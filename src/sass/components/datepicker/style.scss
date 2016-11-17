@@ -1,0 +1,98 @@
+@import "../../components/core/color";
+
+.box-datepicker {
+  padding: 2rem 0 0;
+
+  .inline {
+    vertical-align: middle;
+  }
+
+  .date-txt {
+    margin-right: 10px;
+    width: 20px;
+  }
+}
+
+.form_date {
+  width: 100%;
+  padding: 0 0 1rem;
+  font-family: "HelveticaNeue";
+  font-size: 1.3rem;
+  color: $sf-dark-text;
+
+  .form-control {
+    float: inherit;
+    width: 50%;
+    color: $sf-light-text;
+    border: none;
+    border-bottom: 1px solid $sf-border-dropdown;
+  }
+
+  .input-group-addon {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.datetimepicker {
+  font-family: "HelveticaNeue";
+  padding: 0;
+  border-radius: 0;
+
+  &:before, &:after {
+    display: none;
+  }
+
+  tbody {
+    tr {
+      padding: 15px;
+      color: $sf-dark-text;
+    }
+  }
+
+  .table-condensed {
+    thead {
+      tr {
+        height: 4rem;
+        background-color: $sf-primary;
+        color: $sf-light;
+
+        &:nth-child(2) {
+          height: inherit;
+          background-color: $sf-light;
+          color: $sf-dark-text;
+          padding: 0;
+
+          &:hover {
+            background-color: inherit;
+          }
+        }
+
+        th {
+          border-radius: 0;
+          transition: all .2s linear;
+
+          &:hover {
+            background-color: transparent !important;
+            transition: all .2s linear;
+          }
+        }
+      }
+    }
+
+    > tbody > tr > td {
+      padding: 15px 15px 10px;
+      margin: 0 10px;
+      border-radius: 50%;
+
+      &:hover {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  table tr td.active.active {
+    background-color: $sf-primary !important;
+    border-radius: 50%;
+  }
+}
