@@ -18,11 +18,6 @@ $progressbar-button-progress-bg-color: #7bc280;
   outline: none;
   overflow: hidden;
 
-  // Fix for firefox dots around the button when clicked
-  &::-moz-focus-inner {
-    border: 0;
-  }
-
   .text-content {
     position: absolute;
     z-index: 10;
