@@ -1,0 +1,47 @@
+$progressbar-button-border-radius: 54px;
+$progressbar-button-color: #fff;
+$progressbar-button-bg-color: #e2e2e2;
+$progressbar-button-font-size: 18px;
+$progressbar-button-width: 200px;
+$progressbar-button-height: 40px;
+$progressbar-button-progress-bg-color: #7bc280;
+
+.progressbar-button {
+  position: relative;
+  height: $progressbar-button-height;
+  width: $progressbar-button-width;
+  font-family: Nunito-Regular;
+  text-transform: uppercase;
+  border: none;
+  border-radius: $progressbar-button-border-radius;
+  outline: none;
+  background-color: $progressbar-button-bg-color;
+  color: $progressbar-button-color;
+  font-size: $progressbar-button-font-size;
+  border-radius: $progressbar-button-border-radius;
+
+  // Fix for firefox dots around the button when clicked
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  .text-content {
+    position: absolute;
+    z-index: 10;
+
+    // center with absolute position (ie9 compatible)
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  .progress {
+    z-index: 9;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: $progressbar-button-progress-bg-color;
+    border-radius: $progressbar-button-border-radius 0 0 $progressbar-button-border-radius;
+  }
+}
