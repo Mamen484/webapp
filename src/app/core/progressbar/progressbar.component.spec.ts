@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ProgressbarButtonComponent } from './progressbar-button.component';
+import { ProgressbarComponent } from './progressbar.component';
 
-describe('ProgressbarButtonComponent', () => {
-  let component: ProgressbarButtonComponent;
-  let fixture: ComponentFixture<ProgressbarButtonComponent>;
+describe('ProgressbarComponent', () => {
+  let component: ProgressbarComponent;
+  let fixture: ComponentFixture<ProgressbarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressbarButtonComponent ]
+      declarations: [ ProgressbarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProgressbarButtonComponent);
+    fixture = TestBed.createComponent(ProgressbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

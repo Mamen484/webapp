@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ProgressbarButtonModule} from "./progressbar-button/progressbar-button.module";
+import { ProgressbarModule } from "./progressbar/progressbar.module";
 
 @NgModule({
   imports: [
     CommonModule,
-    ProgressbarButtonModule,
+    ProgressbarModule,
   ],
   exports: [
-    ProgressbarButtonModule
+    ProgressbarModule
   ]
 })
 export class CoreModule { }
