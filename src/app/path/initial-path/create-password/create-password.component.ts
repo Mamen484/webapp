@@ -24,7 +24,7 @@ export class CreatePasswordComponent implements OnDestroy {
 
     this.unsubscribe();
     this.subscription = observable.subscribe((result: {success: boolean}) => {
-      if (!result['success']) {
+      if (!result.success) {
         return;
       }
 
@@ -39,8 +39,6 @@ export class CreatePasswordComponent implements OnDestroy {
   }
 
   private unsubscribe() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription && this.subscription.unsubscribe();
   }
 }

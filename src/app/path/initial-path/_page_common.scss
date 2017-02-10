@@ -4,17 +4,10 @@ $page-bg: #D4EFF9;
 .page {
   background-color: $page-bg;
   display: block;
-  height: calc(100% - #{$menu-height});
-  position: relative;
+  min-height: calc(100% - #{$menu-height});
 
   .card {
-    position: absolute;
     background-color: #fff;
-    padding: 50px 100px;
-
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-40%);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   }
 }
