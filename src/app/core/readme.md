@@ -25,3 +25,4 @@ List of components
 ---
 
 - [Progressbar](progressbar/readme.md)
+- [Menu](menu/readme.md)

@@ -20,12 +20,10 @@ export class CreatePasswordComponent implements OnDestroy {
   ) {}
 
   public createPassword() {
-    console.log(this.email, this.password);
     let observable: Observable<{success: boolean}> = this.service.createPassword(this.email, this.password);
 
     this.unsubscribe();
     this.subscription = observable.subscribe((result: {success: boolean}) => {
-      console.log(result);
       if (!result['success']) {
         return;
       }

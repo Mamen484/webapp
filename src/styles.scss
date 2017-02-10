@@ -1,2 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'sass/components/style';
+
+html, body, app-root {
+  height: 100%;
+  margin: 0;
+  display: block;
+}

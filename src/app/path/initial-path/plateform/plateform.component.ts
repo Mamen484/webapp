@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./plateform.component.scss']
 })
 export class PlateformComponent implements OnInit {
+  public daysLeft: number = 0;
+  public price: string = "";
 
   constructor() { }
 

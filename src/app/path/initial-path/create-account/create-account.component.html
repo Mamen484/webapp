@@ -1,12 +1,58 @@
-<h1>
-  Please wait a moment while we are creating your Shopping Feed account.
-</h1>
+<app-menu></app-menu>
 
-<div>
+<div class="page">
+  <h1>
+    Please wait a moment while we are creating your Shopping Feed account.
+  </h1>
 
+  <div class="card">
+    <div class="logo">
+      <img src="logo.png" />
+    </div>
+    <div class="keypoints">
+      <div class="keypoint">
+        <div class="keypoint-logo">
+          <img src="keypoint1-logo.png" />
+        </div>
+        <div class="keypoint-text">
+          <h2>Auto-installation</h2>
+          <p>
+            Shopping flux vous guidera pour chaque canal de diffusion à travers les étapes nécessaires
+            pour se connecter et mettre en ligne vos produits très rapidement.
+          </p>
+        </div>
+      </div>
+
+      <div class="keypoint">
+        <div class="keypoint-logo">
+          <img src="keypoint2-logo.png" />
+        </div>
+        <div class="keypoint-text">
+          <h2>Exports personnalisés</h2>
+          <p>
+            Créez des flux de données personnalisés, avec vos produits, grâce à notre outil facile à utiliser.
+            Si vous avez besoin d'un export de produit, shopping flux peut le créer, simplement et efficacement.
+          </p>
+        </div>
+      </div>
+
+      <div class="keypoint">
+        <div class="keypoint-logo">
+          <img src="keypoint3-logo.png" />
+        </div>
+        <div class="keypoint-text">
+          <h2>Suivi des conversions</h2>
+          <p>
+            Suivez les ventes engendrées par vos publicités avec notre suivi des conversions pour comparateurs de prix.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-progressbar style="display: inline-block; width: 100px; height:30px;"
+                   [text]="'Start selling now'"
+                   (refresh)="refreshProgressBar($event)"
+  >
+  </app-progressbar>
 </div>
-
-<app-progressbar style="display: inline-block; width: 100px; height:30px;"
-                 [progress]="progress"
-                 [text]="'Start selling now'">
-</app-progressbar>

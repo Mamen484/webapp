@@ -1,32 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
+import {ProgressModel} from "../../../core/progressbar/progress.model";
 
 @Component({
   selector: 'app-create-account',
   templateUrl: './create-account.component.html',
   styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent implements OnInit {
-  private refreshRate: number = 100;
+export class CreateAccountComponent {
   private creationTime: number = 15000;
 
-  private elapsedTime: number = 0;
-  private progress: number = 0;
-
-  ngOnInit(): void {
-    this.startTimeout();
-  }
-
-  public refreshProgressBar() {
-    this.elapsedTime += this.refreshRate;
-    this.progress = this.elapsedTime * 100 / this.creationTime;
-  }
-
-  private startTimeout() {
-    setTimeout(() => {
-      this.refreshProgressBar();
-      if (this.elapsedTime < this.creationTime) {
-        this.startTimeout();
-      }
-    }, this.refreshRate);
+  public refreshProgressBar(event: ProgressModel) {
+    event.progress = event.occurrence * event.refreshRate * 100 / this.creationTime;
   }
 }
