@@ -54,6 +54,10 @@ export class ProgressbarComponent implements OnInit, AfterViewInit {
     return this.progress+'%';
   }
 
+  public getTransitionAsCss(): string {
+    return 'width '+(this.refreshRate / 1000)+'s linear'
+  }
+
   private startTimeout() {
     setTimeout(() => {
       this.progress += this.refreshRate;

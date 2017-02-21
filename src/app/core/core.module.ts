@@ -4,6 +4,7 @@ import { ProgressbarModule } from "./progressbar/progressbar.module";
 import { MenuModule } from "./menu/menu.module";
 import { AssetsModule } from "./assets/assets.module";
 import { ChannelModule } from "./channel/channel.module";
+import {ConfigModule} from "./config/config.module";
 
 @NgModule({
   imports: [
@@ -12,12 +13,14 @@ import { ChannelModule } from "./channel/channel.module";
     MenuModule,
     AssetsModule,
     ChannelModule,
+    ConfigModule
   ],
   exports: [
     ProgressbarModule,
     MenuModule,
     AssetsModule,
     ChannelModule,
+    ConfigModule
   ],
   declarations: [],
 })

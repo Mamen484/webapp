@@ -67,17 +67,11 @@ $content-color: #7D7D7D;
     .element {
       flex-basis: 100%;
       text-align: center;
-      .element-icon{
-        display: inline;
 
-        img {
-          width: 24px;
-          height: 24px;
-        }
-      }
-      .element-text {
-        font-size: 24px;
-        color: #FFFFFF;
+      font-size: 24px;
+      color: #FFFFFF;
+
+      .element-text, .element-icon {
         display: inline;
       }
     }
