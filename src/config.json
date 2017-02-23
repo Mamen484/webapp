@@ -1,5 +1,5 @@
 {
   "app": {
-    "prefix": "/webapp/"
+    "baseUrl": "http://app.shopping-feed.lan/"
   }
 }

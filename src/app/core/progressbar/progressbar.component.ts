@@ -28,6 +28,11 @@ export class ProgressbarComponent implements OnInit, AfterViewInit {
   @Output() refresh: EventEmitter<ProgressModel> = new EventEmitter<ProgressModel>();
 
   /**
+   * A null event is emitted in this emitter when to progress is finished
+   */
+  @Output() onFinish: EventEmitter<null> = new EventEmitter<null>();
+
+  /**
    * The timeing where progress events are sent.
    * Default to 100ms
    */
@@ -69,6 +74,8 @@ export class ProgressbarComponent implements OnInit, AfterViewInit {
       if (event.progress < 100) {
         this.progress = event.progress;
         this.startTimeout();
+      } else {
+        this.onFinish.emit(null);
       }
     }, this.refreshRate);
   }
