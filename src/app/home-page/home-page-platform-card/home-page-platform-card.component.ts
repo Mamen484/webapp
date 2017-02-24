@@ -12,13 +12,7 @@ export class HomePagePlatformCardComponent implements OnInit {
   public fakeNewPdmInter = new Array(4);
 
   constructor() {}
-  
-  
-  test () {
-    alert('ok');
-  }
-  
-  
+
   ngOnInit() {
   }
 
