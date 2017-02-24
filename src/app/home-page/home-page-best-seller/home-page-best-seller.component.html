@@ -6,6 +6,9 @@
     </div>
     <div class="half-box">
       <ul>
+        <li *ngFor="let bestSeller of bestSellers">
+          <img [src]="bestSeller.logo"  [alt]="bestSeller.name" />
+        </li>
       </ul>
     </div>
   </div>

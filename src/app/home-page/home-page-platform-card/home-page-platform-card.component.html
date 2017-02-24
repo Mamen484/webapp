@@ -7,18 +7,18 @@
           <img src="/image/auchan.jpg" alt="">
         </div>
         <div class="body-card">
-          2546 €
+          {{ price }}
         </div>
         <div class="footer-card">
           <div class="select">
             <div class="badge bg-success">
-              746
+              {{ numberofSelectedProducts }}
             </div>
             Sélectionnés
           </div>
           <div class="error">
             <div class="badge bg-alert">
-              46
+              {{ numberOfErrors }}
             </div>
             Erreurs
           </div>
@@ -40,7 +40,7 @@
         </div>
         <div class="card-hover">
           <div class="body-card">
-            50€/mois
+            {{ price }} / mois
             <a href="#">Offres partenaire</a>
             <div class="btn-add">
               <button (click)="test();">

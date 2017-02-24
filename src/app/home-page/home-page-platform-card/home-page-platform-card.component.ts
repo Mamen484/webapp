@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page-platform-card.component.scss']
 })
 export class HomePagePlatformCardComponent implements OnInit {
+  private numberofSelectedProducts: number = 723;
+  private numberOfErrors: number = 46;
+  private price: string = "99$";
 
   public fakePdm = new Array(5);
   public fakeNewPdm = new Array(7);

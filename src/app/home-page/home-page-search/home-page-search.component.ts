@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home-page-research',
-  templateUrl: './home-page-research.component.html',
-  styleUrls: ['./home-page-research.component.scss']
+  selector: 'app-home-page-search',
+  templateUrl: 'home-page-search.component.html',
+  styleUrls: ['home-page-search.component.scss']
 })
 export class HomePageSearchComponent implements OnInit {
 

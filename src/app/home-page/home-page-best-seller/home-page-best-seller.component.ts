@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BestSeller } from "./best-seller.model";
 
 @Component({
   selector: 'app-home-page-best-seller',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page-best-seller.component.scss']
 })
 export class HomePageBestSellerComponent implements OnInit {
-  private logo = '/image/auchan.jpg';
+  public bestSellers: Array<BestSeller> = [
+    new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
+  ];
 
   constructor() {
   }
