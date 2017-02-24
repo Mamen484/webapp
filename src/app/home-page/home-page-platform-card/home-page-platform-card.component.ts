@@ -7,16 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePagePlatformCardComponent implements OnInit {
 
-  fakePdm = new Array(5);
-  fakeNewPdm = new Array(7);
+  public fakePdm = new Array(5);
+  public fakeNewPdm = new Array(7);
+  public fakeNewPdmInter = new Array(4);
 
-  constructor() {
-    this.fakePdm;
-    this.fakeNewPdm;
-  }
+  constructor() {}
+  
+  
   test () {
     alert('ok');
   }
+  
+  
   ngOnInit() {
   }
 

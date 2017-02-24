@@ -34,7 +34,7 @@
         <div class="body-card">
           <div class="btn-add">
             <button>
-              Ajoutez
+              ajoutez
             </button>
           </div>
         </div>
@@ -44,7 +44,31 @@
             <a href="#">Offres partenaire</a>
             <div class="btn-add">
               <button (click)="test();">
-                Ajoutez
+                ajoutez
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li *ngFor="let a of fakeNewPdmInter">
+      <div class="card">
+        <div class="header-card">
+          <img src="/image/auchan.jpg" alt="">
+        </div>
+        <div class="body-card">
+          <div class="btn-add">
+            <button>
+              créez
+            </button>
+          </div>
+        </div>
+        <div class="card-hover">
+          <div class="body-card">
+            Compte international
+            <div class="btn-add">
+              <button (click)="test();">
+                créez
               </button>
             </div>
           </div>
