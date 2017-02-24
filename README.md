@@ -29,3 +29,17 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Translation
+
+We use crowdin tool for translation : https://support.crowdin.com.
+
+### Installation
+
+You can install console client by following this guide : https://support.crowdin.com/cli-tool/.
+
+### Usage
+
+The console client allow you to :
+* Upload sources with : crowdin-cli upload sources
+* Download latest translation with : crowdin-cli download
