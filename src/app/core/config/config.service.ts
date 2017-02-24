@@ -26,7 +26,6 @@ export class ConfigService implements OnInit, OnDestroy {
                 this.config = response.json();
                 this.loaded = true;
             });
-
     }
 
     public ngOnInit(): void {
