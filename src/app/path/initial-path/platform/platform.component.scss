@@ -1,0 +1,79 @@
+@import "../modal_common";
+@import "../buttons";
+
+$platform-title-color: #098FD0;
+$content-color: #7D7D7D;
+
+.card {
+  min-width: 750px;
+
+  .card-body {
+    padding: 50px 100px 50px 100px;
+
+    text-align: center;
+    font-family: Nunito-Regular;
+
+    .title {
+      font-size: 30px;
+      color: $platform-title-color;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .channel-price {
+      display: flex;
+      font-size: 18px;
+      color: $platform-title-color;
+      align-items: center;
+      justify-content: center;
+
+      .channel-logo {
+        width: 200px;
+        height: 100px;
+      }
+
+      .channel-text {
+        margin-left: 10px;
+        line-height: 100px;
+        vertical-align: middle;
+
+        .price {
+          font-size: 48px;
+        }
+      }
+    }
+
+    .content {
+      font-size: 18px;
+      color: $content-color;
+      line-height: 28px;
+      margin-bottom: 30px;
+    }
+
+    .btn-accept {
+      display: inline-block;
+      padding: 10px;
+    }
+  }
+
+  .card-footer {
+    display: flex;
+    height: 70px;
+    padding: 0 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #098FD0;
+
+    .element {
+      flex-basis: 100%;
+      text-align: center;
+
+      font-size: 24px;
+      color: #FFFFFF;
+
+      .element-text, .element-icon {
+        display: inline;
+      }
+    }
+  }
+}

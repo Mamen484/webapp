@@ -1,0 +1,13 @@
+@import "../../core/menu/variables";
+$page-bg: #D4EFF9;
+
+.page {
+  background-color: $page-bg;
+  display: block;
+  min-height: calc(100% - #{$menu-height});
+
+  .card {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+  }
+}
