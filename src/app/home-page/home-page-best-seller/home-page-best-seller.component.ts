@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-page-best-seller.component.scss']
 })
 export class HomePageBestSellerComponent implements OnInit {
-
-  fakeArray = new Array(5);
+  private logo = '/image/auchan.jpg';
 
   constructor() {
-    this.fakeArray;
   }
 
   ngOnInit() {
