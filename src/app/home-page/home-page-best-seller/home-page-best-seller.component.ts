@@ -9,6 +9,10 @@ import { BestSeller } from "./best-seller.model";
 export class HomePageBestSellerComponent implements OnInit {
   public bestSellers: Array<BestSeller> = [
     new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
+    new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
+    new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
+    new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
+    new BestSeller('https://app.shopping-feed.com/images/registration/logo_sf_other.svg', 'foo'),
   ];
 
   constructor() {

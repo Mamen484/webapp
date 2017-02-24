@@ -1,5 +1,6 @@
 .container {
   margin: 0 56px;
+
   .card {
     position: relative;
     margin: 0 0 20px 0;
@@ -7,6 +8,7 @@
     background-color: #fff;
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+
     .box-search {
       button {
         display: inline-block;
@@ -16,6 +18,12 @@
         background-color: transparent;
         cursor: pointer;
       }
+
+      .icon {
+        color: #7D7D7D;
+        font-size: 25px;
+      }
+
       input {
         width: calc(100% - 90px);
         padding: 10px;
@@ -31,7 +39,7 @@
           padding: 0 20px;
           color: #7D7D7D;
           font: {
-            family: 'HelveticaNeue';
+            family: HelveticaNeue-Regular;
             size: 13px;
           }
         }

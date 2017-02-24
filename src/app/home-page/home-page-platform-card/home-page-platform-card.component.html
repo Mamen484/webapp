@@ -1,10 +1,10 @@
 <div class="container">
   <ul>
-    <li *ngFor="let a of fakePdm">
+    <li *ngFor="let platform of platforms">
       <a href="">
         <div class="card">
         <div class="header-card">
-          <img src="/image/auchan.jpg" alt="">
+          <img [src]="platform.logo" [alt]="platform.name">
         </div>
         <div class="body-card">
           {{ price }}
@@ -26,10 +26,10 @@
       </div>
       </a>
     </li>
-    <li *ngFor="let a of fakeNewPdm">
+    <li *ngFor="let newPlatform of newPlatforms">
       <div class="card">
         <div class="header-card">
-          <img src="/image/auchan.jpg" alt="">
+          <img [src]="newPlatform.logo" [alt]="newPlatform.name">
         </div>
         <div class="body-card">
           <div class="btn-add">
@@ -40,7 +40,7 @@
         </div>
         <div class="card-hover">
           <div class="body-card">
-            {{ price }} / mois
+            {{ newPrice }} / mois
             <a href="#">Offres partenaire</a>
             <div class="btn-add">
               <button (click)="test();">
@@ -51,10 +51,10 @@
         </div>
       </div>
     </li>
-    <li *ngFor="let a of fakeNewPdmInter">
+    <li *ngFor="let newPlatformInter of newPlatformsInter">
       <div class="card">
         <div class="header-card">
-          <img src="/image/auchan.jpg" alt="">
+          <img [src]="newPlatformInter.logo" [alt]="newPlatformInter.name">
         </div>
         <div class="body-card">
           <div class="btn-add">

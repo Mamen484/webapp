@@ -31,12 +31,16 @@
 
   .header-card {
     text-align: center;
+    img {
+      width: 100%;
+      max-width: 100px;
+    }
   }
 
   .body-card {
     font-size: 20px;
     color: #098FD0;
-    padding: 30px 0 10px;
+    padding: 15px 0 10px;
     text-align: center;
 
     .btn-add button {
@@ -49,7 +53,7 @@
       background-color: #7BC280;
       color: #FFF;
       font: {
-        family: 'Nunito-Bold';
+        family: Nunito-Bold;
         size: 12px;
       }
       text-transform: uppercase;
@@ -100,7 +104,7 @@
         display: block;
         padding: 40px 10px 0;
         font: {
-          family: 'HelveticaNeue';
+          family: HelveticaNeue-Bold;
           size: 24px;
         }
       }
@@ -114,7 +118,11 @@
         display: block;
         color: #fff;
         text-decoration: underline;
-        font-size: 13px;
+        font: {
+          family: HelveticaNeue-Regular;
+          size: 13px;
+        }
+
       }
     }
   }

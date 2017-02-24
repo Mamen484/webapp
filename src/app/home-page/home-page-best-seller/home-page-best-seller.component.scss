@@ -1,28 +1,33 @@
 .container {
   margin: 0 56px;
+
   .card {
     position: relative;
-    margin-bottom: 30px;
+    margin: 30px 0;
     padding: 33px 20px;
     background-color: #fff;
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+
     .half-box {
       display: inline-block;
       width: 49%;
       color: #333;
       font: {
-        family: "Nunito";
+        family: Nunito-Regular;
         size: 16px;
       }
+
       span {
         display: block;
         margin-bottom: 5px;
       }
+
       ul li {
         display: inline-block;
         width: 18%;
         padding: 0 1%;
+
         img {
           width: 100%;
           max-width: 130px;
