@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {ProgressModel} from "../../../core/progressbar/progress.model";
-import {ConfigService} from "../../../core/config/config.service";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { ProgressModel } from "../../../core/progressbar/progress.model";
+import { ConfigService } from "../../../core/config/config.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-create-account',
@@ -21,8 +21,6 @@ export class CreateAccountComponent {
   }
 
   public onFinish() {
-    this.router.navigateByUrl(
-        this.config.get('app').baseUrl
-    );
+    window.location = this.config.get('app').baseUrl;
   }
 }

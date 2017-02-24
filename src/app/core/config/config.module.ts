@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {NgModule, APP_INITIALIZER} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ConfigService} from "./config.service";
 
@@ -6,6 +6,14 @@ import {ConfigService} from "./config.service";
     imports: [
         CommonModule
     ],
-    providers: [ConfigService]
+    providers: [
+        ConfigService,
+        {
+            provide: APP_INITIALIZER,
+            multi: true,
+            useFactory: (config: ConfigService) => () => {config.load()},
+            deps: [ConfigService]
+        }
+    ]
 })
 export class ConfigModule {}
