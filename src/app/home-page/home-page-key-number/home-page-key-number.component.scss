@@ -1,0 +1,50 @@
+$first: #098Fd0;
+$second: #473A7A;
+$third: #7BC280;
+
+$selectorColor: (
+  1: $first,
+  2: $second,
+  3: $third
+);
+
+.container {
+  margin: 0 56px;
+
+  .box-key ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline-block;
+      width: 33%;
+      padding: 0 0 30px 0;
+      text-align: center;
+      font: {
+        family: 'HelveticaNeue';
+        size: 50px;
+      }
+      list-style: none;
+
+      span {
+        display: block;
+        padding: 0 0 30px 0;
+        color: #333;
+        font: {
+          family: 'HelveticaNeue';
+          size: 13px;
+        }
+
+        &:first-letter {
+          text-transform: capitalize;
+        }
+      }
+
+      @each $selector, $colorFont in $selectorColor {
+        &:nth-child(#{$selector}) {
+          color: $colorFont;
+        }
+      }
+    }
+  }
+}

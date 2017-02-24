@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BestSellerComponent } from './best-seller.component';
+import { HomePageBestSellerComponent } from './home-page-best-seller.component';
 
-describe('BestSellerComponent', () => {
-  let component: BestSellerComponent;
-  let fixture: ComponentFixture<BestSellerComponent>;
+describe('HomePageBestSellerComponent', () => {
+  let component: HomePageBestSellerComponent;
+  let fixture: ComponentFixture<HomePageBestSellerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BestSellerComponent ]
+      declarations: [ HomePageBestSellerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BestSellerComponent);
+    fixture = TestBed.createComponent(HomePageBestSellerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

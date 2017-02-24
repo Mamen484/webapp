@@ -6,20 +6,20 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { HomePageComponent } from './home-page/home-page.component';
-import { BestSellerComponent } from './home-page/best-seller/best-seller.component';
-import { KeyNumberComponent } from './home-page/key-number/key-number.component';
-import { ResearchComponent } from './home-page/research/research.component';
-import { PlatformCardComponent } from './home-page/platform-card/platform-card.component';
+import { HomePageResearchComponent } from './home-page/home-page-research/home-page-research.component';
+import { HomePageBestSellerComponent } from './home-page/home-page-best-seller/home-page-best-seller.component';
+import { HomePageKeyNumberComponent } from './home-page/home-page-key-number/home-page-key-number.component';
+import { HomePagePlatformCardComponent } from './home-page/home-page-platform-card/home-page-platform-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimelineComponent,
     HomePageComponent,
-    BestSellerComponent,
-    KeyNumberComponent,
-    ResearchComponent,
-    PlatformCardComponent
+    HomePageResearchComponent,
+    HomePageBestSellerComponent,
+    HomePageKeyNumberComponent,
+    HomePagePlatformCardComponent
   ],
   imports: [
     BrowserModule,

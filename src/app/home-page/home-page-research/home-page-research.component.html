@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="card">
+    <div class="box-search">
+      <button class="material-icons"
+              (click)="addSearchTab(newSearchTab.value)">search</button>
+
+      <input #newSearchTab
+             type="text"
+             placeholder="Rechercher une plateforme"
+             (keyup.enter)="addSearchTab(newSearchTab.value); newSearchTab.value='' ">
+
+      <button class="material-icons">list</button>
+
+      <ul>
+        <li *ngFor="let a of searchTabs">
+          <div>{{ a }}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

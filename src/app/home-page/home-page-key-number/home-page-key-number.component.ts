@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-key-number',
-  templateUrl: './key-number.component.html',
-  styleUrls: ['./key-number.component.scss']
+  selector: 'app-home-page-key-number',
+  templateUrl: './home-page-key-number.component.html',
+  styleUrls: ['./home-page-key-number.component.scss']
 })
+export class HomePageKeyNumberComponent implements OnInit {
 
-export class KeyNumberComponent implements OnInit {
-  
   public KeyNumbers:Array<Object> = [
     {number: "1017598€", text: "chiffre d'affaires"},
     {number: "127498", text: "nombre de vente"},
@@ -17,7 +16,7 @@ export class KeyNumberComponent implements OnInit {
 
   constructor() {
     this.KeyNumbers;
-    
+
   }
 
   ngOnInit() {

@@ -1,0 +1,55 @@
+<div class="container">
+  <ul>
+    <li *ngFor="let a of fakePdm">
+      <a href="">
+        <div class="card">
+        <div class="header-card">
+          <img src="/image/auchan.jpg" alt="">
+        </div>
+        <div class="body-card">
+          2546 €
+        </div>
+        <div class="footer-card">
+          <div class="select">
+            <div class="badge bg-success">
+              746
+            </div>
+            Sélectionnés
+          </div>
+          <div class="error">
+            <div class="badge bg-alert">
+              46
+            </div>
+            Erreurs
+          </div>
+        </div>
+      </div>
+      </a>
+    </li>
+    <li *ngFor="let a of fakeNewPdm">
+      <div class="card">
+        <div class="header-card">
+          <img src="/image/auchan.jpg" alt="">
+        </div>
+        <div class="body-card">
+          <div class="btn-add">
+            <button>
+              Ajoutez
+            </button>
+          </div>
+        </div>
+        <div class="card-hover">
+          <div class="body-card">
+            50€/mois
+            <a href="#">Offres partenaire</a>
+            <div class="btn-add">
+              <button (click)="test();">
+                Ajoutez
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
