@@ -5,8 +5,11 @@ import { HomePageSearchComponent } from './home-page-search/home-page-search.com
 import { HomePageBestSellerComponent } from './home-page-best-seller/home-page-best-seller.component';
 import { HomePageKeyNumberComponent } from './home-page-key-number/home-page-key-number.component';
 import { HomePagePlatformCardComponent } from './home-page-platform-card/home-page-platform-card.component';
-import {RouterModule} from "@angular/router";
-import {CoreModule} from "../core/core.module";
+import { RouterModule } from "@angular/router";
+import { CoreModule } from "../core/core.module";
+
+
+import { HomePageModalSearchComponent } from './home-page-search/home-page-modal-search/home-page-modal-search.component';
 
 const routes = [
     {path: '', component: HomePageComponent},
@@ -23,7 +26,9 @@ const routes = [
         HomePageSearchComponent,
         HomePageBestSellerComponent,
         HomePageKeyNumberComponent,
-        HomePagePlatformCardComponent
+        HomePagePlatformCardComponent,
+
+        HomePageModalSearchComponent
     ],
     exports: [
         HomePageComponent,

@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'home-page-search.component.html',
   styleUrls: ['home-page-search.component.scss']
 })
+
+
 export class HomePageSearchComponent implements OnInit {
 
   public searchTabs = [];

@@ -1,10 +1,14 @@
-<div class="container">
-  <div class="box-key">
-    <ul>
-      <li *ngFor="let key of KeyNumbers">
-        <span>{{ key.text }}</span>
-        <div>{{ key.number }}</div>
-      </li>
-    </ul>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box-key">
+        <ul class.row>
+          <li class="col-xs-4" *ngFor="let key of KeyNumbers">
+            <span>{{ key.text }}</span>
+            <div>{{ key.number }}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

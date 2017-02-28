@@ -1,49 +1,52 @@
-.container {
-  margin: 0 56px;
+.card {
+  margin: 0 0 20px 0;
+  padding: 12px 20px;
+  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 
-  .card {
-    position: relative;
-    margin: 0 0 20px 0;
-    padding: 12px 20px;
-    background-color: #fff;
-    -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+  .box-search {
+    button {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
 
-    .box-search {
-      button {
-        display: inline-block;
+    .icon {
+      color: #7D7D7D;
+      font-size: 25px;
+      &::before {
         vertical-align: middle;
-        padding: 0;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
       }
+    }
 
-      .icon {
+    input {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      font: {
+        family: HelveticaNeue-Regular;
+        size: 16px;
+      }
+      color: #7D7D7D;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        padding: 0 20px;
         color: #7D7D7D;
-        font-size: 25px;
-      }
-
-      input {
-        width: calc(100% - 90px);
-        padding: 10px;
-        border: none;
-      }
-
-      ul {
-        margin: 0;
-        padding: 0;
-
-        li {
-          display: inline-block;
-          padding: 0 20px;
-          color: #7D7D7D;
-          font: {
-            family: HelveticaNeue-Regular;
-            size: 13px;
-          }
+        font: {
+          family: HelveticaNeue-Regular;
+          size: 13px;
         }
       }
     }
   }
 }
+

@@ -1,31 +1,24 @@
-.container {
-  text-align: center;
 
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-    li {
-      display: inline-block;
-      width: 22%;
-      padding: 0 1%;
-      vertical-align: top;
+  li {
+    display: inline-block;
+    vertical-align: top;
 
-      a {
-        display: block;
-        text-decoration: none;
-      }
+    a {
+      display: block;
+      text-decoration: none;
     }
   }
 }
 
 .card {
-  position: relative;
   height: 140px;
   margin-bottom: 20px;
-  padding: 20px 0 0;
-  background-color: #fff;
+  padding: 10px 0 0;
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 
@@ -40,7 +33,7 @@
   .body-card {
     font-size: 20px;
     color: #098FD0;
-    padding: 15px 0 10px;
+    padding: 10px 0 10px;
     text-align: center;
 
     .btn-add button {
@@ -64,21 +57,13 @@
   .footer-card {
     position: absolute;
     bottom: 0;
-    width: calc(100% - 40px);
+    width: 100%;
     padding: 10px 20px;
     font-size: 12px;
     color: #333;
     overflow: hidden;
     clear: both;
     background-color: #F7F7F9;
-
-    .select {
-      float: left;
-    }
-
-    .error {
-      float: right;
-    }
 
     .badge {
       display: inline-block;
@@ -102,7 +87,7 @@
 
       .body-card {
         display: block;
-        padding: 40px 10px 0;
+        padding: 25px 10px 0;
         font: {
           family: HelveticaNeue-Bold;
           size: 24px;
@@ -127,3 +112,66 @@
     }
   }
 }
+
+
+.modal {
+  box-shadow: 0 17px 50px 0 rgba(0,0,0,0.19), 0 12px 15px 0 rgba(0,0,0,0.24);
+
+  .modal-dialog {
+    width: 690px;
+
+    .modal-content {
+      padding: 50px;
+      border-radius: 0;
+
+      .modal-header {
+        border: none;
+        padding: 0 0 50px;
+      }
+    }
+  }
+
+
+
+  .title {
+    color: #098FD0;
+    text-align: center;
+    font: {
+      family: Nunito-Regular;
+      size: 30px;
+    }
+  }
+
+  .modal-body {
+    padding: 0 0 50px;
+    color: #333;
+    font: {
+      family: HelveticaNeue-Regular;
+      size: 16px;
+    }
+    line-height: 26px;
+  }
+
+  .modal-footer {
+    border: none;
+    text-align: center;
+
+    .btn {
+      border: none;
+      border-radius: 25px;
+      padding: 5px 50px;
+    }
+
+    .btn-success {
+      font: {
+        family: Nunito-Regular;
+        size: 20px;
+      }
+      color: #fff;
+      background-color: #7BC270;
+      text-transform: uppercase;
+    }
+  }
+}
+
+

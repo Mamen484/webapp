@@ -1,79 +1,104 @@
-<div class="container">
-  <ul>
-    <li *ngFor="let platform of platforms">
-      <a href="">
+<div class="container-fluid">
+  <div class="row">
+    <ul class="col-xs-12">
+      <li class="col-xs-3" *ngFor="let platform of platforms">
+        <a href="">
+          <div class="card">
+            <div class="header-card">
+              <img [src]="platform.logo" [alt]="platform.name">
+            </div>
+            <div class="body-card">
+              {{ price }}
+            </div>
+            <div class="footer-card">
+              <div class="pull-left">
+                <div class="badge bg-success">
+                  {{ numberofSelectedProducts }}
+                </div>
+                Sélectionnés
+              </div>
+              <div class="pull-right">
+                <div class="badge bg-alert">
+                  {{ numberOfErrors }}
+                </div>
+                Erreurs
+              </div>
+            </div>
+          </div>
+        </a>
+      </li>
+      <li class="col-xs-3" *ngFor="let newPlatform of newPlatforms">
         <div class="card">
-        <div class="header-card">
-          <img [src]="platform.logo" [alt]="platform.name">
-        </div>
-        <div class="body-card">
-          {{ price }}
-        </div>
-        <div class="footer-card">
-          <div class="select">
-            <div class="badge bg-success">
-              {{ numberofSelectedProducts }}
-            </div>
-            Sélectionnés
+          <div class="header-card">
+            <img [src]="newPlatform.logo" [alt]="newPlatform.name">
           </div>
-          <div class="error">
-            <div class="badge bg-alert">
-              {{ numberOfErrors }}
-            </div>
-            Erreurs
-          </div>
-        </div>
-      </div>
-      </a>
-    </li>
-    <li *ngFor="let newPlatform of newPlatforms">
-      <div class="card">
-        <div class="header-card">
-          <img [src]="newPlatform.logo" [alt]="newPlatform.name">
-        </div>
-        <div class="body-card">
-          <div class="btn-add">
-            <button>
-              ajoutez
-            </button>
-          </div>
-        </div>
-        <div class="card-hover">
           <div class="body-card">
-            {{ newPrice }} / mois
-            <a href="#">Offres partenaire</a>
             <div class="btn-add">
-              <button (click)="test();">
+              <button>
                 ajoutez
               </button>
             </div>
           </div>
-        </div>
-      </div>
-    </li>
-    <li *ngFor="let newPlatformInter of newPlatformsInter">
-      <div class="card">
-        <div class="header-card">
-          <img [src]="newPlatformInter.logo" [alt]="newPlatformInter.name">
-        </div>
-        <div class="body-card">
-          <div class="btn-add">
-            <button>
-              créez
-            </button>
+          <div class="card-hover">
+            <div class="body-card">
+              {{ newPrice }} / mois
+              <a href="#">Offres partenaire</a>
+              <div class="btn-add">
+                <button (click)="test();">
+                  ajoutez
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="card-hover">
+      </li>
+      <li class="col-xs-3" *ngFor="let newPlatformInter of newPlatformsInter">
+        <div class="card">
+          <div class="header-card">
+            <img [src]="newPlatformInter.logo" [alt]="newPlatformInter.name">
+          </div>
           <div class="body-card">
-            Compte international
             <div class="btn-add">
-              <button (click)="test();">
+              <button data-toggle="modal" data-target="#Account-inter">
                 créez
               </button>
             </div>
           </div>
+          <div class="card-hover">
+            <div class="body-card">
+              Compte international
+              <div class="btn-add">
+                <button data-toggle="modal" data-target="#Account-inter">
+                  créez
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="modal fade" id="Account-inter" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="title">
+          Création de compte international
         </div>
       </div>
-    </li>
-  </ul>
+
+
+      <div class="modal-body">
+        <span class="block">Votre demande a été envoyée.</span>
+        <span class="block">Un commercial va prendre contact avec vous très prochainement.</span>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-rounded">ok</button>
+      </div>
+    </div>
+  </div>
 </div>
