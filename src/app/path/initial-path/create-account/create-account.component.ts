@@ -11,7 +11,7 @@ export class CreateAccountComponent {
   private creationTime: number = 10000;
 
   constructor(
-      private config: ConfigService
+      private config: ConfigService,
   ) {}
 
   public refreshProgressBar(event: ProgressModel) {

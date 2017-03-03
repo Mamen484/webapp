@@ -21,7 +21,7 @@ export class ConfigService implements OnInit, OnDestroy {
             return;
         }
 
-        this.subscription = this.http.get('config.json')
+        this.subscription = this.http.get('assets/config/config.json')
             .subscribe((response: Response) => {
                 this.config = response.json();
                 this.loaded = true;
