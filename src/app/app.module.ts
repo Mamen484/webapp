@@ -8,6 +8,9 @@ import { HomepageModule } from "./home-page/homepage.module";
 import { PathModule } from "./path/path.module";
 import { RouterModule } from "@angular/router";
 
+import { MaterialModule } from '@angular/material';
+import 'hammerjs';
+
 const appRoutes = [];
 
 @NgModule({
@@ -21,7 +24,8 @@ const appRoutes = [];
     HttpModule,
     HomepageModule,
     PathModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    MaterialModule
   ],
   bootstrap: [AppComponent]
 })

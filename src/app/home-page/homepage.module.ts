@@ -9,7 +9,8 @@ import { RouterModule } from "@angular/router";
 import { CoreModule } from "../core/core.module";
 
 
-import { HomePageModalSearchComponent } from './home-page-search/home-page-modal-search/home-page-modal-search.component';
+import {MaterialModule} from "@angular/material";
+
 
 const routes = [
     {path: '', component: HomePageComponent},
@@ -19,20 +20,20 @@ const routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule
+        CoreModule,
+        MaterialModule
     ],
     declarations: [
         HomePageComponent,
         HomePageSearchComponent,
         HomePageBestSellerComponent,
         HomePageKeyNumberComponent,
-        HomePagePlatformCardComponent,
-
-        HomePageModalSearchComponent
+        HomePagePlatformCardComponent
     ],
     exports: [
         HomePageComponent,
-        RouterModule
+        RouterModule,
+        MaterialModule
     ],
 })
 export class HomepageModule {}

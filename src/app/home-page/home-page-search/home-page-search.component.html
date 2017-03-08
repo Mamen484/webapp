@@ -19,9 +19,8 @@
               <button class="icon mdi-action-view-list pull-right" data-toggle="modal" data-target="#List"></button>
             </div>
           </div>
-
           <ul>
-            <li *ngFor="let a of searchTabs">
+            <li *ngFor="let a of valTab">
               <div>{{ a }}</div>
             </li>
           </ul>
@@ -31,6 +30,64 @@
   </div>
 </div>
 
+<!--modal-->
 
-<app-home-page-modal-search></app-home-page-modal-search>
+<div class="modal fade" id="List" tabindex="-1" role="dialog">
+  <div class="row modal-dialog" role="document">
+    <div class="col-xs-12 modal-content">
+      <div class="box-flags">
+        <h2>{{ title }}</h2>
+        <ul>
+          <li *ngFor="let flag of flags">
+            <a href="">
+              <img [src]="flag.country"  [alt]="flag.name" />
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-xs-4 modal-header">
+          <div class="box-title">
+            <div class="title">
+              types de plateformes
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-8 modal-header">
+          <div class="box-title">
+            <div class="title">
+              categories de produits
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-4 modal-body">
+          <ul class="row">
+            <li class="col-xs-12" *ngFor="let TextModal of TextModalPlateforms">
+              <md-checkbox>{{ TextModal.text }}</md-checkbox>
+            </li>
+          </ul>
+        </div>
+        <div class="col-xs-8 modal-body">
+          <ul class="row">
+            <li class="col-xs-6" *ngFor="let TextModal of TextModalProducts">
+              <label class="md-check">
+                <input #newVal (click)="test(newVal.value)" [value]="TextModal.text" class="has-value" type="checkbox">
+                <i class="indigo"></i>
+                {{ TextModal.text }}
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row modal-footer">
+        <button type="button" class="btn btn-confirm" data-dismiss="modal">valider</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 

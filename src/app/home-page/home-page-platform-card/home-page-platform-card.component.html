@@ -3,7 +3,7 @@
     <ul class="col-xs-12">
       <li class="col-xs-3" *ngFor="let platform of platforms">
         <a href="">
-          <div class="card">
+          <md-card>
             <div class="header-card">
               <img [src]="platform.logo" [alt]="platform.name">
             </div>
@@ -24,11 +24,11 @@
                 Erreurs
               </div>
             </div>
-          </div>
+          </md-card>
         </a>
       </li>
       <li class="col-xs-3" *ngFor="let newPlatform of newPlatforms">
-        <div class="card">
+        <md-card>
           <div class="header-card">
             <img [src]="newPlatform.logo" [alt]="newPlatform.name">
           </div>
@@ -50,10 +50,10 @@
               </div>
             </div>
           </div>
-        </div>
+        </md-card>
       </li>
       <li class="col-xs-3" *ngFor="let newPlatformInter of newPlatformsInter">
-        <div class="card">
+        <md-card>
           <div class="header-card">
             <img [src]="newPlatformInter.logo" [alt]="newPlatformInter.name">
           </div>
@@ -74,7 +74,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </md-card>
       </li>
     </ul>
   </div>
@@ -90,14 +90,13 @@
         </div>
       </div>
 
-
       <div class="modal-body">
         <span class="block">Votre demande a été envoyée.</span>
         <span class="block">Un commercial va prendre contact avec vous très prochainement.</span>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-success btn-rounded">ok</button>
+        <button type="button" class="btn btn-success btn-rounded" data-dismiss="modal">ok</button>
       </div>
     </div>
   </div>

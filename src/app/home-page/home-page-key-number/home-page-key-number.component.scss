@@ -1,11 +1,12 @@
-$first: #098Fd0;
-$second: #473A7A;
-$third: #7BC280;
+$primary: #098Fd0;
+$secondary: #473A7A;
+$success: #7BC280;
+$color-text: #333;
 
 $selectorColor: (
-  1: $first,
-  2: $second,
-  3: $third
+  1: $primary,
+  2: $secondary,
+  3: $success
 );
 
 .box-key ul {
@@ -25,7 +26,7 @@ $selectorColor: (
     span {
       display: block;
       padding: 0 0 30px 0;
-      color: #333;
+      color: $color-text;
       font: {
         family: HelveticaNeue-Regular;
         size: 13px;

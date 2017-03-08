@@ -1,11 +1,14 @@
-.card {
+$color-text: #333;
+$box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+
+md-card {
   margin: 30px 0;
-  padding: 33px 20px;
-  -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
+  padding: 15px 20px;
+  -webkit-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
 
   .half-box {
-    color: #333;
+    color: $color-text;
     font: {
       family: Nunito-Regular;
       size: 16px;
@@ -18,13 +21,21 @@
 
     ul li {
       display: inline-block;
-      width: 18%;
-      padding: 0 1%;
-
+      list-style: none;
+      width: 19%;
       img {
         width: 100%;
-        max-width: 130px;
+        max-width: 100px;
       }
+    }
+  }
+}
+
+
+.col-xs-6 {
+  &:nth-child(1) {
+    .half-box {
+      margin-top: 20px;
     }
   }
 }
