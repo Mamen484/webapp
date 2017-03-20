@@ -38,8 +38,16 @@ We use crowdin tool for translation : https://support.crowdin.com.
 
 You can install console client by following this guide : https://support.crowdin.com/cli-tool/.
 
+### Configuration
+
+On linux, you have to create a file $HOME/.crowdin.yaml with your credential :
+
+api_key: <YOUR_API_KEY>
+
+For more information : https://support.crowdin.com/configuration-file/#cli-2
+
 ### Usage
 
 The console client allow you to :
-* Upload sources with : crowdin-cli upload sources
-* Download latest translation with : crowdin-cli download
+* Upload sources with : crowdin upload sources
+* Download latest translation with : crowdin download
