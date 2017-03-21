@@ -48,6 +48,9 @@ For more information : https://support.crowdin.com/configuration-file/#cli-2
 
 ### Usage
 
-The console client allow you to :
-* Upload sources with : crowdin upload sources
-* Download latest translation with : crowdin download
+- Generates and upload translation file:
+    - `./node_modules/.bin/ng-xi18n  -p src/tsconfig.json`
+    - `crowdin upload sources`
+
+- Fetch latest translations
+    - `crowdin download`

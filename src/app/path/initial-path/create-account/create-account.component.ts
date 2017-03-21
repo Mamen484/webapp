@@ -17,6 +17,6 @@ export class CreateAccountComponent {
   }
 
   public onFinish() {
-    window.location = '/';
+    //window.location = '/';
   }
 }
