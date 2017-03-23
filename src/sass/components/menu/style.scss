@@ -1,5 +1,5 @@
-@import "../../components/core/color";
-@import "../../components/core/class";
+@import "../../components/core/_color.scss";
+@import "../../components/core/_class.scss";
 
 html {
   font-size: 10px;
@@ -7,7 +7,6 @@ html {
   body {
     font-family: "Nunito", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
     font-size: 10px;
-    background-color: $sf-background;
   }
 }
 

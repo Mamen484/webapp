@@ -1,7 +1,6 @@
 project_identifier: shoppingfeed-webapp
-base_path: .
+base_path: ./
 
 files:
-  -
-    source: '/src/**/*.html'
+  - source: '/src/messages.xlf'
     translation: '/locale/%two_letters_code%/LC_MESSAGES/%original_file_name%'

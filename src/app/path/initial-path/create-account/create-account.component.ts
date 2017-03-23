@@ -1,7 +1,5 @@
-import {Component} from '@angular/core';
-import {ProgressModel} from "../../../core/progressbar/progress.model";
-import {ConfigService} from "../../../core/config/config.service";
-import {Router} from "@angular/router";
+import { Component } from '@angular/core';
+import { ProgressModel } from "../../../core/progressbar/progress.model";
 
 @Component({
   selector: 'app-create-account',
@@ -12,8 +10,6 @@ export class CreateAccountComponent {
   private creationTime: number = 10000;
 
   constructor(
-      private config: ConfigService,
-      private router: Router
   ) {}
 
   public refreshProgressBar(event: ProgressModel) {
@@ -21,8 +17,6 @@ export class CreateAccountComponent {
   }
 
   public onFinish() {
-    this.router.navigateByUrl(
-        this.config.get('app').baseUrl
-    );
+    //window.location = '/';
   }
 }
