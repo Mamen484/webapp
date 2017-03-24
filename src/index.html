@@ -7,6 +7,24 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="assets/app/favicon.ico">
+
+  <!-- SystemJS -->
+  <script src="../node_modules/systemjs/dist/system.src.js"></script>
+
+  <script>
+      // Get the locale id somehow
+      document.locale = 'fr';
+
+      // Map to the text plugin
+      SystemJS.config({
+          map: {
+              text: 'systemjs-text-plugin.js'
+          }
+      });
+
+      // Launch the app
+      SystemJS.import('main.ts').catch(function(err){ console.error(err); });
+  </script>
 </head>
 <body>
   <app-root></app-root>
