@@ -1,0 +1,8 @@
+node:
+  extends:
+    file: resources/docker/services.yml
+    service: node
+  ports:
+    - 0.0.0.0:4200:4200
+  volumes:
+    - .:/var/www
