@@ -54,3 +54,60 @@ For more information : https://support.crowdin.com/configuration-file/#cli-2
 
 - Fetch latest translations
     - `crowdin download`
+
+### Adding an asset
+
+A very hard task in the build process is adding an asset in it the package.
+Here's a small advice on how to add one without loosing a day:
+
+The assets are defined in `./angular-cli.json`, in  `apps.assets`.
+
+If you want to add a directory or a file, just name it as a string.
+
+example:
+```json
+{
+    "apps": {
+        "assets": [
+          "my_directory_or_file"
+        ]
+    }
+}
+```
+
+#### Add a dependency from another directory
+
+Angular/cli supports a way to add files from another directory that isn't `src`.
+
+It can be done by defining an object:
+```json
+{
+    "apps": {
+        "assets": [
+          // Remember that "input" is a relative path from src/
+          {"glob": "my_file", "input": "../node_modules/foo/bar", "output": "a_dir_name_in_dist"},
+          {"glob": "my_directory/**/*", "input": "../node_modules/foo/bar", "output": "a_dir_name_in_dist"},
+        ]
+    }
+}
+```
+
+Here's the trick:
+- input: This field is the base directory of the asset, not the path to the asset
+- glob: a glob expression leading the file(s). To add a directory, you need to append `/**/*` to the path
+- output: The directory name of the asset in dist package. (can be `.`) for root.
+
+#### known bugs
+
+##### glob
+
+You can't only use `glob` and `output` to achieve this.
+"glob" entry is used as-is by input AND output, that means if you try this:
+`{"glob": "../node_modules/foo/bar/my_file", "output": "baz"},`
+
+the output file will be placed in: `dist/baz/../node_modules/foo/bar/my_file`, not in "baz".
+
+##### input
+
+You can't use only input, if your only provide input, webpack will explore your fs recursively from `src` to `/` and
+ will fail when reading a root-only dir (`/lost+found` or `/root`, `/proc/1/map_files/**` in docker).
