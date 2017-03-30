@@ -8,6 +8,10 @@
 /node_modules
 /bower_components
 
+# Translations
+/src/locale/*
+/src/messages.xlf
+
 # IDEs and editors
 /.idea
 /.vscode
@@ -25,7 +29,6 @@
 npm-debug.log
 testem.log
 /typings
-messages.xlf
 
 # e2e
 /e2e/*.js
