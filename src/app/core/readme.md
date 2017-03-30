@@ -26,3 +26,5 @@ List of components
 
 - [Progressbar](progressbar/readme.md)
 - [Menu](menu/readme.md)
+- [Channel](channel/readme.md)
+- [I18n](i18n/readme.md)

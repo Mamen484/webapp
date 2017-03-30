@@ -1,16 +1,12 @@
 import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID } from '@angular/core';
 
 export function getTranslationProviders(): Promise<Object[]> {
-    // Get the locale id from the global
+    // Get the locale id from the navigator (for now)
+    // const locale = (window.navigator.language.substr(0, 2) || 'en') as string;
     const locale = document['locale'] as string;
 
     // return no providers if fail to get translation file for locale
     const noProviders: Object[] = [];
-
-    // No locale or U.S. English: no translation providers
-    if (!locale || locale === 'en-US') {
-        return Promise.resolve(noProviders);
-    }
 
     // Ex: 'locale/messages.es.xlf`
     const translationFile = `./locale/${locale}/messages.xlf`;
@@ -24,8 +20,8 @@ export function getTranslationProviders(): Promise<Object[]> {
         .catch(() => noProviders); // ignore if file not found
 }
 
-declare let SystemJS: any;
-
 function getTranslationsWithSystemJs(file: string) {
     return SystemJS.import(file + '!text'); // relies on text plugin
 }
+
+declare let SystemJS: any;
