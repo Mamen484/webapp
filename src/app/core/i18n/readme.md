@@ -7,9 +7,3 @@ i18n.providers.ts
 ---
 
 This file provides the i18n initialization script. It is executed before the application bootstrap and it loads the translation file.
-
-LocaleService
----
-
-This service handles the current user locale.
-It is used to change/get the language. 
