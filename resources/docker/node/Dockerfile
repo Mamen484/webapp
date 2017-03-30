@@ -1,8 +1,8 @@
 FROM node:6
 
+WORKDIR /var/www
+
 RUN npm install -g @angular/cli
 RUN npm install
-
-WORKDIR /var/www
 
 CMD ["ng", "serve", "--host", "0.0.0.0"]
