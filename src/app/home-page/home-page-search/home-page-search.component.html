@@ -12,6 +12,7 @@
               <input #newSearchTab
                      type="text"
                      placeholder="Rechercher une plateforme"
+                     i18n-placeholder
                      (keyup.enter)="addSearchTab(newSearchTab.value); newSearchTab.value='' ">
             </div>
 
@@ -48,14 +49,14 @@
       <div class="row">
         <div class="col-xs-4 modal-header">
           <div class="box-title">
-            <div class="title">
+            <div class="title" i18n>
               types de plateformes
             </div>
           </div>
         </div>
         <div class="col-xs-8 modal-header">
           <div class="box-title">
-            <div class="title">
+            <div class="title" i18n>
               categories de produits
             </div>
           </div>
@@ -83,7 +84,7 @@
         </div>
       </div>
       <div class="row modal-footer">
-        <button type="button" class="btn btn-confirm" data-dismiss="modal">valider</button>
+        <button type="button" class="btn btn-confirm" data-dismiss="modal" i18n>Valider</button>
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <div class="row">
     <ul class="col-xs-12">
       <li class="col-xs-3" *ngFor="let platform of platforms">
-        <a href="">
+        <a href="#">
           <md-card>
             <div class="header-card">
               <img [src]="platform.logo" [alt]="platform.name">
@@ -15,13 +15,13 @@
                 <div class="badge bg-success">
                   {{ numberofSelectedProducts }}
                 </div>
-                Sélectionnés
+                <ng-container i18n>Sélectionnés</ng-container>
               </div>
               <div class="pull-right">
                 <div class="badge bg-alert">
                   {{ numberOfErrors }}
                 </div>
-                Erreurs
+                <ng-container i18n>Erreurs</ng-container>
               </div>
             </div>
           </md-card>
@@ -35,16 +35,16 @@
           <div class="body-card">
             <div class="btn-add">
               <button>
-                ajoutez
+                <ng-container i18n>Ajoutez</ng-container>
               </button>
             </div>
           </div>
           <div class="card-hover">
             <div class="body-card">
               {{ newPrice }} / mois
-              <a href="#">Offres partenaire</a>
+              <a href="#" i18n>Offres partenaire</a>
               <div class="btn-add">
-                <button (click)="test();">
+                <button (click)="test();" i18n>
                   ajoutez
                 </button>
               </div>
@@ -59,8 +59,8 @@
           </div>
           <div class="body-card">
             <div class="btn-add">
-              <button data-toggle="modal" data-target="#Account-inter">
-                créez
+              <button data-toggle="modal" data-target="#Account-inter" i18n>
+                Créez
               </button>
             </div>
           </div>
@@ -68,8 +68,8 @@
             <div class="body-card">
               Compte international
               <div class="btn-add">
-                <button data-toggle="modal" data-target="#Account-inter">
-                  créez
+                <button data-toggle="modal" data-target="#Account-inter" i18n>
+                  Créez
                 </button>
               </div>
             </div>
@@ -85,18 +85,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="title">
+        <div class="title" i18n>
           Création de compte international
         </div>
       </div>
 
       <div class="modal-body">
-        <span class="block">Votre demande a été envoyée.</span>
-        <span class="block">Un commercial va prendre contact avec vous très prochainement.</span>
+        <span class="block" i18n>Votre demande a été envoyée.</span>
+        <span class="block" i18n>Un commercial va prendre contact avec vous très prochainement.</span>
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-success btn-rounded" data-dismiss="modal">ok</button>
+        <button type="button" class="btn btn-success btn-rounded" data-dismiss="modal" i18n>Ok</button>
       </div>
     </div>
   </div>

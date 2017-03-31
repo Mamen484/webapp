@@ -7,8 +7,6 @@ import { HomePageKeyNumberComponent } from './home-page-key-number/home-page-key
 import { HomePagePlatformCardComponent } from './home-page-platform-card/home-page-platform-card.component';
 import { RouterModule } from "@angular/router";
 import { CoreModule } from "../core/core.module";
-
-
 import {MaterialModule} from "@angular/material";
 
 
@@ -32,8 +30,7 @@ const routes = [
     ],
     exports: [
         HomePageComponent,
-        RouterModule,
-        MaterialModule
+        RouterModule
     ],
 })
 export class HomepageModule {}

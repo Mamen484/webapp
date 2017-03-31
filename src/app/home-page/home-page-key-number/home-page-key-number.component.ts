@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
 export class HomePageKeyNumberComponent {
 
   public KeyNumbers:Array<Object> = [
-    {number: "1017598 €", text: "chiffre d'affaires"},
-    {number: "127498", text: "nombre de vente"},
-    {number: "11598", text: "nombre de clic"}
+    "1017598 €",
+    "127498",
+    "11598",
   ];
 
 }
