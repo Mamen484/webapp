@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { HomePagePlatformCardComponent } from './home-page-platform-card.component';
+import { HomepageComponent } from './homepage.component';
 
-describe('HomePagePlatformCardComponent', () => {
-  let component: HomePagePlatformCardComponent;
-  let fixture: ComponentFixture<HomePagePlatformCardComponent>;
+describe('HomepageComponent', () => {
+  let component: HomepageComponent;
+  let fixture: ComponentFixture<HomepageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomePagePlatformCardComponent ]
+      declarations: [ HomepageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomePagePlatformCardComponent);
+    fixture = TestBed.createComponent(HomepageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

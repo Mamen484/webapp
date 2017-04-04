@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { HomePageSearchComponent } from './home-page-search.component';
+import { HomepageSearchComponent } from './homepage-search.component';
 
-describe('HomePageSearchComponent', () => {
-  let component: HomePageSearchComponent;
-  let fixture: ComponentFixture<HomePageSearchComponent>;
+describe('HomepageSearchComponent', () => {
+  let component: HomepageSearchComponent;
+  let fixture: ComponentFixture<HomepageSearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HomePageSearchComponent ]
+      declarations: [ HomepageSearchComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomePageSearchComponent);
+    fixture = TestBed.createComponent(HomepageSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

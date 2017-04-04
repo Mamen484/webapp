@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
-import { HomepageModule } from "./home-page/homepage.module";
+import { HomepageModule } from "./homepage/homepage.module";
 import { PathModule } from "./path/path.module";
 import { RouterModule } from "@angular/router";
 

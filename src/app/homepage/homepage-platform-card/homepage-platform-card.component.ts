@@ -3,11 +3,11 @@ import { Platform } from "./platform.model";
 
 
 @Component({
-  selector: 'app-home-page-platform-card',
-  templateUrl: './home-page-platform-card.component.html',
-  styleUrls: ['./home-page-platform-card.component.scss']
+  selector: 'app-homepage-platform-card',
+  templateUrl: 'homepage-platform-card.component.html',
+  styleUrls: ['homepage-platform-card.component.scss']
 })
-export class HomePagePlatformCardComponent implements OnInit {
+export class HomepagePlatformCardComponent implements OnInit {
   private numberofSelectedProducts: number = 723;
   private numberOfErrors: number = 46;
   private price: string = "99$";
