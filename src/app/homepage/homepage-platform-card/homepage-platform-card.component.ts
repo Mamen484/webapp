@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform } from "./platform.model";
 
 
@@ -7,12 +7,11 @@ import { Platform } from "./platform.model";
   templateUrl: 'homepage-platform-card.component.html',
   styleUrls: ['homepage-platform-card.component.scss']
 })
-export class HomepagePlatformCardComponent implements OnInit {
+export class HomepagePlatformCardComponent {
   private numberofSelectedProducts: number = 723;
   private numberOfErrors: number = 46;
   private price: string = "99$";
   private newPrice: string = "50€";
-  
 
   public platforms: Array<Platform> = [
     new Platform('https://app.shopping-feed.com/images/logos/idealo.png', 'idealo'),
@@ -29,10 +28,4 @@ export class HomepagePlatformCardComponent implements OnInit {
   public newPlatformsInter: Array<Platform> = [
     new Platform('https://app.shopping-feed.com/images/logos/googleshopping.png', 'googleshopping'),
   ];
-
-  constructor() {}
-
-  ngOnInit() {
-  }
-
 }

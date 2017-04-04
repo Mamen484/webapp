@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalSearchFlag } from './modal-search-flag.model';
-
 
 @Component({
   selector: 'app-homepage-search',
   templateUrl: 'homepage-search.component.html',
   styleUrls: ['homepage-search.component.scss']
 })
-
-
-export class HomepageSearchComponent implements OnInit {
-
+export class HomepageSearchComponent {
   public flags: Array<ModalSearchFlag> = [
     new ModalSearchFlag('http://app.shopping-feed.com/images/flags/United-States.png', 'US'),
     new ModalSearchFlag('http://app.shopping-feed.com/images/flags/France.png', 'Fr'),
@@ -40,7 +36,7 @@ export class HomepageSearchComponent implements OnInit {
     new ModalSearchFlag('http://app.shopping-feed.com/images/flags/Australia.png', 'Au')
   ];
 
-  public TextModalPlateforms:Array<Object> = [
+  public TextModalPlateforms: Array<{text: string}> = [
     {text: "places de marché"},
     {text: "comparateurs"},
     {text: "pla"},
@@ -48,8 +44,7 @@ export class HomepageSearchComponent implements OnInit {
     {text: "social local mobile"}
   ];
 
-
-  public TextModalProducts:Array<Object> = [
+  public TextModalProducts: Array<{text: string}> = [
     {text: "généraliste"},
     {text: "achats professionnels"},
     {text: "auto / moto"},
@@ -66,7 +61,7 @@ export class HomepageSearchComponent implements OnInit {
     {text: "sports et loisirs"}
   ];
 
-  valTab = [];
+  private valTab = [];
 
   test(newVal: string) {
     const index = this.valTab.indexOf(newVal);
@@ -77,10 +72,4 @@ export class HomepageSearchComponent implements OnInit {
       this.valTab.splice(index, 1);
     }
   }
-
-  constructor() {}
-
-  ngOnInit() {
-  }
-
 }
