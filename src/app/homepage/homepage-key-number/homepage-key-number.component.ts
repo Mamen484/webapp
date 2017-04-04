@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['homepage-key-number.component.scss']
 })
 export class HomepageKeyNumberComponent {
-  public keyNumbers: Array<Object> = [
+  public keyNumbers: string[] = [
     "1017598 €",
     "127498",
     "11598",

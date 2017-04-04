@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    <ul class="col-xs-12">
-      <li class="col-xs-3" *ngFor="let platform of platforms">
+    <ul class="cards">
+      <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let platform of platforms">
         <a href="#">
           <md-card>
             <div class="header-card">
@@ -27,7 +27,7 @@
           </md-card>
         </a>
       </li>
-      <li class="col-xs-3" *ngFor="let newPlatform of newPlatforms">
+      <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let newPlatform of newPlatforms">
         <md-card>
           <div class="header-card">
             <img [src]="newPlatform.logo" [alt]="newPlatform.name">
@@ -52,7 +52,7 @@
           </div>
         </md-card>
       </li>
-      <li class="col-xs-3" *ngFor="let newPlatformInter of newPlatformsInter">
+      <li class="col-xs-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let newPlatformInter of newPlatformsInter">
         <md-card>
           <div class="header-card">
             <img [src]="newPlatformInter.logo" [alt]="newPlatformInter.name">
