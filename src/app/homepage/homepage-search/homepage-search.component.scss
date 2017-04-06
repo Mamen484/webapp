@@ -1,8 +1,18 @@
 $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 $color-icon: #7D7D7D;
 
-:root {
-  background-color: #f7f7f7;
+
+md-checkbox {
+  text-transform: capitalize;
+  font-family: HelveticaNeue-Regular;
+  font-size: 14px;
+  color: #333;
+
+  // The "/deep/" selector is used to "pierce" the shadow-dom and affect child element of another directive.
+  // needed here to vertically center the checkbox labels
+  /deep/ .mat-checkbox-label {
+    height: 14px;
+  }
 }
 
 .remove-category, .remove-category {
@@ -34,6 +44,7 @@ $color-icon: #7D7D7D;
   padding: 12px 20px;
   -webkit-box-shadow: $box-shadow;
   box-shadow: $box-shadow;
+  background-color: #ffffff;
 
   .box-search {
     button {
@@ -150,7 +161,7 @@ $color-icon: #7D7D7D;
       padding: 0;
       margin: 0;
       li {
-        padding-bottom: 20px;
+        padding-bottom: 15px;
         list-style: none;
         &:first-line {
           padding-top: 20px;

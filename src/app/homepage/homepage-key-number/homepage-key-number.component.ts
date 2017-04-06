@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class HomepageKeyNumberComponent {
   public keyNumbers: string[] = [
-    "1017598 €",
+    "1017598€",
     "127498",
     "11598",
   ];

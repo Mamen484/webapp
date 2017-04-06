@@ -2,7 +2,9 @@ $color-text: #333;
 $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 
 md-card {
-  margin: 30px 0;
+  margin: {
+    top: 20px;
+  }
   padding: 15px 20px;
   -webkit-box-shadow: $box-shadow;
   box-shadow: $box-shadow;
