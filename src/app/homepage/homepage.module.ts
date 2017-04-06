@@ -8,6 +8,7 @@ import { HomepagePlatformCardComponent } from './homepage-platform-card/homepage
 import { RouterModule } from "@angular/router";
 import { CoreModule } from "../core/core.module";
 import {MaterialModule} from "@angular/material";
+import {FormsModule} from "../../../node_modules/@angular/forms/src/form_providers";
 
 
 const routes = [
@@ -19,7 +20,8 @@ const routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
-        MaterialModule
+        MaterialModule,
+        FormsModule
     ],
     declarations: [
         HomepageComponent,

@@ -5,28 +5,31 @@
         <div class="box-search">
           <div class="row">
             <div class="col-xs-1">
-              <button class="icon mdi-action-search"
-                      (click)="addSearchTab(newSearchTab.value)"></button>
+              <button class="icon mdi-action-search"></button>
             </div>
             <div class="col-xs-10">
-              <input #newSearchTab
-                     type="text"
-                     placeholder="Rechercher une plateforme"
-                     i18n-placeholder
-                     (keyup.enter)="addSearchTab(newSearchTab.value); newSearchTab.value='' ">
+                <input placeholder="Rechercher une plateforme"
+                       i18n-placeholder
+                       class="input-field"
+                       (keyup.enter)="pushFilterFromInput()"
+                       [(ngModel)]="filterInput"
+                />
             </div>
 
             <div class="col-xs-1">
               <button class="icon mdi-action-view-list pull-right" data-toggle="modal" data-target="#List"></button>
             </div>
           </div>
-          <ul>
-            <li *ngFor="let a of valTab">
-              <div>{{ a }}</div>
-            </li>
-          </ul>
         </div>
       </div>
+      <ul class="categories">
+        <li *ngFor="let filter of getActiveFilters()" class="category">
+          <div>
+            {{ filter }}
+            <sup><a href="#" class="remove-category" (click)="removeFilter(filter); false">x</a></sup>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
@@ -66,18 +69,16 @@
       <div class="row">
         <div class="col-xs-4 modal-body">
           <ul class="row">
-            <li class="col-xs-12" *ngFor="let TextModal of TextModalPlateforms">
-              <md-checkbox>{{ TextModal.text }}</md-checkbox>
+            <li class="col-xs-12" *ngFor="let platform of platformCriteria">
+              <md-checkbox>{{ platform }}</md-checkbox>
             </li>
           </ul>
         </div>
         <div class="col-xs-8 modal-body">
           <ul class="row">
-            <li class="col-xs-6" *ngFor="let TextModal of TextModalProducts">
+            <li class="col-xs-6" *ngFor="let category of categoryCriteria">
               <label class="md-check">
-                <input #newVal (click)="test(newVal.value)" [value]="TextModal.text" class="has-value" type="checkbox">
-                <i class="indigo"></i>
-                {{ TextModal.text }}
+                <md-checkbox [(checked)]="filters[category].checked" (change)="filters[category].checked = $event.checked">{{ category }}</md-checkbox>
               </label>
             </li>
           </ul>

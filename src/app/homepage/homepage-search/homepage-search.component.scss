@@ -1,8 +1,36 @@
 $box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.26);
 $color-icon: #7D7D7D;
 
-.card {
+:root {
+  background-color: #f7f7f7;
+}
+
+.remove-category, .remove-category {
+  text-decoration: none;
+  color: inherit;
+}
+
+.input-field {
+  background-color: transparent;
+}
+
+.categories {
+  padding: 0;
   margin: 0 0 20px 0;
+
+  .category {
+    display: inline-block;
+    padding: 0 20px;
+    color: $color-icon;
+    font: {
+      family: HelveticaNeue-Regular;
+      size: 13px;
+    }
+  }
+}
+
+.card {
+  margin: 0 0 10px 0;
   padding: 12px 20px;
   -webkit-box-shadow: $box-shadow;
   box-shadow: $box-shadow;
@@ -40,21 +68,6 @@ $color-icon: #7D7D7D;
         content: "";
         display: inline-block;
         vertical-align: middle;
-      }
-    }
-
-    ul {
-      margin: 0;
-      padding: 0;
-
-      li {
-        display: inline-block;
-        padding: 0 20px;
-        color: $color-icon;
-        font: {
-          family: HelveticaNeue-Regular;
-          size: 13px;
-        }
       }
     }
   }
