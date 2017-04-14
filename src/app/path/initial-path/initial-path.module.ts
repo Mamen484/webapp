@@ -7,7 +7,6 @@ import { PlatformComponent } from './platform/platform.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { CreatePasswordService } from "./create-password/create-password.service";
-import { CreatePasswordServiceMock } from "./create-password/create-password.service.mock";
 import { CoreModule } from "../../core/core.module";
 import { ScheduleCallComponent } from './schedule-call/schedule-call.component';
 
@@ -30,7 +29,7 @@ const initialPathRoutes = [
     RouterModule,
   ],
   providers: [
-    {provide: CreatePasswordService, useClass: CreatePasswordServiceMock}
+    CreatePasswordService
   ],
   declarations: [
     CreatePasswordComponent,
