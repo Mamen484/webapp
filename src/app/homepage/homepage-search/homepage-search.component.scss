@@ -7,6 +7,7 @@ md-checkbox {
   font-family: HelveticaNeue-Regular;
   font-size: 14px;
   color: #333;
+  letter-spacing: 1px;
 
   // The "/deep/" selector is used to "pierce" the shadow-dom and affect child element of another directive.
   // needed here to vertically center the checkbox labels
@@ -146,6 +147,7 @@ md-checkbox {
         size: 13px;
         weight: 600;
       }
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
   }

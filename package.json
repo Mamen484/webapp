@@ -38,6 +38,7 @@
     "@types/node": "^6.0.42",
     "bootstrap-sass": "^3.3.7",
     "codelyzer": "~1.0.0-beta.3",
+    "gulp": "^3.9.1",
     "hammerjs": "^2.0.8",
     "jasmine-core": "2.4.1",
     "jasmine-spec-reporter": "2.5.0",
