@@ -4,6 +4,6 @@ document.locale = 'en';
 // Map to the text plugin
 SystemJS.config({
     map: {
-        text: 'systemjs-text-plugin.js'
+        text: 'assets/js/systemjs-text-plugin.js'
     }
 });

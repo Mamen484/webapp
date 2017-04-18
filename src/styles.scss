@@ -2,10 +2,14 @@
 @import 'sass/components/style';
 @import 'sass/fonts';
 @import 'sass/icons';
+@import 'sass/bootstrap';
+@import 'sass/materialdesign';
+
 
 html, body, app-root {
   height: 100%;
   margin: 0;
   display: block;
+  overflow: inherit;
   background-color: transparent;
 }
