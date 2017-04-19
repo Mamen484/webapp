@@ -1,27 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CreatePasswordService } from "./create-password.service";
 import { Observable, Subscription } from "rxjs";
-import { ActivatedRoute, Router, Params } from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-create-password',
   templateUrl: './create-password.component.html',
   styleUrls: ['./create-password.component.scss']
 })
-export class CreatePasswordComponent implements OnDestroy, OnInit {
+export class CreatePasswordComponent implements OnDestroy {
   public email: string = '';
   public password: string = '';
-  private display: boolean = false;
-  private hmac;
-  private shop;
-  private code;
 
   private subscription: Subscription;
 
   constructor(
       private service: CreatePasswordService,
-      private router: Router,
-      private route: ActivatedRoute
+      private router: Router
   ) {}
 
   public createPassword() {
@@ -39,34 +34,11 @@ export class CreatePasswordComponent implements OnDestroy, OnInit {
     return false;
   }
 
-  ngOnInit() {
-    this.hasAuthorisation();
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe();
   }
 
   private unsubscribe() {
     this.subscription && this.subscription.unsubscribe();
-  }
-
-  private hasAuthorisation() {
-    this.route.queryParams
-        .subscribe((params: Params) => {
-          this.hmac = params['hmac'];
-          this.shop = params['shop'];
-          this.code = params['code'];
-
-          if (!this.shop) {
-            window.location.href = 'https://apps.shopify.com/shopping-feed-dev';
-          }
-
-          if (!this.code) {
-            this.service.getAuthorizationUrl(this.shop).subscribe((url: string) => {
-              window.location.href = url;
-            });
-          }
-        });
   }
 }
