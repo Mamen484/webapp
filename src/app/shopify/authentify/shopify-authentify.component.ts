@@ -5,13 +5,14 @@ import { ActivatedRoute } from "@angular/router";
 import { ShopifyAuthentifyService } from "./shopify-authentify.service";
 
 @Component({
-
+    template: '',
 })
 export class ShopifyAuthentifyComponent implements OnInit {
     constructor(
        private route: ActivatedRoute,
        private service: ShopifyAuthentifyService
     ) {}
+
     ngOnInit(): void {
         this.route.queryParams
             .subscribe((params: Params) => {

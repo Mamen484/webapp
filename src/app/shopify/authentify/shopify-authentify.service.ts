@@ -13,11 +13,12 @@ export class ShopifyAuthentifyService {
     ) {}
 
     public getAuthorizationUrl(shop): Observable<string> {
+        shop = shop.split('.myshopify.com')[0];
         let headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Authorization', 'Bearer shopping-feed');
 
-        return this.http.get(this.apiUrl+'/shopify/auth/'+shop, headers)
+        return this.http.get(this.apiUrl+'/shopify/auth/'+shop, {headers: headers})
             .map((response: Response ) => response.json())
             .map((data: {authorize_url: string}) => data.authorize_url);
     }

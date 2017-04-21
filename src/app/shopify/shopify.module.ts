@@ -18,6 +18,9 @@ const routes = [
     ],
     providers: [
         ShopifyAuthentifyService,
+    ],
+    declarations: [
+        ShopifyAuthentifyComponent
     ]
 })
 export class ShopifyModule {}
