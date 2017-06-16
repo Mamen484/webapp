@@ -31,7 +31,6 @@ const routes = [
         HomepagePlatformCardComponent
     ],
     exports: [
-        HomepageComponent,
         RouterModule
     ],
 })
