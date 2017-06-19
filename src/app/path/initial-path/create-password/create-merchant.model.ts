@@ -1,9 +1,15 @@
 export class CreateMerchantModel  {
-    login: string = '';
-    password: string = '';
-    token: string = '';
-    email: string = '';
-    feed: string = '';
-    feed_type: string = '';
-    language: string = '';
+    owner: {
+        email: string,
+        login: string,
+        password: string
+    };
+    feed: {
+        url: string,
+        source: string,
+        settings: {
+            xmlProductNode: string
+        }
+    };
+    country: string;
 }

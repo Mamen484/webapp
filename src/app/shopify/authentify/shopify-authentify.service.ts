@@ -33,13 +33,19 @@ export class ShopifyAuthentifyService {
         return this.http.get(this.apiUrl+'/shopify/merchant/'+name+queryString, {headers: this.getHeaders()})
             .map((response: Response) => response.json())
             .map((data: any) => { return {
-                login: name,
-                password: '',
-                token: data.token,
-                email: data.email,
-                feed: data.feed,
-                feed_type: 'shopify',
-                language: data.language,
+                owner: {
+                    email: data.email,
+                    login: name,
+                    password: '',
+                },
+                feed: {
+                    url: data.feed,
+                    source: 'shopify',
+                    settings: {
+                        xmlProductNode: 'product'
+                    }
+                },
+                country: data.language,
             }})
         ;
     }
