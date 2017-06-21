@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { Config } from "../../core/core.config";
-import {CreateMerchantModel} from "../../path/initial-path/create-password/create-merchant.model";
+import {CreateStoreModel} from "../../path/initial-path/create-password/create-store.model";
 import {Params} from "@angular/router";
 import "rxjs/add/operator/map";
 import {escape} from "querystring";
@@ -20,32 +20,34 @@ export class ShopifyAuthentifyService {
 
         return this.http.get(this.apiUrl+'/shopify/auth/'+name, {headers: this.getHeaders()})
             .map((response: Response ) => response.json())
-            .map((data: {authorize_url: string}) => data.authorize_url);
+            .map((data: {authorizeUrl: string}) => data.authorizeUrl);
     }
 
-    public getMerchantData(shop: string, query: Params): Observable<CreateMerchantModel> {
+    public getStoreData(shop: string, query: Params): Observable<CreateStoreModel> {
         let name: string = shop.split('.myshopify.com')[0];
         let queryString: string =
             '?code='+(query['code'])+
             '&timestamp='+(query['timestamp'])+
             '&hmac='+(query['hmac']);
 
-        return this.http.get(this.apiUrl+'/shopify/merchant/'+name+queryString, {headers: this.getHeaders()})
+        return this.http.get(this.apiUrl+'/shopify/store/'+name+queryString, {headers: this.getHeaders()})
             .map((response: Response) => response.json())
             .map((data: any) => { return {
-                owner: {
-                    email: data.email,
-                    login: name,
-                    password: '',
-                },
-                feed: {
-                    url: data.feed,
-                    source: 'shopify',
-                    settings: {
-                        xmlProductNode: 'product'
-                    }
-                },
-                country: data.language,
+                store: {
+                    owner: {
+                        email: data.email,
+                        login: name,
+                        password: '',
+                    },
+                    feed: {
+                        url: data.feed,
+                        source: 'shopify',
+                        settings: {
+                            xmlProductNode: 'product'
+                        }
+                    },
+                    country: data.language,
+                }
             }})
         ;
     }

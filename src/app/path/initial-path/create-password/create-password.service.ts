@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { Config } from "../../../core/core.config";
-import { CreateMerchantModel } from "./create-merchant.model";
+import { CreateStoreModel } from "./create-store.model";
 import "rxjs/add/operator/map";
 
 @Injectable()
@@ -16,8 +16,8 @@ export class CreatePasswordService {
       private http: Http
     ) {}
 
-    public createPassword(merchant: CreateMerchantModel): Observable<{success: boolean}> {
-      return this.http.post(this.apiUrl+'/merchant', merchant, {headers: this.getHeaders()})
+    public createPassword(store: CreateStoreModel): Observable<{success: boolean}> {
+      return this.http.post(this.apiUrl+'/store', store, {headers: this.getHeaders()})
         .map((response: Response) => {return {success: response.status < 300 && response.status >= 200}});
     }
 

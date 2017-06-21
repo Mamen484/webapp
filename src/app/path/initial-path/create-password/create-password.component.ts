@@ -3,7 +3,7 @@ import { CreatePasswordService } from "./create-password.service";
 import { Observable, Subscription } from "rxjs";
 import { Router, ActivatedRoute, Params} from "@angular/router";
 import {ShopifyAuthentifyService} from "../../../shopify/authentify/shopify-authentify.service";
-import {CreateMerchantModel} from "./create-merchant.model";
+import {CreateStoreModel} from "./create-store.model";
 
 @Component({
   selector: 'app-create-password',
@@ -11,7 +11,7 @@ import {CreateMerchantModel} from "./create-merchant.model";
   styleUrls: ['./create-password.component.scss']
 })
 export class CreatePasswordComponent implements OnInit, OnDestroy {
-  public merchant: CreateMerchantModel;
+  public store: CreateStoreModel;
 
   private subscription: Subscription;
   private queryParamsSubscription: Subscription;
@@ -24,18 +24,18 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
-    this.merchant = new CreateMerchantModel();
+    this.store = new CreateStoreModel();
     let cache = localStorage.getItem('sf.path.initial');
 
     if (cache) {
-      this.merchant = JSON.parse(cache) as CreateMerchantModel;
+      this.store = JSON.parse(cache) as CreateStoreModel;
     } else {
       this.queryParamsSubscription = this.route.queryParams
           .subscribe((params: Params) => {
-            this.shopifyService.getMerchantData(params['shop'] || '', params)
-                .subscribe((merchant: CreateMerchantModel) => {
-                  this.merchant = merchant;
-                  localStorage.setItem('sf.path.initial', JSON.stringify(merchant));
+            this.shopifyService.getStoreData(params['shop'] || '', params)
+                .subscribe((store: CreateStoreModel) => {
+                  this.store = store;
+                  localStorage.setItem('sf.path.initial', JSON.stringify(store));
                 });
           });
     }
@@ -43,7 +43,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
 
   public createPassword() {
     // This is currently shopify specific
-    let observable: Observable<{success: boolean}> = this.service.createPassword(this.merchant);
+    let observable: Observable<{success: boolean}> = this.service.createPassword(this.store);
 
     this.unsubscribe();
     this.subscription = observable.subscribe((result: {success: boolean}) => {
