@@ -8,6 +8,7 @@ export class CreateStoreModel  {
         feed: {
             url: string,
             source: string,
+            mapping: object,
             settings: {
                 xmlProductNode: string
             }
