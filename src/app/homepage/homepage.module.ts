@@ -7,9 +7,8 @@ import { HomepageKeyNumberComponent } from './homepage-key-number/homepage-key-n
 import { HomepagePlatformCardComponent } from './homepage-platform-card/homepage-platform-card.component';
 import { RouterModule } from "@angular/router";
 import { CoreModule } from "../core/core.module";
-import {MaterialModule} from "@angular/material";
-import {FormsModule} from "../../../node_modules/@angular/forms/src/form_providers";
-
+import { MaterialModule } from "@angular/material";
+import { FormsModule } from "@angular/forms";
 
 const routes = [
     {path: '', component: HomepageComponent},

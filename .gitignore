@@ -9,8 +9,9 @@
 /bower_components
 
 # Translations
-/src/locale/*
-/src/messages.xlf
+/assets
+/src/assets/locale/*
+/src/assets/messages.xlf
 
 # IDEs and editors
 /.idea
