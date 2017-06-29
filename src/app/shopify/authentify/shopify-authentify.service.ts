@@ -36,64 +36,30 @@ export class ShopifyAuthentifyService {
                 store: {
                     owner: {
                         email: data.email,
-                        login: 'test3',
+                        login: name,
                         password: '',
                     },
                     feed: {
                         url: data.feed,
                         source: 'shopify',
                         mapping: {
-                            'category': [
-                                'category'
-                            ],
-                            'brand': [
-                                'brand'
-                            ],
-                            'brand-link': [
-                                'brand-link'
-                            ],
-                            'reference': [
-                                'id'
-                            ],
-                            'name': [
-                                'name'
-                            ],
-                            'link': [
-                                'uri'
-                            ],
-                            'description': [
-                                'description'
-                            ],
-                            'short_description': [
-                                'short_description'
-                            ],
-                            'price': [
-                                'price'
-                            ],
-                            'old_price': [
-                                'old-price'
-                            ],
-                            'shipping_cost': [
-                                'shipping-cost'
-                            ],
-                            'shipping_time': [
-                                'shipping-time'
-                            ],
-                            'quantity': [
-                                'quantity'
-                            ],
-                            'ean': [
-                                'barcode'
-                            ],
-                            'weight': [
-                                'weight'
-                            ],
-                            'ecotax': [
-                                'ecotax'
-                            ],
-                            'tva': [
-                                'vat'
-                            ]
+                            'category': 'category',
+                            'brand': 'brand',
+                            'brand-link': 'brand-link',
+                            'reference': 'id',
+                            'name': 'name',
+                            'link': 'uri',
+                            'description': 'description',
+                            'short_description': 'short_description',
+                            'price': 'price',
+                            'old_price': 'old-price',
+                            'shipping_cost': 'shipping-cost',
+                            'shipping_time': 'shipping-time',
+                            'quantity': 'quantity',
+                            'ean': 'barcode',
+                            'weight': 'weight',
+                            'ecotax': 'ecotax',
+                            'tva': 'vat'
                         },
                         settings: {
                             xmlProductNode: 'product'
