@@ -14,10 +14,3 @@ node:
     service: node
   volumes:
     - .:/var/www
-  entrypoint:
-    - npm
-    - install
-    - &&
-    - ng
-    - build
-    - --prod
