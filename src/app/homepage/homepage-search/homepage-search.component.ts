@@ -8,9 +8,11 @@ import { OnInit } from "@angular/core";
   styleUrls: ['homepage-search.component.scss']
 })
 export class HomepageSearchComponent implements OnInit {
-  private filterInput: string = '';
+  public filterInput: string = '';
 
-  private flags: Array<ModalSearchFlag> = [
+  public title: string = '';
+
+  public flags: Array<ModalSearchFlag> = [
     new ModalSearchFlag('https://app.shopping-feed.com/images/flags/United-States.png', 'US'),
     new ModalSearchFlag('https://app.shopping-feed.com/images/flags/France.png', 'Fr'),
     new ModalSearchFlag('https://app.shopping-feed.com/images/flags/United-Kingdom.png', 'UK'),
@@ -39,7 +41,7 @@ export class HomepageSearchComponent implements OnInit {
     new ModalSearchFlag('https://app.shopping-feed.com/images/flags/Australia.png', 'Au'),
   ];
 
-  private platformCriteria: string[] = [
+  public platformCriteria: string[] = [
     "places de marché",
     "comparateurs",
     "pla",
@@ -47,7 +49,7 @@ export class HomepageSearchComponent implements OnInit {
     "social local mobile",
   ];
 
-  private categoryCriteria: string[] = [
+  public categoryCriteria: string[] = [
     "généraliste",
     "achats professionnels",
     "auto / moto",
@@ -72,7 +74,7 @@ export class HomepageSearchComponent implements OnInit {
     }
   }
 
-  private pushFilterFromInput(): void {
+  public pushFilterFromInput(): void {
     this.setFilter(this.filterInput, true);
     this.filterInput = '';
   }
@@ -81,7 +83,7 @@ export class HomepageSearchComponent implements OnInit {
     return "undefined" !== typeof this.filters[filter] && this.filters[filter].checked;
   }
 
-  private toggleFilter(filter: string): void {
+  public toggleFilter(filter: string): void {
     this.setFilter(filter, !this.hasFilter(filter));
   }
 
@@ -89,11 +91,11 @@ export class HomepageSearchComponent implements OnInit {
     this.filters[name] = {checked: value};
   }
 
-  private removeFilter(filter: string): void {
+  public removeFilter(filter: string): void {
     this.setFilter(filter, false);
   }
 
-  private getActiveFilters(): string[] {
+  public getActiveFilters(): string[] {
     let activeFilters = [];
     for (let key in this.filters) {
       if (this.filters.hasOwnProperty(key) && this.filters[key].checked) {

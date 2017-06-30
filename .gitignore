@@ -11,6 +11,7 @@
 # Translations
 /assets
 /src/assets/locale/*
+locale/*
 /src/assets/messages.xlf
 
 # IDEs and editors
