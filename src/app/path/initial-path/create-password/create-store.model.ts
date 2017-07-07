@@ -15,4 +15,23 @@ export class CreateStoreModel  {
         };
         country: string;
     }
+
+    constructor() {
+        this.store = {
+            owner: {
+                email: '',
+                login: '',
+                password: '',
+            },
+            feed: {
+                url: '',
+                source: '',
+                mapping: {},
+                settings: {
+                    xmlProductNode: ''
+                }
+            },
+            country: '',
+        };
+    }
 }
