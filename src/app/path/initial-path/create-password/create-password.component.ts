@@ -33,7 +33,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
     } else {
       this.queryParamsSubscription = this.route.queryParams
           .subscribe((params: Params) => {
-            !params['shop'] && (window.location.href = Config.SHOPIFY_APP_URL);
+            //!params['shop'] && (window.location.href = Config.SHOPIFY_APP_URL);
 
             this.shopifyService.getStoreData(params['shop'] || '', params)
                 .subscribe((store: CreateStoreModel) => {
