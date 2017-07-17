@@ -2,8 +2,10 @@
 document.locale = 'en';
 
 // Map to the text plugin
-SystemJS.config({
-    map: {
-        text: 'assets/js/systemjs-text-plugin.js'
-    }
-});
+if (typeof SystemJS !== 'undefined'){
+    SystemJS.config({
+        map: {
+            text: 'assets/js/systemjs-text-plugin.js'
+        }
+    });
+}
