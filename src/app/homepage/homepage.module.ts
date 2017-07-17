@@ -11,7 +11,7 @@ import { MaterialModule } from "@angular/material";
 import { FormsModule } from "@angular/forms";
 
 const routes = [
-    {path: '', component: HomepageComponent},
+    // {path: '', component: HomepageComponent},
 ];
 
 @NgModule({
