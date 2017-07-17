@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from "rxjs";
-import { Config } from "../../../core/core.config";
 import { CreateStoreModel } from "./create-store.model";
 import "rxjs/add/operator/map";
+import {environment} from "../../../../environments/environment";
 
 @Injectable()
 export class CreatePasswordService {
     /**
      * @type {string}
      */
-    private apiUrl = Config.API_URL;
+    private apiUrl = environment.API_URL;
 
     constructor(
       private http: Http
@@ -24,7 +24,7 @@ export class CreatePasswordService {
     private getHeaders(): Headers {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
-        headers.append('Authorization', Config.DEFAULT_AUTHORIZATION);
+        headers.append('Authorization', environment.DEFAULT_AUTHORIZATION);
 
         return headers;
     }
