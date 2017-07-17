@@ -4,7 +4,7 @@ import { Observable, Subscription } from "rxjs";
 import { Router, ActivatedRoute, Params} from "@angular/router";
 import {ShopifyAuthentifyService} from "../../../shopify/authentify/shopify-authentify.service";
 import {CreateStoreModel} from "./create-store.model";
-import {Config} from "../../../core/core.config";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-create-password',
@@ -33,7 +33,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
     } else {
       this.queryParamsSubscription = this.route.queryParams
           .subscribe((params: Params) => {
-            !params['shop'] && (window.location.href = Config.SHOPIFY_APP_URL);
+            !params['shop'] && (window.location.href = environment.SHOPIFY_APP_URL);
 
             this.shopifyService.getStoreData(params['shop'] || '', params)
                 .subscribe((store: CreateStoreModel) => {

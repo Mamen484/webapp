@@ -1,15 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Http, Response, Headers } from "@angular/http";
 import { Observable } from "rxjs";
-import { Config } from "../../core/core.config";
 import {CreateStoreModel} from "../../path/initial-path/create-password/create-store.model";
 import {Params} from "@angular/router";
 import "rxjs/add/operator/map";
-import {escape} from "querystring";
+import {environment} from "../../../environments/environment";
 
 @Injectable()
 export class ShopifyAuthentifyService {
-    private apiUrl = Config.API_URL;
+    private apiUrl = environment.API_URL;
 
     constructor(
         private http: Http,
@@ -74,7 +73,7 @@ export class ShopifyAuthentifyService {
     private getHeaders(): Headers {
         let headers = new Headers();
         headers.append('Accept', 'application/json');
-        headers.append('Authorization', Config.DEFAULT_AUTHORIZATION);
+        headers.append('Authorization', environment.DEFAULT_AUTHORIZATION);
 
         return headers;
     }

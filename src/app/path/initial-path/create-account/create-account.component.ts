@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressModel } from "../../../core/progressbar/progress.model";
-import {Config} from "../../../core/core.config";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-create-account',
@@ -23,6 +23,6 @@ export class CreateAccountComponent implements OnInit {
   }
 
   public onFinish() {
-    window.location.href = Config.APP_URL;
+    window.location.href = environment.APP_URL;
   }
 }
