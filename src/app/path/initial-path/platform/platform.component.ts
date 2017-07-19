@@ -9,8 +9,8 @@ import {Subscription} from "rxjs";
   styleUrls: ['platform.component.scss']
 })
 export class PlatformComponent implements OnInit, OnDestroy {
-  public daysLeft: number = 20;
-  public price: string = '99$';
+  public daysLeft: number = 30;
+  public price: number = 99;
   public channel: string;
   public channelImage: string;
 
@@ -27,6 +27,11 @@ export class PlatformComponent implements OnInit, OnDestroy {
           this.channel = params['channelName'];
           this.channelImage = this.logoService.getLogoUrl(this.channel);
         });
+
+    this.route.queryParams.subscribe((params: Params) => {
+      this.daysLeft = params['daysLeft'] || 30;
+      this.price    = params['price'] || 99;
+    });
   }
 
   ngOnDestroy(): void {

@@ -29,7 +29,8 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts"
+        "prod": "environments/environment.prod.ts",
+        "staging": "environments/environment.staging.ts"
       }
     }
   ],
@@ -54,7 +55,7 @@
     },
     "spec": {
       "class": false,
-      "component": true,
+      "component": false,
       "directive": true,
       "module": false,
       "pipe": true,
