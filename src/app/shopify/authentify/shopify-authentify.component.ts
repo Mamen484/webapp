@@ -28,7 +28,7 @@ export class ShopifyAuthentifyComponent implements OnInit {
                     window.location.href = environment.SHOPIFY_APP_URL;
                 } else if (!code) {
                     this.service.getAuthorizationUrl(shop).subscribe((url: string) => {
-                        window.location.href = url;
+                        window.location.href = url + '?' + params.toString();
                     });
                 }
             });

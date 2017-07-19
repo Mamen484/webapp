@@ -16,6 +16,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
   private queryParamsSubscription: Subscription;
+  private queryParam: object;
 
   constructor(
     private service: CreatePasswordService,
@@ -34,7 +35,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
       this.queryParamsSubscription = this.route.queryParams
           .subscribe((params: Params) => {
             !params['shop'] && (window.location.href = environment.SHOPIFY_APP_URL);
-
+            this.queryParam = params;
             this.shopifyService.getStoreData(params['shop'] || '', params)
                 .subscribe((store: CreateStoreModel) => {
                   this.store = store;
@@ -54,7 +55,9 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
         return;
       }
 
-      this.router.navigateByUrl('path/initial/create-account');
+      // passing the query parameters is important,
+      // they are used after to automatically connect to shopping-feed
+      this.router.navigateByUrl('path/initial/create-account?'+this.queryParam.toString());
     });
 
     return false;
