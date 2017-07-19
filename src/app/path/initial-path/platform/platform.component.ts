@@ -10,7 +10,7 @@ import {Subscription} from "rxjs";
 })
 export class PlatformComponent implements OnInit, OnDestroy {
   public daysLeft: number = 30;
-  public price: string = '99$';
+  public price: number = 99;
   public channel: string;
   public channelImage: string;
 
@@ -30,6 +30,7 @@ export class PlatformComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe((params: Params) => {
       this.daysLeft = params['daysLeft'] || 30;
+      this.price    = params['price'] || 99;
     });
   }
 
