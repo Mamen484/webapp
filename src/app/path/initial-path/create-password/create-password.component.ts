@@ -57,7 +57,13 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
 
       // passing the query parameters is important,
       // they are used after to automatically connect to shopping-feed
-      this.router.navigateByUrl('path/initial/create-account?'+this.queryParam.toString());
+      let url = 'path/initial/create-account?';
+      for (let param in this.queryParam as any) {
+        if (this.queryParam.hasOwnProperty(param)) {
+          url += param + '=' + this.queryParam[param] + '&';
+        }
+      }
+      this.router.navigateByUrl(url);
     });
 
     return false;

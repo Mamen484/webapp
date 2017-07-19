@@ -10,7 +10,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 })
 export class CreateAccountComponent implements OnInit {
   private creationTime: number = 10000;
-  private queryParams: object;
+  private queryParam: object;
 
   constructor(
       private route: ActivatedRoute,
@@ -19,7 +19,7 @@ export class CreateAccountComponent implements OnInit {
   public ngOnInit() {
     // remove the create password cache
     localStorage.removeItem('sf.path.initial');
-    this.route.queryParams.subscribe((params: Params) => {this.queryParams = params} );
+    this.route.queryParams.subscribe((params: Params) => {this.queryParam = params} );
   }
 
   public refreshProgressBar(event: ProgressModel) {
@@ -28,6 +28,14 @@ export class CreateAccountComponent implements OnInit {
 
   public onFinish() {
     // query params are passed to shopping feed to auto connect the user
-    window.location.href = environment.APP_URL+'?'+this.queryParams.toString();
+    let url = environment.APP_URL+'?';
+
+    for (let param in this.queryParam as any) {
+      if (this.queryParam.hasOwnProperty(param)) {
+        url += param + '=' + this.queryParam[param] + '&';
+      }
+    }
+
+    window.location.href = url;
   }
 }
