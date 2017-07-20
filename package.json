@@ -2,24 +2,24 @@
   "version": "0.0.0",
   "angular-cli": [],
   "dependencies": {
-    "@angular/compiler": "4.2.3",
-    "bootstrap-sass": "3.3.7",
-    "@angular/forms": "4.2.3",
-    "@angular/material": "2.0.0-beta.6",
-    "core-js": "2.4.1",
     "@angular/animations": "4.2.3",
-    "rxjs": "5.4.1",
-    "ts-helpers": "1.1.2",
-    "jquery": "3.2.1",
-    "zone.js": "0.8.12",
-    "@angular/platform-browser": "4.2.3",
     "@angular/common": "4.2.3",
+    "@angular/compiler": "4.2.3",
+    "@angular/core": "4.2.3",
+    "@angular/forms": "4.2.3",
     "@angular/http": "4.2.3",
-    "systemjs": "0.19.47",
+    "@angular/material": "2.0.0-beta.6",
+    "@angular/platform-browser": "4.2.3",
     "@angular/platform-browser-dynamic": "4.2.3",
     "@angular/platform-server": "2.4.10",
-    "@angular/core": "4.2.3",
-    "@angular/router": "4.2.3"
+    "@angular/router": "4.2.3",
+    "bootstrap-sass": "3.3.7",
+    "core-js": "2.4.1",
+    "jquery": "3.2.1",
+    "rxjs": "5.4.1",
+    "systemjs": "0.19.47",
+    "ts-helpers": "1.1.2",
+    "zone.js": "0.8.12"
   },
   "devDependencies": {
     "@angular/cli": "1.2.0",
@@ -41,7 +41,7 @@
     "phantomjs": "^2.1.7",
     "protractor": "~5.1.0",
     "reflect-metadata": "^0.1.8",
-    "ts-node": "~2.0.0",
+    "ts-node": "^2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0",
     "webdriver-manager": "10.2.5"
@@ -54,7 +54,8 @@
     "test": "ng test",
     "i18n": "ng-xi18n",
     "e2e": "protractor",
-    "start": "ng serve"
+    "start": "ng serve",
+    "compile-env": "ts-node compile-environment"
   },
   "private": true
 }
