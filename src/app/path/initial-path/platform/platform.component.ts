@@ -15,6 +15,7 @@ export class PlatformComponent implements OnInit, OnDestroy {
   public channelImage: string;
 
   private paramsSubscription: Subscription;
+  private queryParamsSubscription: Subscription;
 
   constructor(
       private route: ActivatedRoute,
@@ -28,7 +29,7 @@ export class PlatformComponent implements OnInit, OnDestroy {
           this.channelImage = this.logoService.getLogoUrl(this.channel);
         });
 
-    this.route.queryParams.subscribe((params: Params) => {
+    this.queryParamsSubscription = this.route.queryParams.subscribe((params: Params) => {
       this.daysLeft = params['daysLeft'] || 30;
       this.price    = params['price'] || 99;
     });
@@ -36,5 +37,6 @@ export class PlatformComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.paramsSubscription && this.paramsSubscription.unsubscribe();
+    this.queryParamsSubscription && this.queryParamsSubscription.unsubscribe();
   }
 }
