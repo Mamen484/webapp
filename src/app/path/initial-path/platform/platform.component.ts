@@ -9,19 +9,8 @@ import {Subscription} from "rxjs";
   styleUrls: ['platform.component.scss']
 })
 export class PlatformComponent implements OnInit, OnDestroy {
-  /**
-   * This value will be set with an api resource in the futur,
-   * for now it is set by a workaround
-   *
-   * @type {number}
-   */
   public daysLeft: number = 30;
-
-  /**
-   * This value is hardcoded now, but should be provided in an API resource
-   * @type {string}
-   */
-  public price: string = '99$';
+  public price: number = 99;
   public channel: string;
   public channelImage: string;
 
@@ -40,10 +29,10 @@ export class PlatformComponent implements OnInit, OnDestroy {
           this.channelImage = this.logoService.getLogoUrl(this.channel);
         });
 
-    this.queryParamsSubscription = this.route.queryParams
-        .subscribe((params: Params) => {
-          params['daysLeft'] && (this.daysLeft = params['daysLeft']);
-        })
+    this.queryParamsSubscription = this.route.queryParams.subscribe((params: Params) => {
+      this.daysLeft = params['daysLeft'] || 30;
+      this.price    = params['price'] || 99;
+    });
   }
 
   ngOnDestroy(): void {

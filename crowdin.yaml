@@ -4,4 +4,4 @@ base_path: ./
 files:
   -
     source: '/src/messages.xlf'
-    translation: '/src/locale/%two_letters_code%/%original_file_name%'
+    translation: '/src/locale/messages.%two_letters_code%.xlf/'

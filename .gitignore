@@ -42,3 +42,4 @@ Thumbs.db
 
 # docker local config
 /docker-compose.yml
+/src/environments/environment.prod.ts
