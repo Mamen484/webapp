@@ -1,0 +1,44 @@
+<md-sidenav-container>
+    <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="true" disableClose="true">
+        <md-icon class="mdi-image-wb-cloudy" mdTooltip="PLATEFORMES" mdTooltipPosition="after"></md-icon>
+        <md-icon class="mdi-action-shopping-basket" [mdMenuTriggerFor]="ordersMenu" mdTooltip="COMMANDES"
+                 mdTooltipPosition="after"></md-icon>
+        <md-icon class="mdi-action-settings" [mdMenuTriggerFor]="utilsMenu" mdTooltip="OUTILS"
+                 mdTooltipPosition="after"></md-icon>
+        <md-icon class="mdi-action-trending-up" [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTIQUES"
+                 mdTooltipPosition="after"></md-icon>
+        <md-icon class="mdi-navigation-apps" [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"
+                 mdTooltipPosition="after"></md-icon>
+    </md-sidenav>
+
+</md-sidenav-container>
+<md-menu #utilsMenu="mdMenu">
+    <button md-menu-item>Chercher/remplacer</button>
+    <button md-menu-item>Retrait automatique</button>
+    <button md-menu-item>Gestion Tailles/Couleurs</button>
+    <button md-menu-item>Création champs</button>
+    <button md-menu-item>Assistant inteligent</button>
+    <hr>
+    <button md-menu-item>Filtres</button>
+    <button md-menu-item>Gestion nouveaux produits</button>
+    <button md-menu-item>Sélection multi-canaux</button>
+    <button md-menu-item>Votre flux</button>
+</md-menu>
+<md-menu #ordersMenu="mdMenu">
+    <button md-menu-item>Commandes</button>
+    <button md-menu-item>Export de commandes</button>
+</md-menu>
+<md-menu #statisticsMenu="mdMenu">
+    <button md-menu-item>Statistiques globales</button>
+    <button md-menu-item>Statistiques places de marché</button>
+    <button md-menu-item>Statistiques comparateurs</button>
+    <hr>
+    <button md-menu-item>Paramètres</button>
+    <button md-menu-item>Marges</button>
+    <button md-menu-item>Comparatifs</button>
+    <button md-menu-item>Exports</button>
+</md-menu>
+<md-menu #appsMenu="mdMenu">
+    <button md-menu-item>Repricins</button>
+    <button md-menu-item>EAN finder</button>
+</md-menu>
