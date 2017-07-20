@@ -1,6 +1,9 @@
 @import "_variables.scss";
 
 .sf-top-menu {
+  width: 100vw;
+  position: fixed;
+  z-index: 1;
 
   .sf-top-menu-container {
     width: 100%;
