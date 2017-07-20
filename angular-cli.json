@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0",
-    "name": "web-app"
+    "name": "Shopping Feed UI"
   },
   "apps": [
     {
@@ -14,7 +14,7 @@
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
-      "prefix": "app",
+      "prefix": "sf",
       "mobile": false,
       "styles": [
         "styles.scss"
