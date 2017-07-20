@@ -1,4 +1,4 @@
-# WebApp
+# Shopping Feed UI
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.20-4.
 
@@ -12,6 +12,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+##CI Build
+
+When we build the code on a CI environment, we may need to pass environment variables to the build script.
+Run `npm run ci-build`, passing environment variables before. It will create environment.prod.ts with all needed environment variables and run the production build.
+You can consult to src/environments/environment.ts to know what variables can be used.
+
+You SHOULD NOT run `ng build` on a CI environment anymore, as well as on any other production build, because appropriate environment.prod.ts file will not be created in that case.
+
+Example:
+
+`DEFAULT_AUTHORIZATION=some_url SHOPIFY_APP_URL=some_another_url npm run ci-build`
+
+It will set DEFAULT_AUTHORIZATION and SHOPIFY_APP_URL as you specified in the command, all the other variables will be taken from environment.ts file.
 
 ## Running unit tests
 
