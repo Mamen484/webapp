@@ -1,10 +1,18 @@
 import { NgModule } from "@angular/core";
 import { MenuComponent } from "./menu.component";
 import { CommonModule } from "@angular/common";
+import {MdIconModule, MdInputModule, MdMenuModule, MdToolbarModule} from "@angular/material";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        BrowserAnimationsModule,
+        MdIconModule,
+        MdToolbarModule,
+        MdIconModule,
+        MdInputModule,
+        MdMenuModule,
     ],
     exports: [MenuComponent],
     declarations: [MenuComponent]

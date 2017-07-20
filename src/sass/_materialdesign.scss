@@ -21,6 +21,16 @@ $theme: mat-light-theme($primary, $accent);
   @include angular-material-theme($dark-theme);
 }
 
+.sf-top-menu {
+  $primary: mat-palette($mat-light-blue, 50);
+  $accent:  mat-palette($mat-light-blue, 800);
+
+
+  $theme: mat-dark-theme($primary, $accent);
+
+  @include angular-material-theme($theme);
+}
+
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 
@@ -42,8 +52,8 @@ body {
     }
   }
 
-  mat-toolbar {
-    mat-icon {
+  md-toolbar {
+    md-icon {
       cursor: pointer;
     }
   }
