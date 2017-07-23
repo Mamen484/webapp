@@ -8,6 +8,8 @@ import { UserService } from './services/user.service';
 import { StoreModule } from '@ngrx/store';
 import { currentStoreReducer } from './reducers/current-store';
 import { userInfoReducer } from './reducers/user-info-reducer';
+import { aggregatedUserInfoMock } from '../../mocks/AggregatedUserInfoMock';
+import { Observable } from 'rxjs/Observable';
 
 @NgModule({
     imports: [
@@ -26,6 +28,7 @@ import { userInfoReducer } from './reducers/user-info-reducer';
     ],
     providers: [
         UserService,
+        // {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of(aggregatedUserInfoMock)}},
     ],
     declarations: []
 })

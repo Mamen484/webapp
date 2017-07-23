@@ -24,8 +24,11 @@
                 </md-menu>
                 <img src="assets/images/flags/fr.png" class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
 
-                <md-icon class="sf-nav-icon icon mdi-social-notifications-none"></md-icon>
-                <md-icon class="sf-nav-icon icon mdi-social-person-outline"></md-icon>
+                <md-icon class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}" [attr.data-badge]="(currentStore | async).timeline.total"></md-icon>
+                <md-icon class="sf-nav-icon icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
+                <md-menu #accountMenu="mdMenu">
+                    <button md-menu-item *ngFor="let store of (userInfo | async)._embedded.store" (click)="chooseStore(store)">{{store.name}}</button>
+                </md-menu>
             </md-toolbar-row>
         </div>
     </md-toolbar>
