@@ -5,13 +5,20 @@ import { HomepageSearchComponent } from './homepage-search/homepage-search.compo
 import { HomePageBestSellerComponent } from './homepage-bestseller/homepage-bestseller.component';
 import { HomepageKeyNumberComponent } from './homepage-key-number/homepage-key-number.component';
 import { HomepagePlatformCardComponent } from './homepage-platform-card/homepage-platform-card.component';
-import { RouterModule } from "@angular/router";
-import { CoreModule } from "../core/core.module";
-import { MaterialModule } from "@angular/material";
-import { FormsModule } from "@angular/forms";
+import { RouterModule } from '@angular/router';
+import { CoreModule } from '../core/core.module';
+import { MaterialModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-info-resolve.guard';
 
 const routes = [
-    // {path: '', component: HomepageComponent},
+    {
+        path: '',
+        component: HomepageComponent,
+        resolve: {
+            userInfo: AggregatedUserInfoResolveGuard
+        }
+    },
 ];
 
 @NgModule({
@@ -32,5 +39,9 @@ const routes = [
     exports: [
         RouterModule
     ],
+    providers: [
+        AggregatedUserInfoResolveGuard
+    ]
 })
-export class HomepageModule {}
+export class HomepageModule {
+}

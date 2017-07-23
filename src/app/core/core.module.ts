@@ -1,9 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ProgressbarModule} from './progressbar/progressbar.module';
-import {MenuModule} from './menu/menu.module';
-import {ChannelModule} from './channel/channel.module';
-import {SidebarModule} from './sidebar/sidebar.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProgressbarModule } from './progressbar/progressbar.module';
+import { MenuModule } from './menu/menu.module';
+import { ChannelModule } from './channel/channel.module';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { UserService } from './services/user.service';
 
 @NgModule({
     imports: [
@@ -18,6 +19,9 @@ import {SidebarModule} from './sidebar/sidebar.module';
         MenuModule,
         SidebarModule,
         ChannelModule,
+    ],
+    providers: [
+        UserService,
     ],
     declarations: [],
 })

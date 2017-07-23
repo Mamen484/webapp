@@ -7,7 +7,7 @@
                     <img alt="Home" title="Home" width="23" src="assets/menu/logo.png">
                 </a>
 
-                <span class="sf-nav-welcome-text">Bienvenue, Nom de société</span>
+                <span class="sf-nav-welcome-text">Bienvenue, {{currentStore.name}}</span>
 
                 <md-input-container class="sf-nav-search">
                     <md-icon mdPrefix class="icon mdi-action-search"></md-icon>
@@ -23,9 +23,9 @@
                     <button md-menu-item>  <img src="assets/images/flags/es.png" class="sf-nav-selected-language"> </button>
                 </md-menu>
                 <img src="assets/images/flags/fr.png" class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
-                <md-icon class="sf-nav-icon icon mdi-social-person-outline"></md-icon>
-                <md-icon class="sf-nav-icon icon mdi-social-notifications-none"></md-icon>
 
+                <md-icon class="sf-nav-icon icon mdi-social-notifications-none"></md-icon>
+                <md-icon class="sf-nav-icon icon mdi-social-person-outline"></md-icon>
             </md-toolbar-row>
         </div>
     </md-toolbar>

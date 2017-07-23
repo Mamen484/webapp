@@ -4,6 +4,6 @@ export const environment = {
 
   APP_URL: 'http://app.shopping-feed.lan',
   API_URL: 'https://staging.api.shopping-feed.com/v1',
-  DEFAULT_AUTHORIZATION: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
+  DEFAULT_AUTHORIZATION: 'Bearer ea76a3e3b8937a17786f8b1fde6c4f9c',
   SHOPIFY_APP_URL: 'https://apps.shopify.com/shopping-feed-dev'
 };
