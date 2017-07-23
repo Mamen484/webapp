@@ -15,6 +15,8 @@
 
     .sf-nav-search {
       margin-left: 80px;
+      flex: 1 1 auto;
+      margin-right: 40px;
 
       md-placeholder {
         font-size: 1.4rem;
@@ -23,10 +25,13 @@
       .icon {
         margin-right: 20px;
       }
-    }
 
-    .spacer {
-      flex: 1 1 auto;
+      md-icon {
+        vertical-align: middle;
+      }
+
+
+
     }
 
     md-icon.sf-nav-icon {
