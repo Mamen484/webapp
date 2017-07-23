@@ -7,7 +7,7 @@
                     <img alt="Home" title="Home" width="23" src="assets/menu/logo.png">
                 </a>
 
-                <span class="sf-nav-welcome-text">Bienvenue, {{currentStore.name}}</span>
+                <span class="sf-nav-welcome-text">Bienvenue, {{(currentStore | async).name}}</span>
 
                 <md-input-container class="sf-nav-search">
                     <md-icon mdPrefix class="icon mdi-action-search"></md-icon>

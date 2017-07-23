@@ -4,7 +4,7 @@ import { Store } from './store';
 export interface AggregatedUserInfo {
     token: string;
     login: string;
-    email: string,
+    email: string;
     roles: UserRole[];
     language: string;
     _links: {

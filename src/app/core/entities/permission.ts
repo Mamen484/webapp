@@ -12,4 +12,5 @@ export interface Permission {
     statistics: string;
     timeline: string;
     tools: string;
+    university: string;
 }

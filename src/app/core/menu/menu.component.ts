@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { Store } from '../entities/store';
+import { Store as AppStore } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'app-menu',
@@ -9,13 +12,16 @@ import { Store } from '../entities/store';
 })
 export class MenuComponent implements OnInit {
 
-    @Input() userInfo: AggregatedUserInfo;
-    currentStore: Store;
+    userInfo: Observable<AggregatedUserInfo>;
+    currentStore: Observable<Store>;
 
-    constructor() {
+    constructor(protected _appStore: AppStore<AppState>) {
+        this.userInfo = this._appStore.select('userInfo');
+        this.currentStore = this._appStore.select('currentStore');
+
     }
 
     ngOnInit() {
-        this.currentStore = this.userInfo._embedded.store[0];
+
     }
 }
