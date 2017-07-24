@@ -1,9 +1,9 @@
-<app-menu></app-menu>
+<app-menu (sidebarToggle)="sidebarOpened = !sidebarOpened"></app-menu>
 
 <div>
-    <sf-sidebar></sf-sidebar>
+    <sf-sidebar [opened]="sidebarOpened"></sf-sidebar>
 
-    <div class="content">
+    <div class="content {{sidebarOpened ? 'contains-left-margin' : ''}}">
         <app-homepage-bestseller></app-homepage-bestseller>
         <app-homepage-key-number></app-homepage-key-number>
         <app-homepage-search></app-homepage-search>

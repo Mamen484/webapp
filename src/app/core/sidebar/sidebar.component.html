@@ -1,5 +1,5 @@
 <md-sidenav-container>
-    <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="true" disableClose="true">
+    <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
         <md-icon class="mdi-image-wb-cloudy" [mdMenuTriggerFor]="channelsMenu" mdTooltip="PLATEFORMES"
                  mdTooltipPosition="after" *ngIf="hasChannelsPermissions() | async"></md-icon>
         <md-icon class="mdi-action-shopping-basket {{(currentStore | async).order.total ? 'sf-badge' : ''}}"

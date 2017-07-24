@@ -13,3 +13,6 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 $menu-primary: mat-palette($mat-light-blue, 50);
 $menu-accent: mat-palette($mat-light-blue, 800);
 $menu-theme: mat-dark-theme($menu-primary, $menu-accent);
+
+$toolbar-height: 64px;
+$toolbar-tablet-height: 56px;

@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { Store } from '../entities/store';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { Observable } from 'rxjs/Observable';
 import { SET_STORE } from '../reducers/current-store';
 
 @Component({
@@ -12,6 +11,8 @@ import { SET_STORE } from '../reducers/current-store';
     styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
+
+    @Output() sidebarToggle = new EventEmitter();
 
     userInfo: AppStore<AggregatedUserInfo>;
     currentStore: AppStore<Store>;

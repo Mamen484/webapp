@@ -3,14 +3,19 @@
 
 md-sidenav.mat-sidenav.sidenav {
   position: fixed;
-  top: $menu-height;
   bottom: 0;
   left: 0;
   min-width: 80px;
   background-color: rgb(250, 250, 250);
   box-shadow: rgba(0, 0, 0, 0.1) 6px 0 6px;
-  height: calc(100vh - #{$menu-height});
   text-align: center;
+  top: $toolbar-height;
+  height: calc(100vh - #{$toolbar-height});
+
+  @media screen and ($mat-xsmall) {
+    top: $toolbar-tablet-height;
+    height: calc(100vh - #{$toolbar-tablet-height});
+  }
 
   md-icon {
     font-size: 2rem;
