@@ -34,7 +34,7 @@ const routes = [
         HomepageComponent,
         // HomepageSearchComponent,
         HomePageBestSellerComponent,
-        // HomepageKeyNumberComponent,
+        HomepageKeyNumberComponent,
         // HomepagePlatformCardComponent
     ],
     exports: [

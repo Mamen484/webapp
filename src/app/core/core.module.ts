@@ -32,8 +32,8 @@ import 'rxjs/add/observable/of';
         FlexLayoutModule
     ],
     providers: [
-        UserService,
-        // {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of(aggregatedUserInfoMock)}},
+        // UserService,
+        {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of(aggregatedUserInfoMock)}},
     ],
     declarations: []
 })

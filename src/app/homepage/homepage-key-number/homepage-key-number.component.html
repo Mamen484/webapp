@@ -1,22 +1,16 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="box-key">
-        <ul class="row">
-          <li class="col-xs-4">
-            <span i18n>Chiffre d'affaires</span>
-            <div>{{ keyNumbers[0] }}</div>
-          </li>
-          <li class="col-xs-4">
-            <span i18n>Nombre de vente</span>
-            <div>{{ keyNumbers[1] }}</div>
-          </li>
-          <li class="col-xs-4">
-            <span i18n>Nombre de clic</span>
-            <div>{{ keyNumbers[2] }}</div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<div class="box-key">
+  <ul fxLayout="row">
+    <li fxFlex>
+      <span i18n>Chiffre d'affaires</span>
+      <div>{{ keyNumbers[0] }}</div>
+    </li>
+    <li fxFlex>
+      <span i18n>Nombre de vente</span>
+      <div>{{ keyNumbers[1] }}</div>
+    </li>
+    <li fxFlex>
+      <span i18n>Nombre de clic</span>
+      <div>{{ keyNumbers[2] }}</div>
+    </li>
+  </ul>
 </div>
