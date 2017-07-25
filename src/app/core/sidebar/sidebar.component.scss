@@ -1,5 +1,7 @@
 @import '../../../sass/variables';
 
+$config: mat-typography-config();
+
 md-sidenav.mat-sidenav.sidenav {
   position: fixed;
   bottom: 0;
@@ -17,7 +19,7 @@ md-sidenav.mat-sidenav.sidenav {
   }
 
   md-icon {
-    font-size: 2rem;
+    font-size: mat-font-size($config, headline);
     color: mat-color($grey, 600);
     cursor: pointer;
 

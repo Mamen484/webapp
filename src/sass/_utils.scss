@@ -1,5 +1,7 @@
 @import 'variables';
 
+$config: mat-typography-config();
+
 .sf-badge {
   position: relative;
 }
@@ -9,7 +11,7 @@
   position: absolute;
   top: -7px;
   right: -3px;
-  font-size: 1.2rem;
+  font-size: mat-font-size($config, body-1);
   font-weight: bold;
   background: mat-color($accent);
   color: white;
