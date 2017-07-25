@@ -1,3 +1,5 @@
+@import 'variables';
+
 .sf-badge {
   position: relative;
 }
@@ -9,7 +11,7 @@
   right: -3px;
   font-size: 1.2rem;
   font-weight: bold;
-  background: mat-color($primary);
+  background: mat-color($accent);
   color: white;
   width: 18px;
   height: 18px;

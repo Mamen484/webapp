@@ -1,16 +1,15 @@
-@import '../../../app/core/menu/variables';
 @import '../../../sass/variables';
 
 md-sidenav.mat-sidenav.sidenav {
   position: fixed;
   bottom: 0;
   left: 0;
-  min-width: 80px;
-  background-color: rgb(250, 250, 250);
-  box-shadow: rgba(0, 0, 0, 0.1) 6px 0 6px;
+  min-width: 60px;
+  background-color: mat-color($grey, 50);
   text-align: center;
   top: $toolbar-height;
   height: calc(100vh - #{$toolbar-height});
+  border-right: 1px solid mat-color($grey, 300);
 
   @media screen and ($mat-xsmall) {
     top: $toolbar-tablet-height;
@@ -20,14 +19,10 @@ md-sidenav.mat-sidenav.sidenav {
   md-icon {
     font-size: 2rem;
     color: mat-color($grey, 600);
-    margin-top: 15px;
     cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 
     &:hover {
-      color: mat-color($menu-accent);
+      color: mat-color($accent);
     }
   }
 }

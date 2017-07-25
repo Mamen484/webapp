@@ -1,4 +1,4 @@
-@import "_variables.scss";
+@import "../../../sass/variables";
 @import '~@angular/material/theming';
 
 .sf-top-menu {
@@ -15,7 +15,6 @@
     width: 100%;
 
     .sf-nav-welcome-text {
-      font-size: 1.4rem;
       margin-left: 20px;
     }
 
@@ -52,19 +51,51 @@
     display: none;
     height: 100%;
     padding: 0 20px;
-    background-color: rgb(2, 119, 189);
+    background-color: mat-color($primary);
     border: 0;
 
     &:hover {
-      background-color: darken(rgb(2, 119, 189), 10%);
+      background-color: mat-color($primary, 600);
     }
     &:focus {
       outline: none;
     }
 
-    @media screen and($mat-small){
+    @media screen and($mat-small) {
       display: block;
     }
+  }
+
+  .toolbar-search-container {
+    margin: 0 50px;
+    font-size: 1.4rem;
+    flex: 1;
+    background: mat-color($grey, A100, 0.2);
+    border-radius: 2px;
+    padding-right: 30px;
+    ::placeholder {
+      color: mat-color($grey, A100);
+    }
+
+    .sf-search-icon {
+      color: mat-color($grey, A100);
+      float: left;
+      padding: 8px;
+      font-size: 2rem;
+      vertical-align: middle;
+    }
+
+    .toolbar-search {
+      width: 100%;
+      border: none;
+      margin-left: 10px;
+      color: mat-color($grey, A100);
+      background-color: transparent;
+    }
+  }
+
+  .toolbar-search:focus {
+    outline: none;
   }
 
 }

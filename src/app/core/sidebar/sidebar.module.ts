@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SidebarComponent} from './sidebar.component';
-import {MdIconModule, MdMenuModule, MdSidenavModule, MdTooltipModule} from '@angular/material';
+import { MdIconModule, MdListModule, MdMenuModule, MdSidenavModule, MdTooltipModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -9,7 +9,8 @@ import {MdIconModule, MdMenuModule, MdSidenavModule, MdTooltipModule} from '@ang
         MdMenuModule,
         MdSidenavModule,
         MdTooltipModule,
-        MdIconModule
+        MdIconModule,
+        MdListModule,
     ],
     declarations: [SidebarComponent],
     exports: [SidebarComponent]

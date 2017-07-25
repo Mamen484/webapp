@@ -7,7 +7,6 @@ import { HomepageKeyNumberComponent } from './homepage-key-number/homepage-key-n
 import { HomepagePlatformCardComponent } from './homepage-platform-card/homepage-platform-card.component';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-info-resolve.guard';
 
@@ -26,15 +25,14 @@ const routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
-        MaterialModule,
         FormsModule
     ],
     declarations: [
         HomepageComponent,
-        HomepageSearchComponent,
-        HomePageBestSellerComponent,
-        HomepageKeyNumberComponent,
-        HomepagePlatformCardComponent
+        // HomepageSearchComponent,
+        // HomePageBestSellerComponent,
+        // HomepageKeyNumberComponent,
+        // HomepagePlatformCardComponent
     ],
     exports: [
         RouterModule

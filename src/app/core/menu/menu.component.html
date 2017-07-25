@@ -1,5 +1,5 @@
 <div class="sf-top-menu">
-    <md-toolbar role="toolbar" color="accent">
+    <md-toolbar role="toolbar" color="primary">
         <div class="sf-top-menu-container">
             <md-toolbar-row>
                 <button md-icon-button class="sf-menu-button" (click)="sidebarToggle.next()"><md-icon class="icon mdi-navigation-menu"></md-icon></button>
@@ -7,13 +7,12 @@
                     <img alt="Home" title="Home" width="23" src="assets/images/SF_white.svg">
                 </a>
 
-                <span class="sf-nav-welcome-text">Bienvenue, {{(currentStore | async).name}}</span>
+                <h2 class="sf-nav-welcome-text title">Bienvenue, {{(currentStore | async).name}}</h2>
 
-                <md-input-container class="sf-nav-search">
-                    <md-icon mdPrefix class="icon mdi-action-search"></md-icon>
-                    <md-placeholder><span >Besoin d'aide</span></md-placeholder>
-                    <input mdInput type="search">
-                </md-input-container>
+                <div class="toolbar-search-container">
+                    <md-icon class="icon mdi-action-search sf-search-icon"></md-icon>
+                    <input placeholder="Besoin d'aide" class="toolbar-search">
+                </div>
 
                 <md-menu #langMenu="mdMenu">
                     <button md-menu-item>  <img src="assets/images/flags/uk.png" class="sf-nav-selected-language"> </button>

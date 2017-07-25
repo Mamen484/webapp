@@ -1,19 +1,10 @@
 @import '~@angular/material/theming';
 @import 'variables';
 
-// NOTE: Theming is currently experimental and not yet publicly released!
-
 @include mat-core();
-
 @include angular-material-theme($theme);
 
-.m2app-dark {
-  @include angular-material-theme($dark-theme);
-}
-
-.sf-top-menu {
-  @include angular-material-theme($menu-theme);
-}
+@include angular-material-typography($sf-typography);
 
 body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
