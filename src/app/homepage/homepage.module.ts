@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
 import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-info-resolve.guard';
+import { MdCardModule, MdGridListModule } from '@angular/material';
 
 const routes = [
     {
@@ -25,12 +26,14 @@ const routes = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
-        FormsModule
+        FormsModule,
+        MdCardModule,
+        MdGridListModule,
     ],
     declarations: [
         HomepageComponent,
         // HomepageSearchComponent,
-        // HomePageBestSellerComponent,
+        HomePageBestSellerComponent,
         // HomepageKeyNumberComponent,
         // HomepagePlatformCardComponent
     ],

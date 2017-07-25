@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Bestseller } from "./bestseller.model";
+import { Bestseller } from './bestseller.model';
 
 @Component({
   selector: 'app-homepage-bestseller',

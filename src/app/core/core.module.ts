@@ -6,10 +6,13 @@ import { ChannelModule } from './channel/channel.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { UserService } from './services/user.service';
 import { StoreModule } from '@ngrx/store';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { currentStoreReducer } from './reducers/current-store';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { aggregatedUserInfoMock } from '../../mocks/AggregatedUserInfoMock';
 import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/observable/of';
 
 @NgModule({
     imports: [
@@ -18,13 +21,15 @@ import { Observable } from 'rxjs/Observable';
         MenuModule,
         ChannelModule,
         SidebarModule,
-        StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer})
+        StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer}),
+        FlexLayoutModule
     ],
     exports: [
         ProgressbarModule,
         MenuModule,
         SidebarModule,
         ChannelModule,
+        FlexLayoutModule
     ],
     providers: [
         UserService,

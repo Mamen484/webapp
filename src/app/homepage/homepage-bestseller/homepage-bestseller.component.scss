@@ -6,7 +6,6 @@ md-card {
     top: 20px;
   }
   padding: 15px 20px;
-  -webkit-box-shadow: $box-shadow;
   box-shadow: $box-shadow;
 
   .half-box {
@@ -29,15 +28,6 @@ md-card {
         width: 100%;
         max-width: 100px;
       }
-    }
-  }
-}
-
-
-.col-xs-6 {
-  &:nth-child(1) {
-    .half-box {
-      margin-top: 20px;
     }
   }
 }

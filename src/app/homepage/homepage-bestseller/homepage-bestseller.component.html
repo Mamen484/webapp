@@ -1,25 +1,14 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12">
-      <md-card>
-        <div class="row">
-          <div class="col-xs-6">
-            <div class="half-box">
-              <span><ng-container i18n>Bienvenue</ng-container>,</span>
-              <ng-container i18n>Voici vos meilleures produits et vos statistiques sur les 30 derniers jours.</ng-container>
-            </div>
-          </div>
-          <div class="col-xs-6">
-            <div class="half-box">
-              <ul>
-                <li *ngFor="let bestSeller of bestSellers">
-                  <img [src]="bestSeller.logo"  [alt]="bestSeller.name" />
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </md-card>
+<md-card fxLayout="row">
+    <div class="half-box">
+        <span><ng-container i18n>Bienvenue</ng-container>,</span>
+        <ng-container i18n>Voici vos meilleures produits et vos statistiques sur les 30 derniers jours.
+        </ng-container>
     </div>
-  </div>
-</div>
+    <div class="half-box">
+        <ul>
+            <li *ngFor="let bestSeller of bestSellers">
+                <img [src]="bestSeller.logo" [alt]="bestSeller.name" width="20"/>
+            </li>
+        </ul>
+    </div>
+</md-card>
