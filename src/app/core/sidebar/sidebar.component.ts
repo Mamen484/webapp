@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-    @Input() opened = true;
+    opened = true;
     currentStore: Observable<Store>;
 
     constructor(protected _appStore: AppStore<AppState>) {

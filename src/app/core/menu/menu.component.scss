@@ -47,25 +47,6 @@
     margin-top: -3px;
   }
 
-  .sf-menu-button {
-    display: none;
-    height: 100%;
-    padding: 0 20px;
-    background-color: mat-color($primary);
-    border: 0;
-
-    &:hover {
-      background-color: mat-color($primary, 600);
-    }
-    &:focus {
-      outline: none;
-    }
-
-    @media screen and($mat-small) {
-      display: block;
-    }
-  }
-
   .toolbar-search-container {
     margin: 0 50px;
     font-size: 1.4rem;

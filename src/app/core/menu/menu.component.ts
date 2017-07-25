@@ -11,9 +11,6 @@ import { SET_STORE } from '../reducers/current-store';
     styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
-
-    @Output() sidebarToggle = new EventEmitter();
-
     userInfo: AppStore<AggregatedUserInfo>;
     currentStore: AppStore<Store>;
 
