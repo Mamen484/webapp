@@ -2,34 +2,34 @@
     <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
         <md-list>
             <md-list-item [mdMenuTriggerFor]="channelsMenu" mdTooltip="PLATEFORMES" mdTooltipPosition="after"
-                          *ngIf="hasChannelsPermissions() | async">
+                          i18n-mdTooltip *ngIf="hasChannelsPermissions() | async">
                 <md-icon class="mdi-image-wb-cloudy"></md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="ordersMenu" mdTooltip="COMMANDES" mdTooltipPosition="after"
+            <md-list-item [mdMenuTriggerFor]="ordersMenu" mdTooltip="COMMANDES" i18n-mdTooltip mdTooltipPosition="after"
                           *ngIf="(currentStore | async).permission.marketplaces">
                 <md-icon class="mdi-action-shopping-basket"
                          [ngClass]="{'sf-badge': (currentStore | async).order.total > 0}"
                          [attr.data-badge]="(currentStore | async).order.total"></md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="OUTILS" mdTooltipPosition="after"
-                          *ngIf="(currentStore | async).permission.tools">
+            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="OUTILS" i18n-mdTooltip mdTooltipPosition="after"
+                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools">
                 <md-icon class="mdi-action-settings"></md-icon>
             </md-list-item>
 
             <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTIQUES"
-                          mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
+                          i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
                 <md-icon class="mdi-action-trending-up"></md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"
+            <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"  i18n-mdTooltip
                           mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
                 <md-icon class="mdi-navigation-apps"></md-icon>
             </md-list-item>
 
             <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="appsMenu" mdTooltip="UNIVERSITY"
-                          mdTooltipPosition="after" *ngIf="(currentStore | async).permission.university">
+                          i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.university">
                 <md-icon class="mdi-social-school"></md-icon>
             </md-list-item>
         </md-list>
@@ -38,39 +38,39 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/channels/add">Ajouter une plateform</a>
+    <a md-menu-item href="{{appUrl}}/channels/add" i18n>Ajouter une plateform</a>
     <a md-menu-item *ngFor="let channel of (channels | async)" [href]="appUrl + channel._links.self.href">
         <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
     </a>
-    <a md-menu-item href="{{appUrl}}/tools/export">Export personnalisé</a>
+    <a md-menu-item href="{{appUrl}}/tools/export" i18n>Export personnalisé</a>
 </md-menu>
 <md-menu #utilsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/tools/rules">Chercher/remplacer</a>
-    <a md-menu-item href="{{appUrl}}/tools/segmentations">Retrait automatique</a>
-    <a md-menu-item href="{{appUrl}}/marketplaces/autotag">Gestion Tailles/Couleurs</a>
-    <a md-menu-item href="{{appUrl}}/tools/field">Création champs</a>
-    <a md-menu-item href="{{appUrl}}/tools/relaunch">Assistant inteligent</a>
+    <a md-menu-item href="{{appUrl}}/tools/rules" i18n>Chercher/remplacer</a>
+    <a md-menu-item href="{{appUrl}}/tools/segmentations" i18n>Retrait automatique</a>
+    <a md-menu-item href="{{appUrl}}/marketplaces/autotag" i18n>Gestion Tailles/Couleurs</a>
+    <a md-menu-item href="{{appUrl}}/tools/field" i18n>Création champs</a>
+    <a md-menu-item href="{{appUrl}}/tools/relaunch" i18n>Assistant inteligent</a>
     <hr>
-    <a md-menu-item href="{{appUrl}}/tools/filtres">Filtres</a>
-    <a md-menu-item href="{{appUrl}}/tools/newproducts">Gestion nouveaux produits</a>
-    <a md-menu-item href="{{appUrl}}/multiple">Sélection multi-canaux</a>
-    <a md-menu-item href="{{appUrl}}/tools/infos">Votre flux</a>
+    <a md-menu-item href="{{appUrl}}/tools/filtres" i18n>Filtres</a>
+    <a md-menu-item href="{{appUrl}}/tools/newproducts" i18n>Gestion nouveaux produits</a>
+    <a md-menu-item href="{{appUrl}}/multiple" i18n>Sélection multi-canaux</a>
+    <a md-menu-item href="{{appUrl}}/tools/infos" i18n>Votre flux</a>
 </md-menu>
 <md-menu #ordersMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/marketplaces/orders">Commandes</a>
-    <a md-menu-item href="{{appUrl}}/marketplaces/listexport">Export de commandes</a>
+    <a md-menu-item href="{{appUrl}}/marketplaces/orders" i18n>Commandes</a>
+    <a md-menu-item href="{{appUrl}}/marketplaces/listexport" i18n>Export de commandes</a>
 </md-menu>
 <md-menu #statisticsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/statistics">Statistiques globales</a>
-    <a md-menu-item href="{{appUrl}}/statistics/marketplaces">Statistiques places de marché</a>
-    <a md-menu-item href="{{appUrl}}/statistics/shop">Statistiques comparateurs</a>
+    <a md-menu-item href="{{appUrl}}/statistics" i18n>Statistiques globales</a>
+    <a md-menu-item href="{{appUrl}}/statistics/marketplaces" i18n>Statistiques places de marché</a>
+    <a md-menu-item href="{{appUrl}}/statistics/shop" i18n>Statistiques comparateurs</a>
     <hr>
-    <a md-menu-item href="{{appUrl}}/statistics/parameters">Paramètres</a>
-    <a md-menu-item href="{{appUrl}}/tools/marges">Marges</a>
-    <a md-menu-item href="{{appUrl}}/statistics/compare">Comparatifs</a>
-    <a md-menu-item href="{{appUrl}}/statistics/exportstatistics">Exports</a>
+    <a md-menu-item href="{{appUrl}}/statistics/parameters" i18n>Paramètres</a>
+    <a md-menu-item href="{{appUrl}}/tools/marges" i18n>Marges</a>
+    <a md-menu-item href="{{appUrl}}/statistics/compare" i18n>Comparatifs</a>
+    <a md-menu-item href="{{appUrl}}/statistics/exportstatistics" i18n>Exports</a>
 </md-menu>
 <md-menu #appsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/repricing">Repricins</a>
-    <a md-menu-item href="{{appUrl}}/tools/eanfinder">EAN finder</a>
+    <a md-menu-item href="{{appUrl}}/repricing" i18n>Repricins</a>
+    <a md-menu-item href="{{appUrl}}/tools/eanfinder" i18n>EAN finder</a>
 </md-menu>

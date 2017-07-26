@@ -36,10 +36,20 @@ import { channelsReducer } from './reducers/channels-reducer';
     ],
     providers: [
         // UserService,
-        {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of(aggregatedUserInfoMock)}},
-        {provide: StoreService, useValue: {getAllConfiguredChannels: () => Observable.of(storeChannelMock)}}
+        {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfo}},
+        {provide: StoreService, useValue: {getAllConfiguredChannels: getAllConfiguredChannels}}
     ],
     declarations: []
 })
 export class CoreModule {
+}
+
+// TODO: remove mocking function when API is ready
+export function fetchAggregatedInfo() {
+    return Observable.of(aggregatedUserInfoMock)
+}
+
+// TODO: remove mocking function when API is ready
+export function getAllConfiguredChannels() {
+    return Observable.of(storeChannelMock)
 }
