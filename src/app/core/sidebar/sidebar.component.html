@@ -37,14 +37,14 @@
 
 
 </md-sidenav-container>
-<md-menu #channelsMenu="mdMenu">
+<md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/channels/add">Ajouter une plateform</a>
     <a md-menu-item *ngFor="let channel of (channels | async)" [href]="appUrl + channel._links.self.href">
         <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
     </a>
     <a md-menu-item href="{{appUrl}}/tools/export">Export personnalisé</a>
 </md-menu>
-<md-menu #utilsMenu="mdMenu">
+<md-menu #utilsMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/tools/rules">Chercher/remplacer</a>
     <a md-menu-item href="{{appUrl}}/tools/segmentations">Retrait automatique</a>
     <a md-menu-item href="{{appUrl}}/marketplaces/autotag">Gestion Tailles/Couleurs</a>
@@ -56,11 +56,11 @@
     <a md-menu-item href="{{appUrl}}/multiple">Sélection multi-canaux</a>
     <a md-menu-item href="{{appUrl}}/tools/infos">Votre flux</a>
 </md-menu>
-<md-menu #ordersMenu="mdMenu">
+<md-menu #ordersMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/marketplaces/orders">Commandes</a>
     <a md-menu-item href="{{appUrl}}/marketplaces/listexport">Export de commandes</a>
 </md-menu>
-<md-menu #statisticsMenu="mdMenu">
+<md-menu #statisticsMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/statistics">Statistiques globales</a>
     <a md-menu-item href="{{appUrl}}/statistics/marketplaces">Statistiques places de marché</a>
     <a md-menu-item href="{{appUrl}}/statistics/shop">Statistiques comparateurs</a>
@@ -70,7 +70,7 @@
     <a md-menu-item href="{{appUrl}}/statistics/compare">Comparatifs</a>
     <a md-menu-item href="{{appUrl}}/statistics/exportstatistics">Exports</a>
 </md-menu>
-<md-menu #appsMenu="mdMenu">
+<md-menu #appsMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/repricing">Repricins</a>
     <a md-menu-item href="{{appUrl}}/tools/eanfinder">EAN finder</a>
 </md-menu>

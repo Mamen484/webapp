@@ -6,7 +6,7 @@ md-sidenav.mat-sidenav.sidenav {
   position: fixed;
   bottom: 0;
   left: 0;
-  min-width: 60px;
+  width: $left-sidebar-width;
   background-color: mat-color($grey, 50);
   text-align: center;
   top: $toolbar-height;
