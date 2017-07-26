@@ -9,10 +9,13 @@ import { StoreModule } from '@ngrx/store';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { currentStoreReducer } from './reducers/current-store';
 import { userInfoReducer } from './reducers/user-info-reducer';
-import { aggregatedUserInfoMock } from '../../mocks/AggregatedUserInfoMock';
+import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/of';
+import { StoreService } from './services/store.service';
+import { storeChannelMock } from '../../mocks/store-channel.mock';
+import { channelsReducer } from './reducers/channels-reducer';
 
 @NgModule({
     imports: [
@@ -21,7 +24,7 @@ import 'rxjs/add/observable/of';
         MenuModule,
         ChannelModule,
         SidebarModule,
-        StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer}),
+        StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer, channels: channelsReducer}),
         FlexLayoutModule
     ],
     exports: [
@@ -34,6 +37,7 @@ import 'rxjs/add/observable/of';
     providers: [
         // UserService,
         {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of(aggregatedUserInfoMock)}},
+        {provide: StoreService, useValue: {getAllConfiguredChannels: () => Observable.of(storeChannelMock)}}
     ],
     declarations: []
 })

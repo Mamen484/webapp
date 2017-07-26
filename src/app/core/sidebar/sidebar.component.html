@@ -38,36 +38,39 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu">
-    <button md-menu-item>Ajouter une plateform</button>
-    <button md-menu-item>Export personnalisé</button>
+    <a md-menu-item href="{{appUrl}}/channels/add">Ajouter une plateform</a>
+    <a md-menu-item *ngFor="let channel of (channels | async)" [href]="appUrl + channel._links.self.href">
+        <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
+    </a>
+    <a md-menu-item href="{{appUrl}}/tools/export">Export personnalisé</a>
 </md-menu>
 <md-menu #utilsMenu="mdMenu">
-    <button md-menu-item>Chercher/remplacer</button>
-    <button md-menu-item>Retrait automatique</button>
-    <button md-menu-item>Gestion Tailles/Couleurs</button>
-    <button md-menu-item>Création champs</button>
-    <button md-menu-item>Assistant inteligent</button>
+    <a md-menu-item href="{{appUrl}}/tools/rules">Chercher/remplacer</a>
+    <a md-menu-item href="{{appUrl}}/tools/segmentations">Retrait automatique</a>
+    <a md-menu-item href="{{appUrl}}/marketplaces/autotag">Gestion Tailles/Couleurs</a>
+    <a md-menu-item href="{{appUrl}}/tools/field">Création champs</a>
+    <a md-menu-item href="{{appUrl}}/tools/relaunch">Assistant inteligent</a>
     <hr>
-    <button md-menu-item>Filtres</button>
-    <button md-menu-item>Gestion nouveaux produits</button>
-    <button md-menu-item>Sélection multi-canaux</button>
-    <button md-menu-item>Votre flux</button>
+    <a md-menu-item href="{{appUrl}}/tools/filtres">Filtres</a>
+    <a md-menu-item href="{{appUrl}}/tools/newproducts">Gestion nouveaux produits</a>
+    <a md-menu-item href="{{appUrl}}/multiple">Sélection multi-canaux</a>
+    <a md-menu-item href="{{appUrl}}/tools/infos">Votre flux</a>
 </md-menu>
 <md-menu #ordersMenu="mdMenu">
-    <button md-menu-item>Commandes</button>
-    <button md-menu-item>Export de commandes</button>
+    <a md-menu-item href="{{appUrl}}/marketplaces/orders">Commandes</a>
+    <a md-menu-item href="{{appUrl}}/marketplaces/listexport">Export de commandes</a>
 </md-menu>
 <md-menu #statisticsMenu="mdMenu">
-    <button md-menu-item>Statistiques globales</button>
-    <button md-menu-item>Statistiques places de marché</button>
-    <button md-menu-item>Statistiques comparateurs</button>
+    <a md-menu-item href="{{appUrl}}/statistics">Statistiques globales</a>
+    <a md-menu-item href="{{appUrl}}/statistics/marketplaces">Statistiques places de marché</a>
+    <a md-menu-item href="{{appUrl}}/statistics/shop">Statistiques comparateurs</a>
     <hr>
-    <button md-menu-item>Paramètres</button>
-    <button md-menu-item>Marges</button>
-    <button md-menu-item>Comparatifs</button>
-    <button md-menu-item>Exports</button>
+    <a md-menu-item href="{{appUrl}}/statistics/parameters">Paramètres</a>
+    <a md-menu-item href="{{appUrl}}/tools/marges">Marges</a>
+    <a md-menu-item href="{{appUrl}}/statistics/compare">Comparatifs</a>
+    <a md-menu-item href="{{appUrl}}/statistics/exportstatistics">Exports</a>
 </md-menu>
 <md-menu #appsMenu="mdMenu">
-    <button md-menu-item>Repricins</button>
-    <button md-menu-item>EAN finder</button>
+    <a md-menu-item href="{{appUrl}}/repricing">Repricins</a>
+    <a md-menu-item href="{{appUrl}}/tools/eanfinder">EAN finder</a>
 </md-menu>

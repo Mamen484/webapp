@@ -13,19 +13,31 @@
                     <input placeholder="Besoin d'aide" class="toolbar-search">
                 </div>
 
-                <md-menu #langMenu="mdMenu">
-                    <button md-menu-item>  <img src="assets/images/flags/uk.png" class="sf-nav-selected-language"> </button>
-                    <button md-menu-item>  <img src="assets/images/flags/pt.png" class="sf-nav-selected-language"> </button>
-                    <button md-menu-item>  <img src="assets/images/flags/it.png" class="sf-nav-selected-language"> </button>
-                    <button md-menu-item>  <img src="assets/images/flags/ge.png" class="sf-nav-selected-language"> </button>
-                    <button md-menu-item>  <img src="assets/images/flags/es.png" class="sf-nav-selected-language"> </button>
+                <md-menu #langMenu="mdMenu" class="sf-language-menu" [overlapTrigger]="false">
+                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/uk.png" class="sf-nav-selected-language"> </a>
+                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/pt.png" class="sf-nav-selected-language"> </a>
+                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/it.png" class="sf-nav-selected-language"> </a>
+                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/ge.png" class="sf-nav-selected-language"> </a>
+                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/es.png" class="sf-nav-selected-language"> </a>
                 </md-menu>
                 <img src="assets/images/flags/fr.png" class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
 
-                <md-icon class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}" [attr.data-badge]="(currentStore | async).timeline.total"></md-icon>
+                <md-icon
+                        class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}"
+                        [attr.data-badge]="(currentStore | async).timeline.total"></md-icon>
                 <md-icon class="sf-nav-icon icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
-                <md-menu #accountMenu="mdMenu">
-                    <button md-menu-item *ngFor="let store of (userInfo | async)._embedded.store" (click)="chooseStore(store)">{{store.name}}</button>
+                <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
+                    <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters">Settings</a>
+                    <a md-menu-item href="{{appUrl}}/tools/settings">Alert Management</a>
+                    <a md-menu-item href="{{appUrl}}/facturation">Membership</a>
+                    <a md-menu-item href="{{appUrl}}/tools/access">Access</a>
+                    <hr>
+                    <button md-menu-item *ngFor="let store of (userInfo | async)._embedded.store"
+                            (click)="chooseStore(store)">{{store.name}}
+                    </button>
+                    <hr>
+                    <a md-menu-item>Disconnection</a>
+
                 </md-menu>
             </md-toolbar-row>
         </div>
