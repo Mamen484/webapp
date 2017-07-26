@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { Store } from '../entities/store';
 import { Store as AppStore } from '@ngrx/store';
@@ -7,6 +7,9 @@ import { SET_STORE } from '../reducers/current-store';
 import { StoreService } from '../services/store.service';
 import { SET_CHANNELS } from '../reducers/channels-reducer';
 import { environment } from '../../../environments/environment';
+
+const LOCALIZATIONS = ['us', 'fr', 'pt', 'it', 'de', 'es'];
+const DEFAULT_LANGUAGE = 'fr';
 
 @Component({
     selector: 'app-menu',
@@ -19,9 +22,18 @@ export class MenuComponent {
 
     appUrl = environment.APP_URL;
 
-    constructor(protected _appStore: AppStore<AppState>, protected _storeService: StoreService) {
+    localizations;
+
+    constructor(protected _appStore: AppStore<AppState>,
+                protected _storeService: StoreService,
+                @Inject(LOCALE_ID) public localeId = DEFAULT_LANGUAGE) {
         this.userInfo = this._appStore.select('userInfo');
         this.currentStore = this._appStore.select('currentStore');
+        if (!LOCALIZATIONS.find(locale => locale === this.localeId)) {
+            this.localeId = DEFAULT_LANGUAGE;
+        }
+        this.localizations = LOCALIZATIONS.filter(locale => locale !== this.localeId);
+
     }
 
     chooseStore(store) {

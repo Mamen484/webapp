@@ -14,14 +14,12 @@
                 </div>
 
                 <md-menu #langMenu="mdMenu" class="sf-language-menu" [overlapTrigger]="false">
-                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/uk.png" class="sf-nav-selected-language"> </a>
-                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/pt.png" class="sf-nav-selected-language"> </a>
-                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/it.png" class="sf-nav-selected-language"> </a>
-                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/ge.png" class="sf-nav-selected-language"> </a>
-                    <a md-menu-item class="sf-language-menu-item"> <img src="assets/images/flags/es.png" class="sf-nav-selected-language"> </a>
+                        <a md-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{appUrl}}/index/switchlang/{{locale}}">
+                            <img src="assets/images/flags/{{locale}}.png" class="sf-nav-selected-language">
+                        </a>
                 </md-menu>
-                <img src="assets/images/flags/fr.png" class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
-
+                <img src="assets/images/flags/{{localeId}}.png" class="sf-nav-selected-language"
+                     [mdMenuTriggerFor]="langMenu">
                 <md-icon
                         class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}"
                         [attr.data-badge]="(currentStore | async).timeline.total"></md-icon>
