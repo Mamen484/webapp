@@ -22,7 +22,7 @@
                      [mdMenuTriggerFor]="langMenu">
                 <md-icon
                         class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}"
-                        [attr.data-badge]="(currentStore | async).timeline.total"></md-icon>
+                        [attr.data-badge]="(currentStore | async).timeline.total" [mdMenuTriggerFor]="notificationsMenu"></md-icon>
                 <md-icon class="sf-nav-icon icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
                 <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
                     <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
@@ -36,6 +36,27 @@
                     <hr>
                     <a md-menu-item n18n>Disconnection</a>
 
+                </md-menu>
+                <md-menu #notificationsMenu="mdMenu" [overlapTrigger]="false">
+                    <div md-menu-item class="sf-notification-menu-item">
+                        <md-icon class="mdi-action-settings"></md-icon>
+                        <div class="notification-text">La régle "Marque" a été modifiée</div>
+                        <div class="last-visited">II y a 3 minutes</div>
+                    </div>
+
+                    <div md-menu-item class="sf-notification-menu-item">
+                        <md-icon class="mdi-action-shopping-basket"></md-icon>
+                        <div class="notification-text">Une commande annulée</div>
+                        <div class="last-visited">II y a 10 minutes</div>
+                    </div>
+
+                    <div md-menu-item class="sf-notification-menu-item">
+                        <md-icon class="mdi-action-shopping-basket"></md-icon>
+                        <div class="notification-text">Une commande en cours</div>
+                        <div class="last-visited">II y a 2 heures</div>
+                    </div>
+
+                    <a md-menu-item class="sf-notification-menu-item all-notifications">voir toutes les notifications</a>
                 </md-menu>
             </md-toolbar-row>
         </div>
