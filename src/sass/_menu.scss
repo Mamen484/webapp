@@ -19,11 +19,4 @@
 .sf-sidebar-menu {
   position: fixed;
   left: $left-sidebar-width;
-  top: $toolbar-height;
-  height: calc(100vh - #{$toolbar-height});
-
-  @media screen and ($mat-xsmall) {
-    top: $toolbar-tablet-height;
-    height: calc(100vh - #{$toolbar-tablet-height});
-  }
 }
