@@ -17,6 +17,7 @@ $config: mat-typography-config();
     width: 100%;
 
     .sf-nav-welcome-text {
+      font-size: mat-font-size($config, body-1);
       margin-left: 20px;
     }
 
