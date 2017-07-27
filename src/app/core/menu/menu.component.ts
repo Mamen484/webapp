@@ -9,7 +9,6 @@ import { SET_CHANNELS } from '../reducers/channels-reducer';
 import { environment } from '../../../environments/environment';
 
 const LOCALIZATIONS = ['us', 'fr', 'pt', 'it', 'de', 'es'];
-const DEFAULT_LANGUAGE = 'fr';
 
 @Component({
     selector: 'app-menu',
@@ -26,11 +25,11 @@ export class MenuComponent {
 
     constructor(protected _appStore: AppStore<AppState>,
                 protected _storeService: StoreService,
-                @Inject(LOCALE_ID) public localeId = DEFAULT_LANGUAGE) {
+                @Inject(LOCALE_ID) public localeId = environment.DEFAULT_LANGUAGE) {
         this.userInfo = this._appStore.select('userInfo');
         this.currentStore = this._appStore.select('currentStore');
         if (!LOCALIZATIONS.find(locale => locale === this.localeId)) {
-            this.localeId = DEFAULT_LANGUAGE;
+            this.localeId = environment.DEFAULT_LANGUAGE;
         }
         this.localizations = LOCALIZATIONS.filter(locale => locale !== this.localeId);
 

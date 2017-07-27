@@ -37,3 +37,8 @@ md-sidenav-container {
   margin: 0;
 }
 
+.sf-sidebar-bottom-help {
+  position: absolute;
+  width: $left-sidebar-width;
+  bottom: 60px;
+}
