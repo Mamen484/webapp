@@ -1,30 +1,6 @@
 Core module
 ===
 
-This module exports all the Shopping Feed core components.
+This module provides app-wide services that need to be singleton instances. Do not import it anywhere except for AppModule.
 
-Usage
----
-
-In your module, you may import CoreModule to use its components:
-```typescript
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CoreModule } from "core.module"; // Don't forget to adapt the path to your need
-
-@NgModule({
-  imports: [
-    CommonModule,
-    CoreModule
-  ]
-})
-export class MyAwesomeModule {}
-```
-
-List of components
----
-
-- [Progressbar](progressbar/readme.md)
-- [Menu](menu/readme.md)
-- [Channel](channel/readme.md)
-- [I18n](i18n/readme.md)
+See [Angular StyleGuide](https://angular.io/guide/styleguide#core-feature-module) for details.

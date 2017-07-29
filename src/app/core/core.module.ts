@@ -1,40 +1,27 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressbarModule } from './progressbar/progressbar.module';
-import { MenuModule } from './menu/menu.module';
-import { ChannelModule } from './channel/channel.module';
-import { SidebarModule } from './sidebar/sidebar.module';
-import { UserService } from './services/user.service';
+import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import 'rxjs/add/Observable/of';
+
+import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/observable/of';
 import { StoreService } from './services/store.service';
 import { storeChannelMock } from '../../mocks/store-channel.mock';
 import { channelsReducer } from './reducers/channels-reducer';
+import { throwIfAlreadyLoaded } from './guards/module-import-guard';
+import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 
 @NgModule({
     imports: [
         CommonModule,
-        ProgressbarModule,
-        MenuModule,
-        ChannelModule,
-        SidebarModule,
         StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer, channels: channelsReducer}),
-        FlexLayoutModule
-    ],
-    exports: [
-        ProgressbarModule,
-        MenuModule,
-        SidebarModule,
-        ChannelModule,
-        FlexLayoutModule
+
     ],
     providers: [
+        AggregatedUserInfoResolveGuard,
         // UserService,
         {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfo}},
         {provide: StoreService, useValue: {getAllConfiguredChannels: getAllConfiguredChannels}}
@@ -42,6 +29,9 @@ import { channelsReducer } from './reducers/channels-reducer';
     declarations: []
 })
 export class CoreModule {
+    constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    }
 }
 
 // TODO: remove mocking function when API is ready
