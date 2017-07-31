@@ -41,7 +41,7 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/channels/add" i18n>Ajouter une plateform</a>
+    <a md-menu-item href="{{appUrl}}/channels/add" i18n>Ajouter une plateforme</a>
     <a md-menu-item *ngFor="let channel of (channels | async)" [href]="appUrl + channel._links.self.href">
         <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
     </a>

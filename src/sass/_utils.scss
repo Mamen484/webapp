@@ -1,6 +1,7 @@
 @import 'variables';
 
 $config: mat-typography-config();
+$badge-font-level: caption;
 
 .sf-badge {
   position: relative;
@@ -11,14 +12,15 @@ $config: mat-typography-config();
   position: absolute;
   top: -7px;
   right: -7px;
-  font-size: mat-font-size($config, caption);
+  font-family: mat-font-family($config);
+  font-size: mat-font-size($config, $badge-font-level);
   font-weight: bold;
   background: mat-color($green, A700);
   color: white;
-  width: 18px;
-  height: 18px;
+  width: mat-line-height($config, $badge-font-level);
+  height: mat-line-height($config, $badge-font-level);
   text-align: center;
-  line-height: 16px;
+  line-height: mat-line-height($config, $badge-font-level);
   border-radius: 50%;
   box-shadow: 0 0 1px #333;
 }

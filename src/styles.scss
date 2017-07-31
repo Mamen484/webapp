@@ -10,17 +10,14 @@ html, body, app-root {
   margin: 0;
   display: block;
   overflow: inherit;
-  background-color: transparent;
+  background-color: mat-color($grey, 50);
 }
 
-@media screen and ($mat-small) and (orientation: portrait) {
-  html {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100vh;
-    left: 0;
-  }
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid mat-color($grey, 200);
+  margin: 1em 0;
+  padding: 0;
 }

@@ -1,12 +1,12 @@
 <div class="sf-top-menu">
-    <md-toolbar role="toolbar" color="primary">
+    <md-toolbar role="toolbar" color="primary" class="mat-elevation-z4">
         <div class="sf-top-menu-container">
             <md-toolbar-row>
                 <a class="nav-link home" [href]="appUrl">
                     <img alt="Home" title="Home" i18n-alt i18n-title width="23" src="assets/images/SF_white.svg">
                 </a>
 
-                <div class="sf-nav-welcome-text" i18n>Bienvenue, {{(currentStore | async).name}}</div>
+                <div class="sf-nav-welcome-text" i18n>{{(currentStore | async).name}}</div>
 
                 <div class="toolbar-search-container">
                     <md-icon class="icon mdi-action-search sf-search-icon"></md-icon>
@@ -18,12 +18,14 @@
                             <img src="assets/images/flags/{{locale}}.png" class="sf-nav-selected-language">
                         </a>
                 </md-menu>
-                <img src="assets/images/flags/{{localeId}}.png" class="sf-nav-selected-language"
-                     [mdMenuTriggerFor]="langMenu">
+                <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
+                    <img src="assets/images/flags/{{localeId}}.png" >
+                </div>
                 <md-icon
-                        class="sf-nav-icon icon mdi-social-notifications-none {{(currentStore | async).timeline.total ? 'sf-badge' : ''}}"
+                        class="sf-nav-icon mdi-social-notifications-none"
+                        [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
                         [attr.data-badge]="(currentStore | async).timeline.total" [mdMenuTriggerFor]="notificationsMenu"></md-icon>
-                <md-icon class="sf-nav-icon icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
+                <md-icon class="sf-nav-icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
                 <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
                     <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
                     <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>

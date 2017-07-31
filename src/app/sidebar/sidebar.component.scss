@@ -7,7 +7,7 @@ md-sidenav.mat-sidenav.sidenav {
   bottom: 0;
   left: 0;
   width: $left-sidebar-width;
-  background-color: mat-color($grey, 50);
+  background-color: mat-color($grey, A100);
   text-align: center;
   top: $toolbar-height;
   height: calc(100vh - #{$toolbar-height});
@@ -19,9 +19,14 @@ md-sidenav.mat-sidenav.sidenav {
   }
 
   md-icon {
+    //@TODO: remove the color of the first item when the navigation is implemented
+    &.mdi-image-wb-cloudy {
+      color: mat-color($accent);
+    }
     font-size: mat-font-size($config, headline);
     color: mat-color($grey, 600);
     cursor: pointer;
+    margin: auto;
 
     &:hover {
       color: mat-color($accent);

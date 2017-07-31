@@ -18,7 +18,7 @@ $config: mat-typography-config();
 
     .sf-nav-welcome-text {
       font-size: mat-font-size($config, body-1);
-      margin-left: 20px;
+      margin-left: 22px;
     }
 
     .sf-nav-search {
@@ -41,9 +41,8 @@ $config: mat-typography-config();
     }
   }
 
-  img.sf-nav-selected-language {
+  .sf-nav-selected-language {
     width: 24px;
-    margin-top: -3px;
   }
 
   .toolbar-search-container {
@@ -115,3 +114,11 @@ $config: mat-typography-config();
     margin-left: 28px;
   }
 }
+
+a.nav-link.home {
+  margin-left: 2.5px;
+  img {
+    vertical-align: top;
+  }
+}
+
