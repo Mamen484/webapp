@@ -11,14 +11,13 @@ $config: mat-typography-config();
     width: 100vh;
   }
   position: fixed;
-  z-index: 1;
+  z-index: 10;
 
   .sf-top-menu-container {
     width: 100%;
 
     .sf-nav-welcome-text {
-      font-size: mat-font-size($config, body-1);
-      margin-left: 22px;
+      margin-left: 29px;
     }
 
     .sf-nav-search {
@@ -105,18 +104,22 @@ $config: mat-typography-config();
   }
 
   &.all-notifications {
+    font-size: mat-font-size($config, caption);
     text-transform: uppercase;
     color: mat-color($accent, 500);
+    & > span {
+      margin-left: 28px;
+    }
   }
 
-  .last-visited, &.all-notifications {
+  .last-visited {
     font-size: mat-font-size($config, caption);
-    margin-left: 28px;
+    padding-left: 28px;
   }
 }
 
 a.nav-link.home {
-  margin-left: 2.5px;
+  margin-left: 10px;
   img {
     vertical-align: top;
   }

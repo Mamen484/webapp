@@ -7,6 +7,7 @@ md-sidenav.mat-sidenav.sidenav {
   bottom: 0;
   left: 0;
   width: $left-sidebar-width;
+  min-width: $left-sidebar-width;
   background-color: mat-color($grey, A100);
   text-align: center;
   top: $toolbar-height;
@@ -24,7 +25,7 @@ md-sidenav.mat-sidenav.sidenav {
       color: mat-color($accent);
     }
     font-size: mat-font-size($config, headline);
-    color: mat-color($grey, 600);
+    color: mat-color($grey, 500);
     cursor: pointer;
     margin: auto;
 
@@ -44,6 +45,6 @@ md-sidenav-container {
 
 .sf-sidebar-bottom-help {
   position: absolute;
-  width: $left-sidebar-width;
-  bottom: 60px;
+  width: 100%;
+  bottom: 20px;
 }
