@@ -14,8 +14,9 @@
                 </div>
 
                 <md-menu #langMenu="mdMenu" class="sf-language-menu" [overlapTrigger]="false">
-                        <a md-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{appUrl}}/index/switchlang/{{locale}}">
-                            <img src="assets/images/flags/{{locale}}.png" class="sf-nav-selected-language">
+                        <a md-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{appUrl}}/index/switchlang/{{locale.langCode}}">
+                            <img src="assets/images/flags/{{locale.langCode}}.png" class="sf-nav-selected-language">
+                            <span i18n>{{locale.countryName}}</span>
                         </a>
                 </md-menu>
                 <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">

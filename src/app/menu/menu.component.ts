@@ -7,8 +7,16 @@ import { SET_STORE } from '../core/reducers/current-store';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/channels-reducer';
 import { environment } from '../../environments/environment';
+import { Language } from '../core/entities/language';
 
-const LOCALIZATIONS = ['us', 'fr', 'pt', 'it', 'de', 'es'];
+const LOCALIZATIONS = [
+    new Language('us', 'United States'),
+    new Language('fr', 'France'),
+    new Language('pt', 'Portugal'),
+    new Language('it', 'Italy'),
+    new Language('de', 'Germany'),
+    new Language('es', 'Spain'),
+];
 
 @Component({
     selector: 'app-menu',
@@ -28,10 +36,10 @@ export class MenuComponent {
                 @Inject(LOCALE_ID) public localeId = environment.DEFAULT_LANGUAGE) {
         this.userInfo = this._appStore.select('userInfo');
         this.currentStore = this._appStore.select('currentStore');
-        if (!LOCALIZATIONS.find(locale => locale === this.localeId)) {
+        if (!LOCALIZATIONS.find(locale => locale.langCode === this.localeId)) {
             this.localeId = environment.DEFAULT_LANGUAGE;
         }
-        this.localizations = LOCALIZATIONS.filter(locale => locale !== this.localeId);
+        this.localizations = LOCALIZATIONS.filter(locale => locale.langCode !== this.localeId);
 
     }
 
