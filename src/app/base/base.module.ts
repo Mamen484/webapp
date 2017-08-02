@@ -6,13 +6,15 @@ import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-i
 import { MenuModule } from '../menu/menu.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
         MenuModule,
-        SidebarModule
+        SidebarModule,
+        RouterModule
     ],
     declarations: [
         BaseComponent,

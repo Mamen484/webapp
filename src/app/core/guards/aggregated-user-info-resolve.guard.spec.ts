@@ -1,15 +1,22 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 
 import { AggregatedUserInfoResolveGuard } from './aggregated-user-info-resolve.guard';
+import { UserService } from '../services/user.service';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/observable/of';
 
 describe('AggregatedUserInfoResolveGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AggregatedUserInfoResolveGuard]
+      providers: [
+          AggregatedUserInfoResolveGuard,
+          {provide: UserService, useValue: {fetchAggregatedInfo: Observable.of({})}}
+      ]
     });
   });
 
-  it('should ...', inject([AggregatedUserInfoResolveGuard], (guard: AggregatedUserInfoResolveGuard) => {
+  it('should create', inject([AggregatedUserInfoResolveGuard], (guard: AggregatedUserInfoResolveGuard) => {
     expect(guard).toBeTruthy();
   }));
 });

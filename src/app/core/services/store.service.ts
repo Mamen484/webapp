@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { Headers, Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { StoreChannelResponse } from '../entities/store-channel-response';
+import { Statistics } from '../entities/statistics';
 
 @Injectable()
 export class StoreService {
@@ -16,10 +17,15 @@ export class StoreService {
     }
 
     public getAllConfiguredChannels(storeId): Observable<StoreChannelResponse> {
-        console.log(storeId);
         return this._http.get(`${environment.API_URL}/v1/storechannel`, {
             headers: this._authHeaders,
             params: {store: storeId}
+        }).map(response => response.json());
+    }
+
+    public getStatistics(storeId): Observable<Statistics> {
+        return this._http.get(`${environment.API_URL}/v1/stat/store/${storeId}`, {
+            headers: this._authHeaders
         }).map(response => response.json());
     }
 

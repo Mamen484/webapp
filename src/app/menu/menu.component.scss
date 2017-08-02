@@ -7,9 +7,6 @@ $config: mat-typography-config();
   width: 100vw;
   top: 0;
   left: 0;
-  @media screen and ($mat-small) and (orientation: portrait) {
-    width: 100vh;
-  }
   position: fixed;
   z-index: 10;
 

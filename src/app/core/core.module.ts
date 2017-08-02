@@ -13,33 +13,48 @@ import { storeChannelMock } from '../../mocks/store-channel.mock';
 import { channelsReducer } from './reducers/channels-reducer';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
+import { statisticsReducer } from './reducers/statistics-reducer';
+import { statisticsMock } from '../../mocks/statistics-mock';
 
 @NgModule({
     imports: [
         CommonModule,
-        StoreModule.forRoot({userInfo: userInfoReducer, currentStore: currentStoreReducer, channels: channelsReducer}),
+        StoreModule.forRoot({
+            userInfo: userInfoReducer,
+            currentStore: currentStoreReducer,
+            channels: channelsReducer,
+            storeStatistics: statisticsReducer,
+        }),
 
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
         // UserService,
         {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfo}},
-        {provide: StoreService, useValue: {getAllConfiguredChannels: getAllConfiguredChannels}}
+        {
+            provide: StoreService,
+            useValue: {getAllConfiguredChannels: getAllConfiguredChannels, getStatistics: getStatistics}
+        }
     ],
     declarations: []
 })
 export class CoreModule {
-    constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+    constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
 }
 
 // TODO: remove mocking function when API is ready
 export function fetchAggregatedInfo() {
-    return Observable.of(aggregatedUserInfoMock)
+    return Observable.of(aggregatedUserInfoMock);
 }
 
 // TODO: remove mocking function when API is ready
 export function getAllConfiguredChannels() {
-    return Observable.of(storeChannelMock)
+    return Observable.of(storeChannelMock);
+}
+
+// TODO: remove mocking function when API is ready
+export function getStatistics() {
+    return Observable.of(statisticsMock);
 }

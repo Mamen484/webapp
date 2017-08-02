@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
+import { StatisticsComponent } from './pages/statistics/statistics.component';
 
 const routes: Routes = [
     {
@@ -10,7 +11,14 @@ const routes: Routes = [
         component: BaseComponent,
         resolve: {
             userInfo: AggregatedUserInfoResolveGuard
-        }
+        },
+        children: [
+            {
+                path: '',
+                component: StatisticsComponent
+
+            }
+        ]
     },
 ];
 
@@ -18,4 +26,5 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

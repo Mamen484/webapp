@@ -7,6 +7,8 @@ import {
     MdTooltipModule
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
+import { SfCurrencyPipe } from './sf-currency.pipe';
 
 @NgModule({
     imports: [
@@ -34,8 +36,11 @@ import { FormsModule } from '@angular/forms';
         MdSidenavModule,
         MdTooltipModule,
         MdListModule,
+
+        LargeNumberSuffixPipe,
+        SfCurrencyPipe,
     ],
-    declarations: []
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe]
 })
 export class SharedModule {
 }
