@@ -15,10 +15,13 @@ import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { statisticsReducer } from './reducers/statistics-reducer';
 import { statisticsMock } from '../../mocks/statistics-mock';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 @NgModule({
     imports: [
         CommonModule,
+        HttpClientModule,
         StoreModule.forRoot({
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
@@ -29,7 +32,9 @@ import { statisticsMock } from '../../mocks/statistics-mock';
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
+        // StoreService,
         {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfo}},
         {
             provide: StoreService,
