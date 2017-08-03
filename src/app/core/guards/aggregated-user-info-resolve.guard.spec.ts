@@ -4,8 +4,6 @@ import { AggregatedUserInfoResolveGuard } from './aggregated-user-info-resolve.g
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/observable/of';
-
 describe('AggregatedUserInfoResolveGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({

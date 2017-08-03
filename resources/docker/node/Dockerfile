@@ -1,5 +1,3 @@
-FROM node:6
+FROM node:latest
 
 WORKDIR /var/www
-
-RUN npm install -g @angular/cli

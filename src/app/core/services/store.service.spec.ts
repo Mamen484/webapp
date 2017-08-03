@@ -4,8 +4,6 @@ import { StoreService } from './store.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import 'rxjs/add/observable/of';
-
 describe('StoreService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
