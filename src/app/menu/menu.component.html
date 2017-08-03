@@ -9,7 +9,7 @@
                 <div class="sf-nav-welcome-text md-title" i18n>{{(currentStore | async).name}}</div>
 
                 <div class="toolbar-search-container">
-                    <md-icon class="icon mdi-action-search sf-search-icon"></md-icon>
+                    <md-icon class="sf-search-icon">search</md-icon>
                     <input placeholder="Besoin d'aide" i18n-placeholder class="toolbar-search">
                 </div>
 
@@ -22,11 +22,9 @@
                 <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
                     <img src="assets/images/flags/{{localeId}}.png" >
                 </div>
-                <md-icon
-                        class="sf-nav-icon mdi-social-notifications-none"
-                        [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
-                        [attr.data-badge]="(currentStore | async).timeline.total" [mdMenuTriggerFor]="notificationsMenu"></md-icon>
-                <md-icon class="sf-nav-icon mdi-social-person-outline" [mdMenuTriggerFor]="accountMenu"></md-icon>
+                <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
+                        [attr.data-badge]="(currentStore | async).timeline.total" [mdMenuTriggerFor]="notificationsMenu">notifications_none</md-icon>
+                <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
                 <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
                     <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
                     <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
@@ -42,19 +40,19 @@
                 </md-menu>
                 <md-menu #notificationsMenu="mdMenu" [overlapTrigger]="false">
                     <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon class="mdi-action-settings"></md-icon>
+                        <md-icon>settings</md-icon>
                         <div class="notification-text">La régle "Marque" a été modifiée</div>
                         <div class="last-visited">II y a 3 minutes</div>
                     </div>
 
                     <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon class="mdi-action-shopping-basket"></md-icon>
+                        <md-icon>shopping_basket</md-icon>
                         <div class="notification-text">Une commande annulée</div>
                         <div class="last-visited">II y a 10 minutes</div>
                     </div>
 
                     <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon class="mdi-action-shopping-basket"></md-icon>
+                        <md-icon>shopping_basket</md-icon>
                         <div class="notification-text">Une commande en cours</div>
                         <div class="last-visited">II y a 2 heures</div>
                     </div>
