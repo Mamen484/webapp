@@ -1,4 +1,5 @@
 import { ChannelStatistics } from '../app/core/channel-statistics';
+import { storeChannelMock } from './store-channel.mock';
 
 class ChannelMock implements ChannelStatistics {
 
@@ -7,7 +8,7 @@ class ChannelMock implements ChannelStatistics {
     'selected' = +(Math.random() * 10000000).toFixed(0);
     'exported' = +(Math.random() * 100000).toFixed(0);
 
-    constructor(public name: string) {
+    constructor(public name: string, public id: number) {
 
     }
 }
@@ -19,19 +20,7 @@ export const statisticsMock = {
     'revenue': 20.9,
     'orders': 90000,
     'clicks': 22142200,
-    'channels': [
-        new ChannelMock('amazon'),
-        new ChannelMock('amazon1'),
-        new ChannelMock('amazon2'),
-        new ChannelMock('amazon3'),
-        new ChannelMock('amazon4'),
-        new ChannelMock('amazon5'),
-        new ChannelMock('amazon6'),
-        new ChannelMock('amazon7'),
-        new ChannelMock('amazon8'),
-        new ChannelMock('amazon9'),
-        new ChannelMock('amazon10'),
-    ],
+    'channels': storeChannelMock._embedded.storeChannel.map(ch => new ChannelMock(ch._embedded.channel.name, ch.id)),
     '_links': {
         'self': {
             'href': '/v1/stat/store/109'

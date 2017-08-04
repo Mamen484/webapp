@@ -22,12 +22,12 @@ export class StatisticsComponent implements OnInit {
 
             this._appStore.select('channels').subscribe(resp => {
                 this.channels = resp._embedded.storeChannel
-                    .map(storeChannel => storeChannel._embedded.channel)
-                    .map(channel => ({
-                        name: channel.name,
-                        image: channel._links.image.href,
-                        statistics: statistics.channels.find(ch => ch.name === channel.name)
-                    }));
+                    .map(storeChannel => ({
+                        name: storeChannel._embedded.channel.name,
+                        image: storeChannel._embedded.channel._links.image.href,
+                        statistics: statistics.channels.find(ch => ch.id === storeChannel.id)
+                    }))
+
             });
         });
 

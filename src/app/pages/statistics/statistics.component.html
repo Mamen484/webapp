@@ -31,7 +31,7 @@
             </div>
             <div class="channel-info-line channel-issues">
                 <md-icon>error</md-icon>
-                <span>{{channel.statistics.exported | sfNumber:'1.0'}} issues</span>
+                <span>{{channel.statistics.selected - channel.statistics.exported | sfNumber:'1.0'}} issues</span>
             </div>
             <div class="channel-info-line">
                 <md-icon>open_in_new</md-icon>

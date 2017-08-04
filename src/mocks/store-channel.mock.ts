@@ -21,8 +21,9 @@ class MockChannel {
         }
     };
 
-    constructor(name) {
+    constructor(name, id) {
         this._embedded.channel.name = name;
+        this.id = id;
     }
 }
 
@@ -38,18 +39,6 @@ export const storeChannelMock = {
         }
     },
     '_embedded': {
-        'storeChannel': [
-            new MockChannel('amazon'),
-            new MockChannel('amazon1'),
-            new MockChannel('amazon2'),
-            new MockChannel('amazon3'),
-            new MockChannel('amazon4'),
-            new MockChannel('amazon5'),
-            new MockChannel('amazon6'),
-            new MockChannel('amazon7'),
-            new MockChannel('amazon8'),
-            new MockChannel('amazon9'),
-            new MockChannel('amazon10'),
-        ]
+        'storeChannel': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => new MockChannel('amazon' + id, id))
     }
 };
