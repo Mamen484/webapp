@@ -1,3 +1,18 @@
+import { ChannelStatistics } from '../app/core/channel-statistics';
+
+class ChannelMock implements ChannelStatistics {
+
+    'symbol' = Math.round((Math.random() * 10)) % 2 === 0 ? '$' : '€';
+    'revenue' = +(Math.random() * 1000000).toFixed(0);
+    'selected' = +(Math.random() * 10000000).toFixed(0);
+    'exported' = +(Math.random() * 100000).toFixed(0);
+
+    constructor(public name: string) {
+
+    }
+}
+
+
 export const statisticsMock = {
     'id': 109,
     'symbol': '$',
@@ -5,13 +20,17 @@ export const statisticsMock = {
     'orders': 90000,
     'clicks': 22142200,
     'channels': [
-        {
-            'name': 'amazon',
-            'symbol': '$',
-            'revenue': 10.9,
-            'selected': 10,
-            'exported': 20
-        }
+        new ChannelMock('amazon'),
+        new ChannelMock('amazon1'),
+        new ChannelMock('amazon2'),
+        new ChannelMock('amazon3'),
+        new ChannelMock('amazon4'),
+        new ChannelMock('amazon5'),
+        new ChannelMock('amazon6'),
+        new ChannelMock('amazon7'),
+        new ChannelMock('amazon8'),
+        new ChannelMock('amazon9'),
+        new ChannelMock('amazon10'),
     ],
     '_links': {
         'self': {

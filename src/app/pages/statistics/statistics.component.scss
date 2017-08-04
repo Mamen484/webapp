@@ -14,3 +14,33 @@ $config: mat-typography-config();
 .statistics-value {
   margin-top: 5px;
 }
+
+.channel-card {
+  margin-bottom: 15px;
+
+  .channel-logo {
+    text-align: center;
+  }
+}
+
+.channel-info-line {
+  font-size: mat-font-size($config, body-1);
+  margin-bottom: 15px;
+
+  &>md-icon, &>span {
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  &.channel-checked {
+    color: mat-color($green, A700);
+  }
+  &.channel-issues {
+    color: mat-color($warn);
+  }
+
+  a {
+    text-decoration: none;
+    color: mat-color($grey, 1000, 0.87);
+  }
+}

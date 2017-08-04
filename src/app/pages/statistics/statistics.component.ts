@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { Statistics } from '../../core/entities/statistics';
-import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
+import { ChannelStatistics } from '../../core/channel-statistics';
 
 @Component({
     selector: 'sf-statistics',
@@ -11,10 +12,25 @@ import { Observable } from 'rxjs/Observable';
 })
 export class StatisticsComponent implements OnInit {
 
-    public statistics: Observable<Statistics>;
+    public statistics: Statistics;
+    public channels: { name: string, image: string, statistics: ChannelStatistics }[];
+    public appUrl = environment.APP_URL;
 
     constructor(protected _appStore: Store<AppState>) {
-        this.statistics = this._appStore.select('storeStatistics');
+        this._appStore.select('storeStatistics').subscribe(statistics => {
+            this.statistics = statistics;
+
+            this._appStore.select('channels').subscribe(resp => {
+                this.channels = resp._embedded.storeChannel
+                    .map(storeChannel => storeChannel._embedded.channel)
+                    .map(channel => ({
+                        name: channel.name,
+                        image: channel._links.image.href,
+                        statistics: statistics.channels.find(ch => ch.name === channel.name)
+                    }));
+            });
+        });
+
     }
 
 
