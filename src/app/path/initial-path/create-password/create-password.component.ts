@@ -42,6 +42,11 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
                   localStorage.setItem('sf.path.initial', JSON.stringify(store));
                 });
           });
+
+      if (this.store.store.id > 0){
+        this.shopifyService.updateStore(this.store);
+        window.location.href = environment.APP_URL;
+      }
     }
   }
 

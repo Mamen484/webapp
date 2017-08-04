@@ -1,9 +1,11 @@
 export class CreateStoreModel  {
     store: {
+        id: number,
         owner: {
             email: string,
             login: string,
-            password: string
+            password: string,
+            token: string
         };
         feed: {
             url: string,
@@ -18,10 +20,12 @@ export class CreateStoreModel  {
 
     constructor() {
         this.store = {
+            id: 0,
             owner: {
                 email: '',
                 login: '',
                 password: '',
+                token: '',
             },
             feed: {
                 url: '',

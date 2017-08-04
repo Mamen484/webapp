@@ -33,10 +33,12 @@ export class ShopifyAuthentifyService {
             .map((response: Response) => response.json())
             .map((data: any) => { return {
                 store: {
+                    id: data.id,
                     owner: {
                         email: data.email,
                         login: name,
                         password: '',
+                        token: '',
                     },
                     feed: {
                         url: data.feed,
@@ -76,5 +78,17 @@ export class ShopifyAuthentifyService {
         headers.append('Authorization', environment.DEFAULT_AUTHORIZATION);
 
         return headers;
+    }
+
+    public updateStore(store: CreateStoreModel){
+
+        let data = {
+            op: 'replace',
+            path: 'owner/token',
+            value: store.store.owner.token
+        };
+
+        this.http.patch(this.apiUrl+'/store/'+store.store.id, data, {headers: this.getHeaders()})
+            .subscribe();
     }
 }
