@@ -1,0 +1,18 @@
+<div fxLayout="row" fxLayoutGap="10px">
+  <div fxFlex="25" fxFlexAlign="baseline">
+    <div class="statistics-welcome" i18n>Welcome,</div>
+    <div class="mat-caption" i18n>Here's what's happening on your store this month</div>
+  </div>
+  <div fxFlex="25" class="statistics-item"  fxFlexAlign="baseline">
+    <div class="mat-caption" i18n>Turnover</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.revenue  | sfCurrency:statistics.symbol }}</div>
+  </div>
+  <div fxFlex="25" class="statistics-item" fxFlexAlign="baseline">
+    <div class="mat-caption" i18n>Orders</div>
+    <div class="mat-display-2 statistics-value">{{ statistics.orders | largeNumberSuffix }}</div>
+  </div>
+  <div fxFlex="25" class="statistics-item" fxFlexAlign="baseline">
+    <div class="mat-caption" i18n>Clicks</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.clicks | largeNumberSuffix}}</div>
+  </div>
+</div>

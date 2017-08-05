@@ -1,0 +1,14 @@
+<md-card class="channel-card">
+  <md-card-content>
+    <div class="channel-logo"> <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name"></div>
+    <div class="channel-info-line">
+      <span class="channel-name">{{channel.name}}</span>
+    </div>
+    <div class="channel-info-line channel-description">
+      <span>{{channel.description}} </span>
+    </div>
+    <div class="connect-button">
+      <a md-button color="accent" href="#">CONNECT</a>
+    </div>
+  </md-card-content>
+</md-card>

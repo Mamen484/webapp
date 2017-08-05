@@ -7,14 +7,13 @@ import { AppComponent } from './app.component';
 import { BaseModule } from './base/base.module';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
-import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { SharedModule } from './shared/shared.module';
+import { StatisticsModule } from './statistics/statistics.module';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        StatisticsComponent,
     ],
     imports: [
         BrowserModule,
@@ -23,7 +22,8 @@ import { SharedModule } from './shared/shared.module';
         CoreModule,
         BaseModule,
         SharedModule,
-        AppRoutingModule
+        StatisticsModule,
+        AppRoutingModule,
     ],
     bootstrap: [AppComponent]
 })

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
+    MdButtonModule,
     MdCardModule,
     MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdSidenavModule, MdToolbarModule,
     MdTooltipModule
@@ -26,6 +27,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdTooltipModule,
         MdListModule,
         MdCardModule,
+        MdButtonModule,
     ],
     exports: [
         CommonModule,
@@ -40,6 +42,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdTooltipModule,
         MdListModule,
         MdCardModule,
+        MdButtonModule,
 
         LargeNumberSuffixPipe,
         SfCurrencyPipe,

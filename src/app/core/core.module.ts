@@ -17,6 +17,8 @@ import { statisticsReducer } from './reducers/statistics-reducer';
 import { statisticsMock } from '../../mocks/statistics-mock';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { ChannelService } from './services/channel.service';
+import { channelsResponseMock } from '../../mocks/channels-response-mock';
 
 @NgModule({
     imports: [
@@ -35,11 +37,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
         // StoreService,
-        {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfo}},
-        {
-            provide: StoreService,
-            useValue: {getAllConfiguredChannels: getAllConfiguredChannels, getStatistics: getStatistics}
-        }
+        {provide: UserService, useValue: {fetchAggregatedInfo}},
+        {provide: StoreService, useValue: {getAllConfiguredChannels, getStatistics}},
+        {provide: ChannelService, useValue: {getChannels}}
     ],
     declarations: []
 })
@@ -62,4 +62,9 @@ export function getAllConfiguredChannels() {
 // TODO: remove mocking function when API is ready
 export function getStatistics() {
     return Observable.of(statisticsMock);
+}
+
+// TODO: remove mocking function when API is ready
+export function getChannels() {
+    return Observable.of(channelsResponseMock);
 }

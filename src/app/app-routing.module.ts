@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
-import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 const routes: Routes = [
     {
@@ -16,7 +16,6 @@ const routes: Routes = [
             {
                 path: '',
                 component: StatisticsComponent
-
             }
         ]
     },
