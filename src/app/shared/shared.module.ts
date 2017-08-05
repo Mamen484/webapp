@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdListModule,
         MdCardModule,
         MdButtonModule,
+        InfiniteScrollModule,
     ],
     exports: [
         CommonModule,
@@ -43,6 +45,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdListModule,
         MdCardModule,
         MdButtonModule,
+        InfiniteScrollModule,
 
         LargeNumberSuffixPipe,
         SfCurrencyPipe,

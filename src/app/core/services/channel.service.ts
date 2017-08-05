@@ -10,9 +10,10 @@ export class ChannelService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    getChannels(searchQuery?: string, country?: string, type?: string, segment?: string, status?: string) {
+    getChannels(page = 1, searchQuery?: string, country?: string, type?: string, segment?: string, status?: string) {
         return <Observable<ChannelsResponse>>this.httpClient.get(`${environment.API_URL}/channel`, {
             params: new HttpParams()
+                .set('page', page.toString())
                 .set('country', country)
                 .set('name', searchQuery)
                 .set('type', type)

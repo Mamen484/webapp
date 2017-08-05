@@ -18,6 +18,8 @@ export class StatisticsComponent {
     public configuredChannels: { name: string, image: string, statistics: ChannelStatistics }[];
     public appUrl = environment.APP_URL;
     public suggestedChannels: ChannelsResponse;
+    infiniteScrollDisabled = false;
+    processing = false;
 
     constructor(protected appStore: Store<AppState>, protected channelService: ChannelService) {
         this.appStore.select('storeStatistics').subscribe(statistics => {
@@ -41,6 +43,24 @@ export class StatisticsComponent {
     protected initializeSuggestedChannels() {
         this.channelService.getChannels()
             .subscribe(data => this.suggestedChannels = data);
+    }
+
+
+    onScroll() {
+        if (this.processing) {
+            return;
+        }
+        if (this.suggestedChannels.page === this.suggestedChannels.pages) {
+            this.infiniteScrollDisabled = true;
+            return;
+        }
+        this.processing = true;
+        this.channelService.getChannels(this.suggestedChannels.page + 1)
+            .subscribe(data => {
+                this.suggestedChannels.page = data.page;
+                this.suggestedChannels._embedded.channel.push(...data._embedded.channel);
+                this.processing = false;
+            });
     }
 
 }

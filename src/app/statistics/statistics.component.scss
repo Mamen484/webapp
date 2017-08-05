@@ -1,3 +1,9 @@
 @import '../../sass/variables';
 
 $config: mat-typography-config();
+
+.statistics-container {
+  display: block;
+  height: calc(100vh - 2*#{$toolbar-height});
+  overflow: scroll;
+}

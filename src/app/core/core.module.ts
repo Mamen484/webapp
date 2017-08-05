@@ -2,7 +2,8 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
-import 'rxjs/add/Observable/of';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/debounceTime';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store';
@@ -18,7 +19,7 @@ import { statisticsMock } from '../../mocks/statistics-mock';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ChannelService } from './services/channel.service';
-import { channelsResponseMock } from '../../mocks/channels-response-mock';
+import { ChannelsResponseDynamicMock } from '../../mocks/channels-response-mock';
 
 @NgModule({
     imports: [
@@ -65,6 +66,6 @@ export function getStatistics() {
 }
 
 // TODO: remove mocking function when API is ready
-export function getChannels() {
-    return Observable.of(channelsResponseMock);
+export function getChannels(page = 1) {
+    return Observable.of(new ChannelsResponseDynamicMock(page)).debounceTime(Math.round(Math.random() * 700));
 }
