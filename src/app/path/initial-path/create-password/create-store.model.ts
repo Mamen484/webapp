@@ -1,6 +1,6 @@
 export class CreateStoreModel  {
     store: {
-        id: number,
+        storeId: number,
         owner: {
             email: string,
             login: string,
@@ -20,7 +20,7 @@ export class CreateStoreModel  {
 
     constructor() {
         this.store = {
-            id: 0,
+            storeId: 0,
             owner: {
                 email: '',
                 login: '',

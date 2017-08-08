@@ -33,7 +33,7 @@ export class ShopifyAuthentifyService {
             .map((response: Response) => response.json())
             .map((data: any) => { return {
                 store: {
-                    id: data.id,
+                    storeId: data.storeId,
                     owner: {
                         email: data.email,
                         login: name,
@@ -88,7 +88,7 @@ export class ShopifyAuthentifyService {
             value: store.store.owner.token
         };
 
-        this.http.patch(this.apiUrl+'/store/'+store.store.id, data, {headers: this.getHeaders()})
+        this.http.patch(this.apiUrl+'/store/'+store.store.storeId, data, {headers: this.getHeaders()})
             .subscribe();
     }
 }
