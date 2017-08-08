@@ -1,6 +1,6 @@
 import { SfNumberPipe } from './sf-number.pipe';
 
-fdescribe('SfNumberPipe', () => {
+describe('SfNumberPipe', () => {
     let pipe;
 
     beforeEach(() => {

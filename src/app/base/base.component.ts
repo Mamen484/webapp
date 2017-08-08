@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { AppState } from '../core/entities/app-state';
-import { SET_STORE } from '../core/reducers/current-store';
+import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { INITIALIZE_USER_INFO } from '../core/reducers/user-info-reducer';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/channels-reducer';

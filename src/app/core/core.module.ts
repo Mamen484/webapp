@@ -6,7 +6,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/debounceTime';
 
 import { UserService } from './services/user.service';
-import { currentStoreReducer } from './reducers/current-store';
+import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { StoreService } from './services/store.service';
