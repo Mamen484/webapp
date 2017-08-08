@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { Statistics } from '../core/entities/statistics';
@@ -6,6 +6,10 @@ import { environment } from '../../environments/environment';
 import { ChannelStatistics } from '../core/channel-statistics';
 import { ChannelService } from '../core/services/channel.service';
 import { ChannelsResponse } from '../core/entities/channels-response';
+
+const LOAD_CHANNELS_COUNT = 6;
+const MIN_CHANNELS_DISPLAY = 16;
+const MIN_SUGGESTED_CHANNELS_DISPLAY = 4;
 
 @Component({
     selector: 'sf-statistics',
@@ -41,8 +45,17 @@ export class StatisticsComponent {
     }
 
     protected initializeSuggestedChannels() {
-        this.channelService.getChannels()
-            .subscribe(data => this.suggestedChannels = data);
+        this.appStore.select('channels').subscribe(resp => {
+            let limit = resp._embedded.storeChannel.length % MIN_CHANNELS_DISPLAY < MIN_SUGGESTED_CHANNELS_DISPLAY
+                ? 4
+                : resp._embedded.storeChannel.length % MIN_CHANNELS_DISPLAY;
+
+            this.channelService.getChannels({limit})
+                .subscribe(data => {
+                    this.suggestedChannels = data;
+                    this.suggestedChannels.page = 0;
+                });
+        });
     }
 
 
@@ -55,10 +68,14 @@ export class StatisticsComponent {
             return;
         }
         this.processing = true;
-        this.channelService.getChannels(this.suggestedChannels.page + 1)
+        this.channelService.getChannels({page: this.suggestedChannels.page + 1, limit: LOAD_CHANNELS_COUNT})
             .subscribe(data => {
                 this.suggestedChannels.page = data.page;
-                this.suggestedChannels._embedded.channel.push(...data._embedded.channel);
+                if (data.page === 1) {
+                    this.suggestedChannels._embedded.channel = data._embedded.channel;
+                } else {
+                    this.suggestedChannels._embedded.channel.push(...data._embedded.channel);
+                }
                 this.processing = false;
             });
     }

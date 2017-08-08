@@ -4,7 +4,7 @@ let descriptions = [
     'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below'
 ];
 
-class ChannelDynamicMock {
+export class ChannelDynamicMock {
 
     'id' = 456;
     'name' = 'amazon';
@@ -23,7 +23,12 @@ class ChannelDynamicMock {
     };
 
     static generate(amount) {
-        return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(() => {
+        let array = [];
+        for (let i = 0; i < amount; i++) {
+            array.push(i);
+        }
+
+        return array.map(() => {
             let channel = new ChannelDynamicMock();
             let random = Math.round(Math.random() * 300);
             channel.name = 'amazon' + random;
@@ -32,27 +37,4 @@ class ChannelDynamicMock {
         });
     }
 
-}
-
-export class ChannelsResponseDynamicMock {
-    'total' = 95;
-    'limit' = 10;
-    'pages' = 10;
-    'page' = 1;
-    'count' = 10;
-    '_links' = {
-        'self': {
-            'href': '/v1/channel'
-        }
-    };
-    _embedded = {
-        'channel': []
-    };
-
-
-    constructor(page) {
-        this.page = page;
-        this.count = this.page === this.pages ? this.total % this.limit : this.count;
-        this._embedded.channel = ChannelDynamicMock.generate(this.count);
-    }
 }
