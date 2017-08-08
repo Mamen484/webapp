@@ -38,7 +38,7 @@ export class ShopifyAuthentifyService {
                         email: data.email,
                         login: name,
                         password: '',
-                        token: '',
+                        token: data.token,
                     },
                     feed: {
                         url: data.feed,
@@ -80,15 +80,26 @@ export class ShopifyAuthentifyService {
         return headers;
     }
 
-    public updateStore(store: CreateStoreModel){
+    public updateStore(store: CreateStoreModel, queryParam: object){
+
+        console.log(store);
 
         let data = {
             op: 'replace',
-            path: 'owner/token',
+            path: '/owner/token',
             value: store.store.owner.token
         };
 
         this.http.patch(this.apiUrl+'/store/'+store.store.storeId, data, {headers: this.getHeaders()})
-            .subscribe();
+            .subscribe(() => {
+                let url = environment.APP_URL+'?';
+
+                for (let param in queryParam as any) {
+                    if (queryParam.hasOwnProperty(param)) {
+                        url += param + '=' + queryParam[param] + '&';
+                    }
+                }
+                window.location.href = url;
+            });
     }
 }

@@ -35,18 +35,8 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
           this.shopifyService.getStoreData(params['shop'] || '', params)
               .subscribe((store: CreateStoreModel) => {
                 this.store = store;
-                if (this.store.store.storeId > 0){
-                  this.shopifyService.updateStore(this.store);
-
-                  let url = environment.APP_URL+'?';
-
-                  for (let param in this.queryParam as any) {
-                    if (this.queryParam.hasOwnProperty(param)) {
-                      url += param + '=' + this.queryParam[param] + '&';
-                    }
-                  }
-
-                  window.location.href = url;
+                if (store.store.storeId > 0){
+                  this.shopifyService.updateStore(store, this.queryParam);
                 }
                 else {
                   localStorage.setItem('sf.path.initial', JSON.stringify(store));
