@@ -82,8 +82,6 @@ export class ShopifyAuthentifyService {
 
     public updateStore(store: CreateStoreModel, queryParam: object){
 
-        console.log(store);
-
         let data = {
             op: 'replace',
             path: '/owner/token',
