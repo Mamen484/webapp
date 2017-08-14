@@ -1,7 +1,5 @@
 @import "../../sass/variables";
-@import '../../../node_modules/@angular/material/theming';
 
-$config: mat-typography-config();
 
 .sf-top-menu {
   width: 100vw;
@@ -15,21 +13,6 @@ $config: mat-typography-config();
 
     .sf-nav-welcome-text {
       margin-left: 29px;
-    }
-
-    .sf-nav-search {
-      margin-left: 80px;
-      flex: 1 1 auto;
-      margin-right: 40px;
-
-      .icon {
-        margin-right: 20px;
-      }
-
-      md-icon {
-        vertical-align: middle;
-      }
-
     }
 
     md-icon.sf-nav-icon {

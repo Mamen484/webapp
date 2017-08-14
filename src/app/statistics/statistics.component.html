@@ -2,6 +2,7 @@
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="1000" (scrolled)="onScroll()" [scrollWindow]="false">
     <sf-store-statistics [statistics]="statistics"></sf-store-statistics>
+    <sf-search-channels></sf-search-channels>
     <div fxLayout="row" fxLayoutGap="2%" fxLayoutWrap="wrap">
         <div fxFlex.md="23" fxFlex.sm="31.33" fxFlex.lg="23" fxFlex.xl="14.66"
              *ngFor="let channel of configuredChannels">

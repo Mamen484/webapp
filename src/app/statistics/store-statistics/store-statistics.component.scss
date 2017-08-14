@@ -1,7 +1,5 @@
 @import '../../../sass/variables';
 
-$config: mat-typography-config();
-
 .statistics-welcome {
   margin-bottom: 5px;
   font-size: mat-font-size($config, display-1);

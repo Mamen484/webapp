@@ -1,0 +1,24 @@
+@import '../../../sass/variables';
+
+md-input-container {
+  width: 100%;
+}
+
+md-card {
+  margin: 0 20px 20px 5px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  display: flex;
+  md-icon {
+    color: mat-color($grey);
+  }
+  input {
+    margin: 0 10px;
+    border: none;
+    flex: 1;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
