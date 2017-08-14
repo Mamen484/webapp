@@ -3,6 +3,7 @@
 $config: mat-typography-config();
 
 .statistics-container {
+  padding-top: $content-margin;
   display: block;
   height: calc(100vh - 2*#{$toolbar-height});
   overflow: scroll;

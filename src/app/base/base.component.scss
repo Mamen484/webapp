@@ -1,10 +1,8 @@
 @import '~@angular/material/theming';
 @import '../../sass/variables';
 
-$content-margin: 20px;
-
 .content {
-  margin-top: $toolbar-height + $content-margin;
+  margin-top: $toolbar-height;
   margin-left: $left-sidebar-width + $content-margin;
 
   @media screen and ($mat-xsmall) {
