@@ -4,16 +4,15 @@ $config: mat-typography-config();
 
 .channel-card {
   margin-bottom: 15px;
-  height: 188px;
-
-  .channel-logo {
-    text-align: center;
-  }
+  height: 231px;
 }
 
 .channel-info-line {
   font-size: mat-font-size($config, body-1);
   margin-bottom: 15px;
+  text-decoration: none;
+  color: initial;
+  display: block;
 
   &>md-icon, &>span {
     vertical-align: middle;

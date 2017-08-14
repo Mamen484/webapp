@@ -12,6 +12,9 @@ import { SuggestedChannelComponent } from './suggested-channel/suggested-channel
       SharedModule,
   ],
     exports: [StatisticsComponent],
-  declarations: [StatisticsComponent, ConfiguredChannelComponent, StoreStatisticsComponent, SuggestedChannelComponent]
+  declarations: [StatisticsComponent,
+      ConfiguredChannelComponent,
+      StoreStatisticsComponent,
+      SuggestedChannelComponent]
 })
 export class StatisticsModule { }

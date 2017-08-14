@@ -17,6 +17,6 @@ describe('SfCurrencyPipe', () => {
     });
 
     it('return a currency symbol after the number when the currency is EUR', () => {
-        expect(pipe.transform(34, '€')).toEqual('34€');
+        expect(pipe.transform(34, '€')).toEqual('34 €');
     });
 });

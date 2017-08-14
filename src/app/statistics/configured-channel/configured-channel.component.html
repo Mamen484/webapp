@@ -1,18 +1,18 @@
 <md-card class="channel-card">
   <md-card-content>
-    <div class="channel-logo"> <img [src]="appUrl + '/images' + channel.image" [alt]="channel.name"></div>
-    <div class="channel-info-line channel-revenue">
+    <div> <img md-card-image [src]="appUrl + '/images' + channel.image" [alt]="channel.name"></div>
+    <a class="channel-info-line channel-revenue" [href]="appUrl + '/statistics'">
       <md-icon>monetization_on</md-icon>
-      <span>{{channel.statistics.revenue | sfNumber:'1.0-2' | sfCurrency:channel.statistics.symbol}}</span>
-    </div>
-    <div class="channel-info-line channel-checked">
+      <span>{{channel.statistics.revenue | largeNumberSuffix | sfCurrency:channel.statistics.symbol}}</span>
+    </a>
+    <a class="channel-info-line channel-checked" [href]="appUrl + '/' + channel.name">
       <md-icon>check_circle</md-icon>
-      <span>{{channel.statistics.selected | sfNumber:'1.0'}} checked</span>
-    </div>
-    <div class="channel-info-line channel-issues">
+      <span>{{channel.statistics.selected | largeNumberSuffix }} checked</span>
+    </a>
+    <a class="channel-info-line channel-issues" [href]="appUrl + '/' +  channel.name">
       <md-icon>error</md-icon>
-      <span>{{channel.statistics.selected - channel.statistics.exported | sfNumber:'1.0'}} issues</span>
-    </div>
+      <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }} issues</span>
+    </a>
     <div class="channel-info-line">
       <md-icon>open_in_new</md-icon>
       <span><a href="{{appUrl}}/tools/relaunch" target="_blank">Quickfix</a></span>

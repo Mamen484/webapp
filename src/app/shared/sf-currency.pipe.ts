@@ -11,7 +11,7 @@ export class SfCurrencyPipe implements PipeTransform {
                 return '$' + value;
 
             default:
-                return value + symbol
+                return value + ' ' + symbol
         }
     }
 

@@ -16,12 +16,30 @@ describe('LargeNumberSuffixPipe', () => {
         expect(pipe.transform(1)).toEqual('1');
     });
 
+    it('transform 1 to just 1 but return LargeNumberFormat object', () => {
+        let formatted = pipe.transform(1, true);
+        expect(formatted.number).toEqual('1');
+        expect(formatted.suffix).toEqual('');
+    });
+
     it('transform 1000 to 1K', () => {
         expect(pipe.transform(1000)).toEqual('1K');
     });
 
+    it('transform 1000 to 1K but return LargeNumberFormat object', () => {
+        let formatted = pipe.transform(1000, true);
+        expect(formatted.number).toEqual('1');
+        expect(formatted.suffix).toEqual('K');
+    });
+
     it('transform 1000000 to 1M', () => {
         expect(pipe.transform(1000000)).toEqual('1M');
+    });
+
+    it('transform 1000000 to 1M but return LargeNumberFormat object', () => {
+        let formatted = pipe.transform(1000000, true);
+        expect(formatted.number).toEqual('1');
+        expect(formatted.suffix).toEqual('M');
     });
 
     it('transform 244.24423312 to 244.24', () => {

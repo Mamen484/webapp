@@ -2,12 +2,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
 @Pipe({
-  name: 'sfNumber'
+    name: 'sfNumber'
 })
-export class SfNumberPipe extends DecimalPipe implements PipeTransform {
+export class SfNumberPipe implements PipeTransform {
 
-  transform(value: any, digits?: string): any {
-    return super.transform(value, digits).replace(/,/g, ' ');
-  }
+    constructor(protected _decimalPipe: DecimalPipe) {
+
+    }
+
+    transform(value: any, digits?: string): any {
+        return this._decimalPipe.transform(value, digits).replace(/,/g, ' ');
+    }
 
 }
