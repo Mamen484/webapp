@@ -4,6 +4,9 @@ import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/distinct';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
@@ -68,5 +71,5 @@ export function getStatistics() {
 
 // TODO: remove mocking function when API is ready
 export function getChannels({page = 1, limit = 6}) {
-    return Observable.of(new PagedResponseFactory(page, limit, ChannelDynamicMock, 'channel')).debounceTime(Math.round(Math.random() * 700));
+    return Observable.of(new PagedResponseFactory(page, limit, ChannelDynamicMock, 'channel')).delay(Math.round(Math.random() * 700));
 }

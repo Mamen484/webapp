@@ -6,19 +6,31 @@ md-input-container {
 
 md-card {
   margin: 0 20px 20px 5px;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding: 0;
   display: flex;
-  md-icon {
-    color: mat-color($grey);
-  }
-  input {
-    margin: 0 10px;
-    border: none;
+  flex-direction: column;
+  md-card-content {
     flex: 1;
+    margin-bottom: 0;
 
-    &:focus {
-      outline: none;
+
+    .search-container {
+      display: flex;
+      margin: 12px 24px;
+
+      md-icon {
+        color: mat-color($grey);
+      }
+      input {
+        margin: 0 10px;
+        border: none;
+        flex: 1;
+
+        &:focus {
+          outline: none;
+        }
+      }
     }
   }
+
 }
