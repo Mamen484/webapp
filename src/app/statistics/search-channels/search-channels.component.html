@@ -4,9 +4,25 @@
             <div class="search-container">
                 <md-icon>search</md-icon>
                 <input [formControl]="searchControl">
-                <md-icon>filter_list</md-icon>
+                <button md-button md-icon-button (click)="openDialog()">
+                    <md-icon>filter_list</md-icon>
+                </button>
             </div>
             <md-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></md-progress-bar>
         </md-card-content>
     </md-card>
 </label>
+<md-chip-list [selectable]="false">
+    <md-chip *ngIf="filter.country">
+        <span>{{countries[filter.country]}}</span>
+        <md-icon (click)="cancelFilter('country')">cancel</md-icon>
+    </md-chip>
+    <md-chip *ngIf="filter.type">
+        <span>{{types[filter.type]}}</span>
+        <md-icon (click)="cancelFilter('type')">cancel</md-icon>
+    </md-chip>
+    <md-chip *ngIf="filter.segment">
+        <span>{{segments[filter.segment]}}</span>
+        <md-icon (click)="cancelFilter('segment')">cancel</md-icon>
+    </md-chip>
+</md-chip-list>

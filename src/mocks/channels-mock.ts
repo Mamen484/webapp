@@ -322,7 +322,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'nursery',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -332,7 +332,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'homeAndGarden',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -342,7 +342,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'homeAndGarden',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -352,7 +352,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'toys',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -362,7 +362,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'highTech',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -382,7 +382,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'appliances',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -392,7 +392,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'gastronomy',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -402,7 +402,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'appliances',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -412,7 +412,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'organic',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -422,7 +422,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'organic',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -432,7 +432,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'professional',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -442,7 +442,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'motors',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -472,7 +472,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'professional',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -492,7 +492,7 @@ const channelsMock = {
                 'isConfigured': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
-                'segment': 'everything',
+                'segment': 'professional',
                 'offer': 'http://example.fr',
                 'countries': [],
                 '_links': {'self': {'href': '/v1/channel/456'}, 'image': {'href': '/amazon.jpg'}}
@@ -720,16 +720,22 @@ const channelsMock = {
     }
 };
 
-export const channelsStaticMock = function ({page, limit, searchQuery}) {
-    let channels = channelsMock._embedded.channel.filter(channel => {
-        switch (channel.isConfigured) {
-            case true:
-                return (<StoreChannel>channel)._embedded.channel.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+export const channelsStaticMock = function ({page, limit, searchQuery, segment}) {
+    let channels = channelsMock._embedded.channel
+    // filter by name
+        .filter(channel => {
+            switch (channel.isConfigured) {
+                case true:
+                    return (<StoreChannel>channel)._embedded.channel.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
 
-            default:
-                return (<Channel>channel).name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
-        }
-    });
+                default:
+                    return (<Channel>channel).name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+            }
+        })
+        // filter by segment
+        .filter(channel => {
+            return segment === '' || !channel.isConfigured && (<Channel>channel).segment === segment;
+        });
 
     let total = channels.length;
     let pages = Math.floor(total / limit);
@@ -742,8 +748,6 @@ export const channelsStaticMock = function ({page, limit, searchQuery}) {
     });
 
     mock._embedded = {channel: []};
-
-    console.log((page - 1) * limit, (page - 1) * limit + mock.count);
 
     for (let i = (page - 1) * limit; i < (page - 1) * limit + mock.count; i++) {
         mock._embedded.channel.push(channels[i]);

@@ -1,0 +1,23 @@
+<div md-dialog-title>
+    Filters
+</div>
+<md-dialog-content>
+    <md-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country">
+        <md-option value="">All Countries</md-option>
+        <md-option *ngFor="let country of countries" [value]="country[0]">{{country[1]}}</md-option>
+    </md-select>
+
+    <md-select placeholder="Type" i18n-placeholder  [(ngModel)]="filter.type">
+        <md-option value="">All Types</md-option>
+        <md-option *ngFor="let type of types" [value]="type[0]">{{type[1]}}</md-option>
+    </md-select>
+
+    <md-select placeholder="Category" i18n-placeholder  [(ngModel)]="filter.segment">
+        <md-option value="">All Categories</md-option>
+        <md-option *ngFor="let category of categories" [value]="category[0]">{{category[1]}}</md-option>
+    </md-select>
+</md-dialog-content>
+<md-dialog-actions>
+    <button md-button color="accent" (click)="cancel()">CANCEL</button>
+    <button md-button color="accent" (click)="accept()">ACCEPT</button>
+</md-dialog-actions>

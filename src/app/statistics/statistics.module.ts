@@ -6,6 +6,7 @@ import { ConfiguredChannelComponent } from './configured-channel/configured-chan
 import { StoreStatisticsComponent } from './store-statistics/store-statistics.component';
 import { SuggestedChannelComponent } from './suggested-channel/suggested-channel.component';
 import { SearchChannelsComponent } from './search-channels/search-channels.component';
+import { FilterChannelsDialogComponent } from './filter-channels-dialog/filter-channels-dialog.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,11 @@ import { SearchChannelsComponent } from './search-channels/search-channels.compo
         ConfiguredChannelComponent,
         StoreStatisticsComponent,
         SuggestedChannelComponent,
-        SearchChannelsComponent
+        SearchChannelsComponent,
+        FilterChannelsDialogComponent
+    ],
+    entryComponents: [
+        FilterChannelsDialogComponent
     ]
 })
 export class StatisticsModule {

@@ -1,8 +1,9 @@
 @import '../../sass/variables';
 
 .statistics-container {
+  padding-left: 5px;
   padding-top: $content-margin;
   display: block;
-  height: calc(100vh - 2*#{$toolbar-height});
+  height: calc(100vh - #{$toolbar-height});
   overflow: scroll;
 }

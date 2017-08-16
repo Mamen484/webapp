@@ -10,7 +10,7 @@ import { StoreChannel } from '../core/entities/store-channel';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
- * load pages on page initizalize
+ * load pages on page initialization
  * @type {number}
  */
 const INITIAL_PAGES_AMOUNT = 3;
@@ -50,13 +50,10 @@ export class StatisticsComponent {
         });
     }
 
-    onApplyFilter({type, data}) {
-        switch (type) {
-            default:
-                this.filterState.searchQuery = data;
-                this.processingFilters = true;
-                this.initialize();
-        }
+    onApplyFilter(params: ChannelsRequestParams) {
+        this.filterState = Object.assign({}, params);
+        this.processingFilters = true;
+        this.initialize();
     }
 
     protected canScroll() {

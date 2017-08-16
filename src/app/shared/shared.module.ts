@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    MdAutocompleteModule, MdButtonModule, MdCardModule, MdDialogModule,
+    MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule,
     MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdSelectModule, MdSidenavModule,
     MdToolbarModule, MdTooltipModule
 } from '@angular/material';
@@ -24,6 +24,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdAutocompleteModule,
         MdButtonModule,
         MdCardModule,
+        MdChipsModule,
         MdDialogModule,
         MdIconModule,
         MdInputModule,
@@ -46,6 +47,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdAutocompleteModule,
         MdButtonModule,
         MdCardModule,
+        MdChipsModule,
         MdDialogModule,
         MdIconModule,
         MdInputModule,
