@@ -1,22 +1,15 @@
 import { Component, Inject, LOCALE_ID } from '@angular/core';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
-import { Store } from '../core/entities/store';
 import { Store as AppStore } from '@ngrx/store';
+import { toPairs } from 'lodash';
+
 import { AppState } from '../core/entities/app-state';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/channels-reducer';
 import { environment } from '../../environments/environment';
-import { Language } from '../core/entities/language';
-
-const LOCALIZATIONS = [
-    new Language('us', 'United States'),
-    new Language('fr', 'France'),
-    new Language('pt', 'Portugal'),
-    new Language('it', 'Italy'),
-    new Language('de', 'Germany'),
-    new Language('es', 'Spain'),
-];
+import { ChannelLanguage } from '../core/entities/channel-language.enum';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { Store } from '../core/entities/store';
 
 @Component({
     selector: 'app-menu',
@@ -29,17 +22,17 @@ export class MenuComponent {
 
     appUrl = environment.APP_URL;
 
-    localizations;
+    localizations = toPairs(ChannelLanguage);
 
     constructor(protected _appStore: AppStore<AppState>,
                 protected _storeService: StoreService,
                 @Inject(LOCALE_ID) public localeId = environment.DEFAULT_LANGUAGE) {
         this.userInfo = this._appStore.select('userInfo');
         this.currentStore = this._appStore.select('currentStore');
-        if (!LOCALIZATIONS.find(locale => locale.langCode === this.localeId)) {
+        if (!this.localizations.find(locale => locale[0] === this.localeId)) {
             this.localeId = environment.DEFAULT_LANGUAGE;
         }
-        this.localizations = LOCALIZATIONS.filter(locale => locale.langCode !== this.localeId);
+        this.localizations = this.localizations.filter(locale => locale[0] !== this.localeId);
 
     }
 
