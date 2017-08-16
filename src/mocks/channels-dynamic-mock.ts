@@ -8,6 +8,7 @@ export class ChannelDynamicMock {
 
     'id' = 456;
     'name' = 'amazon';
+    'isConfigured' = false;
     'description' = 'Some two-line description of the channel';
     'type' = 'marketplace';
     'segment' = 'everything';

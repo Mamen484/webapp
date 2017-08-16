@@ -1,15 +1,15 @@
 <md-card class="channel-card">
   <md-card-content>
-    <div> <img md-card-image [src]="appUrl + '/images' + channel.image" [alt]="channel.name"></div>
+    <div> <img md-card-image [src]="appUrl + '/images' + channel._embedded.channel._links.image.href" [alt]="channel.name"></div>
     <a class="channel-info-line channel-revenue" [href]="appUrl + '/statistics'">
       <md-icon>monetization_on</md-icon>
       <span>{{channel.statistics.revenue | largeNumberSuffix | sfCurrency:channel.statistics.symbol}}</span>
     </a>
-    <a class="channel-info-line channel-checked" [href]="appUrl + '/' + channel.name">
+    <a class="channel-info-line channel-checked" [href]="appUrl + '/' + channel._embedded.channel.name">
       <md-icon>check_circle</md-icon>
       <span>{{channel.statistics.selected | largeNumberSuffix }} checked</span>
     </a>
-    <a class="channel-info-line channel-issues" [href]="appUrl + '/' +  channel.name">
+    <a class="channel-info-line channel-issues" [href]="appUrl + '/' +  channel._embedded.channel.name">
       <md-icon>error</md-icon>
       <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }} issues</span>
     </a>

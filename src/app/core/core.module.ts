@@ -22,8 +22,8 @@ import { statisticsMock } from '../../mocks/statistics-mock';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ChannelService } from './services/channel.service';
-import { ChannelDynamicMock } from '../../mocks/channels-response-mock';
-import { PagedResponseFactory } from '../../mocks/paged-response-factory';
+import { channelsStaticMock } from '../../mocks/channels-mock';
+import { ChannelsRequestParams } from './entities/channels-request-params';
 
 @NgModule({
     imports: [
@@ -70,6 +70,6 @@ export function getStatistics() {
 }
 
 // TODO: remove mocking function when API is ready
-export function getChannels({page = 1, limit = 6}) {
-    return Observable.of(new PagedResponseFactory(page, limit, ChannelDynamicMock, 'channel')).delay(Math.round(Math.random() * 700));
+export function getChannels(params: ChannelsRequestParams) {
+    return Observable.of(channelsStaticMock(params)).delay(Math.round(Math.random() * 700));
 }

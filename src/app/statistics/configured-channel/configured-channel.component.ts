@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ChannelStatistics } from '../../core/channel-statistics';
+import { StoreChannel } from '../../core/entities/store-channel';
 
 @Component({
     selector: 'sf-configured-channel',
@@ -9,7 +9,7 @@ import { ChannelStatistics } from '../../core/channel-statistics';
 })
 export class ConfiguredChannelComponent implements OnInit {
 
-    @Input() channel: { name: string, image: string, statistics: ChannelStatistics };
+    @Input() channel: StoreChannel;
     appUrl = environment.APP_URL;
 
     constructor() {

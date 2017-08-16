@@ -2,16 +2,13 @@
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <sf-store-statistics [statistics]="statistics"></sf-store-statistics>
-    <sf-search-channels (applyFilter)="onApplyFilter($event)" [processing]="processingConfigured || processingNew" ></sf-search-channels>
+    <sf-search-channels (applyFilter)="onApplyFilter($event)"
+                        [processing]="processingFilters"></sf-search-channels>
     <div fxLayout="row" fxLayoutGap="2%" fxLayoutWrap="wrap">
         <div fxFlex.md="23" fxFlex.sm="31.33" fxFlex.lg="23" fxFlex.xl="14.66"
-             *ngFor="let channel of configuredChannels">
-            <sf-configured-channel [channel]="channel"></sf-configured-channel>
-        </div>
-        <div fxFlex.md="23" fxFlex.sm="31.33" fxFlex.lg="23" fxFlex.xl="14.66"
-             *ngFor="let channel of suggestedChannels._embedded.channel">
-            <sf-suggested-channel [channel]="channel"></sf-suggested-channel>
+             *ngFor="let channel of channels._embedded.channel">
+            <sf-configured-channel [channel]="channel" *ngIf="channel.isConfigured"></sf-configured-channel>
+            <sf-suggested-channel [channel]="channel" *ngIf="!channel.isConfigured"></sf-suggested-channel>
         </div>
     </div>
-
 </div>
