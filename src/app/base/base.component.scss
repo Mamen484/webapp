@@ -2,10 +2,5 @@
 @import '../../sass/variables';
 
 .content {
-  margin-top: $toolbar-height;
   margin-left: $left-sidebar-width + $content-margin;
-
-  @media screen and ($mat-xsmall) {
-    margin-top: $toolbar-tablet-height + $content-margin;
-  }
 }

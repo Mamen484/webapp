@@ -8,12 +8,8 @@ $grey: mat-palette($mat-grey);
 $green: mat-palette($mat-green);
 $theme: mat-light-theme($primary, $accent, $warn);
 
-
 $toolbar-height: 64px;
-$toolbar-tablet-height: 56px;
-
 $left-sidebar-width: 75px;
-
 
 $sf-typography: mat-typography-config(
         $font-family: 'Noto Sans'
@@ -22,3 +18,4 @@ $sf-typography: mat-typography-config(
 $content-margin: 20px;
 
 $config: mat-typography-config();
+$min-width: 1024px;

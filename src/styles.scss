@@ -7,10 +7,10 @@
 @import 'sass/utils';
 
 html, body, app-root {
+  min-width: $min-width;
   height: 100vh;
   margin: 0;
   display: block;
-  overflow: inherit;
   background-color: mat-color($grey, 50);
 }
 

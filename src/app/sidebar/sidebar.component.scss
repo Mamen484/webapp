@@ -12,11 +12,6 @@ md-sidenav.mat-sidenav.sidenav {
   height: calc(100vh - #{$toolbar-height});
   border-right: 1px solid mat-color($grey, 300);
 
-  @media screen and ($mat-xsmall) {
-    top: $toolbar-tablet-height;
-    height: calc(100vh - #{$toolbar-tablet-height});
-  }
-
   md-icon {
     font-size: mat-font-size($config, headline);
     color: mat-color($grey, 500);

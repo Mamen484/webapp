@@ -2,10 +2,11 @@
 
 
 .sf-top-menu {
+  min-width: $min-width;
   width: 100vw;
   top: 0;
   left: 0;
-  position: fixed;
+  position: sticky;
   z-index: 10;
 
   .sf-top-menu-container {
