@@ -10,11 +10,11 @@ md-sidenav.mat-sidenav.sidenav {
   text-align: center;
   top: $toolbar-height;
   height: calc(100vh - #{$toolbar-height});
-  border-right: 1px solid mat-color($grey, 300);
+  border-right: 1px solid mat-color($grey, 200);
 
   md-icon {
     font-size: mat-font-size($config, headline);
-    color: mat-color($grey, 500);
+    color: mat-color($grey, 1000, 0.54);
     cursor: pointer;
     margin: auto;
 
@@ -40,4 +40,14 @@ md-sidenav-container {
   position: absolute;
   width: 100%;
   bottom: 20px;
+}
+
+a.channel-logo:hover, a.channel-logo:focus {
+  background: transparent;
+}
+
+a.channel-logo {
+  img {
+    vertical-align: middle;
+  }
 }

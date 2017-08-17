@@ -12,23 +12,23 @@
                          [attr.data-badge]="(currentStore | async).order.total">shopping_basket</md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="OUTILS" i18n-mdTooltip mdTooltipPosition="after"
-                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools">
-                <md-icon>settings</md-icon>
-            </md-list-item>
-
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTIQUES"
+            <md-list-item [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTIQUES"
                           i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
                 <md-icon>trending_up</md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"  i18n-mdTooltip
+            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="OUTILS" i18n-mdTooltip mdTooltipPosition="after"
+                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools">
+                <md-icon>build</md-icon>
+            </md-list-item>
+
+            <md-list-item [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"  i18n-mdTooltip
                           mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
                 <md-icon>apps</md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" [mdMenuTriggerFor]="appsMenu" mdTooltip="UNIVERSITY"
-                          i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.university">
+            <md-list-item  mdTooltip="UNIVERSITY" i18n-mdTooltip mdTooltipPosition="after"
+                           *ngIf="(currentStore | async).permission.university">
                 <md-icon>school</md-icon>
             </md-list-item>
         </md-list>
@@ -41,7 +41,7 @@
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu">
     <a md-menu-item href="{{appUrl}}/channels/add" i18n>Ajouter une plateforme</a>
-    <a md-menu-item *ngFor="let channel of (channels | async)" [href]="appUrl + channel._links.self.href">
+    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" [href]="appUrl + channel._links.self.href">
         <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
     </a>
     <a md-menu-item href="{{appUrl}}/tools/export" i18n>Export personnalisé</a>
