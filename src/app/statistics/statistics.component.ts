@@ -81,7 +81,6 @@ export class StatisticsComponent {
     }
 
     protected initialize() {
-
         this.channelService.getChannels(Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}))
             .subscribe(data => {
                 this.channels = data;
