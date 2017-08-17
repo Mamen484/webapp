@@ -1,5 +1,12 @@
 import './polyfills.ts';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/distinct';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/count';
 
 import 'zone.js/dist/long-stack-trace-zone';
 import 'zone.js/dist/proxy.js';

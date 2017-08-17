@@ -119,6 +119,25 @@ describe('StatisticsComponent', () => {
             component.onScroll();
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(1); // no new calls were made
         });
+        it ('should disable infinite scroll when all pages are loaded', () => {
+            component.onScroll(); // page = 4
+            component.onScroll(); // page = 5
+            component.onScroll(); // page = 6
+            component.onScroll(); // page = 7
+            component.onScroll(); // page = 8
+            component.onScroll(); // page = 9
+            component.onScroll(); // page = 10
+            component.onScroll(); // page = 11
+            expect(component.channels.page).toEqual(11);
+            expect(component.channels.pages).toEqual(11);
+            expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(9);
+            // try to scroll one more time
+            component.onScroll(); // page = 11
+            expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(9);
+            expect(component.channels.page).toEqual(11);
+            expect(component.channels.pages).toEqual(11);
+            expect(component.infiniteScrollDisabled).toEqual(true);
+        })
     });
 
     describe('filtering', () => {

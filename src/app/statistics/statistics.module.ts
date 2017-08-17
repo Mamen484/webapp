@@ -19,7 +19,7 @@ import { FilterChannelsDialogComponent } from './filter-channels-dialog/filter-c
         StoreStatisticsComponent,
         SuggestedChannelComponent,
         SearchChannelsComponent,
-        FilterChannelsDialogComponent
+        FilterChannelsDialogComponent,
     ],
     entryComponents: [
         FilterChannelsDialogComponent
