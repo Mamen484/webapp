@@ -8,3 +8,11 @@
   position: fixed;
   left: $left-sidebar-width;
 }
+
+// this override prevents reducing toolbar height for small screens, we don't support small screens
+@media screen and ($mat-xsmall) {
+  .sf-top-menu md-toolbar,
+  .sf-top-menu md-toolbar-row {
+    min-height: $toolbar-height;
+  }
+}

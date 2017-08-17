@@ -1,5 +1,5 @@
 <div class="sf-top-menu">
-    <md-toolbar role="toolbar" color="primary" class="mat-elevation-z4">
+    <md-toolbar role="toolbar" color="primary" class="mat-elevation-z2">
         <div class="sf-top-menu-container">
             <md-toolbar-row>
                 <a class="nav-link home" [href]="appUrl">
@@ -12,54 +12,23 @@
                     <md-icon class="sf-search-icon">search</md-icon>
                     <input placeholder="Besoin d'aide" i18n-placeholder class="toolbar-search">
                 </div>
-
-                <md-menu #langMenu="mdMenu" class="sf-language-menu" [overlapTrigger]="false">
-                        <a md-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{appUrl}}/index/switchlang/{{locale[0]}}">
-                            <img src="/assets/images/flags/{{locale[0]}}.png" class="sf-nav-selected-language  sf-flag">
-                            <span i18n>{{locale[1]}}</span>
-                        </a>
-                </md-menu>
-                <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
-                    <img src="/assets/images/flags/{{localeId}}.png" >
-                </div>
                 <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
-                        [attr.data-badge]="(currentStore | async).timeline.total" [mdMenuTriggerFor]="notificationsMenu">notifications_none</md-icon>
+                         [attr.data-badge]="(currentStore | async).timeline.total">notifications_none
+                </md-icon>
                 <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
                 <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
-                    <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
+                    <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n
+                       *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
                     <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
-                    <a md-menu-item href="{{appUrl}}/facturation" i18n *ngIf="(currentStore | async).permission.facturation">Membership</a>
+                    <a md-menu-item href="{{appUrl}}/facturation" i18n
+                       *ngIf="(currentStore | async).permission.facturation">Membership</a>
                     <a md-menu-item href="{{appUrl}}/tools/access" i18n>Access</a>
                     <hr>
-                    <button md-menu-item *ngFor="let store of (userInfo | async)._embedded.store"
-                            (click)="chooseStore(store)">{{store.name}}
-                    </button>
+                    <a md-menu-item *ngFor="let store of (userInfo | async)._embedded.store"
+                       href="{{appUrl}}/index/switch/{{store.name}}">{{store.name}}
+                    </a>
                     <hr>
-                    <a md-menu-item n18n>Disconnection</a>
-
-                </md-menu>
-                <md-menu #notificationsMenu="mdMenu" [overlapTrigger]="false">
-                    <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon>settings</md-icon>
-                        <div class="notification-text">La régle "Marque" a été modifiée</div>
-                        <div class="last-visited">II y a 3 minutes</div>
-                    </div>
-
-                    <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon>shopping_basket</md-icon>
-                        <div class="notification-text">Une commande annulée</div>
-                        <div class="last-visited">II y a 10 minutes</div>
-                    </div>
-
-                    <div md-menu-item class="sf-notification-menu-item">
-                        <md-icon>shopping_basket</md-icon>
-                        <div class="notification-text">Une commande en cours</div>
-                        <div class="last-visited">II y a 2 heures</div>
-                    </div>
-
-                        <a md-menu-item class="sf-notification-menu-item all-notifications">
-                            <span>voir toutes les notifications</span>
-                        </a>
+                    <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
 
                 </md-menu>
             </md-toolbar-row>

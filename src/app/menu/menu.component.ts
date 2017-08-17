@@ -22,17 +22,10 @@ export class MenuComponent {
 
     appUrl = environment.APP_URL;
 
-    localizations = toPairs(ChannelLanguage);
-
     constructor(protected _appStore: AppStore<AppState>,
-                protected _storeService: StoreService,
-                @Inject(LOCALE_ID) public localeId = environment.DEFAULT_LANGUAGE) {
+                protected _storeService: StoreService) {
         this.userInfo = this._appStore.select('userInfo');
         this.currentStore = this._appStore.select('currentStore');
-        if (!this.localizations.find(locale => locale[0] === this.localeId)) {
-            this.localeId = environment.DEFAULT_LANGUAGE;
-        }
-        this.localizations = this.localizations.filter(locale => locale[0] !== this.localeId);
 
     }
 
