@@ -7,15 +7,15 @@
     </a>
     <a class="channel-info-line channel-checked" [href]="appUrl + '/' + channel._embedded.channel.name">
       <md-icon>check_circle</md-icon>
-      <span>{{channel.statistics.selected | largeNumberSuffix }} checked</span>
+      <span>{{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
     </a>
     <a class="channel-info-line channel-issues" [href]="appUrl + '/' +  channel._embedded.channel.name">
       <md-icon>error</md-icon>
-      <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }} issues</span>
+      <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }}  <ng-container i18n>issues</ng-container></span>
     </a>
     <div class="channel-info-line">
       <md-icon>open_in_new</md-icon>
-      <span><a href="{{appUrl}}/tools/relaunch" target="_blank">Quickfix</a></span>
+      <span><a href="{{appUrl}}/tools/relaunch" target="_blank" i18n>Quickfix</a></span>
     </div>
   </md-card-content>
 </md-card>

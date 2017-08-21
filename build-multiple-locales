@@ -1,7 +1,9 @@
-for lang in it en; do \
+for lang in fr it es de en pt; do \
     LOCALE_ID=$lang production=true node_modules/.bin/ts-node compile-environment.ts && \
     ng build --output-path=dist/$lang \
              --prod \
              --bh /$lang/ \
-             --locale=$lang; \
+             --locale=$lang \
+             --i18nFile=src/locale/messages.$lang.xlf \
+             --i18nFormat=xlf
   done

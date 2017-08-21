@@ -25,7 +25,6 @@ export class LocaleIdService {
     }
 
     constructor(@Inject(LOCALE_ID) protected originalLocaleId) {
-        console.log(this.originalLocaleId);
         this.localeId = LocaleIdService.detectLocale(this.originalLocaleId);
     }
 }
