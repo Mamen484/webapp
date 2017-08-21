@@ -3,7 +3,7 @@ import { StoreChannel } from '../../app/core/entities/store-channel';
 
 @Component({
     selector: 'sf-configured-channel',
-    template: '',
+    template: ' ',
 })
 export class ConfiguredChannelStubComponent {
 

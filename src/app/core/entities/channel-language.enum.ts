@@ -1,6 +1,6 @@
 export enum ChannelLanguage {
     fr = 'France',
-    gb = 'United Kingdom',
+    en = 'United Kingdom',
     de = 'Germany',
     es = 'Spain',
     it = 'Italy',

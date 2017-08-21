@@ -1,6 +1,6 @@
 <md-card class="channel-card">
   <md-card-content>
-    <div> <img md-card-image [src]="appUrl + '/images' + channel._embedded.channel._links.image.href" [alt]="channel.name"></div>
+    <div> <img md-card-image [src]="appUrl + '/images' + channel._embedded.channel._links.image.href" [alt]="channel._embedded.channel.name"></div>
     <a class="channel-info-line channel-revenue" [href]="appUrl + '/statistics'">
       <md-icon>monetization_on</md-icon>
       <span>{{channel.statistics.revenue | largeNumberSuffix | sfCurrency:channel.statistics.symbol}}</span>

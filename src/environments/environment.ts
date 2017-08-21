@@ -1,6 +1,7 @@
 // dev environment
 export const environment = {
     production: false,
+    LOCALE_ID: 'en',
     DEFAULT_LANGUAGE: 'fr',
     APP_URL: 'https://app.shopping-feed.com',
     API_URL: 'https://staging.api.shopping-feed.com/v1',

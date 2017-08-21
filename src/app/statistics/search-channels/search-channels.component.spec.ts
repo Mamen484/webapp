@@ -62,14 +62,14 @@ describe('SearchChannelsComponent', () => {
             expect(value instanceof ChannelsRequestParams).toEqual(true);
             expect(value.searchQuery).toEqual('');
             expect(value.type).toEqual('retargeting');
-            expect(value.country).toEqual('gb');
+            expect(value.country).toEqual('en');
             expect(value.segment).toEqual('fashion');
             done();
         });
 
         let filter = new ChannelsRequestParams();
         filter.type = 'retargeting';
-        filter.country = 'gb';
+        filter.country = 'en';
         filter.segment = 'fashion';
         afterClosedSpy.and.returnValue(Observable.of(filter));
         component.openDialog();
@@ -81,14 +81,14 @@ describe('SearchChannelsComponent', () => {
             expect(value instanceof ChannelsRequestParams).toEqual(true);
             expect(value.searchQuery).toEqual('babadag');
             expect(value.type).toEqual('retargeting');
-            expect(value.country).toEqual('gb');
+            expect(value.country).toEqual('en');
             expect(value.segment).toEqual('fashion');
             done();
         });
         component.filter.searchQuery = 'babadag'
         let filter = new ChannelsRequestParams();
         filter.type = 'retargeting';
-        filter.country = 'gb';
+        filter.country = 'en';
         filter.segment = 'fashion';
         afterClosedSpy.and.returnValue(Observable.of(filter));
         component.openDialog();
@@ -99,14 +99,14 @@ describe('SearchChannelsComponent', () => {
             expect(value instanceof ChannelsRequestParams).toEqual(true);
             expect(value.searchQuery).toEqual('babadag');
             expect(value.type).toEqual('');
-            expect(value.country).toEqual('gb');
+            expect(value.country).toEqual('en');
             expect(value.segment).toEqual('fashion');
             done();
         });
 
         component.filter.searchQuery = 'babadag';
         component.filter.type = 'retargeting';
-        component.filter.country = 'gb';
+        component.filter.country = 'en';
         component.filter.segment = 'fashion';
         component.cancelFilter('type');
     });

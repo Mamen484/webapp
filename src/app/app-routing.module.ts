@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
 
 const routes: Routes = [
     {
@@ -12,6 +13,9 @@ const routes: Routes = [
         resolve: {
             userInfo: AggregatedUserInfoResolveGuard
         },
+        canActivate: [
+            CheckProperLocaleGuard
+        ],
         children: [
             {
                 path: '',

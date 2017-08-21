@@ -1,0 +1,7 @@
+for lang in it en; do \
+    LOCALE_ID=$lang production=true node_modules/.bin/ts-node compile-environment.ts && \
+    ng build --output-path=dist/$lang \
+             --prod \
+             --bh /$lang/ \
+             --locale=$lang; \
+  done

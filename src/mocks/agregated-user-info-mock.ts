@@ -2,7 +2,7 @@ export const aggregatedUserInfoMock = {
     'login': 'admin',
     'email': 'clement@shopping-feed.com',
     'roles': ['employee', 'admin'],
-    'language': 'us_US',
+    'language': 'it_IT',
     '_links': {'self': {'href': '/v1/me'}},
     '_embedded': {
         'account': {'id': 19958, '_links': {'self': {'href': '/v1/account/19958'}}},

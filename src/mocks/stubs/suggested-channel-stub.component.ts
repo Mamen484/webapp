@@ -3,7 +3,7 @@ import { Channel } from '../../app/core/entities/channel';
 
 @Component({
     selector: 'sf-suggested-channel',
-    template: ''
+    template: ' '
 })
 export class SuggestedChannelStubComponent {
     @Input() channel: Channel;

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'sf-search-channels',
-    template: '',
+    template: ' ',
 })
 export class SearchChannelsStubComponent {
 

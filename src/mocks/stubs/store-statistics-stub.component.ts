@@ -3,7 +3,7 @@ import { Statistics } from '../../app/core/entities/statistics';
 
 @Component({
     selector: 'sf-store-statistics',
-    template: '',
+    template: ' ',
 })
 export class StoreStatisticsStubComponent {
 

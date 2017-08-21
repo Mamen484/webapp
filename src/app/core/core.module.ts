@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
@@ -27,6 +27,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { ChannelService } from './services/channel.service';
 import { channelsStaticMock } from '../../mocks/channels-mock';
 import { ChannelsRequestParams } from './entities/channels-request-params';
+import { LocaleIdService } from './services/locale-id.service';
+import { environment } from '../../environments/environment';
+import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 
 @NgModule({
     imports: [
@@ -42,12 +45,15 @@ import { ChannelsRequestParams } from './entities/channels-request-params';
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
+        CheckProperLocaleGuard,
+        LocaleIdService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
         // StoreService,
         {provide: UserService, useValue: {fetchAggregatedInfo}},
         {provide: StoreService, useValue: {getAllConfiguredChannels, getStatistics}},
-        {provide: ChannelService, useValue: {getChannels}}
+        {provide: ChannelService, useValue: {getChannels}},
+        {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
     ],
     declarations: []
 })
