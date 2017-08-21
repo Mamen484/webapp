@@ -26,4 +26,16 @@ describe('UserService', () => {
                 expect(req.request.method).toEqual('GET');
                 httpMock.verify();
             }));
+
+    it('should request /auth resource',
+        inject([UserService, HttpTestingController],
+            (service: UserService, httpMock: HttpTestingController) => {
+                service.login('username1', 'password1').subscribe();
+                const req = httpMock.expectOne(environment.API_URL + '/auth');
+                expect(req.request.method).toEqual('POST');
+                expect(req.request.body.body.username).toEqual('username1');
+                expect(req.request.body.body.password).toEqual('password1');
+                expect(req.request.body.body.grant_type).toEqual('password');
+                httpMock.verify();
+            }));
 });

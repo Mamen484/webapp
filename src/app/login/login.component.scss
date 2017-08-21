@@ -1,0 +1,57 @@
+@import '../../sass/variables';
+
+.login-container {
+  display: flex;
+  height: calc(100vh - #{$toolbar-height});
+  text-align: center;
+
+  md-card {
+    padding: 25px 50px;
+  }
+
+  .login-title {
+    color: mat-color($grey, 1000, 0.54);
+  }
+
+  .login-form {
+    margin: auto;
+  }
+
+  .login-input {
+    display: block;
+    width: 425px;
+  }
+
+  .login-actions {
+
+    .login-button {
+      margin-top: 30px;
+      font-weight: bold;
+    }
+  }
+
+  a.forgot-password {
+    float: right;
+    text-decoration: none;
+    color: mat-color($grey, 1000, 0.87);
+    margin-right: 25px;
+    margin-bottom: 15px;
+  }
+
+}
+
+.error {
+  color: mat-color($warn);
+}
+
+.menu-blank-space {
+  flex: 1;
+}
+
+.sf-nav-selected-language {
+  margin-right: 30px;
+}
+
+.sf-flag {
+  margin-right: 10px;
+}

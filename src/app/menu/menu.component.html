@@ -1,37 +1,26 @@
-<div class="sf-top-menu">
-    <md-toolbar role="toolbar" color="primary" class="mat-elevation-z2">
-        <div class="sf-top-menu-container">
-            <md-toolbar-row>
-                <a class="nav-link home" [href]="appUrl">
-                    <img alt="Home" title="Home" i18n-alt i18n-title width="23" src="assets/images/SF_white.svg">
-                </a>
+<sf-menu-container>
+    <div class="sf-nav-welcome-text md-title" i18n>{{(currentStore | async).name}}</div>
 
-                <div class="sf-nav-welcome-text md-title" i18n>{{(currentStore | async).name}}</div>
-
-                <div class="toolbar-search-container">
-                    <md-icon class="sf-search-icon">search</md-icon>
-                    <input placeholder="Besoin d'aide" i18n-placeholder class="toolbar-search">
-                </div>
-                <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
-                         [attr.data-badge]="(currentStore | async).timeline.total">notifications_none
-                </md-icon>
-                <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
-                <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
-                    <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n
-                       *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
-                    <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
-                    <a md-menu-item href="{{appUrl}}/facturation" i18n
-                       *ngIf="(currentStore | async).permission.facturation">Membership</a>
-                    <a md-menu-item href="{{appUrl}}/tools/access" i18n>Access</a>
-                    <hr>
-                    <a md-menu-item *ngFor="let store of (userInfo | async)._embedded.store"
-                       href="{{appUrl}}/index/switch/{{store.name}}">{{store.name}}
-                    </a>
-                    <hr>
-                    <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
-
-                </md-menu>
-            </md-toolbar-row>
-        </div>
-    </md-toolbar>
-</div>
+    <div class="toolbar-search-container">
+        <md-icon class="sf-search-icon">search</md-icon>
+        <input placeholder="Besoin d'aide" i18n-placeholder class="toolbar-search">
+    </div>
+    <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
+             [attr.data-badge]="(currentStore | async).timeline.total">notifications_none
+    </md-icon>
+    <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
+    <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
+        <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n
+           *ngIf="(currentStore | async).permission.marketplaces">Settings</a>
+        <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
+        <a md-menu-item href="{{appUrl}}/facturation" i18n
+           *ngIf="(currentStore | async).permission.facturation">Membership</a>
+        <a md-menu-item href="{{appUrl}}/tools/access" i18n>Access</a>
+        <hr>
+        <a md-menu-item *ngFor="let store of (userInfo | async)._embedded.store"
+           href="{{appUrl}}/index/switch/{{store.name}}">{{store.name}}
+        </a>
+        <hr>
+        <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
+    </md-menu>
+</sf-menu-container>

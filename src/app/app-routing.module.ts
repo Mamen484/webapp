@@ -5,6 +5,7 @@ import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
     {
@@ -23,6 +24,10 @@ const routes: Routes = [
             }
         ]
     },
+    {
+        path: 'login',
+        component: LoginComponent
+    }
 ];
 
 @NgModule({

@@ -1,0 +1,44 @@
+<sf-menu-container>
+    <md-menu #langMenu="mdMenu" class="sf-language-menu" [overlapTrigger]="false">
+        <a md-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="/{{locale[0]}}/login">
+            <img src="/assets/images/flags/{{locale[0]}}.png" class="sf-flag">
+            <span i18n>{{locale[1]}}</span>
+        </a>
+    </md-menu>
+    <div class="menu-blank-space"></div>
+    <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
+        <img src="/assets/images/flags/{{localeId}}.png" >
+    </div>
+</sf-menu-container>
+<div class="login-container">
+    <div class="login-form">
+        <md-card>
+            <md-card-title class="login-title mat-display-1" i18n>Login</md-card-title>
+            <md-card-content>
+                <form (ngSubmit)="login()">
+
+                    <md-input-container class="login-input">
+                        <input mdInput i18n-placeholder placeholder="Username/Email" name="username" [(ngModel)]="username">
+                    </md-input-container>
+
+
+                    <md-input-container class="login-input">
+                        <input mdInput i18n-placeholder placeholder="Password" name="password" type="password" [(ngModel)]="password">
+                    </md-input-container>
+
+                    <div class="error">{{error}}</div>
+
+                    <div class="login-actions">
+                        <button md-button md-raised-button color="primary" class="login-button" [disabled]="!username || !password" i18n>LOGIN</button>
+                    </div>
+                </form>
+
+            </md-card-content>
+
+            <md-card-footer>
+                <a class="forgot-password mat-caption" i18n>Forgot the password?</a>
+            </md-card-footer>
+
+        </md-card>
+    </div>
+</div>

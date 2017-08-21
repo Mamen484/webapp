@@ -14,5 +14,15 @@ export class UserService {
         return <Observable<AggregatedUserInfo>>(this.httpClient.get(`${environment.API_URL}/me`));
     }
 
+    public login(username, password) {
+        return this.httpClient.post(`${environment.API_URL}/auth`, {
+            body: {
+                grant_type: 'password',
+                username,
+                password
+            }
+        })
+    }
+
 }
 
