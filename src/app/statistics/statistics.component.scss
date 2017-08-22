@@ -7,3 +7,7 @@
   height: calc(100vh - #{$toolbar-height});
   overflow: scroll;
 }
+
+md-card.channel-card {
+  margin-bottom: 20px;
+}

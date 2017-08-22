@@ -24,8 +24,8 @@ const channelsMock = {
                 'channel': 789,
                 '_embedded': {
                     'channel': {
-                        'name': 'amazon1',
-                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/amazon.jpg'}}
+                        'name': 'ebay',
+                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/ebay.png'}}
                     }
                 },
                 '_links': {'self': {'href': '/v1/storechannel/123'}}
@@ -37,7 +37,7 @@ const channelsMock = {
                 '_embedded': {
                     'channel': {
                         'name': 'amazon2',
-                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/amazon.jpg'}}
+                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/googleshopping.png'}}
                     }
                 },
                 '_links': {'self': {'href': '/v1/storechannel/123'}}
@@ -49,7 +49,7 @@ const channelsMock = {
                 '_embedded': {
                     'channel': {
                         'name': 'amazon3',
-                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/amazon.jpg'}}
+                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/cdiscount.png'}}
                     }
                 },
                 '_links': {'self': {'href': '/v1/storechannel/123'}}
@@ -61,7 +61,7 @@ const channelsMock = {
                 '_embedded': {
                     'channel': {
                         'name': 'amazon4',
-                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/amazon.jpg'}}
+                        '_links': {'self': {'href': '/v1/channel/1'}, 'image': {'href': '/etsy.png'}}
                     }
                 },
                 '_links': {'self': {'href': '/v1/storechannel/123'}}
