@@ -1,10 +1,22 @@
 @import '../../../sass/variables';
 
 .statistics-welcome {
-  font-size: mat-font-size($config, display-1);
+  margin-bottom: 20px;
 }
 
 .statistics-item {
   margin-top: 10px;
   text-align: center;
+
+  .statistics-item-title {
+    margin-bottom: 25px;
+  }
+}
+
+.statistics-item-title, .description {
+  color: mat-color($primary, 600);
+}
+
+.statistics-value {
+  margin-bottom: 40px;
 }
