@@ -97,6 +97,7 @@ export class ShopifyAuthentifyService {
                         url += param + '=' + queryParam[param] + '&';
                     }
                 }
+                localStorage.removeItem('sf.path.initial');
                 window.location.href = url;
             });
     }
