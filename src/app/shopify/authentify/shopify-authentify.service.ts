@@ -16,7 +16,6 @@ export class ShopifyAuthentifyService {
 
     public getAuthorizationUrl(shop: string): Observable<string> {
         let name = shop.split('.myshopify.com')[0];
-        console.log(this.getHeaders());
 
         return this.http.get(this.apiUrl+'/shopify/auth/'+name, {headers: this.getHeaders()})
             .map((response: Response ) => response.json())
