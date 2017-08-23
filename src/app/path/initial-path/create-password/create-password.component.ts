@@ -31,6 +31,9 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
 
     if (cache){
         this.store = JSON.parse(cache) as CreateStoreModel;
+        if (this.store.store.storeId > 0){
+          this.shopifyService.updateStore(this.store, this.queryParam);
+        }
     }
     else {
         this.queryParamsSubscription = this.route.queryParams
@@ -40,14 +43,14 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
                 this.shopifyService.getStoreData(params['shop'] || '', params)
                     .subscribe((store: CreateStoreModel) => {
                         this.store = store;
+                        if (this.store.store.storeId > 0){
+                          this.shopifyService.updateStore(this.store, this.queryParam);
+                        }
                         localStorage.setItem('sf.path.initial', JSON.stringify(store));
                     });
             });
     }
 
-    if (this.store.store.storeId > 0){
-        this.shopifyService.updateStore(this.store, this.queryParam);
-    }
   }
 
   public createPassword() {
