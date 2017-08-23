@@ -15,4 +15,11 @@ export class TimelineService {
             })
     }
 
+    getEventUpdates() {
+        return this.httpClient.get(environment.API_URL + '/timeline',
+            {
+                params: new HttpParams().set('filter', 'updates')
+            })
+    }
+
 }

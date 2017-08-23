@@ -33,6 +33,8 @@ import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { TimelineService } from './services/timeline.service';
 import { events } from '../../mocks/events-mock';
 import { EventsResolveGuard } from './guards/events-resolve.guard';
+import { EventUpdatesGuard } from './guards/event-updates.guard';
+import { updates } from '../../mocks/updates-mock';
 
 @NgModule({
     imports: [
@@ -50,7 +52,8 @@ import { EventsResolveGuard } from './guards/events-resolve.guard';
         CheckProperLocaleGuard,
         EventsResolveGuard,
         LocaleIdService,
-        {provide: TimelineService, useValue: {getEvents}},
+        EventUpdatesGuard,
+        {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
         // StoreService,
@@ -89,4 +92,9 @@ export function getChannels(params: ChannelsRequestParams) {
 
 export function getEvents() {
     return Observable.of(events);
+}
+
+
+export function getEventUpdates() {
+    return Observable.of(updates);
 }

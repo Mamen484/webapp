@@ -9,7 +9,11 @@
   color: mat-color($accent);
 }
 
-.event {
+.channel-name {
+  margin-right: 20px;
+}
+
+.event, .update {
   width: calc(100% - 40px); //40px - list-item paddings + margin between card and sidebar
 }
 
@@ -32,4 +36,17 @@ md-list-item {
 
 md-list {
   padding: 0;
+}
+
+.update {
+  background: mat-color($accent, 700, 0.05);
+  .event-description {
+    text-transform: capitalize;
+  }
+
+  md-list-item {
+    &:hover {
+      background-color: mat-color($grey, 1000, 0.1);
+    }
+  }
 }

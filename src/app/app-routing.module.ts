@@ -7,6 +7,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsResolveGuard } from './core/guards/events-resolve.guard';
+import { EventUpdatesGuard } from './core/guards/event-updates.guard';
 
 const routes: Routes = [
     {
@@ -27,7 +28,8 @@ const routes: Routes = [
                 path: 'timeline',
                 component: TimelineComponent,
                 resolve: {
-                    timeline: EventsResolveGuard
+                    timeline: EventsResolveGuard,
+                    updates: EventUpdatesGuard
                 }
             }
         ]

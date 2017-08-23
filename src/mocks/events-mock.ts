@@ -12,7 +12,7 @@ export const events = {
             {
                 'type': 'rule.transformation',
                 'operation': 'update',
-                'occurredAt': '2016-10-19T09:25:45+0000',
+                'occurredAt': '2016-10-19T09:12:45+0000',
                 '_embedded': {
                     'rules': [
                         {
@@ -30,7 +30,7 @@ export const events = {
             {
                 'type': 'rule.transformation',
                 'operation': 'create',
-                'occurredAt': '2016-10-19T09:25:45+0000',
+                'occurredAt': '2016-10-19T10:25:45+0000',
                 '_embedded': {
                     'rules': [
                         {
@@ -48,7 +48,7 @@ export const events = {
             {
                 'type': 'rule.transformation',
                 'operation': 'delete',
-                'occurredAt': '2016-10-18T09:25:45+0000',
+                'occurredAt': '2016-10-18T16:25:45+0000',
                 '_embedded': {
                     'rules': [
                         {
@@ -65,6 +65,78 @@ export const events = {
             },
             {
                 'type': 'rule.transformation',
+                'operation': 'read',
+                'occurredAt': '2016-10-19T09:49:45+0000',
+                '_embedded': {
+                    'rules': [
+                        {
+                            '_links': {
+                                'self': {
+                                    'href': '/tools/rules'
+                                }
+                            },
+                            'id': 3,
+                            'name': 'Une règle'
+                        }
+                    ]
+                }
+            },
+            {
+                'type': 'rule.segmentation',
+                'operation': 'update',
+                'occurredAt': '2016-10-19T09:21:45+0000',
+                '_embedded': {
+                    'rules': [
+                        {
+                            '_links': {
+                                'self': {
+                                    'href': '/tools/rules'
+                                }
+                            },
+                            'id': 3,
+                            'name': 'Une règle'
+                        }
+                    ]
+                }
+            },
+            {
+                'type': 'rule.segmentation',
+                'operation': 'create',
+                'occurredAt': '2016-10-19T09:15:36+0000',
+                '_embedded': {
+                    'rules': [
+                        {
+                            '_links': {
+                                'self': {
+                                    'href': '/tools/rules'
+                                }
+                            },
+                            'id': 3,
+                            'name': 'Une règle'
+                        }
+                    ]
+                }
+            },
+            {
+                'type': 'rule.segmentation',
+                'operation': 'delete',
+                'occurredAt': '2016-10-18T02:37:45+0000',
+                '_embedded': {
+                    'rules': [
+                        {
+                            '_links': {
+                                'self': {
+                                    'href': '/tools/rules'
+                                }
+                            },
+                            'id': 3,
+                            'name': 'Une règle'
+                        }
+                    ]
+                }
+            },
+            {
+                'type': 'rule.segmentation',
                 'operation': 'read',
                 'occurredAt': '2016-10-19T09:25:45+0000',
                 '_embedded': {
@@ -84,17 +156,16 @@ export const events = {
             {
                 'type': 'order.lifecycle',
                 'operation': 'ship',
-                'occurredAt': '2016-10-18T09:25:45+0000',
+                'occurredAt': '2016-10-18T10:12:45+0000',
                 '_embedded': {
-                    'rules': [
+                    'order': [
                         {
                             '_links': {
                                 'self': {
                                     'href': '/tools/rules'
                                 }
                             },
-                            'id': 3,
-                            'name': 'Une règle'
+                            reference: 22122
                         }
                     ]
                 }
@@ -102,17 +173,16 @@ export const events = {
             {
                 'type': 'order.lifecycle',
                 'operation': 'import',
-                'occurredAt': '2016-10-17T09:25:45+0000',
+                'occurredAt': '2016-10-17T09:21:45+0000',
                 '_embedded': {
-                    'rules': [
+                    'order': [
                         {
                             '_links': {
                                 'self': {
                                     'href': '/tools/rules'
                                 }
                             },
-                            'id': 3,
-                            'name': 'Une règle'
+                            reference: 13445
                         }
                     ]
                 }
