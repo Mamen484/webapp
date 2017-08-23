@@ -12,9 +12,11 @@
                     <md-icon class="sf-search-icon">search</md-icon>
                     <input placeholder="Besoin d'aide" i18n-placeholder class="toolbar-search">
                 </div>
-                <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
-                         [attr.data-badge]="(currentStore | async).timeline.total">notifications_none
-                </md-icon>
+                <a routerLink="/timeline" class="sf-icon-link">
+                    <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': (currentStore | async).timeline.total > 0}"
+                             [attr.data-badge]="(currentStore | async).timeline.total">notifications_none
+                    </md-icon>
+                </a>
                 <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
                 <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
                     <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n

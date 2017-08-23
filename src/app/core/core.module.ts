@@ -30,6 +30,9 @@ import { ChannelsRequestParams } from './entities/channels-request-params';
 import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
+import { TimelineService } from './services/timeline.service';
+import { events } from '../../mocks/events-mock';
+import { EventsResolveGuard } from './guards/events-resolve.guard';
 
 @NgModule({
     imports: [
@@ -40,13 +43,14 @@ import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
             currentStore: currentStoreReducer,
             channels: channelsReducer,
             storeStatistics: statisticsReducer,
-        }),
-
+        })
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
+        EventsResolveGuard,
         LocaleIdService,
+        {provide: TimelineService, useValue: {getEvents}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
         // StoreService,
@@ -81,4 +85,8 @@ export function getStatistics() {
 // TODO: remove mocking function when API is ready
 export function getChannels(params: ChannelsRequestParams) {
     return Observable.of(channelsStaticMock(params)).delay(Math.round(Math.random() * 700));
+}
+
+export function getEvents() {
+    return Observable.of(events);
 }

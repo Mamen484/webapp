@@ -24,6 +24,11 @@
     width: 24px;
   }
 
+  .sf-icon-link {
+    height: 24px;
+    color: inherit;
+  }
+
   .toolbar-search-container {
     margin: 0 25px 0 50px;
     font-size: mat-font-size($config, headline);

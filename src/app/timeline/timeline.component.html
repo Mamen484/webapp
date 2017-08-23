@@ -1,0 +1,18 @@
+<div class="timeline">
+    <div *ngFor="let eventsGroup of events">
+        <span class="mat-caption heading-date">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</span>
+        <md-card class="event">
+            <md-list>
+                <md-list-item *ngFor="let event of eventsGroup[1]">
+
+                    <div class="event-icon">
+                        <md-icon>{{event.icon}}</md-icon>
+                    </div>
+                    <div class="event-description sf-fill-space">{{event.type}}</div>
+                    <div class="event-time">{{event.time | date:"HH:mm"}}</div>
+
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+</div>
