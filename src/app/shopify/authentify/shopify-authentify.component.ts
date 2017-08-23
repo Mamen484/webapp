@@ -21,6 +21,8 @@ export class ShopifyAuthentifyComponent implements OnInit {
                 let shop = params['shop'];
                 let code = params['code'];
 
+                localStorage.removeItem('sf.path.initial');
+
                 if (!shop) {
                     window.location.href = environment.SHOPIFY_APP_URL;
                 } else if (!code) {

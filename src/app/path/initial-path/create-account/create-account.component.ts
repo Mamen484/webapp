@@ -17,6 +17,7 @@ export class CreateAccountComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
+    localStorage.removeItem('sf.path.initial');
     this.route.queryParams.subscribe((params: Params) => {this.queryParam = params} );
   }
 
