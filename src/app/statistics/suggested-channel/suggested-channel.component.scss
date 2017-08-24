@@ -30,8 +30,4 @@
 
 div.connect-button {
   text-align: center;
-
-  & > a {
-    background-color: mat-color($accent, 50);
-  }
 }
