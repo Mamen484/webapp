@@ -21,6 +21,7 @@ export class ShopifyAuthentifyComponent implements OnInit {
                 let shop = params['shop'];
                 let code = params['code'];
 
+                // clear cache if the merchant tries again
                 localStorage.removeItem('sf.path.initial');
 
                 if (!shop) {
