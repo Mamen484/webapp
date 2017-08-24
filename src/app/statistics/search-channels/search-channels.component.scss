@@ -26,6 +26,7 @@ md-card {
         margin: 0 10px;
         border: none;
         flex: 1;
+        color: mat-color($grey, 600);
 
         &:focus {
           outline: none;
