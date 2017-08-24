@@ -17,6 +17,7 @@ export class CreateAccountComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
+    // remove the create password cache
     localStorage.removeItem('sf.path.initial');
     this.route.queryParams.subscribe((params: Params) => {this.queryParam = params} );
   }
