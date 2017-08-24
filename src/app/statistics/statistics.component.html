@@ -4,7 +4,7 @@
     <sf-store-statistics [statistics]="statistics"></sf-store-statistics>
     <sf-search-channels (applyFilter)="onApplyFilter($event)"
                         [processing]="processingFilters"></sf-search-channels>
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch" class="channels-list">
 
         <md-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(33.33% - 20px)"
                  fxFlex.xs="0 0 calc(33.33% - 20px)" fxFlex.lg="0 0 calc(25% - 20px)"
@@ -14,5 +14,9 @@
             <sf-suggested-channel [channel]="channel" *ngIf="!channel.isConfigured"></sf-suggested-channel>
         </md-card>
     </div>
+    <div>
+        <md-spinner *ngIf="!infiniteScrollDisabled"></md-spinner>
+    </div>
+
 </div>
 
