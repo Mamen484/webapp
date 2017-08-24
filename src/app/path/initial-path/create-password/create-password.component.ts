@@ -29,28 +29,20 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
     this.store = new CreateStoreModel();
     let cache = localStorage.getItem('sf.path.initial');
 
-    if (cache){
-        this.store = JSON.parse(cache) as CreateStoreModel;
-        if (this.store.store.storeId > 0){
-          this.shopifyService.updateStore(this.store, this.queryParam);
-        }
+    if (cache) {
+      this.store = JSON.parse(cache) as CreateStoreModel;
+    } else {
+      this.queryParamsSubscription = this.route.queryParams
+          .subscribe((params: Params) => {
+            !params['shop'] && (window.location.href = environment.SHOPIFY_APP_URL);
+            this.queryParam = params;
+            this.shopifyService.getStoreData(params['shop'] || '', params)
+                .subscribe((store: CreateStoreModel) => {
+                  this.store = store;
+                  localStorage.setItem('sf.path.initial', JSON.stringify(store));
+                });
+          });
     }
-    else {
-        this.queryParamsSubscription = this.route.queryParams
-            .subscribe((params: Params) => {
-                !params['shop'] && (window.location.href = environment.SHOPIFY_APP_URL);
-                this.queryParam = params;
-                this.shopifyService.getStoreData(params['shop'] || '', params)
-                    .subscribe((store: CreateStoreModel) => {
-                        this.store = store;
-                        if (this.store.store.storeId > 0){
-                          this.shopifyService.updateStore(this.store, this.queryParam);
-                        }
-                        localStorage.setItem('sf.path.initial', JSON.stringify(store));
-                    });
-            });
-    }
-
   }
 
   public createPassword() {
