@@ -14,6 +14,7 @@ import { StoreStatisticsStubComponent } from '../../mocks/stubs/store-statistics
 import { ConfiguredChannelStubComponent } from '../../mocks/stubs/configured-channel-stub.component';
 import { SuggestedChannelStubComponent } from '../../mocks/stubs/suggested-channel-stub.component';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
+import { MdCardModule } from '@angular/material';
 
 describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
@@ -27,7 +28,8 @@ describe('StatisticsComponent', () => {
             imports: [
                 CommonModule,
                 InfiniteScrollModule,
-                FlexLayoutModule
+                FlexLayoutModule,
+                MdCardModule,
             ],
             declarations: [
                 StatisticsComponent,
@@ -66,6 +68,7 @@ describe('StatisticsComponent', () => {
             expect((<ChannelsRequestParams>channelServiceMock.getChannels.calls.argsFor(0)[0]).type).toEqual('');
             expect((<ChannelsRequestParams>channelServiceMock.getChannels.calls.argsFor(0)[0]).status).toEqual('');
             expect(component.channels._embedded.channel.length).toEqual(18);
+            expect(component.infiniteScrollDisabled).toEqual(false);
         });
 
         it('should set the current page to 3, because 3 first pages we loaded within one request to initialize the page', () => {
@@ -119,7 +122,7 @@ describe('StatisticsComponent', () => {
             component.onScroll();
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(1); // no new calls were made
         });
-        it ('should disable infinite scroll when all pages are loaded', () => {
+        it('should disable infinite scroll when all pages are loaded', () => {
             component.onScroll(); // page = 4
             component.onScroll(); // page = 5
             component.onScroll(); // page = 6
@@ -131,22 +134,22 @@ describe('StatisticsComponent', () => {
             expect(component.channels.page).toEqual(11);
             expect(component.channels.pages).toEqual(11);
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(9);
+            expect(component.infiniteScrollDisabled).toEqual(true);
             // try to scroll one more time
             component.onScroll(); // page = 11
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(9);
             expect(component.channels.page).toEqual(11);
             expect(component.channels.pages).toEqual(11);
             expect(component.infiniteScrollDisabled).toEqual(true);
-        })
+        });
     });
 
     describe('filtering', () => {
         it('should clear channels and call for new channels with appropriate filters', () => {
-            let filter = new ChannelsRequestParams();
-            filter.type = 'ads'
-            filter.country = 'it';
-            filter.segment = 'appliances';
-            component.onApplyFilter(filter);
+            component.filterState.type = 'ads';
+            component.filterState.country = 'it';
+            component.filterState.segment = 'appliances';
+            component.onApplyFilter();
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(2); // first one - for initialization
             expect((<ChannelsRequestParams>channelServiceMock.getChannels.calls.argsFor(1)[0]).page).toEqual(1);
             expect((<ChannelsRequestParams>channelServiceMock.getChannels.calls.argsFor(1)[0]).limit).toEqual(18);
@@ -159,11 +162,10 @@ describe('StatisticsComponent', () => {
         });
 
         it('should save filters on scrolling', () => {
-            let filter = new ChannelsRequestParams();
-            filter.type = 'ads';
-            filter.country = 'fr';
-            filter.searchQuery = 'amaz';
-            component.onApplyFilter(filter);
+            component.filterState.type = 'ads';
+            component.filterState.country = 'fr';
+            component.filterState.searchQuery = 'amaz';
+            component.onApplyFilter();
             component.onScroll();
             expect(channelServiceMock.getChannels).toHaveBeenCalledTimes(3); // first one - for initialization, second one - apply filter
             expect((<ChannelsRequestParams>channelServiceMock.getChannels.calls.argsFor(2)[0]).page).toEqual(4);
@@ -186,10 +188,19 @@ describe('StatisticsComponent', () => {
                     spy(value)
                 }
             });
-            component.onApplyFilter(new ChannelsRequestParams());
+            component.onApplyFilter();
             expect(spy).toHaveBeenCalledTimes(2);
             expect(spy.calls.argsFor(0)[0]).toEqual(true);
             expect(spy.calls.argsFor(1)[0]).toEqual(false);
+        });
+
+        it('should enable/disable inifinite scroll when the filter is applied', () => {
+            expect(component.infiniteScrollDisabled).toEqual(false);
+            component.filterState.searchQuery = 'some unreal string azazazazazazazazza';
+            component.onApplyFilter();
+            expect(component.infiniteScrollDisabled).toEqual(true);
+            component.resetFilter();
+            expect(component.infiniteScrollDisabled).toEqual(false);
         });
     })
 });

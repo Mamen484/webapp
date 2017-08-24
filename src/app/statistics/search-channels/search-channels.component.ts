@@ -20,7 +20,7 @@ export class SearchChannelsComponent implements OnInit {
     @Output() applyFilter = new EventEmitter();
     @Input() processing = false;
     searchControl = new FormControl();
-    filter = new ChannelsRequestParams();
+    @Input() filter: ChannelsRequestParams;
 
     countries = ChannelLanguage;
     types = ChannelType;

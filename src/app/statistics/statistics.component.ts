@@ -47,24 +47,22 @@ export class StatisticsComponent {
         this.channelService.getChannels(this.getFilterState()).subscribe(data => {
             this.updateSuggestedChannels(data);
             this.processing = false;
+            this.infiniteScrollDisabled = data.page >= data.pages;
         });
     }
 
-    onApplyFilter(params: ChannelsRequestParams) {
-        this.filterState = Object.assign({}, params);
+    onApplyFilter() {
         this.processingFilters = true;
         this.initialize();
     }
 
+    resetFilter() {
+        this.filterState = new ChannelsRequestParams();
+        this.onApplyFilter();
+    }
+
     protected canScroll() {
-        if (this.processing) {
-            return false;
-        }
-        if (this.channels.page === this.channels.pages) {
-            this.infiniteScrollDisabled = true;
-            return false;
-        }
-        return true;
+        return !this.processing && this.channels.page < this.channels.pages;
     }
 
     protected updateSuggestedChannels({page, _embedded}) {
@@ -92,6 +90,8 @@ export class StatisticsComponent {
                 this.channels.page = INITIAL_PAGES_AMOUNT;
                 this.channels.pages = Math.floor(this.channels.total / LOAD_CHANNELS_COUNT);
                 this.processingFilters = false;
+                this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
+
             });
     }
 

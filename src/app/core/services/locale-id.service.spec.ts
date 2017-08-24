@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { LocaleIdService } from './locale-id.service';
 import { LOCALE_ID } from '@angular/core';
 
-fdescribe('LocaleIdService', () => {
+describe('LocaleIdService', () => {
 
     describe('english locale', () => {
         beforeEach(() => {

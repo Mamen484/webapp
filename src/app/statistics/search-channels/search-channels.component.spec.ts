@@ -41,6 +41,7 @@ describe('SearchChannelsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SearchChannelsComponent);
         component = fixture.componentInstance;
+        component.filter = new ChannelsRequestParams();
         fixture.detectChanges();
     });
 

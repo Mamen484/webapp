@@ -6,6 +6,7 @@ import { ChannelsRequestParams } from '../../core/entities/channels-request-para
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LocaleIdService } from '../../core/services/locale-id.service';
 
 describe('FilterChannelsDialogComponent', () => {
     let component: FilterChannelsDialogComponent;
@@ -26,6 +27,7 @@ describe('FilterChannelsDialogComponent', () => {
             providers: [
                 {provide: MdDialogRef, useValue: {}},
                 {provide: MD_DIALOG_DATA, useValue: params},
+                {provide: LocaleIdService, useValue: {localeId: 'en'}}
             ]
         })
             .compileComponents();

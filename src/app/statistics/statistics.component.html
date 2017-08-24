@@ -2,7 +2,7 @@
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <sf-store-statistics [statistics]="statistics"></sf-store-statistics>
-    <sf-search-channels (applyFilter)="onApplyFilter($event)"
+    <sf-search-channels (applyFilter)="onApplyFilter($event)" [filter]="filterState"
                         [processing]="processingFilters"></sf-search-channels>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch" class="channels-list">
 
@@ -13,6 +13,10 @@
             <sf-configured-channel [channel]="channel" *ngIf="channel.isConfigured"></sf-configured-channel>
             <sf-suggested-channel [channel]="channel" *ngIf="!channel.isConfigured"></sf-suggested-channel>
         </md-card>
+    </div>
+    <div class="no-results-container" *ngIf="!channels._embedded.channel.length">
+        <div>No results</div>
+        <a md-button (click)="resetFilter()" color="accent">Clear the selection</a>
     </div>
     <div>
         <md-spinner *ngIf="!infiniteScrollDisabled"></md-spinner>

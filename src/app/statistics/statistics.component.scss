@@ -19,3 +19,8 @@ md-card.channel-card {
 md-spinner {
   margin: auto;
 }
+
+.no-results-container {
+  text-align: center;
+  color: mat-color($grey, 600);
+}
