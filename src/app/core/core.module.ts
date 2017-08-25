@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';

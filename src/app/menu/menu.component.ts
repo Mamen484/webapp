@@ -17,20 +17,19 @@ import { Store } from '../core/entities/store';
     styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent {
-    userInfo: AppStore<AggregatedUserInfo>;
-    currentStore: AppStore<Store>;
+    userInfo: AggregatedUserInfo;
+    currentStore: Store;
 
     appUrl = environment.APP_URL;
 
     constructor(protected _appStore: AppStore<AppState>,
                 protected _storeService: StoreService) {
-        this.userInfo = this._appStore.select('userInfo');
-        this.currentStore = this._appStore.select('currentStore');
-
+        this._appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
+        this._appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
 
     chooseStore(store) {
-        this.currentStore.dispatch({type: SET_STORE, store});
+        this._appStore.select('currentStore').dispatch({type: SET_STORE, store});
         this._storeService.getAllConfiguredChannels(store.id).subscribe(channels =>
             this._appStore.select('channels').dispatch({type: SET_CHANNELS, channels}));
     }
