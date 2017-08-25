@@ -2,7 +2,7 @@
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <sf-store-statistics [statistics]="statistics"></sf-store-statistics>
-    <sf-search-channels (applyFilter)="onApplyFilter($event)" [filter]="filterState"
+    <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
                         [processing]="processingFilters"></sf-search-channels>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch" class="channels-list">
 
