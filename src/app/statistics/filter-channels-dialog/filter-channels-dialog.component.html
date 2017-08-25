@@ -3,7 +3,6 @@
 </div>
 <md-dialog-content>
     <md-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country">
-        <md-option value="" i18n>All Countries</md-option>
         <md-option *ngFor="let country of countries" [value]="country[0]" i18n>
             <img src="assets/images/flags/{{country[0]}}.png" class="sf-flag"> {{country[1]}}
         </md-option>
