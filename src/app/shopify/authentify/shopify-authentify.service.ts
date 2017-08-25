@@ -82,11 +82,11 @@ export class ShopifyAuthentifyService {
 
     public updateStore(store: CreateStoreModel, queryParam: object){
 
-        let data = {
+        let data = [{
             op: 'replace',
             path: '/owner/token',
             value: store.store.owner.token
-        };
+        }];
 
         this.http.patch(this.apiUrl+'/store/'+store.store.storeId, data, {headers: this.getHeaders()})
             .subscribe(() => {
