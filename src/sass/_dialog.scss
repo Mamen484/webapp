@@ -1,0 +1,28 @@
+@import './variables';
+
+[md-dialog-title] {
+  font-weight: bold;
+}
+
+md-dialog-content.mat-dialog-content {
+  margin-top: 35px;
+  margin-bottom: 35px;
+
+  color: mat-color($grey, 1000, 0.54);
+
+  .error {
+    color: mat-color($warn);
+  }
+}
+
+md-dialog-actions {
+  float: right;
+
+  button.mat-button {
+    margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -15,6 +15,7 @@ import { ConfiguredChannelStubComponent } from '../../mocks/stubs/configured-cha
 import { SuggestedChannelStubComponent } from '../../mocks/stubs/suggested-channel-stub.component';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { MdCardModule } from '@angular/material';
+import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 
 describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
@@ -39,7 +40,13 @@ describe('StatisticsComponent', () => {
                 SuggestedChannelStubComponent
             ],
             providers: [
-                {provide: Store, useValue: {select: () => Observable.of(statisticsMock)}},
+                {
+                    provide: Store, useValue: {
+                    select: param => param === 'currentStore'
+                        ? Observable.of(aggregatedUserInfoMock._embedded.store[0])
+                        : Observable.of(statisticsMock)
+                }
+                },
                 {provide: ChannelService, useValue: channelServiceMock}
             ]
         })
@@ -202,5 +209,34 @@ describe('StatisticsComponent', () => {
             component.resetFilter();
             expect(component.infiniteScrollDisabled).toEqual(false);
         });
-    })
+    });
+
+    it('should set internationalMode to false when the filter.country is not set', () => {
+        expect(component.filterState.country).toEqual('');
+        expect(component.internationalMode).toEqual(false);
+    });
+
+    it('should set internationalMode to true when the filter.country differ from store.country', () => {
+        component.filterState.country = 'pt';
+        component.onApplyFilter();
+        expect(component.internationalMode).toEqual(true);
+    });
+
+    it('should reset internationalMode to false when the filter.country changes to equal store.country', () => {
+        component.filterState.country = 'pt';
+        component.onApplyFilter();
+        expect(component.internationalMode).toEqual(true);
+        component.filterState.country = 'fr';
+        component.onApplyFilter();
+        expect(component.internationalMode).toEqual(false);
+    });
+
+    it('should reset internationalMode to false when the filter.country changes to empty string', () => {
+        component.filterState.country = 'pt';
+        component.onApplyFilter();
+        expect(component.internationalMode).toEqual(true);
+        component.filterState.country = '';
+        component.onApplyFilter();
+        expect(component.internationalMode).toEqual(false);
+    });
 });

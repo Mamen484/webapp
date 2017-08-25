@@ -28,6 +28,7 @@ export class StatisticsComponent {
     infiniteScrollDisabled = false;
     processing = false;
     processingFilters = false;
+    internationalMode = false;
 
     filterState = new ChannelsRequestParams();
 
@@ -91,7 +92,9 @@ export class StatisticsComponent {
                 this.channels.pages = Math.floor(this.channels.total / LOAD_CHANNELS_COUNT);
                 this.processingFilters = false;
                 this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
-
+                this.appStore.select('currentStore').subscribe(store => {
+                    this.internationalMode = Boolean(this.filterState.country) && store.country !== this.filterState.country;
+                })
             });
     }
 

@@ -30,6 +30,7 @@ import { ChannelsRequestParams } from './entities/channels-request-params';
 import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
+import { InternationalAccountService } from './services/international-account.service';
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
         LocaleIdService,
+        InternationalAccountService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,
         // StoreService,

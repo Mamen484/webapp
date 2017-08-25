@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
-import { MD_DIALOG_DATA, MdDialog, MdDialogModule, MdDialogRef, MdSelectModule } from '@angular/material';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { MD_DIALOG_DATA, MdDialogModule, MdDialogRef, MdSelectModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { LocaleIdService } from '../../core/services/locale-id.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
+import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
+import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 
 describe('FilterChannelsDialogComponent', () => {
     let component: FilterChannelsDialogComponent;
@@ -27,7 +28,7 @@ describe('FilterChannelsDialogComponent', () => {
             providers: [
                 {provide: MdDialogRef, useValue: {}},
                 {provide: MD_DIALOG_DATA, useValue: params},
-                {provide: LocaleIdService, useValue: {localeId: 'en'}}
+                {provide: Store, useValue: {select: () => Observable.of({country: 'en'})}}
             ]
         })
             .compileComponents();
@@ -45,5 +46,9 @@ describe('FilterChannelsDialogComponent', () => {
 
     it('should create own copy of the filter not to modify original one', () => {
         expect(component.filter !== params).toEqual(true);
+    });
+
+    it('should write a country from a store', () => {
+        expect(component.filter.country).toEqual('en');
     });
 });

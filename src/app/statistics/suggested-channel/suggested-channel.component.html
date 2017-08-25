@@ -1,5 +1,6 @@
 <md-card-content fxFlex fxLayout="column">
-    <div class="channel-logo"><img md-card-image [src]="appUrl + '/images/logos' + channel._links.image.href" [alt]="channel.name"></div>
+    <div class="channel-logo"><img md-card-image [src]="appUrl + '/images/logos' + channel._links.image.href"
+                                   [alt]="channel.name"></div>
     <div class="channel-info-line">
         <a href="{{appUrl}}/statistics"><span class="mat-title">{{channel.name}}</span></a>
     </div>
@@ -8,6 +9,9 @@
     </div>
     <div class="sf-fill-space"></div>
     <div class="connect-button">
-        <a md-button md-raised-button color="accent" [href]="appUrl + '/' + channel.name" i18n><strong>CONNECT</strong></a>
+        <a md-button md-raised-button color="accent" *ngIf="!internationalMode" [href]="appUrl + '/' + channel.name"
+           i18n><strong>CONNECT</strong></a>
+        <a md-button md-raised-button color="accent" *ngIf="internationalMode"
+           (click)="showInternationalChannelDialog()" i18n><strong>CONNECT</strong></a>
     </div>
 </md-card-content>

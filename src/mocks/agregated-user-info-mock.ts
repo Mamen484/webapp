@@ -9,6 +9,7 @@ export const aggregatedUserInfoMock = {
         'store': [{
             'id': 307,
             'name': 'Store 1',
+            'country': 'fr',
             'permission': {
                 'ads': '*',
                 'affiliation': '*',
