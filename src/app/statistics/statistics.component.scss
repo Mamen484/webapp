@@ -23,4 +23,7 @@ md-spinner {
 .no-results-container {
   text-align: center;
   color: mat-color($grey, 600);
+  a, a:visited {
+    color: mat-color($accent);
+  }
 }

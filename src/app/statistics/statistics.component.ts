@@ -60,6 +60,7 @@ export class StatisticsComponent {
     resetFilter() {
         this.filterState = new ChannelsRequestParams();
         this.onApplyFilter();
+        return false;
     }
 
     protected canScroll() {

@@ -16,7 +16,7 @@
     </div>
     <div class="no-results-container" *ngIf="!channels._embedded.channel.length">
         <div>No results</div>
-        <a md-button (click)="resetFilter()" color="accent">Clear the selection</a>
+        <a href="#" (click)="resetFilter()">Clear the selection</a>
     </div>
     <div>
         <md-spinner *ngIf="!infiniteScrollDisabled"></md-spinner>
