@@ -33,10 +33,12 @@ export class ShopifyAuthentifyService {
             .map((response: Response) => response.json())
             .map((data: any) => { return {
                 store: {
+                    storeId: data.storeId,
                     owner: {
                         email: data.email,
                         login: name,
                         password: '',
+                        token: data.token,
                     },
                     feed: {
                         url: data.feed,
@@ -76,5 +78,27 @@ export class ShopifyAuthentifyService {
         headers.append('Authorization', environment.DEFAULT_AUTHORIZATION);
 
         return headers;
+    }
+
+    public updateStore(store: CreateStoreModel, queryParam: object){
+
+        let data = [{
+            op: 'replace',
+            path: '/owner/token',
+            value: store.store.owner.token
+        }];
+
+        this.http.patch(this.apiUrl+'/store/'+store.store.storeId, data, {headers: this.getHeaders()})
+            .subscribe(() => {
+                let url = environment.APP_URL+'?';
+
+                for (let param in queryParam as any) {
+                    if (queryParam.hasOwnProperty(param)) {
+                        url += param + '=' + queryParam[param] + '&';
+                    }
+                }
+                localStorage.removeItem('sf.path.initial');
+                window.location.href = url;
+            });
     }
 }
