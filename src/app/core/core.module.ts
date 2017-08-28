@@ -90,7 +90,9 @@ export function getChannels(params: ChannelsRequestParams) {
     return Observable.of(channelsStaticMock(params)).delay(Math.round(Math.random() * 700));
 }
 
-export function searchArticles() {
-    // return Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
-    return Observable.of({_embedded: {entries: []}})
+export function searchArticles(query) {
+    return query === 'empty'
+        ? Observable.of({_embedded: {entries: []}}).delay(Math.round(Math.random() * 1200))
+        : Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
+
 }
