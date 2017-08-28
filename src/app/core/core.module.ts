@@ -32,6 +32,9 @@ import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { InternationalAccountService } from './services/international-account.service';
+import { SupportService } from './services/support.service';
+import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
+import { supportSearchMock } from '../../mocks/support-search-mock';
 
 @NgModule({
     imports: [
@@ -50,9 +53,10 @@ import { InternationalAccountService } from './services/international-account.se
         CheckProperLocaleGuard,
         LocaleIdService,
         InternationalAccountService,
+        // SupportService,
+        {provide: SupportService, useValue: {searchArticles}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-        // UserService,
-        // StoreService,
+        {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: UserService, useValue: {fetchAggregatedInfo}},
         {provide: StoreService, useValue: {getAllConfiguredChannels, getStatistics}},
         {provide: ChannelService, useValue: {getChannels}},
@@ -84,4 +88,9 @@ export function getStatistics() {
 // TODO: remove mocking function when API is ready
 export function getChannels(params: ChannelsRequestParams) {
     return Observable.of(channelsStaticMock(params)).delay(Math.round(Math.random() * 700));
+}
+
+export function searchArticles() {
+    // return Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
+    return Observable.of({_embedded: {entries: []}})
 }

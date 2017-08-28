@@ -24,37 +24,9 @@
     width: 24px;
   }
 
-  .toolbar-search-container {
+  sf-support-help-center {
     margin: 0 25px 0 50px;
-    font-size: mat-font-size($config, headline);
     flex: 1;
-    background: mat-color($primary, A100, 0.2);
-    border-radius: 2px;
-    padding-right: 30px;
-    ::placeholder {
-      color: mat-color($primary, A100);
-      font-size: mat-font-size($config, body-1);
-    }
-
-    .sf-search-icon {
-      color: mat-color($primary, A100);
-      float: left;
-      padding: 8px;
-      vertical-align: middle;
-    }
-
-    .toolbar-search {
-      width: 100%;
-      border: none;
-      margin-left: 10px;
-      color: mat-color($primary, A100);
-      background-color: transparent;
-      font-size: mat-font-size($config, body-1);
-    }
-  }
-
-  .toolbar-search:focus {
-    outline: none;
   }
 
 }
