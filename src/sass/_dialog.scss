@@ -1,9 +1,5 @@
 @import './variables';
 
-[md-dialog-title] {
-  font-weight: bold;
-}
-
 md-dialog-content.mat-dialog-content {
   margin-top: 35px;
   margin-bottom: 35px;
@@ -20,7 +16,6 @@ md-dialog-actions {
 
   button.mat-button {
     margin-right: 5px;
-    font-weight: bold;
 
     &:last-child {
       margin-right: 0;

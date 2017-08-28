@@ -8,9 +8,6 @@
 
   & > span {
     vertical-align: middle;
-    &.channel-name {
-      font-size: mat-font-size($config, title);
-    }
   }
 
   &.channel-description {
