@@ -7,7 +7,6 @@ import { environment } from '../../../environments/environment';
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
 
-
 @Component({
     selector: 'sf-support-help-center',
     templateUrl: './support-help-center.component.html',
@@ -23,8 +22,8 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
 
     @HostListener('window:resize')
     setSearchResultsPosition() {
-        let leftPosition = this.elementRef.nativeElement.querySelector('.toolbar-search-container').getBoundingClientRect().width;
-        this.elementRef.nativeElement.querySelector('.search-results').style.width = `${leftPosition}px`;
+        let width = this.elementRef.nativeElement.querySelector('.toolbar-search-container').getBoundingClientRect().width;
+        this.elementRef.nativeElement.querySelector('.search-results').style.width = `${width}px`;
 
     }
 
@@ -53,5 +52,12 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
         this.setSearchResultsPosition()
     }
 
+    clearSearch() {
+        this.showSearchResult = false;
+        this.searchControl.reset();
+        this.searchResults = undefined;
+
+        return false;
+    }
 
 }
