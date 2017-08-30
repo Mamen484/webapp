@@ -28,6 +28,10 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
         let width = this.elementRef.nativeElement.querySelector('.toolbar-search-container').getBoundingClientRect().width;
         this.elementRef.nativeElement.querySelector('.search-results').style.width = `${width}px`;
 
+        let leftPosition = this.elementRef.nativeElement.querySelector('.toolbar-search-container').getBoundingClientRect().left;
+        this.elementRef.nativeElement.querySelector('.search-results').style.left = `${leftPosition}px`;
+
+
     }
 
     constructor(protected elementRef: ElementRef,
