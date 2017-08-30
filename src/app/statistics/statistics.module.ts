@@ -7,6 +7,9 @@ import { StoreStatisticsComponent } from './store-statistics/store-statistics.co
 import { SuggestedChannelComponent } from './suggested-channel/suggested-channel.component';
 import { SearchChannelsComponent } from './search-channels/search-channels.component';
 import { FilterChannelsDialogComponent } from './filter-channels-dialog/filter-channels-dialog.component';
+import { ConnectIntlChannelDialogComponent } from './connect-intl-channel-dialog/connect-intl-channel-dialog.component';
+import { IntlRequestSuccessDialogComponent } from './intl-request-success-dialog/intl-request-success-dialog.component';
+import { RequestFailedDialogComponent } from './request-failed-dialog/request-failed-dialog.component';
 
 @NgModule({
     imports: [
@@ -20,9 +23,15 @@ import { FilterChannelsDialogComponent } from './filter-channels-dialog/filter-c
         SuggestedChannelComponent,
         SearchChannelsComponent,
         FilterChannelsDialogComponent,
+        ConnectIntlChannelDialogComponent,
+        IntlRequestSuccessDialogComponent,
+        RequestFailedDialogComponent,
     ],
     entryComponents: [
-        FilterChannelsDialogComponent
+        FilterChannelsDialogComponent,
+        ConnectIntlChannelDialogComponent,
+        IntlRequestSuccessDialogComponent,
+        RequestFailedDialogComponent,
     ]
 })
 export class StatisticsModule {

@@ -1,14 +1,14 @@
 @import '../../sass/variables';
 
-md-sidenav.mat-sidenav.sidenav {
-  position: fixed;
+md-sidenav {
+  position: sticky;
   bottom: 0;
   left: 0;
   width: $left-sidebar-width;
   min-width: $left-sidebar-width;
   background-color: mat-color($grey, A100);
   text-align: center;
-  top: $toolbar-height;
+  top: 0;
   height: calc(100vh - #{$toolbar-height});
   border-right: 1px solid mat-color($grey, 200);
 
@@ -29,6 +29,7 @@ md-sidenav.mat-sidenav.sidenav {
 }
 
 md-sidenav-container {
+  float: left;
   min-height: 100%;
   max-width: 100%;
   transform: none;

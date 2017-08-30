@@ -1,21 +1,21 @@
-<md-card class="channel-card">
-  <md-card-content>
-    <div> <img md-card-image [src]="appUrl + '/images' + channel._embedded.channel._links.image.href" [alt]="channel._embedded.channel.name"></div>
+<md-card-content fxFlex fxLayout="column">
+    <div class="channel-logo"><img md-card-image [src]="appUrl + '/images/logos' + channel._embedded.channel._links.image.href"
+              [alt]="channel._embedded.channel.name"></div>
     <a class="channel-info-line channel-revenue" [href]="appUrl + '/statistics'">
-      <md-icon>monetization_on</md-icon>
-      <span>{{channel.statistics.revenue | largeNumberSuffix | sfCurrency:channel.statistics.symbol}}</span>
+        <md-icon>monetization_on</md-icon>
+        <span>{{channel.statistics.revenue | largeNumberSuffix | sfCurrency:channel.statistics.symbol}}</span>
     </a>
     <a class="channel-info-line channel-checked" [href]="appUrl + '/' + channel._embedded.channel.name">
-      <md-icon>check_circle</md-icon>
-      <span>{{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
+        <md-icon>check_circle</md-icon>
+        <span>{{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
     </a>
     <a class="channel-info-line channel-issues" [href]="appUrl + '/' +  channel._embedded.channel.name">
-      <md-icon>error</md-icon>
-      <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }}  <ng-container i18n>issues</ng-container></span>
+        <md-icon>error</md-icon>
+        <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }}  <ng-container i18n>issues</ng-container></span>
     </a>
-    <div class="channel-info-line">
-      <md-icon>open_in_new</md-icon>
-      <span><a href="{{appUrl}}/tools/relaunch" target="_blank" i18n>Quickfix</a></span>
+    <div class="channel-info-line quickfix">
+        <md-icon>open_in_new</md-icon>
+        <span><a href="{{appUrl}}/tools/relaunch" target="_blank" i18n>Quickfix</a></span>
     </div>
-  </md-card-content>
-</md-card>
+</md-card-content>
+

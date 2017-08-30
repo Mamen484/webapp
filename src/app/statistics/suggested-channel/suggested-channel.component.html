@@ -1,14 +1,17 @@
-<md-card class="channel-card">
-    <md-card-content>
-        <div><img md-card-image [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name"></div>
-        <div class="channel-info-line">
-            <a href="{{appUrl}}/statistics"><span class="channel-name">{{channel.name}}</span></a>
-        </div>
-        <div class="channel-info-line channel-description">
-            <span>{{channel.description}} </span>
-        </div>
-        <div class="connect-button">
-            <a md-button color="accent" [href]="appUrl + '/' + channel.name" i18n>CONNECT</a>
-        </div>
-    </md-card-content>
-</md-card>
+<md-card-content fxFlex fxLayout="column">
+    <div class="channel-logo"><img md-card-image [src]="appUrl + '/images/logos' + channel._links.image.href"
+                                   [alt]="channel.name"></div>
+    <div class="channel-info-line">
+        <a href="{{appUrl}}/statistics"><span class="mat-title">{{channel.name}}</span></a>
+    </div>
+    <div class="channel-info-line channel-description mat-body-1">
+        <span>{{channel.description}}</span>
+    </div>
+    <div class="sf-fill-space"></div>
+    <div class="connect-button">
+        <a md-button md-raised-button color="accent" *ngIf="!internationalMode" [href]="appUrl + '/' + channel.name"
+           i18n><strong>CONNECT</strong></a>
+        <a md-button md-raised-button color="accent" *ngIf="internationalMode"
+           (click)="showInternationalChannelDialog()" i18n><strong>CONNECT</strong></a>
+    </div>
+</md-card-content>

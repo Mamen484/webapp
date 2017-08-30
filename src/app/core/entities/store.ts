@@ -4,6 +4,7 @@ export interface Store {
     id: number;
     name: string;
     permission: Permission;
+    country: string;
     order: {
         total: number
     };

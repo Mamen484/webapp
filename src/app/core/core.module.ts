@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
@@ -32,6 +33,7 @@ import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { WindowRefService } from './services/window-ref.service';
+import { InternationalAccountService } from './services/international-account.service';
 
 @NgModule({
     imports: [
@@ -49,6 +51,7 @@ import { WindowRefService } from './services/window-ref.service';
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
         LocaleIdService,
+        InternationalAccountService,
         WindowRefService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         // UserService,

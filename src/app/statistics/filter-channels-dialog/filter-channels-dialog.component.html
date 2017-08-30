@@ -3,7 +3,6 @@
 </div>
 <md-dialog-content>
     <md-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country">
-        <md-option value="" i18n>All Countries</md-option>
         <md-option *ngFor="let country of countries" [value]="country[0]" i18n>
             <img src="assets/images/flags/{{country[0]}}.png" class="sf-flag"> {{country[1]}}
         </md-option>
@@ -21,5 +20,5 @@
 </md-dialog-content>
 <md-dialog-actions>
     <button md-button color="accent" (click)="cancel()" i18n>CANCEL</button>
-    <button md-button color="accent" (click)="accept()" i18n>ACCEPT</button>
+    <button md-button md-raised-button color="accent" (click)="accept()" i18n class="accept">ACCEPT</button>
 </md-dialog-actions>

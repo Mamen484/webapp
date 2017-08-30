@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs/Observable';
+
 export const aggregatedUserInfoMock = {
     'login': 'admin',
     'email': 'clement@shopping-feed.com',
@@ -9,6 +11,7 @@ export const aggregatedUserInfoMock = {
         'store': [{
             'id': 307,
             'name': 'Store 1',
+            'country': 'fr',
             'permission': {
                 'ads': '*',
                 'affiliation': '*',
@@ -25,7 +28,7 @@ export const aggregatedUserInfoMock = {
                 'tools': '*'
             },
             'order': {'total': 12},
-            'timeline': {'total': 19},
+            'timeline': {'total': 0},
             '_links': {'self': {'href': '/v1/store/307'}}
         },
             {
@@ -35,7 +38,7 @@ export const aggregatedUserInfoMock = {
                     'university': '*'
                 },
                 'order': {'total': 0},
-                'timeline': {'total': 0},
+                'timeline': {'total': 12},
                 '_links': {'self': {'href': '/v1/store/307'}}
             },
             {
@@ -48,9 +51,15 @@ export const aggregatedUserInfoMock = {
                     'tools': '*'
                 },
                 'order': {'total': 0},
-                'timeline': {'total': 2},
+                'timeline': {'total': 22},
                 '_links': {'self': {'href': '/v1/store/307'}}
             }
         ]
     }
 };
+
+Observable.interval(6e4).subscribe(() => {
+    aggregatedUserInfoMock._embedded.store.forEach((store, index) => {
+        store.timeline.total = Math.floor(Math.random() * 9 + (index * 10));
+    })
+});

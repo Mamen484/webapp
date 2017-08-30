@@ -4,7 +4,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
     MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule,
-    MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdSelectModule, MdSidenavModule,
+    MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdProgressSpinnerModule,
+    MdSelectModule, MdSidenavModule,
     MdToolbarModule, MdTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +34,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdSelectModule,
         MdSidenavModule,
         MdProgressBarModule,
+        MdProgressSpinnerModule,
         MdToolbarModule,
         MdTooltipModule,
         ReactiveFormsModule,
@@ -56,6 +58,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdSelectModule,
         MdSidenavModule,
         MdProgressBarModule,
+        MdProgressSpinnerModule,
         MdToolbarModule,
         MdTooltipModule,
         ReactiveFormsModule,
