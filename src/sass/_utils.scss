@@ -13,7 +13,7 @@ $badge-font-level: caption;
   font-family: mat-font-family($config);
   font-size: mat-font-size($config, $badge-font-level);
   font-weight: bold;
-  background: mat-color($green, A700);
+  background: mat-color($green, 400);
   color: white;
   width: mat-line-height($config, $badge-font-level);
   height: mat-line-height($config, $badge-font-level);

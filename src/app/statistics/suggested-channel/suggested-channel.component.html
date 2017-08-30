@@ -9,9 +9,9 @@
     </div>
     <div class="sf-fill-space"></div>
     <div class="connect-button">
-        <a md-button md-raised-button color="accent" *ngIf="!internationalMode" [href]="appUrl + '/' + channel.name"
+        <a md-button color="accent" *ngIf="!internationalMode" [href]="appUrl + '/' + channel.name"
            i18n><strong>CONNECT</strong></a>
-        <a md-button md-raised-button color="accent" *ngIf="internationalMode"
+        <a md-button color="accent" *ngIf="internationalMode"
            (click)="showInternationalChannelDialog()" i18n><strong>CONNECT</strong></a>
     </div>
 </md-card-content>
