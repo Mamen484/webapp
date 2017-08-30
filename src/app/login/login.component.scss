@@ -11,6 +11,7 @@
 
   .login-title {
     color: mat-color($grey, 1000, 0.54);
+    margin-bottom: 25px;
   }
 
   .login-form {
@@ -34,8 +35,7 @@
     float: right;
     text-decoration: none;
     color: mat-color($grey, 1000, 0.87);
-    margin-right: 25px;
-    margin-bottom: 15px;
+    margin-top: 15px;
   }
 
 }
