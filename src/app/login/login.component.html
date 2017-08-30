@@ -18,18 +18,24 @@
                 <form (ngSubmit)="login()">
 
                     <md-input-container class="login-input">
-                        <input mdInput i18n-placeholder placeholder="Username/Email" name="username" [(ngModel)]="username">
+                        <input mdInput i18n-placeholder placeholder="Username/Email" [formControl]="userNameControl">
+                        <md-error *ngIf="userNameControl.hasError('required')">
+                            Username is <strong>required</strong>
+                        </md-error>
                     </md-input-container>
 
 
                     <md-input-container class="login-input">
-                        <input mdInput i18n-placeholder placeholder="Password" name="password" type="password" [(ngModel)]="password">
+                        <input mdInput i18n-placeholder placeholder="Password" type="password" [formControl]="passwordControl">
+                        <md-error *ngIf="passwordControl.hasError('required')">
+                            Password is <strong>required</strong>
+                        </md-error>
                     </md-input-container>
 
                     <div class="error">{{error}}</div>
 
                     <div class="login-actions">
-                        <button md-button md-raised-button color="primary" class="login-button" [disabled]="!username || !password" i18n>LOGIN</button>
+                        <button md-button md-raised-button color="primary" class="login-button" i18n>LOGIN</button>
                     </div>
                 </form>
 

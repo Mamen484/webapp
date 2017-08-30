@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { CheckProperLocaleGuard } from './check-proper-locale.guard';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
@@ -6,7 +6,7 @@ import { LocaleIdService } from '../services/locale-id.service';
 import { environment } from '../../../environments/environment';
 import { WindowRefService } from '../services/window-ref.service';
 
-fdescribe('CheckProperLocaleGuard', () => {
+describe('CheckProperLocaleGuard', () => {
 
 
     describe('the same locale in the /me response and the localization of the project', () => {

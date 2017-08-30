@@ -5,6 +5,7 @@ import { LocaleIdService } from '../core/services/locale-id.service';
 import { ChannelLanguage } from '../core/entities/channel-language.enum';
 import { toPairs } from 'lodash';
 import { environment } from '../../environments/environment';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sf-login',
@@ -13,8 +14,9 @@ import { environment } from '../../environments/environment';
 })
 export class LoginComponent implements OnInit {
 
-    username = '';
-    password = '';
+    userNameControl = new FormControl('', [Validators.required]);
+    passwordControl = new FormControl('', [Validators.required]);
+
     error = '';
     localeId: keyof typeof ChannelLanguage;
     localizations = [];
@@ -32,7 +34,10 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.error = '';
-        this.userService.login(this.username, this.password).subscribe(
+        if (this.userNameControl.hasError('required') || this.passwordControl.hasError('required')) {
+            return;
+        }
+        this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => this.router.navigate(['']),
             error => this.error = error.detail
         );
