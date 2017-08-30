@@ -44,6 +44,7 @@ md-chip-list {
   md-chip {
     md-icon {
       cursor: pointer;
+      color: mat-color($grey);
     }
     md-icon, span {
       vertical-align: middle;
