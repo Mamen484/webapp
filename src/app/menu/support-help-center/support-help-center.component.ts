@@ -3,6 +3,8 @@ import { SearchArticlesEntry } from '../../core/entities/search-articles-entry';
 import { FormControl } from '@angular/forms';
 import { SupportService } from '../../core/services/support.service';
 import { environment } from '../../../environments/environment';
+import { LocaleIdService } from '../../core/services/locale-id.service';
+import { HelpCenterLanguage } from '../../core/entities/help-center-language';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -19,6 +21,7 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
     searchResults: SearchArticlesEntry[];
     showSearchResult = false;
     processing = false;
+    helpCenterLanguage: HelpCenterLanguage;
 
     @HostListener('window:resize')
     setSearchResultsPosition() {
@@ -27,10 +30,13 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
 
     }
 
-    constructor(protected elementRef: ElementRef, protected supportService: SupportService) {
+    constructor(protected elementRef: ElementRef,
+                protected supportService: SupportService,
+                protected localeIdService: LocaleIdService) {
     }
 
     ngOnInit() {
+        this.helpCenterLanguage = this.localeIdService.getHelpCenterLanguage();
         this.searchControl.valueChanges
             .debounceTime(SEARCH_DEBOUNCE)
             .filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH)

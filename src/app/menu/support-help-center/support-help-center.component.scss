@@ -70,10 +70,6 @@ $toolbar-search-margin: 10px;
     .details-link {
       color: mat-color($green);
       text-decoration: none;
-
-      &:hover {
-        color: mat-color($green, 400);
-      }
     }
 
     .actions {
