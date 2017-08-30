@@ -63,11 +63,17 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
     }
 
     clearSearch() {
+
         this.showSearchResult = false;
         this.searchControl.reset();
         this.searchResults = undefined;
 
         return false;
+    }
+
+    followLink(link: HTMLLinkElement){
+        link.click();
+        this.clearSearch();
     }
 
 }

@@ -5,10 +5,10 @@
     <md-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></md-progress-bar>
 </div>
 
-<div class="search-results mat-elevation-z22">
+<div class="search-results" [ngClass]="{'mat-elevation-z22': showSearchResult && searchResults}">
     <div *ngIf="showSearchResult && searchResults && searchResults.length">
         <div *ngFor="let entry of searchResults" class="search-entry"
-             (click)="link.click(); clearSearch()">
+             (click)="followLink(link)">
             <div class="mat-subheading-1 title">{{entry.subject}}</div>
             <div class="mat-subheading-1 description">{{entry.body_chat}}</div>
             <div class="actions">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="search-entry all-posts">
-            <a class="mat-body-2" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank">View
+            <a class="mat-body-2" md-button color="accent" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank">View
                 all posts</a>
         </div>
     </div>
@@ -24,7 +24,6 @@
         <div class="mat-subheading-2 no-results">No results</div>
         <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results">Clear</a>
     </div>
-
 </div>
 
 <div class="support-help-center-overlay" (click)="clearSearch()" *ngIf="showSearchResult"></div>
