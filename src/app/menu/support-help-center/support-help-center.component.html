@@ -2,7 +2,7 @@
     <md-icon class="sf-search-icon">search</md-icon>
     <input placeholder="Do you need some help ?" i18n-placeholder #searchInput class="toolbar-search"
            [formControl]="searchControl" (focus)="showSearchResult=true">
-    <md-progress-bar mode="indeterminate" color="accent" *ngIf="showSearchResult && processing"></md-progress-bar>
+    <md-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></md-progress-bar>
 </div>
 
 <div class="search-results mat-elevation-z22">
