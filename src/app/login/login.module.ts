@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { MenuModule } from '../menu/menu.module';
 import { SharedModule } from '../shared/shared.module';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 @NgModule({
     imports: [
@@ -10,7 +11,7 @@ import { SharedModule } from '../shared/shared.module';
         MenuModule,
         SharedModule
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent, PasswordRecoveryComponent]
 })
 export class LoginModule {
 }

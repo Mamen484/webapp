@@ -6,6 +6,7 @@ import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-in
 import { StatisticsComponent } from './statistics/statistics.component';
 import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
 import { LoginComponent } from './login/login.component';
+import { PasswordRecoveryComponent } from './login/password-recovery/password-recovery.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,10 @@ const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent
+    },
+    {
+        path: 'reset-password',
+        component: PasswordRecoveryComponent
     }
 ];
 

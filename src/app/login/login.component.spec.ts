@@ -9,6 +9,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+import { UnauthenticatedMenuComponent } from '../menu/unauthenticated-menu.component';
+import { DummyRouterDirective } from '../../mocks/stubs/dummy-router.directive';
+
 
 describe('LoginComponent', () => {
     let component: LoginComponent;
@@ -20,7 +23,11 @@ describe('LoginComponent', () => {
         loginSpy = jasmine.createSpy('login');
         navigateSpy = jasmine.createSpy('navigate');
         TestBed.configureTestingModule({
-            declarations: [LoginComponent, MenuContainerComponent],
+            declarations: [
+                LoginComponent,
+                MenuContainerComponent,
+                UnauthenticatedMenuComponent,
+                DummyRouterDirective],
             providers: [
                 {provide: UserService, useValue: ({login: loginSpy})},
                 {provide: LocaleIdService, useValue: ({localeId: 'en'})},
