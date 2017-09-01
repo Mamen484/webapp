@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { MenuModule } from '../menu/menu.module';
 import { SharedModule } from '../shared/shared.module';
 import { SendRecoveryEmailComponent } from './send-recovery-email/send-recovery-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
     imports: [
@@ -11,7 +12,7 @@ import { SendRecoveryEmailComponent } from './send-recovery-email/send-recovery-
         MenuModule,
         SharedModule
     ],
-    declarations: [LoginComponent, SendRecoveryEmailComponent]
+    declarations: [LoginComponent, SendRecoveryEmailComponent, ResetPasswordComponent]
 })
 export class LoginModule {
 }

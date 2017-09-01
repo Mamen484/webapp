@@ -17,4 +17,15 @@ export class PasswordRecoveryService {
         );
     }
 
+    resetPassword(token, name, password) {
+        let body = new URLSearchParams();
+        body.set('name', name);
+        body.set('token', token);
+        body.set('password', password);
+        return this.httpClient.post(environment.APP_URL + '/lib/scripts/resetpassword.php', body.toString(), {
+                headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+            }
+        );
+    }
+
 }

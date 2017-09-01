@@ -25,7 +25,7 @@
 
     <md-card *ngIf="showSuccessMessage" >
       <md-card-content class="success-message">
-        We have just sent you an e-mail to reset your password.
+        <span class="mat-subheading-2">We have just sent you an e-mail to reset your password.</span>
       </md-card-content>
     </md-card>
     <a class="back-to-login mat-body-1" i18n [routerLink]="['/login']">Back to login</a>
