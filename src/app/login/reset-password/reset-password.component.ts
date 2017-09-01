@@ -31,6 +31,7 @@ export class ResetPasswordComponent implements OnInit {
         this.showError = false;
         if (this.nameControl.hasError('required')
             || this.passwordControl.hasError('required')
+            || this.passwordCheckControl.hasError('required')
             || this.passwordCheckControl.hasError('equalValues')) {
             return;
         }
