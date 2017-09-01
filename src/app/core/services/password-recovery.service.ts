@@ -8,7 +8,7 @@ export class PasswordRecoveryService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    resetPassword(name) {
+    sendRecoveryEmail(name) {
         let body = new URLSearchParams();
         body.set('name', name);
         return this.httpClient.post(environment.APP_URL + '/lib/scripts/password.php', body.toString(), {

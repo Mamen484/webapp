@@ -3,11 +3,10 @@ import { FormControl, Validators } from '@angular/forms';
 import { PasswordRecoveryService } from '../../core/services/password-recovery.service';
 
 @Component({
-    selector: 'sf-password-recovery',
-    templateUrl: './password-recovery.component.html',
-    styleUrls: ['./password-recovery.component.scss']
+    templateUrl: './send-recovery-email.component.html',
+    styleUrls: ['./send-recovery-email.component.scss']
 })
-export class PasswordRecoveryComponent implements OnInit {
+export class SendRecoveryEmailComponent implements OnInit {
 
     emailControl = new FormControl('', [Validators.required]);
     showSuccessMessage = false;
@@ -24,7 +23,7 @@ export class PasswordRecoveryComponent implements OnInit {
         if (this.emailControl.hasError('required')) {
             return;
         }
-        this.passwordRecoveryService.resetPassword(this.emailControl.value).subscribe(
+        this.passwordRecoveryService.sendRecoveryEmail(this.emailControl.value).subscribe(
             data => this.showSuccessMessage = true,
             error => this.showError = true
         );

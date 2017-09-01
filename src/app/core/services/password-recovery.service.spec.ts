@@ -17,7 +17,7 @@ describe('PasswordRecoveryService', () => {
     }));
 
     it('should call legacy app to send a recovery email', inject([PasswordRecoveryService, HttpTestingController], (service: PasswordRecoveryService, controller: HttpTestingController) => {
-        service.resetPassword('someName').subscribe();
+        service.sendRecoveryEmail('someName').subscribe();
         let request = controller.expectOne(environment.APP_URL + '/lib/scripts/password.php').request;
         expect(request.body).toEqual('name=someName');
         expect(request.headers.get('Content-Type')).toEqual('application/x-www-form-urlencoded');
