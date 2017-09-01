@@ -4,13 +4,13 @@
     <div class="recovery-title mat-display-1" i18n>Reset password</div>
     <md-card *ngIf="!showSuccessMessage">
       <md-card-content>
-        <div class="mat-subheading-2 reset-password-description">Enter your e-mail address and we will return your password.</div>
+        <div class="mat-subheading-2 reset-password-description">Enter your username and we will return your password.</div>
         <form (ngSubmit)="reset()">
 
           <md-input-container color="accent">
-            <input mdInput i18n-placeholder placeholder="E-mail address" [formControl]="emailControl">
+            <input mdInput i18n-placeholder placeholder="Username" [formControl]="emailControl">
             <md-error *ngIf="emailControl.hasError('required')">
-              Email is <strong>required</strong>
+              Username is <strong>required</strong>
             </md-error>
           </md-input-container>
 
