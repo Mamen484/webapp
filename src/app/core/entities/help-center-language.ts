@@ -1,0 +1,1 @@
+export type HelpCenterLanguage = 'it' | 'es' | 'fr_fr' | 'en';

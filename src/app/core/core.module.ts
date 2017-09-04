@@ -5,6 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/interval';
+import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/delay';
@@ -32,6 +33,9 @@ import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { InternationalAccountService } from './services/international-account.service';
+import { SupportService } from './services/support.service';
+import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
+import { supportSearchMock } from '../../mocks/support-search-mock';
 
 @NgModule({
     imports: [
@@ -50,9 +54,10 @@ import { InternationalAccountService } from './services/international-account.se
         CheckProperLocaleGuard,
         LocaleIdService,
         InternationalAccountService,
+        // SupportService,
+        {provide: SupportService, useValue: {searchArticles}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-        // UserService,
-        // StoreService,
+        {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: UserService, useValue: {fetchAggregatedInfo}},
         {provide: StoreService, useValue: {getAllConfiguredChannels, getStatistics}},
         {provide: ChannelService, useValue: {getChannels}},
@@ -84,4 +89,11 @@ export function getStatistics() {
 // TODO: remove mocking function when API is ready
 export function getChannels(params: ChannelsRequestParams) {
     return Observable.of(channelsStaticMock(params)).delay(Math.round(Math.random() * 700));
+}
+
+export function searchArticles(query) {
+    return query === 'empty'
+        ? Observable.of({_embedded: {entries: []}}).delay(Math.round(Math.random() * 1200))
+        : Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
+
 }

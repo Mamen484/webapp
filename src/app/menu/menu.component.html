@@ -8,10 +8,8 @@
 
                 <div class="sf-nav-welcome-text md-title" i18n>{{currentStore.name}}</div>
 
-                <div class="toolbar-search-container">
-                    <md-icon class="sf-search-icon">search</md-icon>
-                    <input placeholder="Do you need some help ?" i18n-placeholder class="toolbar-search">
-                </div>
+                <sf-support-help-center></sf-support-help-center>
+
                 <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
                          [attr.data-badge]="currentStore.timeline.total">notifications_none
                 </md-icon>
