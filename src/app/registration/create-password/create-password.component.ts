@@ -3,8 +3,8 @@ import { CreatePasswordService } from './create-password.service';
 import { Observable, Subscription } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CreateStoreModel } from './create-store.model';
-import { environment } from '../../../../environments/environment';
-import { ShopifyAuthentifyService } from '../../../core/services/shopify-authentify.service';
+import { environment } from '../../../environments/environment';
+import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 
 @Component({
     selector: 'app-create-password',
@@ -25,9 +25,10 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit() {
+
         this.store = new CreateStoreModel();
         let cache = localStorage.getItem('sf.path.initial');
-
+        console.log(cache);
         if (cache) {
             this.store = JSON.parse(cache) as CreateStoreModel;
             if (this.store.store.storeId > 0) {
@@ -63,7 +64,7 @@ export class CreatePasswordComponent implements OnInit, OnDestroy {
 
             // passing the query parameters is important,
             // they are used after to automatically connect to shopping-feed
-            let url = 'path/initial/create-account?';
+            let url = 'register/create-account?';
             for (let param in this.queryParam as any) {
                 if (this.queryParam.hasOwnProperty(param)) {
                     url += param + '=' + this.queryParam[param] + '&';

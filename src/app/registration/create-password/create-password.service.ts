@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { CreateStoreModel } from './create-store.model';
 import 'rxjs/add/operator/map';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CreatePasswordService {

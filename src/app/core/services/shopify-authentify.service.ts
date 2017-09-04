@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { CreateStoreModel } from '../../path/initial-path/create-password/create-store.model';
+import { CreateStoreModel } from '../../registration/create-password/create-store.model';
 import { Params } from '@angular/router';
 import { environment } from '../../../environments/environment';
 

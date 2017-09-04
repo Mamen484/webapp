@@ -10,7 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { LoginModule } from './login/login.module';
-import { InitialPathModule } from './path/initial-path/initial-path.module';
+import { RegistrationModule } from './registration/registration.module';
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { InitialPathModule } from './path/initial-path/initial-path.module';
         StatisticsModule,
         AppRoutingModule,
         LoginModule,
-        InitialPathModule,
+        RegistrationModule,
     ],
     bootstrap: [AppComponent]
 })

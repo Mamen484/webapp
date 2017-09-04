@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
@@ -19,6 +19,7 @@ export class CreateAccountComponent implements OnInit {
     }
 
     public ngOnInit() {
+        console.log('create account');
         localStorage.removeItem('sf.path.initial');
         this.route.queryParams.subscribe((params: Params) => {
             this.queryParam = params
