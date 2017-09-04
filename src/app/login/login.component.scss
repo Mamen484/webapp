@@ -1,45 +1,11 @@
 @import '../../sass/variables';
+@import '../../sass/mixins/form-page';
 
-.login-container {
-  display: flex;
-  height: calc(100vh - #{$toolbar-height});
-  text-align: center;
+@include form-page();
 
-  md-card {
-    padding: 25px 50px;
-  }
-
-  .login-title {
-    color: mat-color($grey, 1000, 0.54);
-    margin-bottom: 25px;
-  }
-
-  .login-form {
-    margin: auto;
-  }
-
-  .login-input {
-    display: block;
-    width: 425px;
-  }
-
-  .login-actions {
-
-    .login-button {
-      margin-top: 30px;
-      font-weight: bold;
-    }
-  }
-
-  a.forgot-password {
-    float: right;
-    text-decoration: none;
-    color: mat-color($grey, 1000, 0.87);
-    margin-top: 15px;
-  }
-
-}
-
-.error {
-  color: mat-color($warn);
+a.below-form-link {
+  float: right;
+  text-decoration: none;
+  color: mat-color($grey, 1000, 0.87);
+  margin-top: 15px;
 }

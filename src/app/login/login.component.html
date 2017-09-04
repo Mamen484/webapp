@@ -1,7 +1,7 @@
 <sf-unauthenticated-menu></sf-unauthenticated-menu>
-<div class="login-container">
-    <div class="login-form">
-        <div class="login-title mat-display-1" i18n>Log in</div>
+<div class="form-container">
+    <div>
+        <div class="form-title mat-display-1" i18n>Log in</div>
         <md-card>
             <md-card-content>
                 <form (ngSubmit)="login()">
@@ -24,13 +24,13 @@
 
                     <div class="error">{{error}}</div>
 
-                    <div class="login-actions">
-                        <button md-raised-button color="accent" class="login-button" i18n>LOGIN</button>
+                    <div class="form-actions">
+                        <button md-raised-button color="accent" i18n>LOGIN</button>
                     </div>
                 </form>
 
             </md-card-content>
         </md-card>
-        <a class="forgot-password mat-body-1" i18n [routerLink]="['/reset-password']">Forgot the password?</a>
+        <a class="below-form-link mat-body-1" i18n [routerLink]="['/reset-password']">Forgot the password?</a>
     </div>
 </div>

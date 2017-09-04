@@ -1,0 +1,48 @@
+@import '../variables';
+
+@mixin form-page(){
+  .form-container {
+    display: flex;
+    height: calc(100vh - #{$toolbar-height});
+    text-align: center;
+
+    & > div {
+      margin: auto;
+    }
+
+    md-card {
+      padding: 25px 50px;
+    }
+
+    .form-title {
+      color: mat-color($grey, 1000, 0.54);
+      margin-bottom: 25px;
+    }
+
+    md-input-container {
+      display: block;
+      width: 425px;
+    }
+
+    .form-actions {
+
+      button {
+        margin-top: 30px;
+        font-weight: bold;
+      }
+    }
+
+  }
+
+  .error {
+    color: mat-color($warn);
+  }
+
+  a.below-form-link {
+    float: right;
+    text-decoration: none;
+    color: mat-color($grey, 1000, 0.87);
+    margin-top: 15px;
+  }
+}
+
