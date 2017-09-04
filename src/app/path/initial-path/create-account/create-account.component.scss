@@ -1,0 +1,87 @@
+@import "../_page_common.scss";
+
+.page {
+  .element {
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-family: Nunito-Regular;
+    font-size: 36px;
+    color: #098FD0;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    margin: 40px 0;
+  }
+
+  .card {
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 30px 30px 30px 0;
+
+    width: 750px;
+
+    .columns {
+      display: flex;
+
+      .logo {
+        width: 60%;
+        position: relative;
+
+        margin: 0 30px;
+
+        .logo-image {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          max-width: 100%;
+          transform: translateX(-50%) translateY(-50%);
+        }
+      }
+    }
+
+    .keypoints {
+      display: flex;
+      flex-direction: column;
+
+      .keypoint {
+        display: flex;
+        margin-bottom: 20px;
+
+        .keypoint-logo {
+          margin-right: 40px;
+
+          .keypoint-logo-image {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+
+        .keypoint-title {
+          font-family: Nunito-Regular;
+          font-size: 18px;
+          color: #7BC280;
+          margin-bottom: 10px;
+        }
+
+        .keypoint-text {
+          font-family: Nunito-Regular;
+          font-size: 14px;
+          color: #7D7D7D;
+        }
+      }
+    }
+  }
+
+  app-progressbar {
+    display: block;
+    width: 500px;
+    height: 40px;
+    margin: 0 auto;
+  }
+}

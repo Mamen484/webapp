@@ -39,6 +39,9 @@ import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
 import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
+import { ChannelLogoService } from './services/channel_logo.service';
+import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
+import { ShopifyGuard } from './guards/shopify.guard';
 
 @NgModule({
     imports: [
@@ -57,9 +60,12 @@ import { PasswordRecoveryService } from './services/password-recovery.service';
         CheckProperLocaleGuard,
         LocaleIdService,
         InternationalAccountService,
+        ChannelLogoService,
+        ShopifyAuthentifyService,
         {provide: SupportService, useValue: {searchArticles}},
         WindowRefService,
         PasswordRecoveryService,
+        ShopifyGuard,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: UserService, useValue: {fetchAggregatedInfo}},
