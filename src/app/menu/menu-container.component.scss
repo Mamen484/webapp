@@ -1,0 +1,22 @@
+@import "../../sass/variables";
+
+.sf-top-menu {
+
+  min-width: $min-width;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  position: sticky;
+  z-index: 10;
+
+  .sf-top-menu-container {
+    width: 100%;
+  }
+}
+
+a.nav-link.home {
+  margin-left: 10px;
+  img {
+    vertical-align: top;
+  }
+}

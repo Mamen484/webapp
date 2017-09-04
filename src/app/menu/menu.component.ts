@@ -3,12 +3,12 @@ import { Store as AppStore } from '@ngrx/store';
 import { toPairs } from 'lodash';
 
 import { AppState } from '../core/entities/app-state';
-import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { StoreService } from '../core/services/store.service';
-import { SET_CHANNELS } from '../core/reducers/channels-reducer';
 import { environment } from '../../environments/environment';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
+import { SET_STORE } from '../core/reducers/current-store-reducer';
+import { SET_CHANNELS } from '../core/reducers/channels-reducer';
 
 @Component({
     selector: 'app-menu',

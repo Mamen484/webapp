@@ -1,0 +1,36 @@
+<sf-unauthenticated-menu></sf-unauthenticated-menu>
+<div class="login-container">
+    <div class="login-form">
+        <div class="login-title mat-display-1" i18n>Log in</div>
+        <md-card>
+            <md-card-content>
+                <form (ngSubmit)="login()">
+
+                    <md-input-container class="login-input" color="accent">
+                        <input mdInput i18n-placeholder placeholder="Username or store e-mail"
+                               [formControl]="userNameControl">
+                        <md-error *ngIf="userNameControl.hasError('required')">
+                            Username is <strong>required</strong>
+                        </md-error>
+                    </md-input-container>
+
+                    <md-input-container class="login-input" color="accent">
+                        <input mdInput i18n-placeholder placeholder="Password" type="password"
+                               [formControl]="passwordControl">
+                        <md-error *ngIf="passwordControl.hasError('required')">
+                            Password is <strong>required</strong>
+                        </md-error>
+                    </md-input-container>
+
+                    <div class="error">{{error}}</div>
+
+                    <div class="login-actions">
+                        <button md-raised-button color="accent" class="login-button" i18n>LOGIN</button>
+                    </div>
+                </form>
+
+            </md-card-content>
+        </md-card>
+        <a class="forgot-password mat-body-1" i18n [routerLink]="['/reset-password']">Forgot the password?</a>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdToolbarModule,
         MdTooltipModule,
         ReactiveFormsModule,
+        RouterModule,
     ],
     exports: [
         // modules
@@ -62,6 +64,7 @@ import { SfNumberPipe } from './sf-number.pipe';
         MdToolbarModule,
         MdTooltipModule,
         ReactiveFormsModule,
+        RouterModule,
 
         // pipes
         LargeNumberSuffixPipe,

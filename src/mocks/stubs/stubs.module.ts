@@ -5,6 +5,7 @@ import { FilterChannelsDialogStubComponent } from './filter-channels-dialog-stub
 import { SearchChannelsStubComponent } from './search-channels-stub.component';
 import { StoreStatisticsStubComponent } from './store-statistics-stub.component';
 import { SuggestedChannelStubComponent } from './suggested-channel-stub.component';
+import { DummyRouterDirective } from './dummy-router.directive';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { SuggestedChannelStubComponent } from './suggested-channel-stub.componen
       SuggestedChannelStubComponent,
       FilterChannelsDialogStubComponent,
       SearchChannelsStubComponent,
-      StoreStatisticsStubComponent
+      StoreStatisticsStubComponent,
+      DummyRouterDirective,
   ]
 })
 export class StubsModule { }

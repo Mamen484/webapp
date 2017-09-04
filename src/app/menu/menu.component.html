@@ -1,16 +1,9 @@
-<div class="sf-top-menu">
-    <md-toolbar role="toolbar" color="primary" class="mat-elevation-z2">
-        <div class="sf-top-menu-container">
-            <md-toolbar-row>
-                <a class="nav-link home" [href]="appUrl">
-                    <img alt="Home" title="Home" i18n-alt i18n-title width="23" src="assets/images/SF_white.svg">
-                </a>
+<sf-menu-container>
+    <div class="sf-nav-welcome-text md-title" i18n>{{currentStore.name}}</div>
 
-                <div class="sf-nav-welcome-text md-title" i18n>{{currentStore.name}}</div>
+    <sf-support-help-center></sf-support-help-center>
 
-                <sf-support-help-center></sf-support-help-center>
-
-                <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
+    <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
                          [attr.data-badge]="currentStore.timeline.total">notifications_none
                 </md-icon>
                 <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
@@ -28,8 +21,5 @@
                     <hr>
                     <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
 
-                </md-menu>
-            </md-toolbar-row>
-        </div>
-    </md-toolbar>
-</div>
+    </md-menu>
+</sf-menu-container>

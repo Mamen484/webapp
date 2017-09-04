@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/debounceTime';
@@ -32,10 +33,12 @@ import { ChannelsRequestParams } from './entities/channels-request-params';
 import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
+import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
 import { supportSearchMock } from '../../mocks/support-search-mock';
+import { PasswordRecoveryService } from './services/password-recovery.service';
 
 @NgModule({
     imports: [
@@ -54,11 +57,13 @@ import { supportSearchMock } from '../../mocks/support-search-mock';
         CheckProperLocaleGuard,
         LocaleIdService,
         InternationalAccountService,
-        // SupportService,
         {provide: SupportService, useValue: {searchArticles}},
+        WindowRefService,
+        PasswordRecoveryService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: UserService, useValue: {fetchAggregatedInfo}},
+        {provide: UserService, useValue: {fetchAggregatedInfo, login}},
         {provide: StoreService, useValue: {getAllConfiguredChannels, getStatistics}},
         {provide: ChannelService, useValue: {getChannels}},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
@@ -96,4 +101,20 @@ export function searchArticles(query) {
         ? Observable.of({_embedded: {entries: []}}).delay(Math.round(Math.random() * 1200))
         : Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
 
+}
+
+export function login(username, password) {
+    if (username === 'goverla' && password === '2061') {
+        return Observable.of({
+            'access_token': '470d9f3c6b0371ff2a88d0c554cbee9cad495e8d',
+            'token_type': 'Bearer'
+        });
+    } else {
+        return Observable.throw({
+            'type': 'http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
+            'title': 'Not Authorized',
+            'detail': 'Invalid username or password',
+            'status': 401
+        });
+    }
 }

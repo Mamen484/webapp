@@ -1,36 +1,22 @@
 @import "../../sass/variables";
 
-.sf-top-menu {
-  min-width: $min-width;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  position: sticky;
-  z-index: 10;
+.sf-nav-welcome-text {
+  margin-left: 29px;
+  font-weight: normal;
+}
 
-  .sf-top-menu-container {
-    width: 100%;
+md-icon.sf-nav-icon {
+  margin-left: 20px;
+}
 
-    .sf-nav-welcome-text {
-      margin-left: 29px;
-      font-weight: normal;
-    }
-
-    md-icon.sf-nav-icon {
-      margin-left: 20px;
-    }
-  }
-
-  .sf-nav-selected-language {
-    width: 24px;
-  }
+.sf-nav-selected-language {
+  width: 24px;
+}
 
   sf-support-help-center {
     margin: 0 25px 0 50px;
     flex: 1;
   }
-
-}
 
 .sf-language-menu-item {
   text-align: left;
@@ -67,13 +53,6 @@
   .last-visited {
     font-size: mat-font-size($config, caption);
     padding-left: 28px;
-  }
-}
-
-a.nav-link.home {
-  margin-left: 10px;
-  img {
-    vertical-align: top;
   }
 }
 

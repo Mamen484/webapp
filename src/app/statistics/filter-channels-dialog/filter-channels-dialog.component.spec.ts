@@ -3,6 +3,7 @@ import { MD_DIALOG_DATA, MdDialogModule, MdDialogRef, MdSelectModule } from '@an
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { LocaleIdService } from '../../core/services/locale-id.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -28,6 +29,7 @@ describe('FilterChannelsDialogComponent', () => {
             providers: [
                 {provide: MdDialogRef, useValue: {}},
                 {provide: MD_DIALOG_DATA, useValue: params},
+                {provide: LocaleIdService, useValue: {localeId: 'en'}},
                 {provide: Store, useValue: {select: () => Observable.of({country: 'en'})}}
             ]
         })
