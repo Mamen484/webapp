@@ -1,0 +1,50 @@
+@import "../_buttons.scss";
+@import "../_modal_common.scss";
+
+.card {
+  padding: 50px 100px;
+  min-width: 750px;
+
+  .title {
+    display: flex;
+    margin-bottom: 50px;
+
+    .title-logo {
+      margin-right: 20px;
+    }
+
+    .title-text {
+      font-family: Nunito-Regular;
+      font-size: 32px;
+      color: #098FD0;
+      margin: 0;
+    }
+  }
+
+  .content {
+    font-family: Nunito-Regular;
+    font-size: 18px;
+    color: #7D7D7D;
+    line-height: 28px;
+    margin-bottom: 30px;
+  }
+
+  .btn-call {
+    padding: 10px 50px;
+    margin-bottom: 20px;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .small-link {
+    display: block;
+    font-family: Nunito-Regular;
+    font-size: 16px;
+    color: #098FD0;
+    text-decoration: underline;
+    outline: 0;
+    text-align: center;
+  }
+}
