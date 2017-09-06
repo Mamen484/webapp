@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { CreateStoreModel } from './create-store.model';
-import 'rxjs/add/operator/map';
 import { environment } from '../../../environments/environment';
+import { CreateStoreModel } from '../../core/entities/create-store-model';
 
 @Injectable()
 export class CreatePasswordService {

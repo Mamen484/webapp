@@ -1,86 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreatePasswordService } from './create-password.service';
-import { Observable, Subscription } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { CreateStoreModel } from './create-store.model';
-import { environment } from '../../../environments/environment';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
+import { FormControl, Validators } from '@angular/forms';
+import { CreateStoreModel } from '../../core/entities/create-store-model';
+import { WindowRefService } from '../../core/services/window-ref.service';
 
 @Component({
     selector: 'app-create-password',
     templateUrl: './create-password.component.html',
     styleUrls: ['./create-password.component.scss']
 })
-export class CreatePasswordComponent implements OnInit, OnDestroy {
-    public store: CreateStoreModel;
+export class CreatePasswordComponent implements OnInit {
 
-    private subscription: Subscription;
-    private queryParamsSubscription: Subscription;
-    private queryParam: object;
+    public emailControl = new FormControl('', Validators.required);
+    public passwordControl = new FormControl('', Validators.required);
 
-    constructor(private service: CreatePasswordService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private shopifyService: ShopifyAuthentifyService) {
+    constructor(protected service: CreatePasswordService,
+                protected router: Router,
+                protected route: ActivatedRoute,
+                protected shopifyService: ShopifyAuthentifyService,
+                protected windowRef: WindowRefService) {
     }
 
     public ngOnInit() {
-
-        this.store = new CreateStoreModel();
-        let cache = localStorage.getItem('sf.path.initial');
-        console.log(cache);
-        if (cache) {
-            this.store = JSON.parse(cache) as CreateStoreModel;
-            if (this.store.store.storeId > 0) {
-                this.shopifyService.updateStore(this.store, this.queryParam);
-            }
-        } else {
-            this.queryParamsSubscription = this.route.queryParams
-                .subscribe((params: Params) => {
-                    !params['shop'] && (window.location.href = environment.SHOPIFY_APP_URL);
-                    this.queryParam = params;
-                    this.shopifyService.getStoreData(params['shop'] || '', params)
-                        .subscribe((store: CreateStoreModel) => {
-                            this.store = store;
-                            if (this.store.store.storeId > 0) {
-                                this.shopifyService.updateStore(this.store, this.queryParam);
-                            }
-                            localStorage.setItem('sf.path.initial', JSON.stringify(store));
-                        });
-                });
-        }
-
+        this.route.queryParams
+            .flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params))
+            .do((store) => this.windowRef.nativeWindow.localStorage.setItem('sf.path.initial', JSON.stringify(store)))
+            .filter(store => store.storeId > 0)
+            .subscribe((store: CreateStoreModel) => this.shopifyService.updateStore(store));
     }
 
     public createPassword() {
+        if (this.emailControl.hasError('required') || this.passwordControl.hasError('required')) {
+            return;
+        }
         // This is currently shopify specific
-        let observable: Observable<{ success: boolean }> = this.service.createPassword(this.store);
-
-        this.unsubscribe();
-        this.subscription = observable.subscribe((result: { success: boolean }) => {
-            if (!result.success) {
-                return;
-            }
-
-            // passing the query parameters is important,
-            // they are used after to automatically connect to shopping-feed
-            let url = 'register/create-account?';
-            for (let param in this.queryParam as any) {
-                if (this.queryParam.hasOwnProperty(param)) {
-                    url += param + '=' + this.queryParam[param] + '&';
-                }
-            }
-            this.router.navigateByUrl(url);
-        });
+        let store = CreateStoreModel.createForRegistration(this.emailControl.value, this.passwordControl.value);
+        this.service.createPassword(store).filter(result => result.success)
+            .flatMap(() => this.route.queryParams)
+            .subscribe((queryParams) => {
+                // query params are used to automatically connect to shopping-feed
+                this.router.navigate(['register', 'create-account'], {queryParams});
+            });
 
         return false;
-    }
-
-    public ngOnDestroy(): void {
-        this.unsubscribe();
-    }
-
-    private unsubscribe() {
-        this.subscription && this.subscription.unsubscribe();
     }
 }

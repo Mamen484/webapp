@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { CreateStoreModel } from '../../registration/create-password/create-store.model';
 import { Params } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { CreateStoreModel } from '../entities/create-store-model';
 
 @Injectable()
 export class ShopifyAuthentifyService {
@@ -30,43 +30,41 @@ export class ShopifyAuthentifyService {
         return this.http.get(this.apiUrl + '/shopify/store/' + name + queryString, {headers: this.getHeaders()})
             .map((response: Response) => response.json())
             .map((data: any) => {
-                return {
-                    store: {
-                        storeId: data.storeId,
-                        owner: {
-                            email: data.email,
-                            login: name,
-                            password: '',
-                            token: data.token,
+                return <CreateStoreModel>{
+                    storeId: data.storeId,
+                    owner: {
+                        email: data.email,
+                        login: name,
+                        password: '',
+                        token: data.token,
+                    },
+                    feed: {
+                        url: data.feed,
+                        source: 'shopify',
+                        mapping: {
+                            'category': 'category',
+                            'brand': 'brand',
+                            'brand-link': 'brand-link',
+                            'reference': 'id',
+                            'name': 'name',
+                            'link': 'uri',
+                            'description': 'description',
+                            'short_description': 'short_description',
+                            'price': 'price',
+                            'old_price': 'old-price',
+                            'shipping_cost': 'shipping-cost',
+                            'shipping_time': 'shipping-time',
+                            'quantity': 'quantity',
+                            'ean': 'barcode',
+                            'weight': 'weight',
+                            'ecotax': 'ecotax',
+                            'tva': 'vat'
                         },
-                        feed: {
-                            url: data.feed,
-                            source: 'shopify',
-                            mapping: {
-                                'category': 'category',
-                                'brand': 'brand',
-                                'brand-link': 'brand-link',
-                                'reference': 'id',
-                                'name': 'name',
-                                'link': 'uri',
-                                'description': 'description',
-                                'short_description': 'short_description',
-                                'price': 'price',
-                                'old_price': 'old-price',
-                                'shipping_cost': 'shipping-cost',
-                                'shipping_time': 'shipping-time',
-                                'quantity': 'quantity',
-                                'ean': 'barcode',
-                                'weight': 'weight',
-                                'ecotax': 'ecotax',
-                                'tva': 'vat'
-                            },
-                            settings: {
-                                xmlProductNode: 'product'
-                            }
-                        },
-                        country: data.language,
-                    }
+                        settings: {
+                            xmlProductNode: 'product'
+                        }
+                    },
+                    country: data.language,
                 }
             })
             ;
@@ -80,25 +78,14 @@ export class ShopifyAuthentifyService {
         return headers;
     }
 
-    public updateStore(store: CreateStoreModel, queryParam: object) {
+    public updateStore(store: CreateStoreModel) {
 
         let data = [{
             op: 'replace',
             path: '/owner/token',
-            value: store.store.owner.token
+            value: store.owner.token
         }];
 
-        this.http.patch(this.apiUrl + '/store/' + store.store.storeId, data, {headers: this.getHeaders()})
-            .subscribe(() => {
-                let url = environment.APP_URL + '?';
-
-                for (let param in queryParam as any) {
-                    if (queryParam.hasOwnProperty(param)) {
-                        url += param + '=' + queryParam[param] + '&';
-                    }
-                }
-                localStorage.removeItem('sf.path.initial');
-                window.location.href = url;
-            });
+        return this.http.patch(this.apiUrl + '/store/' + store.storeId, data, {headers: this.getHeaders()});
     }
 }

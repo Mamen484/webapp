@@ -1,8 +1,6 @@
 import { CreatePasswordService } from './create-password.service';
 import { Observable } from 'rxjs/Observable';
-import { CreateStoreModel } from './create-store.model';
-
-import 'rxjs/add/observable/of';
+import { CreateStoreModel } from '../../core/entities/create-store-model';
 
 describe('CreatePasswordService', () => {
     let service: CreatePasswordService;

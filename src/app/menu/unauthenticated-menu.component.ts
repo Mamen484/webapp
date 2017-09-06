@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChannelLanguage } from '../core/entities/channel-language.enum';
 import { environment } from '../../environments/environment';
 import { LocaleIdService } from '../core/services/locale-id.service';
@@ -11,6 +11,8 @@ import { toPairs } from 'lodash';
     styleUrls: ['./unauthenticated-menu.component.scss']
 })
 export class UnauthenticatedMenuComponent implements OnInit {
+
+    @Input() displayFlags;
 
     localeId: keyof typeof ChannelLanguage;
     localizations = [];

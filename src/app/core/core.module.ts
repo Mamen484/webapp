@@ -42,6 +42,7 @@ import { PasswordRecoveryService } from './services/password-recovery.service';
 import { ChannelLogoService } from './services/channel_logo.service';
 import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
 import { ShopifyGuard } from './guards/shopify.guard';
+import { ShopSpecifiedGuard } from './guard/shop-specified.guard';
 
 @NgModule({
     imports: [
@@ -66,6 +67,7 @@ import { ShopifyGuard } from './guards/shopify.guard';
         WindowRefService,
         PasswordRecoveryService,
         ShopifyGuard,
+        ShopSpecifiedGuard,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: UserService, useValue: {fetchAggregatedInfo}},
