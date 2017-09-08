@@ -19,9 +19,7 @@ import { RegistrationRoutingModule } from './registration-routing.module';
     exports: [
         RouterModule,
     ],
-    providers: [
-        CreatePasswordService
-    ],
+
     declarations: [
         CreatePasswordComponent,
         PlatformComponent,

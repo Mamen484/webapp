@@ -11,10 +11,42 @@ export class CreateStoreModel {
     feed = new CreateStoreFeed();
     country = '';
 
-    static createForRegistration(email, password){
-        let store = new CreateStoreModel();
-        store.owner.email = email;
-        store.owner.password = password;
-        return store;
+    static createFromResponse(data, name) {
+        return Object.assign(new CreateStoreModel(), {
+            storeId: data.storeId,
+            owner: {
+                email: data.email,
+                login: name,
+                password: '',
+                token: data.token,
+            },
+            feed: {
+                url: data.feed,
+                source: 'shopify',
+                mapping: {
+                    'category': 'category',
+                    'brand': 'brand',
+                    'brand-link': 'brand-link',
+                    'reference': 'id',
+                    'name': 'name',
+                    'link': 'uri',
+                    'description': 'description',
+                    'short_description': 'short_description',
+                    'price': 'price',
+                    'old_price': 'old-price',
+                    'shipping_cost': 'shipping-cost',
+                    'shipping_time': 'shipping-time',
+                    'quantity': 'quantity',
+                    'ean': 'barcode',
+                    'weight': 'weight',
+                    'ecotax': 'ecotax',
+                    'tva': 'vat'
+                },
+                settings: {
+                    xmlProductNode: 'product'
+                }
+            },
+            country: data.language,
+        });
     }
 }

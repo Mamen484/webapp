@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { CreateStoreModel } from '../entities/create-store-model';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
 import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
@@ -15,20 +14,31 @@ export class RegistrationCacheGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-        let cache = this.windowRef.nativeWindow.localStorage.getItem('sf.path.initial');
-        if (cache) {
-            let store = JSON.parse(cache) as CreateStoreModel;
-            if (store.storeId > 0) {
-                return this.shopifyService.updateStore(store).map(() => {
-                    let url = environment.APP_URL + '?' + Helpers.createQueryString(next.queryParams);
-                    this.windowRef.nativeWindow.localStorage.removeItem('sf.path.initial');
-                    this.windowRef.nativeWindow.location.href = url;
-                    return false;
-                });
-            }
-        }
-
-        return Observable.of(true);
+        return this.getExistingStore(next.queryParams)
+            .filter(store => store.storeId > 0)
+            .flatMap(store => this.shopifyService.updateStore(store))
+            .map(() => {
+                let url = environment.APP_URL + '?' + Helpers.createQueryString(next.queryParams);
+                this.windowRef.nativeWindow.localStorage.removeItem('sf.registration');
+                this.windowRef.nativeWindow.location.href = url;
+            })
+            .count()
+            .map(count => !count);
     }
+
+    protected getExistingStore(params) {
+        let cache = this.getStoreFromCache();
+        if (cache) {
+            return Observable.of(JSON.parse(cache));
+        }
+        return this.shopifyService.getStoreData(params['shop'], params)
+        // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
+            .do(store => this.windowRef.nativeWindow.localStorage.setItem('sf.registration', JSON.stringify(store)));
+    }
+
+    protected getStoreFromCache() {
+        return this.windowRef.nativeWindow.localStorage.getItem('sf.registration');
+    }
+
 }
 

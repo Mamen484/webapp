@@ -42,7 +42,9 @@ import { PasswordRecoveryService } from './services/password-recovery.service';
 import { ChannelLogoService } from './services/channel_logo.service';
 import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
 import { ShopifyGuard } from './guards/shopify.guard';
-import { ShopSpecifiedGuard } from './guard/shop-specified.guard';
+import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
+import { RegistrationCacheGuard } from './guards/registration-cache.guard';
+import { CreatePasswordService } from '../registration/create-password/create-password.service';
 
 @NgModule({
     imports: [
@@ -63,6 +65,8 @@ import { ShopSpecifiedGuard } from './guard/shop-specified.guard';
         InternationalAccountService,
         ChannelLogoService,
         ShopifyAuthentifyService,
+        RegistrationCacheGuard,
+        CreatePasswordService,
         {provide: SupportService, useValue: {searchArticles}},
         WindowRefService,
         PasswordRecoveryService,

@@ -6,13 +6,14 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PlatformComponent } from './platform/platform.component';
 import { ScheduleCallComponent } from './schedule-call/schedule-call.component';
-import { ShopSpecifiedGuard } from '../core/guard/shop-specified.guard';
+import { ShopSpecifiedGuard } from '../core/guards/shop-specified.guard';
+import { RegistrationCacheGuard } from '../core/guards/registration-cache.guard';
 
 const routes: Routes = [
     {
         path: 'shopify/authentify', canActivate: [ShopifyGuard], component: CreatePasswordComponent
     },
-    {path: 'register', component: CreatePasswordComponent, canActivate: [ShopSpecifiedGuard]},
+    {path: 'register', component: CreatePasswordComponent, canActivate: [ShopSpecifiedGuard, RegistrationCacheGuard]},
     {path: 'register/create-account', component: CreateAccountComponent},
     {path: 'register/welcome', component: WelcomeComponent},
     {path: 'register/platform/:channelName', component: PlatformComponent},

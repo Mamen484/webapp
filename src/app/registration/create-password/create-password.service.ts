@@ -15,7 +15,7 @@ export class CreatePasswordService {
     }
 
     public createPassword(store: CreateStoreModel): Observable<{ success: boolean }> {
-        return this.http.post(this.apiUrl + '/store', store, {headers: this.getHeaders()})
+        return this.http.post(this.apiUrl + '/store', {store}, {headers: this.getHeaders()})
             .map((response: Response) => {
                 return {success: response.status < 300 && response.status >= 200}
             });
