@@ -42,7 +42,7 @@ export class BaseComponent {
     }
 
     protected pollTimelineEventsChanges() {
-        Observable.interval(MINUTE).flatMap(() => this.userService.fetchAggregatedInfo())
+        Observable.interval(MINUTE).flatMap(() => this.userService.fetchAggregatedInfo(true))
             .subscribe(userInfo => {
                 this.appStore.select('currentStore').take(1).subscribe(currentStore => {
                     let timelineEvents = userInfo._embedded.store.find(store => store.id === currentStore.id).timeline.total;
