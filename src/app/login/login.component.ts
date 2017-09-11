@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
         }
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => this.router.navigate(['']),
-            error => this.error = error.detail
+            ({error}) => {
+                this.error = error.detail
+            }
         );
     }
 

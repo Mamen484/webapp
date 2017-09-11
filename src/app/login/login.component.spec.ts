@@ -86,7 +86,7 @@ describe('LoginComponent', () => {
     });
 
     it('should write the error when the UserService returns an error', () => {
-        loginSpy.and.returnValue(Observable.throw({detail: 'bubidu'}));
+        loginSpy.and.returnValue(Observable.throw({error: {detail: 'bubidu'}}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
