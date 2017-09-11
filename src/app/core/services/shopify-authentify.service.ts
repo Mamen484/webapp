@@ -8,7 +8,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 @Injectable()
 export class ShopifyAuthentifyService {
     protected apiUrl = environment.API_URL;
-    protected storeData;
+    protected storeData: CreateStoreModel;
 
     constructor(protected httpClient: HttpClient) {
     }

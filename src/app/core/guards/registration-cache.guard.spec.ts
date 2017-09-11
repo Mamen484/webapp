@@ -33,7 +33,7 @@ describe('RegistrationCacheGuard', () => {
 
         guard = new RegistrationCacheGuard(<any>{
             updateStore: updateStoreSpy,
-            getStoreData: () => Observable.of({})
+            getStoreData: () => Observable.of({owner: {token: 'token'}})
         }, <any>window);
 
     });
@@ -72,7 +72,7 @@ describe('RegistrationCacheGuard', () => {
         getItemSpy.and.returnValue('{"storeId": 1}');
         updateStoreSpy.and.returnValue(Observable.of({}));
         guard.canActivate(<any>{queryParams: {something1: 12, something2: 25}}).subscribe(canActivate => {
-            expect(locationHrefSpy).toHaveBeenCalledWith(`${environment.APP_URL}?something1=12&something2=25`);
+            expect(locationHrefSpy).toHaveBeenCalledWith(environment.APP_URL);
             done();
         });
     });

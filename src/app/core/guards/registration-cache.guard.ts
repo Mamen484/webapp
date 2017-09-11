@@ -18,9 +18,8 @@ export class RegistrationCacheGuard implements CanActivate {
             .filter(store => store.storeId > 0)
             .flatMap(store => this.shopifyService.updateStore(store))
             .map(() => {
-                let url = environment.APP_URL + '?' + Helpers.createQueryString(next.queryParams);
                 this.windowRef.nativeWindow.localStorage.removeItem('sf.registration');
-                this.windowRef.nativeWindow.location.href = url;
+                this.windowRef.nativeWindow.location.href = environment.APP_URL;
             })
             .count()
             .map(count => !count);
@@ -33,11 +32,16 @@ export class RegistrationCacheGuard implements CanActivate {
         }
         return this.shopifyService.getStoreData(params['shop'], params)
         // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
-            .do(store => this.windowRef.nativeWindow.localStorage.setItem('sf.registration', JSON.stringify(store)));
+            .do(store => this.windowRef.nativeWindow.localStorage.setItem('sf.registration', JSON.stringify(store)))
+            .do(store => this.autoLoginUser(store));
     }
 
     protected getStoreFromCache() {
         return this.windowRef.nativeWindow.localStorage.getItem('sf.registration');
+    }
+
+    protected autoLoginUser(store) {
+        this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
     }
 
 }
