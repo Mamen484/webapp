@@ -7,7 +7,7 @@
                 <form (ngSubmit)="login()">
 
                     <md-input-container class="login-input" color="accent">
-                        <input mdInput i18n-placeholder placeholder="Username or store e-mail"
+                        <input mdInput i18n-placeholder placeholder="Username"
                                [formControl]="userNameControl">
                         <md-error *ngIf="userNameControl.hasError('required')">
                             Username is <strong>required</strong>

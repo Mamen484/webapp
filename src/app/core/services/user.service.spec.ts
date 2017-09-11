@@ -3,13 +3,17 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { UserService } from './user.service';
 import { environment } from '../../../environments/environment';
+import { WindowRefService } from './window-ref.service';
 
 describe('UserService', () => {
+    let setItemSpy: jasmine.Spy;
     beforeEach(() => {
+       setItemSpy = jasmine.createSpy('localStorage.setItem()');
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
-                UserService
+                UserService,
+                {provide: WindowRefService, useValue: {nativeWindow: {localStorage: {setItem: setItemSpy}}}}
             ]
         });
     });
@@ -33,9 +37,9 @@ describe('UserService', () => {
                 service.login('username1', 'password1').subscribe();
                 const req = httpMock.expectOne(environment.API_URL + '/auth');
                 expect(req.request.method).toEqual('POST');
-                expect(req.request.body.body.username).toEqual('username1');
-                expect(req.request.body.body.password).toEqual('password1');
-                expect(req.request.body.body.grant_type).toEqual('password');
+                expect(req.request.body.username).toEqual('username1');
+                expect(req.request.body.password).toEqual('password1');
+                expect(req.request.body.grant_type).toEqual('password');
                 httpMock.verify();
             }));
 });
