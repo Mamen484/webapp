@@ -1,8 +1,10 @@
 import { CreateStoreFeed } from './create-store-feed';
+import { StoreOwner } from './store-owner';
 
 export class CreateStoreModel {
+    id?: number;
     storeId = 0;
-    owner = {
+    owner: StoreOwner = {
         email: '',
         login: '',
         password: '',

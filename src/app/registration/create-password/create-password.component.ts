@@ -34,18 +34,16 @@ export class CreatePasswordComponent implements OnInit {
     }
 
     public createPassword() {
-        console.log(this.store);
         if (this.emailControl.hasError('required') || this.passwordControl.hasError('required')) {
             return;
         }
         // This is currently shopify specific
         this.store.owner.email = this.emailControl.value;
         this.store.owner.password = this.passwordControl.value;
-        this.service.createPassword(this.store).filter(result => result.success)
-            .flatMap(() => this.route.queryParams)
-            .subscribe((queryParams) => {
-                // query params are used to automatically connect to shopping-feed
-                this.router.navigate(['register', 'create-account'], {queryParams});
+        this.service.createPassword(this.store)
+            .subscribe((store: CreateStoreModel) => {
+                this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.tokens[0]}`)
+                this.router.navigate(['register', 'create-account']);
             });
 
         return false;

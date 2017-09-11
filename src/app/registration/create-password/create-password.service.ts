@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CreatePasswordService {
@@ -11,21 +11,10 @@ export class CreatePasswordService {
      */
     private apiUrl = environment.API_URL;
 
-    constructor(private http: Http) {
+    constructor(private httpClient: HttpClient) {
     }
 
-    public createPassword(store: CreateStoreModel): Observable<{ success: boolean }> {
-        return this.http.post(this.apiUrl + '/store', {store}, {headers: this.getHeaders()})
-            .map((response: Response) => {
-                return {success: response.status < 300 && response.status >= 200}
-            });
-    }
-
-    private getHeaders(): Headers {
-        let headers = new Headers();
-        headers.append('Accept', 'application/json');
-        headers.append('Authorization', environment.DEFAULT_AUTHORIZATION);
-
-        return headers;
+    public createPassword(store: CreateStoreModel) {
+        return this.httpClient.post(this.apiUrl + '/store', {store}) as Observable<CreateStoreModel>;
     }
 }

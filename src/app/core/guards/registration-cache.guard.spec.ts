@@ -5,12 +5,14 @@ import { environment } from '../../../environments/environment';
 describe('RegistrationCacheGuard', () => {
     let updateStoreSpy: jasmine.Spy;
     let getItemSpy: jasmine.Spy;
+    let setItemSpy: jasmine.Spy;
     let removeItemSpy: jasmine.Spy;
     let locationHrefSpy;
     let guard;
     beforeEach(() => {
         updateStoreSpy = jasmine.createSpy('shopifyAuthentifyService.updateStore');
         getItemSpy = jasmine.createSpy('localStorage.getItem');
+        setItemSpy = jasmine.createSpy('localStorage.setItem');
         removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         locationHrefSpy = jasmine.createSpy('location.href');
 
@@ -18,7 +20,8 @@ describe('RegistrationCacheGuard', () => {
             nativeWindow: {
                 localStorage: {
                     getItem: getItemSpy,
-                    removeItem: removeItemSpy
+                    removeItem: removeItemSpy,
+                    setItem: setItemSpy
                 },
                 location: {}
             }
@@ -28,14 +31,17 @@ describe('RegistrationCacheGuard', () => {
             set: locationHrefSpy
         });
 
-        guard = new RegistrationCacheGuard(<any>{updateStore: updateStoreSpy}, <any>window);
+        guard = new RegistrationCacheGuard(<any>{
+            updateStore: updateStoreSpy,
+            getStoreData: () => Observable.of({})
+        }, <any>window);
 
     });
 
     it('should return true when localStorage does not contain cache',
         done => {
             getItemSpy.and.returnValue(null);
-            guard.canActivate(<any>{}).subscribe(canActivate => {
+            guard.canActivate(<any>{queryParams: {}}).subscribe(canActivate => {
                 expect(canActivate).toEqual(true);
                 done();
             })

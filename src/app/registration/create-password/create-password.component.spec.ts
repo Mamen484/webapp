@@ -8,13 +8,12 @@ import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { WindowRefService } from '../../core/services/window-ref.service';
 import { MenuModule } from '../../menu/menu.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdInputModule } from '@angular/material';
+import { MdCardModule, MdInputModule } from '@angular/material';
 import { CreatePasswordService } from './create-password.service';
 import { LocaleIdService } from '../../core/services/locale-id.service';
-import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Route } from '@angular/router';
 
-fdescribe('CreatePasswordComponent', () => {
+describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
     let fixture: ComponentFixture<CreatePasswordComponent>;
     let getItemSpy: jasmine.Spy;
@@ -43,7 +42,7 @@ fdescribe('CreatePasswordComponent', () => {
 
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MdInputModule],
+            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MdInputModule, MdCardModule],
             providers: [
                 {
                     provide: ShopifyAuthentifyService,
@@ -71,7 +70,6 @@ fdescribe('CreatePasswordComponent', () => {
         });
 
         it('should redirect to shopify app if not shop provided', () => {
-           console.log(window);
             // expect(locationHrefSpy).toHaveBeenCalledWith(environment.SHOPIFY_APP_URL);
 
         });

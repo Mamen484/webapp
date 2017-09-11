@@ -16,6 +16,19 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(req);
         }
 
+        // add app token to shopify requests
+        if (
+            (req.url.indexOf(environment.API_URL + '/shopify/auth') === 0 && req.method === 'GET')
+            || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
+            || (req.url.indexOf(environment.API_URL + '/store') === 0 &&  (req.method === 'POST' || req.method === 'PATCH'))
+        ) {
+            return next.handle(req.clone({
+                headers: req.headers
+                    .set('Accept', 'application/json')
+                    .set('Authorization', environment.APP_AUTHORIZATION)
+            }))
+        }
+
         let authString = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
         if (!authString) {
             return next.handle(req.clone({
