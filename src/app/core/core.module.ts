@@ -45,6 +45,7 @@ import { ShopifyGuard } from './guards/shopify.guard';
 import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
 import { RegistrationCacheGuard } from './guards/registration-cache.guard';
 import { CreatePasswordService } from '../registration/create-password/create-password.service';
+import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 
 @NgModule({
     imports: [
@@ -61,6 +62,7 @@ import { CreatePasswordService } from '../registration/create-password/create-pa
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
+        IsAuthorizedGuard,
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
