@@ -13,8 +13,8 @@ import { WindowRefService } from '../../core/services/window-ref.service';
 })
 export class CreatePasswordComponent implements OnInit {
 
-    public emailControl = new FormControl('', Validators.required);
-    public passwordControl = new FormControl('', Validators.required);
+    public emailControl = new FormControl('', [Validators.required, Validators.email]);
+    public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
 
     protected store;
 
@@ -26,6 +26,11 @@ export class CreatePasswordComponent implements OnInit {
     }
 
     public ngOnInit() {
+        let cache = this.windowRef.nativeWindow.localStorage.getItem('sf.registration');
+        if (cache) {
+            this.store = JSON.parse(cache);
+            return;
+        }
         this.route.queryParams
             .flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params))
             .subscribe(store => {

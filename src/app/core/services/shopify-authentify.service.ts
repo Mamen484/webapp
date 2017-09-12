@@ -20,7 +20,6 @@ export class ShopifyAuthentifyService {
     }
 
     public getStoreData(shop: string, {code, timestamp, hmac}: Params): Observable<CreateStoreModel> {
-
         if (!this.storeData) {
             return this.httpClient.get(this.apiUrl + '/shopify/store/' + this.getShopName(shop), {
                 params: new HttpParams()
