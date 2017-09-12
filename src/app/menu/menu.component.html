@@ -1,5 +1,5 @@
 <sf-menu-container>
-    <div class="sf-nav-welcome-text md-title" i18n>{{currentStore.name}}</div>
+    <div class="sf-nav-welcome-text md-title">{{currentStore.name}}</div>
 
     <sf-support-help-center></sf-support-help-center>
 
@@ -21,7 +21,7 @@
             </button>
         </ng-container>
         <hr *ngIf="userInfo._embedded.store.length > 1">
-        <a md-menu-item n18n (click)="logout()">Logout</a>
+        <a md-menu-item i18n (click)="logout()">Logout</a>
 
     </md-menu>
 </sf-menu-container>

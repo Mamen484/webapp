@@ -1,6 +1,6 @@
 for lang in fr it es de en pt; do \
     LOCALE_ID=$lang production=true node_modules/.bin/ts-node compile-environment.ts && \
-    ng build --output-path=dist/$lang \
+    node_modules/.bin/ng build --output-path=dist/$lang \
              --prod \
              --bh /$lang/ \
              --locale=$lang \

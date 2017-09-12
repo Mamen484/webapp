@@ -3,19 +3,60 @@
 </div>
 <md-dialog-content>
     <md-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country">
-        <md-option *ngFor="let country of countries" [value]="country[0]" i18n>
-            <img src="assets/images/flags/{{country[0]}}.png" class="sf-flag"> {{country[1]}}
+        <md-option value="fr">
+            <img src="assets/images/flags/fr.png" class="sf-flag">
+            <ng-container i18n>France</ng-container>
+        </md-option>
+        <md-option value="en">
+            <img src="assets/images/flags/en.png" class="sf-flag">
+            <ng-container i18n>United Kingdom</ng-container>
+        </md-option>
+        <md-option value="de">
+            <img src="assets/images/flags/de.png" class="sf-flag">
+            <ng-container i18n>Germany</ng-container>
+        </md-option>
+        <md-option value="es">
+            <img src="assets/images/flags/es.png" class="sf-flag">
+            <ng-container i18n>Spain</ng-container>
+        </md-option>
+        <md-option value="it">
+            <img src="assets/images/flags/it.png" class="sf-flag">
+            <ng-container i18n>Italy</ng-container>
+        </md-option>
+        <md-option value="pt">
+            <img src="assets/images/flags/pt.png" class="sf-flag">
+            <ng-container i18n>Portugal</ng-container>
         </md-option>
     </md-select>
 
-    <md-select placeholder="Type" i18n-placeholder  [(ngModel)]="filter.type">
+
+    <md-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
         <md-option value="" i18n>All Types</md-option>
-        <md-option *ngFor="let type of types" [value]="type[0]" i18n>{{type[1]}}</md-option>
+        <md-option value="ads" i18n>Product Listing Ads</md-option>
+        <md-option value="affiliation" i18n>Affiliation</md-option>
+        <md-option value="export" i18n>Custom Exports</md-option>
+        <md-option value="marketplace" i18n>Marketplace</md-option>
+        <md-option value="retargeting" i18n>Retargeting</md-option>
+        <md-option value="shopbot" i18n>Shopping Engines</md-option>
+        <md-option value="solomo" i18n>Social Local Mobile</md-option>
     </md-select>
 
-    <md-select placeholder="Category" i18n-placeholder  [(ngModel)]="filter.segment">
+    <md-select placeholder="Category" i18n-placeholder [(ngModel)]="filter.segment">
         <md-option value="" i18n>All Categories</md-option>
-        <md-option *ngFor="let category of categories" [value]="category[0]"  i18n>{{category[1]}}</md-option>
+        <md-option value="professional" i18n>Professional Purchasing</md-option>
+        <md-option value="motors" i18n>Auto / Moto</md-option>
+        <md-option value="organic" i18n>Organic</md-option>
+        <md-option value="appliances" i18n>Home Appliances</md-option>
+        <md-option value="gastronomy" i18n>Gastronomy</md-option>
+        <md-option value="highTech" i18n>High Tech</md-option>
+        <md-option value="toys" i18n>Games And Toys</md-option>
+        <md-option value="homeAndGarden" i18n>Home And Garden</md-option>
+        <md-option value="nursery" i18n>Nursery</md-option>
+        <md-option value="healthAndBeauty" i18n>Health And Beauty</md-option>
+        <md-option value="wineAndSpirits" i18n>Wine And Spirits</md-option>
+        <md-option value="fashion" i18n>Fashion</md-option>
+        <md-option value="universal" i18n>Universal</md-option>
+        <md-option value="sports" i18n>Sports</md-option>
     </md-select>
 </md-dialog-content>
 <md-dialog-actions>
