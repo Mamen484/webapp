@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         let authString = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
-        if (!authString) {
+        if (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0 /* login resource */) {
             return next.handle(req.clone({
                 headers: req.headers
                     .set('Accept', 'application/json')
