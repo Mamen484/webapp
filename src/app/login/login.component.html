@@ -9,16 +9,16 @@
                     <md-input-container class="login-input" color="accent">
                         <input mdInput i18n-placeholder placeholder="Username"
                                [formControl]="userNameControl">
-                        <md-error *ngIf="userNameControl.hasError('required')">
-                            <ng-container i18n>Username is</ng-container> <strong i18n>required</strong>
+                        <md-error *ngIf="userNameControl.hasError('required')" i18n>
+                            Username is required
                         </md-error>
                     </md-input-container>
 
                     <md-input-container class="login-input" color="accent">
                         <input mdInput i18n-placeholder placeholder="Password" type="password"
                                [formControl]="passwordControl">
-                        <md-error *ngIf="passwordControl.hasError('required')">
-                            <ng-container i18n>Password is</ng-container> <strong i18n>required</strong>
+                        <md-error *ngIf="passwordControl.hasError('required')" i18n>
+                            Password is required
                         </md-error>
                     </md-input-container>
 

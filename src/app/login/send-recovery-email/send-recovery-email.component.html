@@ -11,8 +11,8 @@
 
                     <md-input-container color="accent">
                         <input mdInput i18n-placeholder placeholder="Username" [formControl]="emailControl">
-                        <md-error *ngIf="emailControl.hasError('required')">
-                            <ng-container i18n>Username is</ng-container> <strong i18n>required</strong>
+                        <md-error *ngIf="emailControl.hasError('required')" i18n>
+                           Username is required
                         </md-error>
                     </md-input-container>
 
