@@ -16,6 +16,8 @@ export class CreatePasswordComponent implements OnInit {
     public emailControl = new FormControl('', [Validators.required, Validators.email]);
     public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
 
+    public displayServerError = false;
+
     protected store;
 
     constructor(protected service: CreatePasswordService,
@@ -49,7 +51,8 @@ export class CreatePasswordComponent implements OnInit {
             .subscribe((store: CreateStoreModel) => {
                 this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.tokens[0]}`)
                 this.router.navigate(['register', 'create-account']);
-            });
+            },
+                () => this.displayServerError = true);
 
         return false;
     }
