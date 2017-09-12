@@ -4,22 +4,24 @@
     <sf-support-help-center></sf-support-help-center>
 
     <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
-                         [attr.data-badge]="currentStore.timeline.total">notifications_none
-                </md-icon>
-                <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
-                <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
-                    <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n
-                       *ngIf="currentStore.permission.marketplaces">Settings</a>
-                    <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
-                    <a md-menu-item href="{{appUrl}}/facturation" i18n
-                       *ngIf="currentStore.permission.facturation">Membership</a>
-                    <a md-menu-item href="{{appUrl}}/tools/access" i18n>Access</a>
-                    <hr>
-                    <button md-menu-item *ngFor="let store of userInfo._embedded.store"
-                            (click)="chooseStore(store)">{{store.name}}
-                    </button>
-                    <hr>
-                    <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
+             [attr.data-badge]="currentStore.timeline.total">notifications_none
+    </md-icon>
+    <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
+    <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
+        <a md-menu-item href="{{appUrl}}/marketplaces/globalparameters" i18n
+           *ngIf="currentStore.permission.marketplaces">Settings</a>
+        <a md-menu-item href="{{appUrl}}/tools/settings" i18n>Alert Management</a>
+        <a md-menu-item href="{{appUrl}}/facturation" i18n
+           *ngIf="currentStore.permission.facturation">Membership</a>
+        <a md-menu-item href="{{appUrl}}/tools/access" i18n>Access</a>
+        <hr>
+        <ng-container *ngFor="let store of userInfo._embedded.store">
+            <button md-menu-item *ngIf="store.id !== currentStore.id"
+                    (click)="chooseStore(store)">{{store.name}}
+            </button>
+        </ng-container>
+        <hr *ngIf="userInfo._embedded.store.length > 1">
+        <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
 
     </md-menu>
 </sf-menu-container>
