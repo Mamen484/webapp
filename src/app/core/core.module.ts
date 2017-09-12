@@ -39,6 +39,7 @@ import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
 import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
+import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { PasswordRecoveryService } from './services/password-recovery.service';
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
+        IsAuthorizedGuard,
         LocaleIdService,
         InternationalAccountService,
         {provide: SupportService, useValue: {searchArticles}},

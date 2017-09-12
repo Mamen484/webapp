@@ -21,7 +21,7 @@
             </button>
         </ng-container>
         <hr *ngIf="userInfo._embedded.store.length > 1">
-        <a md-menu-item n18n href="{{appUrl}}/index/logout">Logout</a>
+        <a md-menu-item n18n (click)="logout()">Logout</a>
 
     </md-menu>
 </sf-menu-container>
