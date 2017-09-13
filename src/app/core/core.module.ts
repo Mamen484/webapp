@@ -55,7 +55,7 @@ import { LogoutGuard } from './logout.guard';
         ShopifyAuthentifyService,
         RegistrationCacheGuard,
         CreatePasswordService,
-        {provide: SupportService, useValue: {searchArticles}},
+        SupportService,
         WindowRefService,
         PasswordRecoveryService,
         ShopifyGuard,
@@ -72,11 +72,4 @@ export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
-}
-
-export function searchArticles(query) {
-    return query === 'empty'
-        ? Observable.of({_embedded: {entries: []}}).delay(Math.round(Math.random() * 1200))
-        : Observable.of(supportSearchMock).delay(Math.round(Math.random() * 1200));
-
 }

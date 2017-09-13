@@ -13,7 +13,7 @@ export class SupportService {
     }
 
     searchArticles(searchQuery): Observable<SearchArticlesPage> {
-        return this.httpClient.get(environment.SUPPORT_URL + '/api/v2/articles/search', {
+        return this.httpClient.get(environment.API_URL + '/desk/articles/search', {
             params: new HttpParams()
                 .set('text', searchQuery)
                 .set('in_support_center', 'true')
