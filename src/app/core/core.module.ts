@@ -24,6 +24,7 @@ import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor'
 import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
+import { LogoutGuard } from './logout.guard';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import { IsAuthorizedGuard } from './guards/is-authorized.guard';
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
         IsAuthorizedGuard,
+        LogoutGuard,
         LocaleIdService,
         InternationalAccountService,
         {provide: SupportService, useValue: {searchArticles}},
