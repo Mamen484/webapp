@@ -9,7 +9,7 @@ import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialo
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 
 
-describe('SuggestedChannelComponent', () => {
+xdescribe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
     let fixture: ComponentFixture<SuggestedChannelComponent>;
     let afterClosedSpy;
