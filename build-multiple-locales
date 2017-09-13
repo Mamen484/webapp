@@ -2,7 +2,7 @@ for lang in fr it es de en pt; do \
     LOCALE_ID=$lang production=true node_modules/.bin/ts-node compile-environment.ts && \
     node_modules/.bin/ng build --output-path=dist/$lang \
              --prod \
-             --bh /$lang/ \
+             --bh /v3/$lang/ \
              --locale=$lang \
              --i18nFile=src/locale/messages.$lang.xlf \
              --i18nFormat=xlf
