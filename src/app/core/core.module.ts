@@ -1,6 +1,5 @@
 import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
 import { StoreModule } from '@ngrx/store';
 import '../../rxjs-imports';
 
@@ -30,7 +29,8 @@ import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
 import { RegistrationCacheGuard } from './guards/registration-cache.guard';
 import { CreatePasswordService } from '../registration/create-password/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
-import { LogoutGuard } from './logout.guard';
+import { LogoutGuard } from './guards/logout.guard';
+import { LoginByTokenGuard } from './guards/login-by-token.guard';
 
 @NgModule({
     imports: [
@@ -49,6 +49,7 @@ import { LogoutGuard } from './logout.guard';
         CheckProperLocaleGuard,
         IsAuthorizedGuard,
         LogoutGuard,
+        LoginByTokenGuard,
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,

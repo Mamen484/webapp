@@ -9,7 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { SendRecoveryEmailComponent } from './login/send-recovery-email/send-recovery-email.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
-import { LogoutGuard } from './core/logout.guard';
+import { LogoutGuard } from './core/guards/logout.guard';
+import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 
 const routes: Routes = [
     {
@@ -19,6 +20,7 @@ const routes: Routes = [
             userInfo: AggregatedUserInfoResolveGuard
         },
         canActivate: [
+            LoginByTokenGuard,
             LogoutGuard,
             IsAuthorizedGuard,
             CheckProperLocaleGuard
