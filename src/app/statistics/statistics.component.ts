@@ -8,6 +8,7 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 import { StoreChannel } from '../core/entities/store-channel';
 import { StoreService } from '../core/services/store.service';
 import { PagedResponse } from '../core/entities/paged-response';
+import { ActivatedRoute } from '@angular/router';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -33,7 +34,7 @@ export class StatisticsComponent {
 
     filterState = new ChannelsRequestParams();
 
-    constructor(protected appStore: Store<AppState>, protected storeService: StoreService) {
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected route: ActivatedRoute) {
         this.appStore.select('currentStore')
             .do(() => {
                 this.statistics = undefined;
@@ -66,11 +67,11 @@ export class StatisticsComponent {
 
     onApplyFilter() {
         this.processingFilters = true;
-
         this.appStore.select('currentStore').take(1)
             .flatMap(currentStore => this.storeService.getStoreChannels(
                 currentStore.id,
-                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}),
+                Boolean(this.filterState.country && currentStore.country.toLowerCase() !== this.filterState.country.toLowerCase())
             ))
             .subscribe(channels => this.initialize(channels));
     }
