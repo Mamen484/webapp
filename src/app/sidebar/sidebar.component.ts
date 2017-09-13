@@ -5,6 +5,8 @@ import { Store } from '../core/entities/store';
 import { Observable } from 'rxjs/Observable';
 import { StoreChannelDetails } from '../core/entities/store-channel-details';
 import { environment } from '../../environments/environment';
+import { StoreService } from '../core/services/store.service';
+import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 
 @Component({
     selector: 'sf-sidebar',
@@ -18,10 +20,14 @@ export class SidebarComponent {
     currentStore: Observable<Store>;
     channels: Observable<StoreChannelDetails[]>;
 
-    constructor(protected _appStore: AppStore<AppState>, @Inject(LOCALE_ID) public localeId = environment.DEFAULT_LANGUAGE) {
+    constructor(
+        protected _appStore: AppStore<AppState>,
+        @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
+        protected storeService: StoreService) {
         this.currentStore = this._appStore.select('currentStore');
-        this.channels = this._appStore.select('channels').filter(data => typeof data === 'object')
-            .map(({_embedded}) => _embedded.storeChannel.map(({_embedded: {channel}}) => channel))
+        this.channels = this.currentStore
+            .flatMap(store => this.storeService.getStoreChannels(store.id, Object.assign(new ChannelsRequestParams, {status: 'installed'})))
+            .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
 
     }
 
