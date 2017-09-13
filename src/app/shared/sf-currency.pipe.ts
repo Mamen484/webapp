@@ -1,21 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import * as cf from 'currency-formatter';
 
 @Pipe({
     name: 'sfCurrency'
 })
 export class SfCurrencyPipe implements PipeTransform {
 
+
     transform(value: number, currency): string {
-        switch (currency) {
-            case 'USD':
-                return '$' + value;
-
-            case 'EUR':
-                return value + ' €';
-
-            default:
-                return value + ' ' + currency;
-        }
+        return cf.format(value, {code: currency});
     }
 
 }
