@@ -6,7 +6,7 @@
     </a>
   </md-menu>
   <div class="menu-blank-space"></div>
-  <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu">
+  <div class="sf-nav-selected-language" [mdMenuTriggerFor]="langMenu" *ngIf="displayFlags">
     <img src="/assets/images/flags/{{localeId}}.png" >
   </div>
 </sf-menu-container>

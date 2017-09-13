@@ -23,6 +23,12 @@ import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
 import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
+import { ChannelLogoService } from './services/channel_logo.service';
+import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
+import { ShopifyGuard } from './guards/shopify.guard';
+import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
+import { RegistrationCacheGuard } from './guards/registration-cache.guard';
+import { CreatePasswordService } from '../registration/create-password/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './logout.guard';
 
@@ -45,9 +51,15 @@ import { LogoutGuard } from './logout.guard';
         LogoutGuard,
         LocaleIdService,
         InternationalAccountService,
+        ChannelLogoService,
+        ShopifyAuthentifyService,
+        RegistrationCacheGuard,
+        CreatePasswordService,
         {provide: SupportService, useValue: {searchArticles}},
         WindowRefService,
         PasswordRecoveryService,
+        ShopifyGuard,
+        ShopSpecifiedGuard,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         UserService,

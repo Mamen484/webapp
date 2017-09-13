@@ -58,4 +58,66 @@ describe('AuthInterceptor', () => {
                 expect(request.request.method).toEqual('GET');
                 httpMock.verify();
             }));
+
+    it('should add App Authorization and Accept headers to an http request when the user requests shopify/auth resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                http.get(environment.API_URL + '/shopify/auth/maksym-test7').subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === environment.APP_AUTHORIZATION
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('GET');
+                httpMock.verify();
+            }));
+
+    it('should add App Authorization and Accept headers to an http request when the user requests shopify/store resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                http.get(environment.API_URL + '/shopify/store/maksym-test7').subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === environment.APP_AUTHORIZATION
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('GET');
+                httpMock.verify();
+            }));
+
+    it('should NOT add App Authorization and Accept headers to an http request when the user requests shopify/subscription resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                getItemSpy.and.returnValue('tarampapam');
+                http.post(environment.API_URL + '/shopify/subscription/maksym-test7', {}).subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === 'tarampapam'
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('POST');
+                httpMock.verify();
+            }));
+
+    it('should add App Authorization and Accept headers to an http request when the user requests POST /store resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                http.post(environment.API_URL + '/store', {}).subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === environment.APP_AUTHORIZATION
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('POST');
+                httpMock.verify();
+            }));
+
+    it('should add User Authorization and Accept headers to an http request when the user requests GET /store resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                getItemSpy.and.returnValue('tarampapam');
+                http.get(environment.API_URL + '/store').subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === 'tarampapam'
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('GET');
+                httpMock.verify();
+            }));
 });

@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { LoginModule } from './login/login.module';
+import { RegistrationModule } from './registration/registration.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { LoginModule } from './login/login.module';
         StatisticsModule,
         AppRoutingModule,
         LoginModule,
+        RegistrationModule,
     ],
     bootstrap: [AppComponent]
 })
