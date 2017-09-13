@@ -5,7 +5,7 @@ import { ChannelStatistics } from '../channel-statistics';
 export interface StoreChannel {
     id: number;
     store: number;
-    isConfigured: true;
+    installed: true;
     // custom field set in runtime
     statistics: ChannelStatistics;
     channel: number,

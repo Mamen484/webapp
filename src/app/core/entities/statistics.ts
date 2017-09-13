@@ -3,11 +3,11 @@ import { ChannelStatistics } from '../channel-statistics';
 
 export interface Statistics {
     id: number;
-    symbol: string;
+    currency: string;
     revenue: number;
     orders: number;
     clicks: number;
-    channels: ChannelStatistics[],
+    _embedded: {channel: ChannelStatistics[]},
     _links: {
         self: Link,
         store: Link

@@ -13,10 +13,10 @@ describe('SfCurrencyPipe', () => {
     });
 
     it('return a currency symbol before the number when the currency is USD', () => {
-        expect(pipe.transform(34, '$')).toEqual('$34');
+        expect(pipe.transform(34, 'USD')).toEqual('$34');
     });
 
     it('return a currency symbol after the number when the currency is EUR', () => {
-        expect(pipe.transform(34, '€')).toEqual('34 €');
+        expect(pipe.transform(34, 'EUR')).toEqual('34 €');
     });
 });

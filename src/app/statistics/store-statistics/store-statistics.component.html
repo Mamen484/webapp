@@ -1,11 +1,11 @@
-<div fxLayout="row" fxLayoutGap="10px">
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="statistics">
   <div fxFlex="25" fxFlexAlign="start">
     <div class="statistics-welcome mat-display-1" i18n>Welcome,</div>
     <div class="mat-subheading-1 description" i18n>Here's what's happening on your store this month</div>
   </div>
   <div fxFlex="25" class="statistics-item"  fxFlexAlign="center">
     <div class="mat-body-1 statistics-item-title" i18n>Turnover</div>
-    <div class="mat-display-2 statistics-value"> {{ statistics.revenue  | sfCurrency:statistics.symbol }}</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.revenue  | sfCurrency:statistics.currency }}</div>
   </div>
   <div fxFlex="25" class="statistics-item" fxFlexAlign="center">
     <div class="mat-body-1 statistics-item-title" i18n>Orders</div>

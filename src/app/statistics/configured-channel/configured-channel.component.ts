@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { StoreChannel } from '../../core/entities/store-channel';
 
@@ -7,15 +7,12 @@ import { StoreChannel } from '../../core/entities/store-channel';
     templateUrl: './configured-channel.component.html',
     styleUrls: ['./configured-channel.component.scss']
 })
-export class ConfiguredChannelComponent implements OnInit {
+export class ConfiguredChannelComponent {
 
     @Input() channel: StoreChannel;
     appUrl = environment.APP_URL;
 
     constructor() {
-    }
-
-    ngOnInit() {
     }
 
 }

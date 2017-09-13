@@ -21,7 +21,7 @@ describe('StoreService', () => {
     it('should request /storechannel resource with storeId in params when calling getAllConfiguredChannels method',
         inject([StoreService, HttpTestingController],
             (service: StoreService, httpMock: HttpTestingController) => {
-                service.getAllConfiguredChannels(24).subscribe();
+                service.getStoreChannels(24).subscribe();
                 const req = httpMock.expectOne(environment.API_URL + '/storechannel?store=24');
                 expect(req.request.method).toEqual('GET');
                 httpMock.verify();

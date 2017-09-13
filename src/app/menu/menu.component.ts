@@ -32,8 +32,6 @@ export class MenuComponent {
 
     chooseStore(store) {
         this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
-        this.storeService.getAllConfiguredChannels(store.id).subscribe(channels =>
-            this.appStore.select('channels').dispatch({type: SET_CHANNELS, channels}));
     }
 
     logout() {

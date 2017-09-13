@@ -8,17 +8,18 @@ import { WindowRefService } from './window-ref.service';
 @Injectable()
 export class UserService {
 
-    protected aggregatedInfoCache;
+    protected aggregatedInfoCache: Observable<AggregatedUserInfo>;
 
     constructor(protected httpClient: HttpClient, protected windowRef: WindowRefService) {
     }
 
     public fetchAggregatedInfo(withoutCache = false) {
         if (!this.aggregatedInfoCache || withoutCache) {
-            return <Observable<AggregatedUserInfo>>(this.httpClient.get(`${environment.API_URL}/me`))
-                .do(data => this.aggregatedInfoCache = data);
+            this.aggregatedInfoCache = <Observable<AggregatedUserInfo>>this.httpClient.get(`${environment.API_URL}/me`)
+                .publishReplay(1)
+                .refCount();
         }
-        return Observable.of(this.aggregatedInfoCache);
+        return this.aggregatedInfoCache;
     }
 
     public login(username, password) {
