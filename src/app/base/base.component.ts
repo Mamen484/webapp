@@ -23,7 +23,6 @@ export class BaseComponent {
 
     constructor(protected route: ActivatedRoute,
                 protected appStore: Store<AppState>,
-                protected storeService: StoreService,
                 protected userService: UserService) {
         this.route.data.subscribe(this.initializeAppStore.bind(this));
         this.pollTimelineEventsChanges();
@@ -33,12 +32,6 @@ export class BaseComponent {
         let store = userInfo._embedded.store[0];
         this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
         this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
-        this.storeService.getAllConfiguredChannels(store.id).subscribe(
-            channels => this.appStore.select('channels').dispatch({type: SET_CHANNELS, channels})
-        );
-        this.storeService.getStatistics(store.id).subscribe(
-            statistics => this.appStore.select('storeStatistics').dispatch({type: SET_STATISTICS, statistics})
-        );
     }
 
     protected pollTimelineEventsChanges() {

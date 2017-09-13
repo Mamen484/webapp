@@ -3,7 +3,7 @@ import { storeChannelMock } from './store-channel.mock';
 
 class ChannelMock implements ChannelStatistics {
 
-    'symbol' = Math.round((Math.random() * 10)) % 2 === 0 ? '$' : '€';
+    currency = Math.round((Math.random() * 10)) % 2 === 0 ? '$' : '€';
     'revenue' = +(Math.random() * 1000000).toFixed(0);
     'selected' = +(Math.random() * 10000000).toFixed(0);
     'exported' = +(Math.random() * 100000).toFixed(0);

@@ -8,7 +8,7 @@ const channelsMock = {
             {
                 'id': 0,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -20,7 +20,7 @@ const channelsMock = {
             }, {
                 'id': 1,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -32,7 +32,7 @@ const channelsMock = {
             }, {
                 'id': 2,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -44,7 +44,7 @@ const channelsMock = {
             }, {
                 'id': 3,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -56,7 +56,7 @@ const channelsMock = {
             }, {
                 'id': 4,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -68,7 +68,7 @@ const channelsMock = {
             }, {
                 'id': 5,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -80,7 +80,7 @@ const channelsMock = {
             }, {
                 'id': 6,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -91,7 +91,7 @@ const channelsMock = {
                 '_links': {'self': {'href': '/v1/storechannel/123'}}
             }, {
                 'id': 7,
-                'isConfigured': true,
+                'installed': true,
                 'store': 45,
                 'channel': 789,
                 '_embedded': {
@@ -104,7 +104,7 @@ const channelsMock = {
             }, {
                 'id': 8,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -116,7 +116,7 @@ const channelsMock = {
             }, {
                 'id': 9,
                 'store': 45,
-                'isConfigured': true,
+                'installed': true,
                 'channel': 789,
                 '_embedded': {
                     'channel': {
@@ -129,7 +129,7 @@ const channelsMock = {
             {
                 'id': 456,
                 'name': 'amazon167',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -139,7 +139,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon136',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -149,7 +149,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon177',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -159,7 +159,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon62',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -169,7 +169,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon202',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -179,7 +179,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon49',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -189,7 +189,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon84',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -199,7 +199,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon226',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -209,7 +209,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon179',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -219,7 +219,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon131',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -229,7 +229,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon73',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -239,7 +239,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon196',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -249,7 +249,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon170',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -259,7 +259,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon3',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -269,7 +269,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon71',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -279,7 +279,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon174',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -289,7 +289,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon65',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -299,7 +299,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon290',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -309,7 +309,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon125',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -319,7 +319,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon67',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'nursery',
@@ -329,7 +329,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon172',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'homeAndGarden',
@@ -339,7 +339,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon198',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'homeAndGarden',
@@ -349,7 +349,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon178',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'toys',
@@ -359,7 +359,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon248',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'highTech',
@@ -369,7 +369,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon236',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -379,7 +379,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon254',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'appliances',
@@ -389,7 +389,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon71',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'gastronomy',
@@ -399,7 +399,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon83',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'appliances',
@@ -409,7 +409,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon221',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'organic',
@@ -419,7 +419,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon290',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'organic',
@@ -429,7 +429,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon206',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'professional',
@@ -439,7 +439,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon252',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'motors',
@@ -449,7 +449,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon54',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -459,7 +459,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon127',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -469,7 +469,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon150',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'professional',
@@ -479,7 +479,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon153',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -489,7 +489,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon6',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'professional',
@@ -499,7 +499,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon296',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -509,7 +509,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon201',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -519,7 +519,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon94',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -529,7 +529,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon136',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -539,7 +539,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon81',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -549,7 +549,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon257',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -559,7 +559,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon90',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -569,7 +569,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon152',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -579,7 +579,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon239',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -589,7 +589,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon267',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -599,7 +599,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon96',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -609,7 +609,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon254',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -619,7 +619,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon262',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -629,7 +629,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon202',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -639,7 +639,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon271',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -649,7 +649,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon60',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some two-line description of the channel',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -659,7 +659,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon197',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -669,7 +669,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon274',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -679,7 +679,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon284',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -689,7 +689,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon173',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -699,7 +699,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon272',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some very very long description that takes a lot of lines to make sure that it turns to ellipsis not to overflow the text below',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -709,7 +709,7 @@ const channelsMock = {
             }, {
                 'id': 456,
                 'name': 'amazon100',
-                'isConfigured': false,
+                'installed': false,
                 'description': 'Some short description',
                 'type': 'marketplace',
                 'segment': 'everything',
@@ -724,7 +724,7 @@ export const channelsStaticMock = function ({page, limit, searchQuery, segment})
     let channels = channelsMock._embedded.channel
     // filter by name
         .filter(channel => {
-            switch (channel.isConfigured) {
+            switch (channel.installed) {
                 case true:
                     return (<StoreChannel>channel)._embedded.channel.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
 
@@ -734,7 +734,7 @@ export const channelsStaticMock = function ({page, limit, searchQuery, segment})
         })
         // filter by segment
         .filter(channel => {
-            return segment === '' || !channel.isConfigured && (<Channel>channel).segment === segment;
+            return segment === '' || !channel.installed && (<Channel>channel).segment === segment;
         });
 
     let total = channels.length;

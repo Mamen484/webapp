@@ -4,7 +4,7 @@ export interface Channel {
     id: number;
     name: string;
     description: string;
-    isConfigured: boolean;
+    installed: boolean;
     type: string;
     segment: string;
     offer: string;

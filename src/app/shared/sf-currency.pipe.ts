@@ -5,13 +5,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SfCurrencyPipe implements PipeTransform {
 
-    transform(value: number, symbol): string {
-        switch (symbol) {
-            case '$':
+    transform(value: number, currency): string {
+        switch (currency) {
+            case 'USD':
                 return '$' + value;
 
+            case 'EUR':
+                return value + ' €';
+
             default:
-                return value + ' ' + symbol
+                return value + ' ' + currency;
         }
     }
 

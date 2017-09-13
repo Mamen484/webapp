@@ -6,6 +6,7 @@ import { ConnectIntlChannelDialogComponent } from '../connect-intl-channel-dialo
 import { InternationalAccountService } from '../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
+import { StoreChannel } from '../../core/entities/store-channel';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -14,7 +15,7 @@ import { RequestFailedDialogComponent } from '../request-failed-dialog/request-f
 })
 export class SuggestedChannelComponent {
 
-    @Input() channel: Channel;
+    @Input() channel: StoreChannel;
     @Input() internationalMode = false;
     appUrl = environment.APP_URL;
 

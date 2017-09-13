@@ -13,6 +13,7 @@ export class LocaleIdService {
     public localeId: keyof typeof ChannelLanguage;
 
     static detectLocale(originalLocaleId) {
+        originalLocaleId = originalLocaleId.toLowerCase();
         if (ChannelLanguage.hasOwnProperty(originalLocaleId)) {
             return originalLocaleId;
         }

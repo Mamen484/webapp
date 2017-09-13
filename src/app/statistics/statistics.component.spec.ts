@@ -6,8 +6,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { StatisticsComponent } from './statistics.component';
-import { ChannelService } from '../core/services/channel.service';
-import { channelsStaticMock } from '../../mocks/channels-mock';
 import { statisticsMock } from '../../mocks/statistics-mock';
 import { SearchChannelsStubComponent } from '../../mocks/stubs/search-channels-stub.component';
 import { StoreStatisticsStubComponent } from '../../mocks/stubs/store-statistics-stub.component';
@@ -24,7 +22,7 @@ describe('StatisticsComponent', () => {
 
     beforeEach(async(() => {
         channelServiceMock = {getChannels: jasmine.createSpy('getChannels')};
-        channelServiceMock.getChannels.and.callFake(params => Observable.of(channelsStaticMock(params)));
+        channelServiceMock.getChannels.and.callFake(params => Observable.of({}));
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -47,7 +45,6 @@ describe('StatisticsComponent', () => {
                         : Observable.of(statisticsMock)
                 }
                 },
-                {provide: ChannelService, useValue: channelServiceMock}
             ]
         })
             .compileComponents();

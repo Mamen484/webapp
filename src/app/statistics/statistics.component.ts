@@ -3,10 +3,11 @@ import { AppState } from '../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { Statistics } from '../core/entities/statistics';
 import { environment } from '../../environments/environment';
-import { ChannelService } from '../core/services/channel.service';
 import { ChannelsResponse } from '../core/entities/channels-response';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { StoreChannel } from '../core/entities/store-channel';
+import { StoreService } from '../core/services/store.service';
+import { PagedResponse } from '../core/entities/paged-response';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -32,20 +33,31 @@ export class StatisticsComponent {
 
     filterState = new ChannelsRequestParams();
 
-    constructor(protected appStore: Store<AppState>, protected channelService: ChannelService) {
-        this.appStore.select('storeStatistics').subscribe(statistics => {
-            this.statistics = statistics;
-            this.initialize();
-        });
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService) {
+        this.appStore.select('currentStore')
+            .do(() => {
+                this.statistics = undefined;
+                this.channels = <any>{_embedded: {channel: []}};
+            })
+            .flatMap(currentStore =>
+                this.storeService.getStatistics(currentStore.id)
+                    .zip(this.storeService.getStoreChannels(
+                        currentStore.id,
+                        Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+                    )))
+            .subscribe(([statistics, channels]) => {
+                this.statistics = statistics;
+                this.initialize(channels);
+            });
     }
 
     onScroll() {
         if (!this.canScroll()) {
             return;
         }
-
         this.processing = true;
-        this.channelService.getChannels(this.getFilterState()).subscribe(data => {
+        this.appStore.select('currentStore').take(1)
+            .flatMap(store => this.storeService.getStoreChannels(store.id, this.getFilterState())).subscribe(data => {
             this.updateSuggestedChannels(data);
             this.processing = false;
             this.infiniteScrollDisabled = data.page >= data.pages;
@@ -54,7 +66,13 @@ export class StatisticsComponent {
 
     onApplyFilter() {
         this.processingFilters = true;
-        this.initialize();
+
+        this.appStore.select('currentStore').take(1)
+            .flatMap(currentStore => this.storeService.getStoreChannels(
+                currentStore.id,
+                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+            ))
+            .subscribe(channels => this.initialize(channels));
     }
 
     resetFilter() {
@@ -67,9 +85,19 @@ export class StatisticsComponent {
         return !this.processing && this.channels.page < this.channels.pages;
     }
 
-    protected updateSuggestedChannels({page, _embedded}) {
+    protected updateSuggestedChannels({page, pages, _embedded}: PagedResponse<{ channel: StoreChannel[] }>) {
         this.channels.page = page;
-        this.channels._embedded.channel.push(..._embedded.channel);
+        this.channels._embedded.channel.push(..._embedded.channel.map(channel => {
+            if (channel.installed) {
+                let installedChannel = Object.assign({},
+                    channel,
+                    {statistics: this.statistics._embedded.channel.find(ch => ch.id === channel.id)}
+                );
+                installedChannel.statistics.currency = this.statistics.currency;
+                return installedChannel;
+            }
+            return channel;
+        }));
 
     }
 
@@ -80,23 +108,23 @@ export class StatisticsComponent {
         });
     }
 
-    protected initialize() {
-        this.channelService.getChannels(Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}))
-            .subscribe(data => {
-                this.channels = data;
-                this.channels._embedded.channel.forEach(channel => {
-                    if (channel.isConfigured) {
-                        (<StoreChannel>channel).statistics = this.statistics.channels.find(ch => ch.id === channel.id)
-                    }
-                });
-                this.channels.page = INITIAL_PAGES_AMOUNT;
-                this.channels.pages = Math.floor(this.channels.total / LOAD_CHANNELS_COUNT);
-                this.processingFilters = false;
-                this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
-                this.appStore.select('currentStore').subscribe(store => {
-                    this.internationalMode = Boolean(this.filterState.country) && store.country !== this.filterState.country;
-                })
-            });
+    protected initialize(data) {
+
+        this.channels = data;
+        this.channels._embedded.channel.forEach(channel => {
+            if (channel.installed) {
+                (<StoreChannel>channel).statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);
+                (<StoreChannel>channel).statistics.currency = this.statistics.currency;
+            }
+        });
+        this.channels.page = INITIAL_PAGES_AMOUNT;
+        this.channels.pages = Math.ceil(this.channels.total / LOAD_CHANNELS_COUNT);
+        this.processingFilters = false;
+        this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
+        this.appStore.select('currentStore').take(1).subscribe(store => {
+            this.internationalMode = Boolean(this.filterState.country) && store.country !== this.filterState.country;
+        })
+
     }
 
 }
