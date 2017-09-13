@@ -40,7 +40,6 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/channels/add" i18n>Add a new channel</a>
     <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" [href]="appUrl + channel._links.self.href">
         <img [src]="appUrl + '/images' + channel._links.image.href" [alt]="channel.name">
     </a>
