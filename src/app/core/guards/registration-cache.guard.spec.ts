@@ -72,7 +72,7 @@ describe('RegistrationCacheGuard', () => {
         getItemSpy.and.returnValue('{"storeId": 1}');
         updateStoreSpy.and.returnValue(Observable.of({}));
         guard.canActivate(<any>{queryParams: {something1: 12, something2: 25}}).subscribe(canActivate => {
-            expect(locationHrefSpy).toHaveBeenCalledWith(environment.APP_URL);
+            expect(locationHrefSpy).toHaveBeenCalledWith(environment.APP_URL + '?undefined');
             done();
         });
     });

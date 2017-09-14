@@ -81,14 +81,6 @@ describe('LoginComponent', () => {
         expect(loginSpy).toHaveBeenCalledWith('123', 'asf');
     });
 
-    it('should call navigate to the homepage when the UserService returns success', () => {
-        loginSpy.and.returnValue(Observable.of({}));
-        component.userNameControl.setValue('123');
-        component.passwordControl.setValue('asf');
-        component.login();
-        expect(navigateSpy).toHaveBeenCalledWith(['']);
-    });
-
     it('should write the error when the UserService returns an error', () => {
         loginSpy.and.returnValue(Observable.throw({error: {detail: 'bubidu'}}));
         component.userNameControl.setValue('123');

@@ -21,7 +21,7 @@ export class RegistrationCacheGuard implements CanActivate {
             .flatMap(store => this.shopifyService.updateStore(store))
             .map(() => {
                 this.windowRef.nativeWindow.localStorage.removeItem('sf.registration');
-                this.windowRef.nativeWindow.location.href = environment.APP_URL + '?' + this.token;
+                this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + this.token;
             })
             .count()
             .map(count => !count);
