@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { SupportService } from './support.service';
 import { LocaleIdService } from './locale-id.service';
+import { environment } from '../../../environments/environment';
 
 describe('SupportService', () => {
     beforeEach(() => {
@@ -16,8 +17,9 @@ describe('SupportService', () => {
         expect(service).toBeTruthy();
     }));
 
-    it('should call support service with specified params', inject([SupportService, HttpTestingController], (service: SupportService, httpMock: HttpTestingController) => {
-        service.searchArticles('something').subscribe();
-        httpMock.expectOne('https://support.shopping-feed.com/api/v2/articles/search?text=something&in_support_center=true&locale=fr_fr')
-    }));
+    it('should call support service with specified params', inject([SupportService, HttpTestingController],
+        (service: SupportService, httpMock: HttpTestingController) => {
+            service.searchArticles('something').subscribe();
+            httpMock.expectOne(environment.API_URL + '/desk/articles/search?text=something&in_support_center=true&locale=fr_fr')
+        }));
 });
