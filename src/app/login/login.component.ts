@@ -3,6 +3,8 @@ import { UserService } from '../core/services/user.service';
 import { Router } from '@angular/router';
 import { toPairs } from 'lodash';
 import { FormControl, Validators } from '@angular/forms';
+import { WindowRefService } from '../core/services/window-ref.service';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'sf-login',
@@ -16,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     error = '';
 
-    constructor(protected userService: UserService, protected router: Router) {
+    constructor(protected userService: UserService, protected router: Router, protected windowRef: WindowRefService) {
 
     }
 
@@ -29,7 +31,7 @@ export class LoginComponent implements OnInit {
             return;
         }
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
-            data => this.router.navigate(['']),
+            data => this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + data.access_token,
             ({error}) => {
                 this.error = error.detail
             }

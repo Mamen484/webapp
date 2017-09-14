@@ -13,7 +13,7 @@ export class LogoutGuard implements CanActivate {
                 state: RouterStateSnapshot): boolean {
         if (next.queryParamMap.has('logout')) {
             this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
-            this.windowRef.nativeWindow.location.href = environment.APP_URL + '/login';
+            this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
             return false;
         }
         return true;

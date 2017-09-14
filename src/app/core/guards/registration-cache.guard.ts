@@ -10,6 +10,8 @@ import { Helpers } from '../entities/helpers';
 @Injectable()
 export class RegistrationCacheGuard implements CanActivate {
 
+    protected token;
+
     constructor(protected shopifyService: ShopifyAuthentifyService, protected windowRef: WindowRefService) {
     }
 
@@ -19,7 +21,7 @@ export class RegistrationCacheGuard implements CanActivate {
             .flatMap(store => this.shopifyService.updateStore(store))
             .map(() => {
                 this.windowRef.nativeWindow.localStorage.removeItem('sf.registration');
-                this.windowRef.nativeWindow.location.href = environment.APP_URL;
+                this.windowRef.nativeWindow.location.href = environment.APP_URL + '?' + this.token;
             })
             .count()
             .map(count => !count);
@@ -41,6 +43,7 @@ export class RegistrationCacheGuard implements CanActivate {
     }
 
     protected autoLoginUser(store) {
+        this.token = store.owner.token;
         this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
     }
 

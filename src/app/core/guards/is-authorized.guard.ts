@@ -14,7 +14,7 @@ export class IsAuthorizedGuard implements CanActivate {
         // check Authorization in a storage
         let auth = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
         if (!auth) {
-            this.windowRef.nativeWindow.location.href = environment.APP_URL + '/login';
+            this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
             return false;
         }
         return Observable.create(observer => {
@@ -28,7 +28,8 @@ export class IsAuthorizedGuard implements CanActivate {
                 () => {
                     observer.next(false);
                     observer.complete();
-                    this.windowRef.nativeWindow.location.href = environment.APP_URL + '/login';
+                    this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
+
                 }
             );
         });
