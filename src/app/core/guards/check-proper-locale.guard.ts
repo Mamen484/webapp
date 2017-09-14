@@ -15,8 +15,8 @@ export class CheckProperLocaleGuard implements CanActivate {
 
     canActivate(): Observable<boolean> {
         return this._userService.fetchAggregatedInfo().map((userInfo: AggregatedUserInfo) => {
-            if (environment.production && LocaleIdService.detectLocale(userInfo.language) !== this.localeIdService.localeId) {
-                this.windowRef.nativeWindow.location.href = '/' + LocaleIdService.detectLocale(userInfo.language);
+            if (environment.production === 'true' && LocaleIdService.detectLocale(userInfo.language) !== this.localeIdService.localeId) {
+                this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + LocaleIdService.detectLocale(userInfo.language);
                 return false;
             }
             return true;

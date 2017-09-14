@@ -6,6 +6,7 @@ import { ChannelType } from '../../core/entities/channel-type.enum';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 import { AppState } from '../../core/entities/app-state';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'sf-filter-channels-dialog',
@@ -15,6 +16,7 @@ import { AppState } from '../../core/entities/app-state';
 export class FilterChannelsDialogComponent {
     types = toPairs(ChannelType);
     filter = new ChannelsRequestParams();
+    baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
 
     constructor(protected dialogRef: MdDialogRef<FilterChannelsDialogComponent>,
                 @Inject(MD_DIALOG_DATA) protected data: ChannelsRequestParams,

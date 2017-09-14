@@ -17,6 +17,7 @@ export class UnauthenticatedMenuComponent implements OnInit {
     localeId: keyof typeof ChannelLanguage;
     localizations = [];
     appUrl = environment.APP_URL;
+    baseHref = environment.BASE_HREF;
 
     constructor(protected localeIdService: LocaleIdService) {
         this.localeId = this.localeIdService.localeId;

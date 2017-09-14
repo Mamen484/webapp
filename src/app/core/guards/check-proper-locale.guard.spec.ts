@@ -22,7 +22,7 @@ describe('CheckProperLocaleGuard', () => {
         });
 
         it('should return true', inject([CheckProperLocaleGuard], (guard: CheckProperLocaleGuard) => {
-            environment.production = true;
+            environment.production = 'true';
             guard.canActivate().subscribe(canActivate => {
                 expect(canActivate).toEqual(true);
             })
@@ -41,10 +41,11 @@ describe('CheckProperLocaleGuard', () => {
             });
         });
 
-        it('should redirect the user to the valid localization folder and return false', inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
-            environment.production = true;
+        it('should redirect the user to the valid localization folder and return false',
+            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+            environment.production = 'true';
             guard.canActivate().subscribe(canActivate => {
-                expect(windowRef.nativeWindow.location.href).toEqual('/en');
+                expect(windowRef.nativeWindow.location.href).toEqual('/v3/en');
                 expect(canActivate).toEqual(false);
             })
         }));
