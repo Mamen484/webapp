@@ -13,7 +13,7 @@ const PERCENTS = 100;
 export class CreateAccountComponent implements OnInit {
     public progress = 0;
     public registrationFinished = false;
-    public appUrl = environment.APP_URL;
+    public baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
 
     public ngOnInit() {
         localStorage.removeItem('sf.registration');
