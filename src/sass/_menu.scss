@@ -7,6 +7,10 @@
 .sf-sidebar-menu {
   position: fixed;
   left: $left-sidebar-width;
+
+  &.channels-menu {
+    max-height: calc(100vh - #{$toolbar-height} - 10px);
+  }
 }
 
 // this override prevents reducing toolbar height for small screens, we don't support small screens
