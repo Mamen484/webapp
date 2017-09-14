@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../core/services/user.service';
 import { Router } from '@angular/router';
 import { toPairs } from 'lodash';
-import { environment } from '../../environments/environment';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -16,7 +15,6 @@ export class LoginComponent implements OnInit {
     passwordControl = new FormControl('', [Validators.required]);
 
     error = '';
-    appUrl = environment.APP_URL;
 
     constructor(protected userService: UserService, protected router: Router) {
 

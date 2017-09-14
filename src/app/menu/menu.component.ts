@@ -3,13 +3,12 @@ import { Store as AppStore } from '@ngrx/store';
 import { toPairs } from 'lodash';
 
 import { AppState } from '../core/entities/app-state';
-import { StoreService } from '../core/services/store.service';
 import { environment } from '../../environments/environment';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
-import { SET_CHANNELS } from '../core/reducers/channels-reducer';
 import { WindowRefService } from '../core/services/window-ref.service';
+import { LegacyLinkService } from '../core/services/legacy-link.service';
 
 @Component({
     selector: 'app-menu',
@@ -24,8 +23,8 @@ export class MenuComponent {
 
 
     constructor(protected appStore: AppStore<AppState>,
-                protected storeService: StoreService,
-                protected windowRef: WindowRefService) {
+                protected windowRef: WindowRefService,
+                protected legacyLinkService: LegacyLinkService) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
@@ -37,5 +36,9 @@ export class MenuComponent {
     logout() {
         this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
         this.windowRef.nativeWindow.location.href = `${this.appUrl}/index/logout`;
+    }
+
+    goToLegacy(path) {
+        this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path);
     }
 }

@@ -7,6 +7,10 @@ import { InternationalAccountService } from '../../core/services/international-a
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 import { StoreChannel } from '../../core/entities/store-channel';
+import { LegacyLinkService } from '../../core/services/legacy-link.service';
+import { WindowRefService } from '../../core/services/window-ref.service';
+import { AppState } from '../../core/entities/app-state';
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -17,11 +21,13 @@ export class SuggestedChannelComponent {
 
     @Input() channel: StoreChannel;
     @Input() internationalMode = false;
-    appUrl = environment.APP_URL;
 
     constructor(
         protected dialog: MdDialog,
-        protected internationalAccountService: InternationalAccountService) {
+        protected internationalAccountService: InternationalAccountService,
+        protected legacyLinkService: LegacyLinkService,
+        protected windowRef: WindowRefService,
+        protected appStore: Store<AppState>) {
     }
 
     showInternationalChannelDialog() {
@@ -37,4 +43,9 @@ export class SuggestedChannelComponent {
         });
     }
 
+    goToLegacy(path) {
+        this.appStore.select('currentStore').take(1).subscribe(currentStore =>
+            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
+        );
+    }
 }

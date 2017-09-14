@@ -7,6 +7,8 @@ import { StoreChannelDetails } from '../core/entities/store-channel-details';
 import { environment } from '../../environments/environment';
 import { StoreService } from '../core/services/store.service';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
+import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { WindowRefService } from '../core/services/window-ref.service';
 
 @Component({
     selector: 'sf-sidebar',
@@ -15,15 +17,15 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 })
 export class SidebarComponent {
 
-    appUrl = environment.APP_URL;
     opened = true;
     currentStore: Observable<Store>;
     channels: Observable<StoreChannelDetails[]>;
 
-    constructor(
-        protected _appStore: AppStore<AppState>,
-        @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
-        protected storeService: StoreService) {
+    constructor(protected _appStore: AppStore<AppState>,
+                @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
+                protected storeService: StoreService,
+                protected legacyLinkService: LegacyLinkService,
+                protected windowRef: WindowRefService) {
         this.currentStore = this._appStore.select('currentStore');
         this.channels = this.currentStore
             .flatMap(store => this.storeService.getStoreChannels(store.id, Object.assign(new ChannelsRequestParams, {status: 'installed'})))
@@ -49,6 +51,12 @@ export class SidebarComponent {
             default:
                 return environment.SUPPORT_URL;
         }
+    }
+
+    goToLegacy(path) {
+        this.currentStore.take(1).subscribe(currentStore =>
+            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
+        );
     }
 
 }

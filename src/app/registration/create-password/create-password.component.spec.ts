@@ -11,7 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdCardModule, MdInputModule } from '@angular/material';
 import { CreatePasswordService } from './create-password.service';
 import { LocaleIdService } from '../../core/services/locale-id.service';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { LegacyLinkService } from '../../core/services/legacy-link.service';
 
 describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
@@ -51,7 +52,8 @@ describe('CreatePasswordComponent', () => {
                 {provide: WindowRefService, useValue: window},
                 {provide: CreatePasswordService, useValue: {createPassword: () => Observable.of({})}},
                 {provide: LocaleIdService, useValue: {localeId: 'en'}},
-                {provide: ActivatedRoute, useValue: {queryParams: Observable.of({})}}
+                {provide: ActivatedRoute, useValue: {queryParams: Observable.of({})}},
+                {provide: LegacyLinkService, useValue: {getLegacyLink: () => {}}},
             ],
             declarations: [CreatePasswordComponent]
         })

@@ -25,7 +25,6 @@ const INITIAL_PAGES_AMOUNT = 3;
 export class StatisticsComponent {
 
     public statistics: Statistics;
-    public appUrl = environment.APP_URL;
     public channels: ChannelsResponse = <any>{_embedded: {channel: []}};
     infiniteScrollDisabled = false;
     processing = false;

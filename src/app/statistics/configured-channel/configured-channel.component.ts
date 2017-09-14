@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { StoreChannel } from '../../core/entities/store-channel';
+import { WindowRefService } from '../../core/services/window-ref.service';
+import { LegacyLinkService } from '../../core/services/legacy-link.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
 
 @Component({
     selector: 'sf-configured-channel',
@@ -10,9 +13,16 @@ import { StoreChannel } from '../../core/entities/store-channel';
 export class ConfiguredChannelComponent {
 
     @Input() channel: StoreChannel;
-    appUrl = environment.APP_URL;
 
-    constructor() {
+    constructor(protected windowRef: WindowRefService,
+                protected legacyLinkService: LegacyLinkService,
+                protected appStore: Store<AppState>) {
+    }
+
+    goToLegacy(path) {
+        this.appStore.select('currentStore').take(1).subscribe(currentStore =>
+            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
+        );
     }
 
 }

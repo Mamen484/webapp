@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { WindowRefService } from '../core/services/window-ref.service';
 
 @Component({
     selector: 'sf-menu-container',
     templateUrl: './menu-container.component.html',
     styleUrls: ['./menu-container.component.scss']
 })
-export class MenuContainerComponent implements OnInit {
+export class MenuContainerComponent {
 
-    appUrl = environment.APP_URL;
+    constructor(protected legacyLink: LegacyLinkService, protected windowRef: WindowRefService) {
+    }
 
-    ngOnInit() {
+    goToLegacy() {
+        this.windowRef.nativeWindow.location.href = this.legacyLink.getLegacyLink('/');
     }
 
 }

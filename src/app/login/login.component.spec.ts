@@ -11,6 +11,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 import { UnauthenticatedMenuComponent } from '../menu/unauthenticated-menu.component';
 import { DummyRouterDirective } from '../../mocks/stubs/dummy-router.directive';
+import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { WindowRefService } from '../core/services/window-ref.service';
 
 
 describe('LoginComponent', () => {
@@ -31,7 +33,9 @@ describe('LoginComponent', () => {
             providers: [
                 {provide: UserService, useValue: ({login: loginSpy})},
                 {provide: LocaleIdService, useValue: ({localeId: 'en'})},
-                {provide: Router, useValue: {navigate: navigateSpy}}
+                {provide: Router, useValue: {navigate: navigateSpy}},
+                {provide: LegacyLinkService, useValue: {getLegacyLink: () => {}}},
+                {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
 
             ],
             imports: [

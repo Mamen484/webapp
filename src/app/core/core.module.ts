@@ -31,6 +31,7 @@ import { CreatePasswordService } from '../registration/create-password/create-pa
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
+import { LegacyLinkService } from './services/legacy-link.service';
 
 @NgModule({
     imports: [
@@ -50,6 +51,9 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
         IsAuthorizedGuard,
         LogoutGuard,
         LoginByTokenGuard,
+        ShopifyGuard,
+        ShopSpecifiedGuard,
+
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
@@ -59,12 +63,12 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
         SupportService,
         WindowRefService,
         PasswordRecoveryService,
-        ShopifyGuard,
-        ShopSpecifiedGuard,
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         UserService,
         StoreService,
+        LegacyLinkService,
+
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
     ],
     declarations: []

@@ -40,38 +40,38 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu channels-menu">
-    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" [href]="appUrl + channel._links.self.href">
+    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" (click)="goToLegacy(channel._links.self.href)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
-    <a md-menu-item href="{{appUrl}}/tools/export" i18n>Custom data feeds</a>
+    <a md-menu-item (click)="goToLegacy('/tools/export')" i18n>Custom data feeds</a>
 </md-menu>
 <md-menu #utilsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/tools/rules" i18n>Rules</a>
-    <a md-menu-item href="{{appUrl}}/tools/segmentations" i18n>Auto-Remove</a>
-    <a md-menu-item href="{{appUrl}}/marketplaces/autotag" i18n>Manage colors & sizes</a>
-    <a md-menu-item href="{{appUrl}}/tools/field" i18n>Create new fields</a>
-    <a md-menu-item href="{{appUrl}}/tools/relaunch" i18n>Intelligent assistant</a>
+    <a md-menu-item (click)="goToLegacy('/tools/rules')" i18n>Rules</a>
+    <a md-menu-item (click)="goToLegacy('/tools/segmentations')" i18n>Auto-Remove</a>
+    <a md-menu-item (click)="goToLegacy('/marketplaces/autotag')" i18n>Manage colors & sizes</a>
+    <a md-menu-item (click)="goToLegacy('/tools/field')" i18n>Create new fields</a>
+    <a md-menu-item (click)="goToLegacy('/tools/relaunch')" i18n>Intelligent assistant</a>
     <hr>
-    <a md-menu-item href="{{appUrl}}/tools/filtres" i18n>Filters</a>
-    <a md-menu-item href="{{appUrl}}/tools/newproducts" i18n>Recently added products</a>
-    <a md-menu-item href="{{appUrl}}/multiple" i18n>Select multichannels products</a>
-    <a md-menu-item href="{{appUrl}}/tools/infos" i18n>Source feed</a>
+    <a md-menu-item (click)="goToLegacy('/tools/filtres')" i18n>Filters</a>
+    <a md-menu-item (click)="goToLegacy('/tools/newproducts')" i18n>Recently added products</a>
+    <a md-menu-item (click)="goToLegacy('/multiple')" i18n>Select multichannels products</a>
+    <a md-menu-item (click)="goToLegacy('/tools/infos')" i18n>Source feed</a>
 </md-menu>
 <md-menu #ordersMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/marketplaces/orders" i18n>Orders</a>
-    <a md-menu-item href="{{appUrl}}/marketplaces/listexport" i18n>Order reporting</a>
+    <a md-menu-item (click)="goToLegacy('/marketplaces/orders')" i18n>Orders</a>
+    <a md-menu-item (click)="goToLegacy('/marketplaces/listexport')" i18n>Order reporting</a>
 </md-menu>
 <md-menu #statisticsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/statistics" i18n>Global statistics</a>
-    <a md-menu-item href="{{appUrl}}/statistics/marketplaces" i18n>Marketplace statistics</a>
-    <a md-menu-item href="{{appUrl}}/statistics/shop" i18n>Shpping engine statistics</a>
+    <a md-menu-item (click)="goToLegacy('/statistics')" i18n>Global statistics</a>
+    <a md-menu-item (click)="goToLegacy('/statistics/marketplaces')" i18n>Marketplace statistics</a>
+    <a md-menu-item (click)="goToLegacy('/statistics/shop')" i18n>Shpping engine statistics</a>
     <hr>
-    <a md-menu-item href="{{appUrl}}/statistics/parameters" i18n>Settings</a>
-    <a md-menu-item href="{{appUrl}}/tools/marges" i18n>Margings</a>
-    <a md-menu-item href="{{appUrl}}/statistics/compare" i18n>Compare channels</a>
-    <a md-menu-item href="{{appUrl}}/statistics/exportstatistics" i18n>Exports</a>
+    <a md-menu-item (click)="goToLegacy('/statistics/parameters')" i18n>Settings</a>
+    <a md-menu-item (click)="goToLegacy('/tools/marges')" i18n>Margings</a>
+    <a md-menu-item (click)="goToLegacy('/statistics/compare')" i18n>Compare channels</a>
+    <a md-menu-item (click)="goToLegacy('/statistics/exportstatistics')" i18n>Exports</a>
 </md-menu>
 <md-menu #appsMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item href="{{appUrl}}/repricing" i18n>Repricing</a>
-    <a md-menu-item href="{{appUrl}}/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
+    <a md-menu-item (click)="goToLegacy('/repricing')" i18n>Repricing</a>
+    <a md-menu-item (click)="goToLegacy('/tools/eanfinder')" i18n>UPC/EAN/Barcodes Finder</a>
 </md-menu>
