@@ -29,9 +29,17 @@ export class BaseComponent {
     }
 
     protected initializeAppStore({userInfo}: { userInfo: AggregatedUserInfo }) {
-        let store = userInfo._embedded.store[0];
-        this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
-        this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+        this.route.queryParams.subscribe(params => {
+            let store;
+            if (params.store) {
+                store = userInfo._embedded.store.find(s => s.name === params.store || String(s.id) === params.store);
+            }
+            if (!store) {
+                store = userInfo._embedded.store[0];
+            }
+            this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
+            this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+        });
     }
 
     protected pollTimelineEventsChanges() {
