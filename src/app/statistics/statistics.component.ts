@@ -39,6 +39,7 @@ export class StatisticsComponent {
             .do(() => {
                 this.statistics = undefined;
                 this.channels = <any>{_embedded: {channel: []}};
+                this.processing = true;
             })
             .flatMap(currentStore =>
                 this.storeService.getStatistics(currentStore.id)
@@ -49,6 +50,7 @@ export class StatisticsComponent {
             .subscribe(([statistics, channels]) => {
                 this.statistics = statistics;
                 this.initialize(channels);
+                this.processing = false;
             });
     }
 

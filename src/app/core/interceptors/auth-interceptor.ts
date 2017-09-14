@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
         if (
             (req.url.indexOf(environment.API_URL + '/shopify/auth') === 0 && req.method === 'GET')
             || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
-            || (req.url.indexOf(environment.API_URL + '/desk') === 0 && req.method === 'GET')
             || (req.url.indexOf(environment.API_URL + '/store') === 0 &&  (req.method === 'POST' || req.method === 'PATCH'))
         ) {
             return next.handle(req.clone({

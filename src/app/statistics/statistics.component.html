@@ -14,7 +14,7 @@
             <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"></sf-suggested-channel>
         </md-card>
     </div>
-    <div class="no-results-container" *ngIf="!channels._embedded.channel.length">
+    <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">
         <div>No results</div>
         <a href="#" (click)="resetFilter()">Clear the selection</a>
     </div>
