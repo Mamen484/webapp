@@ -11,7 +11,8 @@
                  fxFlex.xl="0 0 calc(16.66% - 20px)"
                  *ngFor="let channel of channels._embedded.channel">
             <sf-configured-channel [channel]="channel" *ngIf="channel.installed"></sf-configured-channel>
-            <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"></sf-suggested-channel>
+            <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
+            [firstChannel]="haveNoChannels" [charge]="charge"></sf-suggested-channel>
         </md-card>
     </div>
     <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">

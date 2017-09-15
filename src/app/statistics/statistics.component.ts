@@ -10,6 +10,7 @@ import { PagedResponse } from '../core/entities/paged-response';
 import { MdDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
+import { StoreCharge } from '../core/store-charge';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -31,20 +32,24 @@ export class StatisticsComponent {
     processing = false;
     processingFilters = false;
     internationalMode = false;
-
     filterState = new ChannelsRequestParams();
+    haveNoChannels = false;
+    charge: StoreCharge;
 
     constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MdDialog) {
+
         this.appStore.select('currentStore')
             .do(() => this.displayPageLoading())
             .flatMap(currentStore => this.fetchData(currentStore))
-            .subscribe(([statistics, channels]) => {
+            .subscribe(([[statistics, channels], charge]) => {
                 this.statistics = statistics;
                 this.initialize(channels);
                 this.processing = false;
+                this.charge = charge.charge;
 
                 this.appStore.select('currentStore').take(1).subscribe(currentStore => {
                     if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
+                        this.haveNoChannels = true;
                         this.showNoChannelsDialog();
                     }
                 })
@@ -149,5 +154,6 @@ export class StatisticsComponent {
                 currentStore.id,
                 Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
             ))
+            .zip(this.storeService.getStoreCharge(currentStore.id))
     }
 }

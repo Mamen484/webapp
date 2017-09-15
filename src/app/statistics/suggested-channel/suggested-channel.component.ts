@@ -11,6 +11,8 @@ import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { WindowRefService } from '../../core/services/window-ref.service';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
+import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-channel-dialog.component';
+import { StoreCharge } from '../../core/store-charge';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -21,13 +23,14 @@ export class SuggestedChannelComponent {
 
     @Input() channel: StoreChannel;
     @Input() internationalMode = false;
+    @Input() firstChannel = false;
+    @Input() charge: StoreCharge;
 
-    constructor(
-        protected dialog: MdDialog,
-        protected internationalAccountService: InternationalAccountService,
-        protected legacyLinkService: LegacyLinkService,
-        protected windowRef: WindowRefService,
-        protected appStore: Store<AppState>) {
+    constructor(protected dialog: MdDialog,
+                protected internationalAccountService: InternationalAccountService,
+                protected legacyLinkService: LegacyLinkService,
+                protected windowRef: WindowRefService,
+                protected appStore: Store<AppState>) {
     }
 
     showInternationalChannelDialog() {
@@ -44,8 +47,20 @@ export class SuggestedChannelComponent {
     }
 
     goToLegacy(path) {
-        this.appStore.select('currentStore').take(1).subscribe(currentStore =>
-            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
-        );
+        this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
+    }
+
+    goToChannel(path) {
+        if (this.firstChannel) {
+            this.dialog.open(AcceptChannelDialogComponent, {
+                data: {
+                    logo: this.channel._embedded.channel._links.image.href,
+                    link: this.channel._links.self.href,
+                    charge: this.charge
+                }
+            });
+        } else {
+            this.goToLegacy(path);
+        }
     }
 }

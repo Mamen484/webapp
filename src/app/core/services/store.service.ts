@@ -8,6 +8,7 @@ import { ChannelsResponse } from '../entities/channels-response';
 import { StoreChannel } from '../entities/store-channel';
 import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
+import { StoreCharge } from '../store-charge';
 
 @Injectable()
 export class StoreService {
@@ -50,6 +51,10 @@ export class StoreService {
 
     public getStatistics(storeId): Observable<Statistics> {
         return <Observable<Statistics>>this.httpClient.get(`${environment.API_URL}/stat/store/${storeId}`);
+    }
+
+    public getStoreCharge(storeId): Observable<{charge: StoreCharge}> {
+        return <Observable<{charge: StoreCharge}>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
     }
 
 }

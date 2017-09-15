@@ -12,6 +12,7 @@ import { IntlRequestSuccessDialogComponent } from './intl-request-success-dialog
 import { RequestFailedDialogComponent } from './request-failed-dialog/request-failed-dialog.component';
 import { NoChannelsDialogComponent } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
+import { AcceptChannelDialogComponent } from './accept-channel-dialog/accept-channel-dialog.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,7 @@ import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-cal
         RequestFailedDialogComponent,
         ScheduleCallDialogComponent,
         NoChannelsDialogComponent,
+        AcceptChannelDialogComponent,
     ],
     entryComponents: [
         FilterChannelsDialogComponent,
@@ -38,6 +40,7 @@ import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-cal
         RequestFailedDialogComponent,
         NoChannelsDialogComponent,
         ScheduleCallDialogComponent,
+        AcceptChannelDialogComponent,
     ]
 })
 export class StatisticsModule {
