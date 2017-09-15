@@ -5,6 +5,10 @@ export interface Store {
     name: string;
     permission: Permission;
     country: string;
+    feed: {
+        source: 'Shopify' | 'Prestashop',
+        url: string
+    },
     order: {
         total: number
     };

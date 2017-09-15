@@ -3,9 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShopifyGuard } from '../core/guards/shopify.guard';
 import { CreatePasswordComponent } from './create-password/create-password.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { PlatformComponent } from './platform/platform.component';
-import { ScheduleCallComponent } from './schedule-call/schedule-call.component';
 import { ShopSpecifiedGuard } from '../core/guards/shop-specified.guard';
 import { RegistrationCacheGuard } from '../core/guards/registration-cache.guard';
 
@@ -15,9 +12,6 @@ const routes: Routes = [
     },
     {path: 'register', component: CreatePasswordComponent, canActivate: [ShopSpecifiedGuard, RegistrationCacheGuard]},
     {path: 'register/create-account', component: CreateAccountComponent},
-    {path: 'register/welcome', component: WelcomeComponent},
-    {path: 'register/platform/:channelName', component: PlatformComponent},
-    {path: 'register/schedule-call', component: ScheduleCallComponent},
 ];
 
 @NgModule({

@@ -9,8 +9,8 @@ import { ChannelLogoService } from '../../core/services/channel_logo.service';
     styleUrls: ['platform.component.scss']
 })
 export class PlatformComponent implements OnInit, OnDestroy {
-    public daysLeft: number = 30;
-    public price: number = 99;
+    public daysLeft = 30;
+    public price = 99;
     public channel: string;
     public channelImage: string;
 

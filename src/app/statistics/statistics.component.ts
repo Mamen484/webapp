@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { Statistics } from '../core/entities/statistics';
-import { environment } from '../../environments/environment';
 import { ChannelsResponse } from '../core/entities/channels-response';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { StoreChannel } from '../core/entities/store-channel';
 import { StoreService } from '../core/services/store.service';
 import { PagedResponse } from '../core/entities/paged-response';
-import { ActivatedRoute } from '@angular/router';
+import { MdDialog } from '@angular/material';
+import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
+import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -33,25 +34,23 @@ export class StatisticsComponent {
 
     filterState = new ChannelsRequestParams();
 
-    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected route: ActivatedRoute) {
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MdDialog) {
         this.appStore.select('currentStore')
-            .do(() => {
-                this.statistics = undefined;
-                this.channels = <any>{_embedded: {channel: []}};
-                this.processing = true;
-            })
-            .flatMap(currentStore =>
-                this.storeService.getStatistics(currentStore.id)
-                    .zip(this.storeService.getStoreChannels(
-                        currentStore.id,
-                        Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
-                    )))
+            .do(() => this.displayPageLoading())
+            .flatMap(currentStore => this.fetchData(currentStore))
             .subscribe(([statistics, channels]) => {
                 this.statistics = statistics;
                 this.initialize(channels);
                 this.processing = false;
+
+                this.appStore.select('currentStore').take(1).subscribe(currentStore => {
+                    if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
+                        this.showNoChannelsDialog();
+                    }
+                })
             });
     }
+
 
     onScroll() {
         if (!this.canScroll()) {
@@ -87,7 +86,7 @@ export class StatisticsComponent {
         return !this.processing && this.channels.page < this.channels.pages;
     }
 
-    protected updateSuggestedChannels({page, pages, _embedded}: PagedResponse<{ channel: StoreChannel[] }>) {
+    protected updateSuggestedChannels({page, _embedded}: PagedResponse<{ channel: StoreChannel[] }>) {
         this.channels.page = page;
         this.channels._embedded.channel.push(..._embedded.channel.map(channel => {
             if (channel.installed) {
@@ -129,4 +128,26 @@ export class StatisticsComponent {
 
     }
 
+    protected showNoChannelsDialog() {
+        this.dialog.open(NoChannelsDialogComponent).afterClosed().subscribe(action => {
+            switch (action) {
+                case SCHEDULE_A_CALL:
+                    this.dialog.open(ScheduleCallDialogComponent);
+            }
+        });
+    }
+
+    protected displayPageLoading() {
+        this.statistics = undefined;
+        this.channels = <any>{_embedded: {channel: []}};
+        this.processing = true;
+    }
+
+    protected fetchData(currentStore) {
+        return this.storeService.getStatistics(currentStore.id)
+            .zip(this.storeService.getStoreChannels(
+                currentStore.id,
+                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+            ))
+    }
 }

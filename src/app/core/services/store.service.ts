@@ -15,7 +15,9 @@ export class StoreService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    public getStoreChannels(storeId, params = new ChannelsRequestParams(), foreignChannels = false): Observable<PagedResponse<{ channel: StoreChannel[] }>> {
+    public getStoreChannels(storeId,
+                            params = new ChannelsRequestParams(),
+                            foreignChannels = false): Observable<PagedResponse<{ channel: StoreChannel[] }>> {
 
         let httpParams = new HttpParams()
             .set('page', params.page.toString())
@@ -24,7 +26,7 @@ export class StoreService {
             .set('name', params.searchQuery)
             .set('type', params.type)
             .set('segment', params.segment)
-            .set('status', status);
+            .set('status', params.status);
 
         if (foreignChannels) {
             return <any>this.httpClient.get(`${environment.API_URL}/channel`, {params: httpParams})

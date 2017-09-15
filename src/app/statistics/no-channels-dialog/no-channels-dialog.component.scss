@@ -1,0 +1,37 @@
+@import '../../../sass/variables';
+
+:host {
+  text-align: center;
+  background-color: mat-color($grey, 50);
+}
+
+md-dialog-content {
+  width: 535px;
+  margin-bottom: 0;
+  margin-top: 20px;
+}
+
+img {
+  width: 117px;
+  margin-bottom: 20px;
+}
+
+.mat-display-1 {
+  margin-bottom: 5px;
+  color: mat-color($grey, 1000, 0.87);
+}
+
+.dialog-heading {
+  margin-bottom: 40px;
+}
+
+md-dialog-actions {
+  text-align: center;
+  float: none;
+  display: block;
+  margin-bottom: 0 !important;
+
+  a[md-button] {
+    margin-right: 5px;
+  }
+}
