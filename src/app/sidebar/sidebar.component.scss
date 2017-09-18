@@ -1,0 +1,55 @@
+@import '../../sass/variables';
+
+md-sidenav {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: $left-sidebar-width;
+  min-width: $left-sidebar-width;
+  background-color: mat-color($grey, A100);
+  text-align: center;
+  top: 0;
+  height: calc(100vh - #{$toolbar-height});
+  border-right: 1px solid mat-color($grey, 200);
+
+  md-icon {
+    font-size: mat-font-size($config, headline);
+    color: mat-color($grey, 1000, 0.54);
+    cursor: pointer;
+    margin: auto;
+
+    &.active {
+      color: mat-color($accent);
+    }
+
+    &:hover {
+      color: mat-color($accent);
+    }
+  }
+}
+
+md-sidenav-container {
+  float: left;
+  min-height: 100%;
+  max-width: 100%;
+  transform: none;
+  height: auto;
+  margin: 0;
+}
+
+.sf-sidebar-bottom-help {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+}
+
+a.channel-logo:hover, a.channel-logo:focus {
+  background: transparent;
+}
+
+a.channel-logo {
+  img {
+    vertical-align: middle;
+    max-width: 100px;
+  }
+}

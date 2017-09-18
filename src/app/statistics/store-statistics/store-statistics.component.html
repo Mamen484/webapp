@@ -1,0 +1,14 @@
+<div fxLayout="row" fxLayoutGap="10px" *ngIf="statistics">
+  <div fxFlex="33.33" class="statistics-item"  fxFlexAlign="center">
+    <div class="mat-body-1 statistics-item-title" i18n>Turnover</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.revenue  | sfCurrency:statistics.currency }}</div>
+  </div>
+  <div fxFlex="33.33" class="statistics-item" fxFlexAlign="center">
+    <div class="mat-body-1 statistics-item-title" i18n>Orders</div>
+    <div class="mat-display-2 statistics-value">{{ statistics.orders | largeNumberSuffix }}</div>
+  </div>
+  <div fxFlex="33.33" class="statistics-item mat-body-1" fxFlexAlign="center">
+    <div class="mat-body-1 statistics-item-title" i18n>Clicks</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.clicks | largeNumberSuffix}}</div>
+  </div>
+</div>

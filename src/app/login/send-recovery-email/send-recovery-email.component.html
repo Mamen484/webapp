@@ -1,0 +1,35 @@
+<sf-unauthenticated-menu></sf-unauthenticated-menu>
+<div class="form-container">
+    <div>
+        <div class="form-title mat-display-1" i18n>Reset password</div>
+        <md-card *ngIf="!showSuccessMessage">
+            <md-card-content>
+                <div class="mat-subheading-2 reset-password-description">Enter your username and we will return your
+                    password.
+                </div>
+                <form (ngSubmit)="reset()">
+
+                    <md-input-container color="accent">
+                        <input mdInput i18n-placeholder placeholder="Username" [formControl]="emailControl">
+                        <md-error *ngIf="emailControl.hasError('required')" i18n>
+                           Username is required
+                        </md-error>
+                    </md-input-container>
+
+                    <div class="error" *ngIf="showError" i18n>A system error occurred. Please, try again later.</div>
+
+                    <div class="form-actions">
+                        <button md-raised-button color="accent" i18n>SEND</button>
+                    </div>
+                </form>
+            </md-card-content>
+        </md-card>
+
+        <md-card *ngIf="showSuccessMessage">
+            <md-card-content class="success-message">
+                <span class="mat-subheading-2" i18n>We have just sent you an e-mail to reset your password.</span>
+            </md-card-content>
+        </md-card>
+        <a class="below-form-link mat-body-1" i18n [routerLink]="['/login']">Back to login</a>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+@import 'variables';
+$badge-font-level: caption;
+
+.sf-badge {
+  position: relative;
+}
+
+.sf-badge[data-badge]:after {
+  content: attr(data-badge);
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  font-family: mat-font-family($config);
+  font-size: mat-font-size($config, $badge-font-level);
+  font-weight: bold;
+  background: mat-color($green, 400);
+  color: white;
+  width: mat-line-height($config, $badge-font-level);
+  height: mat-line-height($config, $badge-font-level);
+  text-align: center;
+  line-height: mat-line-height($config, $badge-font-level);
+  border-radius: 50%;
+}
+
+.sf-flag {
+  vertical-align: sub;
+}
+
+.sf-flag-filter {
+  margin-right: 10px;
+}
+
+.sf-fill-space {
+  flex: 1;
+}

@@ -1,0 +1,23 @@
+<sf-menu-container>
+    <div class="sf-nav-welcome-text md-title">{{currentStore.name}}</div>
+
+    <sf-support-help-center></sf-support-help-center>
+    <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
+    <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
+        <a md-menu-item (click)="goToLegacy('/marketplaces/globalparameters')" i18n
+           *ngIf="currentStore.permission.marketplaces">Settings</a>
+        <a md-menu-item (click)="goToLegacy('/tools/settings')" i18n>Alert Management</a>
+        <a md-menu-item (click)="goToLegacy('/facturation')" i18n
+           *ngIf="currentStore.permission.facturation">Membership</a>
+        <a md-menu-item (click)="goToLegacy('/tools/access')" i18n>Access</a>
+        <hr>
+        <ng-container *ngFor="let store of userInfo._embedded.store">
+            <button md-menu-item *ngIf="store.id !== currentStore.id"
+                    (click)="chooseStore(store)">{{store.name}}
+            </button>
+        </ng-container>
+        <hr *ngIf="userInfo._embedded.store.length > 1">
+        <a md-menu-item i18n (click)="logout()">Logout</a>
+
+    </md-menu>
+</sf-menu-container>

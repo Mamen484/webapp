@@ -1,15 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'sass/components/style';
-@import 'sass/fonts';
-@import 'sass/icons';
-@import 'sass/bootstrap';
-@import 'sass/materialdesign';
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans:300,300i,400,400i,500,500i,700,700i');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+@import 'sass/materialdesign';
+@import 'sass/menu';
+@import 'sass/utils';
+@import 'sass/dialog';
 
 html, body, app-root {
-  height: 100%;
+  min-width: $min-width;
+  height: 100vh;
   margin: 0;
   display: block;
-  overflow: inherit;
-  background-color: transparent;
+  background-color: mat-color($grey, 50);
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid mat-color($grey, 200);
+  margin: 1em 0;
+  padding: 0;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
 }

@@ -1,0 +1,13 @@
+@import '../../../sass/_variables.scss';
+
+md-select {
+  min-width: 160px;
+}
+
+md-select {
+  margin-right: 15px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}

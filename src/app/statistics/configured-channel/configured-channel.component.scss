@@ -1,0 +1,40 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/channel';
+
+@include channel-common-styles();
+
+md-card-content {
+  margin-bottom: 0;
+}
+
+.channel-info-line {
+  font-size: mat-font-size($config, body-1);
+  text-decoration: none;
+  color: initial;
+  display: block;
+
+  &>md-icon, &>span {
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  &.channel-revenue {
+    color: mat-color($primary);
+  }
+  &.channel-checked {
+    color: mat-color($green, 400);
+  }
+  &.channel-issues {
+    color: mat-color($warn, 900);
+  }
+
+  a {
+    text-decoration: none;
+    color: mat-color($grey, 1000, 0.87);
+  }
+
+  &.quickfix {
+    margin-bottom: 0;
+    a { cursor: pointer;}
+  }
+}

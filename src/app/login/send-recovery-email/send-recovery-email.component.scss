@@ -1,0 +1,13 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/form-page';
+
+@include form-page();
+
+.reset-password-description, .success-message {
+  color: mat-color($grey, 1000, 0.54);
+}
+
+.success-message {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}

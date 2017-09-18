@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+
+$primary: mat-palette($mat-blue-grey, 700);
+$accent: mat-palette($mat-blue, 700);
+$warn: mat-palette($mat-red);
+
+$grey: mat-palette($mat-grey);
+$green: mat-palette($mat-green);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+$toolbar-height: 64px;
+$left-sidebar-width: 75px;
+
+$sf-typography: mat-typography-config(
+        $font-family: 'Noto Sans',
+        $body-2: mat-typography-level(14px, 24px, 700),
+        $button: mat-typography-level(14px, 14px, 700),
+        $title: mat-typography-level(20px, 32px, 700)
+);
+
+$content-margin: 20px;
+
+$config: mat-typography-config();
+$min-width: 1024px;

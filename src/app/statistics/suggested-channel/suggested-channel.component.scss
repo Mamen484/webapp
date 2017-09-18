@@ -1,0 +1,30 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/channel';
+
+@include channel-common-styles();
+
+.channel-info-line {
+  margin-bottom: 15px;
+
+  & > span {
+    vertical-align: middle;
+  }
+
+  &.channel-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  & > a {
+    text-decoration: none;
+    color: mat-color($grey, 1000);
+  }
+}
+
+div.connect-button {
+  text-align: center;
+}

@@ -1,3 +1,3 @@
-FROM node:8
+FROM node:latest
 
 WORKDIR /var/www

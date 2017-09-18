@@ -1,0 +1,14 @@
+<md-card-content fxFlex fxLayout="column">
+    <div class="channel-logo"><img md-card-image [src]="channel._embedded.channel._links.image.href"
+                                   [alt]="channel._embedded.channel.name"></div>
+    <div class="channel-info-line">
+        <a (click)="goToLegacy('/statistics')"><span class="mat-title">{{channel._embedded.channel.name}}</span></a>
+    </div>
+    <div class="sf-fill-space"></div>
+    <div class="connect-button">
+        <a md-raised-button color="accent" *ngIf="!internationalMode" (click)="goToChannel(channel._embedded.channel)"
+           i18n>CONNECT</a>
+        <a md-raised-button color="accent" *ngIf="internationalMode"
+           (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
+    </div>
+</md-card-content>
