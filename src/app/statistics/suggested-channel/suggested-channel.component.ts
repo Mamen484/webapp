@@ -6,7 +6,6 @@ import { InternationalAccountService } from '../../core/services/international-a
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 import { StoreChannel } from '../../core/entities/store-channel';
-import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { WindowRefService } from '../../core/services/window-ref.service';
 import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-channel-dialog.component';
 import { StoreCharge } from '../../core/store-charge';
@@ -25,7 +24,6 @@ export class SuggestedChannelComponent {
 
     constructor(protected dialog: MdDialog,
                 protected internationalAccountService: InternationalAccountService,
-                protected legacyLinkService: LegacyLinkService,
                 protected windowRef: WindowRefService) {
     }
 
@@ -56,23 +54,6 @@ export class SuggestedChannelComponent {
                 charge: this.charge
             }
         });
-    }
-
-    goToChannel(channel: Channel) {
-        if (this.firstChannel) {
-            this.dialog.open(AcceptChannelDialogComponent, {
-                data: {
-                    logo: this.channel._embedded.channel._links.image.href,
-                    link: this.channel._links.self.href,
-                    charge: this.charge
-                }
-            });
-        } else {
-            let link = channel.type === 'marketplace'
-                ? `/${channel.name}`
-                : `/${channel.type}/manage/${channel.name}`;
-            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(link);
-        }
     }
 
 }
