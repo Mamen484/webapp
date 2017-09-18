@@ -21,7 +21,6 @@ const routes: Routes = [
         },
         canActivate: [
             LoginByTokenGuard,
-            LogoutGuard,
             IsAuthorizedGuard,
             CheckProperLocaleGuard
         ],
@@ -30,6 +29,13 @@ const routes: Routes = [
                 path: '',
                 component: StatisticsComponent
             }
+        ]
+    },
+    {
+        path: 'logout',
+        component: LoginComponent,
+        canActivate: [
+            LogoutGuard
         ]
     },
     {
