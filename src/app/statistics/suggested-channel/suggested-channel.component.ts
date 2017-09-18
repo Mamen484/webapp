@@ -29,8 +29,7 @@ export class SuggestedChannelComponent {
     constructor(protected dialog: MdDialog,
                 protected internationalAccountService: InternationalAccountService,
                 protected legacyLinkService: LegacyLinkService,
-                protected windowRef: WindowRefService,
-                protected appStore: Store<AppState>) {
+                protected windowRef: WindowRefService) {
     }
 
     showInternationalChannelDialog() {
@@ -50,7 +49,7 @@ export class SuggestedChannelComponent {
         this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
     }
 
-    goToChannel(path) {
+    goToChannel(channel: Channel) {
         if (this.firstChannel) {
             this.dialog.open(AcceptChannelDialogComponent, {
                 data: {
@@ -60,7 +59,10 @@ export class SuggestedChannelComponent {
                 }
             });
         } else {
-            this.goToLegacy(path);
+            let link = channel.type === 'marketplace'
+                ? `/${channel.name}`
+                : `/${channel.type}/manage/${channel.name}`;
+            this.goToLegacy(link);
         }
     }
 }

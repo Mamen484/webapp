@@ -4,12 +4,9 @@
     <div class="channel-info-line">
         <a (click)="goToLegacy('/statistics')"><span class="mat-title">{{channel._embedded.channel.name}}</span></a>
     </div>
-    <div class="channel-info-line channel-description mat-body-1">
-        <!--<span>{{channel._embedded.channel.description}}</span>-->
-    </div>
     <div class="sf-fill-space"></div>
     <div class="connect-button">
-        <a md-raised-button color="accent" *ngIf="!internationalMode" (click)="goToChannel('/' + channel._embedded.channel.name)"
+        <a md-raised-button color="accent" *ngIf="!internationalMode" (click)="goToChannel(channel._embedded.channel)"
            i18n>CONNECT</a>
         <a md-raised-button color="accent" *ngIf="internationalMode"
            (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
