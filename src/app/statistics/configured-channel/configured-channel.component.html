@@ -1,5 +1,5 @@
 <md-card-content fxFlex fxLayout="column">
-    <div class="channel-logo"><img md-card-image [src]="channel._embedded.channel._links.image.href"
+    <div class="channel-logo" (click)="goToChannel(channel._embedded.channel)"><img md-card-image [src]="channel._embedded.channel._links.image.href"
               [alt]="channel._embedded.channel.name"></div>
     <a class="channel-info-line channel-revenue" (click)="goToLegacy('/statistics')">
         <md-icon>monetization_on</md-icon>
