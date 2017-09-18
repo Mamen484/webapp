@@ -15,6 +15,7 @@ import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
+import { LegacyLinkDirective } from './legacy-link.directive';
 
 @NgModule({
     imports: [
@@ -71,8 +72,11 @@ import { RouterModule } from '@angular/router';
         SfCurrencyPipe,
         SfNumberPipe,
 
+        // directives
+        LegacyLinkDirective,
+
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe]
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective]
 })
 export class SharedModule {
 }

@@ -15,22 +15,13 @@ export class ConfiguredChannelComponent {
 
     @Input() channel: StoreChannel;
 
-    constructor(protected windowRef: WindowRefService,
-                protected legacyLinkService: LegacyLinkService,
-                protected appStore: Store<AppState>) {
+    constructor(protected windowRef: WindowRefService) {
     }
 
-    goToLegacy(path) {
-        this.appStore.select('currentStore').take(1).subscribe(currentStore =>
-            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
-        );
-    }
-
-    goToChannel(channel: Channel) {
-        let link = channel.type === 'marketplace'
+    goToChannelLink(channel: Channel) {
+        return channel.type === 'marketplace'
             ? `/${channel.name}`
             : `/${channel.type}/manage/${channel.name}`;
-        this.goToLegacy(link);
     }
 
 }

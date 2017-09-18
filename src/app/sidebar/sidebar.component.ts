@@ -54,17 +54,10 @@ export class SidebarComponent {
         }
     }
 
-    goToLegacy(path) {
-        this.currentStore.take(1).subscribe(currentStore =>
-            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
-        );
-    }
-
-    goToChannel(channel: Channel) {
-        let link = channel.type === 'marketplace'
+    getChannelLink(channel: Channel) {
+        return channel.type === 'marketplace'
             ? `/${channel.name}`
             : `/${channel.type}/manage/${channel.name}`;
-        this.goToLegacy(link);
     }
 
 }

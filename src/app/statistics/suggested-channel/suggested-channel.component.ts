@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Channel } from '../../core/entities/channel';
-import { environment } from '../../../environments/environment';
 import { MdDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../core/services/international-account.service';
@@ -9,8 +8,6 @@ import { RequestFailedDialogComponent } from '../request-failed-dialog/request-f
 import { StoreChannel } from '../../core/entities/store-channel';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { WindowRefService } from '../../core/services/window-ref.service';
-import { AppState } from '../../core/entities/app-state';
-import { Store } from '@ngrx/store';
 import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-channel-dialog.component';
 import { StoreCharge } from '../../core/store-charge';
 
@@ -45,8 +42,20 @@ export class SuggestedChannelComponent {
         });
     }
 
-    goToLegacy(path) {
-        this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
+    getChannelLink(channel: Channel) {
+        return channel.type === 'marketplace'
+            ? `/${channel.name}`
+            : `/${channel.type}/manage/${channel.name}`;
+    }
+
+    openAcceptChannelDialog() {
+        this.dialog.open(AcceptChannelDialogComponent, {
+            data: {
+                logo: this.channel._embedded.channel._links.image.href,
+                link: this.channel._links.self.href,
+                charge: this.charge
+            }
+        });
     }
 
     goToChannel(channel: Channel) {
@@ -62,7 +71,8 @@ export class SuggestedChannelComponent {
             let link = channel.type === 'marketplace'
                 ? `/${channel.name}`
                 : `/${channel.type}/manage/${channel.name}`;
-            this.goToLegacy(link);
+            this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(link);
         }
     }
+
 }
