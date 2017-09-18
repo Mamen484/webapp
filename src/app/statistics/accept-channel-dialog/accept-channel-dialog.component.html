@@ -1,11 +1,11 @@
 <md-dialog-content>
     <img [src]="data.logo" alt="channel">
 
-    <div class="mat-display-1 price">Only {{data.charge.amount | sfCurrency:data.charge.currency}}</div>
+    <div class="mat-display-1 price"><span i18n>Only</span> {{data.charge.amount | sfCurrency:data.charge.currency}}</div>
 
-    <div class="text">When you accept, you will be redirected to your Shopify Store to confirm the 30 days trial and
+    <div class="text" i18n>When you accept, you will be redirected to your Shopify Store to confirm the 30 days trial and
         recurring charge.
         Don’t stop with just your first channel: each channel brings in on average $900/month of new orders.
     </div>
-    <a md-raised-button color="accent" (click)="goToLegacy(data.link)">I ACCEPT</a>
+    <a md-raised-button color="accent" (click)="goToLegacy(data.link)" i18n>I ACCEPT</a>
 </md-dialog-content>

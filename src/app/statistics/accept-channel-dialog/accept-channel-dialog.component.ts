@@ -10,7 +10,7 @@ import { LegacyLinkService } from '../../core/services/legacy-link.service';
 })
 export class AcceptChannelDialogComponent implements OnInit {
 
-    constructor(@Inject(MD_DIALOG_DATA) protected data,
+    constructor(@Inject(MD_DIALOG_DATA) public data,
                 protected windowRef: WindowRefService,
                 protected legacyLinkService: LegacyLinkService) {
     }

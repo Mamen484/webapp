@@ -49,7 +49,7 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
             .subscribe(response => {
                 this.searchResults = [];
                 response._embedded.entries.forEach(entry => {
-                    if (entry.body_chat.trim() && this.searchResults.length < 3) {
+                    if (entry.body_chat && entry.body_chat.trim() && this.searchResults.length < 3) {
                         entry.body_chat = entry.body_chat.slice(0, entry.body_chat.indexOf('...') + 3);
                         this.searchResults.push(entry);
                     }

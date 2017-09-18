@@ -14,15 +14,72 @@
 </label>
 <md-chip-list [selectable]="false">
     <md-chip *ngIf="filter.country">
-        <span>{{countries[filter.country]}}</span>
+        <span *ngIf="filter.country === 'at'" i18n>Austria</span>
+        <span *ngIf="filter.country === 'au'" i18n>Australia</span>
+        <span *ngIf="filter.country === 'be'" i18n>Belgium</span>
+        <span *ngIf="filter.country === 'bg'" i18n>Bulgaria</span>
+        <span *ngIf="filter.country === 'br'" i18n>Brazil</span>
+        <span *ngIf="filter.country === 'ca'" i18n>Canada</span>
+        <span *ngIf="filter.country === 'ch'" i18n>Switzerland</span>
+        <span *ngIf="filter.country === 'cz'" i18n>Czech Republic</span>
+        <span *ngIf="filter.country === 'de'" i18n>Germany</span>
+        <span *ngIf="filter.country === 'dk'" i18n>Denmark</span>
+        <span *ngIf="filter.country === 'ee'" i18n>Estonia</span>
+        <span *ngIf="filter.country === 'es'" i18n>Spain</span>
+        <span *ngIf="filter.country === 'fi'" i18n>Finland</span>
+        <span *ngIf="filter.country === 'fr'" i18n>France</span>
+        <span *ngIf="filter.country === 'gr'" i18n>Greece</span>
+        <span *ngIf="filter.country === 'hr'" i18n>Croatia</span>
+        <span *ngIf="filter.country === 'hu'" i18n>Hungary</span>
+        <span *ngIf="filter.country === 'ie'" i18n>Ireland</span>
+        <span *ngIf="filter.country === 'in'" i18n>India</span>
+        <span *ngIf="filter.country === 'it'" i18n>Italy</span>
+        <span *ngIf="filter.country === 'jp'" i18n>Japan</span>
+        <span *ngIf="filter.country === 'lt'" i18n>Lithuania</span>
+        <span *ngIf="filter.country === 'lv'" i18n>Latvia</span>
+        <span *ngIf="filter.country === 'mx'" i18n>Mexico</span>
+        <span *ngIf="filter.country === 'nl'" i18n>Netherlands</span>
+        <span *ngIf="filter.country === 'no'" i18n>Norway</span>
+        <span *ngIf="filter.country === 'pl'" i18n>Poland</span>
+        <span *ngIf="filter.country === 'pt'" i18n>Portugal</span>
+        <span *ngIf="filter.country === 'ro'" i18n>Romania</span>
+        <span *ngIf="filter.country === 'ru'" i18n>Russian Federation</span>
+        <span *ngIf="filter.country === 'se'" i18n>Sweden</span>
+        <span *ngIf="filter.country === 'si'" i18n>Slovenia</span>
+        <span *ngIf="filter.country === 'sk'" i18n>Slovakia</span>
+        <span *ngIf="filter.country === 'sl'" i18n>Sierra Leone</span>
+        <span *ngIf="filter.country === 'th'" i18n>Thailand</span>
+        <span *ngIf="filter.country === 'tr'" i18n>Turkey</span>
+        <span *ngIf="filter.country === 'uk'" i18n>United Kingdom</span>
+        <span *ngIf="filter.country === 'us'" i18n>United States</span>
+
         <md-icon (click)="cancelFilter('country')">cancel</md-icon>
     </md-chip>
     <md-chip *ngIf="filter.type">
-        <span>{{types[filter.type]}}</span>
+        <span *ngIf="filter.type === 'ads'" i18n>Product Listing Ads</span>
+        <span *ngIf="filter.type === 'affiliation'" i18n>Affiliation</span>
+        <span *ngIf="filter.type === 'export'" i18n>Custom Exports</span>
+        <span *ngIf="filter.type === 'marketplace'" i18n>Marketplace</span>
+        <span *ngIf="filter.type === 'retargeting'" i18n>Retargeting</span>
+        <span *ngIf="filter.type === 'shopbot'" i18n>Shopping Engines</span>
+        <span *ngIf="filter.type === 'solomo'" i18n>Social Local Mobile</span>
         <md-icon (click)="cancelFilter('type')">cancel</md-icon>
     </md-chip>
     <md-chip *ngIf="filter.segment">
-        <span>{{segments[filter.segment]}}</span>
+        <span *ngIf="filter.segment === 'professional'" i18n>Professional Purchasing</span>
+        <span *ngIf="filter.segment === 'motors'" i18n>Auto / Moto</span>
+        <span *ngIf="filter.segment === 'organic'" i18n>Organic</span>
+        <span *ngIf="filter.segment === 'appliances'" i18n>Home Appliances</span>
+        <span *ngIf="filter.segment === 'gastronomy'" i18n>Gastronomy</span>
+        <span *ngIf="filter.segment === 'highTech'" i18n>High Tech</span>
+        <span *ngIf="filter.segment === 'toys'" i18n>Games And Toys</span>
+        <span *ngIf="filter.segment === 'homeAndGarden'" i18n>Home And Garden</span>
+        <span *ngIf="filter.segment === 'nursery'" i18n>Nursery</span>
+        <span *ngIf="filter.segment === 'healthAndBeauty'" i18n>Health And Beauty</span>
+        <span *ngIf="filter.segment === 'wineAndSpirits'" i18n>Wine And Spirits</span>
+        <span *ngIf="filter.segment === 'fashion'" i18n>Fashion</span>
+        <span *ngIf="filter.segment === 'universal'" i18n>Universal</span>
+        <span *ngIf="filter.segment === 'sports'" i18n>Sports</span>
         <md-icon (click)="cancelFilter('segment')">cancel</md-icon>
     </md-chip>
 </md-chip-list>

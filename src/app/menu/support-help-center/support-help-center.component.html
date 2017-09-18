@@ -12,17 +12,17 @@
             <div class="mat-subheading-1 title">{{entry.subject}}</div>
             <div class="mat-subheading-1 description">{{entry.body_chat}}</div>
             <div class="actions">
-                <a class="details-link mat-body-2" md-button color="primary" #link [href]="entry.public_url" target="_blank">READ MORE</a>
+                <a class="details-link mat-body-2" md-button color="primary" #link [href]="entry.public_url" target="_blank" i18n>READ MORE</a>
             </div>
         </div>
         <div class="search-entry all-posts">
-            <a class="mat-body-2" md-button color="accent" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank">View
+            <a class="mat-body-2" md-button color="accent" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank" i18n>View
                 all posts</a>
         </div>
     </div>
     <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
-        <div class="mat-subheading-2 no-results">No results</div>
-        <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results">Clear</a>
+        <div class="mat-subheading-2 no-results" i18n>No results</div>
+        <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
     </div>
 </div>
 
