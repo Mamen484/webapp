@@ -40,7 +40,7 @@
 
 </md-sidenav-container>
 <md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu channels-menu">
-    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" (click)="goToLegacy(channel._links.self.href)">
+    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" (click)="goToChannel(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
     <a md-menu-item (click)="goToLegacy('/tools/export')" i18n>Custom data feeds</a>
