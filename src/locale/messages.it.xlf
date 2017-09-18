@@ -205,13 +205,16 @@
           <target xml:lang="it">Statistiche sul mercato</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="e92484f19bcdcd0d24d6702934cd6caefb4179a0" datatype="html">
+      <trans-unit id="e92484f19bcdcd0d24d6702934cd6caefb4179a0" datatype="html" approved="yes">
         <source>Shopping engine statistics</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">67</context>
         </context-group>
-        <target xml:lang="it" state="translated">Statistiche del motore di acquisto</target>
+        <target xml:lang="it">Statistiche comparatori di prezzo</target>
+        <alt-trans>
+          <target xml:lang="it">Statistiche del motore di acquisto</target>
+        </alt-trans>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html" approved="yes">
         <source>Settings</source>
@@ -329,30 +332,30 @@
         </context-group>
         <target xml:lang="it">Hai bisogno d'aiuto ?</target>
       </trans-unit>
-      <trans-unit id="2049c03c0e452488201ee44c2c14198653548f4c" datatype="html">
+      <trans-unit id="2049c03c0e452488201ee44c2c14198653548f4c" datatype="html" approved="yes">
         <source>READ MORE</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/support-help-center/support-help-center.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
-        <target xml:lang="it" state="translated">LEGGI DI PIÙ</target>
+        <target xml:lang="it">LEGGI DI PIÙ</target>
       </trans-unit>
-      <trans-unit id="2c91f401594f93114092adac44e1c67df0b8b875" datatype="html">
+      <trans-unit id="2c91f401594f93114092adac44e1c67df0b8b875" datatype="html" approved="yes">
         <source>View
                 all posts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/support-help-center/support-help-center.component.ts</context>
           <context context-type="linenumber">19</context>
         </context-group>
-        <target xml:lang="it" state="translated">Visualizza tutti i post</target>
+        <target xml:lang="it">Visualizza tutti i post</target>
       </trans-unit>
-      <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
+      <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html" approved="yes">
         <source>No results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/support-help-center/support-help-center.component.ts</context>
           <context context-type="linenumber">24</context>
         </context-group>
-        <target xml:lang="it" state="translated">Nessun risultato</target>
+        <target xml:lang="it">Nessun risultato</target>
       </trans-unit>
       <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html">
         <source>Clear</source>
@@ -411,13 +414,13 @@
     Per iniziare la prova, seleziona un canale o se hai bisogno di aiuto, fai clic su «Pianifica una chiamata». Il nostro team ti contatterà.
   </target>
       </trans-unit>
-      <trans-unit id="19fe6177a3327e94e5515320935c50359d0934f6" datatype="html">
+      <trans-unit id="19fe6177a3327e94e5515320935c50359d0934f6" datatype="html" approved="yes">
         <source>SELECT A CHANNEL</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/no-channels-dialog/no-channels-dialog.component.ts</context>
           <context context-type="linenumber">13</context>
         </context-group>
-        <target xml:lang="it" state="translated">SELEZIONA UNA PIATTAFORMA</target>
+        <target xml:lang="it">SELEZIONA UNA PIATTAFORMA</target>
         <alt-trans>
           <target xml:lang="it">SELEZIONA UN CANALE</target>
         </alt-trans>
@@ -662,13 +665,13 @@
           <target xml:lang="it">La tua password è stata cambiata con successo.</target>
         </alt-trans>
       </trans-unit>
-      <trans-unit id="86e0c598f604063c7f2682e5869563dd3ab37276" datatype="html">
+      <trans-unit id="86e0c598f604063c7f2682e5869563dd3ab37276" datatype="html" approved="yes">
         <source>checked</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/configured-channel/configured-channel.component.ts</context>
           <context context-type="linenumber">10</context>
         </context-group>
-        <target xml:lang="it" state="translated">verificato</target>
+        <target xml:lang="it">verificato</target>
       </trans-unit>
       <trans-unit id="758b201fb10d061f7d04c267163f7018eccdec4e" datatype="html" approved="yes">
         <source>issues</source>
@@ -785,13 +788,13 @@
         </context-group>
         <target xml:lang="it">La tua richiesta è stata inviata.</target>
       </trans-unit>
-      <trans-unit id="169b98255676b58d4690fed52867b63f29e2ddf6" datatype="html">
+      <trans-unit id="169b98255676b58d4690fed52867b63f29e2ddf6" datatype="html" approved="yes">
         <source>A salesperson will contact you shortly.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/intl-request-success-dialog/intl-request-success-dialog.component.ts</context>
           <context context-type="linenumber">6</context>
         </context-group>
-        <target xml:lang="it" state="translated">Un membro del team Sales ti contatterà al più presto.</target>
+        <target xml:lang="it">Un membro del team Sales ti contatterà al più presto.</target>
         <alt-trans>
           <target xml:lang="it">Un venditore ti contatterà presto.</target>
         </alt-trans>

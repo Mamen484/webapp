@@ -9,9 +9,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="fr">PLATEFORMES</target>
-        <alt-trans>
-          <target xml:lang="fr">CANAUX</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="92fdc3ef9a4ba7346a1a4a762f298ab77d97ba81" datatype="html" approved="yes">
         <source>ORDERS</source>
@@ -20,9 +17,6 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="fr">COMMANDES</target>
-        <alt-trans>
-          <target xml:lang="fr">ORDRES</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="92538de0e2f6e64f1d05291132b93c32bed81237" datatype="html" approved="yes">
         <source>STATISTICS</source>
@@ -47,9 +41,6 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <target xml:lang="fr">APPS</target>
-        <alt-trans>
-          <target xml:lang="fr">APPLICATIONS</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="3b33aacd19e7ab98933f0f013dfdf2ad1350af62" datatype="html" approved="yes">
         <source>UNIVERSITY</source>
@@ -58,9 +49,6 @@
           <context context-type="linenumber">30</context>
         </context-group>
         <target xml:lang="fr">UNIVERSITY</target>
-        <alt-trans>
-          <target xml:lang="fr">UNIVERSITÉ</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="74059c5dce671d464259e3ce37a5d408c3fd7720" datatype="html" approved="yes">
         <source>SUPPORT</source>
@@ -69,9 +57,6 @@
           <context context-type="linenumber">35</context>
         </context-group>
         <target xml:lang="fr">SUPPORT</target>
-        <alt-trans>
-          <target xml:lang="fr">SOUTIEN</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="9cc6b06ba346d08d7b2d6b5ce52eadfdadac2160" datatype="html" approved="yes">
         <source>Custom data feeds</source>
@@ -80,9 +65,6 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <target xml:lang="fr">Exports personnalisés</target>
-        <alt-trans>
-          <target xml:lang="fr">Flux de données personnalisés</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html" approved="yes">
         <source>Rules</source>
@@ -99,9 +81,6 @@
           <context context-type="linenumber">50</context>
         </context-group>
         <target xml:lang="fr">Retrait automatique</target>
-        <alt-trans>
-          <target xml:lang="fr">Suppression automatique</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="d344904b664794a257595a814989040db29caf59" datatype="html" approved="yes">
         <source>Manage colors &amp; sizes</source>
@@ -110,9 +89,6 @@
           <context context-type="linenumber">51</context>
         </context-group>
         <target xml:lang="fr">Gestion tailles / couleurs</target>
-        <alt-trans>
-          <target xml:lang="fr">Gérer les couleurs &amp; tailles</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="c3e2b445d7114b8b293d00666bd3a110a6af800a" datatype="html" approved="yes">
         <source>Create new fields</source>
@@ -121,9 +97,6 @@
           <context context-type="linenumber">52</context>
         </context-group>
         <target xml:lang="fr">Création champs</target>
-        <alt-trans>
-          <target xml:lang="fr">Créer de nouveaux champs</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bc5344d355821b6d9b8ba8892dfbbbb1917b8617" datatype="html" approved="yes">
         <source>Intelligent assistant</source>
@@ -152,9 +125,6 @@
           <context context-type="linenumber">56</context>
         </context-group>
         <target xml:lang="fr">Nouveaux produits</target>
-        <alt-trans>
-          <target xml:lang="fr">Produits récemment ajoutés</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="1ae2e13f133e95a511d2b1feebe64c086f82c901" datatype="html" approved="yes">
         <source>Select multichannels products</source>
@@ -163,9 +133,6 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <target xml:lang="fr">Sélection produits multiple</target>
-        <alt-trans>
-          <target xml:lang="fr">Sélectionnez les produits multicanal</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="171250a39e43532e6a5bf46de521de664ab28690" datatype="html" approved="yes">
         <source>Source feed</source>
@@ -174,9 +141,6 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <target xml:lang="fr">Votre flux</target>
-        <alt-trans>
-          <target xml:lang="fr">Alimentation source</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="4e7f5f07ae8e67878f35b34bcee10e39300ff41a" datatype="html" approved="yes">
         <source>Orders</source>
@@ -189,9 +153,6 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <target xml:lang="fr">Commandes</target>
-        <alt-trans>
-          <target xml:lang="fr">Ordres</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0d4d04bdc88e5fc987b225b8783aafea17cb000d" datatype="html" approved="yes">
         <source>Order reporting</source>
@@ -200,9 +161,6 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <target xml:lang="fr">Export de commandes</target>
-        <alt-trans>
-          <target xml:lang="fr">Rapport de commande</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="76c20fa1a5125532d5cb1893496b7ccd67095822" datatype="html" approved="yes">
         <source>Global statistics</source>
@@ -219,9 +177,6 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <target xml:lang="fr">Statistiques places de marché</target>
-        <alt-trans>
-          <target xml:lang="fr">Statistiques du marché</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e92484f19bcdcd0d24d6702934cd6caefb4179a0" datatype="html" approved="yes">
         <source>Shopping engine statistics</source>
@@ -230,9 +185,6 @@
           <context context-type="linenumber">67</context>
         </context-group>
         <target xml:lang="fr">Statistiques comparateurs</target>
-        <alt-trans>
-          <target xml:lang="fr">Statistiques des moteurs commerciaux</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html" approved="yes">
         <source>Settings</source>
@@ -253,9 +205,6 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <target xml:lang="fr">Marges</target>
-        <alt-trans>
-          <target xml:lang="fr">Margings</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="137784d724d706a7dad708cf4394276e47e595a3" datatype="html" approved="yes">
         <source>Compare channels</source>
@@ -264,9 +213,6 @@
           <context context-type="linenumber">71</context>
         </context-group>
         <target xml:lang="fr">Comparatifs</target>
-        <alt-trans>
-          <target xml:lang="fr">Comparer les chaînes</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="37567d68e6b9c68edcc73939f094db30086e6f5f" datatype="html" approved="yes">
         <source>Exports</source>
@@ -275,9 +221,6 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <target xml:lang="fr">Exports</target>
-        <alt-trans>
-          <target xml:lang="fr">Exportations</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="73531f87bdba4fe9319d93ac281a37ac9ea7b6f4" datatype="html" approved="yes">
         <source>Repricing</source>
@@ -286,9 +229,6 @@
           <context context-type="linenumber">75</context>
         </context-group>
         <target xml:lang="fr">Repricing</target>
-        <alt-trans>
-          <target xml:lang="fr">Réévaluation</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="25e66b64c4c32fb78e490f8c5cbd0f405ba70b42" datatype="html" approved="yes">
         <source>UPC/EAN/Barcodes Finder</source>
@@ -297,9 +237,6 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <target xml:lang="fr">Ean finder</target>
-        <alt-trans>
-          <target xml:lang="fr">UPC / EAN / Barcodes Finder</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="63ebcea7d85549607e2e9ceb494dc2791db78e1d" datatype="html" approved="yes">
         <source>Alert Management</source>
@@ -316,9 +253,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="fr">Facturation</target>
-        <alt-trans>
-          <target xml:lang="fr">Adhésion</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="fa5002e6d44382622a9752e361de52c3e81b9093" datatype="html" approved="yes">
         <source>Access</source>
@@ -335,9 +269,6 @@
           <context context-type="linenumber">24</context>
         </context-group>
         <target xml:lang="fr">Déconnexion</target>
-        <alt-trans>
-          <target xml:lang="fr">Connectez - Out</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="6e2601a7673a1aaccf613a68065ddb216cbf39d0" datatype="html" approved="yes">
         <source>Do you need some help ?</source>
@@ -354,9 +285,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="fr">VOIR PLUS</target>
-        <alt-trans>
-          <target xml:lang="fr">LIRE LA SUITE</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2c91f401594f93114092adac44e1c67df0b8b875" datatype="html" approved="yes">
         <source>View
@@ -366,9 +294,6 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <target xml:lang="fr">Voir tous les sujets</target>
-        <alt-trans>
-          <target xml:lang="fr">Voir tous les messages</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html" approved="yes">
         <source>No results</source>
@@ -385,9 +310,6 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <target xml:lang="fr">Effacer</target>
-        <alt-trans>
-          <target xml:lang="fr">Clair</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html" approved="yes">
         <source>Home</source>
@@ -408,9 +330,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="fr">Bienvenue sur Shopping Flux!</target>
-        <alt-trans>
-          <target xml:lang="fr">Bienvenue sur Shopping Feed!</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="17142268412864b0c48712b03c5e1d3702baaeb2" datatype="html" approved="yes">
         <source>Great to see you here</source>
@@ -419,9 +338,6 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <target xml:lang="fr">Nous sommes heureux de vous compter parmis nous</target>
-        <alt-trans>
-          <target xml:lang="fr">C'est génial de vous voir ici</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="21ce8104f918a06bcd8189b3c857fba570bab39f" datatype="html" approved="yes">
         <source>
@@ -434,11 +350,6 @@
         <target xml:lang="fr">
     Pour commencer votre période d'essai, sélectionnez une plateforme ou si vous avez besoin d'aide, cliquez sur «Planifier un appel». Notre équipe vous contactera.
   </target>
-        <alt-trans>
-          <target xml:lang="fr">
-    Pour commencer votre essai, sélectionnez une chaîne ou si vous avez besoin d'aide, cliquez sur «Planifier un appel». Notre équipe vous contactera.
-  </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="19fe6177a3327e94e5515320935c50359d0934f6" datatype="html" approved="yes">
         <source>SELECT A CHANNEL</source>
@@ -447,9 +358,6 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="fr">CHOISIR UNE PLATEFORME</target>
-        <alt-trans>
-          <target xml:lang="fr">CHOISIR UN CANAL</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="96365327b583afcdd33bb2dba9317d2439bd238d" datatype="html" approved="yes">
         <source>SCHEDULE A CALL</source>
@@ -458,9 +366,6 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="fr">PLANIFIER UN APPEL</target>
-        <alt-trans>
-          <target xml:lang="fr">CALENDRIER UN APPEL</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f093d9574ab746b231504bd2cbb65f04bd7b00db" datatype="html" approved="yes">
         <source>Log in</source>
@@ -501,11 +406,6 @@
         <target xml:lang="fr">
                             Le nom d’utilisateur est requis
                         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                            Nom d'utilisateur est nécessaire
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html" approved="yes">
         <source>Password</source>
@@ -530,11 +430,6 @@
         <target xml:lang="fr">
                             Le mot de passe est requis
                         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                            Mot de passe requis
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="9e58dfa6c0a452d8333674cd6aa497d392b1c633" datatype="html" approved="yes">
         <source>LOGIN</source>
@@ -619,9 +514,6 @@
           <context context-type="linenumber">52</context>
         </context-group>
         <target xml:lang="fr">Retour à la page de connexion</target>
-        <alt-trans>
-          <target xml:lang="fr">Retour connexion</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="efaff19a9a2c7f3af986ad67bf14a970340521d1" datatype="html" approved="yes">
         <source>Reset your password</source>
@@ -630,9 +522,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="fr">Réinitialiser votre mot de passe</target>
-        <alt-trans>
-          <target xml:lang="fr">réinitialisez votre mot de passe</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e70e209561583f360b1e9cefd2cbb1fe434b6229" datatype="html" approved="yes">
         <source>New password</source>
@@ -689,9 +578,6 @@
           <context context-type="linenumber">10</context>
         </context-group>
         <target xml:lang="fr">sélectionnés</target>
-        <alt-trans>
-          <target xml:lang="fr">vérifié</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="758b201fb10d061f7d04c267163f7018eccdec4e" datatype="html" approved="yes">
         <source>issues</source>
@@ -700,9 +586,6 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="fr">non envoyés</target>
-        <alt-trans>
-          <target xml:lang="fr">problèmes</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2d11633cc91be6b6678e301554c2aa72eaf214ae" datatype="html" approved="yes">
         <source>Quickfix</source>
@@ -711,9 +594,6 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <target xml:lang="fr">Quickfix</target>
-        <alt-trans>
-          <target xml:lang="fr">Solution rapide</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0f563a2ed5ba847441a8edb8bd149b383b0b18c4" datatype="html" approved="yes">
         <source>Turnover</source>
@@ -722,9 +602,6 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <target xml:lang="fr">Chiffre d’affaires</target>
-        <alt-trans>
-          <target xml:lang="fr">Rotation</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="5632d53bdeb0b8aae4a3413700832ceeee94322a" datatype="html" approved="yes">
         <source>Clicks</source>
@@ -765,9 +642,6 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <target xml:lang="fr">REFUSER</target>
-        <alt-trans>
-          <target xml:lang="fr">ÊTRE EN DÉSACCORD</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0d6d3bd03e48e80c80af772340e1200b93830510" datatype="html" approved="yes">
         <source>AGREE</source>
@@ -776,9 +650,6 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="fr">ACCEPTER</target>
-        <alt-trans>
-          <target xml:lang="fr">SE METTRE D'ACCORD</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="ba8c8db409b82c969f2d2533b5ae9ec3a237a3d8" datatype="html" approved="yes">
         <source>
@@ -807,9 +678,6 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <target xml:lang="fr">Un membre de notre équipe vous contactera sous peu.</target>
-        <alt-trans>
-          <target xml:lang="fr">Un vendeur vous contactera sous peu.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7e6c975ebea8b5f8b120905ca7acf9f8edf59d8e" datatype="html" approved="yes">
         <source>OK</source>
@@ -822,9 +690,6 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <target xml:lang="fr">OK</target>
-        <alt-trans>
-          <target xml:lang="fr">D'accord</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="28a8c8fe1379e248536b44b5c2af8ac1c24963ff" datatype="html" approved="yes">
         <source>International account</source>
@@ -841,9 +706,6 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <target xml:lang="fr">Votre demande ne peut pas être envoyée, veuillez nous joindre à</target>
-        <alt-trans>
-          <target xml:lang="fr">Votre demande ne peut pas être envoyée, nous joindre à</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="1db3d76305f300fa638728796a68286b86561249" datatype="html" approved="yes">
         <source>Only</source>
@@ -864,10 +726,6 @@
         </context-group>
         <target xml:lang="fr">Lorsque vous acceptez, vous serez redirigé vers votre Shopify pour confirmer les 30 jours d'essai et votre facturation. Ne vous arrêtez pas avec votre première plateforme: chaque plateforme apporte en moyenne 900€ par mois de nouvelles commandes.
     </target>
-        <alt-trans>
-          <target xml:lang="fr">Lorsque vous acceptez, vous serez redirigé vers votre Shopify Store pour confirmer les 30 jours d'essai et les frais récurrents. Ne vous arrêtez pas avec votre première chaîne: chaque chaîne apporte en moyenne 900 $ / mois de nouvelles commandes.
-    </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="b05a567e867cf4fdaf3871ff5d78ebf5e1cb7892" datatype="html" approved="yes">
         <source>I ACCEPT</source>
@@ -888,9 +746,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="fr">CONNECTER</target>
-        <alt-trans>
-          <target xml:lang="fr">RELIER</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0ee0858440a44da6832550797918a8ce3844e01e" datatype="html" approved="yes">
         <source>Austria</source>
@@ -903,9 +758,6 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <target xml:lang="fr">Autriche</target>
-        <alt-trans>
-          <target xml:lang="fr">L'Autriche</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2d0140ebd2a7899f27ceff4d7d55b43efd2c200b" datatype="html" approved="yes">
         <source>Australia</source>
@@ -930,9 +782,6 @@
           <context context-type="linenumber">19</context>
         </context-group>
         <target xml:lang="fr">Belgique</target>
-        <alt-trans>
-          <target xml:lang="fr">la Belgique</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="8f4713f7c12b62e3842e4babaa996e3bfb9427a2" datatype="html" approved="yes">
         <source>Bulgaria</source>
@@ -1381,9 +1230,6 @@
           <context context-type="linenumber">59</context>
         </context-group>
         <target xml:lang="fr">Product Listing Ads</target>
-        <alt-trans>
-          <target xml:lang="fr">Annonces d'annonces de produits</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bb8d38336e3c80713535b9270ce33e9298e7eb5f" datatype="html" approved="yes">
         <source>Affiliation</source>
@@ -1408,9 +1254,6 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <target xml:lang="fr">Exports personnalisées</target>
-        <alt-trans>
-          <target xml:lang="fr">Exportations personnalisées</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="975d7a14bb4b923caf6fff68273730235ebeaf2d" datatype="html" approved="yes">
         <source>Marketplace</source>
@@ -1423,9 +1266,6 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <target xml:lang="fr">Marketplace</target>
-        <alt-trans>
-          <target xml:lang="fr">Marché</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="30f4d2c936096bc7e6300187e86a98c54afc9b00" datatype="html" approved="yes">
         <source>Retargeting</source>
@@ -1438,9 +1278,6 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <target xml:lang="fr">Retargeting</target>
-        <alt-trans>
-          <target xml:lang="fr">Retraquer</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="b85c339a6f5b53b9b3caa341aa2d6853d99fa23b" datatype="html" approved="yes">
         <source>Shopping Engines</source>
@@ -1453,9 +1290,6 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <target xml:lang="fr">Comparateurs</target>
-        <alt-trans>
-          <target xml:lang="fr">Moteurs commerciaux</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="12024e78bb8046ff7941d4ccee1ef01f87236b19" datatype="html" approved="yes">
         <source>Social Local Mobile</source>
@@ -1468,9 +1302,6 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <target xml:lang="fr">Social Local Mobile</target>
-        <alt-trans>
-          <target xml:lang="fr">Local Local Mobile</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html" approved="yes">
         <source>Type</source>
@@ -1487,9 +1318,6 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <target xml:lang="fr">Toutes les catégories</target>
-        <alt-trans>
-          <target xml:lang="fr">toutes catégories</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="84a67ace068bbef8a02747ad1343e4f7a1db5544" datatype="html" approved="yes">
         <source>Professional Purchasing</source>
@@ -1550,9 +1378,6 @@
           <context context-type="linenumber">73</context>
         </context-group>
         <target xml:lang="fr">Gastronomie</target>
-        <alt-trans>
-          <target xml:lang="fr">La gastronomie</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="cf868b82ef6b02e8e8988f3d2ed6fd13e644c9cd" datatype="html" approved="yes">
         <source>High Tech</source>
@@ -1565,9 +1390,6 @@
           <context context-type="linenumber">74</context>
         </context-group>
         <target xml:lang="fr">High Tech</target>
-        <alt-trans>
-          <target xml:lang="fr">Haute technologie</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="da2017578241973f49588ab244e265156b806b88" datatype="html" approved="yes">
         <source>Games And Toys</source>
@@ -1604,9 +1426,6 @@
           <context context-type="linenumber">77</context>
         </context-group>
         <target xml:lang="fr">Puériculture</target>
-        <alt-trans>
-          <target xml:lang="fr">Garderie</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f3ed660ed7ca7eacec238eed03d5db15af90ab58" datatype="html" approved="yes">
         <source>Health And Beauty</source>
@@ -1667,9 +1486,6 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <target xml:lang="fr">Sports</target>
-        <alt-trans>
-          <target xml:lang="fr">Des sports</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="607de17c2a755f65775881c19e276e7c933bcf94" datatype="html" approved="yes">
         <source>Category</source>
@@ -1694,9 +1510,6 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <target xml:lang="fr">ACCEPTER</target>
-        <alt-trans>
-          <target xml:lang="fr">ACCEPTEZ</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="508a49dcae743d11911c19d2fd527e211eae7d87" datatype="html" approved="yes">
         <source>Find your next channel</source>
@@ -1705,9 +1518,6 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <target xml:lang="fr">Trouvez votre prochaine plateforme</target>
-        <alt-trans>
-          <target xml:lang="fr">Trouvez votre prochain canal</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bd73e67065c48fd6222301214f5bdb4102dbb1ba" datatype="html" approved="yes">
         <source>Create your Shopping Feed account</source>
@@ -1716,9 +1526,6 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <target xml:lang="fr">Créez votre compte Shopping Flux</target>
-        <alt-trans>
-          <target xml:lang="fr">Créez votre compte Feed Feed</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="358100638b2de39bb16977c359617ca7f082e49b" datatype="html" approved="yes">
         <source>
@@ -1731,11 +1538,6 @@
         <target xml:lang="fr">
            Création de votre compte Shopping Flux
         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-           Création de votre compte Feed Feed
-        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bbf5a45fe8df73ee3c7e8f6d39b461f4dc537285" datatype="html" approved="yes">
         <source>Auto-Configure</source>
@@ -1758,11 +1560,6 @@
         <target xml:lang="fr">
                             Chaque plateforme vous accompagne à chaque étape, de la connexion à l'envoi de vos produits en un rien de temps. Cliquez simplement sur Connecter!
                         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                            Chaque chaîne vous accompagne à chaque étape, se connectant au canal et listant les produits en un rien de temps. Cliquez simplement sur Connecter, et allez!
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="1b9e22961af35a1d180bca073026dc7764f5273f" datatype="html" approved="yes">
         <source>Custom channels</source>
@@ -1771,9 +1568,6 @@
           <context context-type="linenumber">26</context>
         </context-group>
         <target xml:lang="fr">Exports personnalisés</target>
-        <alt-trans>
-          <target xml:lang="fr">Chaînes personnalisées</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="cb0bf802a9d4ac90b9a85f74f9ad1e9f602b97e2" datatype="html" approved="yes">
         <source>Order syncing</source>
@@ -1797,11 +1591,6 @@
         <target xml:lang="fr">
                             Les commandes effectuées sur vos plateformes sont importées directement dans votre back office, vous laissant la possibilité de les expédier directement depuis votre CMS. Les statuts d'expédition et messages sont directement envoyés à vos acheteurs. Plus de 30M€ de commandes circulent chaque jour sur Shopping Flux !
                         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                            L'ordre qui est effectué sur les canaux connectés est importé dans votre magasin, ce qui vous permet de répondre à toutes vos commandes de chaînes directement à partir de votre CMS. Leur état de livraison et leur messagerie envoient automatiquement à vos clients. Plus de 30 millions de dollars dans les commandes passent par Shopping Feed tous les jours!
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f97b6f9bbf20eae2ace4640ed33014ff975578ad" datatype="html" approved="yes">
         <source>Inventory Sync</source>
@@ -1814,9 +1603,6 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <target xml:lang="fr">Synchronisation de l’inventaire</target>
-        <alt-trans>
-          <target xml:lang="fr">Sync d'inventaire</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="a3563dede56f26de19ff29971dcd767f440b22e8" datatype="html" approved="yes">
         <source>
@@ -1831,11 +1617,6 @@
         <target xml:lang="fr">
                             Synchronisation en temps réel de vos produits sur toutes vos plateformes. Lorsqu'un produit est en rupture de stock, il est retiré automatiquement de chaque plateforme
                         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                            Suivi d'inventaire en temps réel et dynamique de vos produits sur tous vos canaux d'alimentation d'achats. Lorsqu'un produit est en rupture de stock, chaque canal supprime sa liste de produits
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="55b85bfdef30564552bca8d8a9788874c2fe9019" datatype="html" approved="yes">
         <source>+ 2 premium channels for</source>
@@ -1844,9 +1625,6 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="fr">+ 2 plateformes pour</target>
-        <alt-trans>
-          <target xml:lang="fr">+ 2 chaînes premium pour</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="2790ad2c08306240a508576e942fcfdf271f5a79" datatype="html" approved="yes">
         <source>month</source>
@@ -1868,11 +1646,6 @@
         <target xml:lang="fr">
                 Lorsque vous acceptez, vous serez redirigé vers votre Shopify pour confirmer les 30 jours d'essai et votre facturation. Ne vous arrêtez pas avec votre première plateforme: chaque plateforme apporte en moyenne 900€ par mois de nouvelles commandes
             </target>
-        <alt-trans>
-          <target xml:lang="fr">
-                Lorsque vous acceptez, vous serez redirigé vers Shop Shop pour confirmer le procès et les frais récurrents. Ne vous arrêtez pas avec votre première chaîne: chaque chaîne apporte en moyenne 900 $ / mois de nouvelles commandes
-            </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f2b5c8fa9d0987f4f442fd5bd117ba8176cb2c11" datatype="html" approved="yes">
         <source>Easy setup</source>
@@ -1905,9 +1678,6 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <target xml:lang="fr">Bienvenue dans Shopping Flux. C'est tellement agréable de vous voir!</target>
-        <alt-trans>
-          <target xml:lang="fr">Bienvenue dans Shopping Feed. C'est tellement agréable de vous voir!</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="a9006489015817e4bc177639affe7cfdd7d5a165" datatype="html" approved="yes">
         <source>
@@ -1923,11 +1693,6 @@
         <target xml:lang="fr">
             Si vous n'êtes pas sûr de ce que vous faites, laissez-nous vous appeler. Les utilisateurs onboardés effectuent en moyenne 3 fois plus de commandes dans leur premier mois. Notre équipe est prête à vous aider, à répondre à toutes vos questions et à configurer chacune de vos plateformes.
         </target>
-        <alt-trans>
-          <target xml:lang="fr">
-            Si vous n'êtes pas sûr de ce que vous faites, laissez-nous vous appeler. Les utilisateurs embarqués effectuent en moyenne 3 fois le nombre de commandes dans leur premier mois. Notre équipe est prête à vous aider, à répondre à toutes vos questions et à vous configurer sur chacun de vos canaux.
-        </target>
-        </alt-trans>
       </trans-unit>
     </body>
   </file>
