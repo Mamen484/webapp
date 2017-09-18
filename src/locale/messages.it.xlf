@@ -2,123 +2,111 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="it">
     <body>
-      <trans-unit id="194f30c08f9e61a392e59f5eb1a4be08dc45c275" datatype="html" approved="yes">
+      <trans-unit id="194f30c08f9e61a392e59f5eb1a4be08dc45c275" datatype="html">
         <source>CHANNELS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">4</context>
         </context-group>
-        <target xml:lang="it">PIATTAFORME</target>
-        <alt-trans>
-          <target xml:lang="it">CANALI</target>
-        </alt-trans>
+        <target xml:lang="it" state="translated">PIATTAFORME</target>
       </trans-unit>
-      <trans-unit id="92fdc3ef9a4ba7346a1a4a762f298ab77d97ba81" datatype="html" approved="yes">
+      <trans-unit id="92fdc3ef9a4ba7346a1a4a762f298ab77d97ba81" datatype="html">
         <source>ORDERS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">9</context>
         </context-group>
-        <target xml:lang="it">ORDINI</target>
+        <target xml:lang="it" state="translated">ORDINI</target>
       </trans-unit>
-      <trans-unit id="92538de0e2f6e64f1d05291132b93c32bed81237" datatype="html" approved="yes">
+      <trans-unit id="92538de0e2f6e64f1d05291132b93c32bed81237" datatype="html">
         <source>STATISTICS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
-        <target xml:lang="it">STATISTICHE</target>
+        <target xml:lang="it" state="translated">STATISTICHE</target>
       </trans-unit>
-      <trans-unit id="10272252e50677238dfbc35330dabb1ab7646f5d" datatype="html" approved="yes">
+      <trans-unit id="10272252e50677238dfbc35330dabb1ab7646f5d" datatype="html">
         <source>SETTINGS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <target xml:lang="it">IMPOSTAZIONI</target>
+        <target xml:lang="it" state="translated">IMPOSTAZIONI</target>
       </trans-unit>
-      <trans-unit id="38cbf4da03b0c84e5caeebb9cb49e31aa97d5edb" datatype="html" approved="yes">
+      <trans-unit id="38cbf4da03b0c84e5caeebb9cb49e31aa97d5edb" datatype="html">
         <source>APPS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">25</context>
         </context-group>
-        <target xml:lang="it">APPS</target>
+        <target xml:lang="it" state="translated">APPS</target>
       </trans-unit>
-      <trans-unit id="3b33aacd19e7ab98933f0f013dfdf2ad1350af62" datatype="html" approved="yes">
+      <trans-unit id="3b33aacd19e7ab98933f0f013dfdf2ad1350af62" datatype="html">
         <source>UNIVERSITY</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">30</context>
         </context-group>
-        <target xml:lang="it">UNIVERSITY</target>
-        <alt-trans>
-          <target xml:lang="it">UNIVERSITÀ</target>
-        </alt-trans>
+        <target xml:lang="it" state="translated">UNIVERSITY</target>
       </trans-unit>
-      <trans-unit id="74059c5dce671d464259e3ce37a5d408c3fd7720" datatype="html" approved="yes">
+      <trans-unit id="74059c5dce671d464259e3ce37a5d408c3fd7720" datatype="html">
         <source>SUPPORT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
-        <target xml:lang="it">SUPPORTO</target>
+        <target xml:lang="it" state="translated">SUPPORTO</target>
       </trans-unit>
-      <trans-unit id="9cc6b06ba346d08d7b2d6b5ce52eadfdadac2160" datatype="html" approved="yes">
+      <trans-unit id="9cc6b06ba346d08d7b2d6b5ce52eadfdadac2160" datatype="html">
         <source>Custom data feeds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">46</context>
         </context-group>
-        <target xml:lang="it">Feed dati personalizzati</target>
+        <target xml:lang="it" state="translated">Feed dati personalizzati</target>
       </trans-unit>
-      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html" approved="yes">
+      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html">
         <source>Rules</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
-        <target xml:lang="it">Regole</target>
+        <target xml:lang="it" state="translated">Regole</target>
       </trans-unit>
-      <trans-unit id="43197616c19c53c53943ecc312d512d70994d31e" datatype="html" approved="yes">
+      <trans-unit id="43197616c19c53c53943ecc312d512d70994d31e" datatype="html">
         <source>Auto-Remove</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">50</context>
         </context-group>
-        <target xml:lang="it">Rimozione automatica</target>
-        <alt-trans>
-          <target xml:lang="it">Auto-Rimuovi</target>
-        </alt-trans>
+        <target xml:lang="it" state="translated">Rimozione automatica</target>
       </trans-unit>
-      <trans-unit id="d344904b664794a257595a814989040db29caf59" datatype="html" approved="yes">
+      <trans-unit id="d344904b664794a257595a814989040db29caf59" datatype="html">
         <source>Manage colors &amp; sizes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">51</context>
         </context-group>
-        <target xml:lang="it">Gestione Taglie/Colori</target>
-        <alt-trans>
-          <target xml:lang="it">Gestisci i colori &amp; dimensioni</target>
-        </alt-trans>
+        <target xml:lang="it" state="translated">Gestione Taglie/Colori</target>
       </trans-unit>
-      <trans-unit id="c3e2b445d7114b8b293d00666bd3a110a6af800a" datatype="html" approved="yes">
+      <trans-unit id="c3e2b445d7114b8b293d00666bd3a110a6af800a" datatype="html">
         <source>Create new fields</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
-        <target xml:lang="it">Crea nuovi campi</target>
+        <target xml:lang="it" state="translated">Crea nuovi campi</target>
       </trans-unit>
-      <trans-unit id="bc5344d355821b6d9b8ba8892dfbbbb1917b8617" datatype="html" approved="yes">
+      <trans-unit id="bc5344d355821b6d9b8ba8892dfbbbb1917b8617" datatype="html">
         <source>Intelligent assistant</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">53</context>
         </context-group>
-        <target xml:lang="it">Assistente intelligente</target>
+        <target xml:lang="it" state="translated">Assistente intelligente</target>
       </trans-unit>
-      <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html" approved="yes">
+      <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html">
         <source>Filters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
@@ -128,18 +116,15 @@
           <context context-type="sourcefile">app/statistics/filter-channels-dialog/filter-channels-dialog.component.ts</context>
           <context context-type="linenumber">1</context>
         </context-group>
-        <target xml:lang="it">Filtri</target>
-        <alt-trans>
-          <target xml:lang="it">filtri</target>
-        </alt-trans>
+        <target xml:lang="it" state="translated">Filtri</target>
       </trans-unit>
-      <trans-unit id="e023b460c32d7205194fade1578f8cc94cbae11c" datatype="html" approved="yes">
+      <trans-unit id="e023b460c32d7205194fade1578f8cc94cbae11c" datatype="html">
         <source>Recently added products</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">56</context>
         </context-group>
-        <target xml:lang="it">Prodotti aggiunti di recente</target>
+        <target xml:lang="it" state="translated">Prodotti aggiunti di recente</target>
       </trans-unit>
       <trans-unit id="1ae2e13f133e95a511d2b1feebe64c086f82c901" datatype="html" approved="yes">
         <source>Select multichannels products</source>
@@ -148,9 +133,6 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <target xml:lang="it">Selezione prodotti multicanale</target>
-        <alt-trans>
-          <target xml:lang="it">Seleziona i prodotti multicanale</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="171250a39e43532e6a5bf46de521de664ab28690" datatype="html" approved="yes">
         <source>Source feed</source>
@@ -159,9 +141,6 @@
           <context context-type="linenumber">58</context>
         </context-group>
         <target xml:lang="it">Feed sorgente</target>
-        <alt-trans>
-          <target xml:lang="it">Feed di origine</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="4e7f5f07ae8e67878f35b34bcee10e39300ff41a" datatype="html" approved="yes">
         <source>Orders</source>
@@ -182,9 +161,6 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <target xml:lang="it">Esportazione degli ordini</target>
-        <alt-trans>
-          <target xml:lang="it">Rapporto di ordinazione</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="76c20fa1a5125532d5cb1893496b7ccd67095822" datatype="html" approved="yes">
         <source>Global statistics</source>
@@ -201,9 +177,6 @@
           <context context-type="linenumber">66</context>
         </context-group>
         <target xml:lang="it">Statistiche marketplaces</target>
-        <alt-trans>
-          <target xml:lang="it">Statistiche sul mercato</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e92484f19bcdcd0d24d6702934cd6caefb4179a0" datatype="html" approved="yes">
         <source>Shopping engine statistics</source>
@@ -212,9 +185,6 @@
           <context context-type="linenumber">67</context>
         </context-group>
         <target xml:lang="it">Statistiche comparatori di prezzo</target>
-        <alt-trans>
-          <target xml:lang="it">Statistiche del motore di acquisto</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html" approved="yes">
         <source>Settings</source>
@@ -227,9 +197,6 @@
           <context context-type="linenumber">12</context>
         </context-group>
         <target xml:lang="it">Impostazioni</target>
-        <alt-trans>
-          <target xml:lang="it">impostazioni</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0caa4ba9c69ca9586ee93d4c063912cd519cbf21" datatype="html" approved="yes">
         <source>Margings</source>
@@ -238,9 +205,6 @@
           <context context-type="linenumber">70</context>
         </context-group>
         <target xml:lang="it">Margini</target>
-        <alt-trans>
-          <target xml:lang="it">margings</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="137784d724d706a7dad708cf4394276e47e595a3" datatype="html" approved="yes">
         <source>Compare channels</source>
@@ -257,9 +221,6 @@
           <context context-type="linenumber">72</context>
         </context-group>
         <target xml:lang="it">Exports</target>
-        <alt-trans>
-          <target xml:lang="it">esportazioni</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="73531f87bdba4fe9319d93ac281a37ac9ea7b6f4" datatype="html" approved="yes">
         <source>Repricing</source>
@@ -268,9 +229,6 @@
           <context context-type="linenumber">75</context>
         </context-group>
         <target xml:lang="it">Repricing</target>
-        <alt-trans>
-          <target xml:lang="it">repricing</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="25e66b64c4c32fb78e490f8c5cbd0f405ba70b42" datatype="html" approved="yes">
         <source>UPC/EAN/Barcodes Finder</source>
@@ -279,9 +237,6 @@
           <context context-type="linenumber">76</context>
         </context-group>
         <target xml:lang="it">UPC / EAN / Barcodes Finder</target>
-        <alt-trans>
-          <target xml:lang="it">Finder UPC / EAN / Barcodes</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="63ebcea7d85549607e2e9ceb494dc2791db78e1d" datatype="html" approved="yes">
         <source>Alert Management</source>
@@ -290,9 +245,6 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="it">Gestione notifiche</target>
-        <alt-trans>
-          <target xml:lang="it">Gestione allerta</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="3c33a66194384cf8c14e25170416767efa56fd98" datatype="html" approved="yes">
         <source>Membership</source>
@@ -301,9 +253,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="it">Il tuo account</target>
-        <alt-trans>
-          <target xml:lang="it">membri</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="fa5002e6d44382622a9752e361de52c3e81b9093" datatype="html" approved="yes">
         <source>Access</source>
@@ -312,9 +261,6 @@
           <context context-type="linenumber">16</context>
         </context-group>
         <target xml:lang="it">Login</target>
-        <alt-trans>
-          <target xml:lang="it">Accesso</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html" approved="yes">
         <source>Logout</source>
@@ -357,13 +303,13 @@
         </context-group>
         <target xml:lang="it">Nessun risultato</target>
       </trans-unit>
-      <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html">
+      <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html" approved="yes">
         <source>Clear</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/support-help-center/support-help-center.component.ts</context>
           <context context-type="linenumber">25</context>
         </context-group>
-        <target xml:lang="it" state="translated">Chiaro</target>
+        <target xml:lang="it">Chiaro</target>
       </trans-unit>
       <trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html" approved="yes">
         <source>Home</source>
@@ -376,9 +322,6 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <target xml:lang="it">Home</target>
-        <alt-trans>
-          <target xml:lang="it">Casa</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="01e3e4090ff4aedae53b23c553f7a53b5fecb0f4" datatype="html" approved="yes">
         <source>Welcome to Shopping Feed!</source>
@@ -387,9 +330,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="it">Benvenuto su Shopping Feed!</target>
-        <alt-trans>
-          <target xml:lang="it">Benvenuti nel feed di acquisto!</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="17142268412864b0c48712b03c5e1d3702baaeb2" datatype="html" approved="yes">
         <source>Great to see you here</source>
@@ -398,11 +338,8 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <target xml:lang="it">Piacere di vederti</target>
-        <alt-trans>
-          <target xml:lang="it">Ottimo per vederti qui</target>
-        </alt-trans>
       </trans-unit>
-      <trans-unit id="21ce8104f918a06bcd8189b3c857fba570bab39f" datatype="html">
+      <trans-unit id="21ce8104f918a06bcd8189b3c857fba570bab39f" datatype="html" approved="yes">
         <source>
     For starting your trial select a channel or if you need more help, click on «Schedule a call». Our team will contact you.
   </source>
@@ -410,8 +347,8 @@
           <context context-type="sourcefile">app/statistics/no-channels-dialog/no-channels-dialog.component.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
-        <target xml:lang="it" state="translated">
-    Per iniziare la prova, seleziona un canale o se hai bisogno di aiuto, fai clic su «Pianifica una chiamata». Il nostro team ti contatterà.
+        <target xml:lang="it">
+    Per iniziare la prova, seleziona un canale e se hai bisogno di aiuto, fai clic su «Richiedi una chiamata». Il nostro team ti contatterà.
   </target>
       </trans-unit>
       <trans-unit id="19fe6177a3327e94e5515320935c50359d0934f6" datatype="html" approved="yes">
@@ -421,9 +358,6 @@
           <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="it">SELEZIONA UNA PIATTAFORMA</target>
-        <alt-trans>
-          <target xml:lang="it">SELEZIONA UN CANALE</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="96365327b583afcdd33bb2dba9317d2439bd238d" datatype="html" approved="yes">
         <source>SCHEDULE A CALL</source>
@@ -432,9 +366,6 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="it">RICHIEDI UNA CHIAMATA</target>
-        <alt-trans>
-          <target xml:lang="it">SCHEDA DI UNA CHIAMATA</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f093d9574ab746b231504bd2cbb65f04bd7b00db" datatype="html" approved="yes">
         <source>Log in</source>
@@ -443,9 +374,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="it">Login</target>
-        <alt-trans>
-          <target xml:lang="it">Accesso</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="08c74dc9762957593b91f6eb5d65efdfc975bf48" datatype="html" approved="yes">
         <source>Username</source>
@@ -478,11 +406,6 @@
         <target xml:lang="it">
                             É richiesto il nome utente
                         </target>
-        <alt-trans>
-          <target xml:lang="it">
-                            è richiesto il nome utente
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html" approved="yes">
         <source>Password</source>
@@ -491,9 +414,6 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <target xml:lang="it">Password</target>
-        <alt-trans>
-          <target xml:lang="it">Parola d'ordine</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="cc4486b0fb4d68f5fa48dc4256a86acdb3284006" datatype="html" approved="yes">
         <source>
@@ -510,11 +430,6 @@
         <target xml:lang="it">
                             É richiesta la password
                         </target>
-        <alt-trans>
-          <target xml:lang="it">
-                            E 'richiesta la password
-                        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="9e58dfa6c0a452d8333674cd6aa497d392b1c633" datatype="html" approved="yes">
         <source>LOGIN</source>
@@ -527,9 +442,6 @@
           <context context-type="linenumber">49</context>
         </context-group>
         <target xml:lang="it">Login</target>
-        <alt-trans>
-          <target xml:lang="it">ACCESSO</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="9dd2181e0f3c4c9f08c25f0f1dff684b90b3c377" datatype="html" approved="yes">
         <source>Forgot the password?</source>
@@ -610,9 +522,6 @@
           <context context-type="linenumber">4</context>
         </context-group>
         <target xml:lang="it">Reimposta la tua password</target>
-        <alt-trans>
-          <target xml:lang="it">reimposta la tua password</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="e70e209561583f360b1e9cefd2cbb1fe434b6229" datatype="html" approved="yes">
         <source>New password</source>
@@ -661,9 +570,6 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <target xml:lang="it">La tua password è stata modoficata con successo.</target>
-        <alt-trans>
-          <target xml:lang="it">La tua password è stata cambiata con successo.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="86e0c598f604063c7f2682e5869563dd3ab37276" datatype="html" approved="yes">
         <source>checked</source>
@@ -671,7 +577,7 @@
           <context context-type="sourcefile">app/statistics/configured-channel/configured-channel.component.ts</context>
           <context context-type="linenumber">10</context>
         </context-group>
-        <target xml:lang="it">verificato</target>
+        <target xml:lang="it">Selezionati</target>
       </trans-unit>
       <trans-unit id="758b201fb10d061f7d04c267163f7018eccdec4e" datatype="html" approved="yes">
         <source>issues</source>
@@ -679,10 +585,7 @@
           <context context-type="sourcefile">app/statistics/configured-channel/configured-channel.component.ts</context>
           <context context-type="linenumber">14</context>
         </context-group>
-        <target xml:lang="it">Errori</target>
-        <alt-trans>
-          <target xml:lang="it">errori</target>
-        </alt-trans>
+        <target xml:lang="it">Non inviati</target>
       </trans-unit>
       <trans-unit id="2d11633cc91be6b6678e301554c2aa72eaf214ae" datatype="html" approved="yes">
         <source>Quickfix</source>
@@ -691,9 +594,6 @@
           <context context-type="linenumber">18</context>
         </context-group>
         <target xml:lang="it">Quickfix</target>
-        <alt-trans>
-          <target xml:lang="it">Soluzione rapida</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0f563a2ed5ba847441a8edb8bd149b383b0b18c4" datatype="html" approved="yes">
         <source>Turnover</source>
@@ -702,9 +602,6 @@
           <context context-type="linenumber">3</context>
         </context-group>
         <target xml:lang="it">Fatturato</target>
-        <alt-trans>
-          <target xml:lang="it">Turnover</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="5632d53bdeb0b8aae4a3413700832ceeee94322a" datatype="html" approved="yes">
         <source>Clicks</source>
@@ -713,9 +610,6 @@
           <context context-type="linenumber">11</context>
         </context-group>
         <target xml:lang="it">Click</target>
-        <alt-trans>
-          <target xml:lang="it">clic</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bf74c0168952a0f49470714016ac0c078e3afe85" datatype="html" approved="yes">
         <source>
@@ -748,9 +642,6 @@
           <context context-type="linenumber">8</context>
         </context-group>
         <target xml:lang="it">NON ACCETTO</target>
-        <alt-trans>
-          <target xml:lang="it">DISACCORDO</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0d6d3bd03e48e80c80af772340e1200b93830510" datatype="html" approved="yes">
         <source>AGREE</source>
@@ -759,9 +650,6 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="it">ACCETTO</target>
-        <alt-trans>
-          <target xml:lang="it">ESSERE D'ACCORDO</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="ba8c8db409b82c969f2d2533b5ae9ec3a237a3d8" datatype="html" approved="yes">
         <source>
@@ -774,11 +662,6 @@
         <target xml:lang="it">
   Account internazionale
 </target>
-        <alt-trans>
-          <target xml:lang="it">
-  Conto internazionale
-</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="c6ed20110b0d6673002380e9624a49ea7b81db15" datatype="html" approved="yes">
         <source>Your request has been sent.</source>
@@ -795,9 +678,6 @@
           <context context-type="linenumber">6</context>
         </context-group>
         <target xml:lang="it">Un membro del team Sales ti contatterà al più presto.</target>
-        <alt-trans>
-          <target xml:lang="it">Un venditore ti contatterà presto.</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7e6c975ebea8b5f8b120905ca7acf9f8edf59d8e" datatype="html" approved="yes">
         <source>OK</source>
@@ -818,9 +698,6 @@
           <context context-type="linenumber">1</context>
         </context-group>
         <target xml:lang="it">Account internazionale</target>
-        <alt-trans>
-          <target xml:lang="it">Conto internazionale</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="cada8caf61e66c4081850de9c04b8f558385458e" datatype="html" approved="yes">
         <source>Your request can't be sent, reach us at</source>
@@ -869,9 +746,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="it">CONNETTERE</target>
-        <alt-trans>
-          <target xml:lang="it">COLLEGARE</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="0ee0858440a44da6832550797918a8ce3844e01e" datatype="html" approved="yes">
         <source>Austria</source>
@@ -1304,9 +1178,6 @@
           <context context-type="linenumber">52</context>
         </context-group>
         <target xml:lang="it">Turchia</target>
-        <alt-trans>
-          <target xml:lang="it">tacchino</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="608585409951428f63bcd3663158023f5e81377e" datatype="html" approved="yes">
         <source>United Kingdom</source>
@@ -1331,9 +1202,6 @@
           <context context-type="linenumber">54</context>
         </context-group>
         <target xml:lang="it">Stati Uniti</target>
-        <alt-trans>
-          <target xml:lang="it">stati Uniti</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="a43f25a9ac40e8e2441ff0be7a36b8e5d15534df" datatype="html" approved="yes">
         <source>Country</source>
@@ -1362,9 +1230,6 @@
           <context context-type="linenumber">59</context>
         </context-group>
         <target xml:lang="it">Product Listing Ads</target>
-        <alt-trans>
-          <target xml:lang="it">Annunci con scheda di prodotto</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bb8d38336e3c80713535b9270ce33e9298e7eb5f" datatype="html" approved="yes">
         <source>Affiliation</source>
@@ -1389,9 +1254,6 @@
           <context context-type="linenumber">61</context>
         </context-group>
         <target xml:lang="it">Feed personalizzati</target>
-        <alt-trans>
-          <target xml:lang="it">Esportazioni personalizzate</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="975d7a14bb4b923caf6fff68273730235ebeaf2d" datatype="html" approved="yes">
         <source>Marketplace</source>
@@ -1404,9 +1266,6 @@
           <context context-type="linenumber">62</context>
         </context-group>
         <target xml:lang="it">Marketplace</target>
-        <alt-trans>
-          <target xml:lang="it">Mercato</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="30f4d2c936096bc7e6300187e86a98c54afc9b00" datatype="html" approved="yes">
         <source>Retargeting</source>
@@ -1419,9 +1278,6 @@
           <context context-type="linenumber">63</context>
         </context-group>
         <target xml:lang="it">Retargeting</target>
-        <alt-trans>
-          <target xml:lang="it">Il retargeting</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="b85c339a6f5b53b9b3caa341aa2d6853d99fa23b" datatype="html" approved="yes">
         <source>Shopping Engines</source>
@@ -1434,9 +1290,6 @@
           <context context-type="linenumber">64</context>
         </context-group>
         <target xml:lang="it">Comparatori di prezzo</target>
-        <alt-trans>
-          <target xml:lang="it">Motori di acquisto</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="12024e78bb8046ff7941d4ccee1ef01f87236b19" datatype="html" approved="yes">
         <source>Social Local Mobile</source>
@@ -1449,9 +1302,6 @@
           <context context-type="linenumber">65</context>
         </context-group>
         <target xml:lang="it">Social Local Mobile</target>
-        <alt-trans>
-          <target xml:lang="it">Mobile sociale locale</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html" approved="yes">
         <source>Type</source>
@@ -1468,9 +1318,6 @@
           <context context-type="linenumber">57</context>
         </context-group>
         <target xml:lang="it">Tutte le categorie</target>
-        <alt-trans>
-          <target xml:lang="it">tutte le categorie</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="84a67ace068bbef8a02747ad1343e4f7a1db5544" datatype="html" approved="yes">
         <source>Professional Purchasing</source>
@@ -1627,9 +1474,6 @@
           <context context-type="linenumber">81</context>
         </context-group>
         <target xml:lang="it">Universal</target>
-        <alt-trans>
-          <target xml:lang="it">universale</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="5eca064f876af561273894bcdaa012e51d05fd54" datatype="html" approved="yes">
         <source>Sports</source>
@@ -1642,9 +1486,6 @@
           <context context-type="linenumber">82</context>
         </context-group>
         <target xml:lang="it">Sport</target>
-        <alt-trans>
-          <target xml:lang="it">Gli sport</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="607de17c2a755f65775881c19e276e7c933bcf94" datatype="html" approved="yes">
         <source>Category</source>
@@ -1685,9 +1526,6 @@
           <context context-type="linenumber">5</context>
         </context-group>
         <target xml:lang="it">Crea il tuo account Shopping Feed</target>
-        <alt-trans>
-          <target xml:lang="it">Crea il tuo account Feed degli acquisti</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="358100638b2de39bb16977c359617ca7f082e49b" datatype="html" approved="yes">
         <source>
@@ -1700,11 +1538,6 @@
         <target xml:lang="it">
            Creazione dell'account Shopping Feed
         </target>
-        <alt-trans>
-          <target xml:lang="it">
-           Creazione dell'account Feed acquisti
-        </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="bbf5a45fe8df73ee3c7e8f6d39b461f4dc537285" datatype="html" approved="yes">
         <source>Auto-Configure</source>
@@ -1713,11 +1546,8 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="it">Auto-configurazione</target>
-        <alt-trans>
-          <target xml:lang="it">Auto-Configure</target>
-        </alt-trans>
       </trans-unit>
-      <trans-unit id="5d4049e2a1b3325cd71cbc9a32b3d54c03d5f076" datatype="html">
+      <trans-unit id="5d4049e2a1b3325cd71cbc9a32b3d54c03d5f076" datatype="html" approved="yes">
         <source>
                             Each channel walks you through every step, connecting to the channel and listing products in
                             no time.
@@ -1727,8 +1557,8 @@
           <context context-type="sourcefile">app/registration/create-account/create-account.component.ts</context>
           <context context-type="linenumber">16</context>
         </context-group>
-        <target xml:lang="it" state="translated">
-                            Ogni canale ti fa passare attraverso ogni passaggio, collegandosi al canale e inserendo i prodotti in poco tempo. Fai clic su Connetti e vai!
+        <target xml:lang="it">
+                            Ogni canale ti fa passare attraverso ogni passaggio, sarà sufficiente collegarsi e inserire i prodotti. Fai clic su Connetti e vai!
                         </target>
       </trans-unit>
       <trans-unit id="1b9e22961af35a1d180bca073026dc7764f5273f" datatype="html" approved="yes">
@@ -1746,9 +1576,6 @@
           <context context-type="linenumber">29</context>
         </context-group>
         <target xml:lang="it">Sincronizzazioni ordini</target>
-        <alt-trans>
-          <target xml:lang="it">Ordine sincronizzazione</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="963aecc953f598efa4345924defad890b83eff6d" datatype="html">
         <source>
@@ -1776,14 +1603,8 @@
           <context context-type="linenumber">44</context>
         </context-group>
         <target xml:lang="it">Sincronizzazione inventario</target>
-        <alt-trans>
-          <target xml:lang="it">Sincronizzazione di inventario</target>
-        </alt-trans>
-        <alt-trans>
-          <target xml:lang="it">Sync Inventory</target>
-        </alt-trans>
       </trans-unit>
-      <trans-unit id="a3563dede56f26de19ff29971dcd767f440b22e8" datatype="html">
+      <trans-unit id="a3563dede56f26de19ff29971dcd767f440b22e8" datatype="html" approved="yes">
         <source>
                             Realtime, dynamic inventory tracking of your products across all of your Shopping Feed
                             channels.
@@ -1793,8 +1614,8 @@
           <context context-type="sourcefile">app/registration/create-account/create-account.component.ts</context>
           <context context-type="linenumber">45</context>
         </context-group>
-        <target xml:lang="it" state="translated">
-                            Real-time, inventario dinamico dei tuoi prodotti in tutti i tuoi canali Feed. Quando un prodotto esaurisce ogni canale elimina il suo elenco di prodotti
+        <target xml:lang="it">
+                            In tempo reale, ecco la dinamica di rilevamento dell'inventario dei vostri prodotti attraverso tutti i canali di Shopping Feed.                             Quando un prodotto é esaurito, ogni canale aggiornerà progressivamente l'informazione di stock
                         </target>
       </trans-unit>
       <trans-unit id="55b85bfdef30564552bca8d8a9788874c2fe9019" datatype="html" approved="yes">
@@ -1813,7 +1634,7 @@
         </context-group>
         <target xml:lang="it">mese</target>
       </trans-unit>
-      <trans-unit id="1f1242b53d8b7d72d83adf484ac4d654063cd647" datatype="html">
+      <trans-unit id="1f1242b53d8b7d72d83adf484ac4d654063cd647" datatype="html" approved="yes">
         <source>
                 When you accept, you will be redirected to your Shopify Store to confirm the trial and recurring charge.
                 Don't stop with just your first channel: each channel brings in on average $900/month of new orders
@@ -1822,14 +1643,9 @@
           <context context-type="sourcefile">app/registration-legacy/platform/platform.component.ts</context>
           <context context-type="linenumber">14</context>
         </context-group>
-        <target xml:lang="it" state="translated">
+        <target xml:lang="it">
                 Quando si accetta, essere ridiretti al tuo negozio Shopify per confermare la carica di prova e ricorso.                 Non si fermano con solo il tuo primo canale: ogni canale porta in media 900 dollari/mese di nuovi ordini
             </target>
-        <alt-trans>
-          <target xml:lang="it">
-                Quando accetti, verrà reindirizzato al tuo Shopify Store per confermare la prova e la ricarica ricorrente. Non fermatevi solo con il tuo primo canale: ogni canale porta in media $ 900 / month di nuovi ordini
-            </target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="f2b5c8fa9d0987f4f442fd5bd117ba8176cb2c11" datatype="html" approved="yes">
         <source>Easy setup</source>
@@ -1838,9 +1654,6 @@
           <context context-type="linenumber">25</context>
         </context-group>
         <target xml:lang="it">Installazione Facile</target>
-        <alt-trans>
-          <target xml:lang="it">Facile installazione</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="005db05ab71c1464985aad57af7f93b45515cc7b" datatype="html" approved="yes">
         <source>Fast support</source>
@@ -1849,9 +1662,6 @@
           <context context-type="linenumber">31</context>
         </context-group>
         <target xml:lang="it">Supporto veloce</target>
-        <alt-trans>
-          <target xml:lang="it">Supporto rapido</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="7e026aeffa1320ca988e6848efdb4c184dc5ad88" datatype="html" approved="yes">
         <source>Powerful tools</source>
@@ -1860,12 +1670,6 @@
           <context context-type="linenumber">37</context>
         </context-group>
         <target xml:lang="it">Potenti strumenti di</target>
-        <alt-trans>
-          <target xml:lang="it">Strumenti potenti</target>
-        </alt-trans>
-        <alt-trans>
-          <target xml:lang="it">Utensili potenti</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="5a582976196ec003513f21c8572af7cac977229b" datatype="html" approved="yes">
         <source>Welcome to Shopping Feed. It's so nice to see you!</source>
@@ -1874,9 +1678,6 @@
           <context context-type="linenumber">7</context>
         </context-group>
         <target xml:lang="it">Benvenuti in Shopping Feed. Che piacere vederti!</target>
-        <alt-trans>
-          <target xml:lang="it">Benvenuti nel feed di acquisto. È così bello vederti!</target>
-        </alt-trans>
       </trans-unit>
       <trans-unit id="a9006489015817e4bc177639affe7cfdd7d5a165" datatype="html">
         <source>
@@ -1890,7 +1691,7 @@
           <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="it" state="translated">
-            Se non sei abbastanza sicuro di quello che stai facendo, ti mettiamo una chiamata. Gli utenti di bordo effettuano in media 3 volte la quantità di nuovi ordini nel solo primo mese. Il nostro team è pronto a darti una mano d'aiuto, rispondendo a tutte le tue domande e per farti impostare su ciascuno dei tuoi canali.
+            Se non sei abbastanza sicuro di quello che stai facendo, permettici di contattarti direttamente via telefono. I nuovi utenti ricevono in media 3 volte la quantità di nuovi ordini nel solo primo mese. Il nostro team è pronto a darti una mano d'aiuto, rispondendo a tutte le tue domande e per farti impostare su ciascuno dei tuoi canali.
         </target>
       </trans-unit>
     </body>
