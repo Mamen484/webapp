@@ -11,6 +11,7 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
 import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
 import { LogoutGuard } from './core/guards/logout.guard';
 import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
+import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 
 const routes: Routes = [
     {
@@ -40,7 +41,10 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [
+            IsLoggedInGuard
+        ]
     },
     {
         path: 'reset-password',

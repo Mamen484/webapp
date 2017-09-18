@@ -32,6 +32,7 @@ import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
+import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 
 @NgModule({
     imports: [
@@ -49,6 +50,7 @@ import { LegacyLinkService } from './services/legacy-link.service';
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
         IsAuthorizedGuard,
+        IsLoggedInGuard,
         LogoutGuard,
         LoginByTokenGuard,
         ShopifyGuard,

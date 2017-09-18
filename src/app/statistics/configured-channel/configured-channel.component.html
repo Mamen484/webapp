@@ -5,11 +5,11 @@
         <md-icon>monetization_on</md-icon>
         <span>{{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
     </a>
-    <a class="channel-info-line channel-checked" (click)="goToLegacy('/' + channel._embedded.channel.name)">
+    <a class="channel-info-line channel-checked" (click)="goToChannel(channel._embedded.channel)">
         <md-icon>check_circle</md-icon>
         <span>{{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
     </a>
-    <a class="channel-info-line channel-issues" (click)="goToLegacy('/' +  channel._embedded.channel.name)">
+    <a class="channel-info-line channel-issues" (click)="goToChannel(channel._embedded.channel)">
         <md-icon>error</md-icon>
         <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }}  <ng-container i18n>issues</ng-container></span>
     </a>
