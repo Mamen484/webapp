@@ -1,6 +1,7 @@
 import { Link } from './link';
 import { StoreChannelDetails } from './store-channel-details';
 import { ChannelStatistics } from '../channel-statistics';
+import { Channel } from './channel';
 
 export interface StoreChannel {
     id: number;
@@ -10,7 +11,7 @@ export interface StoreChannel {
     statistics: ChannelStatistics;
     channel: number,
     _embedded: {
-        channel: StoreChannelDetails
+        channel: Channel
     },
     _links: {
         self: Link
