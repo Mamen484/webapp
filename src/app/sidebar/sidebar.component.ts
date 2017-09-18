@@ -9,6 +9,7 @@ import { StoreService } from '../core/services/store.service';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { WindowRefService } from '../core/services/window-ref.service';
+import { Channel } from '../core/entities/channel';
 
 @Component({
     selector: 'sf-sidebar',
@@ -57,6 +58,13 @@ export class SidebarComponent {
         this.currentStore.take(1).subscribe(currentStore =>
             this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path)
         );
+    }
+
+    goToChannel(channel: Channel) {
+        let link = channel.type === 'marketplace'
+            ? `/${channel.name}`
+            : `/${channel.type}/manage/${channel.name}`;
+        this.goToLegacy(link);
     }
 
 }

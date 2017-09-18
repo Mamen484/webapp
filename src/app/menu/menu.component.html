@@ -3,9 +3,7 @@
 
     <sf-support-help-center></sf-support-help-center>
 
-    <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
-             [attr.data-badge]="currentStore.timeline.total">notifications_none
-    </md-icon>
+    <md-icon class="sf-nav-icon">notifications_none</md-icon>
     <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
     <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
         <a md-menu-item (click)="goToLegacy('/marketplaces/globalparameters')" i18n
