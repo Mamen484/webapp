@@ -173,7 +173,8 @@ describe('StatisticsComponent', () => {
             component.filterState.searchQuery = 'amaz';
             component.onApplyFilter();
             component.onScroll();
-            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3); // first one - for initialization, second one - apply filter
+            // first one - for initialization, second one - apply filter
+            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3);
             expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).page).toEqual(4);
             expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).limit).toEqual(6);
             expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).searchQuery).toEqual('amaz');
