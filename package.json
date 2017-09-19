@@ -61,7 +61,7 @@
     "test": "ng test",
     "i18n": "ng xi18n",
     "e2e": "protractor",
-    "start": "ng serve",
+    "start": "ng serve --base-href=/v3/en/",
     "compile-env": "ts-node compile-environment"
   },
   "private": true
