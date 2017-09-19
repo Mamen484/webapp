@@ -3,8 +3,6 @@
 # compiled output
 /dist
 /tmp
-/src/locale
-/src/messages.xlf
 
 # dependencies
 /node_modules
