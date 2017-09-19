@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
+import { WindowRefService } from '../../core/services/window-ref.service';
+import { LegacyLinkService } from '../../core/services/legacy-link.service';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms
 const PERCENTS = 100;
@@ -13,7 +14,9 @@ const PERCENTS = 100;
 export class CreateAccountComponent implements OnInit {
     public progress = 0;
     public registrationFinished = false;
-    public baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
+
+    constructor(protected windowRef: WindowRefService) {
+    }
 
     public ngOnInit() {
         localStorage.removeItem('sf.registration');

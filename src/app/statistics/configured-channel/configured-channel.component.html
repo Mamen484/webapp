@@ -1,21 +1,21 @@
 <md-card-content fxFlex fxLayout="column">
-    <div class="channel-logo"><img md-card-image [src]="channel._embedded.channel._links.image.href"
-              [alt]="channel._embedded.channel.name"></div>
-    <a class="channel-info-line channel-revenue" (click)="goToLegacy('/statistics')">
+    <a class="channel-logo" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)"><img md-card-image [src]="channel._embedded.channel._links.image.href"
+              [alt]="channel._embedded.channel.name"></a>
+    <a class="channel-info-line channel-revenue" sfLegacyLink path="/statistics">
         <md-icon>monetization_on</md-icon>
         <span>{{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
     </a>
-    <a class="channel-info-line channel-checked" (click)="goToLegacy('/' + channel._embedded.channel.name)">
+    <a class="channel-info-line channel-checked" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
         <md-icon>check_circle</md-icon>
         <span>{{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
     </a>
-    <a class="channel-info-line channel-issues" (click)="goToLegacy('/' +  channel._embedded.channel.name)">
+    <a class="channel-info-line channel-issues" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
         <md-icon>error</md-icon>
         <span>{{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }}  <ng-container i18n>issues</ng-container></span>
     </a>
     <div class="channel-info-line quickfix">
         <md-icon>open_in_new</md-icon>
-        <span><a (click)="goToLegacy('/tools/relaunch')" target="_blank" i18n>Quickfix</a></span>
+        <span><a sfLegacyLink path="/tools/relaunch" target="_blank" i18n>Quickfix</a></span>
     </div>
 </md-card-content>
 
