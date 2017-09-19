@@ -11,6 +11,7 @@ import { MdDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 import { StoreCharge } from '../core/store-charge';
+import { cloneDeep } from 'lodash';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -116,7 +117,7 @@ export class StatisticsComponent {
 
     protected initialize(data) {
 
-        this.channels = data;
+        this.channels = cloneDeep(data);
         this.channels._embedded.channel.forEach(channel => {
             if (channel.installed) {
                 (<StoreChannel>channel).statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);
