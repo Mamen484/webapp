@@ -1,57 +1,67 @@
 <div class="timeline">
-    <div class="heading-date" i18n>Latest updates</div>
+    <div class="heading-date mat-body-1" i18n>Latest updates</div>
     <md-card class="update">
         <md-list>
             <md-list-item class="updates-in-progress">
-                <div class="sf-fill-space " i18n>
+                <div class="sf-fill-space mat-body-1" i18n>
                     Number of updates in progress
                 </div>
                 <div>{{updatesInProgress}}</div>
             </md-list-item>
             <md-list-item *ngFor="let update of updates">
 
-                <div class="event-icon">
+                <div class="event-icon mat-body-1">
                     <md-icon *ngIf="update.type === updateTypes.export">vertical_align_top</md-icon>
                     <md-icon *ngIf="update.type === updateTypes.import">vertical_align_bottom</md-icon>
                 </div>
-                <div class="channel-name" *ngIf="update.type === updateTypes.import">
+                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.import">
                     Source feed
                 </div>
-                <div class="channel-name" *ngIf="update.type === updateTypes.export">
+                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.export">
                     {{update._embedded.channel[0].name}}
                 </div>
-                <div class="event-description">
+                <div class="event-description mat-body-1">
                     <span *ngIf="update.operation === updateOperations.start" i18n>In progress</span>
                     <span *ngIf="update.operation === updateOperations.ask" i18n>Scheduled</span>
                     <span *ngIf="update.operation === updateOperations.finish" i18n>Completed</span>
                 </div>
-                <div class="event-time">{{update.occurredAt | date:"HH:mm"}}</div>
+                <div class="event-time mat-body-1">{{update.occurredAt | date:"HH:mm"}}</div>
             </md-list-item>
             <md-list-item *ngIf="!updates.length">
-                <div class="sf-fill-space no-updates" i18n> No updates</div>
+                <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>
             </md-list-item>
         </md-list>
     </md-card>
 
     <div *ngFor="let eventsGroup of events">
-        <div class="heading-date">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
+        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
         <md-card class="event">
             <md-list>
                 <md-list-item *ngFor="let event of eventsGroup[1]">
 
-                    <div class="event-icon">
+                    <div class="event-icon mat-body-1">
                         <md-icon>{{event.icon}}</md-icon>
                     </div>
                     <sf-order-event [reference]="event.reference" [operation]="event.operation"
-                                    class="event-description sf-fill-space"
+                                    class="event-description sf-fill-space mat-body-1"
                                     *ngIf="event.type === eventTypes.orderLifecycle"></sf-order-event>
                     <sf-rule-event [ruleName]="event.ruleName" [operation]="event.operation"
-                                   class="event-description sf-fill-space"
+                                   class="event-description sf-fill-space mat-body-1"
                                    *ngIf="event.type === eventTypes.ruleSegmentation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
-                    <div class="event-time">{{event.time | date:"HH:mm"}}</div>
+                    <div class="event-time mat-body-1">{{event.time | date:"HH:mm"}}</div>
 
                 </md-list-item>
             </md-list>
+        </md-card>
+    </div>
+
+    <div *ngIf="!events.length">
+        <div class="heading-date mat-body-1" i18n>Today</div>
+        <md-card>
+            <md-card-content>
+                <div class="no-events mat-body-1" i18n>No events</div>
+            </md-card-content>
+
         </md-card>
     </div>
 </div>

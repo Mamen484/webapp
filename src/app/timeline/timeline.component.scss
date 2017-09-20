@@ -64,7 +64,13 @@ md-list {
     border-bottom: none;
   }
 
-  .no-updates {
-    text-align: center;
-  }
+
+}
+
+.no-updates, .no-events {
+  text-align: center;
+  color: mat-color($grey, 1000, 0.54);
+}
+.no-events {
+  padding: 15px;
 }
