@@ -27,6 +27,9 @@
                 </div>
                 <div class="event-time">{{update.occurredAt | date:"HH:mm"}}</div>
             </md-list-item>
+            <md-list-item *ngIf="!updates.length">
+                <div class="sf-fill-space no-updates"> No updates</div>
+            </md-list-item>
         </md-list>
     </md-card>
 
