@@ -53,6 +53,7 @@ import { Observable } from 'rxjs/Observable';
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
+        EventUpdatesGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
@@ -74,7 +75,6 @@ import { Observable } from 'rxjs/Observable';
         StoreService,
         LegacyLinkService,
 
-        EventUpdatesGuard,
         {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
