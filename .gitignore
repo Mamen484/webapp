@@ -9,7 +9,7 @@
 /bower_components
 
 # Translations
-/src/locale/*
+#/src/locale/*
 /src/messages.xlf
 
 # IDEs and editors
