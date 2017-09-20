@@ -1,12 +1,18 @@
 <div class="timeline">
-    <span class="mat-caption heading-date">Missed updates</span>
+    <div class="heading-date" i18n>Latest updates</div>
     <md-card class="update">
         <md-list>
+            <md-list-item class="updates-in-progress">
+                <div class="sf-fill-space " i18n>
+                    Number of updates in progress
+                </div>
+                <div>{{updatesInProgress}}</div>
+            </md-list-item>
             <md-list-item *ngFor="let update of updates">
 
                 <div class="event-icon">
-                    <md-icon *ngIf="update.type === updateTypes.export">file_upload</md-icon>
-                    <md-icon *ngIf="update.type === updateTypes.import">file_download</md-icon>
+                    <md-icon *ngIf="update.type === updateTypes.export">vertical_align_top</md-icon>
+                    <md-icon *ngIf="update.type === updateTypes.import">vertical_align_bottom</md-icon>
                 </div>
                 <div class="channel-name" *ngIf="update.type === updateTypes.import">
                     Source feed
@@ -14,10 +20,10 @@
                 <div class="channel-name" *ngIf="update.type === updateTypes.export">
                     {{update._embedded.channel[0].name}}
                 </div>
-                <div class="event-description sf-fill-space">
-                    <span *ngIf="update.operation === updateOperations.start">In progress</span>
-                    <span *ngIf="update.operation === updateOperations.ask">Scheduled</span>
-                    <span *ngIf="update.operation === updateOperations.finish">Completed</span>
+                <div class="event-description">
+                    <span *ngIf="update.operation === updateOperations.start" i18n>In progress</span>
+                    <span *ngIf="update.operation === updateOperations.ask" i18n>Scheduled</span>
+                    <span *ngIf="update.operation === updateOperations.finish" i18n>Completed</span>
                 </div>
                 <div class="event-time">{{update.occurredAt | date:"HH:mm"}}</div>
             </md-list-item>

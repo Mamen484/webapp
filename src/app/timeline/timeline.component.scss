@@ -4,13 +4,13 @@
   padding-top: 40px;
   color: mat-color($grey, 1000, 0.87);
 }
+
 .event-icon {
   margin-right: 20px;
   color: mat-color($accent);
 }
 
 .channel-name {
-  margin-right: 20px;
 }
 
 .event, .update {
@@ -24,13 +24,16 @@ md-card {
 
 .heading-date {
   color: mat-color($grey, 800, 0.87);
+  margin-bottom: 15px;
 }
 
 md-list-item {
   padding: 0 10px;
   cursor: pointer;
+  border-bottom: 1px solid mat-color($grey, 1000, 0.12);
   &:hover {
     background-color: mat-color($grey, 300, 0.87);
+    border-bottom: 1px solid transparent;
   }
 }
 
@@ -40,7 +43,11 @@ md-list {
 
 .update {
   background: mat-color($accent, 700, 0.05);
+  .channel-name {
+    flex: 1;
+  }
   .event-description {
+    flex: 3;
     text-transform: capitalize;
   }
 
@@ -48,5 +55,10 @@ md-list {
     &:hover {
       background-color: mat-color($grey, 1000, 0.1);
     }
+  }
+
+  .updates-in-progress {
+    background-color: mat-color($grey, 1000, 0.1);
+    border-bottom: none;
   }
 }

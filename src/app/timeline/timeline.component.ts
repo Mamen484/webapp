@@ -21,6 +21,7 @@ export class TimelineComponent {
     eventTypes = TimelineEventType;
     updateTypes = TimelineUpdateType;
     updateOperations = TimelineUpdateOperation;
+    updatesInProgress = 0;
 
     constructor(protected route: ActivatedRoute) {
         this.route.data.subscribe(
@@ -52,8 +53,10 @@ export class TimelineComponent {
             }))]))
     }
 
-    protected initializeUpdates(updates: TimelineUpdates){
+    protected initializeUpdates(updates: TimelineUpdates) {
         this.updates = updates._embedded.updates;
+        this.updatesInProgress = updates._embedded.updates
+            .filter(update => update.operation === this.updateOperations.start).length;
     }
 
     protected getIconName(eventType) {
