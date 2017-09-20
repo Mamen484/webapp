@@ -20,7 +20,6 @@ import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
-import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
 import { ChannelLogoService } from './services/channel_logo.service';
 import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
@@ -33,6 +32,12 @@ import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
+import { TimelineService } from './services/timeline.service';
+import { events } from '../../mocks/events-mock';
+import { EventsResolveGuard } from './guards/events-resolve.guard';
+import { EventUpdatesGuard } from './guards/event-updates.guard';
+import { updates } from '../../mocks/updates-mock';
+import { Observable } from 'rxjs/Observable';
 
 @NgModule({
     imports: [
@@ -43,8 +48,7 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
             currentStore: currentStoreReducer,
             channels: channelsReducer,
             storeStatistics: statisticsReducer,
-        }),
-
+        })
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
@@ -56,6 +60,7 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
         ShopifyGuard,
         ShopSpecifiedGuard,
 
+        EventsResolveGuard,
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
@@ -69,6 +74,8 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
         StoreService,
         LegacyLinkService,
 
+        EventUpdatesGuard,
+        {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
@@ -79,4 +86,13 @@ export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
+}
+
+export function getEvents() {
+    return Observable.of(events);
+}
+
+
+export function getEventUpdates() {
+    return Observable.of(updates);
 }

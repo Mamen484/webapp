@@ -12,6 +12,9 @@ import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
 import { LogoutGuard } from './core/guards/logout.guard';
 import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
+import { TimelineComponent } from './timeline/timeline.component';
+import { EventsResolveGuard } from './core/guards/events-resolve.guard';
+import { EventUpdatesGuard } from './core/guards/event-updates.guard';
 
 const routes: Routes = [
     {
@@ -29,6 +32,14 @@ const routes: Routes = [
             {
                 path: '',
                 component: StatisticsComponent
+            },
+            {
+                path: 'timeline',
+                component: TimelineComponent,
+                resolve: {
+                    timeline: EventsResolveGuard,
+                    updates: EventUpdatesGuard
+                }
             }
         ]
     },

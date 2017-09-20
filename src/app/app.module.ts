@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { LoginModule } from './login/login.module';
 import { RegistrationModule } from './registration/registration.module';
+import { TimelineModule } from './timeline/timeline.module';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { RegistrationModule } from './registration/registration.module';
         AppRoutingModule,
         LoginModule,
         RegistrationModule,
+        TimelineModule,
     ],
     bootstrap: [AppComponent]
 })

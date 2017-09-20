@@ -1,0 +1,52 @@
+@import '../../sass/variables';
+
+.timeline {
+  padding-top: 40px;
+  color: mat-color($grey, 1000, 0.87);
+}
+.event-icon {
+  margin-right: 20px;
+  color: mat-color($accent);
+}
+
+.channel-name {
+  margin-right: 20px;
+}
+
+.event, .update {
+  width: calc(100% - 40px); //40px - list-item paddings + margin between card and sidebar
+}
+
+md-card {
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+
+.heading-date {
+  color: mat-color($grey, 800, 0.87);
+}
+
+md-list-item {
+  padding: 0 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: mat-color($grey, 300, 0.87);
+  }
+}
+
+md-list {
+  padding: 0;
+}
+
+.update {
+  background: mat-color($accent, 700, 0.05);
+  .event-description {
+    text-transform: capitalize;
+  }
+
+  md-list-item {
+    &:hover {
+      background-color: mat-color($grey, 1000, 0.1);
+    }
+  }
+}
