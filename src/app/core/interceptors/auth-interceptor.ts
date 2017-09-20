@@ -7,42 +7,54 @@ import { LocalStorageService } from '../services/local-storage.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor( protected localStorage: LocalStorageService) {
+    constructor(protected localStorage: LocalStorageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // add auth header only to API calls
-        if (req.url.indexOf(environment.API_URL) !== 0) {
-            return next.handle(req);
+        return next.handle(this.formatRequest(req));
+    }
+
+    protected formatRequest(req) {
+
+        if (this.notApiCall(req)) {
+            return req;
         }
 
-        // add app token when needed
-        if (
-            (req.url.indexOf(environment.API_URL + '/shopify/auth') === 0 && req.method === 'GET')
-            || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
-            || (req.url.indexOf(environment.API_URL + '/store') === 0 &&  (req.method === 'POST' || req.method === 'PATCH'))
-        ) {
-            return next.handle(req.clone({
+        if (this.appTokenNeeded(req)) {
+            return req.clone({
                 headers: req.headers
                     .set('Accept', 'application/json')
                     .set('Authorization', environment.APP_AUTHORIZATION)
-            }))
+            })
         }
 
-        let authString = this.localStorage.getItem('Authorization');
-        if (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0 /* login resource */) {
-            return next.handle(req.clone({
-                headers: req.headers
-                    .set('Accept', 'application/json')
-            }));
+        if (this.notLoggedIn(req)) {
+            return req.clone({
+                headers: req.headers.set('Accept', 'application/json')
+            });
         }
 
         // Clone the request to add the new header
         // and Pass on the cloned request instead of the original request..
-        return next.handle(req.clone({
+        return req.clone({
             headers: req.headers
                 .set('Accept', 'application/json')
-                .set('Authorization', authString)
-        }));
+                .set('Authorization', this.localStorage.getItem('Authorization'))
+        });
+    }
+
+    protected appTokenNeeded(req) {
+        return (req.url.indexOf(environment.API_URL + '/shopify/auth') === 0 && req.method === 'GET')
+            || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
+            || (req.url.indexOf(environment.API_URL + '/store') === 0 && (req.method === 'POST' || req.method === 'PATCH'))
+    }
+
+    protected notApiCall(req) {
+        return req.url.indexOf(environment.API_URL) !== 0;
+    }
+
+    protected notLoggedIn(req) {
+        let authString = this.localStorage.getItem('Authorization');
+        return (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0 );
     }
 }
