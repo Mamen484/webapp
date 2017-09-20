@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { UserService } from './user.service';
 import { environment } from '../../../environments/environment';
-import { WindowRefService } from './window-ref.service';
+import { LocalStorageService } from './local-storage.service';
 
 describe('UserService', () => {
     let setItemSpy: jasmine.Spy;
@@ -13,7 +13,7 @@ describe('UserService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 UserService,
-                {provide: WindowRefService, useValue: {nativeWindow: {localStorage: {setItem: setItemSpy}}}}
+                {provide: LocalStorageService, useValue: {setItem: setItemSpy}}
             ]
         });
     });

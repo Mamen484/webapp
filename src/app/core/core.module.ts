@@ -38,6 +38,7 @@ import { EventsResolveGuard } from './guards/events-resolve.guard';
 import { EventUpdatesGuard } from './guards/event-updates.guard';
 import { updates } from '../../mocks/updates-mock';
 import { Observable } from 'rxjs/Observable';
+import { LocalStorageService } from './services/local-storage.service';
 
 @NgModule({
     imports: [
@@ -74,6 +75,7 @@ import { Observable } from 'rxjs/Observable';
         UserService,
         StoreService,
         LegacyLinkService,
+        LocalStorageService,
 
         {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

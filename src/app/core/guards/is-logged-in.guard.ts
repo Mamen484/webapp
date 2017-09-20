@@ -4,20 +4,22 @@ import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { UserService } from '../services/user.service';
 import { LegacyLinkService } from '../services/legacy-link.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {
 
     constructor(protected windowRef: WindowRefService,
                 protected userService: UserService,
-                protected legacyLinkService: LegacyLinkService) {
+                protected legacyLinkService: LegacyLinkService,
+                protected localStorage: LocalStorageService) {
 
     }
 
     canActivate(next: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): Observable<boolean> | boolean {
 
-        let auth = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
+        let auth = this.localStorage.getItem('Authorization');
         if (auth) {
             return Observable.create(observer => {
                 this.userService.fetchAggregatedInfo().subscribe(

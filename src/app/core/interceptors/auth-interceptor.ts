@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
-import { WindowRefService } from '../services/window-ref.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(protected windowRef: WindowRefService) {
+    constructor( protected localStorage: LocalStorageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }))
         }
 
-        let authString = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
+        let authString = this.localStorage.getItem('Authorization');
         if (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0 /* login resource */) {
             return next.handle(req.clone({
                 headers: req.headers

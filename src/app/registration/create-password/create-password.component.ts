@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
-import { WindowRefService } from '../../core/services/window-ref.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 
 @Component({
     selector: 'app-create-password',
@@ -24,11 +24,11 @@ export class CreatePasswordComponent implements OnInit {
                 protected router: Router,
                 protected route: ActivatedRoute,
                 protected shopifyService: ShopifyAuthentifyService,
-                protected windowRef: WindowRefService) {
+                protected localStorage: LocalStorageService) {
     }
 
     public ngOnInit() {
-        let cache = this.windowRef.nativeWindow.localStorage.getItem('sf.registration');
+        let cache = this.localStorage.getItem('sf.registration');
         if (cache) {
             this.store = JSON.parse(cache);
             return;
@@ -49,7 +49,7 @@ export class CreatePasswordComponent implements OnInit {
         this.store.owner.password = this.passwordControl.value;
         this.service.createPassword(this.store)
             .subscribe((store: CreateStoreModel) => {
-                this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.tokens[0]}`)
+                this.localStorage.setItem('Authorization', `Bearer ${store.owner.tokens[0]}`)
                 this.router.navigate(['register', 'create-account']);
             },
                 () => this.displayServerError = true);

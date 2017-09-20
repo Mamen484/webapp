@@ -8,7 +8,7 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { WindowRefService } from '../core/services/window-ref.service';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { LocalStorageService } from '../core/services/local-storage.service';
 
 @Component({
     selector: 'app-menu',
@@ -23,7 +23,8 @@ export class MenuComponent {
 
 
     constructor(protected appStore: AppStore<AppState>,
-                protected windowRef: WindowRefService) {
+                protected windowRef: WindowRefService,
+                protected localStorage: LocalStorageService) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
@@ -33,7 +34,7 @@ export class MenuComponent {
     }
 
     logout() {
-        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+        this.localStorage.removeItem('Authorization');
         this.windowRef.nativeWindow.location.href = `${this.appUrl}/index/logout`;
     }
 
