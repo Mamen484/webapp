@@ -1,5 +1,5 @@
 export enum TimelineEventType {
     ruleTransformation = 'rule.transformation',
-    ruleSegmantation = 'rule.segmentation',
+    ruleSegmentation = 'rule.segmentation',
     orderLifecycle = 'order.lifecycle'
 }

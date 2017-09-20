@@ -28,13 +28,13 @@
                 <div class="event-time">{{update.occurredAt | date:"HH:mm"}}</div>
             </md-list-item>
             <md-list-item *ngIf="!updates.length">
-                <div class="sf-fill-space no-updates"> No updates</div>
+                <div class="sf-fill-space no-updates" i18n> No updates</div>
             </md-list-item>
         </md-list>
     </md-card>
 
     <div *ngFor="let eventsGroup of events">
-        <span class="mat-caption heading-date">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</span>
+        <div class="heading-date">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
         <md-card class="event">
             <md-list>
                 <md-list-item *ngFor="let event of eventsGroup[1]">
@@ -47,7 +47,7 @@
                                     *ngIf="event.type === eventTypes.orderLifecycle"></sf-order-event>
                     <sf-rule-event [ruleName]="event.ruleName" [operation]="event.operation"
                                    class="event-description sf-fill-space"
-                                   *ngIf="event.type === eventTypes.ruleSegmantation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
+                                   *ngIf="event.type === eventTypes.ruleSegmentation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
                     <div class="event-time">{{event.time | date:"HH:mm"}}</div>
 
                 </md-list-item>

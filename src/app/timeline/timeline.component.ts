@@ -47,7 +47,7 @@ export class TimelineComponent {
                         ? event._embedded.order[0].reference
                         : '',
                 ruleName:
-                    event.type === TimelineEventType.ruleTransformation || event.type === TimelineEventType.ruleSegmantation
+                    event.type === TimelineEventType.ruleTransformation || event.type === TimelineEventType.ruleSegmentation
                         ? event._embedded.rules[0].name
                         : ''
             }))]))
@@ -64,7 +64,7 @@ export class TimelineComponent {
             case TimelineEventType.orderLifecycle:
                 return 'shopping_basket';
 
-            case TimelineEventType.ruleSegmantation:
+            case TimelineEventType.ruleSegmentation:
             case TimelineEventType.ruleTransformation:
                 return 'build';
 
