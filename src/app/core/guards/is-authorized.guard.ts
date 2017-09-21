@@ -6,6 +6,11 @@ import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
+/**
+ * This guard is used to detect if the user is logged in. If NOT, then redirect to the login page.
+ * Used on the pages, where authentication is required.
+ */
+
 @Injectable()
 export class IsAuthorizedGuard implements CanActivate {
     constructor(
@@ -30,10 +35,9 @@ export class IsAuthorizedGuard implements CanActivate {
                 },
                 // do not activate and redirect to /login when an error
                 () => {
+                    this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
                     observer.next(false);
                     observer.complete();
-                    this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
-
                 }
             );
         });
