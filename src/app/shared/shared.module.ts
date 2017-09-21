@@ -16,7 +16,7 @@ import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
 import { LegacyLinkDirective } from './legacy-link.directive';
-
+import { BlankComponent } from './blank.component';
 @NgModule({
     imports: [
         BrowserAnimationsModule,
@@ -76,7 +76,7 @@ import { LegacyLinkDirective } from './legacy-link.directive';
         LegacyLinkDirective,
 
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective]
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent]
 })
 export class SharedModule {
 }

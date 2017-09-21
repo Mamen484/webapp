@@ -15,6 +15,7 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { TimelineComponent } from './timeline/timeline.component';
 import { EventsResolveGuard } from './core/guards/events-resolve.guard';
 import { EventUpdatesGuard } from './core/guards/event-updates.guard';
+import { BlankComponent } from './shared/blank.component';
 
 const routes: Routes = [
     {
@@ -45,7 +46,7 @@ const routes: Routes = [
     },
     {
         path: 'logout',
-        component: LoginComponent,
+        component: BlankComponent,
         canActivate: [
             LogoutGuard
         ]

@@ -8,8 +8,7 @@ export class LoginByTokenGuard implements CanActivate {
     constructor(protected localStorage: LocalStorageService) {
     }
 
-    canActivate(next: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): true {
+    canActivate(next: ActivatedRouteSnapshot): true {
         if (next.queryParamMap.has('token')) {
             this.localStorage.setItem('Authorization', 'Bearer ' + next.queryParams.token);
         }
