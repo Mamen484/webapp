@@ -8,7 +8,7 @@ import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { MenuModule } from '../../menu/menu.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MdCardModule, MdInputModule } from '@angular/material';
-import { CreatePasswordService } from './create-password.service';
+import { CreatePasswordService } from '../../core/services/create-password.service';
 import { LocaleIdService } from '../../core/services/locale-id.service';
 import { ActivatedRoute } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';

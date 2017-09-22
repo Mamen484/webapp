@@ -26,7 +26,7 @@ import { ShopifyAuthentifyService } from './services/shopify-authentify.service'
 import { ShopifyGuard } from './guards/shopify.guard';
 import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
 import { RegistrationCacheGuard } from './guards/registration-cache.guard';
-import { CreatePasswordService } from '../registration/create-password/create-password.service';
+import { CreatePasswordService } from './services/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';

@@ -26,17 +26,17 @@ describe('LegacyLinkService', () => {
         expect(service).toBeTruthy();
     }));
 
-    it('shpuld return a link without a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
+    it('should return a link without a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
         getItemSpy.and.returnValue('');
         expect(service.getLegacyLink('/some/path')).toEqual(environment.APP_URL + '/some/path?');
     }));
 
-    it('shpuld return a link with a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
+    it('should return a link with a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
         getItemSpy.and.returnValue('Bearer xsw');
         expect(service.getLegacyLink('/some/path')).toEqual(environment.APP_URL + '/some/path?token=xsw');
     }));
 
-    it('shpuld return a link with a token and a storeId', inject([LegacyLinkService], (service: LegacyLinkService) => {
+    it('should return a link with a token and a storeId', inject([LegacyLinkService], (service: LegacyLinkService) => {
         getItemSpy.and.returnValue('Bearer xsw');
         expect(service.getLegacyLink('/some/path', {storeId: 232})).toEqual(environment.APP_URL + '/some/path?storeId=232&token=xsw');
     }));

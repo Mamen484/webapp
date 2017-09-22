@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CreatePasswordService } from './create-password.service';
+import { CreatePasswordService } from '../../core/services/create-password.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
