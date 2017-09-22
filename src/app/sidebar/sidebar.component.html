@@ -2,7 +2,7 @@
     <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
         <md-list>
             <md-list-item class="mat-active" [mdMenuTriggerFor]="channelsMenu" mdTooltip="CHANNELS" mdTooltipPosition="after"
-                          i18n-mdTooltip *ngIf="hasChannelsPermissions() | async">
+                          i18n-mdTooltip *ngIf="hasChannelsPermissions() | async" (onMenuOpen)="onMenuOpen()">
                 <md-icon class="active">wb_cloudy</md-icon>
             </md-list-item>
 
@@ -12,13 +12,13 @@
                          [attr.data-badge]="(currentStore | async).order.total">shopping_basket</md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTICS"
+            <md-list-item [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
                           i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
                 <md-icon>trending_up</md-icon>
             </md-list-item>
 
             <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="SETTINGS" i18n-mdTooltip mdTooltipPosition="after"
-                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools">
+                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools" (onMenuOpen)="onMenuOpen()">
                 <md-icon>build</md-icon>
             </md-list-item>
 
