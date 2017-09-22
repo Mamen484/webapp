@@ -8,9 +8,8 @@ export class TimelineService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    getEvents() {
-        return this.httpClient.get(environment.API_URL + '/timeline',
-            {
+    getEvents(url = environment.API_URL + '/timeline'): any {
+        return this.httpClient.get(url, {
                 params: new HttpParams().set('filter', 'events')
             })
     }

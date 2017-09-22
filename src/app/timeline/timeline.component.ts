@@ -7,6 +7,7 @@ import { TimelineUpdate } from '../core/entities/timeline-update';
 import { TimelineUpdates } from '../core/entities/timeline-updates';
 import { TimelineUpdateType } from '../core/entities/timeline-update-type.enum';
 import { TimelineUpdateOperation } from '../core/entities/timeline-update-operation.enum';
+import { TimelineService } from '../core/services/timeline.service';
 
 
 @Component({
@@ -22,8 +23,11 @@ export class TimelineComponent {
     updateTypes = TimelineUpdateType;
     updateOperations = TimelineUpdateOperation;
     updatesInProgress = 0;
+    nextLink = null;
+    processing = false;
+    infiniteScrollDisabled = false;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute, protected timelineService: TimelineService) {
         this.route.data.subscribe(
             ({timeline, updates}) => {
                 this.initializeEvents(timeline);
@@ -32,8 +36,29 @@ export class TimelineComponent {
         );
     }
 
+    onScroll() {
+        if (this.processing) {
+            return;
+        }
+        if (!this.nextLink) {
+            this.infiniteScrollDisabled = true;
+            return;
+        }
+        this.processing = true;
+        this.timelineService.getEvents(this.nextLink).subscribe(timeline => {
+            this.nextLink = timeline._links.next.href;
+            this.processing = false;
+            this.events.push(...this.formatEvents(timeline));
+        });
+    }
+
     protected initializeEvents(timeline) {
-        this.events = orderBy(toPairs(groupBy(
+        this.events = this.formatEvents(timeline);
+        this.nextLink = timeline._links.next.href;
+    }
+
+    protected formatEvents(timeline) {
+        return orderBy(toPairs(groupBy(
             timeline._embedded.events,
             event => event.occurredAt.split('T')[0]
         )), 0, 'desc')
@@ -50,7 +75,7 @@ export class TimelineComponent {
                     event.type === TimelineEventType.ruleTransformation || event.type === TimelineEventType.ruleSegmentation
                         ? event._embedded.rules[0].name
                         : ''
-            }))]))
+            }))]));
     }
 
     protected initializeUpdates(updates: TimelineUpdates) {

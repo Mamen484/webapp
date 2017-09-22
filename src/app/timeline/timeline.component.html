@@ -1,4 +1,6 @@
-<div class="timeline">
+<div class="timeline"  infiniteScroll [infiniteScrollDistance]="2"
+     [infiniteScrollDisabled]="infiniteScrollDisabled"
+     [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div class="heading-date mat-body-1" i18n>Latest updates</div>
     <md-card class="update">
         <md-list>
@@ -64,4 +66,7 @@
 
         </md-card>
     </div>
+</div>
+<div>
+    <md-spinner *ngIf="!infiniteScrollDisabled"></md-spinner>
 </div>

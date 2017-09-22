@@ -33,7 +33,7 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
-import { events } from '../../mocks/events-mock';
+import { events, events2 } from '../../mocks/events-mock';
 import { EventsResolveGuard } from './guards/events-resolve.guard';
 import { EventUpdatesGuard } from './guards/event-updates.guard';
 import { updates } from '../../mocks/updates-mock';
@@ -90,8 +90,8 @@ export class CoreModule {
     }
 }
 
-export function getEvents() {
-    return Observable.of(events);
+export function getEvents(link) {
+    return Observable.of(!link ? events : events2);
 }
 
 
