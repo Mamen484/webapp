@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component, ElementRef, Inject, LOCALE_ID } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '../core/entities/store';
@@ -7,7 +7,6 @@ import { StoreChannelDetails } from '../core/entities/store-channel-details';
 import { environment } from '../../environments/environment';
 import { StoreService } from '../core/services/store.service';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { Channel } from '../core/entities/channel';
 
@@ -25,7 +24,6 @@ export class SidebarComponent {
     constructor(protected _appStore: AppStore<AppState>,
                 @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
                 protected storeService: StoreService,
-                protected legacyLinkService: LegacyLinkService,
                 protected windowRef: WindowRefService) {
         this.currentStore = this._appStore.select('currentStore');
         this.channels = this.currentStore
@@ -58,6 +56,11 @@ export class SidebarComponent {
         return channel.type === 'marketplace'
             ? `/${channel.name}`
             : `/${channel.type}/manage/${channel.name}`;
+    }
+
+    onMenuOpen() {
+        let menuElement = <HTMLDivElement>this.windowRef.nativeWindow.document.querySelector('.sf-sidebar-menu');
+        menuElement.style.maxHeight = this.windowRef.nativeWindow.innerHeight - menuElement.getBoundingClientRect().top + 'px'
     }
 
 }
