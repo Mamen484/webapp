@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TimelineEvent } from '../core/entities/timeline-event';
 import { groupBy, orderBy, toPairs } from 'lodash';
 import { TimelineEventType } from '../core/entities/timeline-event-type.enum';
 import { TimelineUpdate } from '../core/entities/timeline-update';
@@ -8,6 +7,7 @@ import { TimelineUpdates } from '../core/entities/timeline-updates';
 import { TimelineUpdateType } from '../core/entities/timeline-update-type.enum';
 import { TimelineUpdateOperation } from '../core/entities/timeline-update-operation.enum';
 import { TimelineService } from '../core/services/timeline.service';
+import { TimelineEvent } from '../core/entities/timeline-event';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { TimelineService } from '../core/services/timeline.service';
 })
 export class TimelineComponent {
 
-    events: TimelineEvent[][];
+    events;
     updates: TimelineUpdate[];
     eventTypes = TimelineEventType;
     updateTypes = TimelineUpdateType;
@@ -37,18 +37,19 @@ export class TimelineComponent {
     }
 
     onScroll() {
-        if (this.processing) {
+        if (this.processing ||  this.infiniteScrollDisabled) {
             return;
         }
-        if (!this.nextLink) {
-            this.infiniteScrollDisabled = true;
-            return;
-        }
+
         this.processing = true;
         this.timelineService.getEvents(this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next.href;
-            this.processing = false;
             this.events.push(...this.formatEvents(timeline));
+
+            if (!this.nextLink){
+                this.infiniteScrollDisabled = true;
+            }
+            this.processing = false;
         });
     }
 
@@ -60,7 +61,7 @@ export class TimelineComponent {
     protected formatEvents(timeline) {
         return orderBy(toPairs(groupBy(
             timeline._embedded.events,
-            event => event.occurredAt.split('T')[0]
+            (event: TimelineEvent) => event.occurredAt.split('T')[0]
         )), 0, 'desc')
             .map(eventGroup => ([eventGroup[0], eventGroup[1].map(event => ({
                 icon: this.getIconName(event.type),

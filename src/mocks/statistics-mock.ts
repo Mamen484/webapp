@@ -1,4 +1,4 @@
-import { ChannelStatistics } from '../app/core/channel-statistics';
+import { ChannelStatistics } from '../app/core/entities/channel-statistics';
 import { storeChannelMock } from './store-channel.mock';
 
 class ChannelMock implements ChannelStatistics {

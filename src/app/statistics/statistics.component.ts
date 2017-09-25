@@ -10,7 +10,7 @@ import { PagedResponse } from '../core/entities/paged-response';
 import { MdDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
-import { StoreCharge } from '../core/store-charge';
+import { StoreCharge } from '../core/entities/store-charge';
 import { cloneDeep } from 'lodash';
 
 const LOAD_CHANNELS_COUNT = 6;
