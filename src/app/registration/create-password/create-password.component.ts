@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
+import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class CreatePasswordComponent implements OnInit {
 
     public emailControl = new FormControl('', [Validators.required, Validators.email]);
     public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
-
+    public supportEmail = environment.SUPPORT_EMAIL;
     public displayServerError = false;
 
     protected store;
