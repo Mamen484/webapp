@@ -5,6 +5,7 @@ import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { WindowRefService } from '../../core/services/window-ref.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-create-password',
@@ -15,7 +16,7 @@ export class CreatePasswordComponent implements OnInit {
 
     public emailControl = new FormControl('', [Validators.required, Validators.email]);
     public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
-
+    public supportEmail = environment.SUPPORT_EMAIL;
     public displayServerError = false;
 
     protected store;

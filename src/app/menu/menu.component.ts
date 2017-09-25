@@ -23,8 +23,7 @@ export class MenuComponent {
 
 
     constructor(protected appStore: AppStore<AppState>,
-                protected windowRef: WindowRefService,
-                protected legacyLinkService: LegacyLinkService) {
+                protected windowRef: WindowRefService) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
@@ -38,7 +37,7 @@ export class MenuComponent {
         this.windowRef.nativeWindow.location.href = `${this.appUrl}/index/logout`;
     }
 
-    goToLegacy(path) {
-        this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(path);
+    isAdmin() {
+        return this.userInfo.roles.find(role => role === 'admin');
     }
 }

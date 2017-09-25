@@ -15,11 +15,7 @@ export class CreateAccountComponent implements OnInit {
     public progress = 0;
     public registrationFinished = false;
 
-    constructor(protected legacyLink: LegacyLinkService, protected windowRef: WindowRefService) {
-    }
-
-    goToLegacy() {
-        this.windowRef.nativeWindow.location.href = this.legacyLink.getLegacyLink('/');
+    constructor(protected windowRef: WindowRefService) {
     }
 
     public ngOnInit() {

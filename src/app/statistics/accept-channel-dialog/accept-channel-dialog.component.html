@@ -7,5 +7,5 @@
         recurring charge.
         Don’t stop with just your first channel: each channel brings in on average $900/month of new orders.
     </div>
-    <a md-raised-button color="accent" (click)="goToLegacy(data.link)" i18n>I ACCEPT</a>
+    <a md-raised-button color="accent" sfLegacyLink [path]="data.link" i18n>I ACCEPT</a>
 </md-dialog-content>

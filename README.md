@@ -1,9 +1,9 @@
 # Shopping Feed UI
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.20-4.
+This project was generated with [@angular/cli](https://github.com/angular/angular-cli).
 
 ## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve --base-href=/v3/en/` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -16,14 +16,16 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ##CI Build
 
 When we build the code on a CI environment, we may need to pass environment variables to the build script.
-Run `npm run ci-build`, passing environment variables before. It will create environment.prod.ts with all needed environment variables and run the production build.
+Run `npm run compile-env`, passing environment variables before. It will create environment.prod.ts with all needed environment variables and run the production build.
 You can consult to src/environments/environment.ts to know what variables can be used.
+After that you need to run `ng build -prod`.
 
 You SHOULD NOT run `ng build` on a CI environment anymore, as well as on any other production build, because appropriate environment.prod.ts file will not be created in that case.
 
 Example:
 
-`DEFAULT_AUTHORIZATION=some_url SHOPIFY_APP_URL=some_another_url npm run ci-build`
+`DEFAULT_AUTHORIZATION=some_url SHOPIFY_APP_URL=some_another_url npm run compile-env`
+`ng build -prod`
 
 It will set DEFAULT_AUTHORIZATION and SHOPIFY_APP_URL as you specified in the command, all the other variables will be taken from environment.ts file.
 
@@ -42,7 +44,7 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 
 ## Further help
 
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the `@angular/cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## Translation
 

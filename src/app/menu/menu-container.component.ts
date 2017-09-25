@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { WindowRefService } from '../core/services/window-ref.service';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'sf-menu-container',
@@ -8,12 +6,4 @@ import { WindowRefService } from '../core/services/window-ref.service';
     styleUrls: ['./menu-container.component.scss']
 })
 export class MenuContainerComponent {
-
-    constructor(protected legacyLink: LegacyLinkService, protected windowRef: WindowRefService) {
-    }
-
-    goToLegacy() {
-        this.windowRef.nativeWindow.location.href = this.legacyLink.getLegacyLink('/');
-    }
-
 }

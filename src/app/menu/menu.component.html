@@ -4,12 +4,13 @@
     <sf-support-help-center></sf-support-help-center>
     <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
     <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
-        <a md-menu-item (click)="goToLegacy('/marketplaces/globalparameters')" i18n
+        <a md-menu-item sfLegacyLink path="/admin" *ngIf="isAdmin()" i18n>Admin</a>
+        <a md-menu-item sfLegacyLink path="/marketplaces/globalparameters" i18n
            *ngIf="currentStore.permission.marketplaces">Settings</a>
-        <a md-menu-item (click)="goToLegacy('/tools/settings')" i18n>Alert Management</a>
-        <a md-menu-item (click)="goToLegacy('/facturation')" i18n
+        <a md-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>
+        <a md-menu-item sfLegacyLink path="/facturation" i18n
            *ngIf="currentStore.permission.facturation">Membership</a>
-        <a md-menu-item (click)="goToLegacy('/tools/access')" i18n>Access</a>
+        <a md-menu-item sfLegacyLink path="/tools/access" i18n>Access</a>
         <hr>
         <ng-container *ngFor="let store of userInfo._embedded.store">
             <button md-menu-item *ngIf="store.id !== currentStore.id"

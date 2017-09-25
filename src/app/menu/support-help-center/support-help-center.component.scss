@@ -49,7 +49,7 @@ $toolbar-search-margin: 10px;
   top: $toolbar-height;
   color: mat-color($grey, 1000);
   max-height: calc(100vh - #{$toolbar-height});
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: mat-color($grey, A100);
 
   .search-entry {
