@@ -28,7 +28,7 @@ const routes: Routes = [
             CheckProperLocaleGuard
         ],
         children: [
-            {path: '', component: StatisticsComponent},
+            {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},
             {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule'}
         ]
     },
