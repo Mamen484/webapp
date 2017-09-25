@@ -11,5 +11,6 @@ export const environment = {
     SHOPIFY_APP_URL: 'https://apps.shopify.com/shopping-feed-dev',
     SUPPORT_URL: 'https://support.shopping-feed.com',
     SUPPORT_AUTHORIZATION: 'Basic ZGV2ZWxvcGVyQHNob3BwaW5nLWZlZWQuY29tOiYqRUZtMn1NK1BxeD5cUXM=',
-    CONTACT_EMAIL: 'contact@shopping-feed.com'
+    CONTACT_EMAIL: 'contact@shopping-feed.com',
+    SUPPORT_EMAIL: 'support@shopping-feed.com'
 };
