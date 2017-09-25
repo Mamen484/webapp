@@ -10,8 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { StatisticsModule } from './statistics/statistics.module';
 import { LoginModule } from './login/login.module';
-import { RegistrationModule } from './registration/registration.module';
-import { TimelineModule } from './timeline/timeline.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -20,6 +19,7 @@ import { TimelineModule } from './timeline/timeline.module';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         HttpModule,
         CoreModule,
@@ -28,8 +28,6 @@ import { TimelineModule } from './timeline/timeline.module';
         StatisticsModule,
         AppRoutingModule,
         LoginModule,
-        RegistrationModule,
-        TimelineModule,
     ],
     bootstrap: [AppComponent]
 })

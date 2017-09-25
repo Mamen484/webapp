@@ -13,6 +13,7 @@ import { LocaleIdService } from '../../core/services/locale-id.service';
 import { ActivatedRoute } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { LocalStorageService } from '../../core/services/local-storage.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
@@ -30,7 +31,7 @@ describe('CreatePasswordComponent', () => {
 
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MdInputModule, MdCardModule],
+            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MdInputModule, MdCardModule, NoopAnimationsModule],
             providers: [
                 {
                     provide: ShopifyAuthentifyService,

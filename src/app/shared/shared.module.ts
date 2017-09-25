@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
     MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule,
     MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdProgressSpinnerModule,
@@ -19,7 +18,6 @@ import { LegacyLinkDirective } from './legacy-link.directive';
 import { BlankComponent } from './blank.component';
 @NgModule({
     imports: [
-        BrowserAnimationsModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
@@ -44,7 +42,6 @@ import { BlankComponent } from './blank.component';
     ],
     exports: [
         // modules
-        BrowserAnimationsModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
