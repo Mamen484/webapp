@@ -3,7 +3,7 @@
 
 @include channel-common-styles();
 
-md-card-content {
+mat-card-content {
   margin-bottom: 0;
 }
 
@@ -13,7 +13,7 @@ md-card-content {
   color: initial;
   display: block;
 
-  &>md-icon, &>span {
+  &>mat-icon, &>span {
     vertical-align: middle;
     margin-right: 10px;
   }
@@ -30,7 +30,7 @@ md-card-content {
 
   a {
     text-decoration: none;
-    color: mat-color($grey, 1000, 0.87);
+    color: $black-87-opacity;
   }
 
   &.quickfix {

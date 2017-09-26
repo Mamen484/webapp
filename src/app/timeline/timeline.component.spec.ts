@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MdCardModule, MdChipsModule } from '@angular/material';
+import { MatCardModule, MatChipsModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
 import { ActivatedRoute } from '@angular/router';
 import { events, events2 } from '../../mocks/events-mock';
@@ -28,8 +28,8 @@ describe('TimelineComponent', () => {
                 CommonModule,
                 InfiniteScrollModule,
                 FlexLayoutModule,
-                MdCardModule,
-                MdChipsModule,
+                MatCardModule,
+                MatChipsModule,
             ],
             declarations: [
                 TimelineComponent,

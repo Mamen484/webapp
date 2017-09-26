@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { MenuModule } from '../../menu/menu.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MdCardModule, MdInputModule } from '@angular/material';
+import { MatCardModule, MatInputModule } from '@angular/material';
 import { CreatePasswordService } from '../../core/services/create-password.service';
 import { LocaleIdService } from '../../core/services/locale-id.service';
 import { ActivatedRoute } from '@angular/router';
@@ -31,7 +31,7 @@ describe('CreatePasswordComponent', () => {
 
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MdInputModule, MdCardModule, NoopAnimationsModule],
+            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, NoopAnimationsModule],
             providers: [
                 {
                     provide: ShopifyAuthentifyService,

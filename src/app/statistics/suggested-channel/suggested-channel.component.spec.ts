@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdButtonModule, MdCardModule, MdDialog } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialog } from '@angular/material';
 import { SuggestedChannelComponent } from './suggested-channel.component';
 import { InternationalAccountService } from '../../core/services/international-account.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -22,10 +22,10 @@ describe('SuggestedChannelComponent', () => {
         openSpy.and.returnValue({afterClosed: afterClosedSpy});
 
         TestBed.configureTestingModule({
-            imports: [MdCardModule, MdButtonModule, InfiniteScrollModule],
+            imports: [MatCardModule, MatButtonModule, InfiniteScrollModule],
             declarations: [SuggestedChannelComponent, LegacyLinkStubDirective],
             providers: [
-                {provide: MdDialog, useValue: {open: openSpy}},
+                {provide: MatDialog, useValue: {open: openSpy}},
                 {
                     provide: InternationalAccountService,
                     useValue: {sendInternationalAccountRequest: requestSpy}

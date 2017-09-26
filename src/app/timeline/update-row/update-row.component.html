@@ -1,6 +1,6 @@
 <div class="event-icon mat-body-1">
-  <md-icon *ngIf="update.name === updateTypes.export">vertical_align_top</md-icon>
-  <md-icon *ngIf="update.name === updateTypes.import">vertical_align_bottom</md-icon>
+  <mat-icon *ngIf="update.name === updateTypes.export">vertical_align_top</mat-icon>
+  <mat-icon *ngIf="update.name === updateTypes.import">vertical_align_bottom</mat-icon>
 </div>
 <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.import">
   <a sfLegacyLink *ngIf="update.action === updateActions.finish;else sourceFeed" path="/tools/infos" target="_blank" class="complete">Source feed</a>

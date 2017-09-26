@@ -12,7 +12,7 @@ import { StoreStatisticsStubComponent } from '../../mocks/stubs/store-statistics
 import { ConfiguredChannelStubComponent } from '../../mocks/stubs/configured-channel-stub.component';
 import { SuggestedChannelStubComponent } from '../../mocks/stubs/suggested-channel-stub.component';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { MdCardModule, MdDialog } from '@angular/material';
+import { MatCardModule, MatDialog } from '@angular/material';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { StoreService } from '../core/services/store.service';
 import { storeChannelMock } from '../../mocks/store-channel.mock';
@@ -37,7 +37,7 @@ describe('StatisticsComponent', () => {
                 CommonModule,
                 InfiniteScrollModule,
                 FlexLayoutModule,
-                MdCardModule,
+                MatCardModule,
             ],
             declarations: [
                 StatisticsComponent,
@@ -54,7 +54,7 @@ describe('StatisticsComponent', () => {
                 }
             },
                 {provide: StoreService, useValue: channelServiceMock},
-                {provide: MdDialog, useValue: {}}
+                {provide: MatDialog, useValue: {}}
             ]
         })
             .compileComponents();
