@@ -50,7 +50,7 @@ export class SuggestedChannelComponent {
         this.dialog.open(AcceptChannelDialogComponent, {
             data: {
                 logo: this.channel._embedded.channel._links.image.href,
-                link: this.channel._links.self.href,
+                link: this.getChannelLink(this.channel._embedded.channel),
                 charge: this.charge
             }
         });
