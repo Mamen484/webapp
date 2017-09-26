@@ -1,32 +1,32 @@
-<div md-dialog-title i18n>Filters</div>
-<md-dialog-content>
+<div matDialogTitle i18n>Filters</div>
+<mat-dialog-content>
     <div fxFlex>
         <div>
-            <md-select [(ngModel)]="filter.date">
-                <md-option selected value="today">Today</md-option>
-                <md-option selected value="week">Last 7 days</md-option>
-                <md-option selected value="month">Last 30 days</md-option>
-                <md-option selected value="custom">Custom</md-option>
-            </md-select>
+            <mat-select [(ngModel)]="filter.date">
+                <mat-option selected value="today">Today</mat-option>
+                <mat-option selected value="week">Last 7 days</mat-option>
+                <mat-option selected value="month">Last 30 days</mat-option>
+                <mat-option selected value="custom">Custom</mat-option>
+            </mat-select>
         </div>
         <div>
-            <md-select [(ngModel)]="filter.channel">
-                <md-option value="all">All channels</md-option>
-            </md-select>
+            <mat-select [(ngModel)]="filter.channel">
+                <mat-option value="all">All channels</mat-option>
+            </mat-select>
         </div>
         <div>
-            <md-select [(ngModel)]="filter.carrier">
-                <md-option value="all">All carriers</md-option>
-            </md-select>
+            <mat-select [(ngModel)]="filter.carrier">
+                <mat-option value="all">All carriers</mat-option>
+            </mat-select>
         </div>
         <div>
-            <md-select [(ngModel)]="filter.tab">
-                <md-option value="all">All tags</md-option>
-            </md-select>
+            <mat-select [(ngModel)]="filter.tab">
+                <mat-option value="all">All tags</mat-option>
+            </mat-select>
         </div>
     </div>
-</md-dialog-content>
-<md-dialog-actions>
-    <button md-button color="accent" (click)="cancel()" i18n>CANCEL</button>
-    <button md-button color="accent" (click)="accept()" i18n class="accept">ACCEPT</button>
-</md-dialog-actions>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="accent" (click)="cancel()" i18n>CANCEL</button>
+    <button mat-button color="accent" (click)="accept()" i18n class="accept">ACCEPT</button>
+</mat-dialog-actions>

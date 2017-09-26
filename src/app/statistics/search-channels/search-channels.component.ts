@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 import { ChannelCategory } from '../../core/entities/channel-category.enum';
@@ -24,7 +24,7 @@ export class SearchChannelsComponent implements OnInit {
     searchControl = new FormControl();
     types = ChannelType;
 
-    constructor(protected dialog: MdDialog) {
+    constructor(protected dialog: MatDialog) {
     }
 
     ngOnInit() {

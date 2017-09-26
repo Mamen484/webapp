@@ -2,6 +2,7 @@ import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import '../../rxjs-imports';
+import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
@@ -83,6 +84,7 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
+        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     ],
     declarations: []
 })

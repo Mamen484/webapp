@@ -1,16 +1,16 @@
 <div class="orders">
   <label>
-    <md-card>
-      <md-card-content>
+    <mat-card>
+      <mat-card-content>
         <div class="search-container">
-          <md-icon>search</md-icon>
+          <mat-icon>search</mat-icon>
           <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder placeholder="Search">
-          <button md-button md-icon-button (click)="openDialog()">
-            <md-icon>filter_list</md-icon>
+          <button mat-button mat-icon-button (click)="openDialog()">
+            <mat-icon>filter_list</mat-icon>
           </button>
         </div>
-        <md-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></md-progress-bar>
-      </md-card-content>
-    </md-card>
+        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+      </mat-card-content>
+    </mat-card>
   </label>
 </div>

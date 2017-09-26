@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 
 @Component({
@@ -13,7 +13,7 @@ export class OrdersListComponent implements OnInit {
 
   searchControl = new FormControl();
   processing = false;
-  constructor(protected dialog: MdDialog) { }
+  constructor(protected dialog: MatDialog) { }
 
   ngOnInit() {
   }

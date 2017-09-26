@@ -15,7 +15,7 @@
     }
 
     .form-title {
-      color: mat-color($grey, 1000, 0.54);
+      color: $black-54-opacity;
       margin-bottom: 25px;
     }
 
@@ -41,7 +41,7 @@
   a.below-form-link {
     float: right;
     text-decoration: none;
-    color: mat-color($grey, 1000, 0.87);
+    color: $black-87-opacity;
     margin-top: 15px;
   }
 }

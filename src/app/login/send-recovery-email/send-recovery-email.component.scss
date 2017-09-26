@@ -4,7 +4,7 @@
 @include form-page();
 
 .reset-password-description, .success-message {
-  color: mat-color($grey, 1000, 0.54);
+  color: $black-54-opacity;
 }
 
 .success-message {

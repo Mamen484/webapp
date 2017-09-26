@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Channel } from '../../core/entities/channel';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
@@ -21,7 +21,7 @@ export class SuggestedChannelComponent {
     @Input() firstChannel = false;
     @Input() charge: StoreCharge;
 
-    constructor(protected dialog: MdDialog,
+    constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService) {
     }
 

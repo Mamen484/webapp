@@ -3,27 +3,27 @@
 
     <sf-support-help-center></sf-support-help-center>
     <a routerLink="/timeline" class="sf-icon-link">
-        <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
+        <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
                  [attr.data-badge]="currentStore.timeline.total">notifications_none
-        </md-icon>
+        </mat-icon>
     </a>
-    <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>
-    <md-menu #accountMenu="mdMenu" [overlapTrigger]="false">
-        <a md-menu-item sfLegacyLink path="/admin" *ngIf="isAdmin()" i18n>Admin</a>
-        <a md-menu-item sfLegacyLink path="/marketplaces/globalparameters" i18n
+    <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
+    <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
+        <a mat-menu-item sfLegacyLink path="/admin" *ngIf="isAdmin()" i18n>Admin</a>
+        <a mat-menu-item sfLegacyLink path="/marketplaces/globalparameters" i18n
            *ngIf="currentStore.permission.marketplaces">Settings</a>
-        <a md-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>
-        <a md-menu-item sfLegacyLink path="/facturation" i18n
+        <a mat-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>
+        <a mat-menu-item sfLegacyLink path="/facturation" i18n
            *ngIf="currentStore.permission.facturation">Membership</a>
-        <a md-menu-item sfLegacyLink path="/tools/access" i18n>Access</a>
+        <a mat-menu-item sfLegacyLink path="/tools/access" i18n>Access</a>
         <hr>
         <ng-container *ngFor="let store of userInfo._embedded.store">
-            <button md-menu-item *ngIf="store.id !== currentStore.id"
+            <button mat-menu-item *ngIf="store.id !== currentStore.id"
                     (click)="chooseStore(store)">{{store.name}}
             </button>
         </ng-container>
         <hr *ngIf="userInfo._embedded.store.length > 1">
-        <a md-menu-item i18n (click)="logout()">Logout</a>
+        <a mat-menu-item i18n (click)="logout()">Logout</a>
 
-    </md-menu>
+    </mat-menu>
 </sf-menu-container>

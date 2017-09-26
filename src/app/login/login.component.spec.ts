@@ -4,7 +4,7 @@ import { LoginComponent } from './login.component';
 import { UserService } from '../core/services/user.service';
 import { LocaleIdService } from '../core/services/locale-id.service';
 import { MenuContainerComponent } from '../menu/menu-container.component';
-import { MdCardModule, MdInputModule, MdMenuModule, MdToolbarModule } from '@angular/material';
+import { MatCardModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,12 +39,12 @@ describe('LoginComponent', () => {
 
             ],
             imports: [
-                MdMenuModule,
-                MdToolbarModule,
+                MatMenuModule,
+                MatToolbarModule,
                 FormsModule,
                 ReactiveFormsModule,
-                MdCardModule,
-                MdInputModule,
+                MatCardModule,
+                MatInputModule,
                 NoopAnimationsModule,
             ]
         })

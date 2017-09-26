@@ -7,7 +7,7 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 import { StoreChannel } from '../core/entities/store-channel';
 import { StoreService } from '../core/services/store.service';
 import { PagedResponse } from '../core/entities/paged-response';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 import { StoreCharge } from '../core/entities/store-charge';
@@ -37,7 +37,7 @@ export class StatisticsComponent {
     haveNoChannels = false;
     charge: StoreCharge;
 
-    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MdDialog) {
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
 
         this.appStore.select('currentStore')
             .do(() => this.displayPageLoading())

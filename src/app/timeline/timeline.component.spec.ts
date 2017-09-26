@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MdCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
 import { OrderEventComponent } from './order-event/order-event.component';
 import { RuleEventComponent } from './rule-event/rule-event.component';
@@ -27,7 +27,7 @@ describe('TimelineComponent', () => {
                 CommonModule,
                 InfiniteScrollModule,
                 FlexLayoutModule,
-                MdCardModule,
+                MatCardModule,
             ],
             declarations: [
                 TimelineComponent,
