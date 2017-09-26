@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '../core/entities/store';
@@ -20,15 +20,18 @@ export class SidebarComponent {
     opened = true;
     currentStore: Observable<Store>;
     channels: Observable<StoreChannelDetails[]>;
+    currentRoute;
 
-    constructor(protected _appStore: AppStore<AppState>,
+    constructor(protected appStore: AppStore<AppState>,
                 @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
                 protected storeService: StoreService,
                 protected windowRef: WindowRefService) {
-        this.currentStore = this._appStore.select('currentStore');
+        this.currentStore = this.appStore.select('currentStore');
         this.channels = this.currentStore
             .flatMap(store => this.storeService.getStoreChannels(store.id, Object.assign(new ChannelsRequestParams, {status: 'installed'})))
             .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
+
+        this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
 
     }
 

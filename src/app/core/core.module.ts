@@ -7,10 +7,8 @@ import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
-import { channelsReducer } from './reducers/channels-reducer';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
-import { statisticsReducer } from './reducers/statistics-reducer';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LocaleIdService } from './services/locale-id.service';
@@ -39,6 +37,9 @@ import { EventUpdatesGuard } from './guards/event-updates.guard';
 import { updates } from '../../mocks/updates-mock';
 import { Observable } from 'rxjs/Observable';
 import { LocalStorageService } from './services/local-storage.service';
+import { currentRouteReducer } from './reducers/current-route-reducer';
+import { ChannelsRouteGuard } from './guards/channels-route.guard';
+import { OrdersRouteGuard } from './guards/orders-route.guard';
 
 @NgModule({
     imports: [
@@ -47,18 +48,19 @@ import { LocalStorageService } from './services/local-storage.service';
         StoreModule.forRoot({
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
-            channels: channelsReducer,
-            storeStatistics: statisticsReducer,
+            currentRoute: currentRouteReducer
         })
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
+        ChannelsRouteGuard,
         CheckProperLocaleGuard,
         EventUpdatesGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
         LoginByTokenGuard,
+        OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
 

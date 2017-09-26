@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
-import { StatisticsComponent } from './statistics/statistics.component';
 import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
 import { LoginComponent } from './login/login.component';
 import { SendRecoveryEmailComponent } from './login/send-recovery-email/send-recovery-email.component';
@@ -14,6 +13,8 @@ import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
+import { ChannelsRouteGuard } from './core/guards/channels-route.guard';
+import { OrdersRouteGuard } from './core/guards/orders-route.guard';
 
 const routes: Routes = [
     {
@@ -28,8 +29,9 @@ const routes: Routes = [
             CheckProperLocaleGuard
         ],
         children: [
-            {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},
-            {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule'}
+            {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
+            {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
+            {path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},

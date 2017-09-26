@@ -3,12 +3,12 @@
         <md-list>
             <md-list-item class="mat-active" [mdMenuTriggerFor]="channelsMenu" mdTooltip="CHANNELS" mdTooltipPosition="after"
                           i18n-mdTooltip *ngIf="hasChannelsPermissions() | async" (onMenuOpen)="onMenuOpen()">
-                <md-icon class="active">wb_cloudy</md-icon>
+                <md-icon [class.active]="currentRoute === 'channels'">wb_cloudy</md-icon>
             </md-list-item>
 
             <md-list-item [mdMenuTriggerFor]="ordersMenu" mdTooltip="ORDERS" i18n-mdTooltip mdTooltipPosition="after"
                           *ngIf="(currentStore | async).permission.marketplaces">
-                <md-icon [ngClass]="{'sf-badge': (currentStore | async).order.total > 0}"
+                <md-icon [class.sf-badge]="(currentStore | async).order.total > 0" [class.active]="currentRoute === 'orders'"
                          [attr.data-badge]="(currentStore | async).order.total">shopping_basket</md-icon>
             </md-list-item>
 
@@ -58,7 +58,7 @@
     <a md-menu-item sfLegacyLink path="/multiple" i18n>Select multichannels products</a>
 </md-menu>
 <md-menu #ordersMenu="mdMenu" class="sf-sidebar-menu">
-    <a md-menu-item sfLegacyLink path="/marketplaces/orders" i18n>Orders</a>
+    <a md-menu-item routerLink="/orders" i18n>Orders</a>
     <a md-menu-item sfLegacyLink path="/marketplaces/listexport" i18n>Order reporting</a>
 </md-menu>
 <md-menu #statisticsMenu="mdMenu" class="sf-sidebar-menu">

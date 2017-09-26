@@ -6,9 +6,6 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { AppState } from '../core/entities/app-state';
 import { SET_STORE, UPDATE_TIMELINE } from '../core/reducers/current-store-reducer';
 import { INITIALIZE_USER_INFO } from '../core/reducers/user-info-reducer';
-import { StoreService } from '../core/services/store.service';
-import { SET_CHANNELS } from '../core/reducers/channels-reducer';
-import { SET_STATISTICS } from '../core/reducers/statistics-reducer';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../core/services/user.service';
 

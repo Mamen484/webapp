@@ -1,0 +1,10 @@
+@import '../../../sass/variables';
+
+.orders {
+  color: mat-color($grey, 1000, 0.87);
+  padding-left: 5px;
+  padding-top: $content-margin;
+  display: block;
+  height: calc(100vh - #{$toolbar-height} - #{$content-margin});
+  overflow: scroll;
+}
