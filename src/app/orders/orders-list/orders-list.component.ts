@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
+import { MdDialog } from '@angular/material';
+import { OrdersFilter } from '../../core/entities/orders-filter';
 
 @Component({
   selector: 'sf-orders-list',
@@ -7,9 +11,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersListComponent implements OnInit {
 
-  constructor() { }
+  searchControl = new FormControl();
+  processing = false;
+  constructor(protected dialog: MdDialog) { }
 
   ngOnInit() {
+  }
+
+  openDialog(){
+      let dialogRef = this.dialog.open(OrdersFilterDialogComponent);
+      dialogRef.afterClosed().subscribe((data) => {
+          if (!data) {
+              return;
+          }
+      });
   }
 
 }

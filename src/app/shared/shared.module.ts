@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-    MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule,
+    MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDatepicker, MdDatepickerModule, MdDialogModule,
     MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdProgressSpinnerModule,
     MdSelectModule, MdSidenavModule,
     MdToolbarModule, MdTooltipModule
@@ -26,6 +26,7 @@ import { BlankComponent } from './blank.component';
         MdButtonModule,
         MdCardModule,
         MdChipsModule,
+        MdDatepickerModule,
         MdDialogModule,
         MdIconModule,
         MdInputModule,
@@ -50,6 +51,7 @@ import { BlankComponent } from './blank.component';
         MdButtonModule,
         MdCardModule,
         MdChipsModule,
+        MdDatepickerModule,
         MdDialogModule,
         MdIconModule,
         MdInputModule,

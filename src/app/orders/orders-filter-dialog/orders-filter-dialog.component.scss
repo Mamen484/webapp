@@ -1,0 +1,6 @@
+@import '../../../sass/variables';
+
+md-select {
+  width: 300px;
+  height: 2.5*mat-line-height($config, body-1);
+}

@@ -19,12 +19,10 @@ export class SearchChannelsComponent implements OnInit {
 
     @Output() applyFilter = new EventEmitter();
     @Input() processing = false;
-    searchControl = new FormControl();
     @Input() filter: ChannelsRequestParams;
 
-    countries = ChannelCountry;
+    searchControl = new FormControl();
     types = ChannelType;
-    segments = ChannelCategory;
 
     constructor(protected dialog: MdDialog) {
     }
