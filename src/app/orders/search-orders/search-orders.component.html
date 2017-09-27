@@ -1,0 +1,14 @@
+<label>
+  <mat-card>
+    <mat-card-content>
+      <div class="search-container">
+        <mat-icon>search</mat-icon>
+        <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder placeholder="Search">
+        <button mat-button mat-icon-button (click)="openDialog()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+</label>
