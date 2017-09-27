@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-    MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDatepicker, MatDatepickerModule, MatDialogModule,
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule,
+    MatSelectModule, MatSidenavModule, MatNativeDateModule,
     MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +32,7 @@ import { BlankComponent } from './blank.component';
         MatInputModule,
         MatListModule,
         MatMenuModule,
+        MatNativeDateModule,
         MatSelectModule,
         MatSidenavModule,
         MatProgressBarModule,
@@ -57,6 +58,7 @@ import { BlankComponent } from './blank.component';
         MatInputModule,
         MatListModule,
         MatMenuModule,
+        MatNativeDateModule,
         MatSelectModule,
         MatSidenavModule,
         MatProgressBarModule,
