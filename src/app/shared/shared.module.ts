@@ -5,7 +5,7 @@ import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
     MatSelectModule, MatSidenavModule, MatNativeDateModule,
-    MatToolbarModule, MatTooltipModule
+    MatToolbarModule, MatTooltipModule, MatTabsModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -33,6 +33,7 @@ import { BlankComponent } from './blank.component';
         MatListModule,
         MatMenuModule,
         MatNativeDateModule,
+        MatTabsModule,
         MatSelectModule,
         MatSidenavModule,
         MatProgressBarModule,
@@ -59,6 +60,7 @@ import { BlankComponent } from './blank.component';
         MatListModule,
         MatMenuModule,
         MatNativeDateModule,
+        MatTabsModule,
         MatSelectModule,
         MatSidenavModule,
         MatProgressBarModule,

@@ -1,3 +1,34 @@
 <div class="orders">
   <sf-search-orders></sf-search-orders>
+  <mat-tab-group color="accent">
+    <mat-tab i18n label="All orders">
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab i18n label="To validate">
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab i18n label="To import">
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon color="warn">error</mat-icon>
+        <span i18n>Import errors</span>
+      </ng-template>
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab i18n label="To ship">
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon color="warn">error</mat-icon>
+        <span i18n>Shipping errors</span>
+      </ng-template>
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+    <mat-tab i18n label="Shipped">
+      <sf-orders-table></sf-orders-table>
+    </mat-tab>
+  </mat-tab-group>
 </div>

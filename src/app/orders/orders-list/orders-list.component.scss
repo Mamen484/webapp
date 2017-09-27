@@ -8,3 +8,12 @@
   height: calc(100vh - #{$toolbar-height} - #{$content-margin});
   overflow: scroll;
 }
+
+mat-tab {
+  text-transform: uppercase;
+}
+
+mat-icon[color="warn"]{
+  color: mat-color($warn, 900);
+  margin-right: 5px;
+}
