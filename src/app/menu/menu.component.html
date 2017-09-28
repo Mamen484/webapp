@@ -17,7 +17,7 @@
                     (click)="chooseStore(store)">{{store.name}}
             </button>
             <button md-menu-item *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
-                    disabled>{{store.name}}
+                    disabled title="This store is deleted" i18n-title>{{store.name}}
             </button>
         </ng-container>
         <hr *ngIf="userInfo._embedded.store.length > 1">
