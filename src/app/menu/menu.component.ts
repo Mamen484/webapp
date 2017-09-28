@@ -8,7 +8,7 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { WindowRefService } from '../core/services/window-ref.service';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { StoreStatus } from '../core/entities/store-status.enum';
 
 @Component({
     selector: 'app-menu',
@@ -18,7 +18,7 @@ import { LegacyLinkService } from '../core/services/legacy-link.service';
 export class MenuComponent {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
-
+    storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
 
 

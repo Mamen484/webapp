@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../core/services/user.service';
 import { Router } from '@angular/router';
 import { toPairs } from 'lodash';
 import { FormControl, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+
 import { WindowRefService } from '../core/services/window-ref.service';
 import { environment } from '../../environments/environment';
+import { StoreStatus } from '../core/entities/store-status.enum';
+import { Store } from '../core/entities/store';
+import { UserService } from '../core/services/user.service';
 
 @Component({
     selector: 'sf-login',
@@ -17,8 +21,12 @@ export class LoginComponent implements OnInit {
     passwordControl = new FormControl('', [Validators.required]);
 
     error = '';
+    showDeletedStoreError = false;
+    contactEmail = environment.CONTACT_EMAIL;
 
-    constructor(protected userService: UserService, protected router: Router, protected windowRef: WindowRefService) {
+    constructor(protected userService: UserService,
+                protected router: Router,
+                protected windowRef: WindowRefService) {
 
     }
 
@@ -31,11 +39,31 @@ export class LoginComponent implements OnInit {
             return;
         }
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
-            data => this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + data.access_token,
+            data => {
+                // TODO: refactor the code in next releases
+                this.userService.fetchAggregatedInfo(true)
+                    .subscribe(userData => {
+                        let activeStore = this.findActiveStore(userData);
+                        if (activeStore) {
+                            let queryParams = new URLSearchParams();
+                            queryParams.set('token', data.access_token);
+                            queryParams.set('store', activeStore.name);
+                            this.windowRef.nativeWindow.location.href = environment.APP_URL + '?' + queryParams.toString();
+                            return;
+                        }
+                        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+                        this.showDeletedStoreError = true;
+                    })
+            },
             ({error}) => {
                 this.error = error.detail
             }
-        );
+        )
+        ;
+    }
+
+    protected findActiveStore(userData): Store {
+        return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
     }
 
 }

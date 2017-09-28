@@ -6,11 +6,9 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { AppState } from '../core/entities/app-state';
 import { SET_STORE, UPDATE_TIMELINE } from '../core/reducers/current-store-reducer';
 import { INITIALIZE_USER_INFO } from '../core/reducers/user-info-reducer';
-import { StoreService } from '../core/services/store.service';
-import { SET_CHANNELS } from '../core/reducers/channels-reducer';
-import { SET_STATISTICS } from '../core/reducers/statistics-reducer';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../core/services/user.service';
+import { StoreStatus } from '../core/entities/store-status.enum';
 
 const MINUTE = 6e4;
 
@@ -35,7 +33,7 @@ export class BaseComponent {
                 store = userInfo._embedded.store.find(s => s.name === params.store || String(s.id) === params.store);
             }
             if (!store) {
-                store = userInfo._embedded.store[0];
+                store = userInfo._embedded.store.find(s => s.status !== StoreStatus.deleted);
             }
             this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
             this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
