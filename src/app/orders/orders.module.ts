@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { OrdersFilterDialogComponent } from './orders-filter-dialog/orders-filter-dialog.component';
 import { SearchOrdersComponent } from './search-orders/search-orders.component';
 import { OrdersTableComponent } from './orders-table/orders-table.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
     imports: [
@@ -14,7 +15,7 @@ import { OrdersTableComponent } from './orders-table/orders-table.component';
         SharedModule,
         OrdersRoutingModule
     ],
-    declarations: [OrdersListComponent, OrdersFilterDialogComponent, SearchOrdersComponent, OrdersTableComponent],
+    declarations: [OrdersListComponent, OrdersFilterDialogComponent, SearchOrdersComponent, OrdersTableComponent, OrderDetailsComponent],
     entryComponents: [OrdersFilterDialogComponent]
 })
 export class OrdersModule {
