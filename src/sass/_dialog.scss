@@ -1,6 +1,6 @@
 @import './variables';
 
-md-dialog-content.mat-dialog-content {
+mat-dialog-content.mat-dialog-content {
   margin-top: 35px;
   margin-bottom: 35px;
 
@@ -11,7 +11,7 @@ md-dialog-content.mat-dialog-content {
   }
 }
 
-md-dialog-actions {
+mat-dialog-actions {
   float: right;
 
   button.mat-button {

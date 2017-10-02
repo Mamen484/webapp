@@ -26,8 +26,8 @@ body {
     }
   }
 
-  md-toolbar {
-    md-icon {
+  mat-toolbar {
+    mat-icon {
       cursor: pointer;
     }
   }
@@ -37,7 +37,7 @@ body {
   }
 }
 
-[md-raised-button].mat-raised-button {
+[mat-raised-button].mat-raised-button {
   &:not(:hover) {
     box-shadow: none;
   }
