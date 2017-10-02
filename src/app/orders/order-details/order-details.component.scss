@@ -1,5 +1,6 @@
-mat-card {
+mat-card.orders-table {
   padding: 0;
+  margin-bottom: 20px;
 }
 
 .totals {
@@ -24,4 +25,8 @@ mat-card {
       width: 50px;
     }
   }
+}
+
+mat-card-actions {
+  text-align: right;
 }
