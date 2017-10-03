@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TableDataSource } from '../../core/entities/table-data-source';
 import { Observable } from 'rxjs/Observable';
+import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'sf-orders-table',
@@ -18,10 +20,14 @@ export class OrdersTableComponent implements OnInit {
         {hasErrors: true, name: 'Order 6', id: '1235123512341-36431512341234', status: 'Delivered', total: 243, date: '12/07/2016 14:03'},
     ]));
 
-    constructor() {
+    constructor(protected matDialog: MatDialog) {
     }
 
     ngOnInit() {
+    }
+
+    addLabel() {
+        this.matDialog.open(LabelsDialogComponent);
     }
 
 }

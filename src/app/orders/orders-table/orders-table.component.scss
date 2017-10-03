@@ -1,0 +1,19 @@
+@import '../../../sass/variables';
+
+mat-card {
+  padding:0;
+  margin-left: 5px;
+  width: calc(100% - 10px);
+}
+
+.actions {
+  padding: 10px;
+  border-bottom: 1px solid $black-12-opacity;
+  justify-content: flex-end;
+  align-items: center;
+
+  mat-icon {
+    vertical-align: middle;
+    color: $black-54-opacity;
+  }
+}
