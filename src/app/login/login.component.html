@@ -23,10 +23,9 @@
                     </md-input-container>
 
                     <div class="error" *ngIf="error">{{error}}</div>
-                    <div class="error" *ngIf="showDeletedStoreError" i18n>
-                        <div>Your store has been deleted but no worries</div>
-                        <div>your datas are not lost, please contact</div>
-                        <div>{{contactEmail}} to re-open it.</div>
+                    <div class="error deleted-store-message" *ngIf="showDeletedStoreError" i18n="@@storeIsDeletedMessage">
+                        Your store has been deleted but no worries your datas are not lost, please contact
+                        {{contactEmail}} to re-open it.
                     </div>
 
                     <div class="form-actions">
