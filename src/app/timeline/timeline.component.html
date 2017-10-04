@@ -13,19 +13,19 @@
             <md-list-item *ngFor="let update of updates">
 
                 <div class="event-icon mat-body-1">
-                    <md-icon *ngIf="update.type === updateTypes.export">vertical_align_top</md-icon>
-                    <md-icon *ngIf="update.type === updateTypes.import">vertical_align_bottom</md-icon>
+                    <md-icon *ngIf="update.name === updateTypes.export">vertical_align_top</md-icon>
+                    <md-icon *ngIf="update.name === updateTypes.import">vertical_align_bottom</md-icon>
                 </div>
-                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.import">
+                <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.import">
                     Source feed
                 </div>
-                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.export">
-                    {{update._embedded.channel[0].name}}
+                <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.export">
+                    {{update._embedded.channel.name}}
                 </div>
                 <div class="event-description mat-body-1">
-                    <span *ngIf="update.operation === updateOperations.start" i18n>In progress</span>
-                    <span *ngIf="update.operation === updateOperations.ask" i18n>Scheduled</span>
-                    <span *ngIf="update.operation === updateOperations.finish" i18n>Completed</span>
+                    <span *ngIf="update.action === updateOperations.start" i18n>In progress</span>
+                    <span *ngIf="update.action === updateOperations.ask" i18n>Scheduled</span>
+                    <span *ngIf="update.action === updateOperations.finish" i18n>Completed</span>
                 </div>
                 <div class="event-time mat-body-1">{{update.occurredAt | date:"HH:mm"}}</div>
             </md-list-item>

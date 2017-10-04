@@ -4,8 +4,8 @@ import { Rule } from './rule';
 import { Order } from './order';
 
 export interface TimelineEvent {
-    type: TimelineEventType;
-    operation: TimelineEventOperation;
+    name: TimelineEventType;
+    action: TimelineEventOperation;
     occurredAt: string;
     _embedded?: {
         rules?: Rule[],

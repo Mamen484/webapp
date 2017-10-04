@@ -6,6 +6,6 @@ export interface TimelineUpdates {
         'self': Link
     };
     '_embedded': {
-        'updates': TimelineUpdate[]
+        timeline: TimelineUpdate[]
     }
 }

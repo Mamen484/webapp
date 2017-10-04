@@ -7,6 +7,6 @@ export interface TimelineEvents {
         'next': Link
     };
     '_embedded': {
-        'events': TimelineEvent[]
+        timeline: TimelineEvent[]
     }
 }

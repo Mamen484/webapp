@@ -37,16 +37,16 @@ export class TimelineComponent {
     }
 
     onScroll() {
-        if (this.processing ||  this.infiniteScrollDisabled) {
+        if (this.processing || this.infiniteScrollDisabled) {
             return;
         }
 
         this.processing = true;
-        this.timelineService.getEvents(this.nextLink).subscribe(timeline => {
-            this.nextLink = timeline._links.next.href;
+        this.timelineService.getEvents(null, this.nextLink).subscribe(timeline => {
+            this.nextLink = timeline._links.next && timeline._links.next.href;
             this.events.push(...this.formatEvents(timeline));
 
-            if (!this.nextLink){
+            if (!this.nextLink) {
                 this.infiniteScrollDisabled = true;
             }
             this.processing = false;
@@ -55,34 +55,37 @@ export class TimelineComponent {
 
     protected initializeEvents(timeline) {
         this.events = this.formatEvents(timeline);
-        this.nextLink = timeline._links.next.href;
+        this.nextLink =  timeline._links.next && timeline._links.next.href;
+        if (!this.nextLink){
+            this.infiniteScrollDisabled = true;
+        }
     }
 
     protected formatEvents(timeline) {
         return orderBy(toPairs(groupBy(
-            timeline._embedded.events,
+            timeline._embedded.timeline,
             (event: TimelineEvent) => event.occurredAt.split('T')[0]
         )), 0, 'desc')
             .map(eventGroup => ([eventGroup[0], eventGroup[1].map(event => ({
-                icon: this.getIconName(event.type),
-                type: event.type,
+                icon: this.getIconName(event.name),
+                type: event.name,
                 time: new Date(event.occurredAt),
-                operation: event.operation,
+                operation: event.action,
                 reference:
                     event.type === TimelineEventType.orderLifecycle
-                        ? event._embedded.order[0].reference
+                        ? event.data.reference
                         : '',
                 ruleName:
-                    event.type === TimelineEventType.ruleTransformation || event.type === TimelineEventType.ruleSegmentation
-                        ? event._embedded.rules[0].name
+                    event.name === TimelineEventType.ruleTransformation || event.name === TimelineEventType.ruleSegmentation
+                        ? event.data.name
                         : ''
             }))]));
     }
 
     protected initializeUpdates(updates: TimelineUpdates) {
-        this.updates = updates._embedded.updates;
-        this.updatesInProgress = updates._embedded.updates
-            .filter(update => update.operation === this.updateOperations.start).length;
+        this.updates = updates._embedded.timeline;
+        this.updatesInProgress = updates._embedded.timeline
+            .filter(update => update.action === this.updateOperations.start).length;
     }
 
     protected getIconName(eventType) {

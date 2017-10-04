@@ -14,6 +14,7 @@ import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
+import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 
 const routes: Routes = [
     {
@@ -25,7 +26,8 @@ const routes: Routes = [
         canActivate: [
             LoginByTokenGuard,
             IsAuthorizedGuard,
-            CheckProperLocaleGuard
+            CheckProperLocaleGuard,
+            InitializeStoreGuard,
         ],
         children: [
             {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},

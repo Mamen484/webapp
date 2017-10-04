@@ -33,12 +33,10 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
-import { events, events2 } from '../../mocks/events-mock';
 import { EventsResolveGuard } from './guards/events-resolve.guard';
 import { EventUpdatesGuard } from './guards/event-updates.guard';
-import { updates } from '../../mocks/updates-mock';
-import { Observable } from 'rxjs/Observable';
 import { LocalStorageService } from './services/local-storage.service';
+import { InitializeStoreGuard } from './guards/initialize-store.guard';
 
 @NgModule({
     imports: [
@@ -54,7 +52,9 @@ import { LocalStorageService } from './services/local-storage.service';
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
+        EventsResolveGuard,
         EventUpdatesGuard,
+        InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
@@ -62,7 +62,6 @@ import { LocalStorageService } from './services/local-storage.service';
         ShopifyGuard,
         ShopSpecifiedGuard,
 
-        EventsResolveGuard,
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
@@ -76,8 +75,8 @@ import { LocalStorageService } from './services/local-storage.service';
         StoreService,
         LegacyLinkService,
         LocalStorageService,
+        TimelineService,
 
-        {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
@@ -88,13 +87,4 @@ export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
-}
-
-export function getEvents(link) {
-    return Observable.of(!link ? events : events2);
-}
-
-
-export function getEventUpdates() {
-    return Observable.of(updates);
 }

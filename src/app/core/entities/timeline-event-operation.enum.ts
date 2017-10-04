@@ -1,11 +1,11 @@
 export enum TimelineEventOperation {
-    // TimelineEvent.type = transformation.*
+    // TimelineEvent.name = rule.*
     'update' = 'update',
     create = 'create',
     delete = 'delete',
     read = 'read',
 
-    // TimelineEvent.type = order.lifecycle
+    // TimelineEvent.name = order.lifecycle
     import = 'import',
     ship = 'ship'
 }
