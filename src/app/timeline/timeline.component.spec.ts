@@ -54,40 +54,39 @@ describe('TimelineComponent', () => {
 
     describe('initialization', () => {
         it('should group events by date', () => {
-            expect(component.events.length).toEqual(3);
-            expect(component.events[0][0]).toEqual('2016-10-19');
-            expect(component.events[1][0]).toEqual('2016-10-18');
-            expect(component.events[2][0]).toEqual('2016-10-17');
+            expect(component.events.length).toEqual(2);
+            expect(component.events[0][0]).toEqual('2017-10-03');
+            expect(component.events[1][0]).toEqual('2017-10-02');
         });
 
         it('should set the order reference if event type is order lifecycle', () => {
-            expect(component.events[2][1][0].type).toEqual('order.lifecycle');
-            expect(component.events[2][1][0].reference).toEqual(13445);
+            expect(component.events[0][1][2].type).toEqual('order.lifecycle');
+            expect(component.events[0][1][2].reference).toEqual('59d53a6b2b26b');
         });
 
-        it('should set the order reference if event type is order lifecycle', () => {
+        it('should set the order reference if event type is rule.*', () => {
             expect(component.events[0][1][0].type).toEqual('rule.transformation');
-            expect(component.events[0][1][0].ruleName).toEqual('Une règle');
+            expect(component.events[0][1][0].ruleName).toEqual('some name');
 
-            expect(component.events[0][1][4].type).toEqual('rule.segmentation');
-            expect(component.events[0][1][4].ruleName).toEqual('Une règle');
+            expect(component.events[0][1][3].type).toEqual('rule.segmentation');
+            expect(component.events[0][1][3].ruleName).toEqual('some name');
         });
 
         it('should set updatesInProgress amount', () => {
-            expect(component.updatesInProgress).toEqual(2);
+            expect(component.updatesInProgress).toEqual(1);
         });
 
         it('should set a shopping_basket icon for the order type event', () => {
-            expect(component.events[2][1][0].type).toEqual('order.lifecycle');
-            expect(component.events[2][1][0].icon).toEqual('shopping_basket');
+            expect(component.events[0][1][2].type).toEqual('order.lifecycle');
+            expect(component.events[0][1][2].icon).toEqual('shopping_basket');
         });
 
         it('should set a build icon for the order type event', () => {
             expect(component.events[0][1][0].type).toEqual('rule.transformation');
             expect(component.events[0][1][0].icon).toEqual('build');
 
-            expect(component.events[0][1][4].type).toEqual('rule.segmentation');
-            expect(component.events[0][1][4].icon).toEqual('build');
+            expect(component.events[0][1][3].type).toEqual('rule.segmentation');
+            expect(component.events[0][1][3].icon).toEqual('build');
         });
     });
 
@@ -95,7 +94,7 @@ describe('TimelineComponent', () => {
     describe('scroll', () => {
         it('should load next page on scroll', () => {
             component.onScroll();
-            expect(getEventsSpy).toHaveBeenCalledWith('https://app.shopping-feed.com/timeline/events?page=2');
+            expect(getEventsSpy).toHaveBeenCalledWith(null, '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
         });
 
         it('should set infiniteScrollDisabled to true when all the pages are loaded', () => {

@@ -1,14 +1,12 @@
 import { TimelineEventOperation } from './timeline-event-operation.enum';
 import { TimelineEventType } from './timeline-event-type.enum';
-import { Rule } from './rule';
-import { Order } from './order';
 
 export interface TimelineEvent {
     name: TimelineEventType;
     action: TimelineEventOperation;
+    data: {reference?: string, name?: string}
     occurredAt: string;
     _embedded?: {
-        rules?: Rule[],
-        order?: Order[]
+       timeline: any[]
     }
 }

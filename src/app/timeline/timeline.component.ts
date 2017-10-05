@@ -55,8 +55,8 @@ export class TimelineComponent {
 
     protected initializeEvents(timeline) {
         this.events = this.formatEvents(timeline);
-        this.nextLink =  timeline._links.next && timeline._links.next.href;
-        if (!this.nextLink){
+        this.nextLink = timeline._links.next && timeline._links.next.href;
+        if (!this.nextLink) {
             this.infiniteScrollDisabled = true;
         }
     }
@@ -66,13 +66,13 @@ export class TimelineComponent {
             timeline._embedded.timeline,
             (event: TimelineEvent) => event.occurredAt.split('T')[0]
         )), 0, 'desc')
-            .map(eventGroup => ([eventGroup[0], eventGroup[1].map(event => ({
+            .map(eventGroup => ([eventGroup[0], eventGroup[1].map((event: TimelineEvent) => ({
                 icon: this.getIconName(event.name),
                 type: event.name,
                 time: new Date(event.occurredAt),
                 operation: event.action,
                 reference:
-                    event.type === TimelineEventType.orderLifecycle
+                    event.name === TimelineEventType.orderLifecycle
                         ? event.data.reference
                         : '',
                 ruleName:
