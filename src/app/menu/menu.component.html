@@ -3,8 +3,8 @@
 
     <sf-support-help-center></sf-support-help-center>
     <a routerLink="/timeline" class="sf-icon-link">
-        <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': currentStore.timeline.total > 0}"
-                 [attr.data-badge]="currentStore.timeline.total">notifications_none
+        <md-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
+                 [attr.data-badge]="newEvents">notifications_none
         </md-icon>
     </a>
     <md-icon class="sf-nav-icon" [mdMenuTriggerFor]="accountMenu">person_outline</md-icon>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
-import { toPairs } from 'lodash';
 
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment';
@@ -9,6 +8,10 @@ import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { LocalStorageService } from '../core/services/local-storage.service';
+import { TimelineService } from '../core/services/timeline.service';
+import { Observable } from 'rxjs/Observable';
+
+const MINUTE = 6e4;
 
 @Component({
     selector: 'app-menu',
@@ -20,13 +23,19 @@ export class MenuComponent {
     currentStore: Store;
 
     appUrl = environment.APP_URL;
+    newEvents = '0';
 
 
     constructor(protected appStore: AppStore<AppState>,
                 protected windowRef: WindowRefService,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: LocalStorageService,
+                protected timelineService: TimelineService) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
-        this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
+        this.appStore.select('currentStore').subscribe(currentStore => {
+            this.currentStore = currentStore;
+            this.updateEvents();
+        });
+        Observable.timer(0, MINUTE).subscribe(() => this.updateEvents());
     }
 
     chooseStore(store) {
@@ -40,5 +49,9 @@ export class MenuComponent {
 
     isAdmin() {
         return this.userInfo.roles.find(role => role === 'admin');
+    }
+
+    protected updateEvents() {
+        this.timelineService.getUpdatesNumber(this.currentStore.id).subscribe(events => this.newEvents = events);
     }
 }
