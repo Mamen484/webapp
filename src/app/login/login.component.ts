@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { StoreStatus } from '../core/entities/store-status.enum';
 import { Store } from '../core/entities/store';
 import { UserService } from '../core/services/user.service';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 
 @Component({
     selector: 'sf-login',
@@ -42,13 +43,14 @@ export class LoginComponent implements OnInit {
             data => {
                 // TODO: refactor the code in next releases
                 this.userService.fetchAggregatedInfo(true)
-                    .subscribe(userData => {
+                    .subscribe((userData: AggregatedUserInfo) => {
                         let activeStore = this.findActiveStore(userData);
                         if (activeStore) {
-                            let queryParams = new URLSearchParams();
-                            queryParams.set('token', data.access_token);
-                            queryParams.set('store', activeStore.name);
-                            this.windowRef.nativeWindow.location.href = environment.APP_URL + '?' + queryParams.toString();
+                            this.windowRef.nativeWindow.location.href = this.buildUrl(
+                                data.access_token,
+                                activeStore.name,
+                                userData.roles.indexOf('admin') !== -1
+                            );
                             return;
                         }
                         this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
@@ -64,6 +66,14 @@ export class LoginComponent implements OnInit {
 
     protected findActiveStore(userData): Store {
         return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
+    }
+
+    protected buildUrl(token, storeName, isAdmin) {
+        let queryParams = new URLSearchParams();
+        queryParams.set('token', token);
+        queryParams.set('store', storeName);
+        let additionalPath = isAdmin ? '/admin' : '';
+        return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }
 
 }
