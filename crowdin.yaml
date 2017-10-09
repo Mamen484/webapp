@@ -1,5 +1,6 @@
 project_identifier: shoppingfeed-webapp
 base_path: ./
+api_key_env: CROWDIN_API_KEY
 
 files:
   -
