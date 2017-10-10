@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { TimelineEventType } from '../entities/timeline-event-type.enum';
-import { TimelineUpdateType } from '../entities/timeline-update-type.enum';
+import { TimelineEventName } from '../entities/timeline-event-name.enum';
+import { TimelineUpdateName } from '../entities/timeline-update-name.enum';
 import { Observable } from 'rxjs/Observable';
 
 const DAY = 1000 * 60 * 60 * 24;
@@ -19,7 +19,7 @@ export class TimelineService {
             params: new HttpParams()
                 .set(
                     'name',
-                    `${TimelineEventType.ruleTransformation}, ${TimelineEventType.ruleSegmentation}, ${TimelineEventType.orderLifecycle}`
+                    `${TimelineEventName.ruleTransformation}, ${TimelineEventName.ruleSegmentation}, ${TimelineEventName.orderLifecycle}`
                 )
         })
     }
@@ -28,7 +28,7 @@ export class TimelineService {
         return this.httpClient.get(`${environment.API_URL}/store/${storeId}/timeline`,
             {
                 params: new HttpParams()
-                    .set('name', `${TimelineUpdateType.export},${TimelineUpdateType.import}`)
+                    .set('name', `${TimelineUpdateName.export},${TimelineUpdateName.import}`)
                     .set('since', new Date(Date.now() - DAY).toISOString())
                     .set('limit', String(MAX_UPDATES))
             })

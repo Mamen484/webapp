@@ -1,4 +1,4 @@
-export enum TimelineUpdateType {
+export enum TimelineUpdateName {
     'export' = 'feed.export',
     'import' = 'feed.import'
 }

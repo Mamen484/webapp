@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { groupBy, orderBy, toPairs } from 'lodash';
-import { TimelineEventType } from '../core/entities/timeline-event-type.enum';
+import { groupBy, toPairs } from 'lodash';
+import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
 import { TimelineUpdate } from '../core/entities/timeline-update';
-import { TimelineUpdates } from '../core/entities/timeline-updates';
-import { TimelineUpdateType } from '../core/entities/timeline-update-type.enum';
-import { TimelineUpdateOperation } from '../core/entities/timeline-update-operation.enum';
+import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
+import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
+import { TimelineEventFormatted } from '../core/entities/timeline-event-formatted';
+import { Timeline } from '../core/entities/timeline';
 
 
 @Component({
@@ -19,9 +20,9 @@ export class TimelineComponent {
 
     events;
     updates: TimelineUpdate[];
-    eventTypes = TimelineEventType;
-    updateTypes = TimelineUpdateType;
-    updateOperations = TimelineUpdateOperation;
+    eventTypes = TimelineEventName;
+    updateTypes = TimelineUpdateName;
+    updateOperations = TimelineUpdateAction;
     updatesInProgress = 0;
     nextLink = null;
     processing = false;
@@ -44,13 +45,7 @@ export class TimelineComponent {
         this.processing = true;
         this.timelineService.getEvents(null, this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next && timeline._links.next.href;
-            let formatted = this.formatEvents(timeline);
-            if (this.events[this.events.length - 1][0] === formatted[0][0]) {
-                let ar = this.events[this.events.length - 1][1];
-                let toInsert = formatted.shift();
-                ar.push(...toInsert[1]);
-            }
-            this.events.push(...formatted);
+            this.events = this.mergeEvents(this.formatEvents(timeline._embedded.timeline));
 
             if (!this.nextLink) {
                 this.infiniteScrollDisabled = true;
@@ -59,50 +54,59 @@ export class TimelineComponent {
         });
     }
 
+    /**
+     * Add events of the new page to existing events list
+     *
+     * @param formatted
+     */
+    protected mergeEvents(formatted) {
+
+        if (this.groupsEqual(this.events[this.events.length - 1], formatted[0])) {
+            this.mergeTwoGroups(this.events[this.events.length - 1][1], formatted);
+        }
+        return this.events.concat(formatted);
+    }
+
+    /**
+     * check if the last existing group of events has the same date as the first group in the new page
+     * @param {Array} group1 - 0: group name, 1: events array
+     * @param {Array} group2 - 0: group name, 1: events array
+     */
+    protected groupsEqual(group1, group2) {
+        return group1[0] === group2[0]
+    }
+
+    /**
+     * Merge first index of group2 into group1, deleting first index of group2.
+     * Used to move events of two groups with equal date into one group to avoid duplications.
+     *
+     * @param {Array<Array>} group1 - Array<0: group name, 1: events array>
+     * @param {Array<Array>} group2 - Array<0: group name, 1: events array>
+     */
+    protected mergeTwoGroups(group1, group2) {
+        let toInsert = group2.shift();
+        group1.push(...toInsert[1]);
+    }
+
     protected initializeEvents(timeline) {
-        this.events = this.formatEvents(timeline);
+        this.events = this.formatEvents(timeline._embedded.timeline);
         this.nextLink = timeline._links.next && timeline._links.next.href;
         if (!this.nextLink) {
             this.infiniteScrollDisabled = true;
         }
     }
 
-    protected formatEvents(timeline) {
-        return orderBy(toPairs(groupBy(
-            timeline._embedded.timeline,
-            (event: TimelineEvent) => event.occurredAt.split('T')[0]
-        )), 0, 'desc')
-            .map(eventGroup => ([eventGroup[0], eventGroup[1].map((event: TimelineEvent) => ({
-                icon: this.getIconName(event.name),
-                type: event.name,
-                time: new Date(event.occurredAt),
-                operation: event.action,
-                reference:
-                    event.name === TimelineEventType.orderLifecycle
-                        ? event.data.reference
-                        : '',
-                ruleName:
-                    event.name === TimelineEventType.ruleTransformation || event.name === TimelineEventType.ruleSegmentation
-                        ? event.data.name
-                        : ''
-            }))]));
+    protected formatEvents(timeline: TimelineEvent[]) {
+        return toPairs(groupBy(timeline, (event: TimelineEvent) => event.occurredAt.split('T')[0]))
+            .map(eventGroup => ([
+                eventGroup[0],
+                eventGroup[1].map((event: TimelineEvent) => new TimelineEventFormatted(event))
+            ]));
     }
 
-    protected initializeUpdates(updates: TimelineUpdates) {
+    protected initializeUpdates(updates: Timeline<TimelineUpdate>) {
         this.updates = updates._embedded.timeline;
         this.updatesInProgress = updates._embedded.timeline
             .filter(update => update.action === this.updateOperations.start).length;
-    }
-
-    protected getIconName(eventType) {
-        switch (eventType) {
-            case TimelineEventType.orderLifecycle:
-                return 'shopping_basket';
-
-            case TimelineEventType.ruleSegmentation:
-            case TimelineEventType.ruleTransformation:
-                return 'build';
-
-        }
     }
 }

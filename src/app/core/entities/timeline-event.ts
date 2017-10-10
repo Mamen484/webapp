@@ -1,12 +1,11 @@
-import { TimelineEventOperation } from './timeline-event-operation.enum';
-import { TimelineEventType } from './timeline-event-type.enum';
+import { TimelineEventAction } from './timeline-event-action.enum';
+import { TimelineEventName } from './timeline-event-name.enum';
 
 export interface TimelineEvent {
-    name: TimelineEventType;
-    action: TimelineEventOperation;
+    name: TimelineEventName;
+    action: TimelineEventAction;
     data: {reference?: string, name?: string}
     occurredAt: string;
-    _embedded?: {
-       timeline: any[]
-    }
+    id: string;
+    storeId: number;
 }

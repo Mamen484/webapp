@@ -1,4 +1,4 @@
-export enum TimelineEventOperation {
+export enum TimelineEventAction {
     // TimelineEvent.name = rule.*
     'update' = 'update',
     create = 'create',
@@ -6,6 +6,6 @@ export enum TimelineEventOperation {
     read = 'read',
 
     // TimelineEvent.name = order.lifecycle
-    import = 'import',
+    push = 'push',
     ship = 'ship'
 }

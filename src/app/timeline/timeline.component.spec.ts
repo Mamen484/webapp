@@ -91,7 +91,7 @@ describe('TimelineComponent', () => {
     });
 
 
-    fdescribe('scroll', () => {
+    describe('scroll', () => {
         it('should load next page on scroll', () => {
             component.onScroll();
             expect(getEventsSpy).toHaveBeenCalledWith(null, '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');

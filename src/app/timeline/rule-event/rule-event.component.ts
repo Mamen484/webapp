@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TimelineEventOperation } from '../../core/entities/timeline-event-operation.enum';
+import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 
 @Component({
     selector: 'sf-rule-event',
@@ -9,9 +9,9 @@ import { TimelineEventOperation } from '../../core/entities/timeline-event-opera
 export class RuleEventComponent implements OnInit {
 
     @Input() ruleName: string;
-    @Input() operation: TimelineEventOperation;
+    @Input() operation: TimelineEventAction;
 
-    operations = TimelineEventOperation;
+    operations = TimelineEventAction;
 
     constructor() {
     }

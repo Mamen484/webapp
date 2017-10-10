@@ -1,12 +1,4 @@
-import { Link } from './link';
-import { TimelineEvent } from './timeline-event';
+import { PagedResponse } from './paged-response';
 
-export interface Timeline {
-    '_links': {
-        'self': Link,
-        'next': Link
-    };
-    '_embedded': {
-        'events': TimelineEvent[]
-    }
+export interface Timeline<T> extends PagedResponse<{timeline: T[]}> {
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TimelineEventOperation } from '../../core/entities/timeline-event-operation.enum';
+import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 
 @Component({
   selector: 'sf-order-event',
@@ -11,7 +11,7 @@ export class OrderEventComponent implements OnInit {
   @Input() operation;
   @Input() reference;
 
-  operations = TimelineEventOperation;
+  operations = TimelineEventAction;
 
   constructor() { }
 
