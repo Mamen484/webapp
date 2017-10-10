@@ -91,7 +91,7 @@ describe('TimelineComponent', () => {
     });
 
 
-    describe('scroll', () => {
+    fdescribe('scroll', () => {
         it('should load next page on scroll', () => {
             component.onScroll();
             expect(getEventsSpy).toHaveBeenCalledWith(null, '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
@@ -101,6 +101,17 @@ describe('TimelineComponent', () => {
             expect(component.infiniteScrollDisabled).toEqual(false);
             component.onScroll();
             expect(component.infiniteScrollDisabled).toEqual(true);
+        });
+
+        it('if the date of the last event on page 1 equals to the date of first event on page 2, should merge events for this same date to one group', () => {
+            component.onScroll();
+            expect(component.events[1][0]).toEqual('2017-10-02');
+            expect(component.events[1][1].length).toEqual(8);
+
+            expect(component.events.length).toEqual(3);
+
+            expect(component.events[2][0]).toEqual('2017-10-01');
+            expect(component.events[2][1].length).toEqual(6);
         });
     });
 

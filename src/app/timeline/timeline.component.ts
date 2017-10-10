@@ -44,7 +44,13 @@ export class TimelineComponent {
         this.processing = true;
         this.timelineService.getEvents(null, this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next && timeline._links.next.href;
-            this.events.push(...this.formatEvents(timeline));
+            let formatted = this.formatEvents(timeline);
+            if (this.events[this.events.length - 1][0] === formatted[0][0]) {
+                let ar = this.events[this.events.length - 1][1];
+                let toInsert = formatted.shift();
+                ar.push(...toInsert[1]);
+            }
+            this.events.push(...formatted);
 
             if (!this.nextLink) {
                 this.infiniteScrollDisabled = true;

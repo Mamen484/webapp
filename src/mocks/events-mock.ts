@@ -142,7 +142,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.segmentation',
             'action': 'update',
-            'occurredAt': '2017-10-03T19:45:02+00:00',
+            'occurredAt': '2017-10-02T19:45:02+00:00',
             'data': {'reference': null, 'name': 'some name'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a3f884e62000a4f8be6'},
@@ -153,7 +153,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.transformation',
             'action': 'update',
-            'occurredAt': '2017-10-03T19:44:53+00:00',
+            'occurredAt': '2017-10-02T19:44:53+00:00',
             'data': {'reference': null, 'name': 'some name'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a36884e6200093fcd25'},
@@ -164,7 +164,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'order.lifecycle',
             'action': 'ship',
-            'occurredAt': '2017-10-03T19:42:30+00:00',
+            'occurredAt': '2017-10-02T19:42:30+00:00',
             'data': {'reference': '59d539a60f738'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d539a6884e6200080a7f64'},
@@ -175,7 +175,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.segmentation',
             'action': 'create',
-            'occurredAt': '2017-10-03T14:41:51+00:00',
+            'occurredAt': '2017-10-01T14:41:51+00:00',
             'data': {'reference': null, 'name': 'some name'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d4f331884e6200070a4af6'},
@@ -186,7 +186,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.transformation',
             'action': 'delete',
-            'occurredAt': '2017-10-03T14:15:12+00:00',
+            'occurredAt': '2017-10-01T14:15:12+00:00',
             'data': {'reference': null, 'name': null},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d4ecf3884e6200061639b5'},
@@ -197,7 +197,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'order.lifecycle',
             'action': 'ship',
-            'occurredAt': '2017-10-02T19:45:49+00:00',
+            'occurredAt': '2017-10-01T19:45:49+00:00',
             'data': {'reference': '59d53a6d353c3'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a6d884e62000c78c308'},
@@ -208,7 +208,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'order.lifecycle',
             'action': 'ship',
-            'occurredAt': '2017-10-02T19:45:48+00:00',
+            'occurredAt': '2017-10-01T19:45:48+00:00',
             'data': {'reference': '59d53a6c2f802'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a6c884e62000c78c303'},
@@ -219,7 +219,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.transformation',
             'action': 'update',
-            'occurredAt': '2017-10-02T19:45:47+00:00',
+            'occurredAt': '2017-10-01T19:45:47+00:00',
             'data': {'reference': null, 'name': 'some name'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a6b884e62000c78c2ff'},
@@ -230,7 +230,7 @@ export const events2 = {
             'storeId': 307,
             'name': 'rule.transformation',
             'action': 'update',
-            'occurredAt': '2017-10-02T19:45:44+00:00',
+            'occurredAt': '2017-10-01T19:45:44+00:00',
             'data': {'reference': null, 'name': 'some name'},
             '_links': {
                 'self': {'href': '/v1/store/307/timeline/59d53a69884e62000c78c2f5'},

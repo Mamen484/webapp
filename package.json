@@ -60,6 +60,7 @@
     "lint": "tslint \"src/**/*.ts\"",
     "pree2e": "webdriver-manager update",
     "test": "ng test",
+    "dev-test": "ng test --browsers Chrome --sourcemaps false",
     "i18n": "ng xi18n",
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/",
