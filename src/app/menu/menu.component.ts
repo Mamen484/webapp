@@ -11,7 +11,7 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { Observable } from 'rxjs/Observable';
 
-const MINUTE = 6e4;
+const UPDATE_EVENTS_INTERVAL = 1e4;
 
 @Component({
     selector: 'app-menu',
@@ -35,7 +35,7 @@ export class MenuComponent {
             this.currentStore = currentStore;
             this.updateEvents();
         });
-        Observable.timer(0, MINUTE).subscribe(() => this.updateEvents());
+        Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
     }
 
     chooseStore(store) {
