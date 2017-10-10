@@ -2,145 +2,145 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template" target-language="it">
     <body>
-      <trans-unit id="194f30c08f9e61a392e59f5eb1a4be08dc45c275" datatype="html">
+      <trans-unit id="194f30c08f9e61a392e59f5eb1a4be08dc45c275" datatype="html" approved="yes">
         <source>CHANNELS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">4</context>
         </context-group>
-        <target xml:lang="it" state="translated">PIATTAFORME</target>
+        <target xml:lang="it">PIATTAFORME</target>
       </trans-unit>
-      <trans-unit id="92fdc3ef9a4ba7346a1a4a762f298ab77d97ba81" datatype="html">
+      <trans-unit id="92fdc3ef9a4ba7346a1a4a762f298ab77d97ba81" datatype="html" approved="yes">
         <source>ORDERS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">9</context>
         </context-group>
-        <target xml:lang="it" state="translated">ORDINI</target>
+        <target xml:lang="it">ORDINI</target>
       </trans-unit>
-      <trans-unit id="92538de0e2f6e64f1d05291132b93c32bed81237" datatype="html">
+      <trans-unit id="92538de0e2f6e64f1d05291132b93c32bed81237" datatype="html" approved="yes">
         <source>STATISTICS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">15</context>
         </context-group>
-        <target xml:lang="it" state="translated">STATISTICHE</target>
+        <target xml:lang="it">STATISTICHE</target>
       </trans-unit>
-      <trans-unit id="10272252e50677238dfbc35330dabb1ab7646f5d" datatype="html">
-        <source>SETTINGS</source>
+      <trans-unit id="a9149535680910cdf65bfa03d7f6d5574336417c" datatype="html" approved="yes">
+        <source>TOOLS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <target xml:lang="it" state="translated">IMPOSTAZIONI</target>
+        <target xml:lang="it">STRUMENTI</target>
       </trans-unit>
-      <trans-unit id="38cbf4da03b0c84e5caeebb9cb49e31aa97d5edb" datatype="html">
+      <trans-unit id="38cbf4da03b0c84e5caeebb9cb49e31aa97d5edb" datatype="html" approved="yes">
         <source>APPS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">25</context>
         </context-group>
-        <target xml:lang="it" state="translated">APPS</target>
+        <target xml:lang="it">APPS</target>
       </trans-unit>
-      <trans-unit id="3b33aacd19e7ab98933f0f013dfdf2ad1350af62" datatype="html">
+      <trans-unit id="3b33aacd19e7ab98933f0f013dfdf2ad1350af62" datatype="html" approved="yes">
         <source>UNIVERSITY</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">30</context>
         </context-group>
-        <target xml:lang="it" state="translated">UNIVERSITY</target>
+        <target xml:lang="it">UNIVERSITY</target>
       </trans-unit>
-      <trans-unit id="74059c5dce671d464259e3ce37a5d408c3fd7720" datatype="html">
+      <trans-unit id="74059c5dce671d464259e3ce37a5d408c3fd7720" datatype="html" approved="yes">
         <source>SUPPORT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">35</context>
         </context-group>
-        <target xml:lang="it" state="translated">SUPPORTO</target>
+        <target xml:lang="it">SUPPORTO</target>
       </trans-unit>
-      <trans-unit id="9cc6b06ba346d08d7b2d6b5ce52eadfdadac2160" datatype="html">
+      <trans-unit id="9cc6b06ba346d08d7b2d6b5ce52eadfdadac2160" datatype="html" approved="yes">
         <source>Custom data feeds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">46</context>
         </context-group>
-        <target xml:lang="it" state="translated">Feed dati personalizzati</target>
+        <target xml:lang="it">Feed dati personalizzati</target>
       </trans-unit>
-      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html">
+      <trans-unit id="2489eefea00931942b91f4a1ae109514b591e2e1" datatype="html" approved="yes">
         <source>Rules</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">49</context>
         </context-group>
-        <target xml:lang="it" state="translated">Regole</target>
+        <target xml:lang="it">Regole</target>
       </trans-unit>
-      <trans-unit id="43197616c19c53c53943ecc312d512d70994d31e" datatype="html">
+      <trans-unit id="43197616c19c53c53943ecc312d512d70994d31e" datatype="html" approved="yes">
         <source>Auto-Remove</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">50</context>
         </context-group>
-        <target xml:lang="it" state="translated">Rimozione automatica</target>
+        <target xml:lang="it">Rimozione automatica</target>
       </trans-unit>
-      <trans-unit id="d344904b664794a257595a814989040db29caf59" datatype="html">
+      <trans-unit id="d344904b664794a257595a814989040db29caf59" datatype="html" approved="yes">
         <source>Manage colors &amp; sizes</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">51</context>
         </context-group>
-        <target xml:lang="it" state="translated">Gestione Taglie/Colori</target>
+        <target xml:lang="it">Gestione Taglie/Colori</target>
       </trans-unit>
-      <trans-unit id="c3e2b445d7114b8b293d00666bd3a110a6af800a" datatype="html">
+      <trans-unit id="c3e2b445d7114b8b293d00666bd3a110a6af800a" datatype="html" approved="yes">
         <source>Create new fields</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">52</context>
         </context-group>
-        <target xml:lang="it" state="translated">Crea nuovi campi</target>
+        <target xml:lang="it">Crea nuovi campi</target>
       </trans-unit>
-      <trans-unit id="bc5344d355821b6d9b8ba8892dfbbbb1917b8617" datatype="html">
+      <trans-unit id="bc5344d355821b6d9b8ba8892dfbbbb1917b8617" datatype="html" approved="yes">
         <source>Intelligent assistant</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">53</context>
         </context-group>
-        <target xml:lang="it" state="translated">Assistente intelligente</target>
-      </trans-unit>
-      <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html">
-        <source>Filters</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/statistics/filter-channels-dialog/filter-channels-dialog.component.ts</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-        <target xml:lang="it" state="translated">Filtri</target>
-      </trans-unit>
-      <trans-unit id="e023b460c32d7205194fade1578f8cc94cbae11c" datatype="html">
-        <source>Recently added products</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-        <target xml:lang="it" state="translated">Prodotti aggiunti di recente</target>
-      </trans-unit>
-      <trans-unit id="1ae2e13f133e95a511d2b1feebe64c086f82c901" datatype="html" approved="yes">
-        <source>Select multichannels products</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <target xml:lang="it">Selezione prodotti multicanale</target>
+        <target xml:lang="it">Assistente intelligente</target>
       </trans-unit>
       <trans-unit id="171250a39e43532e6a5bf46de521de664ab28690" datatype="html" approved="yes">
         <source>Source feed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <target xml:lang="it">Feed sorgente</target>
+      </trans-unit>
+      <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html" approved="yes">
+        <source>Filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/statistics/filter-channels-dialog/filter-channels-dialog.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <target xml:lang="it">Filtri</target>
+      </trans-unit>
+      <trans-unit id="e023b460c32d7205194fade1578f8cc94cbae11c" datatype="html" approved="yes">
+        <source>Recently added products</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <target xml:lang="it">Prodotti aggiunti di recente</target>
+      </trans-unit>
+      <trans-unit id="1ae2e13f133e95a511d2b1feebe64c086f82c901" datatype="html" approved="yes">
+        <source>Select multichannels products</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <target xml:lang="it">Selezione prodotti multicanale</target>
       </trans-unit>
       <trans-unit id="4e7f5f07ae8e67878f35b34bcee10e39300ff41a" datatype="html" approved="yes">
         <source>Orders</source>
@@ -194,7 +194,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="it">Impostazioni</target>
       </trans-unit>
@@ -238,11 +238,19 @@
         </context-group>
         <target xml:lang="it">UPC / EAN / Barcodes Finder</target>
       </trans-unit>
+      <trans-unit id="408cb6073e60c5d966296a3207fc596adca75e01" datatype="html" approved="yes">
+        <source>Admin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/menu/menu.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <target xml:lang="it">Admin</target>
+      </trans-unit>
       <trans-unit id="63ebcea7d85549607e2e9ceb494dc2791db78e1d" datatype="html" approved="yes">
         <source>Alert Management</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <target xml:lang="it">Gestione notifiche</target>
       </trans-unit>
@@ -250,17 +258,25 @@
         <source>Membership</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">12</context>
         </context-group>
-        <target xml:lang="it">Il tuo account</target>
+        <target xml:lang="it">Fatturazione</target>
       </trans-unit>
       <trans-unit id="fa5002e6d44382622a9752e361de52c3e81b9093" datatype="html" approved="yes">
         <source>Access</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="it">Login</target>
+      </trans-unit>
+      <trans-unit id="6b8dbbe4eefacb57ab74cb3756001fa8a7a6fef2" datatype="html" approved="yes">
+        <source>This store is deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/menu/menu.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <target xml:lang="it">Questo negozio é eliminato</target>
       </trans-unit>
       <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html" approved="yes">
         <source>Logout</source>
@@ -431,11 +447,26 @@
                             É richiesta la password
                         </target>
       </trans-unit>
+      <trans-unit id="storeIsDeletedMessage" datatype="html" approved="yes">
+        <source>
+                        Your store has been deleted but no worries your datas are not lost, please contact
+                        <x id="INTERPOLATION"/> to re-open it.
+                    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Interpolation replaced with support email</note>
+        <target xml:lang="it">
+                        
+Il tuo negozio è stato eliminato ma non preoccuparti i tuoi dati non saranno persi, sarà sufficiente contattare <x id="INTERPOLATION"/> per riaprirlo.                    
+                    </target>
+      </trans-unit>
       <trans-unit id="9e58dfa6c0a452d8333674cd6aa497d392b1c633" datatype="html" approved="yes">
         <source>LOGIN</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/login.component.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/reset-password/reset-password.component.ts</context>
@@ -447,7 +478,7 @@
         <source>Forgot the password?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/login.component.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <target xml:lang="it">Hai dimenticato la password?</target>
       </trans-unit>
@@ -687,7 +718,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/request-failed-dialog/request-failed-dialog.component.ts</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <target xml:lang="it">ok</target>
       </trans-unit>
@@ -699,13 +730,18 @@
         </context-group>
         <target xml:lang="it">Account internazionale</target>
       </trans-unit>
-      <trans-unit id="cada8caf61e66c4081850de9c04b8f558385458e" datatype="html" approved="yes">
-        <source>Your request can't be sent, reach us at</source>
+      <trans-unit id="requestCannotBeSentMessage" datatype="html" approved="yes">
+        <source>
+        Your request can't be sent, reach us at <x id="INTERPOLATION"/>.
+    </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/request-failed-dialog/request-failed-dialog.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <target xml:lang="it">La tua richiesta non può essere inviata, contattaci</target>
+        <note priority="1" from="description">Interpolation replaced with support email</note>
+        <target xml:lang="it">
+        La tua richiesta non può essere inviata, contattaci al numero <x id="INTERPOLATION"/>.
+    </target>
       </trans-unit>
       <trans-unit id="1db3d76305f300fa638728796a68286b86561249" datatype="html" approved="yes">
         <source>Only</source>
@@ -715,7 +751,7 @@
         </context-group>
         <target xml:lang="it">Solo</target>
       </trans-unit>
-      <trans-unit id="a4c371ad3363d1ff969eb4d33e9eadeb7412758d" datatype="html">
+      <trans-unit id="a4c371ad3363d1ff969eb4d33e9eadeb7412758d" datatype="html" approved="yes">
         <source>When you accept, you will be redirected to your Shopify Store to confirm the 30 days trial and
         recurring charge.
         Don’t stop with just your first channel: each channel brings in on average $900/month of new orders.
@@ -724,7 +760,7 @@
           <context context-type="sourcefile">app/statistics/accept-channel-dialog/accept-channel-dialog.component.ts</context>
           <context context-type="linenumber">6</context>
         </context-group>
-        <target xml:lang="it" state="translated">Quando accetti, verrà reindirizzato al tuo Shopify Store per confermare la prova di 30 giorni e la ricarica ricorrente. Non fermatevi solo con il tuo primo canale: ogni canale porta in media $ 900 / month di nuovi ordini.
+        <target xml:lang="it">Quando accetti, verrà reindirizzato al tuo Shopify Store per confermare la prova di 30 giorni e la ricarica ricorrente. Non fermatevi solo con il tuo primo canale: ogni canale porta in media $ 900 / month di nuovi ordini.
     </target>
       </trans-unit>
       <trans-unit id="b05a567e867cf4fdaf3871ff5d78ebf5e1cb7892" datatype="html" approved="yes">
@@ -739,11 +775,15 @@
         <source>CONNECT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="it">CONNETTERE</target>
       </trans-unit>
@@ -1577,7 +1617,7 @@
         </context-group>
         <target xml:lang="it">Sincronizzazioni ordini</target>
       </trans-unit>
-      <trans-unit id="963aecc953f598efa4345924defad890b83eff6d" datatype="html">
+      <trans-unit id="963aecc953f598efa4345924defad890b83eff6d" datatype="html" approved="yes">
         <source>
                             Order that are made on connected channels are imported back into your storefront, letting
                             you fulfill all your channel order right from your CMS.
@@ -1588,7 +1628,7 @@
           <context context-type="sourcefile">app/registration/create-account/create-account.component.ts</context>
           <context context-type="linenumber">30</context>
         </context-group>
-        <target xml:lang="it" state="translated">
+        <target xml:lang="it">
                             Gli ordini effettuati sui canali collegati vengono importati indietro nel tuo storefront, consentendo di soddisfare tutti gli ordini del tuo canale direttamente dal tuo CMS. Il loro stato di spedizione e messaggi inviati automaticamente ai vostri clienti. Oltre 30 milioni di dollari negli ordini passano attraverso il feed di vendita ogni giorno!
                         </target>
       </trans-unit>
@@ -1679,7 +1719,7 @@
         </context-group>
         <target xml:lang="it">Benvenuti in Shopping Feed. Che piacere vederti!</target>
       </trans-unit>
-      <trans-unit id="a9006489015817e4bc177639affe7cfdd7d5a165" datatype="html">
+      <trans-unit id="a9006489015817e4bc177639affe7cfdd7d5a165" datatype="html" approved="yes">
         <source>
             If you aren't quite sure what you are doing, let us give you a call.
             Onboarded users make on average 3X the amount of new orders in their first month alone.
@@ -1690,7 +1730,7 @@
           <context context-type="sourcefile">app/registration-legacy/welcome/welcome.component.ts</context>
           <context context-type="linenumber">9</context>
         </context-group>
-        <target xml:lang="it" state="translated">
+        <target xml:lang="it">
             Se non sei abbastanza sicuro di quello che stai facendo, permettici di contattarti direttamente via telefono. I nuovi utenti ricevono in media 3 volte la quantità di nuovi ordini nel solo primo mese. Il nostro team è pronto a darti una mano d'aiuto, rispondendo a tutte le tue domande e per farti impostare su ciascuno dei tuoi canali.
         </target>
       </trans-unit>

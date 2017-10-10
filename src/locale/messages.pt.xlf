@@ -26,13 +26,13 @@
         </context-group>
         <target xml:lang="pt-PT" state="translated">ESTATISTICAS</target>
       </trans-unit>
-      <trans-unit id="10272252e50677238dfbc35330dabb1ab7646f5d" datatype="html">
-        <source>SETTINGS</source>
+      <trans-unit id="a9149535680910cdf65bfa03d7f6d5574336417c" datatype="html">
+        <source>TOOLS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <target xml:lang="pt-PT" state="translated">CONFIGURAÇÕES</target>
+        <target xml:lang="pt-PT" state="translated">FERRAMENTAS</target>
       </trans-unit>
       <trans-unit id="38cbf4da03b0c84e5caeebb9cb49e31aa97d5edb" datatype="html">
         <source>APPS</source>
@@ -106,11 +106,19 @@
         </context-group>
         <target xml:lang="pt-PT" state="translated">Assistente inteligente</target>
       </trans-unit>
+      <trans-unit id="171250a39e43532e6a5bf46de521de664ab28690" datatype="html">
+        <source>Source feed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+        <target xml:lang="pt-PT" state="translated">Alimentação de origem</target>
+      </trans-unit>
       <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html">
         <source>Filters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">56</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/filter-channels-dialog/filter-channels-dialog.component.ts</context>
@@ -122,7 +130,7 @@
         <source>Recently added products</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Produtos recentemente adicionados</target>
       </trans-unit>
@@ -130,17 +138,9 @@
         <source>Select multichannels products</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <target xml:lang="pt-PT" state="translated">Selecione produtos multicanal</target>
-      </trans-unit>
-      <trans-unit id="171250a39e43532e6a5bf46de521de664ab28690" datatype="html">
-        <source>Source feed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/sidebar/sidebar.component.ts</context>
           <context context-type="linenumber">58</context>
         </context-group>
-        <target xml:lang="pt-PT" state="translated">Alimentação de origem</target>
+        <target xml:lang="pt-PT" state="translated">Selecione produtos multicanal</target>
       </trans-unit>
       <trans-unit id="4e7f5f07ae8e67878f35b34bcee10e39300ff41a" datatype="html">
         <source>Orders</source>
@@ -194,7 +194,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">9</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Configurações</target>
       </trans-unit>
@@ -238,11 +238,19 @@
         </context-group>
         <target xml:lang="pt-PT" state="translated">UPC / EAN / Buscador de códigos de barras</target>
       </trans-unit>
+      <trans-unit id="408cb6073e60c5d966296a3207fc596adca75e01" datatype="html">
+        <source>Admin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/menu/menu.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <target xml:lang="pt-PT" state="translated">Administrador</target>
+      </trans-unit>
       <trans-unit id="63ebcea7d85549607e2e9ceb494dc2791db78e1d" datatype="html">
         <source>Alert Management</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Gestão de alertas</target>
       </trans-unit>
@@ -250,7 +258,7 @@
         <source>Membership</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">12</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Associação</target>
       </trans-unit>
@@ -258,9 +266,17 @@
         <source>Access</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/menu/menu.component.ts</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Acesso</target>
+      </trans-unit>
+      <trans-unit id="6b8dbbe4eefacb57ab74cb3756001fa8a7a6fef2" datatype="html">
+        <source>This store is deleted</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/menu/menu.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <target xml:lang="pt-PT" state="translated">Essa loja foi excluída</target>
       </trans-unit>
       <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
         <source>Logout</source>
@@ -431,11 +447,25 @@
                             Senha requerida
                         </target>
       </trans-unit>
+      <trans-unit id="storeIsDeletedMessage" datatype="html">
+        <source>
+                        Your store has been deleted but no worries your datas are not lost, please contact
+                        <x id="INTERPOLATION"/> to re-open it.
+                    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.ts</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <note priority="1" from="description">Interpolation replaced with support email</note>
+        <target xml:lang="pt-PT" state="translated">
+                        Sua loja foi excluída, mas não preocupa que seus dados não estejam perdidos, entre em contato com <x id="INTERPOLATION"/> para reabri-lo.
+                    </target>
+      </trans-unit>
       <trans-unit id="9e58dfa6c0a452d8333674cd6aa497d392b1c633" datatype="html">
         <source>LOGIN</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/login.component.ts</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/reset-password/reset-password.component.ts</context>
@@ -447,7 +477,7 @@
         <source>Forgot the password?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/login/login.component.ts</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Esqueceu a senha?</target>
       </trans-unit>
@@ -687,7 +717,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/request-failed-dialog/request-failed-dialog.component.ts</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">Está bem</target>
       </trans-unit>
@@ -699,13 +729,18 @@
         </context-group>
         <target xml:lang="pt-PT" state="translated">Conta internacional</target>
       </trans-unit>
-      <trans-unit id="cada8caf61e66c4081850de9c04b8f558385458e" datatype="html">
-        <source>Your request can't be sent, reach us at</source>
+      <trans-unit id="requestCannotBeSentMessage" datatype="html">
+        <source>
+        Your request can't be sent, reach us at <x id="INTERPOLATION"/>.
+    </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/request-failed-dialog/request-failed-dialog.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <target xml:lang="pt-PT" state="translated">O seu pedido não pode ser enviado, contacte-nos em</target>
+        <note priority="1" from="description">Interpolation replaced with support email</note>
+        <target xml:lang="pt-PT" state="translated">
+        O seu pedido não pode ser enviado, contacte-nos em <x id="INTERPOLATION"/>.
+    </target>
       </trans-unit>
       <trans-unit id="1db3d76305f300fa638728796a68286b86561249" datatype="html">
         <source>Only</source>
@@ -739,11 +774,15 @@
         <source>CONNECT</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">10</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/statistics/suggested-channel/suggested-channel.component.ts</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="pt-PT" state="translated">CONECTAR</target>
       </trans-unit>
