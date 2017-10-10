@@ -17,7 +17,7 @@
                 <md-icon>trending_up</md-icon>
             </md-list-item>
 
-            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="SETTINGS" i18n-mdTooltip mdTooltipPosition="after"
+            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="TOOLS" i18n-mdTooltip mdTooltipPosition="after"
                           i18n-mdTooltip *ngIf="(currentStore | async).permission.tools" (onMenuOpen)="onMenuOpen()">
                 <md-icon>build</md-icon>
             </md-list-item>
@@ -33,7 +33,7 @@
             </md-list-item>
         </md-list>
         <div class="sf-sidebar-bottom-help" mdTooltip="SUPPORT" mdTooltipPosition="after" i18n-mdTooltip>
-            <a [href]="getSupportLink()"><md-icon>help</md-icon></a>
+            <a [href]="getSupportLink()" target="_blank"><md-icon>help</md-icon></a>
         </div>
     </md-sidenav>
 
