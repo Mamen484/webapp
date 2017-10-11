@@ -8,7 +8,11 @@
                 <div class="sf-fill-space mat-body-1" i18n>
                     Number of updates in progress
                 </div>
-                <div>{{updatesInProgress}}</div>
+                <div>
+                    <md-chip-list>
+                        <md-chip color="accent">{{updatesInProgress}}</md-chip>
+                    </md-chip-list>
+                </div>
             </md-list-item>
             <md-list-item *ngFor="let update of updates">
 

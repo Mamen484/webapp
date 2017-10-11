@@ -37,6 +37,6 @@ describe('EventLinkComponent', () => {
 
     it('should return proper link for event with name=order.lifecycle', () => {
         component.event = <any>{type: 'order.lifecycle', reference: '171717'};
-        expect(component.getLink()).toEqual('/marketplaces/orders#171717')
+        expect(component.getLink()).toEqual('/marketplaces/orders/171717')
     })
 });

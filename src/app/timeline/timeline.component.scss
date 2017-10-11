@@ -71,3 +71,8 @@ md-list {
 md-spinner {
   margin: auto;
 }
+
+md-chip[color="accent"]{
+  background-color: mat-color($accent);
+  color: mat-color($grey, 50);
+}

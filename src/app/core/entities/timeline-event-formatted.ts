@@ -15,10 +15,7 @@ export class TimelineEventFormatted {
         this.type = event.name;
         this.time = new Date(event.occurredAt);
         this.operation = event.action;
-        this.reference =
-            event.name === TimelineEventName.orderLifecycle
-                ? event.data.reference
-                : '';
+        this.reference = event.data && event.data.reference || '';
         this.ruleName =
             event.name === TimelineEventName.ruleTransformation || event.name === TimelineEventName.ruleSegmentation
                 ? event.data.name

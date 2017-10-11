@@ -21,7 +21,7 @@ export class EventLinkComponent {
     getLink() {
         switch (this.event.type) {
             case this.names.orderLifecycle:
-                return `/marketplaces/orders#${this.event.reference}`;
+                return `/marketplaces/orders/${this.event.reference}`;
             case this.names.ruleSegmentation:
                 return `/tools/segmentations#${this.event.reference}`;
             case this.names.ruleTransformation:
