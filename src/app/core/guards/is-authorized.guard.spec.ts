@@ -4,14 +4,17 @@ import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsAuthorizedGuard } from './is-authorized.guard';
+import { aggregatedUserInfoMock } from '../../../mocks/agregated-user-info-mock';
 
 describe('IsAuthorizedGuard', () => {
 
     let getItemSpy: jasmine.Spy;
+    let removeItemSpy: jasmine.Spy;
     let fetchAggregatedInfoSpy: jasmine.Spy;
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
+        removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
 
         TestBed.configureTestingModule({
@@ -19,7 +22,7 @@ describe('IsAuthorizedGuard', () => {
                 IsAuthorizedGuard,
                 {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
                 {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy}}
+                {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}}
             ]
         })
         ;
@@ -35,8 +38,8 @@ describe('IsAuthorizedGuard', () => {
     it('should call UserService.fetchAggregatedInfo to check if the authorization is valid',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of({}));
-            (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
+            fetchAggregatedInfoSpy.and.returnValue(Observable.of(aggregatedUserInfoMock));
+            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(fetchAggregatedInfoSpy).toHaveBeenCalled();
             });
         }));
@@ -53,8 +56,8 @@ describe('IsAuthorizedGuard', () => {
     it('should return true if the authorization is valid ',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of({}));
-            (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
+            fetchAggregatedInfoSpy.and.returnValue(Observable.of(aggregatedUserInfoMock));
+            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(canActivate).toEqual(true);
             });
         }));

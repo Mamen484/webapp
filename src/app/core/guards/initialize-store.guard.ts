@@ -6,6 +6,7 @@ import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
+import { StoreStatus } from '../entities/store-status.enum';
 
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {
@@ -20,7 +21,7 @@ export class InitializeStoreGuard implements CanActivate {
                 store = userInfo._embedded.store.find(s => s.name === next.queryParams.store || String(s.id) === next.queryParams.store);
             }
             if (!store) {
-                store = userInfo._embedded.store[0];
+                store = userInfo._embedded.store.find(s => s.status !== StoreStatus.deleted);;
             }
             this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
             this.appStore.select('currentStore').dispatch({type: SET_STORE, store});

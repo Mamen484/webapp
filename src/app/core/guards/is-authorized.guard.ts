@@ -57,7 +57,7 @@ export class IsAuthorizedGuard implements CanActivate {
 
     protected isNotAuthorized(observer) {
         this.redirectToLogin();
-        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+        this.localStorage.removeItem('Authorization');
         observer.next(false);
         observer.complete();
     }
