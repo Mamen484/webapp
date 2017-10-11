@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
+import { StoreStatus } from '../entities/store-status.enum';
 import { LocalStorageService } from '../services/local-storage.service';
 
 /**
@@ -23,23 +24,41 @@ export class IsAuthorizedGuard implements CanActivate {
         // check Authorization in a storage
         let auth = this.localStorage.getItem('Authorization');
         if (!auth) {
-            this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
+            this.redirectToLogin();
             return false;
         }
         return Observable.create(observer => {
             this.userService.fetchAggregatedInfo().subscribe(
-                // activate if no errors
-                () => {
-                    observer.next(true);
-                    observer.complete();
+                userInfo => {
+                    // activate if no errors and the user has at least 1 enabled store
+                    if (this.hasEnabledStore(userInfo._embedded.store, next.queryParams.store)) {
+                        observer.next(true);
+                        observer.complete();
+                    } else {
+                        this.isNotAuthorized(observer)
+                    }
                 },
                 // do not activate and redirect to /login when an error
-                () => {
-                    this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
-                    observer.next(false);
-                    observer.complete();
-                }
+                () => this.isNotAuthorized(observer)
             );
         });
+    }
+
+    protected redirectToLogin() {
+        this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
+    }
+
+    protected hasEnabledStore(store, storeQueryParam) {
+        if (storeQueryParam) {
+            return store.find(s => s.status !== StoreStatus.deleted && s.name === storeQueryParam);
+        }
+        return store.find(s => s.status !== StoreStatus.deleted);
+    }
+
+    protected isNotAuthorized(observer) {
+        this.redirectToLogin();
+        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+        observer.next(false);
+        observer.complete();
     }
 }

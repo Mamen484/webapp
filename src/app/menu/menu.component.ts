@@ -7,6 +7,7 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
 import { WindowRefService } from '../core/services/window-ref.service';
+import { StoreStatus } from '../core/entities/store-status.enum';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +22,7 @@ const UPDATE_EVENTS_INTERVAL = 1e4;
 export class MenuComponent {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
-
+    storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = '0';
 
