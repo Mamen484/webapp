@@ -27,7 +27,7 @@
                     <span *ngIf="update.action === updateOperations.ask" i18n>Scheduled</span>
                     <span *ngIf="update.action === updateOperations.finish" i18n>Completed</span>
                 </div>
-                <div class="event-time mat-body-1">{{update.occurredAt | date:"HH:mm"}}</div>
+                <div class="event-time mat-body-1">{{update.occurredAt | date:'shortTime'}}</div>
             </md-list-item>
             <md-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>
@@ -50,7 +50,7 @@
                     <sf-rule-event [ruleName]="event.ruleName" [operation]="event.operation"
                                    class="event-description sf-fill-space mat-body-1"
                                    *ngIf="event.type === eventTypes.ruleSegmentation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
-                    <div class="event-time mat-body-1">{{event.time | date:"HH:mm"}}</div>
+                    <div class="event-time mat-body-1">{{event.time | date:'shortTime'}}</div>
 
                 </md-list-item>
             </md-list>
