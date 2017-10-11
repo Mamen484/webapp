@@ -5,12 +5,12 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MdCardModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
-import { OrderEventComponent } from './order-event/order-event.component';
-import { RuleEventComponent } from './rule-event/rule-event.component';
 import { ActivatedRoute } from '@angular/router';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
 import { TimelineService } from '../core/services/timeline.service';
+import { EventLinkComponent } from './event-link/event-link.component';
+import { LegacyLinkStubDirective } from '../../mocks/stubs/legacy-link-stub.directive';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -31,8 +31,8 @@ describe('TimelineComponent', () => {
             ],
             declarations: [
                 TimelineComponent,
-                OrderEventComponent,
-                RuleEventComponent
+                EventLinkComponent,
+                LegacyLinkStubDirective,
             ],
             providers: [
                 {provide: ActivatedRoute, useValue: {data: Observable.of({timeline: events, updates})}},

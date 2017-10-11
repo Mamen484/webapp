@@ -35,12 +35,7 @@ md-card {
 
 md-list-item {
   padding: 0 10px;
-  cursor: pointer;
   border-bottom: 1px solid mat-color($grey, 1000, 0.12);
-  &:hover {
-    background-color: mat-color($grey, 300, 0.87);
-    border-bottom: 1px solid transparent;
-  }
 }
 
 md-list {
@@ -55,12 +50,6 @@ md-list {
   .event-description {
     flex: 3;
     text-transform: capitalize;
-  }
-
-  md-list-item {
-    &:hover {
-      background-color: mat-color($grey, 1000, 0.1);
-    }
   }
 
   .updates-in-progress {

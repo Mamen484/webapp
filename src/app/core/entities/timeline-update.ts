@@ -7,4 +7,5 @@ export interface TimelineUpdate {
     storeId: number;
     occurredAt: string;
     id: string;
+    _embedded: {channel: {name: string}}
 }

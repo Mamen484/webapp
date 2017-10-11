@@ -1,4 +1,4 @@
-<div class="timeline"  infiniteScroll [infiniteScrollDistance]="2"
+<div class="timeline" infiniteScroll [infiniteScrollDistance]="2"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div class="heading-date mat-body-1" i18n>Latest updates</div>
@@ -40,16 +40,10 @@
         <md-card class="event">
             <md-list>
                 <md-list-item *ngFor="let event of eventsGroup[1]">
-
                     <div class="event-icon mat-body-1">
                         <md-icon>{{event.icon}}</md-icon>
                     </div>
-                    <sf-order-event [reference]="event.reference" [operation]="event.operation"
-                                    class="event-description sf-fill-space mat-body-1"
-                                    *ngIf="event.type === eventTypes.orderLifecycle"></sf-order-event>
-                    <sf-rule-event [ruleName]="event.ruleName" [operation]="event.operation"
-                                   class="event-description sf-fill-space mat-body-1"
-                                   *ngIf="event.type === eventTypes.ruleSegmentation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
+                    <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>
                     <div class="event-time mat-body-1">{{event.time | date:'shortTime'}}</div>
 
                 </md-list-item>
