@@ -34,11 +34,11 @@ export class TimelineService {
             })
     }
 
-    getUpdatesNumber(storeId): Observable<string> {
+    getUpdatesNumber(storeId): Observable<number> {
         return this.httpClient.head(`${environment.API_URL}/store/${storeId}/timeline`, {
             observe: 'response',
             responseType: 'text',
-        }).map(({headers}) => headers.get('X-New-Events-Count'));
+        }).map(({headers}) => Number(headers.get('X-New-Events-Count')));
     }
 
 }

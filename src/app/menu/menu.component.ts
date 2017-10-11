@@ -24,7 +24,7 @@ export class MenuComponent {
     currentStore: Store;
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
-    newEvents = '0';
+    newEvents = 0;
 
 
     constructor(protected appStore: AppStore<AppState>,
