@@ -11,6 +11,7 @@ import { updates } from '../../mocks/updates-mock';
 import { TimelineService } from '../core/services/timeline.service';
 import { EventLinkComponent } from './event-link/event-link.component';
 import { LegacyLinkStubDirective } from '../../mocks/stubs/legacy-link-stub.directive';
+import { UpdateRowComponent } from './update-row/update-row.component';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -34,6 +35,7 @@ describe('TimelineComponent', () => {
                 TimelineComponent,
                 EventLinkComponent,
                 LegacyLinkStubDirective,
+                UpdateRowComponent,
             ],
             providers: [
                 {provide: ActivatedRoute, useValue: {data: Observable.of({timeline: events, updates})}},
