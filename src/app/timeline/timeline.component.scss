@@ -44,13 +44,6 @@ md-list {
 
 .update {
   background: mat-color($accent, 700, 0.05);
-  .channel-name {
-    flex: 1;
-  }
-  .event-description {
-    flex: 3;
-    text-transform: capitalize;
-  }
 
   .updates-in-progress {
     background-color: mat-color($grey, 1000, 0.1);

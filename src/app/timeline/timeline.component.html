@@ -15,23 +15,7 @@
                 </div>
             </md-list-item>
             <md-list-item *ngFor="let update of updates">
-
-                <div class="event-icon mat-body-1">
-                    <md-icon *ngIf="update.name === updateTypes.export">vertical_align_top</md-icon>
-                    <md-icon *ngIf="update.name === updateTypes.import">vertical_align_bottom</md-icon>
-                </div>
-                <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.import">
-                    Source feed
-                </div>
-                <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.export">
-                    {{update._embedded.channel.name}}
-                </div>
-                <div class="event-description mat-body-1">
-                    <span *ngIf="update.action === updateOperations.start" i18n>In progress</span>
-                    <span *ngIf="update.action === updateOperations.ask" i18n>Scheduled</span>
-                    <span *ngIf="update.action === updateOperations.finish" i18n>Completed</span>
-                </div>
-                <div class="event-time mat-body-1">{{update.occurredAt | date:'shortTime'}}</div>
+              <sf-update-row [update]="update"></sf-update-row>
             </md-list-item>
             <md-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>
@@ -49,7 +33,6 @@
                     </div>
                     <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>
                     <div class="event-time mat-body-1">{{event.time | date:'shortTime'}}</div>
-
                 </md-list-item>
             </md-list>
         </md-card>
