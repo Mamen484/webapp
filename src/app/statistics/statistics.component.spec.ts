@@ -12,24 +12,32 @@ import { StoreStatisticsStubComponent } from '../../mocks/stubs/store-statistics
 import { ConfiguredChannelStubComponent } from '../../mocks/stubs/configured-channel-stub.component';
 import { SuggestedChannelStubComponent } from '../../mocks/stubs/suggested-channel-stub.component';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { MdCardModule } from '@angular/material';
+import { MatCardModule, MatDialog } from '@angular/material';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { StoreService } from '../core/services/store.service';
+import { storeChannelMock } from '../../mocks/store-channel.mock';
 
-xdescribe('StatisticsComponent', () => {
+describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
     let fixture: ComponentFixture<StatisticsComponent>;
     let channelServiceMock;
 
     beforeEach(async(() => {
-        channelServiceMock = {getStoreChannels: jasmine.createSpy('getStoreChannels')};
-        channelServiceMock.getStoreChannels.and.callFake(params => Observable.of({}));
+        channelServiceMock = {
+            getStoreChannels: jasmine.createSpy('getStoreChannels'),
+            getStatistics: jasmine.createSpy('getStoreChannels'),
+            getStoreCharge: jasmine.createSpy('getStoreChannels'),
+        };
+
+        channelServiceMock.getStoreChannels.and.callFake(params => Observable.of(storeChannelMock));
+        channelServiceMock.getStatistics.and.callFake(params => Observable.of(statisticsMock));
+        channelServiceMock.getStoreCharge.and.callFake(params => Observable.of({}));
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
                 InfiniteScrollModule,
                 FlexLayoutModule,
-                MdCardModule,
+                MatCardModule,
             ],
             declarations: [
                 StatisticsComponent,
@@ -44,9 +52,9 @@ xdescribe('StatisticsComponent', () => {
                         ? Observable.of(aggregatedUserInfoMock._embedded.store[0])
                         : Observable.of(statisticsMock)
                 }
-            }, {
-                provide: StoreService, useValue: channelServiceMock
-            }
+            },
+                {provide: StoreService, useValue: channelServiceMock},
+                {provide: MatDialog, useValue: {}}
             ]
         })
             .compileComponents();
@@ -66,14 +74,13 @@ xdescribe('StatisticsComponent', () => {
     describe('initialization', () => {
         it('should load initial channels', () => {
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(1);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).page).toEqual(1);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).limit).toEqual(18);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).searchQuery).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).segment).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).country).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).type).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[0]).status).toEqual('');
-            expect(component.channels._embedded.channel.length).toEqual(18);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).page).toEqual(1);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).limit).toEqual(18);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).searchQuery).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).segment).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).country).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).type).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(0)[1]).status).toEqual('');
             expect(component.infiniteScrollDisabled).toEqual(false);
         });
 
@@ -82,7 +89,7 @@ xdescribe('StatisticsComponent', () => {
         });
 
         it('should set the number of pages, taking into account how many channels will load on scroll', () => {
-            expect(component.channels.pages).toEqual(11);
+            expect(component.channels.pages).toEqual(17);
         });
     });
 
@@ -90,20 +97,18 @@ xdescribe('StatisticsComponent', () => {
         it('should load 6 new channels on scroll', () => {
             component.onScroll();
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(2);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).page).toEqual(4);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).limit).toEqual(6);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).searchQuery).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).segment).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).country).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).type).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).status).toEqual('');
-            expect(component.channels._embedded.channel.length).toEqual(24);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).page).toEqual(4);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).limit).toEqual(6);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).searchQuery).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).segment).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).country).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).type).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).status).toEqual('');
 
             component.onScroll();
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).page).toEqual(5);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).limit).toEqual(6);
-            expect(component.channels._embedded.channel.length).toEqual(30);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).page).toEqual(2);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).limit).toEqual(6);
         });
 
         it('should set processing to true while loading channels, then reset it to false', () => {
@@ -129,23 +134,18 @@ xdescribe('StatisticsComponent', () => {
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(1); // no new calls were made
         });
         it('should disable infinite scroll when all pages are loaded', () => {
-            component.onScroll(); // page = 4
-            component.onScroll(); // page = 5
-            component.onScroll(); // page = 6
-            component.onScroll(); // page = 7
-            component.onScroll(); // page = 8
-            component.onScroll(); // page = 9
-            component.onScroll(); // page = 10
-            component.onScroll(); // page = 11
-            expect(component.channels.page).toEqual(11);
-            expect(component.channels.pages).toEqual(11);
-            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(9);
+            channelServiceMock.getStoreChannels.and.returnValue(
+                Observable.of(Object.assign({}, storeChannelMock, {
+                    page: 17
+                })));
+            component.onScroll();
+            expect(component.channels.page).toEqual(17);
+            expect(component.channels.pages).toEqual(17);
+            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(2);
             expect(component.infiniteScrollDisabled).toEqual(true);
             // try to scroll one more time
-            component.onScroll(); // page = 11
-            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(9);
-            expect(component.channels.page).toEqual(11);
-            expect(component.channels.pages).toEqual(11);
+            component.onScroll();
+            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(2);
             expect(component.infiniteScrollDisabled).toEqual(true);
         });
     });
@@ -157,13 +157,13 @@ xdescribe('StatisticsComponent', () => {
             component.filterState.segment = 'appliances';
             component.onApplyFilter();
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(2); // first one - for initialization
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).page).toEqual(1);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).limit).toEqual(18);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).searchQuery).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).segment).toEqual('appliances');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).country).toEqual('it');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).type).toEqual('ads');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[0]).status).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).page).toEqual(1);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).limit).toEqual(18);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).searchQuery).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).segment).toEqual('appliances');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).country).toEqual('it');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).type).toEqual('ads');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(1)[1]).status).toEqual('');
             expect(component.channels._embedded.channel.length).toBeLessThanOrEqual(18);
         });
 
@@ -173,14 +173,15 @@ xdescribe('StatisticsComponent', () => {
             component.filterState.searchQuery = 'amaz';
             component.onApplyFilter();
             component.onScroll();
-            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3); // first one - for initialization, second one - apply filter
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).page).toEqual(4);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).limit).toEqual(6);
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).searchQuery).toEqual('amaz');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).segment).toEqual('');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).country).toEqual('fr');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).type).toEqual('ads');
-            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[0]).status).toEqual('');
+            // first one - for initialization, second one - apply filter
+            expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).page).toEqual(4);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).limit).toEqual(6);
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).searchQuery).toEqual('amaz');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).segment).toEqual('');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).country).toEqual('fr');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).type).toEqual('ads');
+            expect((<ChannelsRequestParams>channelServiceMock.getStoreChannels.calls.argsFor(2)[1]).status).toEqual('');
             expect(component.channels._embedded.channel.length).toBeLessThanOrEqual(24);
         });
 
@@ -198,15 +199,6 @@ xdescribe('StatisticsComponent', () => {
             expect(spy).toHaveBeenCalledTimes(2);
             expect(spy.calls.argsFor(0)[0]).toEqual(true);
             expect(spy.calls.argsFor(1)[0]).toEqual(false);
-        });
-
-        it('should enable/disable inifinite scroll when the filter is applied', () => {
-            expect(component.infiniteScrollDisabled).toEqual(false);
-            component.filterState.searchQuery = 'some unreal string azazazazazazazazza';
-            component.onApplyFilter();
-            expect(component.infiniteScrollDisabled).toEqual(true);
-            component.resetFilter();
-            expect(component.infiniteScrollDisabled).toEqual(false);
         });
     });
 

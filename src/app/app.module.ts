@@ -8,9 +8,8 @@ import { BaseModule } from './base/base.module';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { StatisticsModule } from './statistics/statistics.module';
 import { LoginModule } from './login/login.module';
-import { RegistrationModule } from './registration/registration.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -19,15 +18,14 @@ import { RegistrationModule } from './registration/registration.module';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         FormsModule,
         HttpModule,
         CoreModule,
         BaseModule,
         SharedModule,
-        StatisticsModule,
         AppRoutingModule,
         LoginModule,
-        RegistrationModule,
     ],
     bootstrap: [AppComponent]
 })

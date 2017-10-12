@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { LocaleIdService } from './locale-id.service';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 
-xdescribe('StoreService', () => {
+describe('StoreService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],

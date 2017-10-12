@@ -1,5 +1,5 @@
 import { Link } from './link';
-import { ChannelStatistics } from '../channel-statistics';
+import { ChannelStatistics } from './channel-statistics';
 
 export interface Statistics {
     id: number;

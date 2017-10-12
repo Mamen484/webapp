@@ -1,8 +1,8 @@
 <div class="toolbar-search-container">
-    <md-icon class="sf-search-icon">search</md-icon>
+    <mat-icon class="sf-search-icon">search</mat-icon>
     <input placeholder="Do you need some help ?" i18n-placeholder #searchInput class="toolbar-search"
            [formControl]="searchControl" (focus)="showSearchResult=true">
-    <md-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></md-progress-bar>
+    <mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
 </div>
 
 <div class="search-results" [ngClass]="{'mat-elevation-z22': showSearchResult && searchResults}">
@@ -12,11 +12,11 @@
             <div class="mat-subheading-1 title">{{entry.subject}}</div>
             <div class="mat-subheading-1 description">{{entry.body_chat}}</div>
             <div class="actions">
-                <a class="details-link mat-body-2" md-button color="primary" #link [href]="entry.public_url" target="_blank" i18n>READ MORE</a>
+                <a class="details-link mat-body-2" mat-button color="primary" #link [href]="entry.public_url" target="_blank" i18n>READ MORE</a>
             </div>
         </div>
         <div class="search-entry all-posts">
-            <a class="mat-body-2" md-button color="accent" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank" i18n>View
+            <a class="mat-body-2" mat-button color="accent" href="{{supportUrl}}/customer/{{helpCenterLanguage}}/portal/articles/search?q={{searchInput.value}}" target="_blank" i18n>View
                 all posts</a>
         </div>
     </div>

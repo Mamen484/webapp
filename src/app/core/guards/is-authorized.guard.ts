@@ -5,15 +5,24 @@ import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
 import { StoreStatus } from '../entities/store-status.enum';
+import { LocalStorageService } from '../services/local-storage.service';
+
+/**
+ * This guard is used to detect if the user is logged in. If NOT, then redirect to the login page.
+ * Used on the pages, where authentication is required.
+ */
 
 @Injectable()
 export class IsAuthorizedGuard implements CanActivate {
-    constructor(protected windowRef: WindowRefService, protected userService: UserService) {
+    constructor(
+        protected windowRef: WindowRefService,
+        protected userService: UserService,
+        protected localStorage: LocalStorageService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         // check Authorization in a storage
-        let auth = this.windowRef.nativeWindow.localStorage.getItem('Authorization');
+        let auth = this.localStorage.getItem('Authorization');
         if (!auth) {
             this.redirectToLogin();
             return false;
@@ -48,7 +57,7 @@ export class IsAuthorizedGuard implements CanActivate {
 
     protected isNotAuthorized(observer) {
         this.redirectToLogin();
-        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+        this.localStorage.removeItem('Authorization');
         observer.next(false);
         observer.complete();
     }

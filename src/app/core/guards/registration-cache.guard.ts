@@ -6,13 +6,18 @@ import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
 import { toPairs } from 'lodash';
 import { Helpers } from '../entities/helpers';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class RegistrationCacheGuard implements CanActivate {
 
     protected token;
 
-    constructor(protected shopifyService: ShopifyAuthentifyService, protected windowRef: WindowRefService) {
+    constructor(
+        protected shopifyService: ShopifyAuthentifyService,
+        protected windowRef: WindowRefService,
+        protected localStorage: LocalStorageService
+        ) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
@@ -20,7 +25,7 @@ export class RegistrationCacheGuard implements CanActivate {
             .filter(store => store.storeId > 0)
             .flatMap(store => this.shopifyService.updateStore(store))
             .map(() => {
-                this.windowRef.nativeWindow.localStorage.removeItem('sf.registration');
+                this.localStorage.removeItem('sf.registration');
                 this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + this.token;
             })
             .count()
@@ -34,17 +39,17 @@ export class RegistrationCacheGuard implements CanActivate {
         }
         return this.shopifyService.getStoreData(params['shop'], params)
         // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
-            .do(store => this.windowRef.nativeWindow.localStorage.setItem('sf.registration', JSON.stringify(store)))
+            .do(store => this.localStorage.setItem('sf.registration', JSON.stringify(store)))
             .do(store => this.autoLoginUser(store));
     }
 
     protected getStoreFromCache() {
-        return this.windowRef.nativeWindow.localStorage.getItem('sf.registration');
+        return this.localStorage.getItem('sf.registration');
     }
 
     protected autoLoginUser(store) {
         this.token = store.owner.token;
-        this.windowRef.nativeWindow.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+        this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
     }
 
 }
