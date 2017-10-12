@@ -7,7 +7,8 @@
   <ng-template #sourceFeed>Source feed</ng-template>
 </div>
 <div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.export">
-  {{update._embedded.channel.name}}
+  <a sfLegacyLink *ngIf="update.action === updateActions.finish;else channelText" [path]="getChannelLink()" target="_blank" class="complete">{{update._embedded.channel.name}}</a>
+  <ng-template #channelText>{{update._embedded.channel.name}}</ng-template>
 </div>
 <div class="event-description mat-body-1">
   <span *ngIf="update.action === updateActions.start" i18n>In progress</span>

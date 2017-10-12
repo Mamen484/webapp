@@ -8,7 +8,7 @@ import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enu
     templateUrl: './update-row.component.html',
     styleUrls: ['./update-row.component.scss']
 })
-export class UpdateRowComponent implements OnInit {
+export class UpdateRowComponent {
 
     @Input() update: TimelineUpdate;
 
@@ -18,7 +18,11 @@ export class UpdateRowComponent implements OnInit {
     constructor() {
     }
 
-    ngOnInit() {
+    // TOFIX: refactor duplicated logic from suggested-channel
+    getChannelLink() {
+        return this.update._embedded.channel.type === 'marketplace'
+            ? `/${this.update._embedded.channel.name}`
+            : `/${this.update._embedded.channel.type}/manage/${this.update._embedded.channel.name}`;
     }
 
 }

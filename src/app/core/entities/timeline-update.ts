@@ -1,5 +1,6 @@
 import { TimelineUpdateName } from './timeline-update-name.enum';
 import { TimelineUpdateAction } from './timeline-update-action.enum';
+import { Channel } from './channel';
 
 export interface TimelineUpdate {
     name: TimelineUpdateName;
@@ -7,5 +8,5 @@ export interface TimelineUpdate {
     storeId: number;
     occurredAt: string;
     id: string;
-    _embedded: {channel: {name: string}}
+    _embedded: {channel: Channel}
 }
