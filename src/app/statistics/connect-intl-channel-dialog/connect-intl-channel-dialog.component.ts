@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'sf-connect-international-channel-dialog',
@@ -8,7 +8,7 @@ import { MdDialogRef } from '@angular/material';
 })
 export class ConnectIntlChannelDialogComponent {
 
-    constructor(public dialogRef: MdDialogRef<ConnectIntlChannelDialogComponent>) {
+    constructor(public dialogRef: MatDialogRef<ConnectIntlChannelDialogComponent>) {
     }
 
 

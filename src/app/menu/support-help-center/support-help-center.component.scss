@@ -47,7 +47,7 @@ $toolbar-search-margin: 10px;
   position: absolute;
   z-index: 25;
   top: $toolbar-height;
-  color: mat-color($grey, 1000);
+  color: black;
   max-height: calc(100vh - #{$toolbar-height});
   overflow-y: auto;
   background-color: mat-color($grey, A100);
@@ -90,7 +90,7 @@ $toolbar-search-margin: 10px;
 
     .no-results {
       margin: 0;
-      color: mat-color($grey, 1000, 0.54);
+      color: $black-54-opacity;
     }
 
     a, a:visited {

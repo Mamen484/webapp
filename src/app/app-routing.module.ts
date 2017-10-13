@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
-import { StatisticsComponent } from './statistics/statistics.component';
 import { CheckProperLocaleGuard } from './core/guards/check-proper-locale.guard';
 import { LoginComponent } from './login/login.component';
 import { SendRecoveryEmailComponent } from './login/send-recovery-email/send-recovery-email.component';
@@ -12,6 +11,9 @@ import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
 import { LogoutGuard } from './core/guards/logout.guard';
 import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
+import { BlankComponent } from './shared/blank.component';
+import { ShopifyGuard } from './core/guards/shopify.guard';
+import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 
 const routes: Routes = [
     {
@@ -23,37 +25,20 @@ const routes: Routes = [
         canActivate: [
             LoginByTokenGuard,
             IsAuthorizedGuard,
-            CheckProperLocaleGuard
+            CheckProperLocaleGuard,
+            InitializeStoreGuard,
         ],
         children: [
-            {
-                path: '',
-                component: StatisticsComponent
-            }
+            {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},
+            {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule'}
         ]
     },
-    {
-        path: 'logout',
-        component: LoginComponent,
-        canActivate: [
-            LogoutGuard
-        ]
-    },
-    {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [
-            IsLoggedInGuard
-        ]
-    },
-    {
-        path: 'reset-password',
-        component: SendRecoveryEmailComponent
-    },
-    {
-        path: 'reset-password/:token',
-        component: ResetPasswordComponent
-    }
+    {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
+    {path: 'login', component: LoginComponent, canActivate: [IsLoggedInGuard]},
+    {path: 'reset-password', component: SendRecoveryEmailComponent},
+    {path: 'reset-password/:token', component: ResetPasswordComponent},
+    {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
+    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'}
 ];
 
 @NgModule({

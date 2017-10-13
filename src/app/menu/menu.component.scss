@@ -2,15 +2,21 @@
 
 .sf-nav-welcome-text {
   margin-left: 29px;
+  margin-bottom: 0;
   font-weight: normal;
 }
 
-md-icon.sf-nav-icon {
+mat-icon.sf-nav-icon {
   margin-left: 20px;
 }
 
 .sf-nav-selected-language {
   width: 24px;
+}
+
+.sf-icon-link {
+  height: 24px;
+  color: inherit;
 }
 
   sf-support-help-center {
@@ -28,7 +34,7 @@ md-icon.sf-nav-icon {
   padding-top: 5px;
   padding-bottom: 5px;
 
-  md-icon {
+  mat-icon {
     margin-right: 0;
   }
 

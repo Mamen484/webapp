@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-    MdAutocompleteModule, MdButtonModule, MdCardModule, MdChipsModule, MdDialogModule,
-    MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule, MdProgressSpinnerModule,
-    MdSelectModule, MdSidenavModule,
-    MdToolbarModule, MdTooltipModule
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
+    MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
+    MatSelectModule, MatSidenavModule,
+    MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -16,54 +15,52 @@ import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
 import { LegacyLinkDirective } from './legacy-link.directive';
-
+import { BlankComponent } from './blank.component';
 @NgModule({
     imports: [
-        BrowserAnimationsModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
-        MdAutocompleteModule,
-        MdButtonModule,
-        MdCardModule,
-        MdChipsModule,
-        MdDialogModule,
-        MdIconModule,
-        MdInputModule,
-        MdListModule,
-        MdMenuModule,
-        MdSelectModule,
-        MdSidenavModule,
-        MdProgressBarModule,
-        MdProgressSpinnerModule,
-        MdToolbarModule,
-        MdTooltipModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatChipsModule,
+        MatDialogModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule,
+        MatTooltipModule,
         ReactiveFormsModule,
         RouterModule,
     ],
     exports: [
         // modules
-        BrowserAnimationsModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
-        MdAutocompleteModule,
-        MdButtonModule,
-        MdCardModule,
-        MdChipsModule,
-        MdDialogModule,
-        MdIconModule,
-        MdInputModule,
-        MdListModule,
-        MdMenuModule,
-        MdSelectModule,
-        MdSidenavModule,
-        MdProgressBarModule,
-        MdProgressSpinnerModule,
-        MdToolbarModule,
-        MdTooltipModule,
+        MatAutocompleteModule,
+        MatButtonModule,
+        MatCardModule,
+        MatChipsModule,
+        MatDialogModule,
+        MatIconModule,
+        MatInputModule,
+        MatListModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule,
+        MatToolbarModule,
+        MatTooltipModule,
         ReactiveFormsModule,
         RouterModule,
 
@@ -76,7 +73,7 @@ import { LegacyLinkDirective } from './legacy-link.directive';
         LegacyLinkDirective,
 
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective]
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent]
 })
 export class SharedModule {
 }

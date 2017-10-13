@@ -1,6 +1,5 @@
 import { Link } from './link';
-import { StoreChannelDetails } from './store-channel-details';
-import { ChannelStatistics } from '../channel-statistics';
+import { ChannelStatistics } from './channel-statistics';
 import { Channel } from './channel';
 
 export interface StoreChannel {

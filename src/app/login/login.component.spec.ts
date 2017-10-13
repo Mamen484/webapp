@@ -1,15 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MdCardModule, MdInputModule, MdMenuModule, MdToolbarModule } from '@angular/material';
+import { LoginComponent } from './login.component';
+import { UserService } from '../core/services/user.service';
+import { LocaleIdService } from '../core/services/locale-id.service';
+import { MenuContainerComponent } from '../menu/menu-container.component';
+import { MatCardModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep } from 'lodash';
-
-import { LoginComponent } from './login.component';
-import { UserService } from '../core/services/user.service';
-import { LocaleIdService } from '../core/services/locale-id.service';
-import { MenuContainerComponent } from '../menu/menu-container.component';
 import { UnauthenticatedMenuComponent } from '../menu/unauthenticated-menu.component';
 import { DummyRouterDirective } from '../../mocks/stubs/dummy-router.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
@@ -59,12 +58,12 @@ describe('LoginComponent', () => {
 
             ],
             imports: [
-                MdMenuModule,
-                MdToolbarModule,
+                MatMenuModule,
+                MatToolbarModule,
                 FormsModule,
                 ReactiveFormsModule,
-                MdCardModule,
-                MdInputModule,
+                MatCardModule,
+                MatInputModule,
                 NoopAnimationsModule,
             ]
         })
