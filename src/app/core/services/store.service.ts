@@ -8,7 +8,7 @@ import { ChannelsResponse } from '../entities/channels-response';
 import { StoreChannel } from '../entities/store-channel';
 import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
-import { StoreCharge } from '../entities/store-charge';
+import { StoreCharge } from '../store-charge';
 
 @Injectable()
 export class StoreService {

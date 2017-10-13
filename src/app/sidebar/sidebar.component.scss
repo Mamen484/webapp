@@ -1,6 +1,6 @@
 @import '../../sass/variables';
 
-mat-sidenav {
+md-sidenav {
   position: sticky;
   bottom: 0;
   left: 0;
@@ -12,9 +12,9 @@ mat-sidenav {
   height: calc(100vh - #{$toolbar-height});
   border-right: 1px solid mat-color($grey, 200);
 
-  mat-icon {
+  md-icon {
     font-size: mat-font-size($config, headline);
-    color: $black-54-opacity;
+    color: mat-color($grey, 1000, 0.54);
     cursor: pointer;
     margin: auto;
 
@@ -28,7 +28,7 @@ mat-sidenav {
   }
 }
 
-mat-sidenav-container {
+md-sidenav-container {
   float: left;
   min-height: 100%;
   max-width: 100%;

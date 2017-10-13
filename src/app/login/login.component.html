@@ -2,25 +2,25 @@
 <div class="form-container">
     <div>
         <div class="form-title mat-display-1" i18n>Log in</div>
-        <mat-card>
-            <mat-card-content>
+        <md-card>
+            <md-card-content>
                 <form (ngSubmit)="login()">
 
-                    <mat-form-field class="login-input" color="accent">
-                        <input matInput i18n-placeholder placeholder="Username"
+                    <md-input-container class="login-input" color="accent">
+                        <input mdInput i18n-placeholder placeholder="Username"
                                [formControl]="userNameControl">
-                        <mat-error *ngIf="userNameControl.hasError('required')" i18n>
+                        <md-error *ngIf="userNameControl.hasError('required')" i18n>
                             Username is required
-                        </mat-error>
-                    </mat-form-field>
+                        </md-error>
+                    </md-input-container>
 
-                    <mat-form-field class="login-input margin-top-20" color="accent">
-                        <input matInput i18n-placeholder placeholder="Password" type="password"
+                    <md-input-container class="login-input margin-top-20" color="accent">
+                        <input mdInput i18n-placeholder placeholder="Password" type="password"
                                [formControl]="passwordControl">
-                        <mat-error *ngIf="passwordControl.hasError('required')" i18n>
+                        <md-error *ngIf="passwordControl.hasError('required')" i18n>
                             Password is required
-                        </mat-error>
-                    </mat-form-field>
+                        </md-error>
+                    </md-input-container>
 
                     <div class="error" *ngIf="error">{{error}}</div>
                     <div class="error deleted-store-message" *ngIf="showDeletedStoreError" i18n="Interpolation replaced with support email@@storeIsDeletedMessage">
@@ -29,12 +29,12 @@
                     </div>
 
                     <div class="form-actions">
-                        <button mat-raised-button color="accent" i18n>LOGIN</button>
+                        <button md-raised-button color="accent" i18n>LOGIN</button>
                     </div>
                 </form>
 
-            </mat-card-content>
-        </mat-card>
+            </md-card-content>
+        </md-card>
         <a class="below-form-link mat-body-1" i18n [routerLink]="['/reset-password']">Forgot the password?</a>
     </div>
 </div>

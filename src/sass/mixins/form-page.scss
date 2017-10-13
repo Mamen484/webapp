@@ -10,16 +10,16 @@
       margin: auto;
     }
 
-    mat-card {
+    md-card {
       padding: 50px 100px;
     }
 
     .form-title {
-      color: $black-54-opacity;
+      color: mat-color($grey, 1000, 0.54);
       margin-bottom: 25px;
     }
 
-    mat-form-field {
+    md-input-container {
       display: block;
       width: 325px;
     }
@@ -41,7 +41,7 @@
   a.below-form-link {
     float: right;
     text-decoration: none;
-    color: $black-87-opacity;
+    color: mat-color($grey, 1000, 0.87);
     margin-top: 15px;
   }
 }

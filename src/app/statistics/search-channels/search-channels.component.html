@@ -1,19 +1,19 @@
 <label>
-    <mat-card>
-        <mat-card-content>
+    <md-card>
+        <md-card-content>
             <div class="search-container">
-                <mat-icon>search</mat-icon>
+                <md-icon>search</md-icon>
                 <input [formControl]="searchControl" class="mat-subheading-1" [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel">
-                <button mat-button mat-icon-button (click)="openDialog()">
-                    <mat-icon>filter_list</mat-icon>
+                <button md-button md-icon-button (click)="openDialog()">
+                    <md-icon>filter_list</md-icon>
                 </button>
             </div>
-            <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
-        </mat-card-content>
-    </mat-card>
+            <md-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></md-progress-bar>
+        </md-card-content>
+    </md-card>
 </label>
-<mat-chip-list [selectable]="false">
-    <mat-chip *ngIf="filter.country">
+<md-chip-list [selectable]="false">
+    <md-chip *ngIf="filter.country">
         <span *ngIf="filter.country === 'at'" i18n>Austria</span>
         <span *ngIf="filter.country === 'au'" i18n>Australia</span>
         <span *ngIf="filter.country === 'be'" i18n>Belgium</span>
@@ -53,9 +53,9 @@
         <span *ngIf="filter.country === 'uk'" i18n>United Kingdom</span>
         <span *ngIf="filter.country === 'us'" i18n>United States</span>
 
-        <mat-icon (click)="cancelFilter('country')">cancel</mat-icon>
-    </mat-chip>
-    <mat-chip *ngIf="filter.type">
+        <md-icon (click)="cancelFilter('country')">cancel</md-icon>
+    </md-chip>
+    <md-chip *ngIf="filter.type">
         <span *ngIf="filter.type === 'ads'" i18n>Product Listing Ads</span>
         <span *ngIf="filter.type === 'affiliation'" i18n>Affiliation</span>
         <span *ngIf="filter.type === 'export'" i18n>Custom Exports</span>
@@ -63,9 +63,9 @@
         <span *ngIf="filter.type === 'retargeting'" i18n>Retargeting</span>
         <span *ngIf="filter.type === 'shopbot'" i18n>Shopping Engines</span>
         <span *ngIf="filter.type === 'solomo'" i18n>Social Local Mobile</span>
-        <mat-icon (click)="cancelFilter('type')">cancel</mat-icon>
-    </mat-chip>
-    <mat-chip *ngIf="filter.segment">
+        <md-icon (click)="cancelFilter('type')">cancel</md-icon>
+    </md-chip>
+    <md-chip *ngIf="filter.segment">
         <span *ngIf="filter.segment === 'professional'" i18n>Professional Purchasing</span>
         <span *ngIf="filter.segment === 'motors'" i18n>Auto / Moto</span>
         <span *ngIf="filter.segment === 'organic'" i18n>Organic</span>
@@ -80,6 +80,6 @@
         <span *ngIf="filter.segment === 'fashion'" i18n>Fashion</span>
         <span *ngIf="filter.segment === 'universal'" i18n>Universal</span>
         <span *ngIf="filter.segment === 'sports'" i18n>Sports</span>
-        <mat-icon (click)="cancelFilter('segment')">cancel</mat-icon>
-    </mat-chip>
-</mat-chip-list>
+        <md-icon (click)="cancelFilter('segment')">cancel</md-icon>
+    </md-chip>
+</md-chip-list>

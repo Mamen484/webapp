@@ -16,14 +16,13 @@ describe('RegistrationCacheGuard', () => {
         removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         locationHrefSpy = jasmine.createSpy('location.href');
 
-        let localStorage = {
-            getItem: getItemSpy,
-            removeItem: removeItemSpy,
-            setItem: setItemSpy
-        };
-
         let window = {
             nativeWindow: {
+                localStorage: {
+                    getItem: getItemSpy,
+                    removeItem: removeItemSpy,
+                    setItem: setItemSpy
+                },
                 location: {}
             }
         };
@@ -35,7 +34,7 @@ describe('RegistrationCacheGuard', () => {
         guard = new RegistrationCacheGuard(<any>{
             updateStore: updateStoreSpy,
             getStoreData: () => Observable.of({owner: {token: 'token'}})
-        }, <any>window, <any>localStorage);
+        }, <any>window);
 
     });
 

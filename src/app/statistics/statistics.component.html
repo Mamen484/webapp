@@ -6,21 +6,21 @@
                         [processing]="processingFilters"></sf-search-channels>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch" class="channels-list">
 
-        <mat-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(33.33% - 20px)"
+        <md-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(33.33% - 20px)"
                  fxFlex.xs="0 0 calc(33.33% - 20px)" fxFlex.lg="0 0 calc(25% - 20px)"
                  fxFlex.xl="0 0 calc(16.66% - 20px)"
                  *ngFor="let channel of channels._embedded.channel">
             <sf-configured-channel [channel]="channel" *ngIf="channel.installed"></sf-configured-channel>
             <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
             [firstChannel]="haveNoChannels" [charge]="charge"></sf-suggested-channel>
-        </mat-card>
+        </md-card>
     </div>
     <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">
         <div>No results</div>
         <a href="#" (click)="resetFilter()">Clear the selection</a>
     </div>
     <div>
-        <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
+        <md-spinner *ngIf="!infiniteScrollDisabled"></md-spinner>
     </div>
 
 </div>

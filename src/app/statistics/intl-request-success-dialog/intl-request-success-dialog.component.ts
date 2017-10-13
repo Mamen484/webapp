@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MdDialogRef } from '@angular/material';
 
 @Component({
     selector: 'sf-intl-request-success-dialog',
@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material';
 })
 export class IntlRequestSuccessDialogComponent {
 
-    constructor(public dialogRef: MatDialogRef<IntlRequestSuccessDialogComponent>) {
+    constructor(public dialogRef: MdDialogRef<IntlRequestSuccessDialogComponent>) {
     }
 
     close() {

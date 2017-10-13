@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatSelectModule } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogModule, MdDialogRef, MdSelectModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,13 +22,13 @@ describe('FilterChannelsDialogComponent', () => {
                 NoopAnimationsModule,
                 CommonModule,
                 FormsModule,
-                MatDialogModule,
-                MatSelectModule,
+                MdDialogModule,
+                MdSelectModule,
             ],
             declarations: [FilterChannelsDialogComponent],
             providers: [
-                {provide: MatDialogRef, useValue: {}},
-                {provide: MAT_DIALOG_DATA, useValue: params},
+                {provide: MdDialogRef, useValue: {}},
+                {provide: MD_DIALOG_DATA, useValue: params},
                 {provide: LocaleIdService, useValue: {localeId: 'en'}},
                 {provide: Store, useValue: {select: () => Observable.of({country: 'en'})}}
             ]

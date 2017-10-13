@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CreateStoreModel } from '../entities/create-store-model';
+import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()
@@ -9,9 +9,9 @@ export class CreatePasswordService {
     /**
      * @type {string}
      */
-    protected apiUrl = environment.API_URL;
+    private apiUrl = environment.API_URL;
 
-    constructor(protected httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient) {
     }
 
     public createPassword(store: CreateStoreModel) {

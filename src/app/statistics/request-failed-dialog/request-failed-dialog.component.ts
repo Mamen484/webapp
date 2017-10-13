@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MdDialogRef } from '@angular/material';
 
 import { environment } from '../../../environments/environment';
 
@@ -12,7 +12,7 @@ export class RequestFailedDialogComponent {
 
   contactEmail = environment.CONTACT_EMAIL;
 
-    constructor(public dialogRef: MatDialogRef<RequestFailedDialogComponent>) {
+    constructor(public dialogRef: MdDialogRef<RequestFailedDialogComponent>) {
     }
 
     close() {
