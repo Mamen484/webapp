@@ -5,7 +5,7 @@
   background-color: mat-color($grey, 50);
 }
 
-mat-dialog-content {
+md-dialog-content {
   width: 535px;
   margin-bottom: 0;
   margin-top: 20px;
@@ -18,20 +18,20 @@ img {
 
 .mat-display-1 {
   margin-bottom: 5px;
-  color: $black-87-opacity;
+  color: mat-color($grey, 1000, 0.87);
 }
 
 .dialog-heading {
   margin-bottom: 40px;
 }
 
-mat-dialog-actions {
+md-dialog-actions {
   text-align: center;
   float: none;
   display: block;
   margin-bottom: 0 !important;
 
-  a[mat-button] {
+  a[md-button] {
     margin-right: 5px;
   }
 }

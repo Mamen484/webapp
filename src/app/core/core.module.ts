@@ -2,7 +2,6 @@ import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import '../../rxjs-imports';
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
@@ -21,23 +20,19 @@ import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
+import { supportSearchMock } from '../../mocks/support-search-mock';
 import { PasswordRecoveryService } from './services/password-recovery.service';
 import { ChannelLogoService } from './services/channel_logo.service';
 import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
 import { ShopifyGuard } from './guards/shopify.guard';
 import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
 import { RegistrationCacheGuard } from './guards/registration-cache.guard';
-import { CreatePasswordService } from './services/create-password.service';
+import { CreatePasswordService } from '../registration/create-password/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
-import { TimelineService } from './services/timeline.service';
-import { EventsResolveGuard } from './guards/events-resolve.guard';
-import { EventUpdatesGuard } from './guards/event-updates.guard';
-import { LocalStorageService } from './services/local-storage.service';
-import { InitializeStoreGuard } from './guards/initialize-store.guard';
 
 @NgModule({
     imports: [
@@ -48,14 +43,12 @@ import { InitializeStoreGuard } from './guards/initialize-store.guard';
             currentStore: currentStoreReducer,
             channels: channelsReducer,
             storeStatistics: statisticsReducer,
-        })
+        }),
+
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
         CheckProperLocaleGuard,
-        EventsResolveGuard,
-        EventUpdatesGuard,
-        InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
@@ -75,13 +68,10 @@ import { InitializeStoreGuard } from './guards/initialize-store.guard';
         UserService,
         StoreService,
         LegacyLinkService,
-        LocalStorageService,
-        TimelineService,
 
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     ],
     declarations: []
 })

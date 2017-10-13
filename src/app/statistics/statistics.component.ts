@@ -7,11 +7,10 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 import { StoreChannel } from '../core/entities/store-channel';
 import { StoreService } from '../core/services/store.service';
 import { PagedResponse } from '../core/entities/paged-response';
-import { MatDialog } from '@angular/material';
+import { MdDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
-import { StoreCharge } from '../core/entities/store-charge';
-import { cloneDeep } from 'lodash';
+import { StoreCharge } from '../core/store-charge';
 
 const LOAD_CHANNELS_COUNT = 6;
 /**
@@ -37,7 +36,7 @@ export class StatisticsComponent {
     haveNoChannels = false;
     charge: StoreCharge;
 
-    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MdDialog) {
 
         this.appStore.select('currentStore')
             .do(() => this.displayPageLoading())
@@ -117,7 +116,7 @@ export class StatisticsComponent {
 
     protected initialize(data) {
 
-        this.channels = cloneDeep(data);
+        this.channels = data;
         this.channels._embedded.channel.forEach(channel => {
             if (channel.installed) {
                 (<StoreChannel>channel).statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);

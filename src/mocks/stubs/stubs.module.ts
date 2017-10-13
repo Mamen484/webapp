@@ -6,7 +6,6 @@ import { SearchChannelsStubComponent } from './search-channels-stub.component';
 import { StoreStatisticsStubComponent } from './store-statistics-stub.component';
 import { SuggestedChannelStubComponent } from './suggested-channel-stub.component';
 import { DummyRouterDirective } from './dummy-router.directive';
-import { LegacyLinkStubDirective } from './legacy-link-stub.directive';
 
 @NgModule({
   imports: [
@@ -19,7 +18,6 @@ import { LegacyLinkStubDirective } from './legacy-link-stub.directive';
       SearchChannelsStubComponent,
       StoreStatisticsStubComponent,
       DummyRouterDirective,
-      LegacyLinkStubDirective,
   ]
 })
 export class StubsModule { }

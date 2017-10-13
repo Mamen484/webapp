@@ -1,4 +1,16 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { AppState } from '../core/entities/app-state';
+import { SET_STORE, UPDATE_TIMELINE } from '../core/reducers/current-store-reducer';
+import { INITIALIZE_USER_INFO } from '../core/reducers/user-info-reducer';
+import { Observable } from 'rxjs/Observable';
+import { UserService } from '../core/services/user.service';
+import { StoreStatus } from '../core/entities/store-status.enum';
+
+const MINUTE = 6e4;
 
 @Component({
     selector: 'app-homepage',
@@ -6,4 +18,35 @@ import { Component } from '@angular/core';
     styleUrls: ['./base.component.scss']
 })
 export class BaseComponent {
+
+    constructor(protected route: ActivatedRoute,
+                protected appStore: Store<AppState>,
+                protected userService: UserService) {
+        this.route.data.subscribe(this.initializeAppStore.bind(this));
+        this.pollTimelineEventsChanges();
+    }
+
+    protected initializeAppStore({userInfo}: { userInfo: AggregatedUserInfo }) {
+        this.route.queryParams.subscribe(params => {
+            let store;
+            if (params.store) {
+                store = userInfo._embedded.store.find(s => s.name === params.store || String(s.id) === params.store);
+            }
+            if (!store) {
+                store = userInfo._embedded.store.find(s => s.status !== StoreStatus.deleted);
+            }
+            this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
+            this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+        });
+    }
+
+    protected pollTimelineEventsChanges() {
+        Observable.interval(MINUTE).flatMap(() => this.userService.fetchAggregatedInfo(true))
+            .subscribe(userInfo => {
+                this.appStore.select('currentStore').take(1).subscribe(currentStore => {
+                    let timelineEvents = userInfo._embedded.store.find(store => store.id === currentStore.id).timeline.total;
+                    this.appStore.dispatch({type: UPDATE_TIMELINE, timelineEvents});
+                })
+            })
+    }
 }

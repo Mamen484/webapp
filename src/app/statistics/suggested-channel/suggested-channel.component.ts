@@ -1,13 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { Channel } from '../../core/entities/channel';
-import { MatDialog } from '@angular/material';
+import { MdDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 import { StoreChannel } from '../../core/entities/store-channel';
+import { WindowRefService } from '../../core/services/window-ref.service';
 import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-channel-dialog.component';
-import { StoreCharge } from '../../core/entities/store-charge';
+import { StoreCharge } from '../../core/store-charge';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -21,8 +22,9 @@ export class SuggestedChannelComponent {
     @Input() firstChannel = false;
     @Input() charge: StoreCharge;
 
-    constructor(protected dialog: MatDialog,
-                protected internationalAccountService: InternationalAccountService) {
+    constructor(protected dialog: MdDialog,
+                protected internationalAccountService: InternationalAccountService,
+                protected windowRef: WindowRefService) {
     }
 
     showInternationalChannelDialog() {

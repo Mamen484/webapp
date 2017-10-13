@@ -1,77 +1,77 @@
-<mat-sidenav-container>
-    <mat-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
-        <mat-list>
-            <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS" matTooltipPosition="after"
-                          i18n-matTooltip *ngIf="hasChannelsPermissions() | async" (onMenuOpen)="onMenuOpen()">
-                <mat-icon class="active">wb_cloudy</mat-icon>
-            </mat-list-item>
+<md-sidenav-container>
+    <md-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
+        <md-list>
+            <md-list-item class="mat-active" [mdMenuTriggerFor]="channelsMenu" mdTooltip="CHANNELS" mdTooltipPosition="after"
+                          i18n-mdTooltip *ngIf="hasChannelsPermissions() | async" (onMenuOpen)="onMenuOpen()">
+                <md-icon class="active">wb_cloudy</md-icon>
+            </md-list-item>
 
-            <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
+            <md-list-item [mdMenuTriggerFor]="ordersMenu" mdTooltip="ORDERS" i18n-mdTooltip mdTooltipPosition="after"
                           *ngIf="(currentStore | async).permission.marketplaces">
-                <mat-icon [ngClass]="{'sf-badge': (currentStore | async).order.total > 0}"
-                         [attr.data-badge]="(currentStore | async).order.total">shopping_basket</mat-icon>
-            </mat-list-item>
+                <md-icon [ngClass]="{'sf-badge': (currentStore | async).order.total > 0}"
+                         [attr.data-badge]="(currentStore | async).order.total">shopping_basket</md-icon>
+            </md-list-item>
 
-            <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
-                          i18n-matTooltip matTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
-                <mat-icon>trending_up</mat-icon>
-            </mat-list-item>
+            <md-list-item [mdMenuTriggerFor]="statisticsMenu" mdTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
+                          i18n-mdTooltip mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
+                <md-icon>trending_up</md-icon>
+            </md-list-item>
 
-            <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
-                          i18n-matTooltip *ngIf="(currentStore | async).permission.tools" (onMenuOpen)="onMenuOpen()">
-                <mat-icon>build</mat-icon>
-            </mat-list-item>
+            <md-list-item [mdMenuTriggerFor]="utilsMenu" mdTooltip="TOOLS" i18n-mdTooltip mdTooltipPosition="after"
+                          i18n-mdTooltip *ngIf="(currentStore | async).permission.tools" (onMenuOpen)="onMenuOpen()">
+                <md-icon>build</md-icon>
+            </md-list-item>
 
-            <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS"  i18n-matTooltip
-                          matTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
-                <mat-icon>apps</mat-icon>
-            </mat-list-item>
+            <md-list-item [mdMenuTriggerFor]="appsMenu" mdTooltip="APPS"  i18n-mdTooltip
+                          mdTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
+                <md-icon>apps</md-icon>
+            </md-list-item>
 
-            <mat-list-item  matTooltip="UNIVERSITY" i18n-matTooltip matTooltipPosition="after"
+            <md-list-item  mdTooltip="UNIVERSITY" i18n-mdTooltip mdTooltipPosition="after"
                            *ngIf="(currentStore | async).permission.university">
-                <mat-icon>school</mat-icon>
-            </mat-list-item>
-        </mat-list>
-        <div class="sf-sidebar-bottom-help" matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip>
-            <a [href]="getSupportLink()" target="_blank"><mat-icon>help</mat-icon></a>
+                <md-icon>school</md-icon>
+            </md-list-item>
+        </md-list>
+        <div class="sf-sidebar-bottom-help" mdTooltip="SUPPORT" mdTooltipPosition="after" i18n-mdTooltip>
+            <a [href]="getSupportLink()" target="_blank"><md-icon>help</md-icon></a>
         </div>
-    </mat-sidenav>
+    </md-sidenav>
 
 
-</mat-sidenav-container>
-<mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu">
-    <a mat-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" sfLegacyLink [path]="getChannelLink(channel)">
+</md-sidenav-container>
+<md-menu #channelsMenu="mdMenu" class="sf-sidebar-menu channels-menu">
+    <a md-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" sfLegacyLink [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
-    <a mat-menu-item sfLegacyLink path="/tools/export" i18n>Custom data feeds</a>
-</mat-menu>
-<mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item sfLegacyLink path="/tools/rules" i18n>Rules</a>
-    <a mat-menu-item sfLegacyLink path="/tools/segmentations" i18n>Auto-Remove</a>
-    <a mat-menu-item sfLegacyLink path="/marketplaces/autotag" i18n>Manage colors & sizes</a>
-    <a mat-menu-item sfLegacyLink path="/tools/field" i18n>Create new fields</a>
-    <a mat-menu-item sfLegacyLink path="/tools/relaunch" i18n>Intelligent assistant</a>
+    <a md-menu-item sfLegacyLink path="/tools/export" i18n>Custom data feeds</a>
+</md-menu>
+<md-menu #utilsMenu="mdMenu" class="sf-sidebar-menu">
+    <a md-menu-item sfLegacyLink path="/tools/rules" i18n>Rules</a>
+    <a md-menu-item sfLegacyLink path="/tools/segmentations" i18n>Auto-Remove</a>
+    <a md-menu-item sfLegacyLink path="/marketplaces/autotag" i18n>Manage colors & sizes</a>
+    <a md-menu-item sfLegacyLink path="/tools/field" i18n>Create new fields</a>
+    <a md-menu-item sfLegacyLink path="/tools/relaunch" i18n>Intelligent assistant</a>
     <hr>
-    <a mat-menu-item sfLegacyLink path="/tools/infos" i18n>Source feed</a>
-    <a mat-menu-item sfLegacyLink path="/tools/filters" i18n>Filters</a>
-    <a mat-menu-item sfLegacyLink path="/tools/newproducts" i18n>Recently added products</a>
-    <a mat-menu-item sfLegacyLink path="/multiple" i18n>Select multichannels products</a>
-</mat-menu>
-<mat-menu #ordersMenu="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item sfLegacyLink path="/marketplaces/orders" i18n>Orders</a>
-    <a mat-menu-item sfLegacyLink path="/marketplaces/listexport" i18n>Order reporting</a>
-</mat-menu>
-<mat-menu #statisticsMenu="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item sfLegacyLink path="/statistics" i18n>Global statistics</a>
-    <a mat-menu-item sfLegacyLink path="/statistics/marketplaces" i18n>Marketplace statistics</a>
-    <a mat-menu-item sfLegacyLink path="/statistics/shopbots" i18n>Shopping engine statistics</a>
+    <a md-menu-item sfLegacyLink path="/tools/infos" i18n>Source feed</a>
+    <a md-menu-item sfLegacyLink path="/tools/filters" i18n>Filters</a>
+    <a md-menu-item sfLegacyLink path="/tools/newproducts" i18n>Recently added products</a>
+    <a md-menu-item sfLegacyLink path="/multiple" i18n>Select multichannels products</a>
+</md-menu>
+<md-menu #ordersMenu="mdMenu" class="sf-sidebar-menu">
+    <a md-menu-item sfLegacyLink path="/marketplaces/orders" i18n>Orders</a>
+    <a md-menu-item sfLegacyLink path="/marketplaces/listexport" i18n>Order reporting</a>
+</md-menu>
+<md-menu #statisticsMenu="mdMenu" class="sf-sidebar-menu">
+    <a md-menu-item sfLegacyLink path="/statistics" i18n>Global statistics</a>
+    <a md-menu-item sfLegacyLink path="/statistics/marketplaces" i18n>Marketplace statistics</a>
+    <a md-menu-item sfLegacyLink path="/statistics/shopbots" i18n>Shopping engine statistics</a>
     <hr>
-    <a mat-menu-item sfLegacyLink path="/statistics/parameters" i18n>Settings</a>
-    <a mat-menu-item sfLegacyLink path="/tools/marges" i18n>Margings</a>
-    <a mat-menu-item sfLegacyLink path="/statistics/compare" i18n>Compare channels</a>
-    <a mat-menu-item sfLegacyLink path="/statistics/exportstatistics" i18n>Exports</a>
-</mat-menu>
-<mat-menu #appsMenu="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item sfLegacyLink path="/repricing" i18n>Repricing</a>
-    <a mat-menu-item sfLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
-</mat-menu>
+    <a md-menu-item sfLegacyLink path="/statistics/parameters" i18n>Settings</a>
+    <a md-menu-item sfLegacyLink path="/tools/marges" i18n>Margings</a>
+    <a md-menu-item sfLegacyLink path="/statistics/compare" i18n>Compare channels</a>
+    <a md-menu-item sfLegacyLink path="/statistics/exportstatistics" i18n>Exports</a>
+</md-menu>
+<md-menu #appsMenu="mdMenu" class="sf-sidebar-menu">
+    <a md-menu-item sfLegacyLink path="/repricing" i18n>Repricing</a>
+    <a md-menu-item sfLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
+</md-menu>

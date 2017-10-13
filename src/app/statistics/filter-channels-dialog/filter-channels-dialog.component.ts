@@ -3,7 +3,7 @@ import { toPairs } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { ChannelType } from '../../core/entities/channel-type.enum';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 import { AppState } from '../../core/entities/app-state';
 import { environment } from '../../../environments/environment';
@@ -18,8 +18,8 @@ export class FilterChannelsDialogComponent {
     filter = new ChannelsRequestParams();
     baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
 
-    constructor(protected dialogRef: MatDialogRef<FilterChannelsDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) protected data: ChannelsRequestParams,
+    constructor(protected dialogRef: MdDialogRef<FilterChannelsDialogComponent>,
+                @Inject(MD_DIALOG_DATA) protected data: ChannelsRequestParams,
                 protected appStore: Store<AppState>) {
 
         this.initializeFilter();

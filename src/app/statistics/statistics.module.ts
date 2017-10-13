@@ -13,13 +13,11 @@ import { RequestFailedDialogComponent } from './request-failed-dialog/request-fa
 import { NoChannelsDialogComponent } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 import { AcceptChannelDialogComponent } from './accept-channel-dialog/accept-channel-dialog.component';
-import { StatisticsRoutingModule } from './statistics-routing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        StatisticsRoutingModule,
     ],
     exports: [StatisticsComponent],
     declarations: [StatisticsComponent,

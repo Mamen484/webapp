@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 @import 'variables';
 
 @include mat-core();
@@ -26,8 +27,8 @@ body {
     }
   }
 
-  mat-toolbar {
-    mat-icon {
+  md-toolbar {
+    md-icon {
       cursor: pointer;
     }
   }
@@ -37,7 +38,7 @@ body {
   }
 }
 
-[mat-raised-button].mat-raised-button {
+[md-raised-button].mat-raised-button {
   &:not(:hover) {
     box-shadow: none;
   }

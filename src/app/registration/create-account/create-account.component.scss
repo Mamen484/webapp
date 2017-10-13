@@ -11,15 +11,15 @@
   h1 {
     margin-bottom: 20px;
     text-align: center;
-    color: $black-54-opacity;
+    color: mat-color($grey, 1000, 0.54);
   }
 }
 
-mat-card {
+md-card {
   width: 550px;
   text-align: left;
   padding: 45px 90px;
-  color: $black-54-opacity;
+  color: mat-color($grey, 1000, 0.54);
 
   h2.mat-title {
     color: mat-color($accent);
