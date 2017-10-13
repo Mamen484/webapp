@@ -1789,21 +1789,21 @@
         </context-group>
         <target xml:lang="en" state="needs-translation">No events</target>
       </trans-unit>
-      <trans-unit id="794490686d730aa81f1bba07205127036ab4f2fa" datatype="html">
-        <source>The order <x id="INTERPOLATION"/> has been shipped.</source>
+      <trans-unit id="3116b61b48363fe13c5ce3493111bc64b8f0001f" datatype="html">
+        <source>The order <x id="INTERPOLATION"/>  can't be shipped.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">2</context>
         </context-group>
-        <target xml:lang="en" state="needs-translation">The order <x id="INTERPOLATION"/> has been shipped.</target>
+        <target xml:lang="en" state="needs-translation">The order <x id="INTERPOLATION"/>  can't be shipped.</target>
       </trans-unit>
-      <trans-unit id="480aa0a95ceb019be47d49f800457f7f192c099f" datatype="html">
-        <source>The order <x id="INTERPOLATION"/> has been imported to your store.</source>
+      <trans-unit id="6c35c112ec961c326e6320a45b1f19122bf0f273" datatype="html">
+        <source>The order <x id="INTERPOLATION"/> can't be imported to your store.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <target xml:lang="en" state="needs-translation">The order <x id="INTERPOLATION"/> has been imported to your store.</target>
+        <target xml:lang="en" state="needs-translation">The order <x id="INTERPOLATION"/> can't be imported to your store.</target>
       </trans-unit>
       <trans-unit id="e0e0a5cc0aeec486d118faa5d0aa529530f19181" datatype="html">
         <source>The Auto-Remove rule </source>
@@ -1849,7 +1849,7 @@
         <source>In progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="en" state="needs-translation">In progress</target>
       </trans-unit>
@@ -1857,7 +1857,7 @@
         <source>Scheduled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="en" state="needs-translation">Scheduled</target>
       </trans-unit>
@@ -1865,7 +1865,7 @@
         <source>Completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">16</context>
         </context-group>
         <target xml:lang="en" state="needs-translation">Completed</target>
       </trans-unit>

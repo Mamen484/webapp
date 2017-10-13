@@ -1779,21 +1779,21 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         </context-group>
         <target xml:lang="es-ES">No hay eventos</target>
       </trans-unit>
-      <trans-unit id="794490686d730aa81f1bba07205127036ab4f2fa" datatype="html" approved="yes">
-        <source>The order <x id="INTERPOLATION"/> has been shipped.</source>
+      <trans-unit id="3116b61b48363fe13c5ce3493111bc64b8f0001f" datatype="html" approved="yes">
+        <source>The order <x id="INTERPOLATION"/>  can't be shipped.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">2</context>
         </context-group>
-        <target xml:lang="es-ES">El pedido <x id="INTERPOLATION"/> se ha enviado.</target>
+        <target xml:lang="es-ES">El pedido <x id="INTERPOLATION"/> no se ha podido enviar.</target>
       </trans-unit>
-      <trans-unit id="480aa0a95ceb019be47d49f800457f7f192c099f" datatype="html" approved="yes">
-        <source>The order <x id="INTERPOLATION"/> has been imported to your store.</source>
+      <trans-unit id="6c35c112ec961c326e6320a45b1f19122bf0f273" datatype="html" approved="yes">
+        <source>The order <x id="INTERPOLATION"/> can't be imported to your store.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">3</context>
         </context-group>
-        <target xml:lang="es-ES">El pedido <x id="INTERPOLATION"/> se ha importado a su tienda.</target>
+        <target xml:lang="es-ES">El pedido <x id="INTERPOLATION"/> no se ha importado a su tienda.</target>
       </trans-unit>
       <trans-unit id="e0e0a5cc0aeec486d118faa5d0aa529530f19181" datatype="html" approved="yes">
         <source>The Auto-Remove rule </source>
@@ -1839,7 +1839,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>In progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="es-ES">En progreso</target>
       </trans-unit>
@@ -1847,7 +1847,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>Scheduled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <target xml:lang="es-ES">Programado</target>
       </trans-unit>
@@ -1855,7 +1855,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>Completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">16</context>
         </context-group>
         <target xml:lang="es-ES">Terminado</target>
       </trans-unit>
