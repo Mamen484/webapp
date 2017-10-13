@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
 export const SHOW_CHANNELS = 1;
@@ -14,7 +14,7 @@ export class NoChannelsDialogComponent {
 
     baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
 
-    constructor(public dialogRef: MdDialogRef<NoChannelsDialogComponent>) {
+    constructor(public dialogRef: MatDialogRef<NoChannelsDialogComponent>) {
     }
 
 

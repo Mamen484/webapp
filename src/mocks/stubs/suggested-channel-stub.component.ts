@@ -8,4 +8,6 @@ import { Channel } from '../../app/core/entities/channel';
 export class SuggestedChannelStubComponent {
     @Input() channel: Channel;
     @Input() internationalMode = false;
+    @Input() firstChannel: boolean;
+    @Input() charge;
 }

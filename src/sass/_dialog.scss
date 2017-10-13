@@ -1,17 +1,17 @@
 @import './variables';
 
-md-dialog-content.mat-dialog-content {
+mat-dialog-content.mat-dialog-content {
   margin-top: 35px;
   margin-bottom: 35px;
 
-  color: mat-color($grey, 1000, 0.54);
+  color: $black-54-opacity;
 
   .error {
     color: mat-color($warn);
   }
 }
 
-md-dialog-actions {
+mat-dialog-actions {
   float: right;
 
   button.mat-button {

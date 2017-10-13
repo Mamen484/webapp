@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { AuthInterceptor } from './auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { WindowRefService } from '../services/window-ref.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 describe('AuthInterceptor', () => {
 
@@ -15,7 +16,7 @@ describe('AuthInterceptor', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-                {provide: WindowRefService, useValue: {nativeWindow: {localStorage: {getItem: getItemSpy}}}}
+                {provide: LocalStorageService, useValue: {getItem: getItemSpy}}
             ]
         });
     });

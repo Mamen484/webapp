@@ -1,5 +1,6 @@
 import './polyfills.ts';
 import './rxjs-imports';
+import 'intl/locale-data/jsonp/en.js';
 
 import 'zone.js/dist/long-stack-trace-zone';
 import 'zone.js/dist/proxy.js';

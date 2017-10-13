@@ -71,7 +71,7 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
         return false;
     }
 
-    followLink(link: HTMLLinkElement){
+    followLink(link: HTMLLinkElement) {
         link.click();
         this.clearSearch();
     }

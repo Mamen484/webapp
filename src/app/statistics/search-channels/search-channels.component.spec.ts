@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchChannelsComponent } from './search-channels.component';
 import {
-    MdButtonModule, MdCardModule, MdChipsModule, MdDialog, MdIconModule,
-    MdProgressBarModule
+    MatButtonModule, MatCardModule, MatChipsModule, MatDialog, MatIconModule,
+    MatProgressBarModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -22,17 +22,17 @@ describe('SearchChannelsComponent', () => {
                 CommonModule,
                 FormsModule,
                 ReactiveFormsModule,
-                MdCardModule,
-                MdChipsModule,
-                MdButtonModule,
-                MdIconModule,
-                MdProgressBarModule
+                MatCardModule,
+                MatChipsModule,
+                MatButtonModule,
+                MatIconModule,
+                MatProgressBarModule
             ],
             declarations: [
                 SearchChannelsComponent,
             ],
             providers: [
-                {provide: MdDialog, useValue: {open: () => ({afterClosed: afterClosedSpy})}}
+                {provide: MatDialog, useValue: {open: () => ({afterClosed: afterClosedSpy})}}
             ]
         })
             .compileComponents();

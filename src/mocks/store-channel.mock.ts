@@ -27,6 +27,7 @@ class MockChannel {
     }
 }
 
+let channels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(id => new MockChannel('amazon' + id, id));
 export const storeChannelMock = {
     'total': 100,
     'limit': 10,
@@ -39,6 +40,7 @@ export const storeChannelMock = {
         }
     },
     '_embedded': {
-        'storeChannel': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(id => new MockChannel('amazon' + id, id))
+        'storeChannel': channels,
+        'channel': channels
     }
 };

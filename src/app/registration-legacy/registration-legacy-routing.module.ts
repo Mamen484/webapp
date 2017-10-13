@@ -5,9 +5,9 @@ import { PlatformComponent } from './platform/platform.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-    {path: 'register/welcome', component: WelcomeComponent},
-    {path: 'register/platform/:channelName', component: PlatformComponent},
-    {path: 'register/schedule-call', component: ScheduleCallComponent},
+    {path: 'welcome', component: WelcomeComponent},
+    {path: 'platform/:channelName', component: PlatformComponent},
+    {path: 'schedule-call', component: ScheduleCallComponent},
 ];
 
 @NgModule({
