@@ -5,8 +5,8 @@ import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineUpdateName } from '../entities/timeline-update-name.enum';
 import { Observable } from 'rxjs/Observable';
 
-const DAY = 1000 * 60 * 60 * 24;
-const MAX_UPDATES = 100;
+const UPDATES_PERIOD = 1000 * 60 * 60 * 6; // 6 hours
+const MAX_UPDATES = 30;
 
 @Injectable()
 export class TimelineService {
@@ -29,7 +29,7 @@ export class TimelineService {
             {
                 params: new HttpParams()
                     .set('name', `${TimelineUpdateName.export},${TimelineUpdateName.import}`)
-                    .set('since', new Date(Date.now() - DAY).toISOString())
+                    .set('since', new Date(Date.now() - UPDATES_PERIOD).toISOString())
                     .set('limit', String(MAX_UPDATES))
             })
     }
