@@ -8,6 +8,7 @@ import { TimelineUpdate } from '../entities/timeline-update';
 import { Timeline } from '../entities/timeline';
 import { TimelineUpdateAction } from '../entities/timeline-update-action.enum';
 import { findLast } from 'lodash';
+import { Subject } from 'rxjs/Subject';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 6; // 6 hours
 const MAX_UPDATES = 30;
@@ -20,6 +21,8 @@ const updateActions = {
 
 @Injectable()
 export class TimelineService {
+
+    timelineStream = new Subject();
 
     constructor(protected httpClient: HttpClient) {
     }
@@ -44,6 +47,15 @@ export class TimelineService {
             })
             .map((updates: Timeline<TimelineUpdate>) => this.removeDuplication(updates))
 
+    }
+
+    getTimelineStream() {
+        return this.timelineStream.asObservable();
+    }
+
+    emitUpdatedTimeline(storeId) {
+        this.getEvents(storeId).zip(this.getEventUpdates(storeId))
+            .subscribe(([events, updates]) => this.timelineStream.next({events, updates}))
     }
 
     protected removeDuplication(updates) {
