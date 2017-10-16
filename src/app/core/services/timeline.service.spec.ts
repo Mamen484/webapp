@@ -214,9 +214,9 @@ let data = {
             }
         }]
     }
-}
+};
 
-fdescribe('TimelineService', () => {
+describe('TimelineService', () => {
 
     let service;
     beforeEach(() => {
