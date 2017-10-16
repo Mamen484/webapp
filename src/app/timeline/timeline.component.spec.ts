@@ -39,7 +39,7 @@ describe('TimelineComponent', () => {
             ],
             providers: [
                 {provide: ActivatedRoute, useValue: {data: Observable.of({timeline: events, updates})}},
-                {provide: TimelineService, useValue: {getEvents: getEventsSpy}}
+                {provide: TimelineService, useValue: {getEvents: getEventsSpy, getTimelineStream: () => Observable.empty()}}
             ]
         })
             .compileComponents();

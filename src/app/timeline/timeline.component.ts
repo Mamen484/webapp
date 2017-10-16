@@ -1,16 +1,12 @@
 import { Component, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { groupBy, toPairs } from 'lodash';
-import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
 import { TimelineUpdate } from '../core/entities/timeline-update';
-import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { TimelineEventFormatted } from '../core/entities/timeline-event-formatted';
 import { Timeline } from '../core/entities/timeline';
-import { Store } from '@ngrx/store';
-import { AppState } from '../core/entities/app-state';
 
 
 @Component({
@@ -22,8 +18,6 @@ export class TimelineComponent {
 
     events;
     updates: TimelineUpdate[];
-    eventTypes = TimelineEventName;
-    updateTypes = TimelineUpdateName;
     updateOperations = TimelineUpdateAction;
     updatesInProgress = 0;
     nextLink = null;
@@ -32,7 +26,6 @@ export class TimelineComponent {
 
     constructor(protected route: ActivatedRoute,
                 protected timelineService: TimelineService,
-                protected appStore: Store<AppState>,
                 protected elementRef: ElementRef) {
         this.route.data.subscribe(
             ({timeline, updates}) => {

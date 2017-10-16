@@ -18,6 +18,14 @@
   }
 }
 
+.event {
+  mat-list-item {
+    &:hover {
+      cursor: pointer;
+      background-color: mat-color($grey, 200);
+    }
+  }
+}
 
 .event, .update {
   width: calc(100% - 40px); //40px - list-item paddings + margin between card and sidebar
@@ -43,13 +51,16 @@ mat-list {
 }
 
 .update {
-  background: mat-color($accent, 700, 0.05);
-
   .updates-in-progress {
     background-color: $black-12-opacity;
     border-bottom: none;
   }
-
+  mat-list-item:not(.updates-in-progress) {
+    background: mat-color($accent, 700, 0.05);
+    &:hover {
+      background: none;
+    }
+  }
 
 }
 
@@ -57,6 +68,7 @@ mat-list {
   text-align: center;
   color: $black-54-opacity;
 }
+
 .no-events {
   padding: 15px;
 }
@@ -65,7 +77,7 @@ mat-spinner {
   margin: auto;
 }
 
-mat-chip[color="accent"]{
-  background-color: mat-color($accent);
+mat-chip.updates-badge {
+  background-color: mat-color($green, 400);
   color: mat-color($grey, 50);
 }
