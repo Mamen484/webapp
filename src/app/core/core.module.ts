@@ -8,7 +8,6 @@ import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
-import { channelsReducer } from './reducers/channels-reducer';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { statisticsReducer } from './reducers/statistics-reducer';
@@ -46,7 +45,6 @@ import { InitializeStoreGuard } from './guards/initialize-store.guard';
         StoreModule.forRoot({
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
-            channels: channelsReducer,
             storeStatistics: statisticsReducer,
         })
     ],
