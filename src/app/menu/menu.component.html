@@ -2,7 +2,7 @@
     <div class="sf-nav-welcome-text mat-title">{{currentStore.name}}</div>
 
     <sf-support-help-center></sf-support-help-center>
-    <a routerLink="/timeline" class="sf-icon-link">
+    <a (click)="navigateToTimeline()" class="sf-icon-link">
         <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
                  [attr.data-badge]="newEvents">notifications_none
         </mat-icon>

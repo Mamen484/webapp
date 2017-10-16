@@ -8,14 +8,12 @@
                 <div class="sf-fill-space mat-body-1" i18n>
                     Number of updates in progress
                 </div>
-                <div>
-                    <mat-chip-list>
-                        <mat-chip color="accent">{{updatesInProgress}}</mat-chip>
-                    </mat-chip-list>
-                </div>
+                <mat-chip-list>
+                    <mat-chip class="updates-badge">{{updatesInProgress}}</mat-chip>
+                </mat-chip-list>
             </mat-list-item>
             <mat-list-item *ngFor="let update of updates">
-              <sf-update-row [update]="update"></sf-update-row>
+                <sf-update-row [update]="update"></sf-update-row>
             </mat-list-item>
             <mat-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>

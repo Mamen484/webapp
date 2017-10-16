@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { groupBy, toPairs } from 'lodash';
-import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
 import { TimelineUpdate } from '../core/entities/timeline-update';
-import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
@@ -20,21 +18,28 @@ export class TimelineComponent {
 
     events;
     updates: TimelineUpdate[];
-    eventTypes = TimelineEventName;
-    updateTypes = TimelineUpdateName;
     updateOperations = TimelineUpdateAction;
     updatesInProgress = 0;
     nextLink = null;
     processing = false;
     infiniteScrollDisabled = false;
 
-    constructor(protected route: ActivatedRoute, protected timelineService: TimelineService) {
+    constructor(protected route: ActivatedRoute,
+                protected timelineService: TimelineService,
+                protected elementRef: ElementRef) {
         this.route.data.subscribe(
             ({timeline, updates}) => {
                 this.initializeEvents(timeline);
                 this.initializeUpdates(updates);
             }
         );
+
+        this.timelineService.getTimelineStream().subscribe(({events, updates}) => {
+            this.initializeEvents(events);
+            this.initializeUpdates(updates);
+            /* We emulate page reload, so we need to scroll up like the page is reloaded. */
+            this.elementRef.nativeElement.firstChild.scroll(0, 0);
+        });
     }
 
     onScroll() {
@@ -91,9 +96,7 @@ export class TimelineComponent {
     protected initializeEvents(timeline) {
         this.events = this.formatEvents(timeline._embedded.timeline);
         this.nextLink = timeline._links.next && timeline._links.next.href;
-        if (!this.nextLink) {
-            this.infiniteScrollDisabled = true;
-        }
+        this.infiniteScrollDisabled = !this.nextLink;
     }
 
     protected formatEvents(timeline: TimelineEvent[]) {
