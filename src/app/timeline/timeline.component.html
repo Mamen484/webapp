@@ -1,4 +1,4 @@
-<div class="timeline" infiniteScroll [infiniteScrollDistance]="2"
+<div class="timeline" infiniteScroll [infiniteScrollDistance]="2" *ngIf="!loadingTimeline"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div class="heading-date mat-body-1" i18n>Latest updates</div>
@@ -48,4 +48,7 @@
     <div>
         <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
     </div>
+</div>
+<div class="timeline" *ngIf="loadingTimeline">
+    <mat-spinner></mat-spinner>
 </div>
