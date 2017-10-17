@@ -12,8 +12,7 @@ $toolbar-search-margin: 10px;
 .toolbar-search-container {
   position: relative;
   z-index: 20;
-  width: 50vw;
-  min-width: calc(#{$min-width} / 2);
+  flex: 1;
   font-size: mat-font-size($config, headline);
   background: mat-color($primary, A100, 0.2);
   border-radius: 2px;
