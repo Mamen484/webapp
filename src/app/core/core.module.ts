@@ -37,6 +37,7 @@ import { EventsResolveGuard } from './guards/events-resolve.guard';
 import { EventUpdatesGuard } from './guards/event-updates.guard';
 import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
+import { ErrorInterceptor } from './interceptors/error-interceptor';
 
 @NgModule({
     imports: [
@@ -78,6 +79,7 @@ import { InitializeStoreGuard } from './guards/initialize-store.guard';
 
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
         {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     ],
