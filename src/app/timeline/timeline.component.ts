@@ -8,6 +8,7 @@ import { TimelineEventFormatted } from '../core/entities/timeline-event-formatte
 import { Timeline } from '../core/entities/timeline';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
+import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 
 
 @Component({
@@ -58,6 +59,14 @@ export class TimelineComponent {
             }
             this.processing = false;
         });
+    }
+
+    getUpdateLink(update: TimelineUpdate) {
+        if (update.name === TimelineUpdateName.import) {
+            return '/tools/infos';
+        } else {
+            return this.getChannelLink(update);
+        }
     }
 
     /**
@@ -113,4 +122,12 @@ export class TimelineComponent {
         this.updatesInProgress = updates._embedded.timeline
             .filter(update => update.action === this.updateOperations.start).length;
     }
+
+    // TOFIX: refactor duplicated logic from suggested-channel
+    protected getChannelLink(update) {
+        return update._embedded.channel.type === 'marketplace'
+            ? `/${update._embedded.channel.name}`
+            : `/${update._embedded.channel.type}/manage/${update._embedded.channel.name}`;
+    }
+
 }

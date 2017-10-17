@@ -13,7 +13,12 @@
                 </mat-chip-list>
             </mat-list-item>
             <mat-list-item *ngFor="let update of updates">
-                <sf-update-row [update]="update"></sf-update-row>
+                <a *ngIf="update.action === updateOperations.finish;else notCompletedUpdate" sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank" >
+                    <sf-update-row [update]="update"></sf-update-row>
+                </a>
+                <ng-template #notCompletedUpdate>
+                    <sf-update-row [update]="update" matTooltip="You have to wait until this update has finished before going to the report" i18n-matTooltip></sf-update-row>
+                </ng-template>
             </mat-list-item>
             <mat-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>

@@ -17,12 +17,4 @@ export class UpdateRowComponent {
 
     constructor() {
     }
-
-    // TOFIX: refactor duplicated logic from suggested-channel
-    getChannelLink() {
-        return this.update._embedded.channel.type === 'marketplace'
-            ? `/${this.update._embedded.channel.name}`
-            : `/${this.update._embedded.channel.type}/manage/${this.update._embedded.channel.name}`;
-    }
-
 }
