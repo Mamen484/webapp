@@ -1753,11 +1753,19 @@
                     Nombre de mises à jour en cours
                 </target>
       </trans-unit>
+      <trans-unit id="15fd07f21f41edeb31143ed40a35f459edf4f34a" datatype="html" approved="yes">
+        <source>Please wait until this update has finished processing before you can access the report</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <target xml:lang="fr">Veuillez attendre que cette mise à jour soit terminée avant de pouvoir accéder au rapport</target>
+      </trans-unit>
       <trans-unit id="82da14d5437b42565e785f0a618ea7b55aea22f1" datatype="html" approved="yes">
         <source> No updates</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <target xml:lang="fr"> Aucune mise à jour</target>
       </trans-unit>
@@ -1765,7 +1773,7 @@
         <source>Today</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <target xml:lang="fr">Aujourd'hui</target>
       </trans-unit>
@@ -1773,7 +1781,7 @@
         <source>No events</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <target xml:lang="fr">Aucun événement</target>
       </trans-unit>
@@ -1815,7 +1823,7 @@
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">7</context>
         </context-group>
-        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été mis à jour.</target>
+        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été mise à jour.</target>
       </trans-unit>
       <trans-unit id="807e2846ce55d3f2d2bcc2718069fb10af515947" datatype="html" approved="yes">
         <source>"<x id="INTERPOLATION"/>" has been created.</source>
@@ -1823,7 +1831,7 @@
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
-        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été créé.</target>
+        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été créée.</target>
       </trans-unit>
       <trans-unit id="ea8225675c8edbeb4abfaadfa55da0e2e1c276ac" datatype="html" approved="yes">
         <source>"<x id="INTERPOLATION"/>" has been deleted.</source>
@@ -1831,13 +1839,13 @@
           <context context-type="sourcefile">app/timeline/event-link/event-link.component.ts</context>
           <context context-type="linenumber">9</context>
         </context-group>
-        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été supprimé.</target>
+        <target xml:lang="fr">"<x id="INTERPOLATION"/>" a été supprimée.</target>
       </trans-unit>
       <trans-unit id="287fd156f43dc35c66e15b4db6ce4fc8343e85a8" datatype="html" approved="yes">
         <source>In progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">12</context>
         </context-group>
         <target xml:lang="fr">En cours</target>
       </trans-unit>
@@ -1845,7 +1853,7 @@
         <source>Scheduled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="fr">Programmé</target>
       </trans-unit>
@@ -1853,7 +1861,7 @@
         <source>Completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="fr">Terminé</target>
       </trans-unit>
