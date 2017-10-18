@@ -27,7 +27,7 @@
     </mat-card>
 
     <div *ngFor="let eventsGroup of events">
-        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
+        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'fullDate'}}</div>
         <mat-card class="event">
             <mat-list>
                 <mat-list-item *ngFor="let event of eventsGroup[1]">
