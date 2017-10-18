@@ -1755,11 +1755,19 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
                     Número de actualizaciones en curso
                 </target>
       </trans-unit>
+      <trans-unit id="15fd07f21f41edeb31143ed40a35f459edf4f34a" datatype="html" approved="yes">
+        <source>Please wait until this update has finished processing before you can access the report</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <target xml:lang="es-ES">Por favor, espere hasta que esta actualización ha terminado de procesamiento antes de que usted puede acceder al informe</target>
+      </trans-unit>
       <trans-unit id="82da14d5437b42565e785f0a618ea7b55aea22f1" datatype="html" approved="yes">
         <source> No updates</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <target xml:lang="es-ES"> Sin actualizaciones</target>
       </trans-unit>
@@ -1767,7 +1775,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>Today</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <target xml:lang="es-ES">Hoy</target>
       </trans-unit>
@@ -1775,7 +1783,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>No events</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/timeline.component.ts</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <target xml:lang="es-ES">No hay eventos</target>
       </trans-unit>
@@ -1839,7 +1847,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>In progress</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">12</context>
         </context-group>
         <target xml:lang="es-ES">En progreso</target>
       </trans-unit>
@@ -1847,7 +1855,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>Scheduled</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <target xml:lang="es-ES">Programado</target>
       </trans-unit>
@@ -1855,7 +1863,7 @@ Su solicitud no se puede enviar, contáctenos en <x id="INTERPOLATION"/>.
         <source>Completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/timeline/update-row/update-row.component.ts</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">14</context>
         </context-group>
         <target xml:lang="es-ES">Terminado</target>
       </trans-unit>
