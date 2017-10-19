@@ -66,7 +66,7 @@
     "dev-test": "ng test --browsers Chrome --sourcemaps false",
     "i18n": "ng xi18n",
     "e2e": "protractor",
-    "start": "ng serve --base-href=/v3/en/",
+    "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
     "compile-env": "ts-node compile-environment"
   },
   "private": true

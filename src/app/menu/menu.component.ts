@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 
 import { AppState } from '../core/entities/app-state';
@@ -12,6 +12,7 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
+
 const UPDATE_EVENTS_INTERVAL = 1e4;
 
 @Component({
@@ -19,12 +20,14 @@ const UPDATE_EVENTS_INTERVAL = 1e4;
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent {
+export class MenuComponent implements OnDestroy {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = 0;
+
+    protected newEventsSubscription;
 
 
     constructor(protected appStore: AppStore<AppState>,
@@ -38,7 +41,7 @@ export class MenuComponent {
             this.currentStore = currentStore;
             this.updateEvents();
         });
-        Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
+        this.newEventsSubscription = Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
     }
 
     chooseStore(store) {
@@ -66,6 +69,13 @@ export class MenuComponent {
     }
 
     protected updateEvents() {
-        this.timelineService.getUpdatesNumber(this.currentStore.id).subscribe(events => this.newEvents = events);
+        this.timelineService.getUpdatesNumber(this.currentStore.id)
+            .subscribe(events => this.newEvents = events);
+    }
+
+    ngOnDestroy() {
+        if (this.newEventsSubscription) {
+            this.newEventsSubscription.unsubscribe();
+        }
     }
 }

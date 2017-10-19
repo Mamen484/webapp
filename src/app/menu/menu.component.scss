@@ -4,6 +4,14 @@
   margin-left: 29px;
   margin-bottom: 0;
   font-weight: normal;
+  min-width: 230px; //calculated number to have the help center search bar in the center of the window SFBUG-2159
+}
+
+sf-support-help-center {
+  margin: 0
+  214px  //calculated number to have the help center search bar in the center of the window SFBUG-2159
+  0 10px;
+  flex: 1;
 }
 
 mat-icon.sf-nav-icon {
@@ -18,11 +26,6 @@ mat-icon.sf-nav-icon {
   height: 24px;
   color: inherit;
 }
-
-  sf-support-help-center {
-    margin: 0 25px 0 50px;
-    flex: 1;
-  }
 
 .sf-language-menu-item {
   text-align: left;

@@ -1,12 +1,14 @@
-import { Component, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
 import { TimelineUpdate } from '../core/entities/timeline-update';
 import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
-import { TimelineService } from '../core/services/timeline.service';
+import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { TimelineEventFormatted } from '../core/entities/timeline-event-formatted';
 import { Timeline } from '../core/entities/timeline';
+import { Store } from '@ngrx/store';
+import { AppState } from '../core/entities/app-state';
+import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 
 
 @Component({
@@ -23,22 +25,22 @@ export class TimelineComponent {
     nextLink = null;
     processing = false;
     infiniteScrollDisabled = false;
+    loadingTimeline = true;
 
-    constructor(protected route: ActivatedRoute,
-                protected timelineService: TimelineService,
-                protected elementRef: ElementRef) {
-        this.route.data.subscribe(
-            ({timeline, updates}) => {
-                this.initializeEvents(timeline);
+    constructor(protected appStore: Store<AppState>,
+                protected timelineService: TimelineService) {
+        this.appStore.select('currentStore').take(1)
+            .subscribe(currentStore => this.timelineService.emitUpdatedTimeline(currentStore.id));
+
+        this.timelineService.getTimelineStream().subscribe(({type, data}) => {
+            if (type === StreamEventType.finished) {
+                this.loadingTimeline = false;
+                let {updates, events} = data;
+                this.initializeEvents(events);
                 this.initializeUpdates(updates);
+                return;
             }
-        );
-
-        this.timelineService.getTimelineStream().subscribe(({events, updates}) => {
-            this.initializeEvents(events);
-            this.initializeUpdates(updates);
-            /* We emulate page reload, so we need to scroll up like the page is reloaded. */
-            this.elementRef.nativeElement.firstChild.scroll(0, 0);
+            this.loadingTimeline = true;
         });
     }
 
@@ -57,6 +59,14 @@ export class TimelineComponent {
             }
             this.processing = false;
         });
+    }
+
+    getUpdateLink(update: TimelineUpdate) {
+        if (update.name === TimelineUpdateName.import) {
+            return '/tools/infos';
+        } else {
+            return this.getChannelLink(update);
+        }
     }
 
     /**
@@ -112,4 +122,12 @@ export class TimelineComponent {
         this.updatesInProgress = updates._embedded.timeline
             .filter(update => update.action === this.updateOperations.start).length;
     }
+
+    // TOFIX: refactor duplicated logic from suggested-channel
+    protected getChannelLink(update) {
+        return update._embedded.channel.type === 'marketplace'
+            ? `/${update._embedded.channel.name}`
+            : `/${update._embedded.channel.type}/manage/${update._embedded.channel.name}`;
+    }
+
 }

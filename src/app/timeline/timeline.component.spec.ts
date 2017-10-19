@@ -5,13 +5,14 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule, MatChipsModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
-import { ActivatedRoute } from '@angular/router';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
-import { TimelineService } from '../core/services/timeline.service';
+import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { EventLinkComponent } from './event-link/event-link.component';
 import { LegacyLinkStubDirective } from '../../mocks/stubs/legacy-link-stub.directive';
 import { UpdateRowComponent } from './update-row/update-row.component';
+import { Store } from '@ngrx/store';
+import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -38,8 +39,18 @@ describe('TimelineComponent', () => {
                 UpdateRowComponent,
             ],
             providers: [
-                {provide: ActivatedRoute, useValue: {data: Observable.of({timeline: events, updates})}},
-                {provide: TimelineService, useValue: {getEvents: getEventsSpy, getTimelineStream: () => Observable.empty()}}
+                {
+                    provide: TimelineService,
+                    useValue: {
+                        getEvents: getEventsSpy,
+                        getTimelineStream: () => Observable.of({type: StreamEventType.finished, data: {events, updates}}),
+                        emitUpdatedTimeline: () => {}
+                    }
+                },
+                {
+                    provide: Store,
+                    useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
+                }
             ]
         })
             .compileComponents();

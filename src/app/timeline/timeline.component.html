@@ -1,4 +1,4 @@
-<div class="timeline" infiniteScroll [infiniteScrollDistance]="2"
+<div class="timeline" infiniteScroll [infiniteScrollDistance]="2" *ngIf="!loadingTimeline"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div class="heading-date mat-body-1" i18n>Latest updates</div>
@@ -13,7 +13,12 @@
                 </mat-chip-list>
             </mat-list-item>
             <mat-list-item *ngFor="let update of updates">
-                <sf-update-row [update]="update"></sf-update-row>
+                <a *ngIf="update.action === updateOperations.finish;else notCompletedUpdate" sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank" >
+                    <sf-update-row [update]="update"></sf-update-row>
+                </a>
+                <ng-template #notCompletedUpdate>
+                    <sf-update-row [update]="update" matTooltipPosition="above" matTooltip="Please wait until this update has finished processing before you can access the report" matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
+                </ng-template>
             </mat-list-item>
             <mat-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>
@@ -22,7 +27,7 @@
     </mat-card>
 
     <div *ngFor="let eventsGroup of events">
-        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
+        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'fullDate'}}</div>
         <mat-card class="event">
             <mat-list>
                 <mat-list-item *ngFor="let event of eventsGroup[1]">
@@ -48,4 +53,7 @@
     <div>
         <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
     </div>
+</div>
+<div class="timeline" *ngIf="loadingTimeline">
+    <mat-spinner></mat-spinner>
 </div>

@@ -13,6 +13,8 @@ import { Subject } from 'rxjs/Subject';
 const UPDATES_PERIOD = 1000 * 60 * 60 * 6; // 6 hours
 const MAX_UPDATES = 30;
 
+export const enum StreamEventType {started, finished};
+
 const updateActions = {
     [TimelineUpdateAction.ask]: 0,
     [TimelineUpdateAction.start]: 1,
@@ -54,8 +56,9 @@ export class TimelineService {
     }
 
     emitUpdatedTimeline(storeId) {
+        this.timelineStream.next({type: StreamEventType.started})
         this.getEvents(storeId).zip(this.getEventUpdates(storeId))
-            .subscribe(([events, updates]) => this.timelineStream.next({events, updates}))
+            .subscribe(([events, updates]) => this.timelineStream.next({type: StreamEventType.finished, data: {events, updates}}))
     }
 
     protected removeDuplication(updates) {
