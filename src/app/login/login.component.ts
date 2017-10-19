@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => {
                 // TODO: refactor the code in next releases
-                this.userService.fetchAggregatedInfo(true)
+                this.userService.fetchAggregatedInfo()
                     .subscribe((userData: AggregatedUserInfo) => {
-                        let activeStore = this.findActiveStore(userData);
+                        let activeStore = userData.findFrstEnabledStore();
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
@@ -63,11 +63,6 @@ export class LoginComponent implements OnInit {
         )
         ;
     }
-
-    protected findActiveStore(userData): Store {
-        return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
-    }
-
     protected buildUrl(token, storeName, isAdmin) {
         let queryParams = new URLSearchParams();
         queryParams.set('token', token);

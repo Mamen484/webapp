@@ -4,8 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
-import { StoreStatus } from '../entities/store-status.enum';
 import { LocalStorageService } from '../services/local-storage.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
+import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 
 /**
  * This guard is used to detect if the user is logged in. If NOT, then redirect to the login page.
@@ -17,7 +19,8 @@ export class IsAuthorizedGuard implements CanActivate {
     constructor(
         protected windowRef: WindowRefService,
         protected userService: UserService,
-        protected localStorage: LocalStorageService) {
+        protected localStorage: LocalStorageService,
+        protected appStore: Store<AppState>) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -30,8 +33,8 @@ export class IsAuthorizedGuard implements CanActivate {
         return Observable.create(observer => {
             this.userService.fetchAggregatedInfo().subscribe(
                 userInfo => {
-                    // activate if no errors and the user has at least 1 enabled store
-                    if (this.hasEnabledStore(userInfo._embedded.store, next.queryParams.store)) {
+                    if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
+                        this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
                         observer.next(true);
                         observer.complete();
                     } else {
@@ -48,12 +51,6 @@ export class IsAuthorizedGuard implements CanActivate {
         this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
     }
 
-    protected hasEnabledStore(store, storeQueryParam) {
-        if (storeQueryParam) {
-            return store.find(s => s.status !== StoreStatus.deleted && s.name === storeQueryParam);
-        }
-        return store.find(s => s.status !== StoreStatus.deleted);
-    }
 
     protected isNotAuthorized(observer) {
         this.redirectToLogin();
