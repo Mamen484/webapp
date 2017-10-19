@@ -41,3 +41,10 @@ Thumbs.db
 # docker local config
 /docker-compose.yml
 /src/environments/environment.prod.ts
+
+# Build files
+.v8flags.*
+/ts-node*
+
+# Crowdin archives
+/*.zip
