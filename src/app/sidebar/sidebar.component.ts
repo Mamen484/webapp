@@ -16,8 +16,6 @@ import { Channel } from '../core/entities/channel';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-
-    opened = true;
     currentStore: Observable<Store>;
     channels: Observable<StoreChannelDetails[]>;
 

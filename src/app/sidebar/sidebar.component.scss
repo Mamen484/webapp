@@ -1,40 +1,18 @@
 @import '../../sass/variables';
 
-mat-sidenav {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  width: $left-sidebar-width;
-  min-width: $left-sidebar-width;
-  background-color: mat-color($grey, A100);
-  text-align: center;
-  top: 0;
-  height: calc(100vh - #{$toolbar-height});
-  border-right: 1px solid mat-color($grey, 200);
+mat-icon {
+  font-size: mat-font-size($config, headline);
+  color: $black-54-opacity;
+  cursor: pointer;
+  margin: auto;
 
-  mat-icon {
-    font-size: mat-font-size($config, headline);
-    color: $black-54-opacity;
-    cursor: pointer;
-    margin: auto;
-
-    &.active {
-      color: mat-color($accent);
-    }
-
-    &:hover {
-      color: mat-color($accent);
-    }
+  &.active {
+    color: mat-color($accent);
   }
-}
 
-mat-sidenav-container {
-  float: left;
-  min-height: 100%;
-  max-width: 100%;
-  transform: none;
-  height: auto;
-  margin: 0;
+  &:hover {
+    color: mat-color($accent);
+  }
 }
 
 .sf-sidebar-bottom-help {
