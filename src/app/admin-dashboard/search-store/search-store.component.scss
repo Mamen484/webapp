@@ -1,0 +1,109 @@
+@import '../../../sass/variables';
+
+$icon-width: 24px;
+$icon-padding: 8px;
+$toolbar-search-margin: 10px;
+
+:host {
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar-search-container {
+  position: relative;
+  z-index: 20;
+  flex: 1;
+  font-size: mat-font-size($config, headline);
+  background: mat-color($primary, A100, 0.2);
+  border-radius: 2px;
+  ::placeholder {
+    color: mat-color($primary, A100);
+    font-size: mat-font-size($config, body-1);
+  }
+
+  .sf-search-icon {
+    color: mat-color($primary, A100);
+    float: left;
+    padding: $icon-padding;
+    vertical-align: middle;
+  }
+
+  .toolbar-search {
+    width: calc(100% - (#{$icon-width} + (#{$icon-padding} * 2) + #{$toolbar-search-margin * 2}));
+    border: none;
+    margin-left: $toolbar-search-margin;
+    color: mat-color($primary, A100);
+    background-color: transparent;
+    font-size: mat-font-size($config, body-1);
+  }
+}
+
+.toolbar-search:focus {
+  outline: none;
+}
+
+.search-results {
+  position: absolute;
+  z-index: 25;
+  top: $toolbar-height;
+  color: black;
+  max-height: calc(100vh - #{$toolbar-height});
+  overflow-y: auto;
+  background-color: mat-color($grey, A100);
+
+  .search-entry {
+
+    border-bottom: 1px solid mat-color($grey, 400);
+    padding: 25px;
+    cursor: pointer;
+
+    .title {
+      color: mat-color($grey, 900);
+      font-weight: bold;
+    }
+
+    .description {
+      white-space: normal;
+      color: mat-color($grey, 600);
+    }
+
+    .actions {
+      text-align: right;
+    }
+
+
+  }
+
+  .all-posts {
+    text-align: center;
+    padding: 10px;
+    a {
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+  }
+
+  .no-results-container {
+    text-align: center;
+    padding: 45px;
+
+    .no-results {
+      margin: 0;
+      color: $black-54-opacity;
+    }
+
+    a, a:visited {
+      color: mat-color($accent);
+    }
+  }
+}
+
+.support-help-center-overlay {
+  z-index: 15;
+  background-color: transparent;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  left:0;
+  top: 0;
+}

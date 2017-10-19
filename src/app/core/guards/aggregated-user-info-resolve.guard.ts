@@ -12,6 +12,6 @@ export class AggregatedUserInfoResolveGuard implements Resolve<Observable<Aggreg
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<AggregatedUserInfo> {
-        return this.appStore.select('userInfo');
+        return this.appStore.select('userInfo').take(1);
     }
 }
