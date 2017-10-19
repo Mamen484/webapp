@@ -4,19 +4,26 @@ import { Observable } from 'rxjs/Observable';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
+import { StoreService } from '../services/store.service';
 
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {
 
-    constructor(protected appStore: Store<AppState>) {
+    constructor(protected appStore: Store<AppState>, protected storeService: StoreService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-        return this.appStore.select('userInfo').map(userInfo => {
+        return this.appStore.select('userInfo').take(1).flatMap(userInfo => {
+            if (userInfo.isAdmin() && next.queryParams.store) {
+                return this.storeService.getStore(next.queryParams.store).map(store => {
+                    this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+                    return true;
+                });
+            }
             let store = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFrstEnabledStore();
             this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
 
-            return true;
+            return Observable.of(true);
         });
     }
 

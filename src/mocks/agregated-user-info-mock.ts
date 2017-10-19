@@ -1,10 +1,8 @@
-import { Observable } from 'rxjs/Observable';
-
 export const aggregatedUserInfoMock = {
     'token': 'turudum',
     'login': 'admin',
     'email': 'clement@shopping-feed.com',
-    'roles': <any>['employee', 'admin'],
+    'roles': <any>['user', 'admin'],
     'language': 'it_IT',
     '_links': {'self': {'href': '/v1/me'}},
     '_embedded': <any>{
@@ -28,7 +26,7 @@ export const aggregatedUserInfoMock = {
                 'timeline': '*',
                 'tools': '*'
             },
-            'status': 'deleted',
+            'status': 'active',
             'order': {'total': 12},
             'timeline': {'total': 0},
             '_links': {'self': {'href': '/v1/store/307'}},

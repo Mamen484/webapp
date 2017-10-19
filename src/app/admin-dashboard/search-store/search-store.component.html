@@ -1,0 +1,20 @@
+<div class="toolbar-search-container">
+  <mat-icon class="sf-search-icon">search</mat-icon>
+  <input placeholder="Search a store" i18n-placeholder #searchInput class="toolbar-search"
+         [formControl]="searchControl" (focus)="showSearchResult=true">
+  <mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
+</div>
+
+<div class="search-results" [ngClass]="{'mat-elevation-z22': showSearchResult && searchResults}">
+  <div *ngIf="showSearchResult && searchResults && searchResults.length">
+    <div *ngFor="let entry of searchResults" class="search-entry">
+      <div class="mat-subheading-1 title" (click)="selectStore(entry.id)">{{entry.name}}</div>
+    </div>
+  </div>
+  <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
+    <div class="mat-subheading-2 no-results" i18n>No results</div>
+    <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
+  </div>
+</div>
+
+<div class="support-help-center-overlay" (click)="clearSearch()" *ngIf="showSearchResult"></div>

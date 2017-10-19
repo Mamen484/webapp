@@ -35,6 +35,8 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
+import { DefaultPageGuard } from './guards/default-page.guard';
+import { CanLoadAdminGuard } from './guards/guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 
 @NgModule({
@@ -49,7 +51,9 @@ import { ErrorInterceptor } from './interceptors/error-interceptor';
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
+        CanLoadAdminGuard,
         CheckProperLocaleGuard,
+        DefaultPageGuard,
         InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,

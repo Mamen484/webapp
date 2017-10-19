@@ -1,0 +1,13 @@
+.sf-nav-welcome-text {
+  margin-left: 29px;
+  margin-bottom: 0;
+  font-weight: normal;
+  min-width: 230px; //calculated number to have the help center search bar in the center of the window SFBUG-2159
+}
+
+sf-search-store {
+  margin: 0
+  302px  //calculated number to have the help center search bar in the center of the window SFBUG-2159
+  0 10px;
+  flex: 1;
+}
