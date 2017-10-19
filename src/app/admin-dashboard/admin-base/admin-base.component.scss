@@ -1,0 +1,24 @@
+@import '../../../sass/variables';
+
+.content {
+  margin-left: $left-sidebar-width + $content-margin;
+}
+
+mat-icon {
+  font-size: mat-font-size($config, headline);
+  color: $black-54-opacity;
+  cursor: pointer;
+  margin: auto;
+
+  &.active {
+    color: mat-color($accent);
+  }
+
+  &:hover {
+    color: mat-color($accent);
+  }
+}
+
+mat-list-item {
+  outline: none;
+}

@@ -8,6 +8,8 @@ import { MenuModule } from '../menu/menu.module';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { SearchStoreComponent } from './search-store/search-store.component';
 import { SidebarModule } from '../sidebar/sidebar.module';
+import { AdminBaseComponent } from './admin-base/admin-base.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
     imports: [
@@ -15,8 +17,9 @@ import { SidebarModule } from '../sidebar/sidebar.module';
         AdminDashboardRoutingModule,
         SharedModule,
         MenuModule,
+        SidebarModule,
     ],
-    declarations: [DashboardComponent, AdminMenuComponent, SearchStoreComponent]
+    declarations: [DashboardComponent, AdminMenuComponent, SearchStoreComponent, AdminBaseComponent, CreateUserComponent]
 })
 export class AdminDashboardModule {
 }
