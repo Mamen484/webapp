@@ -1,3 +1,198 @@
 <div class="scrollable-container">
-  Create a user
+    <mat-card *ngIf="successfullyCreated">
+        <mat-card-content>
+            <div i18n>The client is created successfully.</div>
+            <a mat-button color="accent" (click)="createNewClient()">Create a new one.</a>
+        </mat-card-content>
+    </mat-card>
+    <form fxFlexLayout="row" #form="ngForm" fxLayoutGap="10px" (ngSubmit)="save(form.valid)" *ngIf="!successfullyCreated">
+        <mat-card fxFlex="40%">
+            <mat-card-content>
+                <mat-form-field>
+                    <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login" i18n-placeholder>
+                    <mat-error i18n>This field is required.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Password" name="password" minlength="6" required [(ngModel)]="store.owner.password"
+                           i18n-placeholder>
+                    <mat-error i18n>The password must not be shorter then 6 characters.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="email" placeholder="Email" name="email" required [(ngModel)]="store.owner.email"
+                           i18n-placeholder [email]="true">
+                    <mat-error i18n>This field must be a valid email address.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Country" i18n-placeholder name="country" required [(ngModel)]="store.country">
+                        <mat-option value="fr">France</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url" i18n-placeholder name="feed" required [(ngModel)]="store.feed.url">
+                    <mat-error i18n>This must be a valid uri, starting from http, https or ftp.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select placeholder="Source" i18n-placeholder name="feed-source" required [(ngModel)]="store.feed.source">
+                        <mat-option value="prestashop" selected>prestashop</mat-option>
+                        <mat-option value="webetsolutions">webetsolutions</mat-option>
+                        <mat-option value="bigcommerce">bigcommerce</mat-option>
+                        <mat-option value="thelia">thelia</mat-option>
+                        <mat-option value="shopify">shopify</mat-option>
+                        <mat-option value="cmonsite">cmonsite</mat-option>
+                        <mat-option value="ws">ws</mat-option>
+                        <mat-option value="wizishop">wizishop</mat-option>
+                        <mat-option value="magento">magento</mat-option>
+                        <mat-option value="ws">ws</mat-option>
+                        <mat-option value="google">google</mat-option>
+                        <mat-option value="xml">xml</mat-option>
+                        <mat-option value="ws">ws</mat-option>
+                        <mat-option value="powerboutique">powerboutique</mat-option>
+                        <mat-option value="shopapplication">shopapplication</mat-option>
+                        <mat-option value="sa">sa</mat-option>
+                        <mat-option value="csv">csv</mat-option>
+                        <mat-option value="txt">txt</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Separator" i18n-placeholder name="separator" maxlength="1"
+                           [(ngModel)]="store.feed.settings.csvFieldSeparator">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card fxFlex>
+            <mat-card-content class="two-column">
+                <div>
+                    <label for="sf-cu-brand-mapping">brand</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-brand-mapping" matInput placeholder="Describe" name="mapping-brand"
+                               [(ngModel)]="store.feed.mapping.brand" i18n-placeholder>
+                    </mat-form-field>
+
+                </div>
+                <div>
+                    <label for="sf-cu-brand-link-mapping">brand_link</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-brand-link-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-brand_link" [(ngModel)]="store.feed.mapping.brand_link">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-category-mapping">category</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-category-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-category" [(ngModel)]="store.feed.mapping.category">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-description-mapping">description</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-description-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-description" [(ngModel)]="store.feed.mapping.description">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-ean-mapping">ean</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-ean-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-ean" [(ngModel)]="store.feed.mapping.ean">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-ecotax-mapping">ecotax</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-ecotax-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-ecotax" [(ngModel)]="store.feed.mapping.ecotax">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-id_parent-mapping">id_parent</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-id_parent-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-id_parent" [(ngModel)]="store.feed.mapping.id_parent">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-image_1-mapping">image_1</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-image_1-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-image_1" [(ngModel)]="store.feed.mapping.image_1">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-link-mapping">link</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-link-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-link" [(ngModel)]="store.feed.mapping.link">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-name-mapping">name</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-name-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-name" [(ngModel)]="store.feed.mapping.name">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-old_price-mapping">old_price</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-old_price-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-old_price" [(ngModel)]="store.feed.mapping.old_price">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-quantity-mapping">quantity</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-quantity-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-quantity" [(ngModel)]="store.feed.mapping.quantity">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-reference-mapping">reference</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-reference-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-reference" [(ngModel)]="store.feed.mapping.reference">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-shipping_cost-mapping">shipping_cost</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-shipping_cost-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-shipping_cost" [(ngModel)]="store.feed.mapping.shipping_cost">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-shipping_time-mapping">shipping_time</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-shipping_time-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-shipping_time" [(ngModel)]="store.feed.mapping.shipping_time">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-short_description-mapping">short_description</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-short_description-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-short_description" [(ngModel)]="store.feed.mapping.short_description">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-tva-mapping">tva</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-tva-mapping" matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-tva" [(ngModel)]="store.feed.mapping.tva">
+                    </mat-form-field>
+                </div>
+                <div>
+                    <label for="sf-cu-weight-mapping">weight</label>
+                    <mat-form-field floatPlaceholder="never">
+                        <input id="sf-cu-weight-mapping" matInput placeholder="Describe" i18n-placeholder
+                               i18n-placeholder name="mapping-weight" [(ngModel)]="store.feed.mapping.weight">
+                    </mat-form-field>
+                </div>
+                <div class="mat-error" *ngIf="error">{{error}}</div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="accent">CREATE</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
 </div>

@@ -110,5 +110,9 @@ export class StoreService {
 
         }
     }
+
+    createStore(store: Store) {
+        return this.httpClient.post(`${environment.API_URL}/store`, {store});
+    }
 }
 
