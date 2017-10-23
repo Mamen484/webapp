@@ -61,7 +61,7 @@ export class StoreService {
 
     public fetchAvailableStores(filter: string) {
         return Observable.of(fetchStoresMock);
-        // return this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('filter', filter)});
+        // return <Observable<any>>this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('filter', filter)});
     }
 
     public getStore(storeId): Observable<Store> {

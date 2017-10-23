@@ -14,6 +14,7 @@ import { DummyRouterDirective } from '../../mocks/stubs/dummy-router.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 
 
 describe('LoginComponent', () => {
@@ -94,7 +95,7 @@ describe('LoginComponent', () => {
 
     it('should call user service with correct username and password', () => {
         loginSpy.and.returnValue(Observable.of({}));
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(aggregatedUserInfoMock));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
@@ -114,7 +115,7 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'deleted';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(userInfo));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
         loginSpy.and.returnValue(Observable.of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
@@ -127,7 +128,7 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'suspended';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(userInfo));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
         loginSpy.and.returnValue(Observable.of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');

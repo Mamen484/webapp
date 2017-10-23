@@ -52,6 +52,6 @@ export class AggregatedUserInfo {
     }
 
     findEnabledStore(name: string) {
-        return this._embedded.store.find(s => s.name === name && s.name !== StoreStatus.deleted);
+        return this._embedded.store.find(s => s.name === name && s.status !== StoreStatus.deleted);
     }
 }

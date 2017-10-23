@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from '../../services/user.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../entities/app-state';
 
 @Injectable()
 export class CanLoadAdminGuard implements CanLoad {
 
-    constructor(protected userService: UserService, protected router: Router) {
+    constructor(protected router: Router, protected appStore: Store<AppState>) {
     }
 
     canLoad(): Observable<boolean> {
-        return this.userService.fetchAggregatedInfo().map(userInfo => {
-
-            let canLoad = Boolean(userInfo.roles.find(role => role === 'admin' || role === 'employee'));
-            if (!canLoad) {
-                this.router.navigate(['/statistics']);
+        return this.appStore.select('userInfo').take(1).map(userInfo => {
+            if (!userInfo.isAdmin()) {
+                this.router.navigate(['/home']);
+                return false;
             }
-            return canLoad;
+            return true;
         });
     }
 }

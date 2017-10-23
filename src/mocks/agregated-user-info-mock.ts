@@ -2,7 +2,7 @@ export const aggregatedUserInfoMock = {
     'token': 'turudum',
     'login': 'admin',
     'email': 'clement@shopping-feed.com',
-    'roles': <any>['user', 'admin'],
+    'roles': <any>['user'],
     'language': 'it_IT',
     '_links': {'self': {'href': '/v1/me'}},
     '_embedded': <any>{

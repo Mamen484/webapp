@@ -15,9 +15,9 @@ export class UserService {
     }
 
     public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
-        return Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock));
-            // return this.httpClient.get(`${environment.API_URL}/me`)
-            //     .map(userInfo => AggregatedUserInfo.create(userInfo))
+        // return Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock));
+            return this.httpClient.get(`${environment.API_URL}/me`)
+                .map(userInfo => AggregatedUserInfo.create(userInfo))
     }
 
     public login(username, password) {

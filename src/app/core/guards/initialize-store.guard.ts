@@ -13,7 +13,7 @@ export class InitializeStoreGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-        return this.appStore.select('userInfo').take(1).flatMap(userInfo => {
+        return this.appStore.select('userInfo').filter(userInfo => Boolean(userInfo)).take(1).flatMap(userInfo => {
             if (userInfo.isAdmin() && next.queryParams.store) {
                 return this.storeService.getStore(next.queryParams.store).map(store => {
                     this.appStore.select('currentStore').dispatch({type: SET_STORE, store});

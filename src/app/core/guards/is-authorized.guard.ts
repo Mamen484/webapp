@@ -31,7 +31,9 @@ export class IsAuthorizedGuard implements CanActivate {
             return false;
         }
         return Observable.create(observer => {
-            this.userService.fetchAggregatedInfo().subscribe(
+            this.appStore.select('userInfo').take(1)
+                .flatMap(userInfo => userInfo ? Observable.of(userInfo) : this.userService.fetchAggregatedInfo())
+                .subscribe(
                 userInfo => {
                     if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
                         this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});

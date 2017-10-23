@@ -1,77 +1,127 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { InitializeStoreGuard } from './initialize-store.guard';
-import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 import { SET_STORE } from '../reducers/current-store-reducer';
+import { StoreService } from '../services/store.service';
+import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 
 describe('InitializeStoreGuard', () => {
-    let fetchAggregatedInfoSpy: jasmine.Spy;
-    let selectSpy: jasmine.Spy;
+    let store;
+    let storeService;
     beforeEach(() => {
-        fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
-        selectSpy = jasmine.createSpy('appStore.select');
+        store = jasmine.createSpyObj('Store', ['select']);
+        storeService = jasmine.createSpyObj('StoreService', ['getStore']);
         TestBed.configureTestingModule({
             providers: [
                 InitializeStoreGuard,
-                {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
-                {provide: Store, useValue: {select: selectSpy}}
+                {provide: Store, useValue: store},
+                {provide: StoreService, useValue: storeService}
             ]
         });
     });
 
-    it('should always return true', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
-        fetchAggregatedInfoSpy.and.returnValue(Observable.of({_embedded: {store: ['someStore']}}));
-        selectSpy.and.returnValue({
-            dispatch: () => {
-            }
+    it('should fetch the store from the server and write it to the app store if the user has an "admin" role and the store param is specified', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            Observable.of(AggregatedUserInfo.create({roles: ['admin']})),
+            {dispatch: dispatchSpy}
+        );
+        storeService.getStore.and.returnValue(Observable.of('some amazing store'));
+        guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
+            expect(canActivate).toEqual(true);
+            expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
+            expect(dispatchSpy.calls.mostRecent().args[0].store).toEqual('some amazing store');
         });
+    }));
+
+    it('should fetch the store from the server and write it to the app store if the user has an "employee" role and the store param is specified', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            Observable.of(AggregatedUserInfo.create({roles: ['employee']})),
+            {dispatch: dispatchSpy}
+        );
+        storeService.getStore.and.returnValue(Observable.of('some amazing store'));
+        guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
+            expect(canActivate).toEqual(true);
+            expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
+            expect(dispatchSpy.calls.mostRecent().args[0].store).toEqual('some amazing store');
+        });
+    }));
+
+
+    it('should write first enabled store from userInfo to the app store when there is no store param in the query', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            Observable.of(AggregatedUserInfo.create({
+                roles: ['user'],
+                _embedded: {
+                    store: [
+                        {
+                            name: 'dabada',
+                            status: 'deleted'
+                        },
+                        {
+                        name: 'some store',
+                        status: 'active'
+                    }]
+                }
+            })),
+            {dispatch: dispatchSpy}
+        );
         guard.canActivate(<any>{queryParams: {}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
-        });
-
-    }));
-
-    it('should write userInfo to the application store', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
-        fetchAggregatedInfoSpy.and.returnValue(Observable.of({_embedded: {store: ['someStore']}}));
-        let dispatchSpy = jasmine.createSpy('store dispatch');
-        selectSpy.and.returnValue({dispatch: dispatchSpy});
-        guard.canActivate(<any>{queryParams: {}}).subscribe(canActivate => {
-            expect(selectSpy.calls.first().args[0]).toEqual('userInfo');
-            expect(dispatchSpy.calls.first().args[0].userInfo._embedded.store[0]).toEqual('someStore');
-            expect(dispatchSpy.calls.first().args[0].type).toEqual(INITIALIZE_USER_INFO);
-        });
-
-    }));
-
-    it('should write first store from userInfo to the application store when there is no store param in the query', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
-        fetchAggregatedInfoSpy.and.returnValue(Observable.of({_embedded: {store: ['someStore']}}));
-        let dispatchSpy = jasmine.createSpy('store dispatch');
-        selectSpy.and.returnValue({dispatch: dispatchSpy});
-        guard.canActivate(<any>{queryParams: {}}).subscribe(canActivate => {
-            expect(selectSpy.calls.argsFor(1)[0]).toEqual('currentStore');
-            expect(dispatchSpy.calls.argsFor(1)[0].store).toEqual('someStore');
-            expect(dispatchSpy.calls.argsFor(1)[0].type).toEqual(SET_STORE);
+            expect(dispatchSpy.calls.argsFor(0)[0].type).toEqual('SET_STORE');
+            expect(dispatchSpy.calls.argsFor(0)[0].store.name).toEqual('some store');
         });
     }));
 
     it('should write to the application store the store, specified in the queryParams', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
-        fetchAggregatedInfoSpy.and.returnValue(Observable.of({
-            _embedded: {
-                store: [
-                    {id: 0, name: 'zero'},
-                    {id: 1, name: 'one'},
-                    {id: 2, name: 'two'},
-                ]
-            }
-        }));
-        let dispatchSpy = jasmine.createSpy('store dispatch');
-        selectSpy.and.returnValue({dispatch: dispatchSpy});
-        guard.canActivate(<any>{queryParams: {store: 'one'}}).subscribe(canActivate => {
-            expect(dispatchSpy.calls.argsFor(1)[0].store.id).toEqual(1);
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            Observable.of(AggregatedUserInfo.create({
+                roles: ['user'],
+                _embedded: {
+                    store: [
+                        {name: 'dabada', status: 'deleted'},
+                        {name: 'someStore', status: 'active'},
+                        {name: 'someStore1', status: 'active'},
+                        {name: 'someStore2', status: 'active'}]
+                }
+            })),
+            {dispatch: dispatchSpy}
+        );
+
+        guard.canActivate(<any>{queryParams: {store: 'someStore1'}}).subscribe(canActivate => {
+            expect(canActivate).toEqual(true);
+            expect(dispatchSpy.calls.argsFor(0)[0].type).toEqual('SET_STORE');
+            expect(dispatchSpy.calls.argsFor(0)[0].store.name).toEqual('someStore1');
         });
     }));
+
+    it('should write to the application store first enabled store, if specified in the queryParams store is deleted', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            Observable.of(AggregatedUserInfo.create({
+                roles: ['user'],
+                _embedded: {
+                    store: [
+                        {name: 'dabada', status: 'deleted'},
+                        {name: 'someStore', status: 'active'},
+                        {name: 'someStore1', status: 'deleted'},
+                        {name: 'someStore2', status: 'active'}]
+                }
+            })),
+            {dispatch: dispatchSpy}
+        );
+
+        guard.canActivate(<any>{queryParams: {store: 'someStore1'}}).subscribe(canActivate => {
+            expect(canActivate).toEqual(true);
+            expect(dispatchSpy.calls.argsFor(0)[0].type).toEqual('SET_STORE');
+            expect(dispatchSpy.calls.argsFor(0)[0].store.name).toEqual('someStore');
+        });
+    }));
+
 
 });
