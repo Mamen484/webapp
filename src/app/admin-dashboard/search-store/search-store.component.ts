@@ -70,6 +70,6 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     }
 
     selectStore(storeId) {
-        this.router.navigate(['/statistics'], {queryParams: {store: storeId}});
+        this.router.navigate(['/home'], {queryParams: {store: storeId}});
     }
 }

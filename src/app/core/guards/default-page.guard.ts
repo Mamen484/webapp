@@ -15,7 +15,7 @@ export class DefaultPageGuard implements CanActivate {
             if (userInfo.roles.find(role => role === 'admin' || role === 'employee')) {
                 this.router.navigate(['/admin']);
             } else {
-                this.router.navigate(['/statistics']);
+                this.router.navigate(['/home']);
             }
         });
         return false;

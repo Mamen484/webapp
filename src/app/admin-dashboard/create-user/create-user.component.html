@@ -1,38 +1,48 @@
 <div class="scrollable-container">
     <mat-card *ngIf="successfullyCreated">
         <mat-card-content>
-            <div i18n>The client is created successfully.</div>
-            <a mat-button color="accent" (click)="createNewClient()">Create a new one.</a>
+            <div>
+                <ng-container i18n>The client is created successfully.</ng-container>
+                <a mat-button color="accent" (click)="createNewClient()" i18n>Create a new one.</a>
+            </div>
+
         </mat-card-content>
     </mat-card>
-    <form fxFlexLayout="row" #form="ngForm" fxLayoutGap="10px" (ngSubmit)="save(form.valid)" *ngIf="!successfullyCreated">
+    <form fxFlexLayout="row" #form="ngForm" fxLayoutGap="10px" (ngSubmit)="save(form.valid)"
+          *ngIf="!successfullyCreated">
         <mat-card fxFlex="40%">
             <mat-card-content>
                 <mat-form-field>
-                    <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login" i18n-placeholder>
+                    <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login"
+                           i18n-placeholder>
                     <mat-error i18n>This field is required.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Password" name="password" minlength="6" required [(ngModel)]="store.owner.password"
+                    <input matInput placeholder="Password" name="password" minlength="6" required
+                           [(ngModel)]="store.owner.password"
                            i18n-placeholder>
                     <mat-error i18n>The password must not be shorter then 6 characters.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput type="email" placeholder="Email" name="email" required [(ngModel)]="store.owner.email"
+                    <input matInput type="email" placeholder="Email" name="email" required
+                           [(ngModel)]="store.owner.email"
                            i18n-placeholder [email]="true">
                     <mat-error i18n>This field must be a valid email address.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Country" i18n-placeholder name="country" required [(ngModel)]="store.country">
+                    <mat-select placeholder="Country" i18n-placeholder name="country" required
+                                [(ngModel)]="store.country">
                         <mat-option value="fr">France</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url" i18n-placeholder name="feed" required [(ngModel)]="store.feed.url">
+                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url" i18n-placeholder
+                           name="feed" required [(ngModel)]="store.feed.url">
                     <mat-error i18n>This must be a valid uri, starting from http, https or ftp.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Source" i18n-placeholder name="feed-source" required [(ngModel)]="store.feed.source">
+                    <mat-select placeholder="Source" i18n-placeholder name="feed-source" required
+                                [(ngModel)]="store.feed.source">
                         <mat-option value="prestashop" selected>prestashop</mat-option>
                         <mat-option value="webetsolutions">webetsolutions</mat-option>
                         <mat-option value="bigcommerce">bigcommerce</mat-option>

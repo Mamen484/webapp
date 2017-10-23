@@ -32,7 +32,7 @@ const routes: Routes = [
         ],
         children: [
             {path: '', component: BlankComponent, canActivate: [DefaultPageGuard]},
-            {path: 'statistics', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},
+            {path: 'home', loadChildren: 'app/statistics/statistics.module#StatisticsModule'},
             {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule'},
         ]
     },
