@@ -47,7 +47,7 @@ export class AggregatedUserInfo {
         return this._embedded.store.find(s => s.status !== StoreStatus.deleted);
     }
 
-    findFrstEnabledStore() {
+    findFirstEnabledStore() {
         return this._embedded.store.find(s => s.status !== StoreStatus.deleted);
     }
 

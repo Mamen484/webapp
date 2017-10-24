@@ -41,10 +41,9 @@ export class LoginComponent implements OnInit {
         }
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => {
-                // TODO: refactor the code in next releases
                 this.userService.fetchAggregatedInfo()
                     .subscribe((userData: AggregatedUserInfo) => {
-                        let activeStore = userData.findFrstEnabledStore();
+                        let activeStore = userData.findFirstEnabledStore();
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,

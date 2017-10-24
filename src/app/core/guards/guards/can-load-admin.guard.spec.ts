@@ -5,19 +5,23 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AggregatedUserInfo } from '../../entities/aggregated-user-info';
+import { UserService } from '../../services/user.service';
 
 describe('CanLoadAdminGuard', () => {
 
     let store;
     let router;
+    let userService;
     beforeEach(() => {
         store = jasmine.createSpyObj('store', ['select']);
         router = jasmine.createSpyObj('router', ['navigate']);
+        userService = jasmine.createSpyObj('userService', ['fetchAggregatedInfo']);
         TestBed.configureTestingModule({
             providers: [
                 CanLoadAdminGuard,
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
+                {provide: UserService, useValue: userService}
             ]
         });
     });
@@ -43,4 +47,21 @@ describe('CanLoadAdminGuard', () => {
             expect(router.navigate).toHaveBeenCalledWith(['/home']);
         });
     }));
+
+    it('should fetch userInfo from the server when when there is NO userInfo in the app store',
+        inject([CanLoadAdminGuard], (guard: CanLoadAdminGuard) => {
+            store.select.and.returnValue(Observable.of(null));
+            userService.fetchAggregatedInfo.and.returnValue(Observable.of(AggregatedUserInfo.create({roles: ['admin']})));
+            guard.canLoad().subscribe(() =>
+                expect(userService.fetchAggregatedInfo).toHaveBeenCalledTimes(1));
+
+        }));
+
+    it('should NOT fetch userInfo from the server when when there is userInfo in the app store',
+        inject([CanLoadAdminGuard], (guard: CanLoadAdminGuard) => {
+            store.select.and.returnValue(Observable.of(AggregatedUserInfo.create({roles: ['admin']})));
+            guard.canLoad().subscribe(() =>
+                expect(userService.fetchAggregatedInfo).toHaveBeenCalledTimes(0));
+
+        }));
 });

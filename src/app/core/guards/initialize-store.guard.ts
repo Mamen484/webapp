@@ -20,7 +20,7 @@ export class InitializeStoreGuard implements CanActivate {
                     return true;
                 });
             }
-            let store = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFrstEnabledStore();
+            let store = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();
             this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
 
             return Observable.of(true);
