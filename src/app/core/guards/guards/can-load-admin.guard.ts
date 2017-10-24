@@ -11,7 +11,7 @@ export class CanLoadAdminGuard implements CanLoad {
     }
 
     canLoad(): Observable<boolean> {
-        return this.appStore.select('userInfo').take(1).map(userInfo => {
+        return this.appStore.select('userInfo').filter(userInfo => Boolean(userInfo)).take(1).map(userInfo => {
             if (!userInfo.isAdmin()) {
                 this.router.navigate(['/home']);
                 return false;
