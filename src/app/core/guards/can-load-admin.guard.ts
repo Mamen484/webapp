@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../entities/app-state';
-import { UserService } from '../../services/user.service';
+import { AppState } from '../entities/app-state';
+import { UserService } from '../services/user.service';
 
 @Injectable()
 export class CanLoadAdminGuard implements CanLoad {

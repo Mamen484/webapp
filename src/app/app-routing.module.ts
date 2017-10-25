@@ -15,7 +15,7 @@ import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 import { DefaultPageGuard } from './core/guards/default-page.guard';
-import { CanLoadAdminGuard } from './core/guards/guards/can-load-admin.guard';
+import { CanLoadAdminGuard } from './core/guards/can-load-admin.guard';
 
 const routes: Routes = [
     {

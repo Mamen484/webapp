@@ -14,7 +14,6 @@ export class ShopifyAuthentifyService {
     }
 
     public getAuthorizationUrl(shop: string): Observable<string> {
-
         return this.httpClient.get(this.apiUrl + '/shopify/auth/' + this.getShopName(shop))
             .map((data: { authorizeUrl: string }) => data.authorizeUrl);
     }

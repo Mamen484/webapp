@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { WindowRefService } from '../../core/services/window-ref.service';
-import { LegacyLinkService } from '../../core/services/legacy-link.service';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms
 const PERCENTS = 100;
@@ -14,17 +13,18 @@ const PERCENTS = 100;
 export class CreateAccountComponent implements OnInit {
     public progress = 0;
     public registrationFinished = false;
+    public updateFrequency = PROGRESS_UPDATE_FREQUENCY;
 
-    constructor(protected windowRef: WindowRefService) {
+    constructor(protected localStorage: LocalStorageService) {
     }
 
     public ngOnInit() {
-        localStorage.removeItem('sf.registration');
+        this.localStorage.removeItem('sf.registration');
         this.showProgress();
     }
 
     protected showProgress() {
-        Observable.interval(PROGRESS_UPDATE_FREQUENCY).take(PERCENTS).subscribe(
+        Observable.interval(this.updateFrequency).take(PERCENTS).subscribe(
             () => this.progress += 1,
             () => {},
             () => this.onFinish()

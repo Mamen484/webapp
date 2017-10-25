@@ -4,8 +4,8 @@ import { CanLoadAdminGuard } from './can-load-admin.guard';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { AggregatedUserInfo } from '../../entities/aggregated-user-info';
-import { UserService } from '../../services/user.service';
+import { AggregatedUserInfo } from '../entities/aggregated-user-info';
+import { UserService } from '../services/user.service';
 
 describe('CanLoadAdminGuard', () => {
 

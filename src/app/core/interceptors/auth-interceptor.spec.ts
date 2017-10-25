@@ -4,7 +4,6 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { environment } from '../../../environments/environment';
 import { AuthInterceptor } from './auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 describe('AuthInterceptor', () => {
