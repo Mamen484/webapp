@@ -50,7 +50,7 @@ export class CreatePasswordComponent implements OnInit {
         this.store.owner.password = this.passwordControl.value;
         this.service.createPassword(this.store)
             .subscribe((store: CreateStoreModel) => {
-                this.localStorage.setItem('Authorization', `Bearer ${store.owner.tokens[0]}`)
+                this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
                 this.router.navigate(['register', 'create-account']);
             },
                 () => this.displayServerError = true);
