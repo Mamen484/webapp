@@ -1,8 +1,8 @@
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 
-export const INITIALIZE_USER_INFO = 'INITIALIZE';
+export const INITIALIZE_USER_INFO = 'INITIALIZE_USER_INFO';
 
-export function userInfoReducer(state, {type, userInfo}: { type: string, userInfo: AggregatedUserInfo }) {
+export function userInfoReducer(state, {type, userInfo}: { type: string, userInfo?: AggregatedUserInfo }) {
     switch (type) {
 
         case INITIALIZE_USER_INFO:

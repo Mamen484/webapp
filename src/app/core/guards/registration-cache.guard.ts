@@ -4,8 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
 import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
-import { toPairs } from 'lodash';
-import { Helpers } from '../entities/helpers';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()

@@ -81,9 +81,23 @@ describe('IsAuthorizedGuard', () => {
             store.select.and.returnValue(Observable.of(null));
             fetchAggregatedInfoSpy.and.returnValue(Observable.throw(401));
             (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
+                expect(canActivate).toEqual(false);
                 expect(router.navigate).toHaveBeenCalledWith(['/login']);
             });
         }));
+
+    it('should redirect to the homepage if the user is not admin and does not have enabled stores',
+        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
+            getItemSpy.and.returnValue('some token');
+            store.select.and.returnValue(Observable.of(null));
+            fetchAggregatedInfoSpy.and.returnValue(
+                Observable.of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
+            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
+                expect(canActivate).toEqual(false);
+                expect(router.navigate).toHaveBeenCalledWith(['/login']);
+            });
+        }));
+
 
 
     it('should write the userData to the app store, if the user has an enabled store',
@@ -100,7 +114,7 @@ describe('IsAuthorizedGuard', () => {
             getItemSpy.and.returnValue('some token');
             (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(store.select).toHaveBeenCalledWith('userInfo');
-                expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE');
+                expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
             });
         }));
 
@@ -119,7 +133,7 @@ describe('IsAuthorizedGuard', () => {
             })));
             (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(store.select).toHaveBeenCalledWith('userInfo');
-                expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE');
+                expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
             });
         }));
 });

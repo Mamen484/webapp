@@ -38,13 +38,13 @@ export class AggregatedUserInfo {
      * Else finds the first store which status is not 'deleted'.
      *
      * @param {string} storeName
-     * @returns {Store}
+     * @returns boolean
      */
     hasEnabledStore(storeName?: string) {
         if (storeName) {
-            return this._embedded.store.find(s => s.status !== StoreStatus.deleted && s.name === storeName);
+            return Boolean(this.findEnabledStore(storeName));
         }
-        return this._embedded.store.find(s => s.status !== StoreStatus.deleted);
+        return Boolean(this.findFirstEnabledStore());
     }
 
     findFirstEnabledStore() {
