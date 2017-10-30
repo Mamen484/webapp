@@ -13,7 +13,5 @@ export const environment = {
     SUPPORT_URL: 'https://support.shopping-feed.com',
     SUPPORT_AUTHORIZATION: 'Basic ZGV2ZWxvcGVyQHNob3BwaW5nLWZlZWQuY29tOiYqRUZtMn1NK1BxeD5cUXM=',
     CONTACT_EMAIL: 'contact@shopping-feed.com',
-    SUPPORT_EMAIL: 'support@shopping-feed.com',
-    DEFAULT_AUTOPILOT_EMAIL: 'default@shopping-feed.com',
-    DEFAULT_AUTOPILOT_STORENAME: 'default'
+    SUPPORT_EMAIL: 'support@shopping-feed.com'
 };
