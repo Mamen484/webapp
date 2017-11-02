@@ -77,10 +77,8 @@ import { ErrorInterceptor } from './interceptors/error-interceptor';
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
-
-        {provide: 'windowObject', useValue: window}
-    ],
+        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
+        ],
     declarations: []
 })
 export class CoreModule {

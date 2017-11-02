@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
 
-fdescribe('BaseComponent', () => {
+describe('BaseComponent', () => {
 
     let store, window = {Autopilot: <any>{}};
     beforeEach(() => {
@@ -15,7 +15,7 @@ fdescribe('BaseComponent', () => {
             Observable.of({login: 'login1', email: 'email1'}),
             Observable.of({name: 'login1'})
         );
-        let component = new BaseComponent(store, window);
+        let component = new BaseComponent(store, <any>{nativeWindow: window});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');
         expect(window.Autopilot.run.calls.mostRecent().args[1]._simpleAssociate).toEqual(true);
         expect(window.Autopilot.run.calls.mostRecent().args[1].Email).toEqual('email1');
@@ -27,7 +27,7 @@ fdescribe('BaseComponent', () => {
             Observable.of({login: 'login1', email: 'email1'}),
             Observable.of({name: 'login2'})
         );
-        let component = new BaseComponent(store, window);
+        let component = new BaseComponent(store, <any>{nativeWindow: window});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');
         expect(window.Autopilot.run.calls.mostRecent().args[1]._simpleAssociate).toEqual(true);
         expect(window.Autopilot.run.calls.mostRecent().args[1].Email).toEqual(environment.DEFAULT_AUTOPILOT_EMAIL);
