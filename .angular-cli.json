@@ -1,6 +1,6 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0",
     "name": "Shopping Feed UI"
   },
   "apps": [
@@ -12,8 +12,10 @@
       ],
       "index": "index.html",
       "main": "main.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
       "prefix": "sf",
       "mobile": false,
       "styles": [

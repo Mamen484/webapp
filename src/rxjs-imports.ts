@@ -13,3 +13,4 @@ import 'rxjs/add/operator/count';
 import 'rxjs/add/operator/zip';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/publishReplay';
+import 'rxjs/add/operator/combineLatest';
