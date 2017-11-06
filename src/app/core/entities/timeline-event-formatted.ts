@@ -14,7 +14,7 @@ export class TimelineEventFormatted {
     operation: TimelineEventAction | TimelineUpdateAction;
     reference: string;
     ruleName: string;
-    subject: TimelineErrorSubject;
+    reason: TimelineErrorSubject;
     channel?: Channel;
 
     constructor(event: TimelineEvent | TimelineUpdate) {
@@ -27,7 +27,7 @@ export class TimelineEventFormatted {
             event.name === TimelineEventName.ruleTransformation || event.name === TimelineEventName.ruleSegmentation
                 ? event.data.name
                 : '';
-        this.subject = event.action === TimelineUpdateAction.error && event.data && event.data.subject || '';
+        this.reason = event.action === TimelineUpdateAction.error && event.data && event.data.reason || '';
         this.channel = (<TimelineUpdate>event)._embedded && (<TimelineUpdate>event)._embedded.channel;
     }
 

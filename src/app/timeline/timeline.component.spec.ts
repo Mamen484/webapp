@@ -181,10 +181,10 @@ describe('TimelineComponent', () => {
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
-                validateEvent(items[3], 'error_outline', 'We can\'t update your source feed .');
-                validateEvent(items[4], 'error_outline', 'We can\'t update your source feed because too many categories changes.');
-                validateEvent(items[5], 'error_outline', 'We can\'t update your source feed because too many products changed.');
-                validateEvent(items[6], 'error_outline', 'We can\'t update your source feed because we can\'t open it.');
+                validateEvent(items[3], 'error_outline', 'We can\'t update your source feed .', '/tools/infos');
+                validateEvent(items[4], 'error_outline', 'We can\'t update your source feed because too many categories changes.', '/tools/infos');
+                validateEvent(items[5], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
+                validateEvent(items[6], 'error_outline', 'We can\'t update your source feed because we can\'t open it.', '/tools/infos');
                 validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
                 validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
             });

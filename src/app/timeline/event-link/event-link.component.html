@@ -9,11 +9,11 @@
   <ng-container *ngIf="event.operation === actions.delete" i18n>"{{event.ruleName}}" has been deleted.</ng-container>
 </a>
 
-<ng-container *ngIf="event.type === updateNames.import">
+<a sfLegacyLink path="/tools/infos" *ngIf="event.type === updateNames.import" target="_blank">
   <ng-container i18n>We can't update your source feed</ng-container>
-  <ng-container *ngIf="event.subject === 'open'" i18n> because we can't open it.</ng-container>
-  <ng-container *ngIf="event.subject === 'categories'" i18n> because too many categories changes.</ng-container>
-  <ng-container *ngIf="event.subject === 'products'" i18n>  because too many products changed.</ng-container>
-  <ng-container *ngIf="!event.subject">.</ng-container>
-</ng-container>
+  <ng-container *ngIf="event.reason === 'open'" i18n> because we can't open it.</ng-container>
+  <ng-container *ngIf="event.reason === 'categories'" i18n> because too many categories changes.</ng-container>
+  <ng-container *ngIf="event.reason === 'products'" i18n>  because too many products changed.</ng-container>
+  <ng-container *ngIf="!event.reason">.</ng-container>
+</a>
 <a sfLegacyLink [path]="getChannelLink(event.channel)" *ngIf="event.type === updateNames.export" i18n target="_blank">We can't export your feed to {{event.channel.name}}.</a>

@@ -36,19 +36,19 @@ export const eventsWithErrors = {
             name: 'feed.import',
             action: 'error',
             occurredAt: '2017-10-03T19:45:47+00:00',
-            data: {subject: 'categories'}
+            data: {reason: 'categories'}
         }, {
             id: 'import_products_error',
             name: 'feed.import',
             action: 'error',
             occurredAt: '2017-10-03T19:45:47+00:00',
-            data: {subject: 'products'}
+            data: {reason: 'products'}
         }, {
             id: 'import_open_error',
             name: 'feed.import',
             action: 'error',
             occurredAt: '2017-10-03T19:45:47+00:00',
-            data: {subject: 'open'}
+            data: {reason: 'open'}
         }, {
             id: 'export_marketplace_error',
             name: 'feed.export',

@@ -10,5 +10,5 @@ export interface TimelineUpdate {
     occurredAt: string;
     id: string;
     _embedded: {channel: Channel}
-    data?: {subject?: TimelineErrorSubject};
+    data?: {reason?: TimelineErrorSubject};
 }
