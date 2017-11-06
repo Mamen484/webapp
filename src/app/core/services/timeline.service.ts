@@ -9,6 +9,7 @@ import { Timeline } from '../entities/timeline';
 import { TimelineUpdateAction } from '../entities/timeline-update-action.enum';
 import { findLast } from 'lodash';
 import { Subject } from 'rxjs/Subject';
+import { TimelineEventAction } from '../entities/timeline-event-action.enum';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 6; // 6 hours
 const MAX_UPDATES = 30;
@@ -34,8 +35,9 @@ export class TimelineService {
             params: new HttpParams()
                 .set(
                     'name',
-                    `${TimelineEventName.ruleTransformation}, ${TimelineEventName.ruleSegmentation}, ${TimelineEventName.orderLifecycle}`
+                    `${TimelineEventName.ruleTransformation},${TimelineEventName.ruleSegmentation},${TimelineEventName.orderLifecycle},${TimelineUpdateName.export},${TimelineUpdateName.import}`
                 )
+                .set('action', `${TimelineEventAction.create},${TimelineEventAction.push},${TimelineEventAction.delete},${TimelineEventAction.ship},${TimelineEventAction.update},${TimelineUpdateAction.error}`)
         })
     }
 
@@ -46,6 +48,7 @@ export class TimelineService {
                     .set('name', `${TimelineUpdateName.export},${TimelineUpdateName.import}`)
                     .set('since', new Date(Date.now() - UPDATES_PERIOD).toISOString())
                     .set('limit', String(MAX_UPDATES))
+                    .set('action', `${TimelineUpdateAction.ask},${TimelineUpdateAction.start},${TimelineUpdateAction.finish}`)
             })
             .map((updates: Timeline<TimelineUpdate>) => this.removeDuplication(updates))
 
@@ -58,7 +61,10 @@ export class TimelineService {
     emitUpdatedTimeline(storeId) {
         this.timelineStream.next({type: StreamEventType.started})
         this.getEvents(storeId).zip(this.getEventUpdates(storeId))
-            .subscribe(([events, updates]) => this.timelineStream.next({type: StreamEventType.finished, data: {events, updates}}))
+            .subscribe(([events, updates]) => this.timelineStream.next({
+                type: StreamEventType.finished,
+                data: {events, updates}
+            }))
     }
 
     protected removeDuplication(updates) {
