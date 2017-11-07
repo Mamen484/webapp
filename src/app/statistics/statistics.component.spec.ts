@@ -1,21 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { CommonModule } from '@angular/common';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { StatisticsComponent } from './statistics.component';
 import { statisticsMock } from '../../mocks/statistics-mock';
-import { SearchChannelsStubComponent } from '../../mocks/stubs/search-channels-stub.component';
-import { StoreStatisticsStubComponent } from '../../mocks/stubs/store-statistics-stub.component';
-import { ConfiguredChannelStubComponent } from '../../mocks/stubs/configured-channel-stub.component';
-import { SuggestedChannelStubComponent } from '../../mocks/stubs/suggested-channel-stub.component';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { MatCardModule, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { StoreService } from '../core/services/store.service';
 import { storeChannelMock } from '../../mocks/store-channel.mock';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
@@ -33,18 +27,9 @@ describe('StatisticsComponent', () => {
         channelServiceMock.getStatistics.and.callFake(params => Observable.of(statisticsMock));
         channelServiceMock.getStoreCharge.and.callFake(params => Observable.of({}));
         TestBed.configureTestingModule({
-            imports: [
-                CommonModule,
-                InfiniteScrollModule,
-                FlexLayoutModule,
-                MatCardModule,
-            ],
+            schemas: [NO_ERRORS_SCHEMA],
             declarations: [
                 StatisticsComponent,
-                SearchChannelsStubComponent,
-                StoreStatisticsStubComponent,
-                ConfiguredChannelStubComponent,
-                SuggestedChannelStubComponent
             ],
             providers: [{
                 provide: Store, useValue: {
