@@ -13,4 +13,25 @@ mat-dialog-content {
     text-align: left;
     margin-bottom: 40px;
   }
+  max-height: none;
+}
+
+.oppo-icon {
+  height: 100px;
+}
+
+.oppo-title {
+  text-transform: uppercase;
+  color: mat-color($accent);
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.start-trial-button {
+  margin-top: 40px;
+  text-transform: uppercase;
+}
+
+a.plans-link {
+ color: inherit;
 }
