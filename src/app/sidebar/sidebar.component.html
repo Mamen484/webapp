@@ -13,7 +13,7 @@
             </mat-list-item>
 
             <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
-                          i18n-matTooltip matTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
+                          i18n-matTooltip matTooltipPosition="after" *ngIf="(currentStore | async).permission.statistics">
                 <mat-icon>trending_up</mat-icon>
             </mat-list-item>
 
