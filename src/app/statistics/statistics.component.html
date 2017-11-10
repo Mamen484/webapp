@@ -9,7 +9,8 @@
         <mat-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(33.33% - 20px)"
                  fxFlex.xs="0 0 calc(33.33% - 20px)" fxFlex.lg="0 0 calc(25% - 20px)"
                  fxFlex.xl="0 0 calc(16.66% - 20px)"
-                 *ngFor="let channel of channels._embedded.channel">
+                 *ngFor="let channel of channels._embedded.channel"
+                [class.suggested-channel]="!channel.installed">
             <sf-configured-channel [channel]="channel" *ngIf="channel.installed"></sf-configured-channel>
             <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
             [firstChannel]="haveNoChannels" [charge]="charge"></sf-suggested-channel>
