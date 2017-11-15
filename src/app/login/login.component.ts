@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
     }
 
     protected findActiveStore(userData): Store {
+        console.log(userData);
         return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
     }
 
