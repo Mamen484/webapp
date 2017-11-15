@@ -3,7 +3,7 @@ export const environment = {
     production: 'false',
     LOCALE_ID: 'en',
     DEFAULT_LANGUAGE: 'fr',
-    APP_URL: 'https://app.shopping-feed.com',
+    APP_URL: 'http://app.shopping-feed.lan',
     APP_AUTHORIZATION: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
     API_URL_WITHOUT_VERSION: 'http://api.shopping-feed.lan',
     API_URL: 'http://api.shopping-feed.lan/v1',
