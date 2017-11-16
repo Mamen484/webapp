@@ -3,7 +3,7 @@ import { TimelineEventAction } from './timeline-event-action.enum';
 import { TimelineEvent } from './timeline-event';
 import { TimelineUpdateName } from './timeline-update-name.enum';
 import { TimelineUpdateAction } from './timeline-update-action.enum';
-import { TimelineErrorSubject } from './timeline-error-subject';
+import { TimelineErrorReason } from './timeline-error-reason';
 import { TimelineUpdate } from './timeline-update';
 import { Channel } from './channel';
 
@@ -14,7 +14,7 @@ export class TimelineEventFormatted {
     operation: TimelineEventAction | TimelineUpdateAction;
     reference: string;
     ruleName: string;
-    reason: TimelineErrorSubject;
+    reason: TimelineErrorReason;
     channel?: Channel;
 
     constructor(event: TimelineEvent | TimelineUpdate) {

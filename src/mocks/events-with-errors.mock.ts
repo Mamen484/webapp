@@ -1,9 +1,9 @@
 export const eventsWithErrors = {
-    total: 9,
+    total: 13,
     limit: 10,
     pages: 1,
     page: 1,
-    count: 9,
+    count: 13,
     '_links': {
         'next': {'href': '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle\u0026page=2\u0026limit=10'},
     },
@@ -71,6 +71,30 @@ export const eventsWithErrors = {
                     type: 'ads'
                 }
             }
+        }, {
+            id: 'import_check_error',
+            name: 'feed.import',
+            action: 'error',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            data: {reason: 'check'}
+        }, {
+            id: 'import_references_error',
+            name: 'feed.import',
+            action: 'error',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            data: {reason: 'references'}
+        }, {
+            id: 'import_mapping_error',
+            name: 'feed.import',
+            action: 'error',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            data: {reason: 'mapping'}
+        }, {
+            id: 'import_unknown_error',
+            name: 'feed.import',
+            action: 'error',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            data: {reason: 'abracadabra'}
         }
         ]
     }
