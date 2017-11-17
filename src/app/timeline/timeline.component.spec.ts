@@ -17,6 +17,7 @@ import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
+import {environment} from "../../environments/environment";
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -204,7 +205,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual('https://app.shopping-feed.com' + url + '?token=someToken&store=storeName');
+            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeName');
     }
 }
 
