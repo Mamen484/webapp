@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AppState } from '../core/entities/app-state';
-import { Store } from '@ngrx/store';
+import { Store as AppStore } from '@ngrx/store';
+import { Store } from '../core/entities/store';
 import { Statistics } from '../core/entities/statistics';
 import { ChannelsResponse } from '../core/entities/channels-response';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
@@ -36,11 +37,13 @@ export class StatisticsComponent {
     filterState = new ChannelsRequestParams();
     haveNoChannels = false;
     charge: StoreCharge;
+    hasStatisticsPermission = false;
 
-    constructor(protected appStore: Store<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
+    constructor(protected appStore: AppStore<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
 
         this.appStore.select('currentStore')
             .do(() => this.displayPageLoading())
+            .do((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics))
             .flatMap(currentStore => this.fetchData(currentStore))
             .subscribe(([[statistics, channels], charge]) => {
                 this.statistics = statistics;
@@ -128,7 +131,7 @@ export class StatisticsComponent {
         this.channels.pages = Math.ceil(this.channels.total / LOAD_CHANNELS_COUNT);
         this.processingFilters = false;
         this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
-        this.appStore.select('currentStore').take(1).subscribe(store => {
+        this.appStore.select('currentStore').take(1).subscribe((store: Store) => {
             this.internationalMode = Boolean(this.filterState.country) && store.country !== this.filterState.country;
         })
 
