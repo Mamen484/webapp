@@ -2,12 +2,13 @@
 
 .price {
   color: mat-color($accent, 700);
+  font-weight: bold;
 }
 
 mat-dialog-content {
   margin-top:0;
   margin-bottom: 10px;
-  width: 535px;
+  width: 620px;
   text-align: center;
   .text {
     text-align: left;
@@ -34,4 +35,8 @@ mat-dialog-content {
 
 a.plans-link {
  color: inherit;
+}
+
+.top-text {
+  margin: 10px 0;
 }

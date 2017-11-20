@@ -1,23 +1,23 @@
 <mat-dialog-content>
-    <div i18n>List your {{data.charge.references.count}} SKU's on</div>
+    <div i18n class="top-text">List your {{data.charge.references.count}} SKU's on</div>
     <img [src]="data.logo" alt="channel">
 
     <div class="mat-display-1 price" i18n>Only {{data.charge.charge.amount |
         sfCurrency:data.charge.charge.currency}}/Month
     </div>
 
-    <div fxFlexLayout="row">
-        <div fxFlex="1 1 33%">
+    <div fxFlexLayout="row" fxLayoutGap="36px">
+        <div fxFlex="1 1 calc(33% - 36px)">
             <div class="oppo-icon"><img src="{{baseHref}}/assets/images/cloudplus3.svg" alt="Cloud Icon"></div>
-            <div class="oppo-title" i18n>3 premium channels included</div>
-            <div><ng-container i18n>in each of our</ng-container> <a [href]="pricesLink" target="_blank" class="plans-link" i18n>plans</a></div>
+            <div class="oppo-title" i18n>3 premium channels</div>
+            <div><ng-container i18n>included in each of our</ng-container> <a [href]="pricesLink" target="_blank" class="plans-link" i18n>plans</a></div>
         </div>
-        <div fxFlex="1 1 33%">
+        <div fxFlex="1 1 calc(33% - 36px)">
             <div class="oppo-icon"><img src="{{baseHref}}/assets/images/calendar.svg" alt="Calendar Icon"></div>
             <div class="oppo-title" i18n>30 days free trial</div>
             <div i18n>with onboarding and setup assistance</div>
         </div>
-        <div fxFlex="1 1 33%">
+        <div fxFlex="1 1 calc(33% - 36px)">
             <div class="oppo-icon"><img src="{{baseHref}}/assets/images/s-icon.svg" alt="Flat Fee Icon"></div>
             <div class="oppo-title" i18n>flat monthly fee</div>
             <div i18n>no contracts, sales limits, or commissions</div>
