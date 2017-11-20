@@ -1,7 +1,7 @@
 <mat-card-content fxFlex fxLayout="column">
     <a class="channel-logo" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)"><img mat-card-image [src]="channel._embedded.channel._links.image.href"
               [alt]="channel._embedded.channel.name"></a>
-    <a class="channel-info-line channel-revenue" sfLegacyLink path="/statistics">
+    <a class="channel-info-line channel-revenue" sfLegacyLink path="/statistics" *ngIf="hasStatisticsPermission">
         <mat-icon>monetization_on</mat-icon>
         <span>{{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
     </a>
