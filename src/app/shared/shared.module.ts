@@ -4,7 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule,
+    MatSelectModule, MatSidenavModule, MatSnackBarModule,
     MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -33,6 +33,7 @@ import { BlankComponent } from './blank.component';
         MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
@@ -57,6 +58,7 @@ import { BlankComponent } from './blank.component';
         MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
