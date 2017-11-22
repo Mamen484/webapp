@@ -19,7 +19,8 @@ export const enum StreamEventType {started, finished};
 const updateActions = {
     [TimelineUpdateAction.ask]: 0,
     [TimelineUpdateAction.start]: 1,
-    [TimelineUpdateAction.finish]: 2
+    [TimelineUpdateAction.finish]: 2,
+    [TimelineUpdateAction.error]: 3,
 };
 
 @Injectable()
@@ -48,7 +49,7 @@ export class TimelineService {
                     .set('name', `${TimelineUpdateName.export},${TimelineUpdateName.import}`)
                     .set('since', new Date(Date.now() - UPDATES_PERIOD).toISOString())
                     .set('limit', String(MAX_UPDATES))
-                    .set('action', `${TimelineUpdateAction.ask},${TimelineUpdateAction.start},${TimelineUpdateAction.finish}`)
+                    .set('action', `${TimelineUpdateAction.ask},${TimelineUpdateAction.start},${TimelineUpdateAction.finish},${TimelineUpdateAction.error}`)
             })
             .map((updates: Timeline<TimelineUpdate>) => this.removeDuplication(updates))
 
@@ -59,7 +60,7 @@ export class TimelineService {
     }
 
     emitUpdatedTimeline(storeId) {
-        this.timelineStream.next({type: StreamEventType.started})
+        this.timelineStream.next({type: StreamEventType.started});
         this.getEvents(storeId).zip(this.getEventUpdates(storeId))
             .subscribe(([events, updates]) => this.timelineStream.next({
                 type: StreamEventType.finished,
