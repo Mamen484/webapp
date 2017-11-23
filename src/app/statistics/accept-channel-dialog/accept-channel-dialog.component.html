@@ -1,6 +1,6 @@
 <mat-dialog-content>
-    <div i18n class="top-text">List your {{data.charge.references.count}} SKU's on</div>
-    <img [src]="data.logo" alt="channel">
+    <div i18n class="top-text mat-headline">List your {{data.charge.references.count}} SKU's on</div>
+    <img [src]="data.logo" class="channel-logo" alt="channel">
 
     <div class="mat-display-1 price" i18n>Only {{data.charge.charge.amount |
         sfCurrency:data.charge.charge.currency}}/Month
