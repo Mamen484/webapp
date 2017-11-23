@@ -1,10 +1,17 @@
-<a sfLegacyLink [path]="getLink()" target="_blank">
+<a sfLegacyLink [path]="getLink()" target="_blank" *ngIf="event.type === names.ruleSegmentation || event.type === names.ruleTransformation || event.type === names.orderLifecycle">
   <ng-container *ngIf="event.operation === actions.ship" i18n>The order {{event.reference}}  can't be shipped.</ng-container>
   <ng-container *ngIf="event.operation === actions.push" i18n>The order {{event.reference}} can't be imported to your store.</ng-container>
-
-  <ng-container *ngIf="event.type === names.ruleSegmentation" i18n>The Auto-Remove rule </ng-container>
-  <ng-container *ngIf="event.type === names.ruleTransformation" i18n>The rule </ng-container>
-  <ng-container *ngIf="event.operation === actions.update" i18n>"{{event.ruleName}}" has been updated.</ng-container>
-  <ng-container *ngIf="event.operation === actions.create" i18n>"{{event.ruleName}}" has been created.</ng-container>
-  <ng-container *ngIf="event.operation === actions.delete" i18n>"{{event.ruleName}}" has been deleted.</ng-container>
+  <ng-container *ngIf="event.operation === actions.update" i18n>The <ng-container *ngIf="event.type === names.ruleSegmentation">Auto-Remove</ng-container> rule "{{event.ruleName}}" has been updated.</ng-container>
+  <ng-container *ngIf="event.operation === actions.create" i18n>The <ng-container *ngIf="event.type === names.ruleSegmentation">Auto-Remove</ng-container> rule "{{event.ruleName}}" has been created.</ng-container>
+  <ng-container *ngIf="event.operation === actions.delete" i18n>The <ng-container *ngIf="event.type === names.ruleSegmentation">Auto-Remove</ng-container> rule "{{event.ruleName}}" has been deleted.</ng-container>
 </a>
+
+<a sfLegacyLink path="/tools/infos" *ngIf="event.type === updateNames.import" target="_blank">
+  <ng-container *ngIf="event.reason === 'open'" i18n>We can't update your source feed because we can't open it.</ng-container>
+  <ng-container *ngIf="event.reason === 'categories'" i18n>We can't update your source feed because too many categories changes.</ng-container>
+  <ng-container *ngIf="event.reason === 'products'" i18n>We can't update your source feed because too many products changed.</ng-container>
+  <ng-container *ngIf="event.reason === 'mapping' || event.reason === 'references'" i18n>We can't update your source feed because columns changed.</ng-container>
+  <ng-container *ngIf="event.reason === 'check'" i18n>Your source feed wasn't updated because nothing had changed since the last update.</ng-container>
+  <ng-container *ngIf="unknownReason()" i18n>Your source feed can't be updated because of an unrecognized error.</ng-container>
+</a>
+<a sfLegacyLink [path]="getChannelLink(event.channel)" *ngIf="event.type === updateNames.export" i18n target="_blank">We can't export your feed to {{event.channel.name}}.</a>
