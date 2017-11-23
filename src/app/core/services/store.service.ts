@@ -10,7 +10,6 @@ import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 import { StoreCharge } from '../entities/store-charge';
 import { Store } from '../entities/store';
-import { fetchStoresMock } from '../../../mocks/fetch-stores-mock';
 
 @Injectable()
 export class StoreService {
@@ -60,55 +59,11 @@ export class StoreService {
     }
 
     public fetchAvailableStores(filter: string) {
-        return Observable.of(fetchStoresMock);
-        // return <Observable<any>>this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('filter', filter)});
+        return <Observable<any>>this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('name', filter)});
     }
 
     public getStore(storeId): Observable<Store> {
-        switch (String(storeId)) {
-            case '10054':
-            case  'Top Wagen':
-
-                return Observable.of(<any>{
-                    'id': 10054,
-                    'name': 'Top Wagen',
-                    'country': 'fr',
-                    'permission': {
-                        'tools': '*'
-                    },
-                    feed: {source: 'Shopify'},
-                    order: {total: 0}
-                });
-
-            case '2866':
-            case 'Sportsdepot':
-                return Observable.of(<any>{
-                    'id': 2866,
-                    'name': 'Sportsdepot',
-                    'country': 'fr',
-                    'permission': {
-                        'ads': '*',
-                    },
-                    feed: {source: 'Shopify'},
-                    order: {total: 34}
-                });
-
-            case '47':
-            case 'CoindugeekSG9m':
-                return Observable.of(<any>{
-                    'id': 47,
-                    'name': 'CoindugeekSG9m',
-                    'country': 'fr',
-                    'permission': {
-                        'affiliation': '*',
-                        'buyline': '*',
-                        'marketplaces': '*',
-                    },
-                    feed: {source: 'Shopify'},
-                    order: {total: 22}
-                });
-
-        }
+        return <Observable<Store>>this.httpClient.get(`${environment.API_URL}/store/${storeId}`);
     }
 
     createStore(store: Store) {

@@ -19,6 +19,9 @@ export class Store {
             href: string
         }
     };
+    _embedded: {
+        order: {newCount: number};
+    };
 
     create() {
 
