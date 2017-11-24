@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { ServerErrorComponent } from '../../snackbars/server-error/server-error.component';
 
 const RETRY_INTERVAL = 3000;
@@ -33,7 +33,11 @@ export class HttpClientService extends HttpClient {
                 if (retries > 0) {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {
-                    this.snackBar.openFromComponent(ServerErrorComponent);
+                    let config: MatSnackBarConfig = {};
+                    if (args[0].slice(-3) === '/me') {
+                        config.extraClasses = ['app-failed-error'];
+                    }
+                    this.snackBar.openFromComponent(ServerErrorComponent, config);
                 }
             });
     }
