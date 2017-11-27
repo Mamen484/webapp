@@ -28,11 +28,11 @@ describe('InitializeStoreGuard', () => {
             Observable.of(AggregatedUserInfo.create({roles: ['admin']})),
             {dispatch: dispatchSpy}
         );
-        storeService.getStore.and.returnValue(Observable.of('some amazing store'));
+        storeService.getStore.and.returnValue(Observable.of({name: 'some amazing store'}));
         guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
-            expect(dispatchSpy.calls.mostRecent().args[0].store).toEqual('some amazing store');
+            expect(dispatchSpy.calls.mostRecent().args[0].store.name).toEqual('some amazing store');
         });
     }));
 
@@ -42,11 +42,11 @@ describe('InitializeStoreGuard', () => {
             Observable.of(AggregatedUserInfo.create({roles: ['employee']})),
             {dispatch: dispatchSpy}
         );
-        storeService.getStore.and.returnValue(Observable.of('some amazing store'));
+        storeService.getStore.and.returnValue(Observable.of({name: 'some amazing store'}));
         guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
-            expect(dispatchSpy.calls.mostRecent().args[0].store).toEqual('some amazing store');
+            expect(dispatchSpy.calls.mostRecent().args[0].store.name).toEqual('some amazing store');
         });
     }));
 

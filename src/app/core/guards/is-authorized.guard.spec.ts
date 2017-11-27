@@ -29,7 +29,8 @@ describe('IsAuthorizedGuard', () => {
                 {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
                 {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
                 {provide: Store, useValue: store},
-                {provide: Router, useValue: router}
+                {provide: Router, useValue: router},
+
             ],
         })
         ;

@@ -13,7 +13,7 @@ describe('CanLoadAdminGuard', () => {
     let router;
     let userService;
     beforeEach(() => {
-        store = jasmine.createSpyObj('store', ['select']);
+        store = jasmine.createSpyObj('store', ['select', 'dispatch']);
         router = jasmine.createSpyObj('router', ['navigate']);
         userService = jasmine.createSpyObj('userService', ['fetchAggregatedInfo']);
         TestBed.configureTestingModule({
