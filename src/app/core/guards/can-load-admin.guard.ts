@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { UserService } from '../services/user.service';
+import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 
 @Injectable()
 export class CanLoadAdminGuard implements CanLoad {
@@ -15,8 +16,14 @@ export class CanLoadAdminGuard implements CanLoad {
 
     canLoad(): Observable<boolean> {
         return this.appStore.select('userInfo')
-            .flatMap(userInfo => userInfo ? Observable.of(userInfo) : this.userService.fetchAggregatedInfo())
             .take(1)
+            .flatMap(info => info
+                ? Observable.of(info)
+                : this.userService.fetchAggregatedInfo().do(userInfo => this.appStore.dispatch({
+                    type: INITIALIZE_USER_INFO,
+                    userInfo
+                }))
+            )
             .map(userInfo => {
                 if (!userInfo.isAdmin()) {
                     this.router.navigate(['/home']);
