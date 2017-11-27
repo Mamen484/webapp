@@ -10,16 +10,16 @@ export interface Store {
     feed: {
         source: 'Shopify' | 'Prestashop',
         url: string
-    },
-    order: {
-        total: number
-    };
-    timeline: {
-        total: number
     };
     _links: {
         self: {
             href: string
         }
     };
+    _embedded: {
+        order: {
+            newCount: number;
+        }
+    }
+
 }
