@@ -4,11 +4,11 @@ import { Timeline } from '../entities/timeline';
 import { TimelineUpdate } from '../entities/timeline-update';
 
 let data = {
-    'total': 24,
+    'total': 29,
     'limit': 30,
     'pages': 1,
     'page': 1,
-    'count': 24,
+    'count': 29,
     '_embedded': {
         'timeline': [{
             'id': '59e0dcb1ae7b3b02694c3ff1',
@@ -212,7 +212,63 @@ let data = {
                     'type': 'ads',
                 }
             }
-        }]
+        },
+            {
+                'id': '59e0d0f5ae7b3b025c57c2b5',
+                'storeId': 307,
+                'name': 'feed.import',
+                'action': 'error',
+                'occurredAt': '2017-10-13T14:42:57+00:00',
+            },{
+                'id': '59e0d0f5ae7b3b025c57c2b4',
+                'storeId': 307,
+                'name': 'feed.import',
+                'action': 'ask',
+                'occurredAt': '2017-10-13T14:42:57+00:00',
+            },
+            {
+                'id': '59e0d0f5ae7b3b025c57c2b8',
+                'storeId': 307,
+                'name': 'feed.export',
+                'action': 'error',
+                'occurredAt': '2017-10-13T14:42:57+00:00',
+                '_embedded': {
+                    'channel': {
+                        'id': 66,
+                        'name': 'SmartFeed',
+                        'type': 'ads',
+                    }
+                }
+            },
+            {
+                'id': '59e0d0f5ae7b3b025c57c2b7',
+                'storeId': 307,
+                'name': 'feed.export',
+                'action': 'start',
+                'occurredAt': '2017-10-13T14:42:57+00:00',
+                '_embedded': {
+                    'channel': {
+                        'id': 66,
+                        'name': 'SmartFeed',
+                        'type': 'ads',
+                    }
+                }
+            },
+            {
+                'id': '59e0d0f5ae7b3b025c57c2b6',
+                'storeId': 307,
+                'name': 'feed.export',
+                'action': 'ask',
+                'occurredAt': '2017-10-13T14:42:57+00:00',
+                '_embedded': {
+                    'channel': {
+                        'id': 66,
+                        'name': 'SmartFeed',
+                        'type': 'ads',
+                    }
+                }
+            }
+        ]
     }
 };
 
@@ -238,7 +294,9 @@ describe('TimelineService', () => {
             expect(upd[9].id).toEqual('59e0d225ae7b3b025e4d4a33');
             expect(upd[10].id).toEqual('59e0d221ae7b3b025d55c201');
             expect(upd[11].id).toEqual('59e0d0f5ae7b3b025c57c2b3');
-            expect(upd.length).toEqual(12);
+            expect(upd[12].id).toEqual('59e0d0f5ae7b3b025c57c2b5');
+            expect(upd[13].id).toEqual('59e0d0f5ae7b3b025c57c2b8');
+            expect(upd.length).toEqual(14);
         });
     });
 });

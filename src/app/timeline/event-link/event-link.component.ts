@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 import { TimelineEventFormatted } from '../../core/entities/timeline-event-formatted';
+import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enum';
+import { Channel } from '../../core/entities/channel';
+import { TimelineErrorReason } from '../../core/entities/timeline-error-reason';
 
 @Component({
     selector: 'sf-event-link',
@@ -14,6 +17,7 @@ export class EventLinkComponent {
     @Input() event: TimelineEventFormatted;
     actions = TimelineEventAction;
     names = TimelineEventName;
+    updateNames = TimelineUpdateName;
 
     constructor() {
     }
@@ -27,6 +31,18 @@ export class EventLinkComponent {
             case this.names.ruleTransformation:
                 return `/tools/rules#${this.event.reference}`;
         }
+    }
+
+    getChannelLink(channel: Channel) {
+        return channel.type === 'marketplace'
+            ? `/${channel.name}`
+            : `/${channel.type}/manage/${channel.name}`;
+    }
+
+    unknownReason() {
+        return !this.event.reason ||
+            (<TimelineErrorReason[]>['open', 'categories', 'products', 'check', 'references', 'mapping'])
+                .indexOf(this.event.reason) === -1;
     }
 
 }

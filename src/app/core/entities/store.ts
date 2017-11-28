@@ -11,19 +11,15 @@ export class Store {
     owner = new StoreOwner();
     feed = new CreateStoreFeed();
     country = '';
-    order: {
-        total: number
-    };
     _links: {
         self: {
             href: string
         }
     };
     _embedded: {
-        order: {newCount: number};
-    };
-
-    create() {
-
+        order: {
+            newCount: number;
+        }
     }
+
 }
