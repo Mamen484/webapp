@@ -1,18 +1,17 @@
 import { Permission } from './permission';
+import { StoreStatus } from './store-status.enum';
+import { StoreOwner } from './store-owner';
+import { CreateStoreFeed } from './create-store-feed';
 
-export interface Store {
+export class Store {
     id: number;
     name: string;
+    status: StoreStatus;
     permission: Permission;
-    country: string;
-    feed: {
-        source: 'Shopify' | 'Prestashop',
-        url: string
-    },
+    owner = new StoreOwner();
+    feed = new CreateStoreFeed();
+    country = '';
     order: {
-        total: number
-    };
-    timeline: {
         total: number
     };
     _links: {
@@ -20,4 +19,11 @@ export interface Store {
             href: string
         }
     };
+    _embedded: {
+        order: {newCount: number};
+    };
+
+    create() {
+
+    }
 }

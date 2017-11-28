@@ -1,0 +1,23 @@
+@import '../../../sass/variables';
+
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.event-icon {
+  margin-right: 20px;
+  color: mat-color($accent);
+
+  mat-icon {
+    vertical-align: middle;
+  }
+}
+
+.channel-name {
+  flex: 1;
+}
+.event-description {
+  flex: 3;
+  text-transform: capitalize;
+}

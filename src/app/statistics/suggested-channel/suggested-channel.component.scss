@@ -3,6 +3,10 @@
 
 @include channel-common-styles();
 
+:host {
+  height: 100%;
+}
+
 .channel-info-line {
   margin-bottom: 15px;
 
@@ -21,7 +25,7 @@
 
   & > a {
     text-decoration: none;
-    color: black;
+    color: $black-87-opacity;
   }
 }
 

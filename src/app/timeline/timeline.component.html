@@ -1,4 +1,4 @@
-<div class="timeline"  infiniteScroll [infiniteScrollDistance]="2"
+<div class="timeline" infiniteScroll [infiniteScrollDistance]="2" *ngIf="!loadingTimeline"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div class="heading-date mat-body-1" i18n>Latest updates</div>
@@ -8,26 +8,17 @@
                 <div class="sf-fill-space mat-body-1" i18n>
                     Number of updates in progress
                 </div>
-                <div>{{updatesInProgress}}</div>
+                <mat-chip-list>
+                    <mat-chip class="updates-badge">{{updatesInProgress}}</mat-chip>
+                </mat-chip-list>
             </mat-list-item>
             <mat-list-item *ngFor="let update of updates">
-
-                <div class="event-icon mat-body-1">
-                    <mat-icon *ngIf="update.type === updateTypes.export">vertical_align_top</mat-icon>
-                    <mat-icon *ngIf="update.type === updateTypes.import">vertical_align_bottom</mat-icon>
-                </div>
-                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.import">
-                    Source feed
-                </div>
-                <div class="channel-name mat-body-1" *ngIf="update.type === updateTypes.export">
-                    {{update._embedded.channel[0].name}}
-                </div>
-                <div class="event-description mat-body-1">
-                    <span *ngIf="update.operation === updateOperations.start" i18n>In progress</span>
-                    <span *ngIf="update.operation === updateOperations.ask" i18n>Scheduled</span>
-                    <span *ngIf="update.operation === updateOperations.finish" i18n>Completed</span>
-                </div>
-                <div class="event-time mat-body-1">{{update.occurredAt | date:"HH:mm"}}</div>
+                <a *ngIf="update.action === updateOperations.finish;else notCompletedUpdate" sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank" >
+                    <sf-update-row [update]="update"></sf-update-row>
+                </a>
+                <ng-template #notCompletedUpdate>
+                    <sf-update-row [update]="update" matTooltipPosition="above" matTooltip="Please wait until this update has finished processing before you can access the report" matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
+                </ng-template>
             </mat-list-item>
             <mat-list-item *ngIf="!updates.length">
                 <div class="sf-fill-space no-updates mat-body-1" i18n> No updates</div>
@@ -36,22 +27,15 @@
     </mat-card>
 
     <div *ngFor="let eventsGroup of events">
-        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'EEEE MMMM d y'}}</div>
+        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'fullDate'}}</div>
         <mat-card class="event">
             <mat-list>
                 <mat-list-item *ngFor="let event of eventsGroup[1]">
-
                     <div class="event-icon mat-body-1">
                         <mat-icon>{{event.icon}}</mat-icon>
                     </div>
-                    <sf-order-event [reference]="event.reference" [operation]="event.operation"
-                                    class="event-description sf-fill-space mat-body-1"
-                                    *ngIf="event.type === eventTypes.orderLifecycle"></sf-order-event>
-                    <sf-rule-event [ruleName]="event.ruleName" [operation]="event.operation"
-                                   class="event-description sf-fill-space mat-body-1"
-                                   *ngIf="event.type === eventTypes.ruleSegmentation || event.type === eventTypes.ruleTransformation"></sf-rule-event>
-                    <div class="event-time mat-body-1">{{event.time | date:"HH:mm"}}</div>
-
+                    <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>
+                    <div class="event-time mat-body-1">{{event.time | date:'shortTime'}}</div>
                 </mat-list-item>
             </mat-list>
         </mat-card>
@@ -59,7 +43,7 @@
 
     <div *ngIf="!events.length">
         <div class="heading-date mat-body-1" i18n>Today</div>
-        <mat-card>
+        <mat-card class="event">
             <mat-card-content>
                 <div class="no-events mat-body-1" i18n>No events</div>
             </mat-card-content>
@@ -69,4 +53,7 @@
     <div>
         <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
     </div>
+</div>
+<div class="timeline" *ngIf="loadingTimeline">
+    <mat-spinner></mat-spinner>
 </div>

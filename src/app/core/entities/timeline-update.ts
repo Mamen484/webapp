@@ -1,12 +1,12 @@
+import { TimelineUpdateName } from './timeline-update-name.enum';
+import { TimelineUpdateAction } from './timeline-update-action.enum';
 import { Channel } from './channel';
-import { TimelineUpdateType } from './timeline-update-type.enum';
-import { TimelineUpdateOperation } from './timeline-update-operation.enum';
 
 export interface TimelineUpdate {
-    type: TimelineUpdateType;
-    operation: TimelineUpdateOperation;
+    name: TimelineUpdateName;
+    action: TimelineUpdateAction;
+    storeId: number;
     occurredAt: string;
-    _embedded?: {
-        channel: Channel[]
-    };
+    id: string;
+    _embedded: {channel: Channel}
 }

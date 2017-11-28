@@ -1,9 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { StoreChannel } from '../../core/entities/store-channel';
 import { WindowRefService } from '../../core/services/window-ref.service';
-import { LegacyLinkService } from '../../core/services/legacy-link.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
 import { Channel } from '../../core/entities/channel';
 
 @Component({
@@ -14,6 +11,7 @@ import { Channel } from '../../core/entities/channel';
 export class ConfiguredChannelComponent {
 
     @Input() channel: StoreChannel;
+    @Input() hasStatisticsPermission = false;
 
     constructor(protected windowRef: WindowRefService) {
     }

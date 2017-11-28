@@ -32,12 +32,11 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
-import { events, events2 } from '../../mocks/events-mock';
-import { EventsResolveGuard } from './guards/events-resolve.guard';
-import { EventUpdatesGuard } from './guards/event-updates.guard';
-import { updates } from '../../mocks/updates-mock';
-import { Observable } from 'rxjs/Observable';
 import { LocalStorageService } from './services/local-storage.service';
+import { InitializeStoreGuard } from './guards/initialize-store.guard';
+import { DefaultPageGuard } from './guards/default-page.guard';
+import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
+import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { currentRouteReducer } from './reducers/current-route-reducer';
 import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
@@ -49,14 +48,17 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
         StoreModule.forRoot({
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
-            currentRoute: currentRouteReducer
+            currentRoute: currentRouteReducer,
+            storeStatistics: statisticsReducer,
         })
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
         ChannelsRouteGuard,
+        CanLoadAdminGuard,
         CheckProperLocaleGuard,
-        EventUpdatesGuard,
+        DefaultPageGuard,
+        InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
@@ -65,7 +67,6 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
         ShopifyGuard,
         ShopSpecifiedGuard,
 
-        EventsResolveGuard,
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
@@ -79,12 +80,12 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
         StoreService,
         LegacyLinkService,
         LocalStorageService,
+        TimelineService,
 
-        {provide: TimelineService, useValue: {getEvents, getEventUpdates}},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
         {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true},
     ],
     declarations: []
 })
@@ -92,13 +93,4 @@ export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
         throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
-}
-
-export function getEvents(link) {
-    return Observable.of(!link ? events : events2);
-}
-
-
-export function getEventUpdates() {
-    return Observable.of(updates);
 }

@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
-    MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
+    MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule, MatNativeDateModule,
-    MatToolbarModule, MatTooltipModule, MatTabsModule, MatTableModule, MatCheckboxModule,
+    MatSelectModule, MatSidenavModule, MatToolbarModule, MatTooltipModule,  MatDatepickerModule, MatNativeDateModule,
+    MatTabsModule, MatTableModule, MatCheckboxModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -25,23 +25,23 @@ import { BlankComponent } from './blank.component';
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
-        MatCheckboxModule,
         MatChipsModule,
-        MatDatepickerModule,
         MatDialogModule,
         MatIconModule,
         MatInputModule,
         MatListModule,
         MatMenuModule,
-        MatNativeDateModule,
-        MatTableModule,
-        MatTabsModule,
         MatSelectModule,
         MatSidenavModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
         MatTooltipModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTableModule,
+        MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
     ],

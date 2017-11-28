@@ -1,33 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef, MatSelectModule } from '@angular/material';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { LocaleIdService } from '../../core/services/locale-id.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
 import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FilterChannelsDialogComponent', () => {
     let component: FilterChannelsDialogComponent;
     let fixture: ComponentFixture<FilterChannelsDialogComponent>;
     let params;
+    let matDialog: MatDialogRef<any>;
 
     beforeEach(async(() => {
+        matDialog = jasmine.createSpyObj('MatDialog', ['close']);
         params = new ChannelsRequestParams();
         TestBed.configureTestingModule({
-            imports: [
-                NoopAnimationsModule,
-                CommonModule,
-                FormsModule,
-                MatDialogModule,
-                MatSelectModule,
-            ],
+            imports: [],
+            schemas: [NO_ERRORS_SCHEMA],
             declarations: [FilterChannelsDialogComponent],
             providers: [
-                {provide: MatDialogRef, useValue: {}},
+                {provide: MatDialogRef, useValue: matDialog},
                 {provide: MAT_DIALOG_DATA, useValue: params},
                 {provide: LocaleIdService, useValue: {localeId: 'en'}},
                 {provide: Store, useValue: {select: () => Observable.of({country: 'en'})}}
@@ -52,5 +47,15 @@ describe('FilterChannelsDialogComponent', () => {
 
     it('should write a country from a store', () => {
         expect(component.filter.country).toEqual('en');
+    });
+
+    it('cancel should call cancel on MdDialog without params', () => {
+        component.cancel();
+        expect(matDialog.close).toHaveBeenCalledWith();
+    });
+
+    it('cancel should call accept on MdDialog passing a filter as a param', () => {
+        component.accept();
+        expect(matDialog.close).toHaveBeenCalledWith(component.filter);
     });
 });

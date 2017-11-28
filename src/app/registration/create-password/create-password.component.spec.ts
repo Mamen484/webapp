@@ -4,61 +4,175 @@ import { CreatePasswordComponent } from './create-password.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { Observable } from 'rxjs/Observable';
-import { CreateStoreModel } from '../../core/entities/create-store-model';
-import { MenuModule } from '../../menu/menu.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule, MatInputModule } from '@angular/material';
 import { CreatePasswordService } from '../../core/services/create-password.service';
 import { LocaleIdService } from '../../core/services/locale-id.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { LocalStorageService } from '../../core/services/local-storage.service';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BlankComponent } from '../../shared/blank.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
     let fixture: ComponentFixture<CreatePasswordComponent>;
-    let getItemSpy: jasmine.Spy;
-    let setItemSpy: jasmine.Spy;
-    let queryParams;
-    let localStorage = {getItem: getItemSpy, setItem: setItemSpy};
+    let queryParams, localStorage, shopifyService, createPasswordService;
 
     beforeEach(async(() => {
-        localStorage.getItem = jasmine.createSpy('localStorage.getItem');
-        localStorage.setItem = jasmine.createSpy('localStorage.setItem');
+        localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'setItem', 'removeItem']);
         queryParams = Observable.of({});
-
-
+        shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getStoreData']);
+        createPasswordService = jasmine.createSpyObj('CreatePasswordService', ['createPassword']);
 
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, MenuModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, NoopAnimationsModule],
+            imports: [
+                RouterTestingModule.withRoutes([{path: 'register/create-account', component: BlankComponent}]),
+                FormsModule,
+                ReactiveFormsModule,
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                {
-                    provide: ShopifyAuthentifyService,
-                    useValue: {getStoreData: () => Observable.of(new CreateStoreModel())}
-                },
+                {provide: ShopifyAuthentifyService, useValue: shopifyService},
                 {provide: LocalStorageService, useValue: localStorage},
-                {provide: CreatePasswordService, useValue: {createPassword: () => Observable.of({})}},
+                {provide: CreatePasswordService, useValue: createPasswordService},
                 {provide: LocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ActivatedRoute, useValue: {queryParams: Observable.of({})}},
                 {provide: LegacyLinkService, useValue: {getLegacyLink: () => {}}},
             ],
-            declarations: [CreatePasswordComponent]
+            declarations: [CreatePasswordComponent, BlankComponent]
         })
             .compileComponents();
     }));
-
+    // useValue: {getStoreData: () => Observable.of(new CreateStoreModel())}
     describe('ngOnInit', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(CreatePasswordComponent);
             component = fixture.componentInstance;
-            fixture.detectChanges();
+
         });
 
         it('should be created', () => {
             expect(component).toBeTruthy();
         });
-    })
 
+        it('should NOT call data from server when the store data is cached in the local storage', () => {
+            localStorage.getItem.and.returnValue('{"key":"anything"}');
+            component.ngOnInit();
+            expect(localStorage.getItem).toHaveBeenCalled();
+            expect(shopifyService.getStoreData).not.toHaveBeenCalled();
+        });
+
+        it('should call data from server when the store data is NOT cached in the local storage', () => {
+            localStorage.getItem.and.returnValue(null);
+            shopifyService.getStoreData.and.returnValue(Observable.of({}));
+            component.ngOnInit();
+            expect(localStorage.getItem).toHaveBeenCalled();
+            expect(shopifyService.getStoreData).toHaveBeenCalled();
+        });
+
+        it ('should NOT call password service if email or password are invalid', () => {
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}))
+
+            fixture.detectChanges();
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+
+            component.emailControl.setValue('tadada');
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+
+            component.passwordControl.setValue('1');
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+
+            component.passwordControl.setValue('123456');
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('123456');
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+
+            component.emailControl.setValue('fferqw');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
+        });
+
+        it('should send email and password to the server when both controls are valid', () => {
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}));
+            fixture.detectChanges();
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(createPasswordService.createPassword).toHaveBeenCalled();
+        });
+
+        it('should use cached data if it is in the local storage', () => {
+            localStorage.getItem.and.returnValue('{"owner": {"some_data":"some data"}}');
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}));
+            fixture.detectChanges();
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(createPasswordService.createPassword.calls.mostRecent().args[0].owner.some_data)
+                .toEqual('some data')
+        });
+
+        it('should use the data from the server if there is no cache in the local storage', () => {
+            localStorage.getItem.and.returnValue(null);
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {some_data: 'some data from server'}}));
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}));
+            fixture.detectChanges();
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(createPasswordService.createPassword.calls.mostRecent().args[0].owner.some_data)
+                .toEqual('some data from server');
+        });
+
+        it('should save the authorization to the local storage if a call to the server was successful', () => {
+            localStorage.getItem.and.returnValue(null);
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {token: 'some token'}}));
+
+            fixture.detectChanges();
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some token');
+        });
+
+        it('should redirect to account creation progress dialog if createPassword request is successful', () => {
+            let router = TestBed.get(Router);
+            spyOn(router, 'navigate');
+            localStorage.getItem.and.returnValue(null);
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}));
+            fixture.detectChanges();
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account'])
+        });
+
+        it ('should display an error if the createPassword request returns an error', () => {
+            let router = TestBed.get(Router);
+            spyOn(router, 'navigate');
+            localStorage.getItem.and.returnValue(null);
+            shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
+            createPasswordService.createPassword.and.returnValue(Observable.throw('some error'));
+            fixture.detectChanges();
+            expect(component.displayServerError).toEqual(false);
+            component.emailControl.setValue('test@test.com');
+            component.passwordControl.setValue('1234567');
+            component.createPassword();
+            expect(component.displayServerError).toEqual(true);
+        })
+
+    })
 
 });

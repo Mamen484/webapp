@@ -10,6 +10,10 @@
 
 mat-card.channel-card {
   margin-bottom: 20px;
+
+  &.suggested-channel {
+    background-color: $black-12-opacity;
+  }
 }
 
 .channels-list {

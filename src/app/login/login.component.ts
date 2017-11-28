@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../core/services/user.service';
 import { Router } from '@angular/router';
 import { toPairs } from 'lodash';
 import { FormControl, Validators } from '@angular/forms';
+import { URLSearchParams } from '@angular/http';
+
 import { WindowRefService } from '../core/services/window-ref.service';
 import { environment } from '../../environments/environment';
+import { StoreStatus } from '../core/entities/store-status.enum';
+import { Store } from '../core/entities/store';
+import { UserService } from '../core/services/user.service';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 
 @Component({
     selector: 'sf-login',
@@ -17,8 +22,12 @@ export class LoginComponent implements OnInit {
     passwordControl = new FormControl('', [Validators.required]);
 
     error = '';
+    showDeletedStoreError = false;
+    contactEmail = environment.CONTACT_EMAIL;
 
-    constructor(protected userService: UserService, protected router: Router, protected windowRef: WindowRefService) {
+    constructor(protected userService: UserService,
+                protected router: Router,
+                protected windowRef: WindowRefService) {
 
     }
 
@@ -31,11 +40,34 @@ export class LoginComponent implements OnInit {
             return;
         }
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
-            data => this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + data.access_token,
+            data => {
+                this.userService.fetchAggregatedInfo()
+                    .subscribe((userData: AggregatedUserInfo) => {
+                        let activeStore = userData.findFirstEnabledStore();
+                        if (activeStore) {
+                            this.windowRef.nativeWindow.location.href = this.buildUrl(
+                                data.access_token,
+                                activeStore.name,
+                                userData.roles.indexOf('admin') !== -1
+                            );
+                            return;
+                        }
+                        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+                        this.showDeletedStoreError = true;
+                    })
+            },
             ({error}) => {
                 this.error = error.detail
             }
-        );
+        )
+        ;
+    }
+    protected buildUrl(token, storeName, isAdmin) {
+        let queryParams = new URLSearchParams();
+        queryParams.set('token', token);
+        queryParams.set('store', storeName);
+        let additionalPath = isAdmin ? '/admin' : '';
+        return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }
 
 }

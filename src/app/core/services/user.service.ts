@@ -8,19 +8,14 @@ import { LocalStorageService } from './local-storage.service';
 @Injectable()
 export class UserService {
 
-    protected aggregatedInfoCache: Observable<AggregatedUserInfo>;
 
     constructor(protected httpClient: HttpClient,
                 protected localStorage: LocalStorageService) {
     }
 
-    public fetchAggregatedInfo(withoutCache = false) {
-        if (!this.aggregatedInfoCache || withoutCache) {
-            this.aggregatedInfoCache = <Observable<AggregatedUserInfo>>this.httpClient.get(`${environment.API_URL}/me`)
-                .publishReplay(1)
-                .refCount();
-        }
-        return this.aggregatedInfoCache;
+    public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
+            return this.httpClient.get(`${environment.API_URL}/me`)
+                .map(userInfo => AggregatedUserInfo.create(userInfo))
     }
 
     public login(username, password) {

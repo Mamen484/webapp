@@ -18,13 +18,12 @@ mat-sidenav {
     cursor: pointer;
     margin: auto;
 
-    &.active {
-      color: mat-color($accent);
-    }
+  &.active {
+    color: mat-color($accent);
+  }
 
-    &:hover {
-      color: mat-color($accent);
-    }
+  &:hover {
+    color: mat-color($accent);
   }
 }
 

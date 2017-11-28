@@ -9,7 +9,7 @@
 /bower_components
 
 # Translations
-#/src/locale/*
+/src/locale/*
 /src/messages.xlf
 
 # IDEs and editors
@@ -41,3 +41,10 @@ Thumbs.db
 # docker local config
 /docker-compose.yml
 /src/environments/environment.prod.ts
+
+# Build files
+.v8flags.*
+/ts-node*
+
+# Crowdin archives
+/*.zip

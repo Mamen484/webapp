@@ -1,0 +1,10 @@
+<a sfLegacyLink [path]="getLink()" target="_blank">
+  <ng-container *ngIf="event.operation === actions.ship" i18n>The order {{event.reference}}  can't be shipped.</ng-container>
+  <ng-container *ngIf="event.operation === actions.push" i18n>The order {{event.reference}} can't be imported to your store.</ng-container>
+
+  <ng-container *ngIf="event.type === names.ruleSegmentation" i18n>The Auto-Remove rule </ng-container>
+  <ng-container *ngIf="event.type === names.ruleTransformation" i18n>The rule </ng-container>
+  <ng-container *ngIf="event.operation === actions.update" i18n>"{{event.ruleName}}" has been updated.</ng-container>
+  <ng-container *ngIf="event.operation === actions.create" i18n>"{{event.ruleName}}" has been created.</ng-container>
+  <ng-container *ngIf="event.operation === actions.delete" i18n>"{{event.ruleName}}" has been deleted.</ng-container>
+</a>

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TimelineComponent } from './timeline.component';
 import { SharedModule } from '../shared/shared.module';
-import { OrderEventComponent } from './order-event/order-event.component';
-import { RuleEventComponent } from './rule-event/rule-event.component';
 import { TimelineRoutingModule } from './timeline-routing.module';
+import { EventLinkComponent } from './event-link/event-link.component';
+import { UpdateRowComponent } from './update-row/update-row.component';
 
 @NgModule({
     imports: [
@@ -12,7 +12,7 @@ import { TimelineRoutingModule } from './timeline-routing.module';
         SharedModule,
         TimelineRoutingModule,
     ],
-    declarations: [TimelineComponent, OrderEventComponent, RuleEventComponent]
+    declarations: [TimelineComponent, EventLinkComponent, UpdateRowComponent]
 })
 export class TimelineModule {
 }

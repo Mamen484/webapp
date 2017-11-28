@@ -15,7 +15,7 @@ export class StoreStatisticsComponent implements OnInit {
     userLanguage: AggregatedUserInfo;
 
     constructor(protected route: ActivatedRoute) {
-        this.route.data.subscribe(({userInfo}) => {
+        this.route.parent.parent.data.subscribe(({userInfo}) => {
             this.userLanguage = LocaleIdService.detectLocale((<AggregatedUserInfo>userInfo).language);
         });
     }
