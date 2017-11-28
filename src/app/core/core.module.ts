@@ -2,7 +2,6 @@ import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import '../../rxjs-imports';
-import {MATERIAL_COMPATIBILITY_MODE} from '@angular/material';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
@@ -49,7 +48,6 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
             currentRoute: currentRouteReducer,
-            storeStatistics: statisticsReducer,
         })
     ],
     providers: [

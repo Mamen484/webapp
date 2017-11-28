@@ -1,12 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
 import { WindowRefService } from '../core/services/window-ref.service';
-import { SET_STORE, UPDATE_TIMELINE } from '../core/reducers/current-store-reducer';
-import { INITIALIZE_USER_INFO } from '../core/reducers/user-info-reducer';
-import { Observable } from 'rxjs/Observable';
-import { UserService } from '../core/services/user.service';
 
 declare const Autopilot;
 
