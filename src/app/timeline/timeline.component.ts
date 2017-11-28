@@ -14,7 +14,8 @@ import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 @Component({
     selector: 'sf-timeline',
     templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.scss']
+    styleUrls: ['./timeline.component.scss'],
+    preserveWhitespaces: false,
 })
 export class TimelineComponent {
 

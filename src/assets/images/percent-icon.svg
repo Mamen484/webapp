@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="69px" height="69px" viewBox="0 0 69 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>% icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Path" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Amazon-Visual" transform="translate(-830.000000, -397.000000)">
+            <g id="dialog" transform="translate(320.000000, 152.000000)">
+                <g id="3" transform="translate(447.000000, 247.000000)">
+                    <g id="%-icon" transform="translate(65.000000, 0.000000)">
+                        <circle id="Oval-3" stroke="#747474" stroke-width="3" fill="#FFFFFF" cx="32.5" cy="32.5" r="32.5"></circle>
+                        <text id="%" font-family="NotoSans-Bold, Noto Sans" font-size="32" font-weight="bold" fill="#747474">
+                            <tspan x="19.0859375" y="43">%</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

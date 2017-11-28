@@ -2,41 +2,43 @@
     <mat-list>
         <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
                        matTooltipPosition="after"
-                       i18n-matTooltip *ngIf="hasChannelsPermissions() | async" (onMenuOpen)="onMenuOpen()">
+                       i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()">
             <mat-icon [class.active]="currentRoute === 'channels'">wb_cloudy</mat-icon>
         </mat-list-item>
 
-        <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
-                       *ngIf="(currentStore | async).permission.marketplaces">
-            <mat-icon [class.sf-badge]="(currentStore | async).order.total > 0" [class.active]="currentRoute === 'orders'"
-                      [attr.data-badge]="(currentStore | async).order.total">shopping_basket
-            </mat-icon>
-        </mat-list-item>
+
+            <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
+                          *ngIf="currentStore.permission.marketplaces">
+                <mat-icon [class.sf-badge]="currentStore._embedded.order.newCount" [class.active]="currentRoute === 'orders'"
+                         [attr.data-badge]="currentStore._embedded.order.newCount">shopping_basket</mat-icon>
+            </mat-list-item>
 
         <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
                       i18n-matTooltip matTooltipPosition="after" *ngIf="(currentStore | async).permission.statistics">
             <mat-icon>trending_up</mat-icon>
         </mat-list-item>
+            <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
+                          i18n-matTooltip matTooltipPosition="after" *ngIf="currentStore.permission.statistics">
+                <mat-icon>trending_up</mat-icon>
+            </mat-list-item>
 
-        <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
-                       i18n-matTooltip *ngIf="(currentStore | async).permission.tools" (onMenuOpen)="onMenuOpen()">
-            <mat-icon>build</mat-icon>
-        </mat-list-item>
+            <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
+                          i18n-matTooltip *ngIf="currentStore.permission.tools" (onMenuOpen)="onMenuOpen()">
+                <mat-icon>build</mat-icon>
+            </mat-list-item>
 
-        <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS" i18n-matTooltip
-                       matTooltipPosition="after" *ngIf="(currentStore | async).permission.tools">
-            <mat-icon>apps</mat-icon>
-        </mat-list-item>
+            <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS"  i18n-matTooltip
+                          matTooltipPosition="after" *ngIf="currentStore.permission.tools">
+                <mat-icon>apps</mat-icon>
+            </mat-list-item>
 
-        <mat-list-item matTooltip="UNIVERSITY" i18n-matTooltip matTooltipPosition="after"
-                       *ngIf="(currentStore | async).permission.university">
+        <mat-list-item  matTooltip="UNIVERSITY" i18n-matTooltip matTooltipPosition="after"
+                        *ngIf="currentStore.permission.university">
             <mat-icon>school</mat-icon>
         </mat-list-item>
     </mat-list>
     <div class="sf-sidebar-bottom-help" matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip>
-        <a [href]="getSupportLink()" target="_blank">
-            <mat-icon>help</mat-icon>
-        </a>
+        <a [href]="getSupportLink()" target="_blank"><mat-icon>help</mat-icon></a>
     </div>
 </sf-sidebar-container>
 

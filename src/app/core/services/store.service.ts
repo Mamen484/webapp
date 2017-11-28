@@ -66,7 +66,7 @@ export class StoreService {
         return <Observable<Store>>this.httpClient.get(`${environment.API_URL}/store/${storeId}`);
     }
 
-    createStore(store: Store) {
+    public createStore(store: Store) {
         return this.httpClient.post(`${environment.API_URL}/store`, {store});
     }
 }

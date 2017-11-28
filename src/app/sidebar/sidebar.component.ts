@@ -16,7 +16,8 @@ import { Channel } from '../core/entities/channel';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-    currentStore: Observable<Store>;
+
+    currentStore: Store;
     channels: Observable<StoreChannelDetails[]>;
     currentRoute;
 
@@ -24,9 +25,12 @@ export class SidebarComponent {
                 @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
                 protected storeService: StoreService,
                 protected windowRef: WindowRefService) {
-        this.currentStore = this.appStore.select('currentStore');
-        this.channels = this.currentStore
-            .flatMap(store => this.storeService.getStoreChannels(store.id, Object.assign(new ChannelsRequestParams, {status: 'installed'})))
+        this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
+        this.channels = this.storeService.getStoreChannels(
+            this.currentStore.id,
+            Object.assign(new ChannelsRequestParams,
+                {status: 'installed'})
+        )
             .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
 
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
@@ -34,9 +38,12 @@ export class SidebarComponent {
     }
 
     hasChannelsPermissions() {
-        return this.currentStore.map(({permission}) => permission)
-            .map(({ads, affiliation, marketplaces, retargeting, shopbots, solomo}) =>
-                ads || affiliation || marketplaces || retargeting || shopbots || solomo);
+        return this.currentStore.permission.ads
+            || this.currentStore.permission.affiliation
+            || this.currentStore.permission.marketplaces
+            || this.currentStore.permission.retargeting
+            || this.currentStore.permission.shopbots
+            || this.currentStore.permission.solomo;
     }
 
     getSupportLink() {

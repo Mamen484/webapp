@@ -19,7 +19,6 @@ export class InitializeStoreGuard implements CanActivate {
             if (userInfo.isAdmin() && next.queryParams.store) {
                 return this.storeService.getStore(next.queryParams.store).map((store: Store) => {
                     store.permission = Permission.createForAdmin();
-                    store.order = {total: 0};
                     this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
                     return true;
                 });

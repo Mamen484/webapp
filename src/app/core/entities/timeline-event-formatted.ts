@@ -1,25 +1,34 @@
 import { TimelineEventName } from './timeline-event-name.enum';
 import { TimelineEventAction } from './timeline-event-action.enum';
 import { TimelineEvent } from './timeline-event';
+import { TimelineUpdateName } from './timeline-update-name.enum';
+import { TimelineUpdateAction } from './timeline-update-action.enum';
+import { TimelineErrorReason } from './timeline-error-reason';
+import { TimelineUpdate } from './timeline-update';
+import { Channel } from './channel';
 
 export class TimelineEventFormatted {
     icon: string;
-    type: TimelineEventName;
+    type: TimelineEventName | TimelineUpdateName;
     time: Date;
-    operation: TimelineEventAction;
+    operation: TimelineEventAction | TimelineUpdateAction;
     reference: string;
     ruleName: string;
+    reason: TimelineErrorReason;
+    channel?: Channel;
 
-    constructor(event: TimelineEvent) {
+    constructor(event: TimelineEvent | TimelineUpdate) {
         this.icon = this.getIconName(event.name);
         this.type = event.name;
         this.time = new Date(event.occurredAt);
         this.operation = event.action;
-        this.reference = event.data && event.data.reference || '';
+        this.reference = event.data && (<TimelineEvent>event).data.reference || '';
         this.ruleName =
             event.name === TimelineEventName.ruleTransformation || event.name === TimelineEventName.ruleSegmentation
                 ? event.data.name
-                : ''
+                : '';
+        this.reason = event.action === TimelineUpdateAction.error && event.data && event.data.reason || '';
+        this.channel = (<TimelineUpdate>event)._embedded && (<TimelineUpdate>event)._embedded.channel;
     }
 
     protected getIconName(eventType) {
@@ -30,6 +39,11 @@ export class TimelineEventFormatted {
             case TimelineEventName.ruleSegmentation:
             case TimelineEventName.ruleTransformation:
                 return 'build';
+
+            // only updates with action error are displayed within events
+            case TimelineUpdateName.import:
+            case TimelineUpdateName.export:
+                return 'error_outline';
 
         }
     }

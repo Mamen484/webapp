@@ -1,4 +1,9 @@
 export interface StoreCharge {
-    amount: number;
-    currency: string;
+    charge: {
+        amount: number;
+        currency: string;
+    };
+    references: {
+        count: number;
+    }
 }
