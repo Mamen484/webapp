@@ -19,7 +19,7 @@ import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -143,6 +143,9 @@ describe('TimelineComponent', () => {
                     FlexLayoutModule,
                     MatCardModule,
                     MatChipsModule,
+                    MatListModule,
+                    MatIconModule,
+                    MatProgressSpinnerModule,
                 ],
                 declarations: [
                     TimelineComponent,
