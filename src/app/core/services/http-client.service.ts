@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
@@ -29,15 +29,17 @@ export class HttpClientService extends HttpClient {
     protected tryData(observer: Observer<any>, args: any[], retries: number) {
         super.get.apply(this, args).subscribe(
             data => this.applyData(observer, data),
-            error => {
+            (error: HttpErrorResponse) => {
                 if (retries > 0) {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {
-                    let config: MatSnackBarConfig = {};
-                    if (args[0].slice(-3) === '/me') {
-                        config.extraClasses = ['app-failed-error'];
+                    if (error instanceof HttpErrorResponse) {
+                        observer.error(error);
                     }
-                    this.snackBar.openFromComponent(ServerErrorComponent, config);
+                    if (args[0].slice(-3) !== '/me') {
+                        this.snackBar.openFromComponent(ServerErrorComponent);
+                    }
+
                 }
             });
     }

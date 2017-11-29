@@ -14,6 +14,7 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
+import { CriticalErrorComponent } from './critical-error/critical-error.component';
 
 const routes: Routes = [
     {
@@ -38,7 +39,8 @@ const routes: Routes = [
     {path: 'reset-password', component: SendRecoveryEmailComponent},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
-    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'}
+    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'},
+    {path: 'critical-error', component: CriticalErrorComponent},
 ];
 
 @NgModule({

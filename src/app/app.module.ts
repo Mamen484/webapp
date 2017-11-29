@@ -11,6 +11,7 @@ import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarsModule } from './snackbars/snackbars.module';
+import { CriticalErrorModule } from './critical-error/critical-error.module';
 
 @NgModule({
     declarations: [
@@ -19,6 +20,7 @@ import { SnackbarsModule } from './snackbars/snackbars.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        CriticalErrorModule,
         FormsModule,
         HttpModule,
         CoreModule,
