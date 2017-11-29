@@ -47,7 +47,8 @@ describe('HttpClientService', () => {
     it('Should display a snackbar after 3 failed attemps to load the data.', fakeAsync(() => {
         service.retryInterval = 0;
         let callbackSpy = jasmine.createSpy('subscription callback');
-        service.get('/smth').subscribe(callbackSpy);
+        let callbackErrorSpy = jasmine.createSpy('subscription error callback');
+        service.get('/smth').subscribe(callbackSpy, callbackErrorSpy);
         let req = httpMock.expectOne('/smth');
         req.flush('data', {status: 503, statusText: 'Service Unavailable'});
         tick();
@@ -60,6 +61,8 @@ describe('HttpClientService', () => {
         httpMock.expectNone('/smth');
         expect(snackBar.openFromComponent).toHaveBeenCalledWith(ServerErrorComponent);
         expect(callbackSpy).not.toHaveBeenCalled();
+        expect(callbackErrorSpy).toHaveBeenCalled();
+
 
     }));
 

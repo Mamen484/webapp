@@ -33,11 +33,11 @@ export class HttpClientService extends HttpClient {
                 if (retries > 0) {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {
-                    if (error instanceof HttpErrorResponse) {
-                        observer.error(error);
-                    }
                     if (args[0].slice(-3) !== '/me') {
                         this.snackBar.openFromComponent(ServerErrorComponent);
+                    }
+                    if (error instanceof HttpErrorResponse) {
+                        observer.error(error);
                     }
 
                 }
