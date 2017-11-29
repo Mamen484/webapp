@@ -18,24 +18,30 @@ import { Channel } from '../core/entities/channel';
 export class SidebarComponent {
 
     opened = true;
-    currentStore: Observable<Store>;
+    currentStore: Store;
     channels: Observable<StoreChannelDetails[]>;
 
     constructor(protected _appStore: AppStore<AppState>,
                 @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
                 protected storeService: StoreService,
                 protected windowRef: WindowRefService) {
-        this.currentStore = this._appStore.select('currentStore');
-        this.channels = this.currentStore
-            .flatMap(store => this.storeService.getStoreChannels(store.id, Object.assign(new ChannelsRequestParams, {status: 'installed'})))
+        this._appStore.select('currentStore').subscribe(store => this.currentStore = store);
+        this.channels = this.storeService.getStoreChannels(
+            this.currentStore.id,
+            Object.assign(new ChannelsRequestParams,
+                {status: 'installed'})
+        )
             .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
 
     }
 
     hasChannelsPermissions() {
-        return this.currentStore.map(({permission}) => permission)
-            .map(({ads, affiliation, marketplaces, retargeting, shopbots, solomo}) =>
-                ads || affiliation || marketplaces || retargeting || shopbots || solomo);
+        return this.currentStore.permission.ads
+            || this.currentStore.permission.affiliation
+            || this.currentStore.permission.marketplaces
+            || this.currentStore.permission.retargeting
+            || this.currentStore.permission.shopbots
+            || this.currentStore.permission.solomo;
     }
 
     getSupportLink() {

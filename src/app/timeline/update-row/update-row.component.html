@@ -12,5 +12,6 @@
     <span *ngIf="update.action === updateActions.start" i18n>In progress</span>
     <span *ngIf="update.action === updateActions.ask" i18n>Scheduled</span>
     <span *ngIf="update.action === updateActions.finish" i18n>Completed</span>
+    <span *ngIf="update.action === updateActions.error" i18n>Error</span>
 </div>
 <div class="event-time mat-body-1">{{update.occurredAt | date:'shortTime'}}</div>
