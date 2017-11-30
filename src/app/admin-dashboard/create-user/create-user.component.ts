@@ -1,23 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '../../core/entities/store';
 import { StoreService } from '../../core/services/store.service';
+import { MatDialog } from '@angular/material';
+import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
 
 @Component({
     selector: 'sf-create-user',
     templateUrl: './create-user.component.html',
     styleUrls: ['./create-user.component.scss']
 })
-export class CreateUserComponent implements OnInit {
+export class CreateUserComponent {
 
-    successfullyCreated = false;
     error = '';
 
     store = new Store();
+    createdToken = '';
+    images = [];
 
-    constructor(protected storeService: StoreService) {
+    constructor(protected storeService: StoreService, protected dialog: MatDialog) {
     }
 
-    ngOnInit() {
+
+    assignImages() {
+        let images = this.images.filter(im => Boolean(im));
+        if (images.length) {
+            this.store.feed.mapping.images = images;
+        } else {
+            delete this.store.feed.mapping.images;
+        }
     }
 
     save(formValid) {
@@ -25,14 +35,17 @@ export class CreateUserComponent implements OnInit {
             return;
         }
         this.error = '';
+        this.assignImages();
         this.storeService.createStore(this.store).subscribe(
-            () => this.successfullyCreated = true,
-            error => this.error = JSON.parse(error.error).detail
+            (store: Store) => {
+                this.createdToken = store.owner.token;
+                this.openSuccessDialog();
+            },
+            error => this.error = error.detail || error.exception && error.exception.message
         );
     }
 
     createNewClient() {
-        this.successfullyCreated = false;
         this.error = '';
         this.store = new Store();
     }
@@ -47,6 +60,16 @@ export class CreateUserComponent implements OnInit {
 
     trackBy(index) {
         return index;
+    }
+
+    openSuccessDialog() {
+        this.dialog.open(UserCreatedDialogComponent, {
+            data: {
+                login: this.store.owner.login,
+                password: this.store.owner.password,
+                token: this.createdToken,
+            }
+        })
     }
 
 }

@@ -1,0 +1,28 @@
+<mat-dialog-content>
+    <div fxLayout="column">
+        <div class="mat-title title" i18n>Created Account</div>
+        <div class="mat-caption" i18n>Login</div>
+        <div fxLayout="row">
+            <div fxFlexFill class="mat-subheading-2 value">{{data.login}}</div>
+            <mat-icon *ngIf="!loginCopied" ngxClipboard [cbContent]="data.login" (click)="markAsCopied('login')">content_copy</mat-icon>
+            <mat-icon *ngIf="loginCopied" class="green">done</mat-icon>
+        </div>
+        <div class="mat-caption" i18n>Password</div>
+        <div fxLayout="row">
+            <div fxFlexFill class="mat-subheading-2 value">{{data.password}}</div>
+            <mat-icon *ngIf="!passwordCopied" ngxClipboard [cbContent]="data.password" (click)="markAsCopied('password')">content_copy</mat-icon>
+            <mat-icon *ngIf="passwordCopied" class="green">done</mat-icon>
+        </div>
+        <div class="mat-caption" i18n>Token</div>
+        <div fxLayout="row">
+            <div fxFlexFill class="mat-subheading-2 value">{{data.token}}</div>
+            <mat-icon *ngIf="!tokenCopied" ngxClipboard [cbContent]="data.token" (click)="markAsCopied('token')">content_copy</mat-icon>
+            <mat-icon *ngIf="tokenCopied" class="green">done</mat-icon>
+        </div>
+
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <a mat-button (click)="closeDialog()" color="accent">OK</a>
+</mat-dialog-actions>

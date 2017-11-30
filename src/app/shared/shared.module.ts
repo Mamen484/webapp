@@ -9,6 +9,7 @@ import {
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
@@ -20,6 +21,7 @@ import { CountrySelectComponent } from './country-select/country-select.componen
 
 @NgModule({
     imports: [
+        ClipboardModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
@@ -44,6 +46,7 @@ import { CountrySelectComponent } from './country-select/country-select.componen
     ],
     exports: [
         // modules
+        ClipboardModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,

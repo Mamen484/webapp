@@ -10,6 +10,7 @@ import { SearchStoreComponent } from './search-store/search-store.component';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { AdminBaseComponent } from './admin-base/admin-base.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { UserCreatedDialogComponent } from './user-created-dialog/user-created-dialog.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,15 @@ import { CreateUserComponent } from './create-user/create-user.component';
         MenuModule,
         SidebarModule,
     ],
-    declarations: [DashboardComponent, AdminMenuComponent, SearchStoreComponent, AdminBaseComponent, CreateUserComponent]
+    declarations: [
+        DashboardComponent,
+        AdminMenuComponent,
+        SearchStoreComponent,
+        AdminBaseComponent,
+        CreateUserComponent,
+        UserCreatedDialogComponent
+    ],
+    entryComponents: [UserCreatedDialogComponent]
 })
 export class AdminDashboardModule {
 }
