@@ -59,6 +59,7 @@
                 </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
+                <div class="mat-error" *ngIf="error" i18n>Server error: {{error || 'Unknown error'}}</div>
                 <button mat-button color="accent">CREATE</button>
             </mat-card-actions>
         </mat-card>
@@ -200,7 +201,6 @@
                                i18n-placeholder name="mapping-weight" [(ngModel)]="store.feed.mapping.weight">
                     </mat-form-field>
                 </div>
-                <div class="mat-error" *ngIf="error">{{error}}</div>
             </mat-card-content>
         </mat-card>
     </form>

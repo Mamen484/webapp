@@ -41,7 +41,10 @@ export class CreateUserComponent {
                 this.createdToken = store.owner.token;
                 this.openSuccessDialog();
             },
-            error => this.error = error.detail || error.exception && error.exception.message
+            ({error}) => {
+                this.error = error.detail || error.exception && error.exception.message
+            }
+
         );
     }
 
