@@ -143,6 +143,9 @@ describe('TimelineComponent', () => {
                     FlexLayoutModule,
                     MatCardModule,
                     MatChipsModule,
+                    MatListModule,
+                    MatIconModule,
+                    MatProgressSpinnerModule,
                 ],
                 declarations: [
                     TimelineComponent,
