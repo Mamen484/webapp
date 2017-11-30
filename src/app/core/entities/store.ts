@@ -1,7 +1,7 @@
 import { Permission } from './permission';
 import { StoreStatus } from './store-status.enum';
 import { StoreOwner } from './store-owner';
-import { CreateStoreFeed } from './create-store-feed';
+import { StoreFeed } from './store-feed';
 
 export class Store {
     id: number;
@@ -9,7 +9,7 @@ export class Store {
     status: StoreStatus;
     permission: Permission;
     owner = new StoreOwner();
-    feed = new CreateStoreFeed();
+    feed = new StoreFeed();
     country = '';
     _links: {
         self: {

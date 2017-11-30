@@ -118,11 +118,18 @@
                                name="mapping-id_parent" [(ngModel)]="store.feed.mapping.id_parent">
                     </mat-form-field>
                 </div>
-                <div>
-                    <label for="sf-cu-image_1-mapping">image_1</label>
+                <div *ngFor="let image of store.feed.mapping.image; index as i; trackBy: trackBy">
+                    <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-image_1-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-image_1" [(ngModel)]="store.feed.mapping.image_1">
+                        <input id="sf-cu-image_{{i}}-mapping"
+                               matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-image_{{i}}" [(ngModel)]="store.feed.mapping.image[i]">
+                        <button *ngIf="i==0" mat-button matSuffix mat-icon-button aria-label="Add an image" (click)="addImage()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button *ngIf="i>0" mat-button matSuffix mat-icon-button aria-label="Remove the image" (click)="removeImage(i)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
                     </mat-form-field>
                 </div>
                 <div>

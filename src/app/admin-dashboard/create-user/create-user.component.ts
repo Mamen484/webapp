@@ -37,4 +37,16 @@ export class CreateUserComponent implements OnInit {
         this.store = new Store();
     }
 
+    addImage() {
+        (<string[]>this.store.feed.mapping.image).push('');
+    }
+
+    removeImage(index) {
+        (<string[]>this.store.feed.mapping.image).splice(index, 1);
+    }
+
+    trackBy(index) {
+        return index;
+    }
+
 }
