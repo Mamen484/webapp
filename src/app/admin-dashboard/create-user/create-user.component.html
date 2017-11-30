@@ -29,12 +29,9 @@
                            i18n-placeholder [email]="true">
                     <mat-error i18n>This field must be a valid email address.</mat-error>
                 </mat-form-field>
-                <mat-form-field>
-                    <mat-select placeholder="Country" i18n-placeholder name="country" required
-                                [(ngModel)]="store.country">
-                        <mat-option value="fr">France</mat-option>
-                    </mat-select>
-                </mat-form-field>
+
+                <sf-country-select (valueChanged)="store.country = $event"></sf-country-select>
+
                 <mat-form-field>
                     <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url" i18n-placeholder
                            name="feed" required [(ngModel)]="store.feed.url">

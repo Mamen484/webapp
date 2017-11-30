@@ -54,12 +54,13 @@ $toolbar-search-margin: 10px;
   .search-entry {
 
     border-bottom: 1px solid mat-color($grey, 400);
-    padding: 25px;
+    padding: 10px 15px;
     cursor: pointer;
 
     .title {
       color: mat-color($grey, 900);
-      font-weight: bold;
+      font-size: mat-font-size($config, subheading-1);
+      font-weight: normal;
     }
 
     .description {

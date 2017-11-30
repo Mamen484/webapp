@@ -16,6 +16,8 @@ import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
 import { LegacyLinkDirective } from './legacy-link.directive';
 import { BlankComponent } from './blank.component';
+import { CountrySelectComponent } from './country-select/country-select.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -72,8 +74,11 @@ import { BlankComponent } from './blank.component';
         // directives
         LegacyLinkDirective,
 
+        // components
+        CountrySelectComponent,
+
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent]
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent, CountrySelectComponent]
 })
 export class SharedModule {
 }
