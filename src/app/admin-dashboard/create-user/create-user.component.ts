@@ -15,7 +15,7 @@ export class CreateUserComponent {
 
     store = new Store();
     createdToken = '';
-    images = [];
+    images = [''];
 
     constructor(protected storeService: StoreService, protected dialog: MatDialog) {
     }
@@ -51,11 +51,11 @@ export class CreateUserComponent {
     }
 
     addImage() {
-        (<string[]>this.store.feed.mapping.image).push('');
+        this.images.push('');
     }
 
     removeImage(index) {
-        (<string[]>this.store.feed.mapping.image).splice(index, 1);
+        this.images.splice(index, 1);
     }
 
     trackBy(index) {
@@ -70,6 +70,12 @@ export class CreateUserComponent {
                 token: this.createdToken,
             }
         })
+    }
+
+    showMappingsForm() {
+        return this.store.feed.source === 'csv'
+            || this.store.feed.source === 'xml'
+            || this.store.feed.source === 'txt';
     }
 
 }
