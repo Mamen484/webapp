@@ -15,7 +15,7 @@ export class UserCreatedDialogComponent {
     passwordCopied = false;
     tokenCopied = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) protected data,
+    constructor(@Inject(MAT_DIALOG_DATA) public data,
                 protected dialogRef: MatDialogRef<UserCreatedDialogComponent>) {
     }
 
