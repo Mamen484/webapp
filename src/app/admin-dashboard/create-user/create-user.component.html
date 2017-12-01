@@ -1,16 +1,6 @@
 <div class="scrollable-container">
-    <mat-card *ngIf="successfullyCreated">
-        <mat-card-content>
-            <div>
-                <ng-container i18n>The client is created successfully.</ng-container>
-                <a mat-button color="accent" (click)="createNewClient()" i18n>Create a new one.</a>
-            </div>
-
-        </mat-card-content>
-    </mat-card>
-    <form fxFlexLayout="row" #form="ngForm" fxLayoutGap="10px" (ngSubmit)="save(form.valid)"
-          *ngIf="!successfullyCreated">
-        <mat-card fxFlex="40%">
+    <form fxFlexLayout="row" fxLayoutGap="10px" #form="ngForm" (ngSubmit)="save(form.valid)">
+        <mat-card [fxFlex]="showMappingsForm() ? '40%' : '100%'">
             <mat-card-content>
                 <mat-form-field>
                     <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login"
@@ -29,14 +19,12 @@
                            i18n-placeholder [email]="true">
                     <mat-error i18n>This field must be a valid email address.</mat-error>
                 </mat-form-field>
+
+                <sf-country-select (valueChanged)="store.country = $event"></sf-country-select>
+
                 <mat-form-field>
-                    <mat-select placeholder="Country" i18n-placeholder name="country" required
-                                [(ngModel)]="store.country">
-                        <mat-option value="fr">France</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url" i18n-placeholder
+                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url"
+                           i18n-placeholder
                            name="feed" required [(ngModel)]="store.feed.url">
                     <mat-error i18n>This must be a valid uri, starting from http, https or ftp.</mat-error>
                 </mat-form-field>
@@ -52,10 +40,8 @@
                         <mat-option value="ws">ws</mat-option>
                         <mat-option value="wizishop">wizishop</mat-option>
                         <mat-option value="magento">magento</mat-option>
-                        <mat-option value="ws">ws</mat-option>
                         <mat-option value="google">google</mat-option>
                         <mat-option value="xml">xml</mat-option>
-                        <mat-option value="ws">ws</mat-option>
                         <mat-option value="powerboutique">powerboutique</mat-option>
                         <mat-option value="shopapplication">shopapplication</mat-option>
                         <mat-option value="sa">sa</mat-option>
@@ -63,13 +49,21 @@
                         <mat-option value="txt">txt</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field>
+                <mat-form-field *ngIf="store.feed.source === 'csv' || store.feed.source === 'txt'">
                     <input matInput placeholder="Separator" i18n-placeholder name="separator" maxlength="1"
                            [(ngModel)]="store.feed.settings.csvFieldSeparator">
                 </mat-form-field>
+                <mat-form-field *ngIf="store.feed.source === 'xml'">
+                    <input matInput placeholder="XML product" i18n-placeholder name="xmlProductNode"
+                           [(ngModel)]="store.feed.settings.xmlProductNode">
+                </mat-form-field>
             </mat-card-content>
+            <mat-card-actions>
+                <div class="mat-error" *ngIf="error" i18n>Server error: {{error || 'Unknown error'}}</div>
+                <button mat-button color="accent">CREATE</button>
+            </mat-card-actions>
         </mat-card>
-        <mat-card fxFlex>
+        <mat-card fxFlex *ngIf="showMappingsForm()">
             <mat-card-content class="two-column">
                 <div>
                     <label for="sf-cu-brand-mapping">brand</label>
@@ -121,11 +115,20 @@
                                name="mapping-id_parent" [(ngModel)]="store.feed.mapping.id_parent">
                     </mat-form-field>
                 </div>
-                <div>
-                    <label for="sf-cu-image_1-mapping">image_1</label>
+                <div *ngFor="let image of images; index as i; trackBy: trackBy">
+                    <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-image_1-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-image_1" [(ngModel)]="store.feed.mapping.image_1">
+                        <input id="sf-cu-image_{{i}}-mapping"
+                               matInput placeholder="Describe" i18n-placeholder
+                               name="mapping-image_{{i}}" [(ngModel)]="images[i]">
+                        <button *ngIf="i==0" mat-button matSuffix mat-icon-button aria-label="Add an image"
+                                (click)="addImage()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button *ngIf="i>0" mat-button matSuffix mat-icon-button aria-label="Remove the image"
+                                (click)="removeImage(i)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
                     </mat-form-field>
                 </div>
                 <div>
@@ -198,11 +201,7 @@
                                i18n-placeholder name="mapping-weight" [(ngModel)]="store.feed.mapping.weight">
                     </mat-form-field>
                 </div>
-                <div class="mat-error" *ngIf="error">{{error}}</div>
             </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="accent">CREATE</button>
-            </mat-card-actions>
         </mat-card>
     </form>
 </div>

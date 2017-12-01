@@ -24,6 +24,7 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     showSearchResult = false;
     processing = false;
     helpCenterLanguage: HelpCenterLanguage;
+    searchSubscription;
 
     @HostListener('window:resize')
     setSearchResultsPosition() {
@@ -49,7 +50,15 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
             .debounceTime(SEARCH_DEBOUNCE)
             .filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH)
             .do(() => this.processing = true)
-            .flatMap(searchQuery => this.storeService.fetchAvailableStores(searchQuery))
+            .do(searchQuery => this.handleNewSearch(searchQuery))
+            .subscribe();
+    }
+
+    handleNewSearch(searchQuery) {
+        if (this.searchSubscription) {
+            this.searchSubscription.unsubscribe();
+        }
+        this.searchSubscription = this.storeService.fetchAvailableStores(searchQuery)
             .subscribe(response => {
                 this.searchResults = response._embedded.store;
                 this.processing = false;

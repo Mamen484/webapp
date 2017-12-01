@@ -8,7 +8,7 @@
 <div class="search-results" [ngClass]="{'mat-elevation-z22': showSearchResult && searchResults}">
   <div *ngIf="showSearchResult && searchResults && searchResults.length">
     <div *ngFor="let entry of searchResults" class="search-entry">
-      <div class="mat-subheading-1 title" (click)="selectStore(entry.id)">{{entry.name}}</div>
+      <div class="title" (click)="selectStore(entry.id)">{{entry.name}}</div>
     </div>
   </div>
   <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
