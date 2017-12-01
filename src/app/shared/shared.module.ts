@@ -19,6 +19,7 @@ import { LegacyLinkDirective } from './legacy-link.directive';
 import { BlankComponent } from './blank.component';
 import { CountrySelectComponent } from './country-select/country-select.component';
 
+import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 @NgModule({
     imports: [
         ClipboardModule,
@@ -79,9 +80,18 @@ import { CountrySelectComponent } from './country-select/country-select.componen
 
         // components
         CountrySelectComponent,
+        ScheduleCallIframeComponent,
 
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent, CountrySelectComponent]
+    declarations: [
+        LargeNumberSuffixPipe,
+        SfCurrencyPipe,
+        SfNumberPipe,
+        LegacyLinkDirective,
+        BlankComponent,
+        CountrySelectComponent,
+        ScheduleCallIframeComponent,
+    ]
 })
 export class SharedModule {
 }
