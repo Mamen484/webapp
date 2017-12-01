@@ -16,6 +16,7 @@ import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
 import { LegacyLinkDirective } from './legacy-link.directive';
 import { BlankComponent } from './blank.component';
+import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -74,8 +75,11 @@ import { BlankComponent } from './blank.component';
         // directives
         LegacyLinkDirective,
 
+        // components
+        ScheduleCallIframeComponent,
+
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent]
+    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent, ScheduleCallIframeComponent],
 })
 export class SharedModule {
 }
