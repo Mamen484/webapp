@@ -10,7 +10,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { SnackbarsModule } from './snackbars/snackbars.module';
+import { CriticalErrorModule } from './critical-error/critical-error.module';
 
 @NgModule({
     declarations: [
@@ -19,11 +20,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        CriticalErrorModule,
         FormsModule,
         HttpModule,
         CoreModule,
         BaseModule,
         SharedModule,
+        SnackbarsModule,
         AppRoutingModule,
         LoginModule,
     ],

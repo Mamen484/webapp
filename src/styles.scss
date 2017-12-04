@@ -28,3 +28,12 @@ hr {
 .margin-top-20 {
   margin-top: 20px;
 }
+
+snack-bar-container.app-failed-error.mat-snack-bar-container.mat-snack-bar-center {
+  background-color: mat-color($primary, 300);
+  margin-bottom: 50vh;
+
+  .reload {
+    color: mat-color($accent, 800);
+  }
+}

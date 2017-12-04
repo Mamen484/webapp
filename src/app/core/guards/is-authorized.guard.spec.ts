@@ -5,24 +5,28 @@ import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { aggregatedUserInfoMock } from '../../../mocks/agregated-user-info-mock';
+import { Router } from '@angular/router';
 
 describe('IsAuthorizedGuard', () => {
 
     let getItemSpy: jasmine.Spy;
     let removeItemSpy: jasmine.Spy;
     let fetchAggregatedInfoSpy: jasmine.Spy;
+    let router: jasmine.SpyObj<Router>;
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
         removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
+        router = jasmine.createSpyObj('Router', ['navigate']);
 
         TestBed.configureTestingModule({
             providers: [
                 IsAuthorizedGuard,
                 {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
                 {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}}
+                {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
+                {provide: Router, useValue: router},
             ]
         })
         ;
