@@ -1,0 +1,20 @@
+.sf-orders-table {
+
+  .mat-cell {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .mat-column-hasErrors, .mat-column-checkbox {
+    flex: 0 0 50px;
+  }
+
+  .mat-column-total {
+    flex: 0 0 80px;
+  }
+
+  .mat-column-status {
+    flex-grow: 2;
+  }
+
+}

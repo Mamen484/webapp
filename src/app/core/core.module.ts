@@ -39,6 +39,7 @@ import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { currentRouteReducer } from './reducers/current-route-reducer';
 import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
+import { OrdersService } from './services/orders.service';
 
 @NgModule({
     imports: [
@@ -79,6 +80,7 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        OrdersService,
 
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},

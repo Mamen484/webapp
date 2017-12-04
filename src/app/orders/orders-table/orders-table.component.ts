@@ -3,6 +3,10 @@ import { TableDataSource } from '../../core/entities/table-data-source';
 import { Observable } from 'rxjs/Observable';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
 import { MatDialog } from '@angular/material';
+import { OrdersService } from '../../core/services/orders.service';
+import { Store as AppStore } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
+import { Order } from '../../core/entities/orders/order';
 
 @Component({
     selector: 'sf-orders-table',
@@ -10,24 +14,41 @@ import { MatDialog } from '@angular/material';
     styleUrls: ['./orders-table.component.scss']
 })
 export class OrdersTableComponent implements OnInit {
-    displayedColumns = ['checkbox', 'hasErrors', 'name', 'id', 'status', 'total', 'date'];
-    data = new TableDataSource(Observable.of([
-        {hasErrors: false, name: 'Order 1', id: '291789445236-1319635007019', status: 'Accepted', total: 34, date: '12/07/2016 14:26'},
-        {hasErrors: true, name: 'Order 2', id: '1235123512341-345341234123', status: 'Delivered', total: 243, date: '12/07/2016 14:03'},
-        {hasErrors: false, name: 'Order 3', id: '291789445236-1321412', status: 'Accepted', total: 34, date: '12/07/2016 14:26'},
-        {hasErrors: true, name: 'Order 4', id: '1235123512341-123512341234', status: 'Delivered', total: 243, date: '12/07/2016 14:03'},
-        {hasErrors: false, name: 'Order 5', id: '291789445236-23543123412', status: 'Accepted', total: 34, date: '12/07/2016 14:26'},
-        {hasErrors: true, name: 'Order 6', id: '1235123512341-36431512341234', status: 'Delivered', total: 243, date: '12/07/2016 14:03'},
-    ]));
 
-    constructor(protected matDialog: MatDialog) {
+    displayedColumns = ['checkbox', 'hasErrors', 'name', 'id', 'status', 'total', 'date'];
+    data: TableDataSource;
+
+    // @TODO: set to true when server date format has no errors
+    isLoadingResults = false;
+    constructor(protected appStore: AppStore<AppState>,
+                protected ordersService: OrdersService,
+                protected matDialog: MatDialog) {
     }
 
     ngOnInit() {
+        this.appStore.select('currentStore')
+            .flatMap(store => this.ordersService.fetchOrdersList(store.id))
+            .subscribe(ordersPage => {
+                this.isLoadingResults = false;
+                this.data = new TableDataSource(Observable.of(
+                    ordersPage._embedded.order.map(order => this.formatOrder(order))
+                ));
+            });
     }
 
     addLabel() {
         this.matDialog.open(LabelsDialogComponent);
+    }
+
+    formatOrder(order: Order) {
+        return {
+            hasErrors: false,
+            channelImage: order._embedded.channel._links.image.href,
+            id: order.id,
+            status: order.status,
+            total: order.payment.feedAmount,
+            date: order.createdAt
+        }
     }
 
 }

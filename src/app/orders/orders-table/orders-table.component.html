@@ -13,7 +13,10 @@
                 <mat-icon>local_printshop</mat-icon>
             </button>
         </div>
-        <mat-table #table [dataSource]="data">
+        <div *ngIf="isLoadingResults">
+            <mat-spinner></mat-spinner>
+        </div>
+        <mat-table #table [dataSource]="data" *ngIf="!isLoadingResults" class="sf-orders-table">
 
             <ng-container matColumnDef="checkbox">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -30,8 +33,10 @@
             </ng-container>
 
             <ng-container matColumnDef="name">
-                <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+                <mat-header-cell *matHeaderCellDef> Marketplace</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <img [src]="row.channelImage" width="65">
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="id">
@@ -51,7 +56,7 @@
 
             <ng-container matColumnDef="date">
                 <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.date}}</mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.date | date:fullDate}}</mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
