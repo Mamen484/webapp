@@ -47,6 +47,7 @@ $badge-font-level: caption;
   padding-top: $content-margin;
   padding-bottom: $content-margin;
   display: block;
-  height: calc(100vh - #{$toolbar-height});
+  // viewport height - toolbar height - top padding - bottom padding
+  height: calc(100vh - #{$toolbar-height} - (2 * #{$content-margin}));
   overflow: auto;
 }
