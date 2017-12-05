@@ -31,10 +31,10 @@ export class CreateUserComponent {
     }
 
     save(formValid) {
+        this.error = '';
         if (!formValid) {
             return;
         }
-        this.error = '';
         this.assignImages();
         this.storeService.createStore(this.store).subscribe(
             (store: Store) => {
