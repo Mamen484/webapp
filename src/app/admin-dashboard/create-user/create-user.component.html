@@ -1,6 +1,6 @@
 <div class="scrollable-container">
     <form fxFlexLayout="row" fxLayoutGap="10px" #form="ngForm" (ngSubmit)="save(form.valid)">
-        <mat-card [fxFlex]="showMappingsForm() ? '40%' : '100%'">
+        <mat-card fxFlex="50%">
             <mat-card-content>
                 <mat-form-field>
                     <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login"
@@ -63,8 +63,8 @@
                 <button mat-button color="accent">CREATE</button>
             </mat-card-actions>
         </mat-card>
-        <mat-card fxFlex *ngIf="showMappingsForm()">
-            <mat-card-content class="two-column">
+        <mat-card fxFlex>
+            <mat-card-content class="two-column" *ngIf="showMappingsForm();else mappingWillBeHereMessage">
                 <div>
                     <label for="sf-cu-brand-mapping">brand</label>
                     <mat-form-field floatPlaceholder="never">
@@ -202,6 +202,11 @@
                     </mat-form-field>
                 </div>
             </mat-card-content>
+            <ng-template #mappingWillBeHereMessage>
+                <mat-card-content i18n>
+                    Field Mapping will be displayed here if needed.
+                </mat-card-content>
+            </ng-template>
         </mat-card>
     </form>
 </div>
