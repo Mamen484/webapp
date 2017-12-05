@@ -4,7 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule,
+    MatSelectModule, MatSidenavModule, MatSnackBarModule,
     MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +38,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
@@ -63,6 +64,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,

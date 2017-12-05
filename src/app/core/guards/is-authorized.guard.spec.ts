@@ -1,6 +1,7 @@
 import { TestBed, inject, async, tick } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
+import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { aggregatedUserInfoMock } from '../../../mocks/agregated-user-info-mock';
@@ -14,7 +15,7 @@ describe('IsAuthorizedGuard', () => {
     let removeItemSpy: jasmine.Spy;
     let fetchAggregatedInfoSpy: jasmine.Spy;
     let store;
-    let router;
+    let router: jasmine.SpyObj<Router>;
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
@@ -30,8 +31,8 @@ describe('IsAuthorizedGuard', () => {
                 {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
-
-            ],
+                {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
+            ]
         })
         ;
     });

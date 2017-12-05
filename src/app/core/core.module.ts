@@ -10,7 +10,7 @@ import { StoreService } from './services/store.service';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { statisticsReducer } from './reducers/statistics-reducer';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
@@ -37,6 +37,7 @@ import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { DefaultPageGuard } from './guards/default-page.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
+import { HttpClientService } from './services/http-client.service';
 
 @NgModule({
     imports: [
@@ -76,6 +77,7 @@ import { ErrorInterceptor } from './interceptors/error-interceptor';
         LocalStorageService,
         TimelineService,
 
+        {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
