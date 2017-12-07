@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { toPairs } from 'lodash';
 import { FormControl, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
 import { WindowRefService } from '../core/services/window-ref.service';
 import { environment } from '../../environments/environment';
-import { StoreStatus } from '../core/entities/store-status.enum';
-import { Store } from '../core/entities/store';
 import { UserService } from '../core/services/user.service';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 

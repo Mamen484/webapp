@@ -44,7 +44,6 @@ export class CreateUserComponent {
             ({error}) => {
                 this.error = error.detail || error.exception && error.exception.message
             }
-
         );
     }
 
@@ -71,8 +70,9 @@ export class CreateUserComponent {
                 login: this.store.owner.login,
                 password: this.store.owner.password,
                 token: this.createdToken,
-            }
-        })
+            },
+            disableClose: true,
+        });
     }
 
     showMappingsForm() {
