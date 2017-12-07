@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-
 import { AppComponent } from './app.component';
 import { BaseModule } from './base/base.module';
 import { CoreModule } from './core/core.module';
@@ -22,7 +20,6 @@ import { CriticalErrorModule } from './critical-error/critical-error.module';
         BrowserAnimationsModule,
         CriticalErrorModule,
         FormsModule,
-        HttpModule,
         CoreModule,
         BaseModule,
         SharedModule,
