@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { toPairs } from 'lodash';
 import { FormControl, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
@@ -58,6 +57,10 @@ export class LoginComponent implements OnInit {
                     })
             },
             ({error}) => {
+                // @todo: research and refactor type of error issue
+                if (typeof error === 'string') {
+                    error = JSON.parse(error);
+                }
                 this.error = error.detail
             }
         )
