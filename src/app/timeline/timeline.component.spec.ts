@@ -178,7 +178,7 @@ describe('TimelineComponent', () => {
         it('should convert API data to the correct list of events', () => {
             fixture.whenStable().then(() => {
                 let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
-                expect(items.length).toEqual(13);
+                expect(items.length).toEqual(14);
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
