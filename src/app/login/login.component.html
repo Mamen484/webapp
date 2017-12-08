@@ -2,6 +2,7 @@
 <div class="form-container">
     <div>
         <div class="form-title mat-display-1" i18n>Log in</div>
+        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loadingNextPage"></mat-progress-bar>
         <mat-card>
             <mat-card-content>
                 <form (ngSubmit)="login()">
