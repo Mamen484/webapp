@@ -189,10 +189,10 @@ describe('TimelineComponent', () => {
                 validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
                 validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
                 validateEvent(items[9], 'error_outline', 'Your source feed wasn\'t updated because nothing had changed since the last update.', '/tools/infos');
-                validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+                validateEvent(items[10], 'error_outline', 'We can\'t update your source feed too many products changed.', '/tools/infos');
                 validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
                 validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
-
+                validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
             });
         });
     })

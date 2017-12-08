@@ -1,9 +1,9 @@
 export const eventsWithErrors = {
-    total: 13,
+    total: 14,
     limit: 10,
     pages: 1,
     page: 1,
-    count: 13,
+    count: 14,
     '_links': {
         'next': {'href': '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle\u0026page=2\u0026limit=10'},
     },
@@ -95,6 +95,12 @@ export const eventsWithErrors = {
             action: 'error',
             occurredAt: '2017-10-03T19:45:47+00:00',
             data: {reason: 'abracadabra'}
+        }, {
+            id: 'import_setting_error',
+            name: 'feed.import',
+            action: 'error',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            data: {reason: 'settings'}
         }
         ]
     }

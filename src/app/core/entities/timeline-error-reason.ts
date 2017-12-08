@@ -1,1 +1,1 @@
-export type TimelineErrorReason = '' | 'open' | 'categories' | 'products' | 'check' | 'mapping' | 'references';
+export type TimelineErrorReason = '' | 'open' | 'categories' | 'products' | 'check' | 'mapping' | 'references' | 'settings';
