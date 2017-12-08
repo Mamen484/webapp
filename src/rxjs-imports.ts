@@ -14,3 +14,4 @@ import 'rxjs/add/operator/zip';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/publishReplay';
 import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/catch';

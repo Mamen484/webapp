@@ -6,18 +6,23 @@ import { Store } from '@ngrx/store';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { StoreService } from '../services/store.service';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
+import { AppState } from '../entities/app-state';
+import { Router } from '@angular/router';
 
 describe('InitializeStoreGuard', () => {
-    let store;
-    let storeService;
+    let store: jasmine.SpyObj<Store<AppState>>;
+    let storeService: jasmine.SpyObj<StoreService>;
+    let router: jasmine.SpyObj<Router>;
     beforeEach(() => {
         store = jasmine.createSpyObj('Store', ['select']);
         storeService = jasmine.createSpyObj('StoreService', ['getStore']);
+        router = jasmine.createSpyObj('Router', ['navigate']);
         TestBed.configureTestingModule({
             providers: [
                 InitializeStoreGuard,
                 {provide: Store, useValue: store},
-                {provide: StoreService, useValue: storeService}
+                {provide: StoreService, useValue: storeService},
+                {provide: Router, useValue: router},
             ]
         });
     });
@@ -63,9 +68,9 @@ describe('InitializeStoreGuard', () => {
                             status: 'deleted'
                         },
                         {
-                        name: 'some store',
-                        status: 'active'
-                    }]
+                            name: 'some store',
+                            status: 'active'
+                        }]
                 }
             })),
             {dispatch: dispatchSpy}
@@ -123,5 +128,16 @@ describe('InitializeStoreGuard', () => {
         });
     }));
 
+    it('should redirect to store-not-found error page when an admin tries to fetch non-existent store',
+        inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
+            store.select.and.returnValue(Observable.of(AggregatedUserInfo.create({roles: ['admin']})));
+            storeService.getStore.and.returnValue(Observable.throw({}));
+            guard.canActivate(<any>{queryParams: {store: 1}}).subscribe(canActivate => {
+                expect(canActivate).toEqual(false);
+                expect(router.navigate).toHaveBeenCalledTimes(1);
+                expect(router.navigate.calls.mostRecent().args[0][0]).toEqual('/store-not-found');
+            });
+
+        }));
 
 });

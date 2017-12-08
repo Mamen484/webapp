@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { WindowRefService } from '../core/services/window-ref.service';
+import { WindowRefService } from '../../core/services/window-ref.service';
 
 @Component({
-  selector: 'sf-critical-error',
-  templateUrl: './critical-error.component.html',
-  styleUrls: ['./critical-error.component.scss']
+    selector: 'sf-critical-error',
+    templateUrl: './critical-error.component.html',
+    styleUrls: ['./critical-error.component.scss']
 })
 export class CriticalErrorComponent implements OnInit {
 

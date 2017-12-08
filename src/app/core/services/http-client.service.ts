@@ -30,6 +30,10 @@ export class HttpClientService extends HttpClient {
         super.get.apply(this, args).subscribe(
             data => this.applyData(observer, data),
             (error: HttpErrorResponse) => {
+                if (error.status < 500) {
+                    observer.error(error);
+                    return;
+                }
                 if (retries > 0) {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {

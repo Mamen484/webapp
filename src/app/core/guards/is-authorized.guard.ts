@@ -49,7 +49,7 @@ export class IsAuthorizedGuard implements CanActivate {
                         if (error.status >= 400 && error.status < 500) { // client error
                             this.isNotAuthorized(observer);
                         } else if (error.status >= 500) { // server error
-                            // this.router.navigate(['/critical-error'], {skipLocationChange: true});
+                            this.router.navigate(['/critical-error'], {skipLocationChange: true});
                             observer.next(false);
                             observer.complete();
                         }

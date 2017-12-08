@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { Store as AppStore } from '@ngrx/store';
@@ -11,7 +11,9 @@ import { Store } from '../entities/store';
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {
 
-    constructor(protected appStore: AppStore<AppState>, protected storeService: StoreService) {
+    constructor(protected appStore: AppStore<AppState>,
+                protected storeService: StoreService,
+                protected router: Router) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
@@ -21,6 +23,9 @@ export class InitializeStoreGuard implements CanActivate {
                     store.permission = Permission.createForAdmin();
                     this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
                     return true;
+                }).catch(error => {
+                    this.router.navigate(['/store-not-found'], {skipLocationChange: true});
+                    return Observable.of(false);
                 });
             }
             let enabledStore = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();

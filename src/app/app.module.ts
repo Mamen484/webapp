@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarsModule } from './snackbars/snackbars.module';
-import { CriticalErrorModule } from './critical-error/critical-error.module';
+import { ErrorPagesModule } from './error-pages/error-pages.module';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,7 @@ import { CriticalErrorModule } from './critical-error/critical-error.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        CriticalErrorModule,
+        ErrorPagesModule,
         FormsModule,
         CoreModule,
         BaseModule,

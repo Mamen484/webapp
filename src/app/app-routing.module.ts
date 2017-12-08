@@ -16,7 +16,6 @@ import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 import { DefaultPageGuard } from './core/guards/default-page.guard';
 import { CanLoadAdminGuard } from './core/guards/can-load-admin.guard';
-import { CriticalErrorComponent } from './critical-error/critical-error.component';
 
 const routes: Routes = [
     {
@@ -50,7 +49,6 @@ const routes: Routes = [
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
     {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'},
-    {path: 'critical-error', component: CriticalErrorComponent},
 ];
 
 @NgModule({
