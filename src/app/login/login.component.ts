@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
     error = '';
     showDeletedStoreError = false;
     contactEmail = environment.CONTACT_EMAIL;
+    loadingNextPage = false;
 
     constructor(protected userService: UserService,
                 protected router: Router,
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
         if (this.userNameControl.hasError('required') || this.passwordControl.hasError('required')) {
             return;
         }
+        this.loadingNextPage = true;
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => {
                 this.userService.fetchAggregatedInfo()
@@ -54,6 +56,11 @@ export class LoginComponent implements OnInit {
                     })
             },
             ({error}) => {
+                // @todo: research and refactor type of error issue
+                if (typeof error === 'string') {
+                    error = JSON.parse(error);
+                }
+                this.loadingNextPage = false;
                 this.error = error.detail
             }
         )
