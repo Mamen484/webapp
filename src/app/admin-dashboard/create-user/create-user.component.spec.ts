@@ -124,5 +124,46 @@ describe('CreateUserComponent', () => {
                 });
             });
 
-    })
+        it('should create a validation errors object', () => {
+            storeService.createStore.and.returnValue(Observable.throw({
+                error: {
+                    validationMessages: {
+                        country: {
+                            notInArray: 'au is not allowed country code',
+                        },
+                        owner: {
+                            login: {
+                                alreadyExists: 'The element already exists'
+                            }
+                        }
+                    }
+                }
+            }));
+
+            component.save(true);
+            expect(component.validationErrors.country[0]).toEqual('au is not allowed country code');
+            expect(component.validationErrors.owner.login[0]).toEqual('The element already exists');
+        });
+
+        it('should set processing to true after submitting the form', () => {
+            storeService.createStore.and.returnValue(Observable.empty());
+            component.save(true);
+            expect(component.processing).toEqual(true);
+        });
+
+        it('should set processing to false after successful creating a user', () => {
+            storeService.createStore.and.returnValue(Observable.of({owner: {token: 'token1'}}));
+            component.save(true);
+            expect(component.processing).toEqual(false);
+        });
+
+        it('should set processing to false after failure while creating a user', () => {
+            storeService.createStore.and.returnValue(Observable.throw({error: {}}));
+            component.save(true);
+            expect(component.processing).toEqual(false);
+        });
+
+    });
+
+
 });

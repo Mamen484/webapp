@@ -4,13 +4,13 @@
             <mat-card-content>
                 <mat-form-field>
                     <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login"
-                           i18n-placeholder>
+                           i18n-placeholder="A label for the login input">
                     <mat-error i18n>This field is required.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
                     <input matInput placeholder="Password" name="password" minlength="6" required
                            [(ngModel)]="store.owner.password"
-                           i18n-placeholder>
+                           i18n-placeholder="A label for the password field">
                     <mat-error i18n>The password must not be shorter then 6 characters.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
@@ -29,7 +29,8 @@
                     <mat-error i18n>This must be a valid uri, starting from http, https or ftp.</mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Source" i18n-placeholder name="feed-source" required
+                    <mat-select placeholder="Source" i18n-placeholder="A label for a feed source field"
+                                name="feed-source" required
                                 [(ngModel)]="store.feed.source">
                         <mat-option value="prestashop" selected>prestashop</mat-option>
                         <mat-option value="webetsolutions">webetsolutions</mat-option>
@@ -50,17 +51,65 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field *ngIf="store.feed.source === 'csv' || store.feed.source === 'txt'">
-                    <input matInput placeholder="Separator" i18n-placeholder name="separator" maxlength="1"
+                    <input matInput placeholder="Separator" i18n-placeholder="A label for feed csv separator field"
+                           name="separator" maxlength="1"
                            [(ngModel)]="store.feed.settings.csvFieldSeparator">
                 </mat-form-field>
                 <mat-form-field *ngIf="store.feed.source === 'xml'">
-                    <input matInput placeholder="XML product" i18n-placeholder name="xmlProductNode"
+                    <input matInput placeholder="XML product"
+                           i18n-placeholder="A label for an feed XML product node field" name="xmlProductNode"
                            [(ngModel)]="store.feed.settings.xmlProductNode">
                 </mat-form-field>
+                <div color="error" *ngIf="error || validationErrors" class="mat-error">
+                    <div *ngIf="error" i18n>{{error || 'Unknown error'}}</div>
+                    <div *ngIf="validationErrors">
+                        <div *ngIf="validationErrors.owner.login">
+                            <div *ngFor="let error of validationErrors.owner.login"
+                                 i18n="A server error message for a login field, should have the same label as a feed label">
+                                Login: {{error}}
+                            </div>
+                        </div>
+                        <div *ngIf="validationErrors.owner.email">
+                            <div *ngFor="let error of validationErrors.owner.email"
+                                 i18n="A server error message for an email field, should have the same label as a feed label">
+                                Email: {{error}}
+                            </div>
+                        </div>
+                        <div *ngIf="validationErrors.owner.password"
+                             i18n="A server error message for a password field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.owner.password">Password: {{error}}</div>
+                        </div>
+                        <div *ngIf="validationErrors.country"
+                             i18n="A server error message for a country field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.country">Country: {{error}}</div>
+                        </div>
+                        <div *ngIf="validationErrors.feed.url"
+                             i18n="A server error message for a feed url field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.feed.url">Feed Url: {{error}}</div>
+                        </div>
+                        <div *ngIf="validationErrors.feed.source"
+                             i18n="A server error message for a feed source field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.feed.source">Source: {{error}}</div>
+                        </div>
+                        <div *ngIf="validationErrors.feed.settings.xmlProductNode"
+                             i18n="A server error message for an feed XML product node field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.feed.settings.xmlProductNode">XML product:
+                                {{error}}
+                            </div>
+                        </div>
+                        <div *ngIf="validationErrors.feed.settings.csvFieldSeparator"
+                             i18n="A server error message for an feed csv separator field, should have the same label as a feed label">
+                            <div *ngFor="let error of validationErrors.feed.settings.csvFieldSeparator">Separator:
+                                {{error}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </mat-card-content>
             <mat-card-actions>
-                <div class="mat-error" *ngIf="error" i18n>Server error: {{error || 'Unknown error'}}</div>
-                <button mat-button color="accent">CREATE</button>
+
+
+                <button mat-button color="accent" [disabled]="processing">CREATE</button>
             </mat-card-actions>
         </mat-card>
         <mat-card fxFlex>
@@ -115,7 +164,7 @@
                                name="mapping-id_parent" [(ngModel)]="store.feed.mapping.id_parent">
                     </mat-form-field>
                 </div>
-                <div *ngFor="let image of images; index as i; trackBy: trackBy">
+                <div *ngFor="let image of images; index as i; trackBy: trackByIndex">
                     <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
                     <mat-form-field floatPlaceholder="never">
                         <input id="sf-cu-image_{{i}}-mapping"
