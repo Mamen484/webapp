@@ -1,21 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Self, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-  selector: 'sf-country-select',
-  templateUrl: './country-select.component.html',
-  styleUrls: ['./country-select.component.scss']
+    selector: 'sf-country-select',
+    templateUrl: './country-select.component.html',
+    styleUrls: ['./country-select.component.scss']
 })
-export class CountrySelectComponent implements OnInit {
+export class CountrySelectComponent implements ControlValueAccessor {
 
-    @Input() initialValue: string;
-    @Output() valueChanged = new EventEmitter();
     baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
+    @Input() required = false;
 
-    constructor() {
+    @ViewChild('select') select: HTMLSelectElement;
+
+    onChange: (value: any) => void;
+    onTouched: (value: any) => void;
+
+    constructor(@Self() public controlDir: NgControl) {
+        controlDir.valueAccessor = this;
+
     }
 
-    ngOnInit() {
+    writeValue(value: any): void {
+        this.select.value = value;
     }
 
+    registerOnChange(fn: (value: any) => void): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: (value: any) => void): void {
+        this.onTouched = fn;
+    }
 }

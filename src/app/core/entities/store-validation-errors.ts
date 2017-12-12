@@ -1,5 +1,5 @@
 import { StoreError } from './store-error';
-import { has, values } from 'lodash';
+import { has, values, get } from 'lodash';
 
 export class StoreValidationErrors {
     owner?: {
@@ -17,30 +17,32 @@ export class StoreValidationErrors {
         },
     } = {settings: {}};
 
-    constructor({validationMessages}: StoreError) {
-        if (has(validationMessages, 'owner.login')) {
-            this.owner.login = values(validationMessages.owner.login);
-        }
-        if (has(validationMessages, 'owner.email')) {
-            this.owner.email = values(validationMessages.owner.email);
-        }
-        if (has(validationMessages, 'owner.password')) {
-            this.owner.password = values(validationMessages.owner.password);
-        }
-        if (has(validationMessages, 'country')) {
-            this.country = values(validationMessages.country);
-        }
-        if (has(validationMessages, 'feed.url')) {
-            this.feed.url = values(validationMessages.feed.url);
-        }
-        if (has(validationMessages, 'feed.source')) {
-            this.feed.source = values(validationMessages.feed.source);
-        }
-        if (has(validationMessages, 'feed.settings.csvFieldSeparator')) {
-            this.feed.settings.csvFieldSeparator = values(validationMessages.feed.settings.csvFieldSeparator);
-        }
-        if (has(validationMessages, 'feed.settings.xmlProductNode')) {
-            this.feed.settings.xmlProductNode = values(validationMessages.feed.settings.xmlProductNode);
-        }
+    setErrors({validationMessages}: StoreError) {
+        this.owner.login = this.getValue(validationMessages, 'owner.login');
+        this.owner.email = this.getValue(validationMessages, 'owner.email');
+        this.owner.password = this.getValue(validationMessages, 'owner.password');
+        this.country = this.getValue(validationMessages, 'country');
+        this.feed.url = this.getValue(validationMessages, 'feed.url');
+        this.feed.source = this.getValue(validationMessages, 'feed.source');
+        this.feed.settings.csvFieldSeparator = this.getValue(validationMessages, 'feed.settings.csvFieldSeparator');
+        this.feed.settings.xmlProductNode = this.getValue(validationMessages, 'feed.settings.xmlProductNode');
+    }
+
+    hasError(path) {
+        return Boolean(has(this, path) && get(this, path));
+    }
+
+    getError(path) {
+        return get(this, path);
+    }
+
+    reset() {
+        this.owner = {};
+        this.country = undefined;
+        this.feed = {settings: {}};
+    }
+
+    protected getValue(object, path) {
+        return has(object, path) ? values(get(object, path))[0] : undefined;
     }
 }
