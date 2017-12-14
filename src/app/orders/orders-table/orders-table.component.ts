@@ -44,7 +44,7 @@ export class OrdersTableComponent implements OnInit {
         return {
             hasErrors: false,
             channelImage: order._embedded.channel._links.image.href,
-            id: order.id,
+            id: order.reference,
             status: order.status,
             total: order.payment.feedAmount,
             date: order.createdAt
