@@ -1,0 +1,16 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/form-page';
+
+@include form-page();
+
+.reload {
+  color: mat-color($accent);
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.error-message {
+  margin-bottom: 20px;
+}

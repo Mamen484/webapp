@@ -1,0 +1,38 @@
+<sf-sidebar-container>
+  <mat-list>
+    <mat-list-item matTooltip="Create a user" matTooltipPosition="after" i18n-matTooltip routerLink="/admin/create-user">
+      <mat-icon>add</mat-icon>
+    </mat-list-item>
+    <mat-list-item [matMenuTriggerFor]="invoicing" matTooltip="Invoicing" matTooltipPosition="after" i18n-matTooltip>
+      <mat-icon>attach_money</mat-icon>
+    </mat-list-item>
+    <mat-list-item matTooltip="Partners" matTooltipPosition="after" i18n-matTooltip>
+      <mat-icon>people</mat-icon>
+    </mat-list-item>
+    <mat-list-item [matMenuTriggerFor]="tools" matTooltip="Tools" matTooltipPosition="after" i18n-matTooltip>
+      <mat-icon>build</mat-icon>
+    </mat-list-item>
+    <mat-list-item [matMenuTriggerFor]="api" matTooltip="API" matTooltipPosition="after" i18n-matTooltip>
+      <mat-icon>developer_board</mat-icon>
+    </mat-list-item>
+  </mat-list>
+</sf-sidebar-container>
+
+<mat-menu #invoicing="matMenu" class="sf-sidebar-menu">
+  <a mat-menu-item i18n>Clients lost</a>
+  <a mat-menu-item i18n>Churn</a>
+  <a mat-menu-item i18n>Membership</a>
+  <a mat-menu-item i18n>Turnover</a>
+</mat-menu>
+
+<mat-menu #tools="matMenu" class="sf-sidebar-menu">
+  <a mat-menu-item i18n>Auto-Remove Library</a>
+  <a mat-menu-item i18n>Encyclofeedia</a>
+  <a mat-menu-item i18n>Rule Library</a>
+  <a mat-menu-item i18n>Sales Assistant</a>
+</mat-menu>
+
+<mat-menu #api="matMenu" class="sf-sidebar-menu">
+  <a mat-menu-item i18n>API Lookup</a>
+  <a mat-menu-item i18n>Relaunch Orders</a>
+</mat-menu>

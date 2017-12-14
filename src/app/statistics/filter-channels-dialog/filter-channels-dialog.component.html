@@ -1,6 +1,6 @@
 <div matDialogTitle i18n>Filters</div>
 <mat-dialog-content>
-    <sf-country-select [initialValue]="filter.country" (valueChanged)="filter.country = $event"></sf-country-select>
+    <sf-country-select [(ngModel)]="filter.country"></sf-country-select>
     <mat-form-field>
         <mat-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
             <mat-option value="" i18n>All Types</mat-option>

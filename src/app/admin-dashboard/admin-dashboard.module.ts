@@ -11,6 +11,7 @@ import { SidebarModule } from '../sidebar/sidebar.module';
 import { AdminBaseComponent } from './admin-base/admin-base.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserCreatedDialogComponent } from './user-created-dialog/user-created-dialog.component';
+import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { UserCreatedDialogComponent } from './user-created-dialog/user-created-d
         SearchStoreComponent,
         AdminBaseComponent,
         CreateUserComponent,
-        UserCreatedDialogComponent
+        UserCreatedDialogComponent,
+        AdminSidebarComponent
     ],
     entryComponents: [UserCreatedDialogComponent]
 })

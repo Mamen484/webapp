@@ -27,12 +27,16 @@ export const aggregatedUserInfoMock = {
                 'tools': '*'
             },
             'status': 'active',
-            'order': {'total': 12},
             'timeline': {'total': 0},
             '_links': {'self': {'href': '/v1/store/307'}},
             'feed': {
                 'url': 'http://www.deli-delo.fr/modules/shoppingfluxexport/flux.php?token=346f8eb654199a35758f50f0bf082b97',
                 'source': 'Prestashop'
+            },
+            '_embedded': {
+                'order': {
+                    'newCount': 12
+                }
             }
         },
             {
@@ -42,7 +46,11 @@ export const aggregatedUserInfoMock = {
                     'university': '*'
                 },
                 'status': 'deleted',
-                'order': {'total': 0},
+                '_embedded': {
+                    'order': {
+                        'newCount': 0
+                    }
+                },
                 'timeline': {'total': 12},
                 '_links': {'self': {'href': '/v1/store/307'}},
                 'feed': {
@@ -60,7 +68,11 @@ export const aggregatedUserInfoMock = {
                     'tools': '*'
                 },
                 'status': 'suspended',
-                'order': {'total': 0},
+                '_embedded': {
+                    'order': {
+                        'newCount': 0
+                    }
+                },
                 'timeline': {'total': 22},
                 '_links': {'self': {'href': '/v1/store/307'}},
                 'feed': {

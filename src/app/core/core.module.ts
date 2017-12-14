@@ -9,7 +9,7 @@ import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LocaleIdService } from './services/locale-id.service';
 import { environment } from '../../environments/environment';
@@ -40,6 +40,7 @@ import { currentRouteReducer } from './reducers/current-route-reducer';
 import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
 import { OrdersService } from './services/orders.service';
+import { HttpClientService } from './services/http-client.service';
 
 @NgModule({
     imports: [
@@ -82,6 +83,7 @@ import { OrdersService } from './services/orders.service';
         TimelineService,
         OrdersService,
 
+        {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

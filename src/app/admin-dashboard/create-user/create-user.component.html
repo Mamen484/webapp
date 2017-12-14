@@ -1,36 +1,55 @@
 <div class="scrollable-container">
-    <form fxFlexLayout="row" fxLayoutGap="10px" #form="ngForm" (ngSubmit)="save(form.valid)">
-        <mat-card [fxFlex]="showMappingsForm() ? '40%' : '100%'">
+    <form fxFlexLayout="row" fxLayoutGap="10px" (ngSubmit)="save(form.valid)">
+        <mat-card fxFlex="50%" [formGroup]="form">
             <mat-card-content>
                 <mat-form-field>
-                    <input #login matInput placeholder="Login" name="login" required [(ngModel)]="store.owner.login"
-                           i18n-placeholder>
-                    <mat-error i18n>This field is required.</mat-error>
+                    <input #login matInput placeholder="Login" formControlName="login" i18n-placeholder required>
+                    <mat-error i18n *ngIf="form.controls.login.hasError('required')">
+                        This field is required.
+                    </mat-error>
+                    <mat-error
+                            *ngIf="form.controls.login.hasError('create-user-error') && !form.controls.login.hasError('required')">
+                        {{validationErrors.owner.login}}
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput placeholder="Password" name="password" minlength="6" required
-                           [(ngModel)]="store.owner.password"
-                           i18n-placeholder>
-                    <mat-error i18n>The password must not be shorter then 6 characters.</mat-error>
+                    <input matInput placeholder="Password" formControlName="password" i18n-placeholder required>
+                    <mat-error i18n
+                               *ngIf="form.controls.password.hasError('required') || form.controls.password.hasError('min-length')">
+                        The password must not be shorter then 6 characters.
+                    </mat-error>
+                    <mat-error
+                            *ngIf="form.controls.password.hasError('create-user-error') && !form.controls.password.hasError('required') && !form.controls.password.hasError('min-length')">
+                        {{validationErrors.owner.password}}
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <input matInput type="email" placeholder="Email" name="email" required
-                           [(ngModel)]="store.owner.email"
-                           i18n-placeholder [email]="true">
-                    <mat-error i18n>This field must be a valid email address.</mat-error>
+                    <input matInput type="email" placeholder="Email" formControlName="email" i18n-placeholder required>
+                    <mat-error i18n
+                               *ngIf="form.controls.email.hasError('required') || form.controls.email.hasError('email')">
+                        This field must be a valid email address.
+                    </mat-error>
+                    <mat-error
+                            *ngIf="form.controls.email.hasError('create-user-error') && !form.controls.email.hasError('required') && !form.controls.email.hasError('error')">
+                        {{validationErrors.owner.email}}
+                    </mat-error>
                 </mat-form-field>
 
-                <sf-country-select (valueChanged)="store.country = $event"></sf-country-select>
+                <sf-country-select formControlName="country" [required]="true"></sf-country-select>
 
                 <mat-form-field>
-                    <input matInput type="url" pattern="(http|https|ftp)://.+" placeholder="Feed Url"
-                           i18n-placeholder
-                           name="feed" required [(ngModel)]="store.feed.url">
-                    <mat-error i18n>This must be a valid uri, starting from http, https or ftp.</mat-error>
+                    <input matInput type="url" placeholder="Feed Url" formControlName="url" i18n-placeholder required>
+                    <mat-error i18n
+                               *ngIf="form.controls.url.hasError('required') || form.controls.url.hasError('pattern')">
+                        This must be a valid uri, starting from http, https or ftp.
+                    </mat-error>
+                    <mat-error
+                            *ngIf="form.controls.url.hasError('create-user-error') && !form.controls.url.hasError('required') && !form.controls.url.hasError('pattern')">
+                        {{validationErrors.feed.url}}
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="Source" i18n-placeholder name="feed-source" required
-                                [(ngModel)]="store.feed.source">
+                    <mat-select placeholder="Source" formControlName="source" i18n-placeholder required>
                         <mat-option value="prestashop" selected>prestashop</mat-option>
                         <mat-option value="webetsolutions">webetsolutions</mat-option>
                         <mat-option value="bigcommerce">bigcommerce</mat-option>
@@ -48,160 +67,178 @@
                         <mat-option value="csv">csv</mat-option>
                         <mat-option value="txt">txt</mat-option>
                     </mat-select>
+                    <mat-error i18n *ngIf="form.controls.source.hasError('required')">
+                        This field is required.
+                    </mat-error>
+                    <mat-error
+                            *ngIf="form.controls.source.hasError('create-user-error') && !form.controls.source.hasError('required')">
+                        {{validationErrors.feed.source}}
+                    </mat-error>
                 </mat-form-field>
-                <mat-form-field *ngIf="store.feed.source === 'csv' || store.feed.source === 'txt'">
-                    <input matInput placeholder="Separator" i18n-placeholder name="separator" maxlength="1"
-                           [(ngModel)]="store.feed.settings.csvFieldSeparator">
+                <mat-form-field *ngIf="form.value.source === 'csv' || form.value.source === 'txt'">
+                    <input matInput placeholder="Separator" formControlName="separator" i18n-placeholder>
+                    <mat-error *ngIf="form.controls.separator.hasError('create-user-error')">
+                        {{validationErrors.feed.settings.csvValueSeparator}}
+                    </mat-error>
                 </mat-form-field>
-                <mat-form-field *ngIf="store.feed.source === 'xml'">
-                    <input matInput placeholder="XML product" i18n-placeholder name="xmlProductNode"
-                           [(ngModel)]="store.feed.settings.xmlProductNode">
+                <mat-form-field *ngIf="form.value.source === 'xml'">
+                    <input matInput placeholder="XML product" formControlName="productNode" i18n-placeholder>
+                    <mat-error *ngIf="form.controls.productNode.hasError('create-user-error')">
+                        {{validationErrors.feed.settings.xmlProductNode}}
+                    </mat-error>
                 </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
-                <div class="mat-error" *ngIf="error" i18n>Server error: {{error || 'Unknown error'}}</div>
-                <button mat-button color="accent">CREATE</button>
+
+
+                <button mat-button color="accent" [disabled]="processing">CREATE</button>
             </mat-card-actions>
         </mat-card>
-        <mat-card fxFlex *ngIf="showMappingsForm()">
-            <mat-card-content class="two-column">
+        <mat-card fxFlex [formGroup]="mappingsForm">
+            <mat-card-content class="two-column" *ngIf="showMappingsForm();else mappingWillBeHereMessage">
                 <div>
                     <label for="sf-cu-brand-mapping">brand</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-brand-mapping" matInput placeholder="Describe" name="mapping-brand"
-                               [(ngModel)]="store.feed.mapping.brand" i18n-placeholder>
+                        <input id="sf-cu-brand-mapping" matInput placeholder="Describe" formControlName="brand"
+                               i18n-placeholder>
                     </mat-form-field>
 
                 </div>
                 <div>
                     <label for="sf-cu-brand-link-mapping">brand_link</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-brand-link-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-brand_link" [(ngModel)]="store.feed.mapping.brand_link">
+                        <input id="sf-cu-brand-link-mapping" matInput placeholder="Describe" formControlName="brandLink"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-category-mapping">category</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-category-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-category" [(ngModel)]="store.feed.mapping.category">
+                        <input id="sf-cu-category-mapping" matInput placeholder="Describe" formControlName="category"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-description-mapping">description</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-description-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-description" [(ngModel)]="store.feed.mapping.description">
+                        <input id="sf-cu-description-mapping" matInput placeholder="Describe"
+                               formControlName="description" i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-ean-mapping">ean</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-ean-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-ean" [(ngModel)]="store.feed.mapping.ean">
+                        <input id="sf-cu-ean-mapping" matInput placeholder="Describe" formControlName="ean"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-ecotax-mapping">ecotax</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-ecotax-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-ecotax" [(ngModel)]="store.feed.mapping.ecotax">
+                        <input id="sf-cu-ecotax-mapping" matInput placeholder="Describe" formControlName="ecotax"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-id_parent-mapping">id_parent</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-id_parent-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-id_parent" [(ngModel)]="store.feed.mapping.id_parent">
+                        <input id="sf-cu-id_parent-mapping" matInput placeholder="Describe" formControlName="idParent"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
-                <div *ngFor="let image of images; index as i; trackBy: trackBy">
-                    <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
-                    <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-image_{{i}}-mapping"
-                               matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-image_{{i}}" [(ngModel)]="images[i]">
-                        <button *ngIf="i==0" mat-button matSuffix mat-icon-button aria-label="Add an image"
-                                (click)="addImage()">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                        <button *ngIf="i>0" mat-button matSuffix mat-icon-button aria-label="Remove the image"
-                                (click)="removeImage(i)">
-                            <mat-icon>remove</mat-icon>
-                        </button>
-                    </mat-form-field>
-                </div>
+                <ng-container formArrayName="images">
+                    <div *ngFor="let control of mappingsForm.controls['images'].controls; index as i">
+                        <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
+                        <mat-form-field floatPlaceholder="never">
+                            <input id="sf-cu-image_{{i}}-mapping" matInput placeholder="Describe"
+                                   [formControl]="control" i18n-placeholder>
+                            <button *ngIf="i==0" mat-button matSuffix mat-icon-button aria-label="Add an image"
+                                    (click)="addImage()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                            <button *ngIf="i>0" mat-button matSuffix mat-icon-button aria-label="Remove the image"
+                                    (click)="removeImage(i)">
+                                <mat-icon>remove</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
                 <div>
                     <label for="sf-cu-link-mapping">link</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-link-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-link" [(ngModel)]="store.feed.mapping.link">
+                        <input id="sf-cu-link-mapping" matInput placeholder="Describe" formControlName="link"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-name-mapping">name</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-name-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-name" [(ngModel)]="store.feed.mapping.name">
+                        <input id="sf-cu-name-mapping" matInput placeholder="Describe" formControlName="name"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-old_price-mapping">old_price</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-old_price-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-old_price" [(ngModel)]="store.feed.mapping.old_price">
+                        <input id="sf-cu-old_price-mapping" matInput placeholder="Describe" formControlName="oldPrice"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-quantity-mapping">quantity</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-quantity-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-quantity" [(ngModel)]="store.feed.mapping.quantity">
+                        <input id="sf-cu-quantity-mapping" matInput placeholder="Describe" formControlName="quantity"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-reference-mapping">reference</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-reference-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-reference" [(ngModel)]="store.feed.mapping.reference">
+                        <input id="sf-cu-reference-mapping" matInput placeholder="Describe" formControlName="reference"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-shipping_cost-mapping">shipping_cost</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-shipping_cost-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-shipping_cost" [(ngModel)]="store.feed.mapping.shipping_cost">
+                        <input id="sf-cu-shipping_cost-mapping" matInput placeholder="Describe"
+                               formControlName="shippingCost" i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-shipping_time-mapping">shipping_time</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-shipping_time-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-shipping_time" [(ngModel)]="store.feed.mapping.shipping_time">
+                        <input id="sf-cu-shipping_time-mapping" matInput placeholder="Describe"
+                               formControlName="shippingTime" i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-short_description-mapping">short_description</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-short_description-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-short_description" [(ngModel)]="store.feed.mapping.short_description">
+                        <input id="sf-cu-short_description-mapping" matInput placeholder="Describe"
+                               formControlName="shortDescription" i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-tva-mapping">tva</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-tva-mapping" matInput placeholder="Describe" i18n-placeholder
-                               name="mapping-tva" [(ngModel)]="store.feed.mapping.tva">
+                        <input id="sf-cu-tva-mapping" matInput placeholder="Describe" formControlName="tva"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
                 <div>
                     <label for="sf-cu-weight-mapping">weight</label>
                     <mat-form-field floatPlaceholder="never">
-                        <input id="sf-cu-weight-mapping" matInput placeholder="Describe" i18n-placeholder
-                               i18n-placeholder name="mapping-weight" [(ngModel)]="store.feed.mapping.weight">
+                        <input id="sf-cu-weight-mapping" matInput placeholder="Describe" formControlName="weight"
+                               i18n-placeholder>
                     </mat-form-field>
                 </div>
             </mat-card-content>
+            <ng-template #mappingWillBeHereMessage>
+                <mat-card-content i18n>
+                    Field Mapping will be displayed here if needed.
+                </mat-card-content>
+            </ng-template>
         </mat-card>
     </form>
 </div>

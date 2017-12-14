@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
@@ -52,11 +52,11 @@ const routes: Routes = [
     {path: 'reset-password', component: SendRecoveryEmailComponent},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
-    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'}
+    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'},
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

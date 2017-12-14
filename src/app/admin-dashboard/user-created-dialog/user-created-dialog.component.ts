@@ -15,13 +15,9 @@ export class UserCreatedDialogComponent {
     passwordCopied = false;
     tokenCopied = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data,
-                protected dialogRef: MatDialogRef<UserCreatedDialogComponent>) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data) {
     }
 
-    closeDialog() {
-        this.dialogRef.close();
-    }
 
     markAsCopied(control) {
         switch (control) {

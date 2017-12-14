@@ -4,8 +4,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule, MatToolbarModule, MatTooltipModule,  MatDatepickerModule, MatNativeDateModule,
-    MatTabsModule, MatTableModule, MatCheckboxModule,
+    MatSelectModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule, MatDatepickerModule,
+    MatNativeDateModule, MatTabsModule, MatTableModule, MatCheckboxModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -20,6 +20,7 @@ import { BlankComponent } from './blank.component';
 import { CountrySelectComponent } from './country-select/country-select.component';
 
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
+
 @NgModule({
     imports: [
         ClipboardModule,
@@ -38,6 +39,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatMenuModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
@@ -73,6 +75,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatTabsModule,
         MatSelectModule,
         MatSidenavModule,
+        MatSnackBarModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,

@@ -6,3 +6,5 @@ export class StoreOwner {
     token?: string; // GET requests
     tokens?: string[]; // POST requests
 }
+
+export type StoreOwnerKey = keyof StoreOwner

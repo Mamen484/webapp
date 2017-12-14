@@ -1,6 +1,6 @@
 <mat-dialog-content>
     <div fxLayout="column">
-        <div class="mat-title title" i18n>Created Account</div>
+        <div class="mat-title title" i18n>Account сreated</div>
         <div class="mat-caption" i18n>Login</div>
         <div fxLayout="row">
             <div fxFlexFill class="mat-subheading-2 value">{{data.login}}</div>
@@ -24,5 +24,5 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-    <a mat-button (click)="closeDialog()" color="accent">OK</a>
+    <a mat-button sfLegacyLink path="/admin/client/{{data.login}}" color="accent">OK</a>
 </mat-dialog-actions>
