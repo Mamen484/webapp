@@ -108,19 +108,7 @@ export class CreateUserComponent {
         );
     }
 
-    setStore() {
-        this.store.owner.login = this.form.value.login;
-        this.store.owner.password = this.form.value.password;
-        this.store.owner.email = this.form.value.email;
-        this.store.feed.url = this.form.value.url;
-        this.store.country = this.form.value.country;
-        this.store.feed.source = this.form.value.source;
-        this.store.feed.settings.csvFieldSeparator = this.form.value.separator;
-        this.store.feed.settings.xmlProductNode = this.form.value.productNode;
-        if (this.store.feed.source === 'csv' || this.store.feed.source === 'txt' || this.store.feed.source === 'xml') {
-            this.store.feed.mapping = this.mappingsForm.value;
-        }
-    }
+
 
     addImage() {
         (<FormArray>this.mappingsForm.controls['images']).push(new FormControl(''));
@@ -145,6 +133,21 @@ export class CreateUserComponent {
         return this.form.value.source === 'csv'
             || this.form.value.source === 'xml'
             || this.form.value.source === 'txt';
+    }
+
+    protected setStore() {
+        this.store.owner.login = this.form.value.login;
+        this.store.owner.password = this.form.value.password;
+        this.store.owner.email = this.form.value.email;
+        this.store.feed.url = this.form.value.url;
+        this.store.country = this.form.value.country;
+        this.store.feed.source = this.form.value.source;
+        this.store.feed.settings.csvFieldSeparator = this.form.value.separator;
+        this.store.feed.settings.xmlProductNode = this.form.value.productNode;
+        if (this.store.feed.source === 'csv' || this.store.feed.source === 'txt' || this.store.feed.source === 'xml') {
+            this.store.feed.mapping = this.mappingsForm.value;
+            this.store.feed.mapping.images = this.store.feed.mapping.images.filter(im => Boolean(im));
+        }
     }
 
     protected updateValueAndValidity() {
