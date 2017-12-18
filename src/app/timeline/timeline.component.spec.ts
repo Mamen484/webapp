@@ -183,7 +183,7 @@ describe('TimelineComponent', () => {
         it('should convert API data to the correct list of events', () => {
             fixture.whenStable().then(() => {
                 let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
-                expect(items.length).toEqual(13);
+                expect(items.length).toEqual(14);
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
@@ -194,10 +194,10 @@ describe('TimelineComponent', () => {
                 validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
                 validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
                 validateEvent(items[9], 'error_outline', 'Your source feed wasn\'t updated because nothing had changed since the last update.', '/tools/infos');
-                validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+                validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
                 validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
                 validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
-
+                validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
             });
         });
     })

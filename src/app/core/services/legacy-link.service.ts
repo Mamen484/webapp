@@ -11,9 +11,8 @@ export class LegacyLinkService {
 
     currentStore: AppStore;
 
-    constructor(
-        protected appStore: Store<AppState>,
-        protected localStorage: LocalStorageService) {
+    constructor(protected appStore: Store<AppState>,
+                protected localStorage: LocalStorageService) {
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
 
