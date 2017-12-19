@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <div fxFlex>
         <div>
-            <mat-select placeholder="Date" #dateSelect value="today" (selectionChange)="changeDate($event.value)">
+            <mat-select placeholder="Date" value="today" [(ngModel)]="dateOption" (selectionChange)="changeDate($event.value)">
                 <mat-option value="today" i18n>Today</mat-option>
                 <mat-option value="week" i18n>Last 7 days</mat-option>
                 <mat-option value="month" i18n>Last 30 days</mat-option>
@@ -28,16 +28,16 @@
             </mat-select>
         </div>
     </div>
-    <div fxFlex class="column" *ngIf="dateSelect.value === 'custom'">
+    <div fxFlex class="column" *ngIf="dateOption === 'custom'">
         <mat-form-field>
-            <input matInput [matDatepicker]="minDate" i18n-placeholder placeholder="Min date">
+            <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="filter.since" placeholder="Min date">
             <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
             <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
         </mat-form-field>
     </div>
-    <div fxFlex class="column" *ngIf="dateSelect.value === 'custom'">
+    <div fxFlex class="column" *ngIf="dateOption === 'custom'">
         <mat-form-field>
-            <input matInput [matDatepicker]="maxDate" i18n-placeholder placeholder="Max date">
+            <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="filter.until" placeholder="Max date">
             <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
             <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
         </mat-form-field>

@@ -9,6 +9,7 @@ export class OrdersFilter {
     carrier? = 'all';
     tab? = 'all';
     limit = '25';
+    search = '';
 
     static aDayBefore() {
         let date = new Date().toDateString();
@@ -35,6 +36,10 @@ export class OrdersFilter {
         }
         if (this.channel && this.channel !== 'all') {
             params = params.set('channel', this.channel);
+        }
+
+        if (this.search && this.search !== '') {
+            params = params.set('search', this.search);
         }
 
         return params;

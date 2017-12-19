@@ -19,7 +19,6 @@ export class OrdersTableComponent implements OnInit {
 
     @Input()
     set filter(filter: OrdersFilter) {
-        console.log(filter);
         if (!filter) {
             return;
         }

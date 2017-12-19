@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { OrdersFilter } from '../../core/entities/orders-filter';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { StoreChannelDetails } from '../../core/entities/store-channel-details';
@@ -14,12 +14,21 @@ export class OrdersFilterDialogComponent implements OnInit {
 
     filter = new OrdersFilter();
     channels: StoreChannelDetails[];
+    dateOption = 'today';
 
-    constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>, protected appStore: Store<AppState>) {
+    constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>,
+                protected appStore: Store<AppState>,
+                @Inject(MAT_DIALOG_DATA) protected data) {
+        this.filter = Object.assign(new OrdersFilter(), data);
     }
 
     ngOnInit() {
-        this.changeDate('today');
+        if (!this.filter.since) {
+            this.changeDate('today');
+        } else {
+            this.dateOption = 'custom';
+        }
+
         this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
     }
 
@@ -35,14 +44,17 @@ export class OrdersFilterDialogComponent implements OnInit {
         switch (period) {
             case 'today':
                 this.filter.since = OrdersFilter.aDayBefore();
+                delete this.filter.until;
                 break;
 
             case 'week':
                 this.filter.since = OrdersFilter.aWeekBefore();
+                delete this.filter.until;
                 break;
 
             case 'month':
                 this.filter.since = OrdersFilter.aMonthBefore();
+                delete this.filter.until;
                 break;
         }
     }
