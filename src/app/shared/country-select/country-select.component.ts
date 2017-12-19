@@ -5,7 +5,10 @@ import { ControlValueAccessor, NgControl, NgModel } from '@angular/forms';
 @Component({
     selector: 'sf-country-select',
     templateUrl: './country-select.component.html',
-    styleUrls: ['./country-select.component.scss']
+    styleUrls: ['./country-select.component.scss'],
+    providers: [
+        {provide: NgControl, useClass: NgModel}
+    ]
 })
 export class CountrySelectComponent implements ControlValueAccessor {
 
@@ -15,10 +18,10 @@ export class CountrySelectComponent implements ControlValueAccessor {
     @ViewChild('select') select: HTMLSelectElement;
 
     onChange: (value: any) => void;
-    onTouched: (value: any) => void;
+    onTouched: () => void;
 
     // @TODO: replace NgModel with NgControl to support different form modules
-    constructor(@Self() public controlDir: NgModel) {
+    constructor(@Self() public controlDir: NgControl) {
         controlDir.valueAccessor = this;
 
     }
@@ -31,7 +34,7 @@ export class CountrySelectComponent implements ControlValueAccessor {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: (value: any) => void): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 }
