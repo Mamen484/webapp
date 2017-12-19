@@ -41,7 +41,7 @@ export class EventLinkComponent {
 
     unknownReason() {
         return !this.event.reason ||
-            (<TimelineErrorReason[]>['open', 'categories', 'products', 'check', 'references', 'mapping'])
+            (<TimelineErrorReason[]>['open', 'categories', 'products', 'check', 'references', 'mapping', 'settings'])
                 .indexOf(this.event.reason) === -1;
     }
 

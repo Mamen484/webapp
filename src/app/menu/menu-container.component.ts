@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'sf-menu-container',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
     styleUrls: ['./menu-container.component.scss']
 })
 export class MenuContainerComponent {
+    @Input() logo = 'assets/images/SF_white.svg';
+    @Input() logoWidth = 23;
 }

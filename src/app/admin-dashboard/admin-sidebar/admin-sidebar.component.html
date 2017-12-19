@@ -7,7 +7,7 @@
       <mat-icon>attach_money</mat-icon>
     </mat-list-item>
     <mat-list-item matTooltip="Partners" matTooltipPosition="after" i18n-matTooltip>
-      <mat-icon>people</mat-icon>
+      <a sfLegacyLink path="/admin/partners" class="partners-link" target="_blank"><mat-icon>people</mat-icon></a>
     </mat-list-item>
     <mat-list-item [matMenuTriggerFor]="tools" matTooltip="Tools" matTooltipPosition="after" i18n-matTooltip>
       <mat-icon>build</mat-icon>
@@ -19,20 +19,20 @@
 </sf-sidebar-container>
 
 <mat-menu #invoicing="matMenu" class="sf-sidebar-menu">
-  <a mat-menu-item i18n>Clients lost</a>
-  <a mat-menu-item i18n>Churn</a>
-  <a mat-menu-item i18n>Membership</a>
-  <a mat-menu-item i18n>Turnover</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/lost" target="_blank">Clients lost</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/churn" target="_blank">Churn</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/invoicing" target="_blank">Membership</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/turnover" target="_blank">Turnover</a>
 </mat-menu>
 
 <mat-menu #tools="matMenu" class="sf-sidebar-menu">
-  <a mat-menu-item i18n>Auto-Remove Library</a>
-  <a mat-menu-item i18n>Encyclofeedia</a>
-  <a mat-menu-item i18n>Rule Library</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/segmentationcatalog" target="_blank">Auto-Remove Library</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/encyclofeedia" target="_blank">Encyclofeedia</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/rulecatalog" target="_blank">Rule Library</a>
   <a mat-menu-item i18n>Sales Assistant</a>
 </mat-menu>
 
 <mat-menu #api="matMenu" class="sf-sidebar-menu">
-  <a mat-menu-item i18n>API Lookup</a>
-  <a mat-menu-item i18n>Relaunch Orders</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/webservice" target="_blank">API Lookup</a>
+  <a mat-menu-item i18n sfLegacyLink path="/admin/relaunchMarketplaceOrders" target="_blank">Relaunch Orders</a>
 </mat-menu>
