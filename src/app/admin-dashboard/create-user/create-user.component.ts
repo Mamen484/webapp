@@ -8,6 +8,7 @@ import { StoreValidationErrors } from '../../core/entities/store-validation-erro
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { createUserErrorValidator } from '../../core/validators/create-user-error.validator';
 import { values } from 'lodash';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'sf-create-user',
@@ -18,6 +19,7 @@ export class CreateUserComponent {
 
     error = '';
     validationErrors = new StoreValidationErrors();
+    baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
 
     store = new Store();
     createdToken = '';
