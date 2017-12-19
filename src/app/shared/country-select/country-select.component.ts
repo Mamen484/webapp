@@ -1,6 +1,6 @@
 import { Component, Input, Self, ViewChild } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NgControl, NgModel } from '@angular/forms';
 
 @Component({
     selector: 'sf-country-select',
@@ -17,7 +17,8 @@ export class CountrySelectComponent implements ControlValueAccessor {
     onChange: (value: any) => void;
     onTouched: (value: any) => void;
 
-    constructor(@Self() public controlDir: NgControl) {
+    // @TODO: replace NgModel with NgControl to support different form modules
+    constructor(@Self() public controlDir: NgModel) {
         controlDir.valueAccessor = this;
 
     }
