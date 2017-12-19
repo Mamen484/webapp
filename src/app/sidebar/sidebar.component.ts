@@ -18,21 +18,14 @@ import { Channel } from '../core/entities/channel';
 export class SidebarComponent {
 
     currentStore: Store;
-    channels: Observable<StoreChannelDetails[]>;
+    channels: StoreChannelDetails[];
     currentRoute;
 
     constructor(protected appStore: AppStore<AppState>,
                 @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
-                protected storeService: StoreService,
                 protected windowRef: WindowRefService) {
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
-        this.channels = this.storeService.getStoreChannels(
-            this.currentStore.id,
-            Object.assign(new ChannelsRequestParams,
-                {status: 'installed'})
-        )
-            .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
-
+        this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
 
     }

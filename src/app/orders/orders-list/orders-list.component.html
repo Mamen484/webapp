@@ -1,8 +1,8 @@
 <div class="orders">
-  <sf-search-orders></sf-search-orders>
+  <sf-search-orders (onFilter)="filter = $event"></sf-search-orders>
   <mat-tab-group color="accent">
     <mat-tab i18n label="All orders">
-      <sf-orders-table></sf-orders-table>
+      <sf-orders-table [filter]="filter"></sf-orders-table>
     </mat-tab>
     <mat-tab i18n label="To validate">
       <!--<sf-orders-table></sf-orders-table>-->

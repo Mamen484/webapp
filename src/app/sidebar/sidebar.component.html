@@ -39,7 +39,7 @@
 </sf-sidebar-container>
 
 <mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu">
-    <a mat-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" sfLegacyLink
+    <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sfLegacyLink
        [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>

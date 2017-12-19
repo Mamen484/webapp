@@ -41,6 +41,7 @@ import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
 import { OrdersService } from './services/orders.service';
 import { HttpClientService } from './services/http-client.service';
+import { installedChannelsReducer } from './reducers/installed-channels-reducer';
 
 @NgModule({
     imports: [
@@ -50,6 +51,7 @@ import { HttpClientService } from './services/http-client.service';
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
             currentRoute: currentRouteReducer,
+            installedChannels: installedChannelsReducer
         })
     ],
     providers: [

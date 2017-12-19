@@ -3,6 +3,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
 import { WindowRefService } from '../core/services/window-ref.service';
+import { ChannelsRequestParams } from '../core/entities/channels-request-params';
+import { StoreService } from '../core/services/store.service';
+import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 
 declare const Autopilot;
 
@@ -13,7 +16,9 @@ declare const Autopilot;
 })
 export class BaseComponent {
 
-    constructor(protected appStore: Store<AppState>, protected windowRef: WindowRefService) {
+    constructor(protected appStore: Store<AppState>,
+                protected windowRef: WindowRefService,
+                protected storeService: StoreService) {
         this.appStore.select('userInfo')
             .combineLatest(this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
@@ -28,6 +33,12 @@ export class BaseComponent {
                             FirstName: environment.DEFAULT_AUTOPILOT_STORENAME,
                         });
                 }
-            })
+            });
+        this.appStore.select('currentStore')
+            .flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true)))
+            .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
+            .subscribe(channels => {
+                this.appStore.select('installedChannels').dispatch({type: SET_CHANNELS, channels})
+            });
     }
 }
