@@ -16,6 +16,7 @@ export interface Order {
     createdAt: string;
     updatedAt: string;
     status: OrderStatus;
+    storeId: number;
     shippingAddress: Address;
     billingAddress: Address;
     payment: Payment;

@@ -6,7 +6,7 @@
             <button mat-icon-button (click)="addLabel()">
                 <mat-icon>label</mat-icon>
             </button>
-            <button mat-icon-button>
+            <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
                 <mat-icon>view_column</mat-icon>
             </button>
             <button mat-icon-button>
@@ -58,6 +58,38 @@
                 <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.date | date:fullDate}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="updatedAt">
+                <mat-header-cell *matHeaderCellDef> Updated</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.updatedAt | date:fullDate}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="productAmount">
+                <mat-header-cell *matHeaderCellDef> Total Products</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.productAmount}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="shippingAmount">
+                <mat-header-cell *matHeaderCellDef> Total Shipping</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.shippingAmount}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="paymentMethod">
+                <mat-header-cell *matHeaderCellDef> Payment Method</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.paymentMethod}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="deliveryName">
+                <mat-header-cell *matHeaderCellDef> Delivery Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.deliveryName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="invoicingName">
+                <mat-header-cell *matHeaderCellDef> Invoicing Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.invoicingName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="storeId">
+                <mat-header-cell *matHeaderCellDef> Store ID</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.storeId}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="trackingNumber">
+                <mat-header-cell *matHeaderCellDef> Tracking Number</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
+            </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/'+row.id">{{row.name}}
@@ -65,3 +97,14 @@
         </mat-table>
     </mat-card-content>
 </mat-card>
+
+<mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Total products</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount">Total shipping </mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.paymentMethod">Payment method</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.deliveryName">Delivery name</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Invoicing name</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">Store ID</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number</mat-checkbox></div>
+</mat-menu>

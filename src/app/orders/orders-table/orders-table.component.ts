@@ -9,6 +9,7 @@ import { AppState } from '../../core/entities/app-state';
 import { Order } from '../../core/entities/orders/order';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { Store } from '../../core/entities/store';
+import { toPairs } from 'lodash';
 
 @Component({
     selector: 'sf-orders-table',
@@ -27,7 +28,18 @@ export class OrdersTableComponent implements OnInit {
             .subscribe();
     }
 
-    displayedColumns = ['checkbox', 'hasErrors', 'name', 'id', 'status', 'total', 'date'];
+    optionalColumns = {
+        updatedAt: false,
+        productAmount: false,
+        shippingAmount: false,
+        paymentMethod: false,
+        deliveryName: false,
+        invoicingName: false,
+        storeId: false,
+        trackingNumber: false,
+    };
+    requiredColumns = ['checkbox', 'hasErrors', 'name', 'id', 'status', 'total', 'date'];
+    displayedColumns = this.requiredColumns;
     data: TableDataSource;
 
     // @TODO: set to true when server date format has no errors
@@ -67,8 +79,22 @@ export class OrdersTableComponent implements OnInit {
             id: order.reference,
             status: order.status,
             total: order.payment.feedAmount,
-            date: new Date(order.createdAt).getTime()
+            date: new Date(order.createdAt).getTime(),
+            updatedAt: new Date(order.updatedAt).getTime(),
+            productAmount: order.payment.productAmount,
+            shippingAmount: order.payment.shippingAmount,
+            paymentMethod: order.payment.method,
+            deliveryName: order.shippingAddress.firstName + ' ' + order.shippingAddress.lastName,
+            invoicingName: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
+            storeId: order.storeId,
+            trackingNumber: order.shipment.trackingNumber,
         }
+    }
+
+    setDisplayedColumns() {
+        this.displayedColumns = this.requiredColumns
+            .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
+
     }
 
 }
