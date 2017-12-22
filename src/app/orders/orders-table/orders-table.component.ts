@@ -38,7 +38,7 @@ export class OrdersTableComponent implements OnInit {
         storeId: false,
         trackingNumber: false,
     };
-    requiredColumns = ['checkbox', 'hasErrors', 'name', 'id', 'status', 'total', 'date'];
+    requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'id', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
     data: TableDataSource;
 
