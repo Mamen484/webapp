@@ -38,7 +38,7 @@ export class OrdersTableComponent implements OnInit {
         storeId: false,
         trackingNumber: false,
     };
-    requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'id', 'status', 'total', 'date'];
+    requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
     data: TableDataSource;
 
@@ -76,7 +76,8 @@ export class OrdersTableComponent implements OnInit {
         return {
             hasErrors: false,
             channelImage: order._embedded.channel._links.image.href,
-            id: order.reference,
+            reference: order.reference,
+            id: order.id,
             status: order.status,
             total: order.payment.feedAmount,
             date: new Date(order.createdAt).getTime(),

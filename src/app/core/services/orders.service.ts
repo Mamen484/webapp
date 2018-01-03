@@ -13,10 +13,13 @@ export class OrdersService {
     }
 
     fetchOrdersList(storeId, filter: OrdersFilter = new OrdersFilter()) {
-        return <Observable<PagedResponse<{ order: Order[] }>>>
-            this.httpClient.get(`${environment.API_URL}/store/${storeId}/order`, {
+        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order`, {
                 params: filter.toHttpParams()
-            });
+            }) as Observable<PagedResponse<{ order: Order[] }>>;
+    }
+
+    fetchOrder(storeId, orderId): Observable<Order> {
+        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/${orderId}`) as Observable<Order>;
     }
 
 }

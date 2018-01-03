@@ -42,6 +42,7 @@ import { OrdersRouteGuard } from './guards/orders-route.guard';
 import { OrdersService } from './services/orders.service';
 import { HttpClientService } from './services/http-client.service';
 import { installedChannelsReducer } from './reducers/installed-channels-reducer';
+import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 
 @NgModule({
     imports: [
@@ -65,6 +66,7 @@ import { installedChannelsReducer } from './reducers/installed-channels-reducer'
         IsLoggedInGuard,
         LogoutGuard,
         LoginByTokenGuard,
+        OrderDetailsResolveGuard,
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,

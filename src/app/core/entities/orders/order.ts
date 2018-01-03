@@ -5,6 +5,9 @@ import { Payment } from './payment';
 import { Shipment } from './shipment';
 import { Channel } from '../channel';
 import { Store } from '../store';
+import { OrderError } from './order-error';
+import { OrderTag } from './order-tag';
+import { OrderItem } from './order-item';
 
 export interface Order {
     _links: {
@@ -23,6 +26,9 @@ export interface Order {
     shipment: Shipment;
     _embedded: {
         channel: Channel,
-        store: Store;
-    }
+        store: Store,
+        tag: OrderTag
+    },
+    error: OrderError;
+    items: OrderItem[];
 }

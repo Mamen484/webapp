@@ -52,15 +52,15 @@
         <div class="totals">
             <div class="total-row">
                 <div class="description" i18n>Total products</div>
-                <div class="value">3</div>
+                <div class="value" i18n>{{order.payment.productAmount | currency:order.payment.currency}}</div>
             </div>
             <div class="total-row">
                 <div class="description" i18n>Total delivery</div>
-                <div class="value">1</div>
+                <div class="value">{{order.payment.shippingAmount | currency:order.payment.currency}}</div>
             </div>
             <div class="total-row">
                 <div class="description" i18n>Total price</div>
-                <div class="value">336€</div>
+                <div class="value">{{order.payment.productAmount + order.payment.shippingAmount | currency:order.payment.currency}}</div>
             </div>
         </div>
     </mat-card-content>
@@ -73,23 +73,23 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayoutGap="10px">
                     <mat-form-field fxFlex>
-                        <input placeholder="First Name" matInput>
+                        <input placeholder="First Name" matInput [(ngModel)]="order.billingAddress.firstName">
                     </mat-form-field>
                     <mat-form-field fxFlex>
-                        <input placeholder="Last Name" matInput>
+                        <input placeholder="Last Name" matInput [(ngModel)]="order.billingAddress.lastName">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Address" matInput>
+                        <input placeholder="Address" matInput [(ngModel)]="order.billingAddress.street">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px">
                     <mat-form-field fxFlex>
-                        <input placeholder="Zip" matInput>
+                        <input placeholder="Zip" matInput [(ngModel)]="order.billingAddress.postalCode">
                     </mat-form-field>
                     <mat-form-field fxFlex>
-                        <input placeholder="City" matInput>
+                        <input placeholder="City" matInput [(ngModel)]="order.billingAddress.city">
                     </mat-form-field>
                     <mat-form-field fxFlex>
                         <input placeholder="Country" matInput>
@@ -97,12 +97,12 @@
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Phone" matInput>
+                        <input placeholder="Phone" matInput [(ngModel)]="order.billingAddress.phone">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Email" matInput>
+                        <input placeholder="Email" matInput [(ngModel)]="order.billingAddress.email">
                     </mat-form-field>
                 </div>
             </mat-card-content>
@@ -118,23 +118,23 @@
             <mat-card-content>
                 <div fxLayout="row" fxLayoutGap="10px">
                     <mat-form-field fxFlex>
-                        <input placeholder="First Name" matInput>
+                        <input placeholder="First Name" matInput [(ngModel)]="order.shippingAddress.firstName">
                     </mat-form-field>
                     <mat-form-field fxFlex>
-                        <input placeholder="Last Name" matInput>
+                        <input placeholder="Last Name" matInput [(ngModel)]="order.shippingAddress.lastName">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Address" matInput>
+                        <input placeholder="Address" matInput [(ngModel)]="order.shippingAddress.street">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutGap="10px">
                     <mat-form-field fxFlex>
-                        <input placeholder="Zip" matInput>
+                        <input placeholder="Zip" matInput [(ngModel)]="order.shippingAddress.postalCode">
                     </mat-form-field>
                     <mat-form-field fxFlex>
-                        <input placeholder="City" matInput>
+                        <input placeholder="City" matInput [(ngModel)]="order.shippingAddress.city">
                     </mat-form-field>
                     <mat-form-field fxFlex>
                         <input placeholder="Country" matInput>
@@ -142,12 +142,12 @@
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Phone" matInput>
+                        <input placeholder="Phone" matInput [(ngModel)]="order.shippingAddress.phone">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row">
                     <mat-form-field fxFlex>
-                        <input placeholder="Email" matInput>
+                        <input placeholder="Email" matInput [(ngModel)]="order.shippingAddress.email">
                     </mat-form-field>
                 </div>
             </mat-card-content>
