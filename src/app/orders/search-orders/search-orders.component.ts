@@ -42,5 +42,9 @@ export class SearchOrdersComponent implements OnInit {
             this.onFilter.emit(filter);
         });
     }
+    cancelFilter(filterName, filterValue) {
+        this.filter = Object.assign(new OrdersFilter(), this.filter, {[filterName]: filterValue});
+        this.onFilter.emit(this.filter);
+    }
 
 }

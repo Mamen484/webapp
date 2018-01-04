@@ -43,6 +43,7 @@ import { OrdersService } from './services/orders.service';
 import { HttpClientService } from './services/http-client.service';
 import { installedChannelsReducer } from './reducers/installed-channels-reducer';
 import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
+import { tagsReducer } from './reducers/tags-reducer';
 
 @NgModule({
     imports: [
@@ -52,7 +53,8 @@ import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
             currentRoute: currentRouteReducer,
-            installedChannels: installedChannelsReducer
+            installedChannels: installedChannelsReducer,
+            tags: tagsReducer,
         })
     ],
     providers: [

@@ -6,7 +6,7 @@ export class OrdersFilter {
     until?;
     since?: Date;
     channel? = 'all';
-    tab? = 'all';
+    tag? = 'all';
     limit = '25';
     search = '';
 
@@ -39,6 +39,9 @@ export class OrdersFilter {
 
         if (this.search && this.search !== '') {
             params = params.set('search', this.search);
+        }
+        if (this.tag && this.tag !== 'all') {
+            params = params.set('tag', this.tag);
         }
 
         return params;

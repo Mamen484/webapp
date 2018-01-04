@@ -6,6 +6,7 @@ import { WindowRefService } from '../core/services/window-ref.service';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
+import { SET_TAGS } from '../core/reducers/tags-reducer';
 
 declare const Autopilot;
 
@@ -39,6 +40,11 @@ export class BaseComponent {
             .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
             .subscribe(channels => {
                 this.appStore.select('installedChannels').dispatch({type: SET_CHANNELS, channels})
+            });
+        this.appStore.select('currentStore')
+            .flatMap(store => this.storeService.fetchAvailableTags(store.id))
+            .subscribe(response => {
+                this.appStore.select('tags').dispatch({type: SET_TAGS, tags: response._embedded.tag});
             });
     }
 }

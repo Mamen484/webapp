@@ -10,6 +10,7 @@ import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 import { StoreCharge } from '../entities/store-charge';
 import { Store } from '../entities/store';
+import { Tag } from '../entities/tag';
 
 @Injectable()
 export class StoreService {
@@ -68,6 +69,10 @@ export class StoreService {
 
     public createStore(store: Store) {
         return this.httpClient.post(`${environment.API_URL}/store`, {store});
+    }
+
+    public fetchAvailableTags(storeId) {
+        return <Observable<PagedResponse<{tag: Tag[]}>>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`);
     }
 }
 

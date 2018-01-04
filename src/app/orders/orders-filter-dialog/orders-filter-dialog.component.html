@@ -2,7 +2,8 @@
 <mat-dialog-content>
     <div fxFlex>
         <div>
-            <mat-select placeholder="Date" value="today" [(ngModel)]="dateOption" (selectionChange)="changeDate($event.value)">
+            <mat-select placeholder="Date" [(ngModel)]="dateOption" (selectionChange)="changeDate($event.value)">
+                <mat-option value="anytime" i18n>Anytime</mat-option>
                 <mat-option value="today" i18n>Today</mat-option>
                 <mat-option value="week" i18n>Last 7 days</mat-option>
                 <mat-option value="month" i18n>Last 30 days</mat-option>
@@ -18,8 +19,9 @@
             </mat-select>
         </div>
         <div>
-            <mat-select [(ngModel)]="filter.tab">
+            <mat-select [(ngModel)]="filter.tag">
                 <mat-option value="all" i18n>All tags</mat-option>
+                <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>
             </mat-select>
         </div>
     </div>

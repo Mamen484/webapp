@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { StoreChannelDetails } from '../../core/entities/store-channel-details';
+import { Tag } from '../../core/entities/tag';
 
 @Component({
     selector: 'sf-orders-filter-dialog',
@@ -14,7 +15,8 @@ export class OrdersFilterDialogComponent implements OnInit {
 
     filter = new OrdersFilter();
     channels: StoreChannelDetails[];
-    dateOption = 'today';
+    dateOption = 'anytime';
+    tags: Tag[];
 
     constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>,
                 protected appStore: Store<AppState>,
@@ -24,12 +26,13 @@ export class OrdersFilterDialogComponent implements OnInit {
 
     ngOnInit() {
         if (!this.filter.since) {
-            this.changeDate('today');
+            this.changeDate('anytime');
         } else {
             this.dateOption = 'custom';
         }
 
         this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
+        this.appStore.select('tags').subscribe(tags => this.tags = tags);
     }
 
     applyFilter() {
@@ -56,6 +59,10 @@ export class OrdersFilterDialogComponent implements OnInit {
                 this.filter.since = OrdersFilter.aMonthBefore();
                 delete this.filter.until;
                 break;
+
+            case 'anytime':
+                delete this.filter.since;
+                delete this.filter.until;
         }
     }
 
