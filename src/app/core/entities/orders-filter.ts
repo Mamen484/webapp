@@ -6,7 +6,6 @@ export class OrdersFilter {
     until?;
     since?: Date;
     channel? = 'all';
-    carrier? = 'all';
     tab? = 'all';
     limit = '25';
     search = '';
