@@ -38,6 +38,7 @@ export class OrdersTableComponent implements OnInit {
         invoicingName: false,
         storeId: false,
         trackingNumber: false,
+        imported: false,
     };
     requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
@@ -89,8 +90,9 @@ export class OrdersTableComponent implements OnInit {
             paymentMethod: order.payment.method,
             deliveryName: order.shippingAddress.firstName + ' ' + order.shippingAddress.lastName,
             invoicingName: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
-            storeId: order.storeId,
+            storeId: order.storeReference,
             trackingNumber: order.shipment.trackingNumber,
+            imported: Boolean(order.storeReference),
         }
     }
 

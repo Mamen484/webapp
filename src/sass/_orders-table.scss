@@ -19,7 +19,7 @@
     flex: 0 0 80px;
   }
 
-  .mat-column-status, .mat-column-id {
+  .mat-column-status, .mat-column-reference {
     flex: 1 0 150px;
   }
 
@@ -44,6 +44,9 @@
   }
   .mat-column-trackingNumber {
     flex: 0 0 120px;
+  }
+  .mat-column-imported {
+    flex: 0 0 65px;
   }
 
 }

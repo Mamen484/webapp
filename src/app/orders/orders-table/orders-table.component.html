@@ -100,6 +100,13 @@
                 <mat-header-cell *matHeaderCellDef> Tracking Number</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
             </ng-container>
+            <ng-container matColumnDef="imported">
+                <mat-header-cell *matHeaderCellDef> Imported</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span *ngIf="row.imported" i18n>Yes</span>
+                    <span *ngIf="!row.imported" i18n>No</span>
+                </mat-cell>
+            </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/'+row.id">{{row.name}}
@@ -117,4 +124,5 @@
     <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Invoicing name</mat-checkbox></div>
     <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">Store ID</mat-checkbox></div>
     <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number</mat-checkbox></div>
+    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Imported</mat-checkbox></div>
 </mat-menu>
