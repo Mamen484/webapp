@@ -1,4 +1,5 @@
 import { HttpParams } from '@angular/common/http';
+import { OrderStatus } from './orders/order-status.enum';
 
 const DAY = 1000 * 60 * 60 * 24;
 
@@ -9,6 +10,7 @@ export class OrdersFilter {
     tag? = 'all';
     limit = '25';
     search = '';
+    status?: OrderStatus;
 
     static aDayBefore() {
         let date = new Date().toDateString();
@@ -42,6 +44,10 @@ export class OrdersFilter {
         }
         if (this.tag && this.tag !== 'all') {
             params = params.set('tag', this.tag);
+        }
+
+        if (this.status) {
+            params = params.set('status', this.status);
         }
 
         return params;

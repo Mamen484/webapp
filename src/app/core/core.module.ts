@@ -44,6 +44,7 @@ import { HttpClientService } from './services/http-client.service';
 import { installedChannelsReducer } from './reducers/installed-channels-reducer';
 import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
+import { OrdersFilterService } from './services/orders-filter.service';
 
 @NgModule({
     imports: [
@@ -69,6 +70,7 @@ import { tagsReducer } from './reducers/tags-reducer';
         LogoutGuard,
         LoginByTokenGuard,
         OrderDetailsResolveGuard,
+        OrdersFilterService,
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,

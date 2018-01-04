@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
 import { MatDialog } from '@angular/material';
 import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilterService } from '../../core/services/orders-filter.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -14,37 +15,27 @@ const MIN_QUERY_LENGTH = 2;
 })
 export class SearchOrdersComponent implements OnInit {
 
-    @Output() onFilter = new EventEmitter();
-
     searchControl = new FormControl();
     processing = false;
-    filter = new OrdersFilter();
+    filter: OrdersFilter;
 
-    constructor(protected dialog: MatDialog) {
-
+    constructor(protected dialog: MatDialog, protected ordersFilterService: OrdersFilterService) {
+        this.ordersFilterService.getFilter().subscribe(filter => this.filter = filter);
     }
 
     ngOnInit() {
         this.searchControl.valueChanges
             .debounceTime(SEARCH_DEBOUNCE)
             .filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')
-            .do(search => this.filter = Object.assign(new OrdersFilter(), this.filter, {search}))
-            .subscribe(() => this.onFilter.emit(this.filter));
+            .subscribe(searchQuery => this.ordersFilterService.patchFilter('search', searchQuery));
     }
 
     openDialog() {
-        let dialogRef = this.dialog.open(OrdersFilterDialogComponent, {data: this.filter});
-        dialogRef.afterClosed().subscribe((filter) => {
-            if (!filter) {
-                return;
-            }
-            this.filter = Object.assign(new OrdersFilter(), filter);
-            this.onFilter.emit(filter);
-        });
+        this.dialog.open(OrdersFilterDialogComponent);
     }
+
     cancelFilter(filterName, filterValue) {
-        this.filter = Object.assign(new OrdersFilter(), this.filter, {[filterName]: filterValue});
-        this.onFilter.emit(this.filter);
+        this.ordersFilterService.patchFilter(filterName, filterValue);
     }
 
 }

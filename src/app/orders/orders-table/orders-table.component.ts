@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TableDataSource } from '../../core/entities/table-data-source';
 import { Observable } from 'rxjs/Observable';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
@@ -7,27 +7,19 @@ import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Order } from '../../core/entities/orders/order';
-import { OrdersFilter } from '../../core/entities/orders-filter';
 import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
+import { OrdersFilterService } from '../../core/services/orders-filter.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'sf-orders-table',
     templateUrl: './orders-table.component.html',
-    styleUrls: ['./orders-table.component.scss']
+    styleUrls: ['./orders-table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersTableComponent implements OnInit {
-
-    @Input()
-    set filter(filter: OrdersFilter) {
-        if (!filter) {
-            return;
-        }
-        this.appStore.select('currentStore').take(1)
-            .flatMap(store => this.fetchData(store, filter))
-            .subscribe();
-    }
+export class OrdersTableComponent implements OnInit, OnDestroy {
 
     optionalColumns = {
         updatedAt: false,
@@ -47,26 +39,38 @@ export class OrdersTableComponent implements OnInit {
 
     // @TODO: set to true when server date format has no errors
     isLoadingResults = false;
+    subscription: Subscription;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
-                protected matDialog: MatDialog) {
+                protected matDialog: MatDialog,
+                protected changeDetectorRef: ChangeDetectorRef,
+                protected ordersFilterService: OrdersFilterService) {
     }
 
     ngOnInit() {
-        this.appStore.select('currentStore')
-            .flatMap(store => this.fetchData(store))
+        this.subscription = this.appStore.select('currentStore')
+            .combineLatest(this.ordersFilterService.getFilter())
+            .flatMap(([store, filter]) => this.fetchData(store, filter))
             .subscribe();
     }
 
-    protected fetchData(store: Store, filter = undefined) {
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+    }
+
+    protected fetchData(store: Store, filter) {
         this.isLoadingResults = true;
+        this.changeDetectorRef.detectChanges();
         return this.ordersService.fetchOrdersList(store.id, filter)
             .do(ordersPage => {
                 this.isLoadingResults = false;
                 this.data = new TableDataSource(Observable.of(
                     ordersPage._embedded.order.map(order => this.formatOrder(order))
                 ));
+                this.changeDetectorRef.markForCheck();
             });
 
     }

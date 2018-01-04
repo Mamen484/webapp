@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OrdersFilter } from '../../core/entities/orders-filter';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { StoreChannelDetails } from '../../core/entities/store-channel-details';
 import { Tag } from '../../core/entities/tag';
+import { OrdersFilterService } from '../../core/services/orders-filter.service';
 
 @Component({
     selector: 'sf-orders-filter-dialog',
@@ -20,8 +21,10 @@ export class OrdersFilterDialogComponent implements OnInit {
 
     constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>,
                 protected appStore: Store<AppState>,
-                @Inject(MAT_DIALOG_DATA) protected data) {
-        this.filter = Object.assign(new OrdersFilter(), data);
+                protected ordersFilterService: OrdersFilterService) {
+        this.ordersFilterService.getFilter().take(1).subscribe(filter => {
+            this.filter = Object.assign(new OrdersFilter(), filter)
+        });
     }
 
     ngOnInit() {
@@ -36,11 +39,12 @@ export class OrdersFilterDialogComponent implements OnInit {
     }
 
     applyFilter() {
-        this.dialogRef.close(this.filter);
+        this.ordersFilterService.setFilter(this.filter);
+        this.dialogRef.close();
     }
 
     close() {
-        this.dialogRef.close(null);
+        this.dialogRef.close();
     }
 
     changeDate(period) {
