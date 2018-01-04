@@ -46,7 +46,17 @@
 
             <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.status}}</mat-cell>
+                <mat-cell *matCellDef="let row">
+                    <span *ngIf="row.status === orderStatus.cancelled" i18n>Cancelled</span>
+                    <span *ngIf="row.status === orderStatus.partially_refunded" i18n>Partially refunded</span>
+                    <span *ngIf="row.status === orderStatus.partially_shipped" i18n>Partially shipped</span>
+                    <span *ngIf="row.status === orderStatus.created" i18n>Created</span>
+                    <span *ngIf="row.status === orderStatus.refunded" i18n>Refunded</span>
+                    <span *ngIf="row.status === orderStatus.refused" i18n>Refused</span>
+                    <span *ngIf="row.status === orderStatus.shipped" i18n>Shipped</span>
+                    <span *ngIf="row.status === orderStatus.waiting_shipment" i18n>Waiting shipment</span>
+                    <span *ngIf="row.status === orderStatus.waiting_store_acceptance" i18n>Waiting store acceptance</span>
+                </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="total">

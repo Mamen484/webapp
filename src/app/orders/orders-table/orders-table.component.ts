@@ -10,6 +10,7 @@ import { Order } from '../../core/entities/orders/order';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
+import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 
 @Component({
     selector: 'sf-orders-table',
@@ -41,6 +42,7 @@ export class OrdersTableComponent implements OnInit {
     requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
     data: TableDataSource;
+    orderStatus = OrderStatus;
 
     // @TODO: set to true when server date format has no errors
     isLoadingResults = false;
