@@ -13,10 +13,11 @@ describe('BaseComponent', () => {
         storeService = jasmine.createSpyObj('StoreService', ['getStoreChannels']);
     });
 
-    it ('should run autopilot associate with store\'s name and user\'s email', () => {
+    it ('should run `autopilot associate()` with store\'s name and user\'s email when stores name equals user\'s login', () => {
         store.select.and.returnValues(
             Observable.of({login: 'login1', email: 'email1'}),
             Observable.of({name: 'login1'}),
+            Observable.empty(),
             Observable.empty(),
         );
         let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService);
@@ -26,10 +27,11 @@ describe('BaseComponent', () => {
         expect(window.Autopilot.run.calls.mostRecent().args[1].FirstName).toEqual('login1');
     });
 
-    it ('should run autopilot associate with store\'s name and user\'s email', () => {
+    it ('should run `autopilot associate()` with default name and email when the user\'s login differs from the store\'s name', () => {
         store.select.and.returnValues(
             Observable.of({login: 'login1', email: 'email1'}),
             Observable.of({name: 'login2'}),
+            Observable.empty(),
             Observable.empty(),
         );
         let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService);
