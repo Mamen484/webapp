@@ -25,10 +25,10 @@ export interface Order {
     payment: Payment;
     shipment: Shipment;
     _embedded: {
-        channel: Channel,
-        store: Store,
-        tag: OrderTag
+        channel?: Channel,
+        store?: Store,
+        tag?: OrderTag
     },
-    error: OrderError;
-    items: OrderItem[];
+    error?: OrderError;
+    items?: OrderItem[];
 }

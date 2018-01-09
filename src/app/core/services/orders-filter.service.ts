@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { OrdersFilter } from '../entities/orders-filter';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { cloneDeep } from 'lodash';
 
 @Injectable()
 export class OrdersFilterService {
 
     protected filter = new BehaviorSubject(new OrdersFilter());
 
-    constructor() {
-    }
-
     getFilter() {
-        return this.filter.asObservable();
+        return this.filter.asObservable().map(filter => cloneDeep(filter));
     }
 
     setFilter(value: OrdersFilter) {

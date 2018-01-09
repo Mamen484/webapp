@@ -36,8 +36,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     displayedColumns = this.requiredColumns;
     data: TableDataSource;
     orderStatus = OrderStatus;
-
-    // @TODO: set to true when server date format has no errors
     isLoadingResults = false;
     subscription: Subscription;
 
@@ -61,6 +59,16 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
     }
 
+    addLabel() {
+        this.matDialog.open(LabelsDialogComponent);
+    }
+
+    setDisplayedColumns() {
+        this.displayedColumns = this.requiredColumns
+            .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
+
+    }
+
     protected fetchData(store: Store, filter) {
         this.isLoadingResults = true;
         this.changeDetectorRef.detectChanges();
@@ -75,11 +83,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     }
 
-    addLabel() {
-        this.matDialog.open(LabelsDialogComponent);
-    }
-
-    formatOrder(order: Order) {
+    protected formatOrder(order: Order) {
         return {
             hasErrors: false,
             channelImage: order._embedded.channel._links.image.href,
@@ -88,7 +92,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             status: order.status,
             total: order.payment.feedAmount,
             date: new Date(order.createdAt).getTime(),
-            updatedAt: new Date(order.updatedAt).getTime(),
+            updatedAt: order.updatedAt ? new Date(order.updatedAt).getTime() : undefined,
             productAmount: order.payment.productAmount,
             shippingAmount: order.payment.shippingAmount,
             paymentMethod: order.payment.method,
@@ -98,12 +102,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             trackingNumber: order.shipment.trackingNumber,
             imported: Boolean(order.storeReference),
         }
-    }
-
-    setDisplayedColumns() {
-        this.displayedColumns = this.requiredColumns
-            .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
-
     }
 
 }
