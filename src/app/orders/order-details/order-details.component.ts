@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TableDataSource } from '../../core/entities/table-data-source';
-import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from '../../core/entities/orders/order';
 import { OrderItem } from '../../core/entities/orders/order-item';
 import { cloneDeep } from 'lodash';
+import { MatTableDataSource } from '@angular/material';
+import { OrderDetailsItem } from '../../core/entities/orders/order-details-item';
 
 @Component({
     selector: 'sf-order-details',
@@ -14,7 +14,7 @@ import { cloneDeep } from 'lodash';
 export class OrderDetailsComponent implements OnInit {
 
     displayedColumns = ['sku', 'name', 'quantity', 'date', 'price'];
-    data;
+    data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
 
     constructor(protected route: ActivatedRoute) {
@@ -23,15 +23,15 @@ export class OrderDetailsComponent implements OnInit {
     ngOnInit() {
         this.route.data.subscribe(({order}: { order: Order }) => {
             this.order = cloneDeep(order);
-            this.data = new TableDataSource(Observable.of(order.items.map((item: OrderItem) => {
-                return {
+            this.data = new MatTableDataSource(order.items.map((item: OrderItem) => {
+                return <OrderDetailsItem>{
                     sku: item.reference,
                     name: item.name,
                     quantity: item.quantity,
                     date: order.createdAt,
                     price: item.price
                 }
-            })));
+            }));
         });
     }
 

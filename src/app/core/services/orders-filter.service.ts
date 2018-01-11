@@ -16,8 +16,13 @@ export class OrdersFilterService {
         this.filter.next(value);
     }
 
-    patchFilter(field, value) {
-        this.filter.next(Object.assign(new OrdersFilter(), this.filter.getValue(), {[field]: value}));
+    patchFilter(field: string | {[field: string]: string}, value?) {
+        if (typeof field === 'string') {
+            this.filter.next(Object.assign(new OrdersFilter(), this.filter.getValue(), {[field]: value}));
+        } else {
+            this.filter.next(Object.assign(new OrdersFilter(), this.filter.getValue(), field));
+        }
+
     }
 
 }
