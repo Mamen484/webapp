@@ -18,8 +18,9 @@ export class CountrySelectComponent implements ControlValueAccessor {
     onTouched: () => void;
 
     constructor(@Optional() @Self() public controlDir: NgControl) {
-        controlDir.valueAccessor = this;
-
+        if (controlDir) {
+            controlDir.valueAccessor = this;
+        }
     }
 
     writeValue(value: any): void {
