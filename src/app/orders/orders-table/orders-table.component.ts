@@ -85,7 +85,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     protected formatOrder(order: Order) {
         return {
-            hasErrors: false,
+            hasErrors: Boolean(order.errors && order.errors.length),
             channelImage: order._embedded.channel._links.image.href,
             reference: order.reference,
             id: order.id,

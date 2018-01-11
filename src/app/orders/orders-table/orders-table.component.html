@@ -28,7 +28,7 @@
             <ng-container matColumnDef="hasErrors">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <mat-icon *ngIf="row.hasErrors" color="error">error</mat-icon>
+                    <mat-icon *ngIf="row.hasErrors" color="warn">error</mat-icon>
                 </mat-cell>
             </ng-container>
 

@@ -29,6 +29,6 @@ export interface Order {
         store?: Store,
         tag?: OrderTag
     },
-    error?: OrderError;
+    errors?: OrderError[];
     items?: OrderItem[];
 }

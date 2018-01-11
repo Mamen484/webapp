@@ -1,5 +1,7 @@
+import { OrderErrorType } from './order-error-type.enum';
+
 export interface OrderError {
-    type: 'import' | 'ship';
+    type: OrderErrorType;
     message: string;
     occuredAt: string;
 }

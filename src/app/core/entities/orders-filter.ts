@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { OrderStatus } from './orders/order-status.enum';
+import { OrderErrorType } from './orders/order-error-type.enum';
 
 const DAY = 1000 * 60 * 60 * 24;
 
@@ -11,6 +12,7 @@ export class OrdersFilter {
     limit = '25';
     search = '';
     status?: OrderStatus;
+    errorType: OrderErrorType;
 
     static aDayBefore() {
         let date = new Date().toDateString();
@@ -48,6 +50,10 @@ export class OrdersFilter {
 
         if (this.status) {
             params = params.set('status', this.status);
+        }
+
+        if (this.errorType) {
+            params = params.set('errorType', this.errorType);
         }
 
         return params;
