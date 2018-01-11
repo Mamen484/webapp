@@ -12,8 +12,9 @@ import { Order } from '../../core/entities/orders/order';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
-describe('OrdersTableComponent', () => {
+fdescribe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let ordersService: jasmine.SpyObj<OrdersService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
@@ -79,7 +80,7 @@ describe('OrdersTableComponent', () => {
         filterService.getFilter.and.returnValue(Observable.of({}));
         ordersService.fetchOrdersList.and.returnValue(Observable.of(mockOrder()));
         fixture.detectChanges();
-        let data = component.data.dataSource.value[0];
+        let data = component.data.data[0];
         expect(data.hasErrors).toEqual(false);
         expect(data.channelImage).toEqual('image link');
         expect(data.reference).toEqual('ref');
@@ -105,7 +106,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].storeReference = '121';
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.dataSource.value[0].imported).toEqual(true);
+        expect(component.data.data[0].imported).toEqual(true);
     });
 
     it('should set `imported` property to `false` when the storeReference is NOT defined', () => {
@@ -115,7 +116,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].storeReference = undefined;
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.dataSource.value[0].imported).toEqual(false);
+        expect(component.data.data[0].imported).toEqual(false);
     });
 
     it('should open LabelsDialogComponent on addLabel() call', () => {
@@ -146,6 +147,26 @@ describe('OrdersTableComponent', () => {
         filter$.next(filter);
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
         expect(ordersService.fetchOrdersList.calls.mostRecent().args[1]).toEqual(filter);
+    });
+
+    it('should set `hasErrors` to FALSE if errors array is empty', () => {
+        appStore.select.and.returnValue(Observable.of({}));
+        filterService.getFilter.and.returnValue(Observable.of({}));
+        let order = mockOrder();
+        order._embedded.order[0].errors = [];
+        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        fixture.detectChanges();
+        expect(component.data.data[0].hasErrors).toEqual(false);
+    });
+
+    it('should set `hasErrors` to TRUE if errors array is NOT empty', () => {
+        appStore.select.and.returnValue(Observable.of({}));
+        filterService.getFilter.and.returnValue(Observable.of({}));
+        let order = mockOrder();
+        order._embedded.order[0].errors = [{type: OrderErrorType.ship, message: 'some message', occuredAt: 'date'}];
+        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        fixture.detectChanges();
+        expect(component.data.data[0].hasErrors).toEqual(true);
     });
 
     function mockOrder() {
