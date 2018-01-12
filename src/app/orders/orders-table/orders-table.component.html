@@ -21,7 +21,7 @@
             <ng-container matColumnDef="checkbox">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <mat-checkbox></mat-checkbox>
+                    <mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox>
                 </mat-cell>
             </ng-container>
 

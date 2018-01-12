@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
@@ -11,8 +10,6 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrdersListComponent implements OnInit {
-
-    filter: OrdersFilter;
 
     constructor(protected ordersFilterService: OrdersFilterService) {
     }

@@ -14,7 +14,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
-fdescribe('OrdersTableComponent', () => {
+describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let ordersService: jasmine.SpyObj<OrdersService>;
     let matDialog: jasmine.SpyObj<MatDialog>;

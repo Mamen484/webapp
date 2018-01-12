@@ -41,7 +41,7 @@ export class OrdersFilter {
             params = params.set('channel', this.channel);
         }
 
-        if (this.search && this.search !== '') {
+        if (this.search) {
             params = params.set('search', this.search);
         }
         if (this.tag && this.tag !== 'all') {
