@@ -8,7 +8,7 @@ import { OrdersFilter } from '../../core/entities/orders-filter';
 import { Observable } from 'rxjs/Observable';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-fdescribe('OrdersFilterDialogComponent', () => {
+describe('OrdersFilterDialogComponent', () => {
     let dialogRef: jasmine.SpyObj<MatDialogRef<OrdersFilterDialogComponent>>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let ordersFilterService: jasmine.SpyObj<OrdersFilterService>;
