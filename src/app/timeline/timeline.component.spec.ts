@@ -20,6 +20,7 @@ import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { environment } from '../../environments/environment';
+import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -122,6 +123,21 @@ describe('TimelineComponent', () => {
                 expect(component.events[2][0]).toEqual('2017-10-01');
                 expect(component.events[2][1].length).toEqual(6);
             });
+        });
+
+        it ('should return a `/tools/info` link when calling getUpdateLink(), passing update with name that equals feed.import', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.import});
+            expect(link).toEqual('/tools/infos');
+        });
+
+        it ('should return a link to the channel when the type of channel is marketplace and the name is feed.export', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'marketplace', name: 'amazon'}}});
+            expect(link).toEqual('/amazon');
+        });
+
+        it ('should return a link to the channel when the type of channel is NOT marketplace and the name is feed.export', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'ads', name: 'amazon'}}});
+            expect(link).toEqual('/ads/manage/amazon');
         });
 
 
