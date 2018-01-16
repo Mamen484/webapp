@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
@@ -12,9 +12,10 @@ export const SCHEDULE_A_CALL = 2;
 })
 export class NoChannelsDialogComponent {
 
-    baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
+    baseHref: string;
 
-    constructor(public dialogRef: MatDialogRef<NoChannelsDialogComponent>) {
+    constructor(public dialogRef: MatDialogRef<NoChannelsDialogComponent>, @Inject(LOCALE_ID) protected localeId) {
+        this.baseHref = `${environment.BASE_HREF}/${localeId}`;
     }
 
 

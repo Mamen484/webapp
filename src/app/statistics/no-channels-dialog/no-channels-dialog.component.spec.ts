@@ -6,7 +6,7 @@ describe('NoChannelsDialogComponent', () => {
 
     beforeEach(() => {
         dialogMock = jasmine.createSpyObj('MdDialog', ['close']);
-        component = new NoChannelsDialogComponent(dialogMock);
+        component = new NoChannelsDialogComponent(dialogMock, 'en');
     });
 
     it('showChannels should close dialog and pass SHOW_CHANNELS action code into', () => {

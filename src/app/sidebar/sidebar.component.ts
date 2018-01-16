@@ -21,7 +21,7 @@ export class SidebarComponent {
     channels: Observable<StoreChannelDetails[]>;
 
     constructor(protected _appStore: AppStore<AppState>,
-                @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
+                @Inject(LOCALE_ID) protected localeId,
                 protected storeService: StoreService,
                 protected windowRef: WindowRefService) {
         this._appStore.select('currentStore').subscribe(store => this.currentStore = store);
