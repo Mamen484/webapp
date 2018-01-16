@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import '../../rxjs-imports';
@@ -12,7 +12,6 @@ import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-re
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LocaleIdService } from './services/locale-id.service';
-import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
@@ -95,8 +94,7 @@ import { OrdersFilterService } from './services/orders-filter.service';
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
-    ],
+        ],
     declarations: []
 })
 export class CoreModule {

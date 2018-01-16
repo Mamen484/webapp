@@ -22,7 +22,7 @@ export class SidebarComponent {
     currentRoute;
 
     constructor(protected appStore: AppStore<AppState>,
-                @Inject(LOCALE_ID) protected localeId = environment.DEFAULT_LANGUAGE,
+                @Inject(LOCALE_ID) protected localeId,
                 protected windowRef: WindowRefService) {
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);

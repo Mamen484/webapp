@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../environments/environment';
 
@@ -9,10 +9,12 @@ import { environment } from '../../../environments/environment';
 })
 export class AcceptChannelDialogComponent {
 
-    baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
+    baseHref: string;
     // @TODO: consider refactoring this link into some file
     pricesLink = 'http://www.shopping-feed.com/pricing/';
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data, @Inject(LOCALE_ID) protected localeId) {
+        this.baseHref = `${environment.BASE_HREF}/${localeId}`;
     }
+
 }

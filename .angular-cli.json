@@ -54,7 +54,7 @@
     },
     "spec": {
       "class": false,
-      "component": false,
+      "component": true,
       "directive": true,
       "module": false,
       "pipe": true,
