@@ -67,7 +67,11 @@ export class StatisticsComponent {
         }
         this.processing = true;
         this.appStore.select('currentStore').take(1)
-            .flatMap(store => this.storeService.getStoreChannels(store.id, this.getFilterState())).subscribe(data => {
+            .flatMap(store => this.storeService.getStoreChannels(
+                store.id,
+                this.getFilterState(),
+                this.isForeignCountry(store.country)
+            )).subscribe(data => {
             this.updateSuggestedChannels(data);
             this.processing = false;
             this.infiniteScrollDisabled = data.page >= data.pages;
@@ -80,7 +84,7 @@ export class StatisticsComponent {
             .flatMap(currentStore => this.storeService.getStoreChannels(
                 currentStore.id,
                 Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}),
-                Boolean(this.filterState.country && currentStore.country.toLowerCase() !== this.filterState.country.toLowerCase())
+                this.isForeignCountry(currentStore.country)
             ))
             .subscribe(channels => this.initialize(channels));
     }
@@ -93,6 +97,10 @@ export class StatisticsComponent {
 
     protected canScroll() {
         return !this.processing && this.channels.page < this.channels.pages;
+    }
+
+    protected isForeignCountry(country) {
+        return Boolean(this.filterState.country && country.toLowerCase() !== this.filterState.country.toLowerCase());
     }
 
     protected updateSuggestedChannels({page, _embedded}: PagedResponse<{ channel: StoreChannel[] }>) {
@@ -132,7 +140,7 @@ export class StatisticsComponent {
         this.processingFilters = false;
         this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
         this.appStore.select('currentStore').take(1).subscribe((store: Store) => {
-            this.internationalMode = Boolean(this.filterState.country) && store.country !== this.filterState.country;
+            this.internationalMode = this.isForeignCountry(store.country);
         })
 
     }
