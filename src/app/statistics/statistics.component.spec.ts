@@ -215,4 +215,33 @@ describe('StatisticsComponent', () => {
         component.onApplyFilter();
         expect(component.internationalMode).toEqual(false);
     });
+
+    it('should specify foreignChannels = false on getStoreChannels call when country filter is not applied', () => {
+        component.filterState.country = undefined;
+        component.onApplyFilter();
+        expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(false);
+    });
+
+    it('should specify foreignChannels = false on getStoreChannels call when country filter equals to the store country', () => {
+        component.filterState.country = 'fr';
+        component.onApplyFilter();
+        expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(false);
+    });
+
+    it('should specify foreignChannels = false on getStoreChannels after onScroll() call when country filter equals to the store country', () => {
+        component.filterState.country = 'fr';
+        component.onScroll();
+        expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(false);
+    });
+
+    it('should specify foreignChannels = true on getStoreChannels call when country filter differs with the store country', () => {
+        expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(1); // initialization call
+        component.filterState.country = 'us';
+        component.onApplyFilter();
+        expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(2);
+        expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(true);
+        component.onScroll();
+        expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3);
+        expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(true);
+    });
 });
