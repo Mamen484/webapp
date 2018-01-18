@@ -12,7 +12,7 @@ mat-card.channel-card {
   margin-bottom: 20px;
 
   &.suggested-channel {
-    background-color: $black-12-opacity;
+    background-color: mat-color($accent, 0.05);
   }
 }
 
