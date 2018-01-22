@@ -1,39 +1,6 @@
 @import '~@angular/material/theming';
 
-$sf-primary: (
-        50 : #e1e5e8,
-        100 : #b5bdc7,
-        200 : #8391a1,
-        300 : #51657b,
-        400 : #2c445f,
-        500 : #072343,
-        600 : #061f3d,
-        700 : #051a34,
-        800 : #04152c,
-        900 : #020c1e,
-        A100 : #5b82ff,
-        A200 : #285bff,
-        A400 : #0039f4,
-        A700 : #0033da,
-        contrast: (
-                50 : $black-87-opacity,
-                100 : $black-87-opacity,
-                200 : $black-87-opacity,
-                300 : white,
-                400 : white,
-                500 : $white-87-opacity,
-                600 : $white-87-opacity,
-                700 : $white-87-opacity,
-                800 : $white-87-opacity,
-                900 : $white-87-opacity,
-                A100 : #000000,
-                A200 : white,
-                A400 : $white-87-opacity,
-                A700 : $white-87-opacity,
-        )
-);
-
-$primary: mat-palette($sf-primary, 500);
+$primary: mat-palette($mat-blue-grey, 700);
 $accent: mat-palette($mat-blue, 700);
 $warn: mat-palette($mat-red);
 
