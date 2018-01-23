@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
 import { Router } from '@angular/router';
 
 @Injectable()
