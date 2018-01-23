@@ -39,4 +39,20 @@ describe('StoreService', () => {
                 expect(req.request.method).toEqual('GET');
                 httpMock.verify();
             }));
+    it('should request /store/11/channel resource when getStoreChannels() is called with foreignChannels = false',
+        inject([StoreService, HttpTestingController],
+            (service: StoreService, httpMock: HttpTestingController) => {
+                service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false).subscribe();
+                httpMock.expectOne(environment.API_URL + '/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                httpMock.verify();
+            }));
+
+    it('should request /channel resource when getStoreChannels() is called with foreignChannels = true',
+        inject([StoreService, HttpTestingController],
+            (service: StoreService, httpMock: HttpTestingController) => {
+                service.getStoreChannels(11,  Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), true).subscribe();
+                httpMock.expectOne(environment.API_URL + '/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                httpMock.verify();
+            }));
+
 });

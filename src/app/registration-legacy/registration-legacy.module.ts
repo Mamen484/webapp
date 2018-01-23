@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { RegistrationLegacyRoutingModule } from './registration-legacy-routing.module';
 import { ScheduleCallComponent } from './schedule-call/schedule-call.component';
 import { PlatformComponent } from './platform/platform.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -15,7 +14,6 @@ import { SharedModule } from '../shared/shared.module';
     ],
     declarations: [
         PlatformComponent,
-        WelcomeComponent,
         ScheduleCallComponent,
     ]
 })
