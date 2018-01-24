@@ -34,7 +34,9 @@ describe('CheckProperLocaleGuard', () => {
     });
 
     describe('different locales in the /me response and the localization of the project', () => {
+        let locationSpy: jasmine.SpyObj<Location>;
         beforeEach(() => {
+            locationSpy = jasmine.createSpyObj(['path']);
             TestBed.configureTestingModule({
                 imports: [RouterTestingModule.withRoutes([])],
                 providers: [
@@ -42,7 +44,7 @@ describe('CheckProperLocaleGuard', () => {
                     {provide: UserService, useValue: {fetchAggregatedInfo: () => Observable.of({language: 'en_US'})}},
                     {provide: LocaleIdService, useValue: {localeId: 'it'}},
                     {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
-                    Location,
+                    {provide: Location, useValue: locationSpy},
                 ]
             });
         });
@@ -50,11 +52,32 @@ describe('CheckProperLocaleGuard', () => {
         it('should redirect the user to the valid localization folder and return false',
             inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
             environment.production = 'true';
+            locationSpy.path.and.returnValue('');
             guard.canActivate().subscribe(canActivate => {
-                expect(windowRef.nativeWindow.location.href).toEqual('/v3/en');
+                expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/');
                 expect(canActivate).toEqual(false);
             })
         }));
+
+        it('should add a slash before the whole path if it doesn\'t exist to prevent extra redirects on the server',
+            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+                environment.production = 'true';
+                locationSpy.path.and.returnValue('?store=307');
+                guard.canActivate().subscribe(canActivate => {
+                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
+                    expect(canActivate).toEqual(false);
+                })
+            }));
+
+        it('should NOT add a slash before the whole path if it starts from the slash',
+            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+                environment.production = 'true';
+                locationSpy.path.and.returnValue('/home?store=307');
+                guard.canActivate().subscribe(canActivate => {
+                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/home?store=307');
+                    expect(canActivate).toEqual(false);
+                })
+            }));
     });
 
 });
