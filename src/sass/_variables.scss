@@ -25,3 +25,7 @@ $content-margin: 20px;
 
 $config: mat-typography-config();
 $min-width: 1024px;
+
+// media queries according to material spec
+
+$xs: 'screen and (max-width: 599px)';

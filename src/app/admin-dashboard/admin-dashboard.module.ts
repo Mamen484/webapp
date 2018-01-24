@@ -12,6 +12,7 @@ import { AdminBaseComponent } from './admin-base/admin-base.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserCreatedDialogComponent } from './user-created-dialog/user-created-dialog.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
+import { MappingFieldsComponent } from './mapping-fields/mapping-fields.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
         AdminBaseComponent,
         CreateUserComponent,
         UserCreatedDialogComponent,
-        AdminSidebarComponent
+        AdminSidebarComponent,
+        MappingFieldsComponent
     ],
     entryComponents: [UserCreatedDialogComponent]
 })

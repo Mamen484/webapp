@@ -1,7 +1,10 @@
 <sf-menu-container>
     <div class="sf-nav-welcome-text mat-title">{{currentStore.name}}</div>
 
-    <sf-support-help-center></sf-support-help-center>
+    <sf-support-help-center *ngIf="showSearch;else fillSpace"></sf-support-help-center>
+    <ng-template #fillSpace>
+        <div class="sf-fill-space"></div>
+    </ng-template>
     <a (click)="navigateToTimeline()" class="sf-icon-link">
         <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
                  [attr.data-badge]="newEvents">notifications_none

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '../../core/entities/store';
 import { StoreService } from '../../core/services/store.service';
 import { MatDialog } from '@angular/material';
@@ -8,6 +8,7 @@ import { StoreValidationErrors } from '../../core/entities/store-validation-erro
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { createUserErrorValidator } from '../../core/validators/create-user-error.validator';
 import { values } from 'lodash';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
     selector: 'sf-create-user',
@@ -79,7 +80,7 @@ export class CreateUserComponent {
         weight: new FormControl(''),
     });
 
-    constructor(protected storeService: StoreService, protected dialog: MatDialog) {
+    constructor(protected storeService: StoreService, protected dialog: MatDialog, protected mediaObserver: ObservableMedia) {
     }
 
     save() {
@@ -107,7 +108,6 @@ export class CreateUserComponent {
             }
         );
     }
-
 
 
     addImage() {

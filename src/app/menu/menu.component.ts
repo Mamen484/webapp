@@ -12,6 +12,7 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 
@@ -26,6 +27,7 @@ export class MenuComponent implements OnDestroy {
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = 0;
+    showSearch = false;
 
     protected newEventsSubscription;
 
@@ -35,13 +37,15 @@ export class MenuComponent implements OnDestroy {
                 protected localStorage: LocalStorageService,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
-                protected router: Router) {
+                protected router: Router,
+                protected breakpointObserver: BreakpointObserver) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
         this.appStore.select('currentStore').subscribe(currentStore => {
             this.currentStore = currentStore;
             this.updateEvents();
         });
         this.newEventsSubscription = Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
+        this.breakpointObserver.observe([Breakpoints.Tablet, Breakpoints.Web]).subscribe(({matches}) => this.showSearch = matches);
     }
 
     chooseStore(store) {

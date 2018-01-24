@@ -1,6 +1,6 @@
 @import '../variables';
 
-@mixin form-page(){
+@mixin form-page() {
   .form-container {
     display: flex;
     height: calc(100vh - #{$toolbar-height});
@@ -32,6 +32,17 @@
       }
     }
 
+    @media #{$xs} {
+      mat-card {
+        padding: 30px;
+      }
+
+      mat-form-field {
+        display: block;
+        width: 100%;
+      }
+    }
+
   }
 
   .error {
@@ -44,5 +55,6 @@
     color: $black-87-opacity;
     margin-top: 15px;
   }
+
 }
 

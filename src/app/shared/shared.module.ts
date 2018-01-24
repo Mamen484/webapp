@@ -20,6 +20,7 @@ import { BlankComponent } from './blank.component';
 import { CountrySelectComponent } from './country-select/country-select.component';
 
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
+import { LayoutModule } from '@angular/cdk/layout';
 @NgModule({
     imports: [
         ClipboardModule,
@@ -27,6 +28,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -53,6 +55,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

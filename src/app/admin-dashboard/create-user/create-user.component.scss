@@ -31,16 +31,15 @@ mat-card-content {
 
 }
 
-mat-card {
-  &:last-child {
-    margin-right: 20px;
-  }
-}
-
 mat-card-actions {
   text-align: right;
 }
 
 sf-country-select {
   width: 100%;
+}
+
+.form-actions {
+  text-align: right;
+  margin-top: 10px;
 }
