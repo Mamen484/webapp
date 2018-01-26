@@ -2,8 +2,7 @@
 
 mat-card {
   padding:0;
-  margin-left: 5px;
-  width: calc(100% - 10px);
+  width: calc(100% - #{$content-margin});
 }
 
 .actions {
@@ -20,4 +19,8 @@ mat-card {
 
 mat-spinner {
   margin: auto;
+}
+
+mat-tab-group {
+  text-transform: uppercase;
 }

@@ -9,11 +9,13 @@
   overflow: scroll;
 }
 
-mat-tab {
-  text-transform: uppercase;
-}
-
 mat-icon[color="warn"]{
   color: mat-color($warn, 900);
   margin-right: 5px;
+}
+
+mat-tab-group {
+  text-transform: uppercase;
+  margin-bottom: $content-margin;
+  margin-right: $content-margin;
 }
