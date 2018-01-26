@@ -52,3 +52,9 @@ sf-admin-menu {
     }
   }
 }
+
+mat-list-item {
+  & > .mat-list-item-content {
+    min-height: inherit;
+  }
+}
