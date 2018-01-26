@@ -13,7 +13,7 @@ import { TimelineService } from '../core/services/timeline.service';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 
-const UPDATE_EVENTS_INTERVAL = 1e4;
+const UPDATE_EVENTS_INTERVAL = 6e4;
 
 @Component({
     selector: 'app-menu',
