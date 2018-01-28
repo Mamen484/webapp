@@ -3,13 +3,13 @@
 .orders {
   color: $black-87-opacity;
   padding-left: 5px;
-  padding-top: $content-margin;
+  padding-top: $content-margin + $toolbar-height;
   display: block;
-  height: calc(100vh - #{$toolbar-height} - #{$content-margin});
+  height: calc(100vh - 2 * #{$toolbar-height} - #{$content-margin});
   overflow: scroll;
 }
 
-mat-icon[color="warn"]{
+mat-icon[color="warn"] {
   color: mat-color($warn, 900);
   margin-right: 5px;
 }
@@ -18,4 +18,32 @@ mat-tab-group {
   text-transform: uppercase;
   margin-bottom: $content-margin;
   margin-right: $content-margin;
+}
+
+mat-list.subnav {
+  background-color: mat-color($primary, 400);
+
+  position: absolute;
+  z-index: 10;
+  top: $toolbar-height;
+  left: $left-sidebar-width;
+  height: $toolbar-height;
+  width: calc(100vw - #{$left-sidebar-width});
+
+  display: flex;
+  padding: 0;
+
+  mat-list-item {
+    height: 100%;
+    padding: 0 9px;
+
+    &.active {
+      background-color: $white-12-opacity;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      text-transform: uppercase;
+    }
+  }
 }

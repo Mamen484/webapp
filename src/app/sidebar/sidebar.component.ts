@@ -2,11 +2,8 @@ import { Component, Inject, LOCALE_ID } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '../core/entities/store';
-import { Observable } from 'rxjs/Observable';
 import { StoreChannelDetails } from '../core/entities/store-channel-details';
 import { environment } from '../../environments/environment';
-import { StoreService } from '../core/services/store.service';
-import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { Channel } from '../core/entities/channel';
 

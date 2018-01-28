@@ -1,23 +1,28 @@
 <div class="orders">
-  <sf-search-orders></sf-search-orders>
-  <mat-tab-group color="accent" (selectedTabChange)="changeTab($event)">
-    <mat-tab i18n label="All orders"></mat-tab>
-    <mat-tab i18n label="To validate"></mat-tab>
-    <mat-tab i18n label="To import"></mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon color="warn">error</mat-icon>
-        <span i18n>Import errors</span>
-      </ng-template>
-    </mat-tab>
-    <mat-tab i18n label="To ship"></mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon color="warn">error</mat-icon>
-        <span i18n>Shipping errors</span>
-      </ng-template>
-    </mat-tab>
-    <mat-tab i18n label="Shipped"></mat-tab>
-  </mat-tab-group>
-  <sf-orders-table></sf-orders-table>
+    <sf-search-orders></sf-search-orders>
+    <mat-tab-group color="accent" (selectedTabChange)="changeTab($event)">
+        <mat-tab i18n label="All orders"></mat-tab>
+        <mat-tab i18n label="To validate"></mat-tab>
+        <mat-tab i18n label="To import"></mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon color="warn">error</mat-icon>
+                <span i18n>Import errors</span>
+            </ng-template>
+        </mat-tab>
+        <mat-tab i18n label="To ship"></mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon color="warn">error</mat-icon>
+                <span i18n>Shipping errors</span>
+            </ng-template>
+        </mat-tab>
+        <mat-tab i18n label="Shipped"></mat-tab>
+    </mat-tab-group>
+    <sf-orders-table></sf-orders-table>
 </div>
+
+<mat-list class="subnav">
+    <mat-list-item class="active"><a routerLink="/orders" class="mat-body-2">Orders</a></mat-list-item>
+    <mat-list-item><a routerLink="/orders" class="mat-body-2">Parameters</a></mat-list-item>
+</mat-list>
