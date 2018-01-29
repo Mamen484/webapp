@@ -58,7 +58,7 @@ describe('CheckProperLocaleGuard', () => {
                 appStore.select.and.returnValue(Observable.of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('');
                 guard.canActivate().subscribe(canActivate => {
-                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en');
+                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/');
                     expect(canActivate).toEqual(false);
                 })
             }));
