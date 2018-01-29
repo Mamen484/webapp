@@ -49,4 +49,14 @@
     flex: 0 0 65px;
   }
 
+  .mat-column-checkbox {
+    /* @TODO: remove temporary override to fix material bug 8600 */
+    overflow: visible;
+  }
+
+  mat-row {
+    outline: none;
+    cursor: pointer;
+  }
+
 }
