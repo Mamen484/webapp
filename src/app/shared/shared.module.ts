@@ -20,6 +20,7 @@ import { BlankComponent } from './blank.component';
 import { CountrySelectComponent } from './country-select/country-select.component';
 
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
+import { RemoveUnderlinePipe } from './remove-underline.pipe';
 
 @NgModule({
     imports: [
@@ -85,6 +86,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 
         // pipes
         LargeNumberSuffixPipe,
+        RemoveUnderlinePipe,
         SfCurrencyPipe,
         SfNumberPipe,
 
@@ -104,6 +106,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         BlankComponent,
         CountrySelectComponent,
         ScheduleCallIframeComponent,
+        RemoveUnderlinePipe,
     ]
 })
 export class SharedModule {

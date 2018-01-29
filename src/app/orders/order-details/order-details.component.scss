@@ -30,3 +30,7 @@ mat-card.orders-table {
 mat-card-actions {
   text-align: right;
 }
+
+sf-orders-subnav .status {
+  text-transform: capitalize;
+}

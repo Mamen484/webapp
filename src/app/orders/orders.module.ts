@@ -9,6 +9,7 @@ import { SearchOrdersComponent } from './search-orders/search-orders.component';
 import { OrdersTableComponent } from './orders-table/orders-table.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { LabelsDialogComponent } from './labels-dialog/labels-dialog.component';
+import { OrdersSubnavComponent } from './orders-subnav/orders-subnav.component';
 
 @NgModule({
     imports: [
@@ -16,7 +17,7 @@ import { LabelsDialogComponent } from './labels-dialog/labels-dialog.component';
         SharedModule,
         OrdersRoutingModule
     ],
-    declarations: [OrdersListComponent, OrdersFilterDialogComponent, SearchOrdersComponent, OrdersTableComponent, OrderDetailsComponent, LabelsDialogComponent],
+    declarations: [OrdersListComponent, OrdersFilterDialogComponent, SearchOrdersComponent, OrdersTableComponent, OrderDetailsComponent, LabelsDialogComponent, OrdersSubnavComponent],
     entryComponents: [OrdersFilterDialogComponent, LabelsDialogComponent]
 })
 export class OrdersModule {

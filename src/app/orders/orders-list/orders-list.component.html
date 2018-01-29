@@ -1,4 +1,8 @@
-<div class="orders">
+<div class="scrollable-container">
+    <sf-orders-subnav>
+        <mat-list-item class="active"><a routerLink="/orders" class="mat-body-2">Orders</a></mat-list-item>
+        <mat-list-item><a routerLink="/orders" class="mat-body-2">Parameters</a></mat-list-item>
+    </sf-orders-subnav>
     <sf-search-orders></sf-search-orders>
     <mat-tab-group color="accent" (selectedTabChange)="changeTab($event)">
         <mat-tab i18n label="All orders"></mat-tab>
@@ -21,8 +25,3 @@
     </mat-tab-group>
     <sf-orders-table></sf-orders-table>
 </div>
-
-<mat-list class="subnav">
-    <mat-list-item class="active"><a routerLink="/orders" class="mat-body-2">Orders</a></mat-list-item>
-    <mat-list-item><a routerLink="/orders" class="mat-body-2">Parameters</a></mat-list-item>
-</mat-list>
