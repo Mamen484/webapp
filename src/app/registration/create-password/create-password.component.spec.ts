@@ -72,7 +72,7 @@ describe('CreatePasswordComponent', () => {
 
         it ('should NOT call password service if email or password are invalid', () => {
             shopifyService.getStoreData.and.returnValue(Observable.of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}))
+            createPasswordService.createPassword.and.returnValue(Observable.of({owner: {}}));
 
             fixture.detectChanges();
             component.createPassword();

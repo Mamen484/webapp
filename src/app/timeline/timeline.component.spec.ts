@@ -30,7 +30,7 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline']);
             timelineService.getEvents.and.returnValue(Observable.of(events2));
             timelineService.getTimelineStream.and.returnValue(Observable.of({
                 type: StreamEventType.finished,

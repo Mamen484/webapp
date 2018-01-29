@@ -6,7 +6,6 @@ import { StoreService } from '../../core/services/store.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Router } from '@angular/router';
-import { SET_STORE } from '../../core/reducers/current-store-reducer';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
