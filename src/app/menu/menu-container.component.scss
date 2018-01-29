@@ -20,3 +20,8 @@ a.nav-link.home {
     vertical-align: top;
   }
 }
+
+mat-progress-bar {
+  position: absolute;
+  z-index: 25;
+}

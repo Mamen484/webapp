@@ -11,6 +11,8 @@ import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { Subscription } from 'rxjs/Subscription';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
+import { Router } from '@angular/router';
+import { LoadingFlagService } from '../../core/services/loading-flag.service';
 
 @Component({
     selector: 'sf-orders-table',
@@ -43,7 +45,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected ordersService: OrdersService,
                 protected matDialog: MatDialog,
                 protected changeDetectorRef: ChangeDetectorRef,
-                protected ordersFilterService: OrdersFilterService) {
+                protected ordersFilterService: OrdersFilterService,
+                protected router: Router,
+                protected loadingFlagService: LoadingFlagService) {
+    }
+
+    goToOrder(orderId: string) {
+        this.loadingFlagService.triggerLoadingStarted();
+        this.router.navigate(['orders', 'detail', orderId]).then(() => this.loadingFlagService.triggerLoadedFinished());
     }
 
     ngOnInit() {

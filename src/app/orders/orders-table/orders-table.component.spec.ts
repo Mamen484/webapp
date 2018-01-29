@@ -13,6 +13,8 @@ import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { Router } from '@angular/router';
+import { LoadingFlagService } from '../../core/services/loading-flag.service';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -20,6 +22,8 @@ describe('OrdersTableComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let cdr: jasmine.SpyObj<ChangeDetectorRef>;
     let filterService: jasmine.SpyObj<OrdersFilterService>;
+    let router: jasmine.SpyObj<Router>;
+    let loadingFlagService: jasmine.SpyObj<LoadingFlagService>;
 
     let component;
     let fixture;
@@ -30,6 +34,8 @@ describe('OrdersTableComponent', () => {
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
+        router = jasmine.createSpyObj(['navigate']);
+        loadingFlagService = jasmine.createSpyObj(['triggetLoadingStarted', 'triggerLoadingFinished']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -44,6 +50,8 @@ describe('OrdersTableComponent', () => {
                 {provide: MatDialog, useValue: matDialog},
                 {provide: ChangeDetectorRef, useValue: cdr},
                 {provide: OrdersFilterService, useValue: filterService},
+                {provide: Router, useValue: router},
+                {provide: LoadingFlagService, useValue: loadingFlagService},
 
             ],
             imports: [

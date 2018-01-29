@@ -107,9 +107,8 @@
                     <span *ngIf="!row.imported" i18n>No</span>
                 </mat-cell>
             </ng-container>
-
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="'detail/'+row.id">{{row.name}}
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
             </mat-row>
         </mat-table>
     </mat-card-content>
