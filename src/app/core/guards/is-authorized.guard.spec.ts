@@ -1,4 +1,4 @@
-import { TestBed, inject, async, tick } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';

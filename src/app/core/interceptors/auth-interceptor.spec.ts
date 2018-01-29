@@ -10,7 +10,7 @@ describe('AuthInterceptor', () => {
 
     let getItemSpy: jasmine.Spy;
     beforeEach(() => {
-        getItemSpy = jasmine.createSpy('localStorage.getItem()')
+        getItemSpy = jasmine.createSpy('localStorage.getItem()');
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [

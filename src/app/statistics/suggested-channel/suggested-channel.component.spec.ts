@@ -54,7 +54,7 @@ describe('SuggestedChannelComponent', () => {
 
     it('should send international account request when user agreed for that', () => {
         afterClosedSpy.and.returnValue(Observable.of(true));
-        requestSpy.and.returnValue(Observable.of({}))
+        requestSpy.and.returnValue(Observable.of({}));
         component.showInternationalChannelDialog();
         expect(requestSpy).toHaveBeenCalled();
     });

@@ -4,7 +4,7 @@ import { LocaleIdService } from '../core/services/locale-id.service';
 import { DomSanitizer } from '@angular/platform-browser';
 
 describe('ScheduleCallIframeComponent', () => {
-    let fixture: ComponentFixture<ScheduleCallIframeComponent>
+    let fixture: ComponentFixture<ScheduleCallIframeComponent>;
     let localeIdService: jasmine.SpyObj<LocaleIdService>;
     let sanitizer: jasmine.SpyObj<DomSanitizer>;
     beforeEach(async(() => {

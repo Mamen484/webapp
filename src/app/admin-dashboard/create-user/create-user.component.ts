@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '../../core/entities/store';
 import { StoreService } from '../../core/services/store.service';
 import { MatDialog } from '@angular/material';

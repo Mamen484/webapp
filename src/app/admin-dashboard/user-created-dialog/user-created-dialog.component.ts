@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 const MARK_AS_COPIED_TIMEOUT = 3000; // ms
