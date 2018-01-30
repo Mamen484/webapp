@@ -1,3 +1,7 @@
+@import '../../../sass/mixins/order-actions-bar';
+
+@include order-actions-bar();
+
 mat-card.orders-table {
   padding: 0;
   margin-bottom: 20px;

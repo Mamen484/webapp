@@ -1,20 +1,11 @@
 @import '../../../sass/variables';
+@import '../../../sass/mixins/order-actions-bar.scss';
+
+@include order-actions-bar();
 
 mat-card {
   padding:0;
   width: calc(100% - #{$content-margin});
-}
-
-.actions {
-  padding: 10px;
-  border-bottom: 1px solid $black-12-opacity;
-  justify-content: flex-end;
-  align-items: center;
-
-  mat-icon {
-    vertical-align: middle;
-    color: $black-54-opacity;
-  }
 }
 
 mat-spinner {
@@ -26,9 +17,5 @@ mat-spinner {
 }
 
 mat-tab-group {
-  text-transform: uppercase;
-}
-
-.orders-action {
   text-transform: uppercase;
 }

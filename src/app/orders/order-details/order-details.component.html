@@ -12,6 +12,15 @@
         </mat-list-item>
     </sf-orders-subnav>
     <mat-card class="orders-table">
+        <div class="actions" fxLayout="row">
+            <img [src]="order._embedded.channel._links.image.href" height="40px" class="left">
+            <button mat-button color="accent" i18n class="orders-action">Ship</button>
+            <button mat-button color="accent" i18n class="orders-action">Refund</button>
+            <button mat-button color="accent" i18n class="orders-action">Force Import</button>
+            <button mat-icon-button>
+                <mat-icon>local_printshop</mat-icon>
+            </button>
+        </div>
         <mat-card-content>
             <mat-table [dataSource]="data">
                 <ng-container matColumnDef="sku">
