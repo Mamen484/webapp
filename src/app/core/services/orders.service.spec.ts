@@ -33,7 +33,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.error = OrderErrorType.ship;
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&errorType=ship`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&error=ship`);
             httpMock.verify();
         }));
 
@@ -114,7 +114,7 @@ describe('OrdersService', () => {
         filter.status = undefined;
         filter.error = OrderErrorType.ship;
         service.fetchOrdersList(11, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&errorType=ship`);
+        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&error=ship`);
         httpMock.verify();
     }));
 
@@ -138,7 +138,7 @@ describe('OrdersService', () => {
             filter.until = new Date('2030-01-01');
             filter.channel = 'channel132';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&since=2010-01-01T00:00:00.000Z&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance&errorType=import`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&since=2010-01-01T00:00:00.000Z&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance&error=acknowledge`);
             httpMock.verify();
         }));
 
