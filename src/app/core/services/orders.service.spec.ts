@@ -31,7 +31,7 @@ describe('OrdersService', () => {
     it('should call appropriate endpoint when filter.errorType is specified',
         inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
             let filter = new OrdersFilter();
-            filter.errorType = OrderErrorType.ship;
+            filter.error = OrderErrorType.ship;
             service.fetchOrdersList(11, filter).subscribe();
             httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&errorType=ship`);
             httpMock.verify();
@@ -112,7 +112,7 @@ describe('OrdersService', () => {
     it('should NOT include status param to endpoint params if it has undefined value', inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
         let filter = new OrdersFilter();
         filter.status = undefined;
-        filter.errorType = OrderErrorType.ship;
+        filter.error = OrderErrorType.ship;
         service.fetchOrdersList(11, filter).subscribe();
         httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&errorType=ship`);
         httpMock.verify();
@@ -121,7 +121,7 @@ describe('OrdersService', () => {
     it('should NOT include errorType param to endpoint params if it has undefined value', inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
         let filter = new OrdersFilter();
         filter.status = OrderStatus.shipped;
-        filter.errorType = undefined;
+        filter.error = undefined;
         service.fetchOrdersList(11, filter).subscribe();
         httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&status=shipped`);
         httpMock.verify();
@@ -131,7 +131,7 @@ describe('OrdersService', () => {
         inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
             let filter = new OrdersFilter();
             filter.tag = 'tadada';
-            filter.errorType = OrderErrorType.import;
+            filter.error = OrderErrorType.acknowledge;
             filter.search = 'pamparam';
             filter.status = OrderStatus.waiting_store_acceptance;
             filter.since = new Date('2010-01-01');

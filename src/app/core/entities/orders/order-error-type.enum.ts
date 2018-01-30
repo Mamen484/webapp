@@ -1,4 +1,4 @@
 export enum OrderErrorType {
-    import = 'import',
+    acknowledge = 'acknowledge',
     ship = 'ship',
 }

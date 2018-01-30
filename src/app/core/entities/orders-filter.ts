@@ -12,7 +12,7 @@ export class OrdersFilter {
     limit = '25';
     search = '';
     status?: OrderStatus;
-    errorType: OrderErrorType;
+    error: OrderErrorType;
 
     static aDayBefore() {
         let date = new Date().toDateString();
@@ -52,8 +52,8 @@ export class OrdersFilter {
             params = params.set('status', this.status);
         }
 
-        if (this.errorType) {
-            params = params.set('errorType', this.errorType);
+        if (this.error) {
+            params = params.set('error', this.error);
         }
 
         return params;

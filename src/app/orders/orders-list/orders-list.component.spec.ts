@@ -28,7 +28,7 @@ describe('OrdersListComponent', () => {
         filter.tag = 'some tag';
         filter.search = 'some search';
         filter.status = OrderStatus.refused;
-        filter.errorType = OrderErrorType.ship;
+        filter.error = OrderErrorType.ship;
         service.setFilter(filter);
     });
 
@@ -44,7 +44,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 0});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
-            expect(filter.errorType).not.toBeDefined();
+            expect(filter.error).not.toBeDefined();
         });
     });
 
@@ -52,7 +52,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 1});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.waiting_store_acceptance);
-            expect(filter.errorType).not.toBeDefined();
+            expect(filter.error).not.toBeDefined();
         });
     });
 
@@ -60,7 +60,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 3});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
-            expect(filter.errorType).toEqual(OrderErrorType.import);
+            expect(filter.error).toEqual(OrderErrorType.acknowledge);
         });
     });
 
@@ -68,7 +68,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 4});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.waiting_shipment);
-            expect(filter.errorType).not.toBeDefined();
+            expect(filter.error).not.toBeDefined();
         });
     });
 
@@ -76,7 +76,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 5});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
-            expect(filter.errorType).toEqual(OrderErrorType.ship);
+            expect(filter.error).toEqual(OrderErrorType.ship);
         });
     });
 
@@ -84,7 +84,7 @@ describe('OrdersListComponent', () => {
         component.changeTab({index: 6});
         service.getFilter().take(1).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.shipped);
-            expect(filter.errorType).not.toBeDefined();
+            expect(filter.error).not.toBeDefined();
         });
     });
 });

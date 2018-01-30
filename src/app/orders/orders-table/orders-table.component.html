@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <div class="actions" fxLayout="row">
-            <ng-container *ngIf="!ordersFilter.status && !ordersFilter.errorType || ordersFilter.status === orderStatus.waiting_shipment || ordersFilter.errorType === errorType.ship">
+            <ng-container *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment || ordersFilter.error === errorType.ship">
                 <button mat-button color="accent" i18n class="orders-action">Ship</button>
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
@@ -11,7 +11,7 @@
                 <button mat-button color="accent" i18n class="orders-action">Refuse</button>
             </ng-container>
 
-            <ng-container *ngIf="ordersFilter.errorType === errorType.import">
+            <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
                 <button mat-button color="accent" i18n class="orders-action">Force Import</button>
             </ng-container>
 

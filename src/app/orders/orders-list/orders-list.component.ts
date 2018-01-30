@@ -20,27 +20,27 @@ export class OrdersListComponent implements OnInit {
     changeTab(tab) {
         switch (tab.index) {
             case 0:
-                this.ordersFilterService.patchFilter({status: undefined, errorType: undefined});
+                this.ordersFilterService.patchFilter({status: undefined, error: undefined});
                 break;
 
             case 1:
-                this.ordersFilterService.patchFilter({status: OrderStatus.waiting_store_acceptance, errorType: undefined});
+                this.ordersFilterService.patchFilter({status: OrderStatus.waiting_store_acceptance, error: undefined});
                 break;
 
             case 3:
-                this.ordersFilterService.patchFilter({status: undefined, errorType: OrderErrorType.import});
+                this.ordersFilterService.patchFilter({status: undefined, error: OrderErrorType.acknowledge});
                 break;
 
             case 4:
-                this.ordersFilterService.patchFilter({status: OrderStatus.waiting_shipment, errorType: undefined});
+                this.ordersFilterService.patchFilter({status: OrderStatus.waiting_shipment, error: undefined});
                 break;
 
             case 5:
-                this.ordersFilterService.patchFilter({status: undefined, errorType: OrderErrorType.ship});
+                this.ordersFilterService.patchFilter({status: undefined, error: OrderErrorType.ship});
                 break;
 
             case 6:
-                this.ordersFilterService.patchFilter({status: OrderStatus.shipped, errorType: undefined});
+                this.ordersFilterService.patchFilter({status: OrderStatus.shipped, error: undefined});
                 break;
         }
     }
