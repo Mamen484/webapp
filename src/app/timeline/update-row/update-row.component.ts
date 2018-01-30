@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TimelineUpdate } from '../../core/entities/timeline-update';
 import { TimelineUpdateAction } from '../../core/entities/timeline-update-action.enum';
 import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enum';

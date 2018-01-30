@@ -108,17 +108,17 @@ describe('CreateUserComponent', () => {
         });
 
         it('should show a mappings form when the feed source is csv', () => {
-            component.form.setValue(createFormMock({separator: 'csv'}))
+            component.form.setValue(createFormMock({separator: 'csv'}));
             expect(component.showMappingsForm()).toEqual(true);
         });
 
         it('should show a mappings form when the feed source is txt', () => {
-            component.form.setValue(createFormMock({separator: 'txt'}))
+            component.form.setValue(createFormMock({separator: 'txt'}));
             expect(component.showMappingsForm()).toEqual(true);
         });
 
         it('should show a mappings form when the feed source is xml', () => {
-            component.form.setValue(createFormMock({separator: 'xml'}))
+            component.form.setValue(createFormMock({separator: 'xml'}));
             expect(component.showMappingsForm()).toEqual(true);
         });
 
