@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
 import { LoadingFlagService } from '../../core/services/loading-flag.service';
+import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
 @Component({
     selector: 'sf-orders-table',
@@ -37,9 +39,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     displayedColumns = this.requiredColumns;
     data: MatTableDataSource<OrdersTableItem>;
     orderStatus = OrderStatus;
+    errorType = OrderErrorType;
     isLoadingResults = false;
     subscription: Subscription;
     fetchSubscription: Subscription;
+    ordersFilter: OrdersFilter;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -52,7 +56,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     goToOrder(orderId: string) {
         this.loadingFlagService.triggerLoadingStarted();
-        this.router.navigate(['orders', 'detail', orderId]).then(() => this.loadingFlagService.triggerLoadedFinished());
+        this.router.navigate(['orders', 'detail', orderId])
+            .then(() => this.loadingFlagService.triggerLoadedFinished());
     }
 
     ngOnInit() {
@@ -77,8 +82,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     }
 
-    protected fetchData(store: Store, filter) {
+    protected fetchData(store: Store, filter: OrdersFilter) {
         this.isLoadingResults = true;
+        this.ordersFilter = filter;
         this.changeDetectorRef.detectChanges();
         if (this.fetchSubscription && !this.fetchSubscription.closed) {
             this.fetchSubscription.unsubscribe();

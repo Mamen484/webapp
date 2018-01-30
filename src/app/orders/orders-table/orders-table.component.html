@@ -1,8 +1,24 @@
 <mat-card>
     <mat-card-content>
         <div class="actions" fxLayout="row">
-            <button mat-button color="accent">SHIP</button>
-            <button mat-button color="accent">REFUND</button>
+            <ng-container *ngIf="!ordersFilter.status && !ordersFilter.errorType || ordersFilter.status === orderStatus.waiting_shipment || ordersFilter.errorType === errorType.ship">
+                <button mat-button color="accent" i18n class="orders-action">Ship</button>
+                <button mat-button color="accent" i18n class="orders-action">Refund</button>
+            </ng-container>
+
+            <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
+                <button mat-button color="accent" i18n class="orders-action">Accept</button>
+                <button mat-button color="accent" i18n class="orders-action">Refuse</button>
+            </ng-container>
+
+            <ng-container *ngIf="ordersFilter.errorType === errorType.import">
+                <button mat-button color="accent" i18n class="orders-action">Force Import</button>
+            </ng-container>
+
+            <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
+                <button mat-button color="accent" i18n class="orders-action">Refund</button>
+            </ng-container>
+
             <button mat-icon-button (click)="addLabel()">
                 <mat-icon>label</mat-icon>
             </button>
@@ -55,7 +71,8 @@
                     <span *ngIf="row.status === orderStatus.refused" i18n>Refused</span>
                     <span *ngIf="row.status === orderStatus.shipped" i18n>Shipped</span>
                     <span *ngIf="row.status === orderStatus.waiting_shipment" i18n>Waiting shipment</span>
-                    <span *ngIf="row.status === orderStatus.waiting_store_acceptance" i18n>Waiting store acceptance</span>
+                    <span *ngIf="row.status === orderStatus.waiting_store_acceptance"
+                          i18n>Waiting store acceptance</span>
                 </mat-cell>
             </ng-container>
 
