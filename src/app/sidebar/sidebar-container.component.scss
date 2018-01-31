@@ -11,6 +11,11 @@ mat-sidenav {
   top: 0;
   height: calc(100vh - #{$toolbar-height});
   border-right: 1px solid mat-color($grey, 200);
+
+  @media #{$xs} {
+    position: fixed;
+    top: $toolbar-height;
+  }
 }
 
 mat-sidenav-container {

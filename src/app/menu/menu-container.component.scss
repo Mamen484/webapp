@@ -18,3 +18,10 @@ a.nav-link.home {
     vertical-align: top;
   }
 }
+
+.toggle-sidebar-icon {
+  display: none;
+  @media #{$xs} {
+    display: block;
+  }
+}
