@@ -43,3 +43,9 @@ sf-country-select {
   text-align: right;
   margin-top: 10px;
 }
+
+.mappings-form-card[data-show-mappings-card="false"] {
+  @media #{$xs} {
+    display: none;
+  }
+}
