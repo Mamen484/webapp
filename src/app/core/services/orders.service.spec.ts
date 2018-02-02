@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 import { OrderErrorType } from '../entities/orders/order-error-type.enum';
 import { OrderAcknowledgement } from '../entities/orders/order-acknowledgement.enum';
 
-fdescribe('OrdersService', () => {
+describe('OrdersService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [OrdersService],
