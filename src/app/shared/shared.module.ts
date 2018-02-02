@@ -5,7 +5,7 @@ import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule,
     MatSelectModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule, MatDatepickerModule,
-    MatNativeDateModule, MatTabsModule, MatTableModule, MatCheckboxModule,
+    MatNativeDateModule, MatTabsModule, MatTableModule, MatCheckboxModule, MatPaginatorModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -41,6 +41,7 @@ import { RemoveUnderlinePipe } from './remove-underline.pipe';
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
@@ -77,6 +78,7 @@ import { RemoveUnderlinePipe } from './remove-underline.pipe';
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,

@@ -1,12 +1,14 @@
 <mat-card>
     <mat-card-content>
         <div class="actions" fxLayout="row">
-            <ng-container *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment || ordersFilter.error === errorType.ship">
+            <ng-container
+                    *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment || ordersFilter.error === errorType.ship">
                 <button mat-button color="accent" i18n class="orders-action">Ship</button>
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
 
-            <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_shipment && orderStatus.acknowledgement === acknowledgement.unacknowledged">
+            <ng-container
+                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && orderStatus.acknowledgement === acknowledgement.unacknowledged">
                 <button mat-button color="accent" i18n class="orders-action">Accept</button>
                 <button mat-button color="accent" i18n class="orders-action">Refuse</button>
             </ng-container>
@@ -34,116 +36,143 @@
                 <mat-icon>local_printshop</mat-icon>
             </button>
         </div>
-        <div *ngIf="isLoadingResults" class="loading-spinner">
-            <mat-spinner></mat-spinner>
+        <div [class.table-container]="isLoadingResults">
+            <div class="loading-container" *ngIf="isLoadingResults">
+                <mat-spinner></mat-spinner>
+            </div>
+            <mat-table #table [dataSource]="dataSource" class="sf-orders-table">
+
+                <ng-container matColumnDef="checkbox">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="hasErrors">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-icon *ngIf="row.hasErrors" color="warn">error</mat-icon>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="marketplace">
+                    <mat-header-cell *matHeaderCellDef> Marketplace</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <img [src]="row.channelImage" width="65">
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="reference">
+                    <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.reference}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span *ngIf="row.status === orderStatus.cancelled" i18n>Cancelled</span>
+                        <span *ngIf="row.status === orderStatus.partially_refunded" i18n>Partially refunded</span>
+                        <span *ngIf="row.status === orderStatus.partially_shipped" i18n>Partially shipped</span>
+                        <span *ngIf="row.status === orderStatus.created" i18n>Created</span>
+                        <span *ngIf="row.status === orderStatus.refunded" i18n>Refunded</span>
+                        <span *ngIf="row.status === orderStatus.refused" i18n>Refused</span>
+                        <span *ngIf="row.status === orderStatus.shipped" i18n>Shipped</span>
+                        <span *ngIf="row.status === orderStatus.waiting_shipment" i18n>Waiting shipment</span>
+                        <span *ngIf="row.status === orderStatus.waiting_store_acceptance"
+                              i18n>Waiting store acceptance</span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef> Total (€)</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.total}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.date | date:fullDate}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="updatedAt">
+                    <mat-header-cell *matHeaderCellDef> Updated</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.updatedAt | date:fullDate}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="productAmount">
+                    <mat-header-cell *matHeaderCellDef> Total Products</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.productAmount}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="shippingAmount">
+                    <mat-header-cell *matHeaderCellDef> Total Shipping</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.shippingAmount}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="paymentMethod">
+                    <mat-header-cell *matHeaderCellDef> Payment Method</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.paymentMethod}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="deliveryName">
+                    <mat-header-cell *matHeaderCellDef> Delivery Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.deliveryName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="invoicingName">
+                    <mat-header-cell *matHeaderCellDef> Invoicing Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.invoicingName}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="storeId">
+                    <mat-header-cell *matHeaderCellDef> Store ID</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.storeId}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="trackingNumber">
+                    <mat-header-cell *matHeaderCellDef> Tracking Number</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="imported">
+                    <mat-header-cell *matHeaderCellDef> Imported</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span *ngIf="row.imported" i18n>Yes</span>
+                        <span *ngIf="!row.imported" i18n>No</span>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
+                </mat-row>
+            </mat-table>
         </div>
-        <mat-table #table [dataSource]="data" *ngIf="!isLoadingResults" class="sf-orders-table">
-
-            <ng-container matColumnDef="checkbox">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox>
-                </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="hasErrors">
-                <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <mat-icon *ngIf="row.hasErrors" color="warn">error</mat-icon>
-                </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="marketplace">
-                <mat-header-cell *matHeaderCellDef> Marketplace</mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <img [src]="row.channelImage" width="65">
-                </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="reference">
-                <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.reference}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <span *ngIf="row.status === orderStatus.cancelled" i18n>Cancelled</span>
-                    <span *ngIf="row.status === orderStatus.partially_refunded" i18n>Partially refunded</span>
-                    <span *ngIf="row.status === orderStatus.partially_shipped" i18n>Partially shipped</span>
-                    <span *ngIf="row.status === orderStatus.created" i18n>Created</span>
-                    <span *ngIf="row.status === orderStatus.refunded" i18n>Refunded</span>
-                    <span *ngIf="row.status === orderStatus.refused" i18n>Refused</span>
-                    <span *ngIf="row.status === orderStatus.shipped" i18n>Shipped</span>
-                    <span *ngIf="row.status === orderStatus.waiting_shipment" i18n>Waiting shipment</span>
-                    <span *ngIf="row.status === orderStatus.waiting_store_acceptance"
-                          i18n>Waiting store acceptance</span>
-                </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef> Total (€)</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.total}}</mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="date">
-                <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.date | date:fullDate}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="updatedAt">
-                <mat-header-cell *matHeaderCellDef> Updated</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.updatedAt | date:fullDate}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="productAmount">
-                <mat-header-cell *matHeaderCellDef> Total Products</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.productAmount}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="shippingAmount">
-                <mat-header-cell *matHeaderCellDef> Total Shipping</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.shippingAmount}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="paymentMethod">
-                <mat-header-cell *matHeaderCellDef> Payment Method</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.paymentMethod}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="deliveryName">
-                <mat-header-cell *matHeaderCellDef> Delivery Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.deliveryName}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="invoicingName">
-                <mat-header-cell *matHeaderCellDef> Invoicing Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.invoicingName}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="storeId">
-                <mat-header-cell *matHeaderCellDef> Store ID</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.storeId}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="trackingNumber">
-                <mat-header-cell *matHeaderCellDef> Tracking Number</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="imported">
-                <mat-header-cell *matHeaderCellDef> Imported</mat-header-cell>
-                <mat-cell *matCellDef="let row">
-                    <span *ngIf="row.imported" i18n>Yes</span>
-                    <span *ngIf="!row.imported" i18n>No</span>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
-            </mat-row>
-        </mat-table>
+        <mat-paginator [pageSize]="10" [length]="resultsLength"></mat-paginator>
     </mat-card-content>
 </mat-card>
 
 <mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Total products</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount">Total shipping </mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.paymentMethod">Payment method</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.deliveryName">Delivery name</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Invoicing name</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">Store ID</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number</mat-checkbox></div>
-    <div mat-menu-item><mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Imported</mat-checkbox></div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated</mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Total products
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount">Total shipping
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.paymentMethod">Payment method
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.deliveryName">Delivery name
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Invoicing name
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">Store ID</mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Imported</mat-checkbox>
+    </div>
 </mat-menu>

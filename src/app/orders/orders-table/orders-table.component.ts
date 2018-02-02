@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -25,6 +25,10 @@ import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowled
 })
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    resultsLength = 0;
+
     optionalColumns = {
         updatedAt: false,
         productAmount: false,
@@ -38,7 +42,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     };
     requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
-    data: MatTableDataSource<OrdersTableItem>;
+    dataSource: MatTableDataSource<OrdersTableItem> = new MatTableDataSource();
     orderStatus = OrderStatus;
     errorType = OrderErrorType;
     isLoadingResults = false;
@@ -66,6 +70,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.subscription = this.appStore.select('currentStore')
             .combineLatest(this.ordersFilterService.getFilter())
             .subscribe(([store, filter]) => this.fetchData(store, filter));
+
+        this.paginator.page.subscribe(({pageIndex}) => {
+            this.ordersFilterService.patchFilter('page', String(pageIndex + 1))
+        });
     }
 
     ngOnDestroy() {
@@ -94,9 +102,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, filter)
             .subscribe(ordersPage => {
                 this.isLoadingResults = false;
-                this.data = new MatTableDataSource(
-                    ordersPage._embedded.order.map(order => this.formatOrder(order))
-                );
+
+                this.resultsLength = ordersPage.total;
+                this.paginator.pageIndex = +filter.page - 1;
+                this.dataSource.data = ordersPage._embedded.order.map(order => this.formatOrder(order));
                 this.changeDetectorRef.markForCheck();
             });
 

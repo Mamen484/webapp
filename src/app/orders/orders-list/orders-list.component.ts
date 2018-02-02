@@ -23,6 +23,7 @@ export class OrdersListComponent implements OnInit {
         switch (tab.index) {
             case 0: // all orders tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: undefined,
                     error: undefined,
                     acknowledgement: undefined,
@@ -30,6 +31,7 @@ export class OrdersListComponent implements OnInit {
                 break;
             case 1: // to validate tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: OrderStatus.waiting_store_acceptance,
                     error: undefined,
                     acknowledgement: undefined,
@@ -38,6 +40,7 @@ export class OrdersListComponent implements OnInit {
 
             case 2: // to import tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: OrderStatus.waiting_shipment,
                     error: undefined,
                     acknowledgement: OrderAcknowledgement.unacknowledged,
@@ -46,6 +49,7 @@ export class OrdersListComponent implements OnInit {
 
             case 3: // import errors tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: undefined,
                     error: OrderErrorType.acknowledge,
                     acknowledgement: undefined,
@@ -54,6 +58,7 @@ export class OrdersListComponent implements OnInit {
 
             case 4: // to ship tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: OrderStatus.waiting_shipment,
                     error: undefined,
                     acknowledgement: undefined,
@@ -62,6 +67,7 @@ export class OrdersListComponent implements OnInit {
 
             case 5: // shipping errors tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: undefined,
                     error: OrderErrorType.ship,
                     acknowledgement: undefined,
@@ -70,6 +76,7 @@ export class OrdersListComponent implements OnInit {
 
             case 6: // shipped tab
                 this.ordersFilterService.patchFilter(<OrdersFilter>{
+                    page: '1',
                     status: OrderStatus.shipped,
                     error: undefined,
                     acknowledgement: undefined,

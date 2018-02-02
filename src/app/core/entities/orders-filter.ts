@@ -10,7 +10,8 @@ export class OrdersFilter {
     since?: Date;
     channel = 'all';
     tag = 'all';
-    limit = '25';
+    limit = '10';
+    page = '1';
     search = '';
     status?: OrderStatus;
     error?: OrderErrorType;
@@ -60,6 +61,10 @@ export class OrdersFilter {
 
         if (this.acknowledgement) {
             params = params.set('acknowledgement', this.acknowledgement);
+        }
+
+        if (this.page) {
+            params = params.set('page', this.page);
         }
 
         return params;
