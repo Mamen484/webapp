@@ -7,9 +7,9 @@ import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SnackbarsModule } from './snackbars/snackbars.module';
 import { ErrorPagesModule } from './error-pages/error-pages.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -18,7 +18,6 @@ import { ErrorPagesModule } from './error-pages/error-pages.module';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        ErrorPagesModule,
         FormsModule,
         CoreModule,
         BaseModule,
@@ -26,6 +25,8 @@ import { ErrorPagesModule } from './error-pages/error-pages.module';
         SnackbarsModule,
         AppRoutingModule,
         LoginModule,
+        // keep this module in the bottom as it contains a wildcard route
+        ErrorPagesModule,
     ],
     bootstrap: [AppComponent]
 })
