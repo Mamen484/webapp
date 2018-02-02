@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 
 @Component({
     selector: 'sf-orders-table',
@@ -44,6 +45,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
+    acknowledgement = OrderAcknowledgement;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
