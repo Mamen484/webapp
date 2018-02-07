@@ -3,13 +3,6 @@
 
 @include form-page();
 
-a.below-form-link {
-  float: right;
-  text-decoration: none;
-  color: $black-87-opacity;
-  margin-top: 15px;
-}
-
 .deleted-store-message {
   max-width: 320px;
 }

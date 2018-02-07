@@ -45,7 +45,7 @@ const routes: Routes = [
 
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
     {path: 'login', component: LoginComponent, canActivate: [IsLoggedInGuard]},
-    {path: 'reset-password', component: SendRecoveryEmailComponent},
+    {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
     {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'},

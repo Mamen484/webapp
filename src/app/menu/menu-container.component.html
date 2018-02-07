@@ -3,7 +3,12 @@
         <mat-toolbar role="toolbar" color="primary" class="mat-elevation-z2" [style.backgroundColor]="backgroundColor">
 
             <mat-toolbar-row>
-                <button mat-icon-button (click)="toggleSidebar()" class="toggle-sidebar-icon"><mat-icon>menu</mat-icon></button>
+                <button mat-icon-button (click)="toggleSidebar()" class="toggle-sidebar-icon" *ngIf="enableMenuIcon">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <button mat-icon-button (click)="followBackButton()" class="back-in-history" *ngIf="showBackButton">
+                    <mat-icon>keyboard_backspace</mat-icon>
+                </button>
                 <a class="nav-link home" routerLink="/">
                     <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
                 </a>

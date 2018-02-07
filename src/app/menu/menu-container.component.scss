@@ -21,7 +21,20 @@ a.nav-link.home {
 
 .toggle-sidebar-icon {
   display: none;
-  @media #{$xs} {
+}
+
+button.back-in-history {
+  display: none;
+}
+
+@media #{$xs} {
+  .toggle-sidebar-icon {
     display: block;
+  }
+
+  button.back-in-history {
+    display: block;
+    margin-right: 10px;
+    margin-left: 10px;
   }
 }
