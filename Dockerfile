@@ -1,13 +1,14 @@
 FROM node:9.1
+FROM java:8
 
 WORKDIR /var/www
 
 #install crowdin-cli
 RUN  apt-get update && \
-     apt-get install -y build-essential ruby ruby-dev && \
-     gem install crowdin-cli && \
-     apt-get clean && \
-     rm -rf /var/lib/apt/lists/*
+ wget -qO - https://artifacts.crowdin.com/repo/GPG-KEY-crowdin | apt-key add - && \
+ echo "deb https://artifacts.crowdin.com/repo/deb/ /" > /etc/apt/sources.list.d/crowdin.list && \
+ apt-get install apt-transport-https && \
+ apt-get update && apt-get install crowdin
 
 # Install app dependencies
 CMD ["npm", "run", "docker-start"]
