@@ -27,7 +27,6 @@ export class MenuComponent implements OnDestroy {
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = 0;
-    showSearch = false;
 
     protected newEventsSubscription;
 
@@ -37,15 +36,13 @@ export class MenuComponent implements OnDestroy {
                 protected localStorage: LocalStorageService,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
-                protected router: Router,
-                protected breakpointObserver: BreakpointObserver) {
+                protected router: Router) {
         this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
         this.appStore.select('currentStore').subscribe(currentStore => {
             this.currentStore = currentStore;
             this.updateEvents();
         });
         this.newEventsSubscription = Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
-        this.breakpointObserver.observe([Breakpoints.Tablet, Breakpoints.Web]).subscribe(({matches}) => this.showSearch = matches);
     }
 
     chooseStore(store) {

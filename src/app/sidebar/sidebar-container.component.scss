@@ -4,7 +4,6 @@ mat-sidenav {
   position: sticky;
   bottom: 0;
   left: 0;
-  width: $left-sidebar-width;
   min-width: $left-sidebar-width;
   background-color: mat-color($grey, A100);
   text-align: center;
@@ -15,6 +14,11 @@ mat-sidenav {
   @media #{$xs} {
     position: fixed;
     top: $toolbar-height;
+    padding-top: 10px;
+  }
+
+  @media #{$gt-xs} {
+    width: $left-sidebar-width;
   }
 }
 
