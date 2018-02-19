@@ -16,6 +16,10 @@
 
 .channel-name {
   flex: 1;
+
+  @media #{$xs}{
+    flex: 3;
+  }
 }
 .event-description {
   flex: 3;

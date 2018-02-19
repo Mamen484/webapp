@@ -4,6 +4,6 @@
   margin-left: $left-sidebar-width + $content-margin;
 
   @media #{$xs} {
-    margin-left: $content-margin;
+    margin-left: 0;
   }
 }
