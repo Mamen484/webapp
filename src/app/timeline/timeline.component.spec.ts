@@ -17,7 +17,8 @@ import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
+import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -169,12 +170,24 @@ describe('TimelineComponent', () => {
         beforeEach(() => {
             timelineService.getTimelineStream.and.returnValue(Observable.of({
                 type: StreamEventType.finished,
-                data: {events: eventsWithErrors, updates}
+                data: {events: eventsWithErrors, updates: dataDistinct}
             }));
             fixture = TestBed.createComponent(TimelineComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
         });
+
+        it('should convert API data to the correct list of udpates', () => {
+            fixture.whenStable().then(() => {
+                let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
+                expect(items.length).toEqual(4);
+                validateUpdate(items[0], 'vertical_align_top', 'Amazon', 'Completed');
+                validateUpdate(items[1], 'vertical_align_top', 'CDiscount', 'Completed');
+                validateUpdate(items[2], 'vertical_align_bottom', 'Source feed', 'Completed');
+                validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
+            });
+        });
+
         it('should convert API data to the correct list of events', () => {
             fixture.whenStable().then(() => {
                 let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
@@ -209,3 +222,8 @@ function validateEvent(elem, iconName, text, url?) {
     }
 }
 
+function validateUpdate(elem, iconName, channel, status) {
+    expect(elem.querySelector('.event-icon > mat-icon').textContent).toEqual(iconName);
+    expect(elem.querySelector('.channel-name').textContent.trim()).toEqual(channel);
+    expect(elem.querySelector('.event-description').textContent.trim()).toEqual(status);
+}
