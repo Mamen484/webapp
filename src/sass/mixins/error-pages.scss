@@ -1,0 +1,16 @@
+@import '../variables';
+
+@mixin error-pages(){
+  .reload {
+    color: mat-color($accent);
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .error-message {
+    margin-bottom: 20px;
+  }
+
+}

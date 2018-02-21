@@ -1,17 +1,10 @@
 @import '../../../sass/variables';
 @import '../../../sass/mixins/form-page';
+@import '../../../sass/mixins/error-pages';
 
 @include form-page();
+@include error-pages();
 
 .reload {
-  color: mat-color($accent);
   font-weight: bold;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.error-message {
-  margin-bottom: 20px;
 }
