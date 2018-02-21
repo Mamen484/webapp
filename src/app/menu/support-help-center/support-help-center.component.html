@@ -22,7 +22,7 @@
     </div>
     <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
         <div class="mat-subheading-2 no-results" i18n>No results</div>
-        <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
+        <a [href]="linkToSupportCenter" (click)="clearSearch()" target="_blank" class="mat-body-1 clear-results" i18n>Search on support center</a>
     </div>
 </div>
 

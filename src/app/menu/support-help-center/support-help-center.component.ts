@@ -5,6 +5,7 @@ import { SupportService } from '../../core/services/support.service';
 import { environment } from '../../../environments/environment';
 import { LocaleIdService } from '../../core/services/locale-id.service';
 import { HelpCenterLanguage } from '../../core/entities/help-center-language';
+import { SupportLinkService } from '../../core/services/support-link.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -22,6 +23,7 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
     showSearchResult = false;
     processing = false;
     helpCenterLanguage: HelpCenterLanguage;
+    linkToSupportCenter: string;
 
     @HostListener('window:resize')
     setSearchResultsPosition() {
@@ -36,7 +38,8 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
 
     constructor(protected elementRef: ElementRef,
                 protected supportService: SupportService,
-                protected localeIdService: LocaleIdService) {
+                protected localeIdService: LocaleIdService,
+                protected supportLinkService: SupportLinkService) {
     }
 
     ngOnInit() {
@@ -56,6 +59,8 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
                 });
                 this.processing = false;
             });
+
+        this.linkToSupportCenter = this.supportLinkService.supportLink;
     }
 
     ngAfterViewInit() {
@@ -72,5 +77,4 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
         link.click();
         this.clearSearch();
     }
-
 }
