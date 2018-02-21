@@ -1,8 +1,6 @@
 @import "../../sass/variables";
 
 .sf-top-menu {
-
-  min-width: $min-width;
   width: 100vw;
   top: 0;
   left: 0;
@@ -24,4 +22,9 @@ a.nav-link.home {
 mat-progress-bar {
   position: absolute;
   z-index: 25;
+}
+
+button.back-in-history {
+  margin-right: 10px;
+  margin-left: 10px;
 }

@@ -1,7 +1,7 @@
 <div class="timeline" infiniteScroll [infiniteScrollDistance]="2" *ngIf="!loadingTimeline"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
-    <div class="heading-date mat-body-1" i18n>Latest updates</div>
+    <div class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title" i18n>Latest updates</div>
     <mat-card class="update">
         <mat-list>
             <mat-list-item class="updates-in-progress">
@@ -27,11 +27,11 @@
     </mat-card>
 
     <div *ngFor="let eventsGroup of events">
-        <div class="heading-date mat-body-1">{{eventsGroup[0] | date:'fullDate'}}</div>
+        <div  class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title">{{eventsGroup[0] | date:'fullDate'}}</div>
         <mat-card class="event">
             <mat-list>
                 <mat-list-item *ngFor="let event of eventsGroup[1]">
-                    <div class="event-icon mat-body-1">
+                    <div class="event-icon mat-body-1" fxShow fxHide.xs>
                         <mat-icon>{{event.icon}}</mat-icon>
                     </div>
                     <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>

@@ -21,6 +21,7 @@ import { CountrySelectComponent } from './country-select/country-select.componen
 
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 import { RemoveUnderlinePipe } from './remove-underline.pipe';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import { RemoveUnderlinePipe } from './remove-underline.pipe';
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -61,6 +63,7 @@ import { RemoveUnderlinePipe } from './remove-underline.pipe';
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

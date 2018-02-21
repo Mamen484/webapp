@@ -1,10 +1,11 @@
 <sf-menu-container>
     <div class="sf-nav-welcome-text mat-title">{{currentStore.name}}</div>
 
-    <sf-support-help-center></sf-support-help-center>
+    <sf-support-help-center fxShow fxHide.lt-md></sf-support-help-center>
+    <div class="sf-fill-space" fxShow fxHide.gt-sm></div>
     <a (click)="navigateToTimeline()" class="sf-icon-link">
         <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
-                 [attr.data-badge]="newEvents">notifications_none
+                  [attr.data-badge]="newEvents">notifications_none
         </mat-icon>
     </a>
     <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
