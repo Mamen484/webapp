@@ -37,7 +37,6 @@ describe('TimelineService', () => {
 
         service.getEventUpdates(307).subscribe((updates: Timeline<TimelineUpdate>) => {
             let upd = updates._embedded.timeline;
-            console.log(JSON.stringify(updates));
             // feed.export - Amazon
             expect(upd[0].id).toEqual('5a8be8cf14f698306a067839');
             // feed.export - CDiscount
