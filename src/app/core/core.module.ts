@@ -38,6 +38,7 @@ import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { HttpClientService } from './services/http-client.service';
 import { ToggleSidebarService } from './services/toggle-sidebar.service';
+import { SupportLinkService } from './services/support-link.service';
 
 @NgModule({
     imports: [
@@ -76,6 +77,7 @@ import { ToggleSidebarService } from './services/toggle-sidebar.service';
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        SupportLinkService,
         ToggleSidebarService,
 
         {provide: HttpClient, useClass: HttpClientService},

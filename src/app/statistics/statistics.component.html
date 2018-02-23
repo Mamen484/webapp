@@ -20,8 +20,8 @@
         </mat-card>
     </div>
     <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">
-        <div>No results</div>
-        <a href="#" (click)="resetFilter()">Clear the selection</a>
+        <div i18n>No results</div>
+        <a href="#" (click)="resetFilter()" i18n>Clear the selection</a>
     </div>
     <div>
         <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
