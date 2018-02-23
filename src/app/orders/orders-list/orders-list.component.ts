@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-import { OrdersFilter } from '../../core/entities/orders-filter';
-import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
     selector: 'sf-orders-list',
@@ -13,76 +9,15 @@ import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowled
 })
 export class OrdersListComponent implements OnInit {
 
-    constructor(protected ordersFilterService: OrdersFilterService) {
+    isMobile: boolean;
+    constructor(protected media: ObservableMedia) {
     }
 
     ngOnInit() {
+
+        this.isMobile = this.media.isActive('xs');
+        this.media.subscribe(() => {
+            this.isMobile = this.media.isActive('xs');
+        });
     }
-
-    changeTab(tab) {
-        switch (tab.index) {
-            case 0: // all orders tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: undefined,
-                    error: undefined,
-                    acknowledgement: undefined,
-                });
-                break;
-            case 1: // to validate tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: OrderStatus.waiting_store_acceptance,
-                    error: undefined,
-                    acknowledgement: undefined,
-                });
-                break;
-
-            case 2: // to import tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: OrderStatus.waiting_shipment,
-                    error: undefined,
-                    acknowledgement: OrderAcknowledgement.unacknowledged,
-                });
-                break;
-
-            case 3: // import errors tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: undefined,
-                    error: OrderErrorType.acknowledge,
-                    acknowledgement: undefined,
-                });
-                break;
-
-            case 4: // to ship tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: OrderStatus.waiting_shipment,
-                    error: undefined,
-                    acknowledgement: undefined,
-                });
-                break;
-
-            case 5: // shipping errors tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: undefined,
-                    error: OrderErrorType.ship,
-                    acknowledgement: undefined,
-                });
-                break;
-
-            case 6: // shipped tab
-                this.ordersFilterService.patchFilter(<OrdersFilter>{
-                    page: '1',
-                    status: OrderStatus.shipped,
-                    error: undefined,
-                    acknowledgement: undefined,
-                });
-                break;
-        }
-    }
-
 }

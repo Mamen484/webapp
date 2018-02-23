@@ -1,0 +1,34 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/order-actions-bar.scss';
+
+@include order-actions-bar();
+
+mat-card {
+  padding:0;
+  width: calc(100% - #{$content-margin});
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-tab-group {
+  text-transform: uppercase;
+}
+
+.loading-container {
+  position: absolute;
+  top: 117px;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table-container {
+  min-height: 180px;
+}

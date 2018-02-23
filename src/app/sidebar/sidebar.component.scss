@@ -13,6 +13,15 @@ mat-icon {
   &:hover {
     color: mat-color($accent);
   }
+
+  @media #{$xs} {
+    margin-right: 10px;
+    margin-left: 0;
+
+    & + span {
+      text-transform: capitalize;
+    }
+  }
 }
 
 .sf-sidebar-bottom-help {
@@ -30,4 +39,8 @@ a.channel-logo {
     vertical-align: middle;
     max-width: 100px;
   }
+}
+
+span.support-label {
+  vertical-align: super;
 }

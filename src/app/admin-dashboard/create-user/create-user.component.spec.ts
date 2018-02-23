@@ -108,18 +108,18 @@ describe('CreateUserComponent', () => {
         });
 
         it('should show a mappings form when the feed source is csv', () => {
-            component.form.setValue(createFormMock({separator: 'csv'}));
-            expect(component.showMappingsForm()).toEqual(true);
+            component.setShowMappings(<any>{value: 'csv'});
+            expect(component.showMappings).toEqual(true);
         });
 
         it('should show a mappings form when the feed source is txt', () => {
-            component.form.setValue(createFormMock({separator: 'txt'}));
-            expect(component.showMappingsForm()).toEqual(true);
+            component.setShowMappings(<any>{value: 'txt'});
+            expect(component.showMappings).toEqual(true);
         });
 
         it('should show a mappings form when the feed source is xml', () => {
-            component.form.setValue(createFormMock({separator: 'xml'}));
-            expect(component.showMappingsForm()).toEqual(true);
+            component.setShowMappings(<any>{value: 'xml'});
+            expect(component.showMappings).toEqual(true);
         });
 
         (<FeedSource[]>['prestashop', 'webetsolutions', 'bigcommerce', 'thelia',
@@ -127,8 +127,8 @@ describe('CreateUserComponent', () => {
             'google', 'powerboutique', 'shopapplication', 'sa'])
             .forEach(source => {
                 it('should NOT show a mappings form when the feed source is ' + source, () => {
-                    component.store.feed.source = source;
-                    expect(component.showMappingsForm()).toEqual(false);
+                    component.setShowMappings(<any>{value: source});
+                    expect(component.showMappings).toEqual(false);
                 });
             });
 

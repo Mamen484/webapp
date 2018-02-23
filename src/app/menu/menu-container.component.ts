@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LoadingFlagService } from '../core/services/loading-flag.service';
+import { ToggleSidebarService } from '../core/services/toggle-sidebar.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
 
@@ -8,11 +10,35 @@ export const DEFAULT_MENU_BACKGROUND = '#072343';
     templateUrl: './menu-container.component.html',
     styleUrls: ['./menu-container.component.scss']
 })
-export class MenuContainerComponent {
+export class MenuContainerComponent implements OnInit {
     @Input() backgroundColor = DEFAULT_MENU_BACKGROUND;
+    @Input() enableMenuIcon = true;
     loadingNextRoute = false;
 
-    constructor(protected loadingFlagService: LoadingFlagService) {
+    /**
+     * contains false if we don't need to show 'back to login' button,
+     * otherwise contains a route to follow after click on 'back' button
+     *
+     * @type {boolean | string}
+     */
+    showBackButton?: any[];
+
+    constructor(protected loadingFlagService: LoadingFlagService,
+                protected toggleSidebarService: ToggleSidebarService,
+                protected route: ActivatedRoute,
+                protected router: Router) {
         this.loadingFlagService.isLoading().subscribe(isLoading => this.loadingNextRoute = isLoading);
+    }
+
+    ngOnInit() {
+        this.route.data.subscribe(({showBackButton = undefined}) => this.showBackButton = showBackButton);
+    }
+
+    toggleSidebar() {
+        this.toggleSidebarService.toggleSidebar();
+    }
+
+    followBackButton() {
+        this.router.navigate(this.showBackButton);
     }
 }

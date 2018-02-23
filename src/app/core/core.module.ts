@@ -46,6 +46,7 @@ import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { LoadingFlagService } from './services/loading-flag.service';
 import { SupportLinkService } from './services/support-link.service';
+import { ToggleSidebarService } from './services/toggle-sidebar.service';
 
 @NgModule({
     imports: [
@@ -93,6 +94,7 @@ import { SupportLinkService } from './services/support-link.service';
         TimelineService,
         OrdersService,
         SupportLinkService,
+        ToggleSidebarService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

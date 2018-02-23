@@ -52,3 +52,21 @@ sf-admin-menu {
     }
   }
 }
+
+mat-list-item {
+  & > .mat-list-item-content {
+    min-height: inherit;
+  }
+}
+
+mat-sidenav-container {
+  @media #{$xs} {
+    overflow: visible;
+
+    .mat-drawer-backdrop.mat-drawer-shown {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+}

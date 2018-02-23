@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '../../core/entities/store';
 import { StoreService } from '../../core/services/store.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSelectChange } from '@angular/material';
 import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
 import { StoreError } from '../../core/entities/store-error';
 import { StoreValidationErrors } from '../../core/entities/store-validation-errors';
@@ -22,6 +22,7 @@ export class CreateUserComponent {
     store = new Store();
     createdToken = '';
     processing = false;
+    showMappings = false;
     form = new FormGroup({
         login: new FormControl('', [
             Validators.required,
@@ -109,7 +110,6 @@ export class CreateUserComponent {
     }
 
 
-
     addImage() {
         (<FormArray>this.mappingsForm.controls['images']).push(new FormControl(''));
     }
@@ -129,10 +129,8 @@ export class CreateUserComponent {
         });
     }
 
-    showMappingsForm() {
-        return this.form.value.source === 'csv'
-            || this.form.value.source === 'xml'
-            || this.form.value.source === 'txt';
+    setShowMappings(evt: MatSelectChange) {
+        this.showMappings = evt.value === 'csv' || evt.value === 'xml' || evt.value === 'txt';
     }
 
     protected setStore() {

@@ -6,6 +6,10 @@
   display: block;
   height: calc(100vh - #{$toolbar-height} - #{$content-margin});
   overflow: scroll;
+
+  @media #{$xs} {
+    padding-left: 20px;
+  }
 }
 
 mat-card.channel-card {
