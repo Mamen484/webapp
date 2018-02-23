@@ -1,11 +1,12 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '../core/entities/store';
 import { StoreChannelDetails } from '../core/entities/store-channel-details';
-import { environment } from '../../environments/environment';
+import { StoreService } from '../core/services/store.service';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { Channel } from '../core/entities/channel';
+import { SupportLinkService } from '../core/services/support-link.service';
 
 @Component({
     selector: 'sf-sidebar',
@@ -15,15 +16,19 @@ import { Channel } from '../core/entities/channel';
 export class SidebarComponent {
 
     currentStore: Store;
-    channels: StoreChannelDetails[];
     currentRoute;
+    channels: StoreChannelDetails[];
+    linkToSupportCenter;
 
     constructor(protected appStore: AppStore<AppState>,
-                @Inject(LOCALE_ID) protected localeId,
-                protected windowRef: WindowRefService) {
+                protected storeService: StoreService,
+                protected windowRef: WindowRefService,
+                protected supportLinkService: SupportLinkService) {
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
+
+        this.linkToSupportCenter = this.supportLinkService.supportLink;
 
     }
 
@@ -34,20 +39,6 @@ export class SidebarComponent {
             || this.currentStore.permission.retargeting
             || this.currentStore.permission.shopbots
             || this.currentStore.permission.solomo;
-    }
-
-    getSupportLink() {
-        switch (this.localeId) {
-            case 'fr':
-                return `${environment.SUPPORT_URL}/customer/fr_fr/portal/articles`;
-
-            case 'it':
-            case 'es':
-                return `${environment.SUPPORT_URL}/customer/${this.localeId}/portal/articles`;
-
-            default:
-                return environment.SUPPORT_URL;
-        }
     }
 
     getChannelLink(channel: Channel) {

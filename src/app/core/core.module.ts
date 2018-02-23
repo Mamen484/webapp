@@ -45,6 +45,7 @@ import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { LoadingFlagService } from './services/loading-flag.service';
+import { SupportLinkService } from './services/support-link.service';
 
 @NgModule({
     imports: [
@@ -91,6 +92,7 @@ import { LoadingFlagService } from './services/loading-flag.service';
         LocalStorageService,
         TimelineService,
         OrdersService,
+        SupportLinkService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

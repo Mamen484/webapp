@@ -12,7 +12,7 @@
             <div class="mat-subheading-1 title">{{entry.subject}}</div>
             <div class="mat-subheading-1 description">{{entry.body_chat}}</div>
             <div class="actions">
-                <a class="details-link mat-body-2" mat-button color="primary" #link [href]="entry.public_url" target="_blank" i18n>READ MORE</a>
+                <a class="details-link mat-body-2" mat-button color="primary" #link [href]="entry.public_url" (click)="$event.stopPropagation(); clearSearch()" target="_blank" i18n>READ MORE</a>
             </div>
         </div>
         <div class="search-entry all-posts">
@@ -22,7 +22,7 @@
     </div>
     <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
         <div class="mat-subheading-2 no-results" i18n>No results</div>
-        <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
+        <a [href]="linkToSupportCenter" (click)="clearSearch()" target="_blank" class="mat-body-1 clear-results" i18n>Search on support center</a>
     </div>
 </div>
 
