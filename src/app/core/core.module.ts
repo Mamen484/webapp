@@ -37,6 +37,7 @@ import { DefaultPageGuard } from './guards/default-page.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { HttpClientService } from './services/http-client.service';
+import { SupportLinkService } from './services/support-link.service';
 
 @NgModule({
     imports: [
@@ -75,6 +76,7 @@ import { HttpClientService } from './services/http-client.service';
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        SupportLinkService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
