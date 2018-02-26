@@ -59,4 +59,10 @@
     cursor: pointer;
   }
 
+  @media #{$xs} {
+    .mat-cell {
+      flex: 1;
+    }
+  }
+
 }

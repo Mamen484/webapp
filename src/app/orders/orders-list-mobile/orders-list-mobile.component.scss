@@ -1,0 +1,6 @@
+@import '../../../sass/variables';
+
+.scrollable-container {
+  padding: 0;
+  height: calc(100vh - #{$toolbar-height} - #{$tabs-height});
+}

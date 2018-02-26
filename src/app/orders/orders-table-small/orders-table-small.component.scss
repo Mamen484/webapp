@@ -5,7 +5,7 @@
 
 mat-card {
   padding:0;
-  width: calc(100% - #{$content-margin});
+  width: 100%;
 }
 
 mat-spinner {
@@ -17,18 +17,10 @@ mat-tab-group {
 }
 
 .loading-container {
-  position: absolute;
-  top: 117px;
-  left: 0;
-  bottom: 56px;
-  right: 0;
-  background: rgba(0, 0, 0, 0.15);
+  position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.table-container {
-  min-height: 180px;
+  height: calc(100vh - #{$toolbar-height} - #{$tabs-height});
 }

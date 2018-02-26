@@ -11,6 +11,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 $black-54-opacity: rgba(black, 0.54);
 
 $toolbar-height: 64px;
+$tabs-height: 49px;
 $left-sidebar-width: 75px;
 
 $sf-typography: mat-typography-config(
@@ -20,6 +21,8 @@ $sf-typography: mat-typography-config(
         $title: mat-typography-level(20px, 32px, 700),
         $input: mat-typography-level(16px, 1.5, 400)
 );
+
+$mobile-tabs-background: #385370;
 
 $content-margin: 20px;
 
