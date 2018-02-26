@@ -11,7 +11,8 @@ const routes: Routes = [
         component: OrderDetailsComponent,
         resolve: {
             order: OrderDetailsResolveGuard
-        }
+        },
+        data: {showBackButton: ['/orders']}
     }
 ];
 
