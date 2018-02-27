@@ -4,10 +4,10 @@
         <mat-toolbar role="toolbar" color="primary" class="mat-elevation-z2" [style.backgroundColor]="backgroundColor">
 
             <mat-toolbar-row>
-                <button mat-icon-button (click)="toggleSidebar()" fxShow fxHide.gt-xs *ngIf="enableMenuIcon">
+                <button mat-icon-button (click)="toggleSidebar()" fxHide fxShow.xs *ngIf="enableMenuIcon && !showBackButton">
                     <mat-icon>menu</mat-icon>
                 </button>
-                <button mat-icon-button (click)="followBackButton()" fxShow fxHide.gt-xs class="back-in-history" *ngIf="showBackButton">
+                <button mat-icon-button (click)="followBackButton()" fxHide fxShow.xs class="back-in-history" *ngIf="showBackButton">
                     <mat-icon>keyboard_backspace</mat-icon>
                 </button>
                 <a class="nav-link home" routerLink="/" fxShow fxHide.xs>

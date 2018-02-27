@@ -15,9 +15,10 @@ mat-card.orders-table {
 
   .total-row {
     display: flex;
-    padding: 10px;
     align-items: flex-end;
     margin-right: 40px;
+    padding: 10px;
+
 
     .description {
       width: 185px;
@@ -31,10 +32,62 @@ mat-card.orders-table {
   }
 }
 
+.totals-handset {
+  width: 100%;
+  & > div > div:last-child {
+    text-align: right;
+  }
+}
+
+.order-summary {
+  text-align: right;
+}
+
 mat-card-actions {
   text-align: right;
 }
 
 sf-orders-subnav .status {
   text-transform: capitalize;
+}
+
+.scrollable-container {
+  @media #{$xs} {
+    padding-left: 20px;
+  }
+}
+
+.channel-image {
+  position: relative;
+
+  img {
+    height: auto;
+    width: 80%;
+  }
+}
+
+@media #{$xs} {
+
+  mat-card.handset-order-details {
+    padding: 0;
+    margin: 10px 0;
+    mat-card-content {
+      font-size: mat-font-size($config, subheading-2);
+
+      mat-list {
+        padding: 0;
+      }
+      mat-list-item {
+        padding: 10px 24px;
+        height: auto;
+
+        &:not(:last-child){
+          border-bottom: 1px solid mat-color($grey, 400);
+        }
+      }
+
+    }
+
+  }
+
 }

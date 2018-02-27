@@ -73,6 +73,7 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
 
     protected formatOrder(order: Order) {
         return <OrdersTableItem>{
+            id: order.id,
             channelImage: order._embedded.channel._links.image.href,
             total: order.payment.feedAmount,
             date: new Date(order.createdAt).getTime(),

@@ -1,5 +1,5 @@
 <div class="scrollable-container">
-    <sf-orders-subnav>
+    <sf-orders-subnav fxShow fxHide.xs>
         <mat-list-item>
             <a routerLink="/orders">
                 <mat-icon>keyboard_backspace</mat-icon>
@@ -11,7 +11,57 @@
             {{order.status | removeUnderline}}
         </mat-list-item>
     </sf-orders-subnav>
-    <mat-card class="orders-table">
+    <div fxHide fxShow.xs>
+        <div i18n>Order ID {{order.reference}}</div>
+        <mat-card class="handset-order-details">
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxFlex class="channel-image">
+                                <img [src]="order._embedded.channel._links.image.href">
+                            </div>
+
+                            <div fxFlex class="order-summary">
+                                <div> {{order.status | removeUnderline}}</div>
+                                <div>{{order.createdAt | date:'y/MM/d'}}</div>
+                                <div>{{order.createdAt | date:'h:mm a'}}</div>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let item of order.items" >
+                        <div fxLayout="column">
+                            <div i18n>ID {{item.reference}}</div>
+                            <div>{{item.name}}</div>
+                            <div i18n>QTY {{item.quantity}}</div>
+                            <div class="mat-body-2">{{item.price | sfCurrency:order.payment.currency}}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="totals-handset mat-body-2" fxLayout="column">
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total products</div>
+                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                            </div>
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total delivery</div>
+                                <div fxFlex>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                            </div>
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total price</div>
+                                <div fxFlex>{{order.payment.productAmount + order.payment.shippingAmount |
+                                    sfCurrency:order.payment.currency}}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+    <mat-card class="orders-table" fxShow fxHide.xs>
         <div class="actions" fxLayout="row">
             <img [src]="order._embedded.channel._links.image.href" height="40px" class="left">
             <button mat-button color="accent" i18n class="orders-action">Ship</button>
@@ -55,7 +105,7 @@
                     <mat-header-cell *matHeaderCellDef>
                         <ng-container i18n>Price</ng-container>
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.price}}</mat-cell>
+                    <mat-cell *matCellDef="let row">{{row.price | sfCurrency:order.payment.currency}}</mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -74,28 +124,28 @@
             <div class="totals">
                 <div class="total-row">
                     <div class="description" i18n>Total products</div>
-                    <div class="value" i18n>{{order.payment.productAmount | currency:order.payment.currency}}</div>
+                    <div class="value" i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
                 </div>
                 <div class="total-row">
                     <div class="description" i18n>Total delivery</div>
-                    <div class="value">{{order.payment.shippingAmount | currency:order.payment.currency}}</div>
+                    <div class="value">{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
                 </div>
                 <div class="total-row">
                     <div class="description" i18n>Total price</div>
                     <div class="value">{{order.payment.productAmount + order.payment.shippingAmount |
-                        currency:order.payment.currency}}
+                        sfCurrency:order.payment.currency}}
                     </div>
                 </div>
             </div>
         </mat-card-content>
     </mat-card>
 
-    <div fxLayout="row" fxLayoutGap="10px">
-        <div fxFlex="1 1 calc(50% - 5px)">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <div fxFlex>
             <mat-card>
                 <div mat-card-title>Billing address</div>
                 <mat-card-content>
-                    <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
                         <mat-form-field fxFlex>
                             <input placeholder="First Name" matInput [(ngModel)]="order.billingAddress.firstName">
                         </mat-form-field>
@@ -108,7 +158,7 @@
                             <input placeholder="Address" matInput [(ngModel)]="order.billingAddress.street">
                         </mat-form-field>
                     </div>
-                    <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
                         <mat-form-field fxFlex>
                             <input placeholder="Zip" matInput [(ngModel)]="order.billingAddress.postalCode">
                         </mat-form-field>
@@ -136,11 +186,11 @@
                 </mat-card-actions>
             </mat-card>
         </div>
-        <div fxFlex="1 1 calc(50% - 5px)">
+        <div fxFlex>
             <mat-card>
                 <div mat-card-title>Delivery address</div>
                 <mat-card-content>
-                    <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
                         <mat-form-field fxFlex>
                             <input placeholder="First Name" matInput [(ngModel)]="order.shippingAddress.firstName">
                         </mat-form-field>
@@ -153,7 +203,7 @@
                             <input placeholder="Address" matInput [(ngModel)]="order.shippingAddress.street">
                         </mat-form-field>
                     </div>
-                    <div fxLayout="row" fxLayoutGap="10px">
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
                         <mat-form-field fxFlex>
                             <input placeholder="Zip" matInput [(ngModel)]="order.shippingAddress.postalCode">
                         </mat-form-field>
