@@ -70,3 +70,7 @@ mat-sidenav-container {
     }
   }
 }
+
+sf-filtering-tabs mat-tab-header {
+  z-index: 0;
+}
