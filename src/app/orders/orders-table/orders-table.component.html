@@ -8,7 +8,7 @@
             </ng-container>
 
             <ng-container
-                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && orderStatus.acknowledgement === acknowledgement.unacknowledged">
+                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
                 <button mat-button color="accent" i18n class="orders-action">Accept</button>
                 <button mat-button color="accent" i18n class="orders-action">Refuse</button>
             </ng-container>
