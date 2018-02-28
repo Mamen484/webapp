@@ -13,6 +13,7 @@ export class SidebarContainerComponent implements OnInit {
     @ViewChild('sidenav') sidenav: MatSidenav;
 
     opened = true;
+    isMobile = false;
 
     constructor(protected mediaObserver: ObservableMedia, protected toggleSidebarSevice: ToggleSidebarService) {
     }
@@ -21,6 +22,7 @@ export class SidebarContainerComponent implements OnInit {
         this.toggleSidebarSevice.getSubscription().subscribe(() => this.sidenav.toggle());
         this.mediaObserver.subscribe((value) => {
             this.opened = value.mqAlias !== 'xs';
+            this.isMobile = value.mqAlias === 'xs';
         })
     }
 

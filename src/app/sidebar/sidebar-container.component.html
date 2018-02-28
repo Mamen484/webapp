@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-    <mat-sidenav class="sidenav sidenav-main" #sidenav [mode]="mediaObserver.isActive('xs') ? 'over' : 'side'"
+    <mat-sidenav class="sidenav sidenav-main" #sidenav [mode]="isMobile ? 'over' : 'side'"
                  [opened]="opened">
         <ng-content></ng-content>
     </mat-sidenav>
