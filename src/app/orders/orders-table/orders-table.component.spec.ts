@@ -35,7 +35,7 @@ describe('OrdersTableComponent', () => {
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
         router = jasmine.createSpyObj(['navigate']);
-        loadingFlagService = jasmine.createSpyObj(['triggetLoadingStarted', 'triggerLoadingFinished']);
+        loadingFlagService = jasmine.createSpyObj(['triggerLoadingStarted', 'triggerLoadingFinished']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -65,6 +65,7 @@ describe('OrdersTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
+        component.paginator = {page: Observable.empty(), pageIndex: 0};
     });
 
     it('should display a loading spinner while data is being loaded', () => {
@@ -88,7 +89,7 @@ describe('OrdersTableComponent', () => {
         filterService.getFilter.and.returnValue(Observable.of({}));
         ordersService.fetchOrdersList.and.returnValue(Observable.of(mockOrder()));
         fixture.detectChanges();
-        let data = component.data.data[0];
+        let data = component.dataSource.data[0];
         expect(data.hasErrors).toEqual(false);
         expect(data.channelImage).toEqual('image link');
         expect(data.reference).toEqual('ref');
@@ -114,7 +115,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].storeReference = '121';
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.data[0].imported).toEqual(true);
+        expect(component.dataSource.data[0].imported).toEqual(true);
     });
 
     it('should set `imported` property to `false` when the storeReference is NOT defined', () => {
@@ -124,7 +125,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].storeReference = undefined;
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.data[0].imported).toEqual(false);
+        expect(component.dataSource.data[0].imported).toEqual(false);
     });
 
     it('should open LabelsDialogComponent on addLabel() call', () => {
@@ -164,7 +165,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].errors = [];
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.data[0].hasErrors).toEqual(false);
+        expect(component.dataSource.data[0].hasErrors).toEqual(false);
     });
 
     it('should set `hasErrors` to TRUE if errors array is NOT empty', () => {
@@ -174,7 +175,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[0].errors = [{type: OrderErrorType.ship, message: 'some message', occuredAt: 'date'}];
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
-        expect(component.data.data[0].hasErrors).toEqual(true);
+        expect(component.dataSource.data[0].hasErrors).toEqual(true);
     });
 
     function mockOrder() {

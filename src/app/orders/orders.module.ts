@@ -11,8 +11,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { LabelsDialogComponent } from './labels-dialog/labels-dialog.component';
 import { OrdersSubnavComponent } from './orders-subnav/orders-subnav.component';
 import { FilteringTabsComponent } from './filtering-tabs/filtering-tabs.component';
-import { OrdersListMobileComponent } from './orders-list-mobile/orders-list-mobile.component';
-import { OrdersListDesktopComponent } from './orders-list-desktop/orders-list-desktop.component';
+import { OrdersListMobileComponent } from './orders-list/orders-list-mobile/orders-list-mobile.component';
+import { OrdersListDesktopComponent } from './orders-list/orders-list-desktop/orders-list-desktop.component';
 import { OrdersTableSmallComponent } from './orders-table-small/orders-table-small.component';
 
 @NgModule({

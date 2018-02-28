@@ -25,7 +25,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.status = OrderStatus.shipped;
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&status=shipped`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&status=shipped&page=1`);
             httpMock.verify();
         }));
 
@@ -34,7 +34,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.error = OrderErrorType.ship;
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&error=ship`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
             httpMock.verify();
         }));
 
@@ -43,7 +43,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.since = new Date('2025-02-25');
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&since=2025-02-25T00:00:00.000Z`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2025-02-25T00:00:00.000Z&page=1`);
             httpMock.verify();
         }));
 
@@ -52,7 +52,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.until = new Date('2025-02-25');
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&until=2025-02-25T00:00:00.000Z`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&until=2025-02-25T00:00:00.000Z&page=1`);
             httpMock.verify();
         }));
 
@@ -61,7 +61,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.channel = 'all';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
             httpMock.verify();
         }));
 
@@ -70,7 +70,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.channel = 'some-channel';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&channel=some-channel`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&channel=some-channel&page=1`);
             httpMock.verify();
         }));
 
@@ -79,7 +79,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.search = '';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
             httpMock.verify();
         }));
 
@@ -88,7 +88,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.search = 'tadada';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&search=tadada`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&search=tadada&page=1`);
             httpMock.verify();
         }));
 
@@ -97,7 +97,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.tag = 'all';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
             httpMock.verify();
         }));
 
@@ -106,7 +106,7 @@ describe('OrdersService', () => {
             let filter = new OrdersFilter();
             filter.tag = 'tadada';
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&tag=tadada`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&tag=tadada&page=1`);
             httpMock.verify();
         }));
 
@@ -115,7 +115,7 @@ describe('OrdersService', () => {
         filter.status = undefined;
         filter.error = OrderErrorType.ship;
         service.fetchOrdersList(11, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&error=ship`);
+        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
         httpMock.verify();
     }));
 
@@ -124,7 +124,7 @@ describe('OrdersService', () => {
         filter.acknowledgement = undefined;
         filter.error = OrderErrorType.ship;
         service.fetchOrdersList(11, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&error=ship`);
+        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
         httpMock.verify();
     }));
 
@@ -133,7 +133,7 @@ describe('OrdersService', () => {
         filter.status = OrderStatus.shipped;
         filter.error = undefined;
         service.fetchOrdersList(11, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&status=shipped`);
+        httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&status=shipped&page=1`);
         httpMock.verify();
     }));
 
@@ -149,7 +149,7 @@ describe('OrdersService', () => {
             filter.channel = 'channel132';
             filter.acknowledgement = OrderAcknowledgement.unacknowledged;
             service.fetchOrdersList(11, filter).subscribe();
-            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=25&since=2010-01-01T00:00:00.000Z&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance&error=acknowledge&acknowledgement=unacknowledged`);
+            httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2010-01-01T00:00:00.000Z&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance&error=acknowledge&acknowledgement=unacknowledged&page=1`);
             httpMock.verify();
         }));
 

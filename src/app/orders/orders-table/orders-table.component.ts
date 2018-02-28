@@ -105,6 +105,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
                 this.resultsLength = ordersPage.total;
                 this.paginator.pageIndex = +filter.page - 1;
+
                 this.dataSource.data = ordersPage._embedded.order.map(order => this.formatOrder(order));
                 this.changeDetectorRef.markForCheck();
             });
