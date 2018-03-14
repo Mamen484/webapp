@@ -1,9 +1,9 @@
 #!/bin/bash
 for lang in $LOCALES; do \
         LOCALE_ID=$lang production=true npx ts-node compile-environment.ts && \
-        npx ng build --output-path=dist/v3/$lang \
+        npx ng build --output-path=dist$BASE_HREF/$lang \
                  --prod \
-                 --bh /v3/$lang/ \
+                 --bh $BASE_HREF/$lang/ \
                  --locale=$lang \
                  --i18nFile=src/locale/messages.$lang.xlf \
                  --i18nFormat=xlf

@@ -1,4 +1,5 @@
 // dev environment
+// please, update a docker file ARG variables if you update this file
 export const environment = {
     production: 'false',
     LOCALE_ID: 'en',
