@@ -9,19 +9,19 @@ RUN  apt-get update && \
  apt-get update && apt-get install crowdin
 COPY crowdin.yaml /locale
 ARG CROWDIN_API_KEY
+RUN mkdir src
+RUN touch src/messages.xlf
 RUN crowdin download
 
 # Step 2: build an angular application
 FROM node:8.9 as node
 WORKDIR /app
 
-COPY package.json /app
-COPY package-lock.json /app
+COPY ./ /app/
 RUN npm install
 
-COPY ./ /app/
 # copy translations from crowdin /locale folder into /app
-COPY --from=java /locale /app/src/locale
+COPY --from=java /locale/src/locale /app/src/locale
 
 ARG env=prod
 ARG LOCALES="en fr es pt de it"
