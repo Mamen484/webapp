@@ -25,6 +25,7 @@ const routes: Routes = [
             userInfo: AggregatedUserInfoResolveGuard
         },
         canActivate: [
+            // see src/diagrams/authentication to understand what those guards do
             LoginByTokenGuard,
             IsAuthorizedGuard,
             CheckProperLocaleGuard,
