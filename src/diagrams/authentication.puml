@@ -5,6 +5,9 @@ If you use WebStorm or another IDE, you can find a plugin for PlantUML, which wi
 @startuml
 
 start
+
+:user loads any page of the webapp;
+
 partition LoginByTokenGuard {
     if(url has 'token' query param) then (yes)
         :Save token as Authorization to the Browser Local Storage;
