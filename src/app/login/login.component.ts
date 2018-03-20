@@ -74,10 +74,10 @@ export class LoginComponent implements OnInit {
         return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
     }
 
-    protected buildUrl(token, storeName, isAdmin) {
+    protected buildUrl(token, storeId, isAdmin) {
         let queryParams = new URLSearchParams();
         queryParams.set('token', token);
-        queryParams.set('store', storeName);
+        queryParams.set('store', storeId);
         let additionalPath = isAdmin ? '/admin' : '';
         return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }
