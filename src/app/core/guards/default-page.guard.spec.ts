@@ -1,4 +1,4 @@
-import { TestBed, inject, async, tick, fakeAsync } from '@angular/core/testing';
+import { TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { DefaultPageGuard } from './default-page.guard';
 import { Store } from '@ngrx/store';
