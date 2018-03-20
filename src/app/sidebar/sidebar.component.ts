@@ -9,6 +9,7 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 import { WindowRefService } from '../core/services/window-ref.service';
 import { Channel } from '../core/entities/channel';
 import { SupportLinkService } from '../core/services/support-link.service';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
     selector: 'sf-sidebar',
@@ -20,11 +21,13 @@ export class SidebarComponent {
     currentStore: Store;
     channels: Observable<StoreChannelDetails[]>;
     linkToSupportCenter;
+    hideTooltips = false;
 
     constructor(protected _appStore: AppStore<AppState>,
                 protected storeService: StoreService,
                 protected windowRef: WindowRefService,
-                protected supportLinkService: SupportLinkService) {
+                protected supportLinkService: SupportLinkService,
+                protected media: ObservableMedia) {
         this._appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.channels = this.storeService.getStoreChannels(
             this.currentStore.id,
@@ -34,7 +37,7 @@ export class SidebarComponent {
             .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
 
         this.linkToSupportCenter = this.supportLinkService.supportLink;
-
+        this.media.subscribe(() => this.hideTooltips = this.media.isActive('xs'));
     }
 
     hasChannelsPermissions() {
