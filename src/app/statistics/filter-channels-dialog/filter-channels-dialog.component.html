@@ -1,7 +1,8 @@
 <div matDialogTitle i18n>Filters</div>
 <mat-dialog-content>
-    <mat-form-field>
-        <mat-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country">
+    <div fxLayout="row" fxLayoutGap="60px">
+    <mat-form-field fxFlex>
+        <mat-select placeholder="Country" i18n-placeholder [(ngModel)]="filter.country" color="accent">
             <mat-option value="at"><img src="{{baseHref}}/assets/images/flags-mini/at.png" class="sf-flag-filter">
                 <ng-container i18n>Austria</ng-container>
             </mat-option>
@@ -118,7 +119,7 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field fxFlex>
         <mat-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
             <mat-option value="" i18n>All Types</mat-option>
             <mat-option value="ads" i18n>Product Listing Ads</mat-option>
@@ -130,7 +131,7 @@
             <mat-option value="solomo" i18n>Social Local Mobile</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field fxFlex>
         <mat-select placeholder="Category" i18n-placeholder [(ngModel)]="filter.segment">
             <mat-option value="" i18n>All Categories</mat-option>
             <mat-option value="professional" i18n>Professional Purchasing</mat-option>
@@ -149,6 +150,7 @@
             <mat-option value="sports" i18n>Sports</mat-option>
         </mat-select>
     </mat-form-field>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button color="accent" (click)="cancel()" i18n>CANCEL</button>
