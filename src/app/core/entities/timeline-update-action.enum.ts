@@ -2,5 +2,6 @@ export enum TimelineUpdateAction {
     ask = 'ask',
     start = 'start',
     finish = 'finish',
-    error = 'error'
+    error = 'error',
+    cancel = 'cancel',
 }
