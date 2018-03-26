@@ -42,7 +42,7 @@
     </div>
 
     <div *ngIf="!events.length">
-        <div class="heading-date mat-body-1" i18n>Today</div>
+        <div class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title" i18n>Today</div>
         <mat-card class="event">
             <mat-card-content>
                 <div class="no-events mat-body-1" i18n>No events</div>

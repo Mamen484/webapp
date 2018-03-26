@@ -5,7 +5,10 @@
     display: flex;
     height: calc(100vh - #{$toolbar-height});
     text-align: center;
-    background-color: white;
+
+    @media #{$xs} {
+      background-color: white;
+    }
 
     & > div {
       margin: auto;

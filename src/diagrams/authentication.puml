@@ -1,0 +1,65 @@
+This diagram shows simplified Authentication / Authorization process and is written using PlantUML language.
+To get more information visit: http://plantuml.com/activity-diagram-beta
+If you use WebStorm or another IDE, you can find a plugin for PlantUML, which will render the diagram directly in the IDE.
+
+@startuml
+
+start
+
+:user loads any page of the webapp;
+
+partition LoginByTokenGuard {
+    if(url has 'token' query param) then (yes)
+        :Save token as Authorization to the Browser Local Storage;
+    endif
+}
+partition IsAuthorizedGuard {
+    if (Authorization is in Local Storage)  then (yes)
+
+    else (no)
+        :Redirect to the login;
+        stop
+
+
+    endif
+
+    :fetch aggregated user information;
+
+    if (user has an enabled store OR he/she is an admin) then (yes)
+    else (no)
+         :Redirect to the login;
+         stop
+    endif
+}
+
+partition CheckProperLocaleGuard {
+        if (current locale equals to the user's language) then (yes)
+        else (no)
+             :Redirect to the proper locale folder;
+             stop
+        endif
+}
+
+partition InitializeStoreGuard {
+    if (user is admin and url has a store param) then (yes)
+        if (store exists) then (yes)
+            :fetch a store data;
+        else (no)
+            :Redirect to /store-not-found error page;
+            stop
+        endif
+    else (no)
+        if (url has a store param) then (yes)
+            :take a store data from userInfo;
+        else (no)
+            :take first enabled store;
+        endif
+    endif
+}
+
+:render an page for a specified store;
+
+
+stop
+
+@enduml
