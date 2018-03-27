@@ -9,12 +9,6 @@ import { Timeline } from '../core/entities/timeline';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
-import { MatDialog } from '@angular/material';
-import { TimelineFilterComponent } from './timeline-filter/timeline-filter.component';
-import { TimelineFilterData } from '../core/entities/timeline-filter-data';
-import { TimelineFilter } from '../core/entities/timeline-filter';
-import { isNull } from 'util';
-
 
 @Component({
     selector: 'sf-timeline',
@@ -32,11 +26,9 @@ export class TimelineComponent {
     processing = false;
     infiniteScrollDisabled = false;
     loadingTimeline = true;
-    activeFilter: TimelineFilterData;
 
     constructor(protected appStore: Store<AppState>,
-                protected timelineService: TimelineService,
-                protected dialog: MatDialog) {
+                protected timelineService: TimelineService) {
         this.appStore.select('currentStore').take(1)
             .subscribe(currentStore => this.timelineService.emitUpdatedTimeline(currentStore.id));
 
@@ -58,7 +50,7 @@ export class TimelineComponent {
         }
 
         this.processing = true;
-        this.timelineService.getEvents(null, this.nextLink).subscribe(timeline => {
+        this.timelineService.getEventsByLink(this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next && timeline._links.next.href;
             this.events = this.mergeEvents(this.formatEvents(timeline._embedded.timeline));
 
@@ -67,6 +59,16 @@ export class TimelineComponent {
             }
             this.processing = false;
         });
+    }
+
+    applyFilter(filter) {
+        this.loadingTimeline = true;
+        this.appStore.select('currentStore').flatMap(store =>
+            this.timelineService.getEvents(store.id, filter))
+            .subscribe(timeline => {
+                this.initializeEvents(timeline);
+                this.loadingTimeline = false;
+            });
     }
 
     getUpdateLink(update: TimelineUpdate) {
@@ -136,33 +138,6 @@ export class TimelineComponent {
         return update._embedded.channel.type === 'marketplace'
             ? `/${update._embedded.channel.name}`
             : `/${update._embedded.channel.type}/manage/${update._embedded.channel.name}`;
-    }
-
-    protected openFilterDialog() {
-        this.dialog.open(TimelineFilterComponent)
-            .afterClosed()
-            .subscribe((data: TimelineFilterData) => {
-                if (this.filterDidNotChange(data) || this.dialogCanceled(data)) {
-                    return;
-                }
-                this.loadingTimeline = true;
-                this.activeFilter = data;
-                let filter = TimelineFilter.createFrom(data);
-                this.appStore.select('currentStore').flatMap(store =>
-                    this.timelineService.getEvents(store.id, undefined, filter))
-                    .subscribe(timeline => {
-                        this.initializeEvents(timeline);
-                        this.loadingTimeline = false;
-                    });
-            });
-    }
-
-    protected filterDidNotChange(data) {
-        return this.activeFilter === data;
-    }
-
-    protected dialogCanceled(data) {
-        return isNull(data);
     }
 
 }

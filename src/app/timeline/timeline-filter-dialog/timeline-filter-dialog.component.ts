@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
-import { DateFilter } from '../../core/entities/date-filter.enum';
 import { TimelineTypeFilter } from '../../core/entities/timeline-type-filter.enum';
 import { TimelineFilterData } from '../../core/entities/timeline-filter-data';
+import { DateFilter } from '../../core/entities/date-filter.enum';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
-    selector: 'sf-timeline-filter',
-    templateUrl: './timeline-filter.component.html',
-    styleUrls: ['./timeline-filter.component.scss']
+  selector: 'sf-timeline-filter-dialog',
+  templateUrl: './timeline-filter-dialog.component.html',
+  styleUrls: ['./timeline-filter-dialog.component.scss']
 })
-export class TimelineFilterComponent implements OnInit {
+export class TimelineFilterDialogComponent implements OnInit {
 
     public dateFilter: DateFilter;
     public typeFilter: TimelineTypeFilter;
@@ -19,7 +19,7 @@ export class TimelineFilterComponent implements OnInit {
     public typeFilterOptions = TimelineTypeFilter;
 
 
-    constructor(protected dialogRef: MatDialogRef<TimelineFilterComponent>) {
+    constructor(protected dialogRef: MatDialogRef<TimelineFilterDialogComponent>) {
     }
 
     ngOnInit() {

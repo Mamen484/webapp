@@ -1,5 +1,5 @@
 export enum DateFilter {
-    today,
+    today = 1,
     yesterday,
     lastWeek,
     lastMonth,

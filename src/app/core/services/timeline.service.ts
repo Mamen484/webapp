@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { TimelineEventName as eventName } from '../entities/timeline-event-name.enum';
 import { TimelineUpdateName as updateName } from '../entities/timeline-update-name.enum';
 import { Observable } from 'rxjs/Observable';
 import { TimelineUpdate } from '../entities/timeline-update';
 import { TimelineUpdateAction as updateAction } from '../entities/timeline-update-action.enum';
 import { Subject } from 'rxjs/Subject';
-import { TimelineEventAction as eventAction } from '../entities/timeline-event-action.enum';
 import { TimelineFilter } from '../entities/timeline-filter';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
@@ -23,14 +21,18 @@ export class TimelineService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    getEvents(storeId, url = `/v1/store/${storeId}/timeline`, dateFilter: TimelineFilter = new TimelineFilter()): any {
+    getEvents(storeId, dateFilter: TimelineFilter = new TimelineFilter()): any {
         let params = new HttpParams()
             .set('name', dateFilter.name.join(','))
             .set('action', dateFilter.action.join(','));
         params = dateFilter.since ? params.set('since', dateFilter.since.toJSON()) : params;
         params = dateFilter.until ? params.set('until', dateFilter.until.toJSON()) : params;
 
-        return this.httpClient.get(environment.API_URL_WITHOUT_VERSION + url, {params})
+        return this.httpClient.get(environment.API_URL_WITHOUT_VERSION + `/v1/store/${storeId}/timeline`, {params})
+    }
+
+    getEventsByLink(url): any {
+        return this.httpClient.get(environment.API_URL_WITHOUT_VERSION + url);
     }
 
     getEventUpdates(storeId) {
