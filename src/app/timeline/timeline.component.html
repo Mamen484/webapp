@@ -1,8 +1,17 @@
 <div class="timeline" infiniteScroll [infiniteScrollDistance]="2" *ngIf="!loadingTimeline"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
-    <div class="heading-date mat-body-1" i18n>Latest updates</div>
-    <mat-card class="update">
+    <div fxLayout="row" class="header-row">
+        <div fxFlex class="mat-title">Timeline</div>
+        <div>
+            <button mat-button (click)="openFilterDialog()">
+                <span class="mat-body-1 filter-caption">Filter timeline</span>
+                <mat-icon>filter_list</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!activeFilter" class="heading-date mat-body-1" i18n>Latest updates</div>
+    <mat-card  *ngIf="!activeFilter" class="update">
         <mat-list>
             <mat-list-item class="updates-in-progress">
                 <div class="sf-fill-space mat-body-1" i18n>
@@ -13,11 +22,14 @@
                 </mat-chip-list>
             </mat-list-item>
             <mat-list-item *ngFor="let update of updates">
-                <a *ngIf="update.action === updateOperations.finish || update.action === updateOperations.error;else notCompletedUpdate" sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank" >
+                <a *ngIf="update.action === updateOperations.finish || update.action === updateOperations.error;else notCompletedUpdate"
+                   sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank">
                     <sf-update-row [update]="update"></sf-update-row>
                 </a>
                 <ng-template #notCompletedUpdate>
-                    <sf-update-row [update]="update" matTooltipPosition="above" matTooltip="Please wait until this update has finished processing before you can access the report" matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
+                    <sf-update-row [update]="update" matTooltipPosition="above"
+                                   matTooltip="Please wait until this update has finished processing before you can access the report"
+                                   matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
                 </ng-template>
             </mat-list-item>
             <mat-list-item *ngIf="!updates.length">
