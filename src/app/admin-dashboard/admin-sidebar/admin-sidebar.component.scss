@@ -13,12 +13,30 @@ mat-icon {
   &:hover {
     color: mat-color($accent);
   }
+
+  @media #{$xs} {
+    margin-right: 10px;
+    margin-left: 0;
+  }
 }
 
 mat-list-item {
   outline: none;
+  cursor: pointer;
 }
 
 .partners-link {
-  margin: auto;
+  @media #{$gt-xs} {
+    margin: auto;
+  }
+
+  @media #{$xs} {
+    display: contents;
+    text-decoration: none;
+    color: inherit;
+
+    mat-icon {
+      color: $black-54-opacity;
+    }
+  }
 }
