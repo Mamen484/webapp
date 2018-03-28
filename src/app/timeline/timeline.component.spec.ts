@@ -15,9 +15,9 @@ import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
 import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -27,8 +27,8 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline'])
-            timelineService.getEvents.and.returnValue(Observable.of(events2));
+            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService.getEventsByLink.and.returnValue(Observable.of(events2));
             timelineService.getTimelineStream.and.returnValue(Observable.of({
                 type: StreamEventType.finished,
                 data: {events, updates}
@@ -101,7 +101,7 @@ describe('TimelineComponent', () => {
         describe('scroll', () => {
             it('should load next page on scroll', () => {
                 component.onScroll();
-                expect(timelineService.getEvents).toHaveBeenCalledWith(null, '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
+                expect(timelineService.getEventsByLink).toHaveBeenCalledWith('/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
             });
 
             it('should set infiniteScrollDisabled to true when all the pages are loaded', () => {
@@ -125,12 +125,15 @@ describe('TimelineComponent', () => {
 
     });
 
+    @Component({selector: 'sf-timeline-filtering-area', template: ''})
+    class TimelineFilteringAreaComponent {}
+
     describe('integration tests', () => {
         let localStorage;
 
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline']);
+            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
 
@@ -147,6 +150,7 @@ describe('TimelineComponent', () => {
                     EventLinkComponent,
                     LegacyLinkDirective,
                     UpdateRowComponent,
+                    TimelineFilteringAreaComponent,
                 ],
                 providers: [
                     {

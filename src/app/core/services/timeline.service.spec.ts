@@ -36,7 +36,7 @@ describe('TimelineService', () => {
         service.getEvents(114);
         expect(httpClient.get.calls.mostRecent().args[0]).toEqual(`${environment.API_URL}/store/114/timeline`);
         expect(httpClient.get.calls.mostRecent().args[1].params.get('name'))
-            .toEqual('rule.transformation,rule.segmentation,order.lifecycle,feed.import,feed.export');
+            .toEqual('feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation');
         expect(httpClient.get.calls.mostRecent().args[1].params.get('action'))
             .toEqual('create,push,delete,ship,update,error');
     });
