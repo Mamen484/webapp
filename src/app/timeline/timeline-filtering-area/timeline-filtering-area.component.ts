@@ -29,7 +29,7 @@ export class TimelineFilteringAreaComponent implements OnInit {
         this.filterChanged.emit({filter: TimelineFilter.createFrom(this.activeFilter), isActive: this.activeFilter.isActive});
     }
 
-    protected openFilterDialog() {
+    public openFilterDialog() {
         this.dialog.open(TimelineFilterDialogComponent)
             .afterClosed()
             .subscribe((data: TimelineFilterData) => {
