@@ -46,7 +46,7 @@ export class TimelineFilterData {
         this.setIsActive();
     }
 
-    public applyValue({dateFilter, typeFilter, dateSince, dateUntil}: TimelineFilterData) {
+    public applyValue({dateFilter, typeFilter, dateSince, dateUntil}) {
         this._dateFilter = dateFilter;
         this._typeFilter = typeFilter;
         this._dateSince = this.getCustomDate(dateSince);
