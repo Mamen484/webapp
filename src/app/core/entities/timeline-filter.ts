@@ -56,13 +56,13 @@ export class TimelineFilter {
                 filter.name = [updateName.export];
                 break;
             case TypeFilter.rules:
-                filter.name = [eventName.ruleSegmentation, eventName.ruleTransformation];
+                filter.name = [eventName.ruleTransformation];
                 break;
             case TypeFilter.orders:
                 filter.name = [eventName.orderLifecycle];
                 break;
             case TypeFilter.autoRemove:
-                filter.name = [];
+                filter.name = [eventName.ruleSegmentation];
                 break;
         }
 

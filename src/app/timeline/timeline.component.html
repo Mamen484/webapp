@@ -6,8 +6,8 @@
         <sf-timeline-filtering-area (filterChanged)="applyFilter($event)"></sf-timeline-filtering-area>
     </div>
     <div *ngIf="!loadingTimeline">
-        <div *ngIf="!activeFilter" class="heading-date mat-body-1" i18n>Latest updates</div>
-        <mat-card *ngIf="!activeFilter" class="update">
+        <div *ngIf="showUpdates" class="heading-date mat-body-1" i18n>Latest updates</div>
+        <mat-card *ngIf="showUpdates" class="update">
             <mat-list>
                 <mat-list-item class="updates-in-progress">
                     <div class="sf-fill-space mat-body-1" i18n>

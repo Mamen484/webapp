@@ -22,6 +22,7 @@
         <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
       </mat-form-field>
     </div>
+  </form>
     <mat-form-field>
       <mat-select [(ngModel)]="typeFilter" name="type" placeholder="Type" i18n-placeholder>
         <mat-option i18n [value]="typeFilterOptions.all">All Types</mat-option>
@@ -29,10 +30,9 @@
         <mat-option i18n [value]="typeFilterOptions.export">Export</mat-option>
         <mat-option i18n [value]="typeFilterOptions.rules">Rules</mat-option>
         <mat-option i18n [value]="typeFilterOptions.orders">Orders</mat-option>
-        <mat-option i18n [value]="typeFilterOptions.autoRemove">Autp-Remove</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.autoRemove">Auto-Remove</mat-option>
       </mat-select>
     </mat-form-field>
-  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button color="accent" (click)="cancel()" i18n>CANCEL</button>

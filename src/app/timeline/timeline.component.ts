@@ -26,6 +26,7 @@ export class TimelineComponent {
     processing = false;
     infiniteScrollDisabled = false;
     loadingTimeline = true;
+    showUpdates = true;
 
     constructor(protected appStore: Store<AppState>,
                 protected timelineService: TimelineService) {
@@ -61,7 +62,7 @@ export class TimelineComponent {
         });
     }
 
-    applyFilter(filter) {
+    applyFilter({filter, isActive}) {
         this.loadingTimeline = true;
         this.appStore.select('currentStore').flatMap(store =>
             this.timelineService.getEvents(store.id, filter))
@@ -69,6 +70,8 @@ export class TimelineComponent {
                 this.initializeEvents(timeline);
                 this.loadingTimeline = false;
             });
+        // display updates block only if no filters applied
+        this.showUpdates = !isActive;
     }
 
     getUpdateLink(update: TimelineUpdate) {

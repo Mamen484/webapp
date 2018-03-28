@@ -26,7 +26,7 @@ export class TimelineFilteringAreaComponent implements OnInit {
     }
 
     notifyChanges() {
-        this.filterChanged.emit(TimelineFilter.createFrom(this.activeFilter));
+        this.filterChanged.emit({filter: TimelineFilter.createFrom(this.activeFilter), isActive: this.activeFilter.isActive});
     }
 
     protected openFilterDialog() {
