@@ -19,6 +19,10 @@ mat-card.orders-table {
     margin-right: 40px;
     padding: 10px;
 
+    &.total-price {
+      color: mat-color($accent);
+    }
+
 
     .description {
       width: 185px;
