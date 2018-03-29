@@ -3,6 +3,9 @@
 mat-icon[color="warn"] {
   color: mat-color($warn, 900);
   margin-right: 5px;
+  font-size: 16px;
+  height: 16px;
+  vertical-align: sub;
 }
 
 mat-tab-group {
@@ -11,5 +14,11 @@ mat-tab-group {
   @media #{$gt-xs}{
     margin-bottom: $content-margin;
     margin-right: $content-margin;
+  }
+}
+
+.tab-label {
+  &:hover {
+    color: mat-color($accent);
   }
 }
