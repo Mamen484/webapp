@@ -10,6 +10,8 @@ import { environment } from '../../../environments/environment';
 })
 export class AdminMenuComponent {
 
+    searchFocused = false;
+
     constructor(protected windowRef: WindowRefService,
                 protected localStorage: LocalStorageService) {
     }

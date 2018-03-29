@@ -1,7 +1,8 @@
 <sf-menu-container backgroundColor="#212121">
-    <div class="sf-nav-welcome-text mat-title" i18n>Admin</div>
+    <div class="sf-nav-welcome-text mat-title" i18n routerLink="/admin" fxShow [fxHide.xs]="searchFocused">Admin</div>
 
-    <sf-search-store class="sf-fill-space"></sf-search-store>
+    <sf-search-store class="sf-fill-space" (focus)="searchFocused = true"
+                     (blur)="searchFocused = false"></sf-search-store>
     <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
     <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
         <a mat-menu-item i18n (click)="logout()">Logout</a>

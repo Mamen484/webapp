@@ -16,7 +16,11 @@ mat-icon {
 
   @media #{$xs} {
     margin-right: 10px;
-    margin-left: 0;
+    margin-left: 10px;
+
+    & + span {
+      margin-right: 10px;
+    }
   }
 }
 
