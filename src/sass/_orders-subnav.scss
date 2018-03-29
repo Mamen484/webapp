@@ -7,7 +7,7 @@ mat-list.sf-subnav.mat-list {
     color: white;
     box-sizing: border-box;
 
-    &:hover, &.active {
+    &:first-child:hover, &.active {
       background-color: $white-12-opacity;
       border-bottom: 2px solid mat-color($accent, 600);
 
@@ -20,10 +20,12 @@ mat-list.sf-subnav.mat-list {
       color: white;
       text-transform: uppercase;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
 
       mat-icon {
         vertical-align: top;
+        margin-right: 10px;
+        height: 23px;
       }
     }
   }
