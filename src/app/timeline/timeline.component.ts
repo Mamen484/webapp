@@ -10,7 +10,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 
-
 @Component({
     selector: 'sf-timeline',
     templateUrl: './timeline.component.html',
@@ -27,6 +26,7 @@ export class TimelineComponent {
     processing = false;
     infiniteScrollDisabled = false;
     loadingTimeline = true;
+    showUpdates = true;
 
     constructor(protected appStore: Store<AppState>,
                 protected timelineService: TimelineService) {
@@ -51,7 +51,7 @@ export class TimelineComponent {
         }
 
         this.processing = true;
-        this.timelineService.getEvents(null, this.nextLink).subscribe(timeline => {
+        this.timelineService.getEventsByLink(this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next && timeline._links.next.href;
             this.events = this.mergeEvents(this.formatEvents(timeline._embedded.timeline));
 
@@ -60,6 +60,18 @@ export class TimelineComponent {
             }
             this.processing = false;
         });
+    }
+
+    applyFilter({filter, isActive}) {
+        this.loadingTimeline = true;
+        this.appStore.select('currentStore').flatMap(store =>
+            this.timelineService.getEvents(store.id, filter))
+            .subscribe(timeline => {
+                this.initializeEvents(timeline);
+                this.loadingTimeline = false;
+            });
+        // display updates block only if no filters applied
+        this.showUpdates = !isActive;
     }
 
     getUpdateLink(update: TimelineUpdate) {

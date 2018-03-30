@@ -18,6 +18,10 @@
   }
 }
 
+.header-row {
+  margin-right: 40px;
+}
+
 .event {
   mat-list-item {
     &:hover {
@@ -87,4 +91,12 @@ mat-spinner {
 mat-chip.updates-badge {
   background-color: mat-color($green, 400);
   color: mat-color($grey, 50);
+}
+
+.filter-caption {
+  margin-right: 10px;
+}
+
+sf-timeline-filtering-area {
+  margin-bottom: 10px;
 }
