@@ -1,0 +1,9 @@
+:host {
+  & > div {
+    margin-right: 40px;
+  }
+
+  & > div:last-child {
+    margin-bottom: 20px;
+  }
+}
