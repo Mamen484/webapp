@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </mat-list-item>
-                    <mat-list-item *ngFor="let item of order.items" >
+                    <mat-list-item *ngFor="let item of order.items">
                         <div fxLayout="column">
                             <div i18n>ID {{item.reference}}</div>
                             <div>{{item.name}}</div>
@@ -41,7 +41,8 @@
                         <div class="totals-handset mat-body-2" fxLayout="column">
                             <div fxLayout="row">
                                 <div fxFlex i18n>Total products</div>
-                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
+                                </div>
                             </div>
                             <div fxLayout="row">
                                 <div fxFlex i18n>Total delivery</div>
@@ -122,17 +123,15 @@
             </mat-table>
 
             <div class="totals">
-                <div class="total-row">
-                    <div class="description" i18n>Total products</div>
-                    <div class="value" i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                <div class="description" fxLayout="column" fxLayoutGap="20px">
+                    <div i18n>Total products</div>
+                    <div i18n>Total delivery</div>
+                    <div class="total-price" i18n>Total price</div>
                 </div>
-                <div class="total-row">
-                    <div class="description" i18n>Total delivery</div>
-                    <div class="value">{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                </div>
-                <div class="total-row total-price">
-                    <div class="description" i18n>Total price</div>
-                    <div class="value">{{order.payment.productAmount + order.payment.shippingAmount |
+                <div class="value" fxLayout="column" fxLayoutGap="20px">
+                    <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                    <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                    <div class="total-price" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
                         sfCurrency:order.payment.currency}}
                     </div>
                 </div>

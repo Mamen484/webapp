@@ -8,31 +8,23 @@ mat-card.orders-table {
 }
 
 .totals {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  display: grid;
   padding: 20px 0;
 
-  .total-row {
-    display: flex;
-    align-items: flex-end;
-    margin-right: 40px;
-    padding: 10px;
-
-    &.total-price {
-      color: mat-color($accent);
-    }
+  grid-template-columns: 24px 3fr 1fr 1fr 24px;
+  grid-template-areas: "paddingLeft gap description value paddingRight";
 
 
-    .description {
-      width: 185px;
-      padding-right: 15px;
-    }
+  .description {
+    grid-area: description;
+  }
 
-    .value {
-      text-align: right;
-      width: 50px;
-    }
+  .value {
+    grid-area: value;
+  }
+
+  .total-price {
+    color: mat-color($accent);
   }
 }
 
@@ -85,7 +77,7 @@ sf-orders-subnav .status {
         padding: 10px 24px;
         height: auto;
 
-        &:not(:last-child){
+        &:not(:last-child) {
           border-bottom: 1px solid mat-color($grey, 400);
         }
       }
