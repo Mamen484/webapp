@@ -1,11 +1,9 @@
 <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start end">
     <button mat-button (click)="openFilterDialog()">
-        <span class="mat-body-1 filter-caption" i18n>Filter timeline</span>
+        <span class="mat-body-1 filter-caption" i18n>Filter</span>
         <mat-icon>filter_list</mat-icon>
     </button>
     <div *ngIf="activeFilter.isActive" fxLayout="row" fxLayoutAlign="start center">
-        <div class="mat-caption" style="margin-right:10px" i18n>Applied filters:</div>
-
         <mat-chip-list>
             <mat-chip (removed)="activeFilter.typeFilter = undefined; this.notifyChanges()"
                       *ngIf="activeFilter.typeFilter">
