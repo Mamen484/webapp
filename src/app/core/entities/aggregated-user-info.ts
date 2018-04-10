@@ -37,12 +37,12 @@ export class AggregatedUserInfo {
      * If storeName specified, checks if there is an enabled store with name {storeName}.
      * Else finds the first store which status is not 'deleted'.
      *
-     * @param {string} storeName
+     * @param {any} storeId
      * @returns boolean
      */
-    hasEnabledStore(storeName?: string) {
-        if (storeName) {
-            return Boolean(this.findEnabledStore(storeName));
+    hasEnabledStore(storeId?: any) {
+        if (storeId) {
+            return Boolean(this.findEnabledStore(storeId));
         }
         return Boolean(this.findFirstEnabledStore());
     }
@@ -51,7 +51,7 @@ export class AggregatedUserInfo {
         return this._embedded.store.find(s => s.status !== StoreStatus.deleted);
     }
 
-    findEnabledStore(name: string) {
-        return this._embedded.store.find(s => s.name === name && s.status !== StoreStatus.deleted);
+    findEnabledStore(id: any) {
+        return this._embedded.store.find(s => s.id === Number(id) && s.status !== StoreStatus.deleted);
     }
 }

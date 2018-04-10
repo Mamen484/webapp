@@ -93,15 +93,15 @@ describe('InitializeStoreGuard', () => {
                 roles: ['user'],
                 _embedded: {
                     store: [
-                        {name: 'dabada', status: 'deleted'},
-                        {name: 'someStore', status: 'active'},
-                        {name: 'someStore1', status: 'active'},
-                        {name: 'someStore2', status: 'active'}]
+                        {name: 'dabada', status: 'deleted', id: 1},
+                        {name: 'someStore', status: 'active', id: 2},
+                        {name: 'someStore1', status: 'active', id: 3},
+                        {name: 'someStore2', status: 'active', id: 4}]
                 }
             }))
         );
 
-        guard.canActivate(<any>{queryParams: {store: 'someStore1'}}).subscribe(canActivate => {
+        guard.canActivate(<any>{queryParams: {store: '3'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.argsFor(1)[0].type).toEqual('SET_STORE');
             expect(dispatchSpy.calls.argsFor(1)[0].store.name).toEqual('someStore1');
@@ -118,15 +118,15 @@ describe('InitializeStoreGuard', () => {
                 roles: ['user'],
                 _embedded: {
                     store: [
-                        {name: 'dabada', status: 'deleted'},
-                        {name: 'someStore', status: 'active'},
-                        {name: 'someStore1', status: 'deleted'},
-                        {name: 'someStore2', status: 'active'}]
+                        {name: 'dabada', status: 'deleted', id: 1},
+                        {name: 'someStore', status: 'active', id: 2},
+                        {name: 'someStore1', status: 'deleted', id: 3},
+                        {name: 'someStore2', status: 'active', id: 4}]
                 }
             }))
         );
 
-        guard.canActivate(<any>{queryParams: {store: 'someStore1'}}).subscribe(canActivate => {
+        guard.canActivate(<any>{queryParams: {store: '3'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.argsFor(1)[0].type).toEqual('SET_STORE');
             expect(dispatchSpy.calls.argsFor(1)[0].store.name).toEqual('someStore');
