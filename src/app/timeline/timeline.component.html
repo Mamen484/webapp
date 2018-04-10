@@ -1,7 +1,10 @@
 <div class="timeline" infiniteScroll [infiniteScrollDistance]="2"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
+    <div fxLayout="row" class="header-row">
+        <div fxFlex class="mat-title">Timeline</div>
         <sf-timeline-filtering-area (filterChanged)="applyFilter($event)"></sf-timeline-filtering-area>
+    </div>
     <div *ngIf="!loadingTimeline">
         <div *ngIf="showUpdates" class="heading-date mat-body-1" i18n>Latest updates</div>
         <mat-card *ngIf="showUpdates" class="update">
