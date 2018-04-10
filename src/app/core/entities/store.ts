@@ -1,16 +1,16 @@
 import { Permission } from './permission';
 import { StoreStatus } from './store-status.enum';
+import { StoreOwner } from './store-owner';
+import { StoreFeed } from './store-feed';
 
-export interface Store {
+export class Store {
     id: number;
     name: string;
     status: StoreStatus;
     permission: Permission;
-    country: string;
-    feed: {
-        source: 'Shopify' | 'Prestashop',
-        url: string
-    };
+    owner = new StoreOwner();
+    feed = new StoreFeed();
+    country = '';
     _links: {
         self: {
             href: string
