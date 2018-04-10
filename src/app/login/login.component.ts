@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
-                                activeStore.name,
+                                activeStore.id,
                                 userData.roles.indexOf('admin') !== -1
                             );
                             return;
@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
     protected buildUrl(token, storeId, isAdmin) {
         let queryParams = new URLSearchParams();
         queryParams.set('token', token);
-        queryParams.set('store', storeId);
+        queryParams.set('store', String(storeId));
         let additionalPath = isAdmin ? '/admin' : '';
         return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }
