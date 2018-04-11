@@ -5,6 +5,8 @@ import { SharedModule } from '../shared/shared.module';
 import { TimelineRoutingModule } from './timeline-routing.module';
 import { EventLinkComponent } from './event-link/event-link.component';
 import { UpdateRowComponent } from './update-row/update-row.component';
+import { TimelineFilteringAreaComponent } from './timeline-filtering-area/timeline-filtering-area.component';
+import { TimelineFilterDialogComponent } from './timeline-filter-dialog/timeline-filter-dialog.component';
 
 @NgModule({
     imports: [
@@ -12,7 +14,8 @@ import { UpdateRowComponent } from './update-row/update-row.component';
         SharedModule,
         TimelineRoutingModule,
     ],
-    declarations: [TimelineComponent, EventLinkComponent, UpdateRowComponent]
+    declarations: [TimelineComponent, EventLinkComponent, UpdateRowComponent, TimelineFilteringAreaComponent, TimelineFilterDialogComponent],
+    entryComponents: [TimelineFilterDialogComponent]
 })
 export class TimelineModule {
 }

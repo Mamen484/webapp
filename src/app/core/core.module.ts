@@ -37,6 +37,7 @@ import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { HttpClientService } from './services/http-client.service';
+import { SupportLinkService } from './services/support-link.service';
 
 @NgModule({
     imports: [
@@ -73,6 +74,7 @@ import { HttpClientService } from './services/http-client.service';
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        SupportLinkService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

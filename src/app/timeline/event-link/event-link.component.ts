@@ -5,6 +5,7 @@ import { TimelineEventFormatted } from '../../core/entities/timeline-event-forma
 import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enum';
 import { Channel } from '../../core/entities/channel';
 import { TimelineErrorReason } from '../../core/entities/timeline-error-reason';
+import { TimelineUpdateAction } from '../../core/entities/timeline-update-action.enum';
 
 @Component({
     selector: 'sf-event-link',
@@ -18,6 +19,7 @@ export class EventLinkComponent {
     actions = TimelineEventAction;
     names = TimelineEventName;
     updateNames = TimelineUpdateName;
+    updateActions = TimelineUpdateAction;
 
     constructor() {
     }

@@ -1,13 +1,13 @@
-FROM node:9.1
-
-WORKDIR /var/www
+FROM finanzcheck/docker-node-java
 
 #install crowdin-cli
 RUN  apt-get update && \
-     apt-get install -y build-essential ruby ruby-dev && \
-     gem install crowdin-cli && \
-     apt-get clean && \
-     rm -rf /var/lib/apt/lists/*
+ wget -qO - https://artifacts.crowdin.com/repo/GPG-KEY-crowdin | apt-key add - && \
+ echo "deb https://artifacts.crowdin.com/repo/deb/ /" > /etc/apt/sources.list.d/crowdin.list && \
+ apt-get install apt-transport-https && \
+ apt-get update && apt-get install crowdin
+
+WORKDIR /var/www
 
 # Install app dependencies
 CMD ["npm", "run", "docker-start"]
