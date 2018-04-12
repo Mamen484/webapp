@@ -89,16 +89,16 @@ describe('InitializeStoreGuard', () => {
                 roles: ['user'],
                 _embedded: {
                     store: [
-                        {name: 'dabada', status: 'deleted'},
-                        {name: 'someStore', status: 'active'},
-                        {name: 'someStore1', status: 'active'},
-                        {name: 'someStore2', status: 'active'}]
+                        {name: 'dabada', status: 'deleted', id: 1},
+                        {name: 'someStore', status: 'active', id: 2},
+                        {name: 'someStore1', status: 'active', id: 3},
+                        {name: 'someStore2', status: 'active', id: 4}]
                 }
             })),
             {dispatch: dispatchSpy}
         );
 
-        guard.canActivate(<any>{queryParams: {store: 'someStore1'}}).subscribe(canActivate => {
+        guard.canActivate(<any>{queryParams: {store: '3'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.argsFor(0)[0].type).toEqual('SET_STORE');
             expect(dispatchSpy.calls.argsFor(0)[0].store.name).toEqual('someStore1');

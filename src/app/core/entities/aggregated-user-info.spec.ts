@@ -85,7 +85,7 @@ describe('AggregatedUserInfo', () => {
             {status: 'deleted', id: 1, name: 'store1'},
             {status: 'active', id: 2, name: 'store2'},
         ]}});
-        expect(userInfo.hasEnabledStore('store2')).toEqual(true);
+        expect(userInfo.hasEnabledStore(2)).toEqual(true);
     });
 
     it('hasEnabledStore should return false is there is NO store with a status different from "deleted"', () => {
@@ -121,7 +121,7 @@ describe('AggregatedUserInfo', () => {
             {status: 'deleted', id: 1, name: 'store1'},
             {status: 'active', id: 2, name: 'store2'},
         ]}});
-        expect(userInfo.findEnabledStore('store2').id).toEqual(2);
+        expect(userInfo.findEnabledStore('2').id).toEqual(2);
     });
 
 });

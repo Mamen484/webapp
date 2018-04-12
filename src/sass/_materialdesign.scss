@@ -74,3 +74,16 @@ mat-sidenav-container {
 sf-filtering-tabs mat-tab-header {
   z-index: 0;
 }
+sf-filter-channels-dialog {
+  .mat-focused {
+    label.mat-input-placeholder {
+      color: mat-color($accent);
+    }
+    .mat-form-field-underline {
+      &, .mat-form-field-ripple {
+        background-color: mat-color($accent);
+      }
+    }
+  }
+
+}

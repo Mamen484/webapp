@@ -1,0 +1,38 @@
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start end">
+    <button mat-button (click)="openFilterDialog()">
+        <span class="mat-body-1 filter-caption" i18n>Filter</span>
+        <mat-icon>filter_list</mat-icon>
+    </button>
+    <div *ngIf="activeFilter.isActive" fxLayout="row" fxLayoutAlign="start center">
+        <mat-chip-list>
+            <mat-chip (removed)="activeFilter.typeFilter = undefined; this.notifyChanges()"
+                      *ngIf="activeFilter.typeFilter">
+                <ng-container i18n>Type:</ng-container>
+                <span *ngIf="activeFilter.typeFilter === typeOptions.import" i18n>Feed Import</span>
+                <span *ngIf="activeFilter.typeFilter === typeOptions.export" i18n>Feed Export</span>
+                <span *ngIf="activeFilter.typeFilter === typeOptions.orders" i18n>Orders</span>
+                <span *ngIf="activeFilter.typeFilter === typeOptions.rules" i18n>Rules</span>
+                <span *ngIf="activeFilter.typeFilter === typeOptions.autoRemove" i18n>Auto-Remove</span>
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <mat-chip (removed)="activeFilter.dateFilter = undefined; this.notifyChanges()"
+                      *ngIf="activeFilter.dateFilter && activeFilter.dateFilter !== dateFilterOptions.custom">
+                <span *ngIf="activeFilter.dateFilter === dateFilterOptions.today" i18n>Today</span>
+                <span *ngIf="activeFilter.dateFilter === dateFilterOptions.yesterday" i18n>Yesterday</span>
+                <span *ngIf="activeFilter.dateFilter === dateFilterOptions.lastWeek" i18n>Last Week</span>
+                <span *ngIf="activeFilter.dateFilter === dateFilterOptions.lastMonth" i18n>Last Month</span>
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <mat-chip (removed)="activeFilter.dateSince = undefined; this.notifyChanges()"
+                      *ngIf="activeFilter.dateSince">
+                <ng-container i18n>Date Since: {{activeFilter.dateSince | date:'mediumDate'}}</ng-container>
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <mat-chip (removed)="activeFilter.dateUntil = undefined; this.notifyChanges()"
+                      *ngIf="activeFilter.dateUntil">
+                <ng-container i18n>Date Until: {{activeFilter.dateUntil | date:'mediumDate'}}</ng-container>
+                <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+</div>

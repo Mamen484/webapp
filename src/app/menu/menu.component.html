@@ -1,5 +1,5 @@
 <sf-menu-container>
-    <div class="sf-nav-welcome-text mat-title">{{currentStore.name}}</div>
+    <div class="sf-nav-welcome-text mat-title" routerLink="/home">{{currentStore.name}}</div>
 
     <sf-support-help-center fxShow fxHide.lt-md></sf-support-help-center>
     <div class="sf-fill-space" fxShow fxHide.gt-sm></div>
@@ -10,7 +10,7 @@
     </a>
     <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
     <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
-        <a mat-menu-item sfLegacyLink path="/admin" *ngIf="isAdmin()" i18n>Admin</a>
+        <a mat-menu-item routerLink="/admin" *ngIf="isAdmin()" i18n>Admin</a>
         <a mat-menu-item sfLegacyLink path="/marketplaces/globalparameters" i18n
            *ngIf="currentStore.permission.marketplaces">Settings</a>
         <a mat-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>

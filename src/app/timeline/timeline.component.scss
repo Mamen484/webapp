@@ -17,6 +17,10 @@
   }
 }
 
+.header-row {
+  margin-right: 40px;
+}
+
 .event {
   mat-list-item {
     &:hover {
@@ -115,4 +119,12 @@ mat-chip.updates-badge {
   mat-list-item {
     box-sizing: border-box;
   }
+}
+
+.filter-caption {
+  margin-right: 10px;
+}
+
+sf-timeline-filtering-area {
+  margin-bottom: 10px;
 }

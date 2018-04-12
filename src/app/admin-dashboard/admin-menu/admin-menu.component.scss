@@ -35,3 +35,9 @@ sf-search-store {
     flex: 1;
   }
 }
+
+@media #{$xs} {
+  mat-icon.sf-nav-icon {
+    margin-left: 20px;
+  }
+}
