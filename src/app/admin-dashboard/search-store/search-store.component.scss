@@ -14,15 +14,15 @@ $toolbar-search-margin: 10px;
   z-index: 20;
   flex: 1;
   font-size: mat-font-size($config, headline);
-  background: mat-color($mat-blue-grey, A100, 0.2);
+  background: mat-color($primary, A100, 0.2);
   border-radius: 2px;
   ::placeholder {
-    color: mat-color($mat-blue-grey, A100);
+    color: mat-color($primary, A100);
     font-size: mat-font-size($config, body-1);
   }
 
   .sf-search-icon {
-    color: mat-color($mat-blue-grey, A100);
+    color: mat-color($primary, A100);
     float: left;
     padding: $icon-padding;
     vertical-align: middle;
@@ -32,7 +32,7 @@ $toolbar-search-margin: 10px;
     width: calc(100% - (#{$icon-width} + (#{$icon-padding} * 2) + #{$toolbar-search-margin * 2}));
     border: none;
     margin-left: $toolbar-search-margin;
-    color: mat-color($mat-blue-grey, A100);
+    color: mat-color($primary, A100);
     background-color: transparent;
     font-size: mat-font-size($config, body-1);
   }
