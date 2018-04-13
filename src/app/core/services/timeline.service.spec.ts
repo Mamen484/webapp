@@ -7,7 +7,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpHeaders } from '@angular/common/http';
 
-fdescribe('TimelineService', () => {
+describe('TimelineService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
