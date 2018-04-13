@@ -19,7 +19,7 @@ mat-card-content {
   }
 
   &.channel-revenue {
-    color: mat-color($primary);
+    color: $black-54-opacity;
   }
   &.channel-checked {
     color: mat-color($green, 400);
