@@ -7,7 +7,7 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpHeaders } from '@angular/common/http';
 
-describe('TimelineService', () => {
+fdescribe('TimelineService', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -59,8 +59,9 @@ describe('TimelineService', () => {
     it('should fetch both events and updates when timeline update emitted', inject([TimelineService, HttpTestingController], (service: TimelineService, httpMock: HttpTestingController) => {
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
         service.emitUpdatedTimeline(124);
+        console.log(httpMock);
         httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.export,feed.import&since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=rule.transformation,rule.segmentation,order.lifecycle,feed.import,feed.export&action=create,push,delete,ship,update,error`);
+        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         httpMock.verify();
 
     }));
@@ -83,7 +84,7 @@ describe('TimelineService', () => {
         service.emitUpdatedTimeline(116);
 
         let updates = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=feed.export,feed.import&since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        let events = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=rule.transformation,rule.segmentation,order.lifecycle,feed.import,feed.export&action=create,push,delete,ship,update,error`);
+        let events = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
 
         updates.flush({test: 112, _embedded: {timeline: []}});
         events.flush({test: 114, _embedded: {timeline: []}});
