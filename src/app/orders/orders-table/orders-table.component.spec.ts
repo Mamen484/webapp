@@ -2,10 +2,10 @@ import { OrdersTableComponent } from './orders-table.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { OrdersService } from '../../core/services/orders.service';
-import { MatDialog, MatMenuModule, MatTableModule } from '@angular/material';
+import { MatDialog, MatMenuModule, MatPaginator, MatTableModule } from '@angular/material';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { async, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
 import { Observable } from 'rxjs/Observable';
 import { Order } from '../../core/entities/orders/order';
@@ -15,6 +15,7 @@ import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { Router } from '@angular/router';
 import { LoadingFlagService } from '../../core/services/loading-flag.service';
+import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -25,12 +26,12 @@ describe('OrdersTableComponent', () => {
     let router: jasmine.SpyObj<Router>;
     let loadingFlagService: jasmine.SpyObj<LoadingFlagService>;
 
-    let component;
-    let fixture;
+    let component: OrdersTableComponent;
+    let fixture: ComponentFixture<OrdersTableComponent>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList']);
+        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
@@ -65,7 +66,7 @@ describe('OrdersTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
-        component.paginator = {page: Observable.empty(), pageIndex: 0};
+        component.paginator = <any>({page: Observable.empty(), pageIndex: 0});
     });
 
     it('should display a loading spinner while data is being loaded', () => {
@@ -176,6 +177,19 @@ describe('OrdersTableComponent', () => {
         ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].hasErrors).toEqual(true);
+    });
+
+    it('should acknowledge selected orders on click the `acknowledge` button', () => {
+        appStore.select.and.returnValue(Observable.of({id: 190}));
+        ordersService.acknowledge.and.returnValue(Observable.of({}));
+        component.selection.select(<OrdersTableItem>{reference: 'tadada1', hasErrors: false}, <OrdersTableItem>{reference: 'tadada2', hasErrors: false});
+        component.acknowledge();
+        expect(ordersService.acknowledge).toHaveBeenCalledTimes(1);
+        expect(ordersService.acknowledge.calls.mostRecent().args[0]).toEqual(190);
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].reference).toEqual('tadada1');
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][1].reference).toEqual('tadada2');
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].hasErrors).not.toBeDefined();
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][1].hasErrors).not.toBeDefined();
     });
 
     function mockOrder() {

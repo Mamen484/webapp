@@ -27,7 +27,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
-    selection = new SelectionModel(true, []);
+    selection = new SelectionModel<OrdersTableItem>(true, []);
 
     resultsLength = 0;
 
@@ -106,6 +106,17 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.displayedColumns = this.requiredColumns
             .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
 
+    }
+
+    // button actions
+
+    acknowledge() {
+        this.appStore.select('currentStore')
+            .flatMap(store => this.ordersService.acknowledge(
+                store.id,
+                this.selection.selected.map(order => ({reference: order.reference})
+                )))
+            .subscribe();
     }
 
     protected fetchData(store: Store, filter: OrdersFilter) {

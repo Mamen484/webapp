@@ -158,5 +158,14 @@ describe('OrdersService', () => {
             service.fetchOrder(11, 14).subscribe();
             httpMock.expectOne(`${environment.API_URL}/store/11/order/14`);
             httpMock.verify();
-        }))
+        }));
+
+    it('should acknowledge orders',
+        inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
+            service.acknowledge(10, [{reference: '171'}, {reference: '174'}]).subscribe();
+            let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/acknowledge`);
+            expect(req.request.body.order[0].reference).toEqual('171');
+            expect(req.request.body.order[1].reference).toEqual('174');
+            httpMock.verify();
+        }));
 });

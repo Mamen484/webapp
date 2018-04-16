@@ -14,12 +14,16 @@ export class OrdersService {
 
     fetchOrdersList(storeId, filter: OrdersFilter = new OrdersFilter()) {
         return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order`, {
-                params: filter.toHttpParams()
-            }) as Observable<PagedResponse<{ order: Order[] }>>;
+            params: filter.toHttpParams()
+        }) as Observable<PagedResponse<{ order: Order[] }>>;
     }
 
     fetchOrder(storeId, orderId): Observable<Order> {
         return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/${orderId}`) as Observable<Order>;
+    }
+
+    acknowledge(storeId, orders: {reference: string}[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/acknowledge`, {order: orders});
     }
 
 }
