@@ -16,6 +16,7 @@ import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
     selector: 'sf-orders-table',
@@ -26,6 +27,7 @@ import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowled
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    selection = new SelectionModel(true, []);
 
     resultsLength = 0;
 
@@ -60,10 +62,24 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected loadingFlagService: LoadingFlagService) {
     }
 
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+        const numSelected = this.selection.selected.length;
+        const numRows = this.dataSource.data.length;
+        return numSelected === numRows;
+    }
+
     goToOrder(orderId: string) {
         this.loadingFlagService.triggerLoadingStarted();
         this.router.navigate(['orders', 'detail', orderId])
             .then(() => this.loadingFlagService.triggerLoadedFinished());
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+        this.isAllSelected() ?
+            this.selection.clear() :
+            this.dataSource.data.forEach(row => this.selection.select(row));
     }
 
     ngOnInit() {

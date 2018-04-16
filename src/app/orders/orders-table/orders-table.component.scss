@@ -3,6 +3,11 @@
 
 @include order-actions-bar();
 
+.actions {
+  justify-content: flex-start;
+  padding-left: 29px;
+}
+
 mat-card {
   padding:0;
   width: calc(100% - #{$content-margin});
