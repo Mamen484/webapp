@@ -14,6 +14,8 @@ import { FilteringTabsComponent } from './filtering-tabs/filtering-tabs.componen
 import { OrdersListMobileComponent } from './orders-list/orders-list-mobile/orders-list-mobile.component';
 import { OrdersListDesktopComponent } from './orders-list/orders-list-desktop/orders-list-desktop.component';
 import { OrdersTableSmallComponent } from './orders-table-small/orders-table-small.component';
+import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog/confirm-shipping-dialog.component';
+import { OrderShippedSnackbarComponent } from './order-shipped-snackbar/order-shipped-snackbar.component';
 
 @NgModule({
     imports: [
@@ -21,8 +23,27 @@ import { OrdersTableSmallComponent } from './orders-table-small/orders-table-sma
         SharedModule,
         OrdersRoutingModule
     ],
-    declarations: [OrdersListComponent, OrdersFilterDialogComponent, SearchOrdersComponent, OrdersTableComponent, OrderDetailsComponent, LabelsDialogComponent, OrdersSubnavComponent, FilteringTabsComponent, OrdersListMobileComponent, OrdersListDesktopComponent, OrdersTableSmallComponent],
-    entryComponents: [OrdersFilterDialogComponent, LabelsDialogComponent]
+    declarations: [
+        OrdersListComponent,
+        OrdersFilterDialogComponent,
+        SearchOrdersComponent,
+        OrdersTableComponent,
+        OrderDetailsComponent,
+        LabelsDialogComponent,
+        OrdersSubnavComponent,
+        FilteringTabsComponent,
+        OrdersListMobileComponent,
+        OrdersListDesktopComponent,
+        OrdersTableSmallComponent,
+        ConfirmShippingDialogComponent,
+        OrderShippedSnackbarComponent,
+    ],
+    entryComponents: [
+        OrdersFilterDialogComponent,
+        LabelsDialogComponent,
+        ConfirmShippingDialogComponent,
+        OrderShippedSnackbarComponent,
+    ]
 })
 export class OrdersModule {
 }

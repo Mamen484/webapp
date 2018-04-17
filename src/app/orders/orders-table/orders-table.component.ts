@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
-import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -17,6 +17,8 @@ import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
+import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 
 @Component({
     selector: 'sf-orders-table',
@@ -59,7 +61,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
                 protected router: Router,
-                protected loadingFlagService: LoadingFlagService) {
+                protected loadingFlagService: LoadingFlagService,
+                protected snackbar: MatSnackBar) {
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -117,6 +120,19 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 this.selection.selected.map(order => ({reference: order.reference})
                 )))
             .subscribe();
+    }
+
+    openShippingDialog() {
+        this.matDialog.open(ConfirmShippingDialogComponent)
+            .afterClosed()
+            .subscribe((shippingConfirmed: boolean) => {
+                if (shippingConfirmed) {
+                    // @TODO: add a request to the API when an endpoint is implemented
+                    this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
+                        duration: 2000
+                    });
+                }
+            });
     }
 
     protected fetchData(store: Store, filter: OrdersFilter) {

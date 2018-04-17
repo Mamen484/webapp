@@ -4,7 +4,7 @@
             <div fxFlex>{{selection.selected.length}}/{{dataSource.data.length}}</div>
             <ng-container
                     *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.acknowledged || ordersFilter.error === errorType.ship">
-                <button mat-button color="accent" i18n class="orders-action">Ship</button>
+                <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
 
