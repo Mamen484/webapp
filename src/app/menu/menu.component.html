@@ -15,7 +15,7 @@
         <a mat-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>
         <a mat-menu-item sfLegacyLink path="/facturation" i18n
            *ngIf="currentStore.permission.facturation">Membership</a>
-        <a mat-menu-item sfLegacyLink path="/tools/access" i18n>Access</a>
+        <a mat-menu-item sfLegacyLink path="/tools/access" i18n *ngIf="!isManager">Access</a>
         <hr>
         <ng-container *ngFor="let store of userInfo._embedded.store">
             <button mat-menu-item *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
