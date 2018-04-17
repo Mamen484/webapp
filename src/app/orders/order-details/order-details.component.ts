@@ -3,8 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Order } from '../../core/entities/orders/order';
 import { OrderItem } from '../../core/entities/orders/order-item';
 import { cloneDeep } from 'lodash';
-import { MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrderDetailsItem } from '../../core/entities/orders/order-details-item';
+import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
+import { CarrierInfo } from '../../core/entities/carrier-info';
+import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 
 @Component({
     selector: 'sf-order-details',
@@ -17,7 +20,9 @@ export class OrderDetailsComponent implements OnInit {
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute,
+                protected matDialog: MatDialog,
+                protected snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -33,6 +38,17 @@ export class OrderDetailsComponent implements OnInit {
                 }
             }));
         });
+    }
+
+    shipOrder() {
+        this.matDialog.open(CarrierDetailsDialogComponent)
+            .afterClosed().subscribe((data?: CarrierInfo) => {
+            if (data) {
+                    this.snackBar.openFromComponent(OrderShippedSnackbarComponent, {
+                        duration: 2000
+                    });
+            }
+        })
     }
 
 }
