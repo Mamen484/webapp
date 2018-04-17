@@ -9,6 +9,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
+import { Observable } from 'rxjs/Observable';
 
 describe('TimelineService', () => {
 
