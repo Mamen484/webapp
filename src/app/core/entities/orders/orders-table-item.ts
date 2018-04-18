@@ -3,6 +3,7 @@ import { OrderStatus } from './order-status.enum';
 export interface OrdersTableItem {
     hasErrors: boolean;
     channelImage: string;
+    channelName: string;
     reference: string;
     id: number;
     status: OrderStatus;

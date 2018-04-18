@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_SNACK_BAR_DATA } from '@angular/material';
 
 @Component({
   selector: 'sf-order-shipped-snackbar',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderShippedSnackbarComponent implements OnInit {
 
-  constructor() { }
+  plural;
+  action: 'ship' | 'acknowledge';
+
+  constructor(@Inject(MAT_SNACK_BAR_DATA) {plural = false, action}: {plural: boolean, action: 'ship' | 'acknowledge'}) {
+    this.plural = plural;
+    this.action = action;
+  }
 
   ngOnInit() {
   }

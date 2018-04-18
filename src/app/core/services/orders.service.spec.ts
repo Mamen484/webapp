@@ -162,7 +162,7 @@ describe('OrdersService', () => {
 
     it('should acknowledge orders',
         inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
-            service.acknowledge(10, [{reference: '171'}, {reference: '174'}]).subscribe();
+            service.acknowledge(10, [{reference: '171', channelName: ''}, {reference: '174', channelName: ''}]).subscribe();
             let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/acknowledge`);
             expect(req.request.body.order[0].reference).toEqual('171');
             expect(req.request.body.order[1].reference).toEqual('174');

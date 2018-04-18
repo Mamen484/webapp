@@ -117,9 +117,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.appStore.select('currentStore')
             .flatMap(store => this.ordersService.acknowledge(
                 store.id,
-                this.selection.selected.map(order => ({reference: order.reference})
+                this.selection.selected.map(order => ({reference: order.reference, channelName: order.channelName})
                 )))
-            .subscribe();
+            .subscribe(() => {
+                this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
+                    duration: 2000,
+                    data: {plural: this.selection.selected.length > 1, action: 'acknowledge'}
+                });
+            });
     }
 
     openShippingDialog() {
@@ -129,7 +134,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 if (shippingConfirmed) {
                     // @TODO: add a request to the API when an endpoint is implemented
                     this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
-                        duration: 2000
+                        duration: 2000,
+                        data: {plural: this.selection.selected.length > 1, action: 'ship'}
                     });
                 }
             });
@@ -159,6 +165,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         return <OrdersTableItem>{
             hasErrors: Boolean(order.errors && order.errors.length),
             channelImage: order._embedded.channel._links.image.href,
+            channelName: order._embedded.channel.name,
             reference: order.reference,
             id: order.id,
             status: order.status,

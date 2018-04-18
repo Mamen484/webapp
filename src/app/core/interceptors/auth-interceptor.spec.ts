@@ -120,4 +120,17 @@ describe('AuthInterceptor', () => {
                 expect(request.request.method).toEqual('GET');
                 httpMock.verify();
             }));
+
+    it('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/order/acknowledge resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                getItemSpy.and.returnValue('tarampapam');
+                http.post(environment.API_URL + '/store/112/order/acknowledge', {}).subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === 'tarampapam'
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('POST');
+                httpMock.verify();
+            }));
 });
