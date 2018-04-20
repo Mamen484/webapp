@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from '../services/user.service';
-import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 import { SET_STORE } from '../reducers/current-store-reducer';
-import { Store } from '@ngrx/store';
+import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { StoreStatus } from '../entities/store-status.enum';
+import { StoreService } from '../services/store.service';
+import { Permission } from '../entities/permission';
+import { Store } from '../entities/store';
 
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {
 
-    constructor(protected userService: UserService, protected appStore: Store<AppState>) {
+    constructor(protected appStore: AppStore<AppState>,
+                protected storeService: StoreService,
+                protected router: Router) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-        return this.userService.fetchAggregatedInfo().map(userInfo => {
-            let store;
-            if (next.queryParams.store) {
-                store = userInfo._embedded.store.find(s => s.name === next.queryParams.store || String(s.id) === next.queryParams.store);
+        return this.appStore.select('userInfo').filter(userInfo => Boolean(userInfo)).take(1).flatMap(userInfo => {
+            if (userInfo.isAdmin() && next.queryParams.store) {
+                return this.storeService.getStore(next.queryParams.store).map((store: Store) => {
+                    store.permission = Permission.createForAdmin();
+                    this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+                    return true;
+                }).catch(error => {
+                    this.router.navigate(['/store-not-found'], {skipLocationChange: true});
+                    return Observable.of(false);
+                });
             }
-            if (!store) {
-                store = userInfo._embedded.store.find(s => s.status !== StoreStatus.deleted);;
-            }
-            this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
-            this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+            let enabledStore = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();
+            this.appStore.select('currentStore').dispatch({type: SET_STORE, store: enabledStore});
 
-            return true;
+            return Observable.of(true);
         });
     }
+
 }

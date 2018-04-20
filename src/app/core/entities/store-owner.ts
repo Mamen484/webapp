@@ -1,7 +1,8 @@
-export interface StoreOwner {
-    email?: string;
-    login?: string;
-    password?: string;
+export class StoreOwner {
+    email? = '';
+    login? = '';
+    password? = '';
+    phone? = '';
     token?: string; // GET requests
     tokens?: string[]; // POST requests
 }

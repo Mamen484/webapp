@@ -4,11 +4,11 @@
     <sf-store-statistics [statistics]="statistics" *ngIf="hasStatisticsPermission"></sf-store-statistics>
     <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
                         [processing]="processingFilters"></sf-search-channels>
-    <div fxLayout="row" fxLayoutGap="20px" fxLayoutWrap fxLayoutAlign="start stretch" class="channels-list">
+    <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="start stretch" class="channels-list">
 
-        <mat-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(33.33% - 20px)"
+        <mat-card class="channel-card" fxFlex.md="0 0 calc(33.33% - 20px)" fxFlex.sm="0 0 calc(50% - 20px)"
 
-                  fxFlex.xs="0 0 calc(33.33% - 20px)" fxFlex.lg="0 0 calc(25% - 20px)"
+                  fxFlex.xs="1 1 100%" fxFlex.lg="0 0 calc(25% - 20px)"
                   fxFlex.xl="0 0 calc(16.66% - 20px)"
                   *ngFor="let channel of channels._embedded.channel"
                 [class.suggested-channel]="!channel.installed">

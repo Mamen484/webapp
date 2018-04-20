@@ -49,7 +49,7 @@ export class StatisticsComponent {
                 this.statistics = statistics;
                 this.initialize(channels);
                 this.processing = false;
-                this.charge = charge;
+                this.charge = charge.charge;
 
                 this.appStore.select('currentStore').take(1).subscribe(currentStore => {
                     if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {

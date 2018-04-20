@@ -4,14 +4,13 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { environment } from '../../../environments/environment';
 import { AuthInterceptor } from './auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 describe('AuthInterceptor', () => {
 
     let getItemSpy: jasmine.Spy;
     beforeEach(() => {
-        getItemSpy = jasmine.createSpy('localStorage.getItem()')
+        getItemSpy = jasmine.createSpy('localStorage.getItem()');
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
@@ -119,6 +118,19 @@ describe('AuthInterceptor', () => {
                     && req.headers.get('Accept') === 'application/json');
 
                 expect(request.request.method).toEqual('GET');
+                httpMock.verify();
+            }));
+
+    it('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/order/acknowledge resource',
+        inject([HttpClient, HttpTestingController],
+            (http: HttpClient, httpMock: HttpTestingController) => {
+                getItemSpy.and.returnValue('tarampapam');
+                http.post(environment.API_URL + '/store/112/order/acknowledge', {}).subscribe();
+                const request = httpMock.expectOne(req =>
+                    req.headers.get('Authorization') === 'tarampapam'
+                    && req.headers.get('Accept') === 'application/json');
+
+                expect(request.request.method).toEqual('POST');
                 httpMock.verify();
             }));
 });

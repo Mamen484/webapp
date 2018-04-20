@@ -6,14 +6,17 @@
 @import 'sass/menu';
 @import 'sass/utils';
 @import 'sass/dialog';
+@import 'sass/orders-table';
+@import 'sass/orders-subnav';
 
 html, body, app-root {
-  min-width: $min-width;
   height: 100vh;
   margin: 0;
   display: block;
-  background-color: mat-color($grey, 50);
   color: $black-87-opacity;
+  @media #{$gt-xs} {
+    background-color: mat-color($grey, 50);
+  }
 }
 
 hr {

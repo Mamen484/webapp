@@ -42,7 +42,11 @@ export class CreatePasswordComponent implements OnInit {
     }
 
     public createPassword() {
-        if (this.emailControl.hasError('required') || this.passwordControl.hasError('required')) {
+        if (this.emailControl.hasError('required')
+            || this.passwordControl.hasError('required')
+            || this.emailControl.hasError('email')
+            || this.passwordControl.hasError('minlength')
+        ) {
             return;
         }
         // This is currently shopify specific
@@ -50,9 +54,9 @@ export class CreatePasswordComponent implements OnInit {
         this.store.owner.password = this.passwordControl.value;
         this.service.createPassword(this.store)
             .subscribe((store: CreateStoreModel) => {
-                this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
-                this.router.navigate(['register', 'create-account']);
-            },
+                    this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+                    this.router.navigate(['register', 'create-account']);
+                },
                 () => this.displayServerError = true);
 
         return false;

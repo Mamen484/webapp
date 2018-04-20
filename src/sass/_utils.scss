@@ -40,3 +40,13 @@ $badge-font-level: caption;
   position: relative;
   top: 47px;
 }
+
+
+.scrollable-container {
+  padding: $content-margin $content-margin $content-margin 5px;
+
+  display: block;
+  // viewport height - toolbar height - top padding - bottom padding
+  height: calc(100vh - #{$toolbar-height} - (2 * #{$content-margin}));
+  overflow: auto;
+}

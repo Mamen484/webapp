@@ -1,0 +1,14 @@
+@import '../../../sass/variables';
+
+mat-select {
+  width: 200px;
+  height: 2.5*mat-line-height($config, body-1);
+}
+
+.column {
+  margin-left: 20px;
+}
+
+mat-dialog-actions {
+  float: right;
+}

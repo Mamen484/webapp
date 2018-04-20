@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
+import { LocalStorageService } from '../services/local-storage.service';
+import { WindowRefService } from '../services/window-ref.service';
 
 @Injectable()
 export class ShopifyGuard implements CanActivate {
 
-    constructor(protected service: ShopifyAuthentifyService) {
+    constructor(protected service: ShopifyAuthentifyService,
+                protected localStorage: LocalStorageService,
+                protected windowRef: WindowRefService) {
     }
 
-    canActivate(next: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    canActivate(next: ActivatedRouteSnapshot): boolean {
 
-        localStorage.removeItem('sf.registration');
+        this.localStorage.removeItem('sf.registration');
 
         if (!next.queryParams['shop']) {
-            window.location.href = environment.SHOPIFY_APP_URL;
+            this.windowRef.nativeWindow.location.href = environment.SHOPIFY_APP_URL;
         } else if (!next.queryParams['code']) {
             this.service.getAuthorizationUrl(next.queryParams['shop']).subscribe((url: string) => {
-                window.location.href = url;
+                this.windowRef.nativeWindow.location.href = url;
             });
         }
         return false;

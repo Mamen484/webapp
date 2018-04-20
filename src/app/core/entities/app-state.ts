@@ -1,10 +1,14 @@
 import { AggregatedUserInfo } from './aggregated-user-info';
 import { Store } from './store';
 import { Statistics } from './statistics';
-import { TimelineEventFormatted } from './timeline-event-formatted';
+import { StoreChannelDetails } from './store-channel-details';
+import { Tag } from './tag';
 
 export interface AppState {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
-    storeStatistics: Statistics
+    currentRoute: 'channels' | 'orders';
+    storeStatistics: Statistics;
+    installedChannels: StoreChannelDetails[];
+    tags: Tag[];
 }

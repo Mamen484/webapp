@@ -1,0 +1,32 @@
+<label>
+  <mat-card>
+    <mat-card-content>
+      <div class="search-container">
+        <mat-icon>search</mat-icon>
+        <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder placeholder="Search">
+        <button mat-button mat-icon-button (click)="openDialog()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+</label>
+<mat-chip-list [selectable]="false">
+  <mat-chip *ngIf="filter.channel && filter.channel !== 'all'">
+    Channel: {{filter.channel}}
+    <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
+  </mat-chip>
+  <mat-chip *ngIf="filter.since">
+    Since: {{filter.since | date:'short'}}
+    <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
+  </mat-chip>
+  <mat-chip *ngIf="filter.until">
+    Until: {{filter.until | date:'short'}}
+    <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
+  </mat-chip>
+  <mat-chip *ngIf="filter.tag && filter.tag !== 'all'">
+   Tag: {{filter.tag}}
+    <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>

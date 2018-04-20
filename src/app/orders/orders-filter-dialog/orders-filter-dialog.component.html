@@ -1,0 +1,46 @@
+<div matDialogTitle i18n>Filters</div>
+<mat-dialog-content>
+    <div fxFlex>
+        <div>
+            <mat-select placeholder="Date" [(ngModel)]="dateOption" (selectionChange)="changeDate($event.value)">
+                <mat-option value="anytime" i18n>Anytime</mat-option>
+                <mat-option value="today" i18n>Today</mat-option>
+                <mat-option value="week" i18n>Last 7 days</mat-option>
+                <mat-option value="month" i18n>Last 30 days</mat-option>
+                <mat-option value="custom" i18n>Custom</mat-option>
+            </mat-select>
+        </div>
+        <div>
+            <mat-select [(ngModel)]="filter.channel">
+                <mat-option value="all" i18n>All channels</mat-option>
+                <mat-option *ngFor="let channel of channels" [value]="channel.id">
+                    {{channel.name}}
+                </mat-option>
+            </mat-select>
+        </div>
+        <div>
+            <mat-select [(ngModel)]="filter.tag">
+                <mat-option value="all" i18n>All tags</mat-option>
+                <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>
+            </mat-select>
+        </div>
+    </div>
+    <div fxFlex class="column" *ngIf="dateOption === 'custom'">
+        <mat-form-field>
+            <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="filter.since" placeholder="Min date">
+            <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
+            <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxFlex class="column" *ngIf="dateOption === 'custom'">
+        <mat-form-field>
+            <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="filter.until" placeholder="Max date">
+            <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
+            <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
+        </mat-form-field>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="accent" i18n (click)="close()">CANCEL</button>
+    <button mat-button color="accent" i18n (click)="applyFilter()">FILTER</button>
+</mat-dialog-actions>

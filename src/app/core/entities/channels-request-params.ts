@@ -9,4 +9,10 @@ export class ChannelsRequestParams {
     type: keyof typeof ChannelType | '' = '';
     segment: keyof typeof ChannelCategory | '' = '';
     status = '';
+
+    constructor(installed = false) {
+        if (installed) {
+            this.status = 'installed';
+        }
+    }
 }

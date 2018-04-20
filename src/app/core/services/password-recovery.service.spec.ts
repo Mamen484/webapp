@@ -24,4 +24,12 @@ describe('PasswordRecoveryService', () => {
         controller.verify();
     }));
 
+    it('should call legacy app to recover a password', inject([PasswordRecoveryService, HttpTestingController], (service: PasswordRecoveryService, controller: HttpTestingController) => {
+        service.resetPassword('someToken', 'someName', 'somePassword').subscribe();
+        let request = controller.expectOne(environment.APP_URL + '/lib/scripts/resetpassword.php').request;
+        expect(request.body).toEqual('name=someName&token=someToken&password=somePassword');
+        expect(request.headers.get('Content-Type')).toEqual('application/x-www-form-urlencoded');
+        controller.verify();
+    }));
+
 });

@@ -3,9 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
-import { ChannelCategory } from '../../core/entities/channel-category.enum';
 import { ChannelType } from '../../core/entities/channel-type.enum';
-import { ChannelCountry } from '../../channel-country.enum';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -19,12 +17,10 @@ export class SearchChannelsComponent implements OnInit {
 
     @Output() applyFilter = new EventEmitter();
     @Input() processing = false;
-    searchControl = new FormControl();
     @Input() filter: ChannelsRequestParams;
 
-    countries = ChannelCountry;
+    searchControl = new FormControl();
     types = ChannelType;
-    segments = ChannelCategory;
 
     constructor(protected dialog: MatDialog) {
     }

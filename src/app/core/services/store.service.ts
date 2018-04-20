@@ -9,6 +9,8 @@ import { StoreChannel } from '../entities/store-channel';
 import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 import { StoreCharge } from '../entities/store-charge';
+import { Store } from '../entities/store';
+import { Tag } from '../entities/tag';
 
 @Injectable()
 export class StoreService {
@@ -53,9 +55,24 @@ export class StoreService {
         return <Observable<Statistics>>this.httpClient.get(`${environment.API_URL}/stat/store/${storeId}`);
     }
 
-    public getStoreCharge(storeId): Observable<StoreCharge> {
-        return <Observable<StoreCharge>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
+    public getStoreCharge(storeId): Observable<{ charge: StoreCharge }> {
+        return <Observable<{ charge: StoreCharge }>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
     }
 
+    public fetchAvailableStores(filter: string) {
+        return <Observable<any>>this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('name', filter)});
+    }
+
+    public getStore(storeId): Observable<Store> {
+        return <Observable<Store>>this.httpClient.get(`${environment.API_URL}/store/${storeId}`);
+    }
+
+    public createStore(store: Store) {
+        return this.httpClient.post(`${environment.API_URL}/store`, {store});
+    }
+
+    public fetchAvailableTags(storeId) {
+        return <Observable<PagedResponse<{tag: Tag[]}>>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`);
+    }
 }
 

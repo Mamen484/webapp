@@ -4,12 +4,20 @@
   margin-left: 34px;
   margin-bottom: 0;
   font-weight: normal;
-  min-width: 230px; //calculated number to have the help center search bar in the center of the window SFBUG-2159
+  @media #{$gt-xs}{
+    min-width: 230px; //calculated number to have the help center search bar in the center of the window SFBUG-2159
+  }
+  @media #{$xs} {
+    // viewport width - menu side padding - icons width - menu icon width
+    max-width: calc(100vw - 34px * 2 - 44px * 2 - 35px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  outline: none;
 }
 
 sf-support-help-center {
-  margin: 0
-  214px  //calculated number to have the help center search bar in the center of the window SFBUG-2159
+  margin: 0 214px //calculated number to have the help center search bar in the center of the window SFBUG-2159
   0 10px;
   flex: 1;
 }

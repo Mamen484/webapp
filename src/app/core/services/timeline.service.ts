@@ -16,7 +16,7 @@ export const enum StreamEventType {started, finished}
 @Injectable()
 export class TimelineService {
 
-    timelineStream = new Subject();
+    protected timelineStream = new Subject();
 
     constructor(protected httpClient: HttpClient) {
     }

@@ -1,0 +1,139 @@
+<div [formGroup]="formGroup">
+    <div>
+        <label for="sf-cu-brand-mapping">brand</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-brand-mapping" matInput placeholder="Describe" formControlName="brand"
+                   i18n-placeholder>
+        </mat-form-field>
+
+    </div>
+    <div>
+        <label for="sf-cu-brand-link-mapping">brand_link</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-brand-link-mapping" matInput placeholder="Describe" formControlName="brandLink"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-category-mapping">category</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-category-mapping" matInput placeholder="Describe" formControlName="category"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-description-mapping">description</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-description-mapping" matInput placeholder="Describe"
+                   formControlName="description" i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-ean-mapping">ean</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-ean-mapping" matInput placeholder="Describe" formControlName="ean"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-ecotax-mapping">ecotax</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-ecotax-mapping" matInput placeholder="Describe" formControlName="ecotax"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-id_parent-mapping">id_parent</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-id_parent-mapping" matInput placeholder="Describe" formControlName="idParent"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <ng-container formArrayName="images">
+        <div *ngFor="let control of formGroup.controls['images'].controls; index as i">
+            <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
+            <mat-form-field floatPlaceholder="never">
+                <input id="sf-cu-image_{{i}}-mapping" matInput placeholder="Describe"
+                       [formControl]="control" i18n-placeholder>
+                <button *ngIf="i==0" mat-button matSuffix mat-icon-button aria-label="Add an image"
+                        (click)="addImage()">
+                    <mat-icon>add</mat-icon>
+                </button>
+                <button *ngIf="i>0" mat-button matSuffix mat-icon-button aria-label="Remove the image"
+                        (click)="removeImage(i)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+    </ng-container>
+    <div>
+        <label for="sf-cu-link-mapping">link</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-link-mapping" matInput placeholder="Describe" formControlName="link"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-name-mapping">name</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-name-mapping" matInput placeholder="Describe" formControlName="name"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-old_price-mapping">old_price</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-old_price-mapping" matInput placeholder="Describe" formControlName="oldPrice"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-quantity-mapping">quantity</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-quantity-mapping" matInput placeholder="Describe" formControlName="quantity"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-reference-mapping">reference</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-reference-mapping" matInput placeholder="Describe" formControlName="reference"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-shipping_cost-mapping">shipping_cost</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-shipping_cost-mapping" matInput placeholder="Describe"
+                   formControlName="shippingCost" i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-shipping_time-mapping">shipping_time</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-shipping_time-mapping" matInput placeholder="Describe"
+                   formControlName="shippingTime" i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-short_description-mapping">short_description</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-short_description-mapping" matInput placeholder="Describe"
+                   formControlName="shortDescription" i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-tva-mapping">tva</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-tva-mapping" matInput placeholder="Describe" formControlName="tva"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+    <div>
+        <label for="sf-cu-weight-mapping">weight</label>
+        <mat-form-field floatPlaceholder="never">
+            <input id="sf-cu-weight-mapping" matInput placeholder="Describe" formControlName="weight"
+                   i18n-placeholder>
+        </mat-form-field>
+    </div>
+</div>

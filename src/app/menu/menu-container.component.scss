@@ -1,8 +1,6 @@
 @import "../../sass/variables";
 
 .sf-top-menu {
-
-  min-width: $min-width;
   width: 100vw;
   top: 0;
   left: 0;
@@ -21,7 +19,12 @@ a.nav-link.home {
   }
 }
 
-mat-toolbar[color="primary"] {
-  /* @TODO: refactor this when merge to admin branch where we have a mechanism of setting menu background color */
-  background-color: #072343;
+mat-progress-bar {
+  position: absolute;
+  z-index: 25;
+}
+
+button.back-in-history {
+  margin-right: 10px;
+  margin-left: 10px;
 }

@@ -18,14 +18,11 @@
                     </mat-chip-list>
                 </mat-list-item>
                 <mat-list-item *ngFor="let update of updates">
-                    <a *ngIf="update.action === updateOperations.finish || update.action === updateOperations.error;else notCompletedUpdate"
-                       sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank">
+                    <a *ngIf="update.action === updateOperations.finish || update.action === updateOperations.error;else notCompletedUpdate" sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank" >
                         <sf-update-row [update]="update"></sf-update-row>
                     </a>
                     <ng-template #notCompletedUpdate>
-                        <sf-update-row [update]="update" matTooltipPosition="above"
-                                       matTooltip="Please wait until this update has finished processing before you can access the report"
-                                       matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
+                        <sf-update-row [update]="update" matTooltipPosition="above" matTooltip="Please wait until this update has finished processing before you can access the report" matTooltipClass="tooltip-over-update" i18n-matTooltip></sf-update-row>
                     </ng-template>
                 </mat-list-item>
                 <mat-list-item *ngIf="!updates.length">
@@ -39,7 +36,7 @@
             <mat-card class="event">
                 <mat-list>
                     <mat-list-item *ngFor="let event of eventsGroup[1]">
-                        <div class="event-icon mat-body-1">
+                        <div class="event-icon mat-body-1" fxShow fxHide.xs>
                             <mat-icon>{{event.icon}}</mat-icon>
                         </div>
                         <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>
@@ -50,7 +47,7 @@
         </div>
 
         <div *ngIf="!events.length">
-            <div class="heading-date mat-body-1" i18n>Today</div>
+            <div class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title" i18n>Today</div>
             <mat-card class="event">
                 <mat-card-content>
                     <div class="no-events mat-body-1" i18n>No events</div>

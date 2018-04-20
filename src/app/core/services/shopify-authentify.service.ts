@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Params } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { CreateStoreModel } from '../entities/create-store-model';
@@ -14,7 +14,6 @@ export class ShopifyAuthentifyService {
     }
 
     public getAuthorizationUrl(shop: string): Observable<string> {
-
         return this.httpClient.get(this.apiUrl + '/shopify/auth/' + this.getShopName(shop))
             .map((data: { authorizeUrl: string }) => data.authorizeUrl);
     }

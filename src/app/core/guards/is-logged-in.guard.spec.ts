@@ -5,15 +5,20 @@ import { WindowRefService } from '../services/window-ref.service';
 import { LegacyLinkService } from '../services/legacy-link.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsLoggedInGuard } from './is-logged-in.guard';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
 
 describe('IsLoggedInGuard', () => {
 
     let getItemSpy: jasmine.Spy;
     let fetchAggregatedInfoSpy: jasmine.Spy;
+    let store: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
         fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
+        store = jasmine.createSpyObj('Store', ['select']);
+        store.select.and.returnValue(Observable.of(null));
 
         TestBed.configureTestingModule({
             providers: [
@@ -27,7 +32,8 @@ describe('IsLoggedInGuard', () => {
                     }
                 }
                 },
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy}}
+                {provide: LocalStorageService, useValue: {getItem: getItemSpy}},
+                {provide: Store, useValue: store}
             ]
         })
         ;

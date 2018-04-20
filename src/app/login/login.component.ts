@@ -5,8 +5,6 @@ import { URLSearchParams } from '@angular/http';
 
 import { WindowRefService } from '../core/services/window-ref.service';
 import { environment } from '../../environments/environment';
-import { StoreStatus } from '../core/entities/store-status.enum';
-import { Store } from '../core/entities/store';
 import { UserService } from '../core/services/user.service';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 
@@ -42,14 +40,13 @@ export class LoginComponent implements OnInit {
         this.loadingNextPage = true;
         this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => {
-                // TODO: refactor the code in next releases
-                this.userService.fetchAggregatedInfo(true)
+                this.userService.fetchAggregatedInfo()
                     .subscribe((userData: AggregatedUserInfo) => {
-                        let activeStore = this.findActiveStore(userData);
+                        let activeStore = userData.findFirstEnabledStore();
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
-                                activeStore.name,
+                                activeStore.id,
                                 userData.roles.indexOf('admin') !== -1
                             );
                             return;
@@ -69,15 +66,10 @@ export class LoginComponent implements OnInit {
         )
         ;
     }
-
-    protected findActiveStore(userData): Store {
-        return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
-    }
-
-    protected buildUrl(token, storeName, isAdmin) {
+    protected buildUrl(token, storeId, isAdmin) {
         let queryParams = new URLSearchParams();
         queryParams.set('token', token);
-        queryParams.set('store', storeName);
+        queryParams.set('store', storeId);
         let additionalPath = isAdmin ? '/admin' : '';
         return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }

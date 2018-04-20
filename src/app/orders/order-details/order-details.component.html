@@ -1,0 +1,234 @@
+<div class="scrollable-container">
+    <sf-orders-subnav fxShow fxHide.xs>
+        <mat-list-item>
+            <a routerLink="/orders">
+                <mat-icon>keyboard_backspace</mat-icon>
+                <ng-container i18n>Order ID {{order.reference}}</ng-container>
+            </a>
+        </mat-list-item>
+        <mat-list-item class="sf-fill-space"></mat-list-item>
+        <mat-list-item class="status">
+            {{order.status | removeUnderline}}
+        </mat-list-item>
+    </sf-orders-subnav>
+    <div fxHide fxShow.xs>
+        <div i18n>Order ID {{order.reference}}</div>
+        <mat-card class="handset-order-details">
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item>
+                        <div fxLayout="row" fxLayoutGap="10px">
+                            <div fxFlex class="channel-image">
+                                <img [src]="order._embedded.channel._links.image.href">
+                            </div>
+
+                            <div fxFlex class="order-summary">
+                                <div> {{order.status | removeUnderline}}</div>
+                                <div>{{order.createdAt | date:'y/MM/d'}}</div>
+                                <div>{{order.createdAt | date:'h:mm a'}}</div>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let item of order.items">
+                        <div fxLayout="column">
+                            <div i18n>ID {{item.reference}}</div>
+                            <div>{{item.name}}</div>
+                            <div i18n>QTY {{item.quantity}}</div>
+                            <div class="mat-body-2">{{item.price | sfCurrency:order.payment.currency}}</div>
+                        </div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <div class="totals-handset mat-body-2" fxLayout="column">
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total products</div>
+                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
+                                </div>
+                            </div>
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total delivery</div>
+                                <div fxFlex>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                            </div>
+                            <div fxLayout="row">
+                                <div fxFlex i18n>Total price</div>
+                                <div fxFlex>{{order.payment.productAmount + order.payment.shippingAmount |
+                                    sfCurrency:order.payment.currency}}
+                                </div>
+                            </div>
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+
+    <mat-card class="orders-table" fxShow fxHide.xs>
+        <div class="actions" fxLayout="row">
+            <img [src]="order._embedded.channel._links.image.href" height="40px" class="left">
+            <button mat-button color="accent" i18n class="orders-action" (click)="shipOrder()">Ship</button>
+            <button mat-button color="accent" i18n class="orders-action">Refund</button>
+            <button mat-raised-button color="accent" i18n class="orders-action">Force Import</button>
+            <button mat-icon-button>
+                <mat-icon>local_printshop</mat-icon>
+            </button>
+        </div>
+        <mat-card-content>
+            <mat-table [dataSource]="data">
+                <ng-container matColumnDef="sku">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>SKU</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.sku}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Name</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="quantity">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Quantity</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.quantity}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Date</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.date}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Price</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.price | sfCurrency:order.payment.currency}}</mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</mat-row>
+
+
+                <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Total</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.total}}</mat-cell>
+                </ng-container>
+
+            </mat-table>
+
+            <div class="totals">
+                <div class="description" fxLayout="column" fxLayoutGap="20px">
+                    <div i18n>Total products</div>
+                    <div i18n>Total delivery</div>
+                    <div class="total-price" i18n>Total price</div>
+                </div>
+                <div class="value" fxLayout="column" fxLayoutGap="20px">
+                    <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                    <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                    <div class="total-price" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
+                        sfCurrency:order.payment.currency}}
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+        <div fxFlex>
+            <mat-card>
+                <div mat-card-title>Billing address</div>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                        <mat-form-field fxFlex>
+                            <input placeholder="First Name" matInput [(ngModel)]="order.billingAddress.firstName">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="Last Name" matInput [(ngModel)]="order.billingAddress.lastName">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Address" matInput [(ngModel)]="order.billingAddress.street">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Zip" matInput [(ngModel)]="order.billingAddress.postalCode">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="City" matInput [(ngModel)]="order.billingAddress.city">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="Country" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Phone" matInput [(ngModel)]="order.billingAddress.phone">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Email" matInput [(ngModel)]="order.billingAddress.email">
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button color="accent">CANCEL</button>
+                    <button mat-button color="accent">SAVE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+        <div fxFlex>
+            <mat-card>
+                <div mat-card-title>Delivery address</div>
+                <mat-card-content>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                        <mat-form-field fxFlex>
+                            <input placeholder="First Name" matInput [(ngModel)]="order.shippingAddress.firstName">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="Last Name" matInput [(ngModel)]="order.shippingAddress.lastName">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Address" matInput [(ngModel)]="order.shippingAddress.street">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Zip" matInput [(ngModel)]="order.shippingAddress.postalCode">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="City" matInput [(ngModel)]="order.shippingAddress.city">
+                        </mat-form-field>
+                        <mat-form-field fxFlex>
+                            <input placeholder="Country" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Phone" matInput [(ngModel)]="order.shippingAddress.phone">
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row">
+                        <mat-form-field fxFlex>
+                            <input placeholder="Email" matInput [(ngModel)]="order.shippingAddress.email">
+                        </mat-form-field>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button color="accent">CANCEL</button>
+                    <button mat-button color="accent">SAVE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -2,18 +2,15 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { UserService } from '../core/services/user.service';
 import { LocaleIdService } from '../core/services/locale-id.service';
-import { MenuContainerComponent } from '../menu/menu-container.component';
-import { MatCardModule, MatInputModule, MatMenuModule, MatToolbarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 import { cloneDeep } from 'lodash';
-import { UnauthenticatedMenuComponent } from '../menu/unauthenticated-menu.component';
-import { DummyRouterDirective } from '../../mocks/stubs/dummy-router.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 
 describe('LoginComponent', () => {
@@ -30,9 +27,10 @@ describe('LoginComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 LoginComponent,
-                MenuContainerComponent,
-                UnauthenticatedMenuComponent,
-                DummyRouterDirective],
+            ],
+            schemas: [
+                NO_ERRORS_SCHEMA,
+            ],
             providers: [
                 {provide: UserService, useValue: ({login: loginSpy, fetchAggregatedInfo: fetchAggregatedinfoSpy})},
                 {provide: LocaleIdService, useValue: ({localeId: 'en'})},
@@ -58,13 +56,8 @@ describe('LoginComponent', () => {
 
             ],
             imports: [
-                MatMenuModule,
-                MatToolbarModule,
                 FormsModule,
                 ReactiveFormsModule,
-                MatCardModule,
-                MatInputModule,
-                NoopAnimationsModule,
             ]
         })
             .compileComponents();
@@ -94,7 +87,7 @@ describe('LoginComponent', () => {
 
     it('should call user service with correct username and password', () => {
         loginSpy.and.returnValue(Observable.of({}));
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(aggregatedUserInfoMock));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
@@ -114,7 +107,7 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'deleted';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(userInfo));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
         loginSpy.and.returnValue(Observable.of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
@@ -127,7 +120,7 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'suspended';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(userInfo));
+        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
         loginSpy.and.returnValue(Observable.of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');

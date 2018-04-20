@@ -1,0 +1,31 @@
+@startuml
+start
+
+split
+:user visits https://app.shopping-feed.com \n (legacy app) and is NOT authorized;
+split again
+:user visits https://app.shopping-feed.com/v3/{$lang}/* \n (webapp) and is NOT authorized;
+split end
+:redirect to the login page /v3/{$lang}/login;
+repeat
+:user enters login and password\n and submits the form;
+:fetch the aggreated user info;
+
+repeat while (user found?) -> no: **display error**
+-> yes;
+
+if (user is admin?) then (yes)
+    :redirect to \n https://app.shopping-feed.com/admin?token={$userToken}&store={$store};
+    :redirect to https://app.shopping-feed.com/admin;
+else (no)
+    :redirect to \n https://app.shopping-feed.com?token={$userToken}&store={$store};
+    :redirect to https://app.shopping-feed.com/index/membership;
+endif
+stop
+@enduml
+
+if () then (yes)
+    :render the page;
+    stop;
+else (no)
+endif

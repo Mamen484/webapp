@@ -48,3 +48,4 @@ Thumbs.db
 
 # Crowdin archives
 /*.zip
+/bin/

@@ -3,7 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatCardModule, MatChipsModule } from '@angular/material';
+import {
+    MatCardModule, MatChipsModule, MatIconModule, MatListModule, MatProgressSpinnerModule
+} from '@angular/material';
 import { TimelineComponent } from './timeline.component';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
@@ -18,6 +20,7 @@ import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { environment } from '../../environments/environment';
+import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 
 describe('TimelineComponent', () => {
@@ -123,6 +126,21 @@ describe('TimelineComponent', () => {
             });
         });
 
+        it ('should return a `/tools/info` link when calling getUpdateLink(), passing update with name that equals feed.import', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.import});
+            expect(link).toEqual('/tools/infos');
+        });
+
+        it ('should return a link to the channel when the type of channel is marketplace and the name is feed.export', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'marketplace', name: 'amazon'}}});
+            expect(link).toEqual('/amazon');
+        });
+
+        it ('should return a link to the channel when the type of channel is NOT marketplace and the name is feed.export', () => {
+            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'ads', name: 'amazon'}}});
+            expect(link).toEqual('/ads/manage/amazon');
+        });
+
 
     });
 
@@ -145,6 +163,9 @@ describe('TimelineComponent', () => {
                     FlexLayoutModule,
                     MatCardModule,
                     MatChipsModule,
+                    MatListModule,
+                    MatIconModule,
+                    MatProgressSpinnerModule,
                 ],
                 declarations: [
                     TimelineComponent,
@@ -163,7 +184,7 @@ describe('TimelineComponent', () => {
                         useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
                     },
                     LegacyLinkService,
-                    {provide: Store, useValue: {select: () => Observable.of({name: 'storeName'})}},
+                    {provide: Store, useValue: {select: () => Observable.of({id: 'storeId'})}},
                     {provide: LocalStorageService, useValue: localStorage}
 
                 ]
@@ -223,7 +244,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeName');
+            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeId');
     }
 }
 

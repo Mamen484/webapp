@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { CreateStoreModel } from '../entities/create-store-model';
 import { HttpClient } from '@angular/common/http';

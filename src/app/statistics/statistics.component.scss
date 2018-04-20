@@ -6,6 +6,10 @@
   display: block;
   height: calc(100vh - #{$toolbar-height} - #{$content-margin});
   overflow: scroll;
+
+  @media #{$xs} {
+    padding-left: 20px;
+  }
 }
 
 mat-card.channel-card {
@@ -13,6 +17,10 @@ mat-card.channel-card {
 
   &.suggested-channel {
     background-color: mat-color($accent, 0.03);
+  }
+
+  &:last-child {
+    margin-right: 20px; // the same as a gap between cards
   }
 }
 

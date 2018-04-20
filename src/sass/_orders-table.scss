@@ -1,0 +1,68 @@
+@import './variables';
+
+.sf-orders-table {
+
+  overflow-x: auto;
+
+  .mat-cell, .mat-header-cell {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .mat-column-hasErrors, .mat-column-checkbox {
+    flex: 0 0 50px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .mat-column-total, .mat-column-marketplace {
+    flex: 0 0 80px;
+  }
+
+  .mat-column-status, .mat-column-reference {
+    flex: 1 0 150px;
+  }
+
+  .mat-column-updatedAt, .mat-column-date {
+    flex: 0 0 100px;
+  }
+  .mat-column-productAmount,
+  .mat-column-shippingAmount {
+    flex: 0 0 60px;
+  }
+  .mat-column-paymentMethod {
+    flex: 0 0 120px;
+  }
+  .mat-column-deliveryName {
+    flex: 0 0 150px;
+  }
+  .mat-column-invoicingName {
+    flex: 0 0 150px;
+  }
+  .mat-column-storeId {
+    flex: 0 0 60px;
+  }
+  .mat-column-trackingNumber {
+    flex: 0 0 120px;
+  }
+  .mat-column-imported {
+    flex: 0 0 65px;
+  }
+
+  .mat-column-checkbox {
+    /* @TODO: remove temporary override to fix material bug 8600 */
+    overflow: visible;
+  }
+
+  mat-row {
+    outline: none;
+    cursor: pointer;
+  }
+
+  @media #{$xs} {
+    .mat-cell {
+      flex: 1;
+    }
+  }
+
+}
