@@ -9,6 +9,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
+import { Observable } from 'rxjs/Observable';
 
 
 describe('TimelineService', () => {
