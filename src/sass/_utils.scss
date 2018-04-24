@@ -50,3 +50,8 @@ $badge-font-level: caption;
   height: calc(100vh - #{$toolbar-height} - (2 * #{$content-margin}));
   overflow: auto;
 }
+
+.spinner-parent {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}

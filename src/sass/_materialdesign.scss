@@ -43,6 +43,24 @@ body {
   }
 }
 
+sf-filter-channels-dialog {
+  .mat-focused {
+    label.mat-input-placeholder {
+      color: mat-color($accent);
+    }
+    .mat-form-field-underline {
+      &, .mat-form-field-ripple {
+        background-color: mat-color($accent);
+      }
+    }
+  }
+
+}
+
+button[mat-button] {
+  text-transform: uppercase;
+}
+
 sf-admin-menu {
   .sf-top-menu {
     .sf-top-menu-container {
@@ -86,8 +104,4 @@ sf-filter-channels-dialog {
     }
   }
 
-}
-
-button[mat-button] {
-  text-transform: uppercase;
 }
