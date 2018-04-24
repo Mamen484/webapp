@@ -5,6 +5,15 @@ This project was generated with [@angular/cli](https://github.com/angular/angula
 ## Development server
 Run `ng serve --base-href=/v3/en/` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+## Running in a docker
+To run a development server in a docker container:
+1. Build an image
+`docker build -f Dockerfile.dev -t webapp:dev .`
+
+2. Run a container:
+`docker run -p 4200:4200 -v "$(pwd)":/app -t webapp:dev`
+
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
