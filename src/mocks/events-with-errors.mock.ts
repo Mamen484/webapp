@@ -101,6 +101,17 @@ export const eventsWithErrors = {
             action: 'error',
             occurredAt: '2017-10-03T19:45:47+00:00',
             data: {reason: 'settings'}
+        }, {
+            id: 'export_cancelled_error',
+            name: 'feed.export',
+            action: 'cancel',
+            occurredAt: '2017-10-03T19:45:47+00:00',
+            _embedded: {
+                channel: {
+                    name: 'amazon',
+                    type: 'marketplace'
+                }
+            }
         }
         ]
     }
