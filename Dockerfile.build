@@ -1,4 +1,5 @@
-## Production configuration
+## We use this configuration to get a kubernetes build on a testing environment.
+
 ## Step 1: install Crowdin and download translations
 FROM openjdk:7 as java
 WORKDIR /locale
