@@ -1,4 +1,5 @@
 // dev environment
+// please, update a docker file ARG variables if you update this file
 export const environment = {
     production: 'false',
     DEFAULT_LANGUAGE: 'fr',
@@ -13,5 +14,6 @@ export const environment = {
     CONTACT_EMAIL: 'contact@shopping-feed.com',
     SUPPORT_EMAIL: 'support@shopping-feed.com',
     DEFAULT_AUTOPILOT_EMAIL: 'default@shopping-feed.com',
-    DEFAULT_AUTOPILOT_STORENAME: 'default'
+    DEFAULT_AUTOPILOT_STORENAME: 'default',
+    RUN_AUTOPILOT: true
 };

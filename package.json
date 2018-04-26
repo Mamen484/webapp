@@ -68,7 +68,7 @@
     "i18n": "ng xi18n",
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
-    "docker-start": "npm install --no-save && ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT --environment=$ENV --live-reload false",
+    "docker-start": "npm install && ng serve --base-href=/v3/en/ --host=0.0.0.0",
     "compile-env": "ts-node compile-environment"
   },
   "private": true

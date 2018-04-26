@@ -23,6 +23,9 @@ export class BaseComponent {
         this.appStore.select('userInfo')
             .combineLatest(this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
+                if (!environment.RUN_AUTOPILOT || <any>environment.RUN_AUTOPILOT === 'false') {
+                    return;
+                }
                 if (userInfo.login === currentStore.name) {
                     (<any>this.windowRef.nativeWindow).Autopilot.run('associate',
                         {_simpleAssociate: true, Email: userInfo.email, FirstName: currentStore.name});
