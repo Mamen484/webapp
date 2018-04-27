@@ -15,10 +15,31 @@ import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
 import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { environment } from '../../environments/environment';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
+import { EventIconPipe } from './event-icon/event-icon.pipe';
+import { EventLinkPipe } from './event-link/event-link.pipe';
+
+@Pipe({
+    name: 'sfEventIcon'
+})
+export class EventIconPipeShallow implements PipeTransform {
+    transform() {
+        return null
+    };
+}
+
+@Pipe({
+    name: 'sfEventLink'
+})
+export class EventLinkPipeShallow implements PipeTransform {
+    transform() {
+        return null
+    };
+}
+
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -38,6 +59,8 @@ describe('TimelineComponent', () => {
             TestBed.configureTestingModule({
                 declarations: [
                     TimelineComponent,
+                    EventIconPipeShallow,
+                    EventLinkPipeShallow,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
@@ -67,35 +90,10 @@ describe('TimelineComponent', () => {
                 expect(component.events[1][0]).toEqual('2017-10-02');
             });
 
-            it('should set the order reference if event type is order lifecycle', () => {
-                expect(component.events[0][1][2].type).toEqual('order.lifecycle');
-                expect(component.events[0][1][2].reference).toEqual('59d53a6b2b26b');
-            });
-
-            it('should set the order reference if event type is rule.*', () => {
-                expect(component.events[0][1][0].type).toEqual('rule.transformation');
-                expect(component.events[0][1][0].ruleName).toEqual('some name');
-
-                expect(component.events[0][1][3].type).toEqual('rule.segmentation');
-                expect(component.events[0][1][3].ruleName).toEqual('some name');
-            });
-
             it('should set updatesInProgress amount', () => {
                 expect(component.updatesInProgress).toEqual(1);
             });
 
-            it('should set a shopping_basket icon for the order type event', () => {
-                expect(component.events[0][1][2].type).toEqual('order.lifecycle');
-                expect(component.events[0][1][2].icon).toEqual('shopping_basket');
-            });
-
-            it('should set a build icon for the order type event', () => {
-                expect(component.events[0][1][0].type).toEqual('rule.transformation');
-                expect(component.events[0][1][0].icon).toEqual('build');
-
-                expect(component.events[0][1][3].type).toEqual('rule.segmentation');
-                expect(component.events[0][1][3].icon).toEqual('build');
-            });
         });
 
 
@@ -128,7 +126,6 @@ describe('TimelineComponent', () => {
 
     @Component({selector: 'sf-timeline-filtering-area', template: ''})
     class TimelineFilteringAreaComponent {}
-
     describe('integration tests', () => {
         let localStorage;
 
@@ -152,6 +149,8 @@ describe('TimelineComponent', () => {
                     LegacyLinkDirective,
                     UpdateRowComponent,
                     TimelineFilteringAreaComponent,
+                    EventIconPipe,
+                    EventLinkPipe,
                 ],
                 providers: [
                     {
@@ -195,7 +194,7 @@ describe('TimelineComponent', () => {
         it('should convert API data to the correct list of events', () => {
             fixture.whenStable().then(() => {
                 let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
-                expect(items.length).toEqual(15);
+                expect(items.length).toEqual(17);
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
@@ -211,6 +210,8 @@ describe('TimelineComponent', () => {
                 validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
                 validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
                 validateEvent(items[14], 'error_outline', 'We canceled your export on amazon because another export is already in progress.')
+                validateEvent(items[15], 'vertical_align_bottom', 'Your feed has been imported.', '/tools/infos');
+                validateEvent(items[16], 'vertical_align_top', 'Your feed has been exported to javascript_marketplace.', '/javascript_marketplace');
             });
         });
     })
@@ -218,7 +219,7 @@ describe('TimelineComponent', () => {
 });
 
 function validateEvent(elem, iconName, text, url?) {
-    expect(elem.querySelector('.event-icon > mat-icon').textContent).toEqual(iconName);
+    expect(elem.querySelector('.event-icon > mat-icon').textContent.trim()).toEqual(iconName);
     expect(elem.querySelector('sf-event-link').textContent.trim().replace(/\s\s+/g, ' '))
         .toEqual(text);
     if (url) {

@@ -18,8 +18,8 @@
                     </mat-chip-list>
                 </mat-list-item>
                 <mat-list-item *ngFor="let update of updates">
-                    <a *ngIf="update.action === updateOperations.finish || update.action === updateOperations.error;else notCompletedUpdate"
-                       sfLegacyLink [path]="getUpdateLink(update)" class="update-row-link" target="_blank">
+                    <a *ngIf="update.action === actions.finish || update.action === actions.error;else notCompletedUpdate"
+                       sfLegacyLink [path]="update | sfEventLink" class="update-row-link" target="_blank">
                         <sf-update-row [update]="update"></sf-update-row>
                     </a>
                     <ng-template #notCompletedUpdate>
@@ -40,10 +40,11 @@
                 <mat-list>
                     <mat-list-item *ngFor="let event of eventsGroup[1]">
                         <div class="event-icon mat-body-1">
-                            <mat-icon>{{event.icon}}</mat-icon>
+                            <mat-icon>{{ ((event.action === actions.error || event.action === actions.cancel) ? 'error' : event.name) | sfEventIcon }}</mat-icon>
                         </div>
-                        <sf-event-link [event]="event" class="event-description sf-fill-space mat-body-1"></sf-event-link>
-                        <div class="event-time mat-body-1">{{event.time | date:'shortTime'}}</div>
+                        <sf-event-link [event]="event"
+                                       class="event-description sf-fill-space mat-body-1"></sf-event-link>
+                        <div class="event-time mat-body-1">{{event.occurredAt | date:'shortTime'}}</div>
                     </mat-list-item>
                 </mat-list>
             </mat-card>

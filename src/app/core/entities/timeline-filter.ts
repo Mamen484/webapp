@@ -1,7 +1,5 @@
 import { DateFilter } from './date-filter.enum';
 import { TimelineTypeFilter as TypeFilter } from './timeline-type-filter.enum';
-import { TimelineUpdateAction as updateAction } from './timeline-update-action.enum';
-import { TimelineUpdateName as updateName } from './timeline-update-name.enum';
 import { TimelineEventName as eventName } from './timeline-event-name.enum';
 import { TimelineFilterData } from './timeline-filter-data';
 import { TimelineEventAction as eventAction } from './timeline-event-action.enum';
@@ -13,8 +11,8 @@ export class TimelineFilter {
     since?: Date;
     until?: Date;
     name = [
-        updateName.import,
-        updateName.export,
+        eventName.import,
+        eventName.export,
         eventName.orderLifecycle,
         eventName.ruleTransformation,
         eventName.ruleSegmentation
@@ -25,10 +23,10 @@ export class TimelineFilter {
         eventAction.delete,
         eventAction.ship,
         eventAction.update,
-        updateAction.error,
+        eventAction.error,
     ];
 
-    static createFrom({dateFilter: date, typeFilter: type, dateSince, dateUntil}: TimelineFilterData) {
+    static createFrom({dateFilter: date, typeFilter: type, dateSince, dateUntil, isActive}: TimelineFilterData) {
         let filter = new TimelineFilter();
         switch (date) {
             case DateFilter.today:
@@ -50,10 +48,10 @@ export class TimelineFilter {
         }
         switch (type) {
             case TypeFilter.import:
-                filter.name = [updateName.import];
+                filter.name = [eventName.import];
                 break;
             case TypeFilter.export:
-                filter.name = [updateName.export];
+                filter.name = [eventName.export];
                 break;
             case TypeFilter.rules:
                 filter.name = [eventName.ruleTransformation];
@@ -64,6 +62,10 @@ export class TimelineFilter {
             case TypeFilter.autoRemove:
                 filter.name = [eventName.ruleSegmentation];
                 break;
+        }
+
+        if (isActive) {
+            filter.action.push(eventAction.finish);
         }
 
         return filter;
