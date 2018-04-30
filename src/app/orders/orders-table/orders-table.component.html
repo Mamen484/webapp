@@ -7,7 +7,7 @@
                 </div>
             </div>
             <ng-container
-                    *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.acknowledged || ordersFilter.error === errorType.ship">
+                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
                 <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
@@ -15,7 +15,6 @@
             <ng-container
                     *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
                 <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge</button>
-                <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
@@ -24,7 +23,7 @@
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
-                <button mat-button color="accent" i18n class="orders-action">Force Import</button>
+                <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
