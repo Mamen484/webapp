@@ -37,3 +37,7 @@ mat-tab-group {
 .table-container {
   min-height: 180px;
 }
+
+.selected-orders {
+  color: mat-color($accent);
+}
