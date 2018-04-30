@@ -112,3 +112,13 @@ sf-filter-channels-dialog {
     background-color: mat-color($accent);
   }
 }
+
+sf-filtering-tabs {
+  .mat-tab-group.mat-accent {
+    .mat-tab-label-active, .mat-tab-label:not(.mat-tab-disabled):focus {
+      background: none;
+      color: mat-color($accent);
+      opacity: 1;
+    }
+  }
+}
