@@ -105,3 +105,10 @@ sf-filter-channels-dialog {
   }
 
 }
+
+
+.sf-accent {
+  .mat-calendar-body-selected {
+    background-color: mat-color($accent);
+  }
+}
