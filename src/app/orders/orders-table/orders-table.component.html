@@ -26,15 +26,8 @@
             <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
-
-            <button mat-icon-button (click)="addLabel()">
-                <mat-icon>label</mat-icon>
-            </button>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
                 <mat-icon>view_column</mat-icon>
-            </button>
-            <button mat-icon-button>
-                <mat-icon>local_printshop</mat-icon>
             </button>
         </div>
         <div [class.table-container]="isLoadingResults">
