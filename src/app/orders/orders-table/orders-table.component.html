@@ -1,9 +1,13 @@
 <mat-card>
     <mat-card-content>
         <div class="actions" fxLayout="row">
-            <div fxFlex>{{selection.selected.length}}/{{dataSource.data.length}}</div>
+            <div fxFlex>
+                <div class="selected-orders" *ngIf="selection.selected.length" i18n>
+                    {{selection.selected.length}} selected {selection.selected.length, plural, =1 {order} other {orders}}
+                </div>
+            </div>
             <ng-container
-                    *ngIf="!ordersFilter.status && !ordersFilter.error || ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.acknowledged || ordersFilter.error === errorType.ship">
+                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
                 <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
@@ -11,7 +15,6 @@
             <ng-container
                     *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
                 <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge</button>
-                <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
@@ -20,21 +23,14 @@
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
-                <button mat-button color="accent" i18n class="orders-action">Force Import</button>
+                <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
             </ng-container>
 
             <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
                 <button mat-button color="accent" i18n class="orders-action">Refund</button>
             </ng-container>
-
-            <button mat-icon-button (click)="addLabel()">
-                <mat-icon>label</mat-icon>
-            </button>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
                 <mat-icon>view_column</mat-icon>
-            </button>
-            <button mat-icon-button>
-                <mat-icon>local_printshop</mat-icon>
             </button>
         </div>
         <div [class.table-container]="isLoadingResults">

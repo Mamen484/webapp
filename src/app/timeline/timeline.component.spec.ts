@@ -220,17 +220,29 @@ describe('TimelineComponent', () => {
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
+                // feed.import - no reason
                 validateEvent(items[3], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
+                // feed.import - reason: categories
                 validateEvent(items[4], 'error_outline', 'We can\'t update your source feed because too many categories changes.', '/tools/infos');
+                // feed.import - reason: products
                 validateEvent(items[5], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
+                // feed.import - reason: open
                 validateEvent(items[6], 'error_outline', 'We can\'t update your source feed because we can\'t open it.', '/tools/infos');
+                // feed.export - channel: amazon
                 validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
+                // feed.export - channel: some_ad
                 validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
+                // feed.import - reason: check
                 validateEvent(items[9], 'error_outline', 'Your source feed wasn\'t updated because nothing had changed since the last update.', '/tools/infos');
+                // feed.import - reason: references
                 validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
+                // feed.import - reason: mapping
                 validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+                // feed.import - reason: abracadabra
                 validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
+                // feed.import - reason: settings
                 validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+                // feed.export - action: cancel
                 validateEvent(items[14], 'error_outline', 'We canceled your export on amazon because another export is already in progress.')
             });
         });

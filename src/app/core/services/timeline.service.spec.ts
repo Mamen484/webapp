@@ -9,7 +9,6 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
-import { Observable } from 'rxjs/Observable';
 
 
 describe('TimelineService', () => {
@@ -145,6 +144,7 @@ describe('TimelineService', () => {
     it('should fetch both events and updates when timeline update emitted', inject([TimelineService, HttpTestingController], (service: TimelineService, httpMock: HttpTestingController) => {
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
         service.emitUpdatedTimeline(124);
+        console.log(httpMock);
         httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.export,feed.import&since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
         httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         httpMock.verify();

@@ -101,6 +101,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
     }
 
+    // tags/labels functionality is planned for next releases
     addLabel() {
         this.matDialog.open(LabelsDialogComponent);
     }

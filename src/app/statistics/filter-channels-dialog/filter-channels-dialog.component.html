@@ -1,7 +1,7 @@
 <div matDialogTitle i18n>Filters</div>
 <mat-dialog-content>
     <sf-country-select [(ngModel)]="filter.country"></sf-country-select>
-    <mat-form-field>
+    <mat-form-field color="accent">
         <mat-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
             <mat-option value="" i18n>All Types</mat-option>
             <mat-option value="ads" i18n>Product Listing Ads</mat-option>
@@ -13,7 +13,7 @@
             <mat-option value="solomo" i18n>Social Local Mobile</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field color="accent">
         <mat-select placeholder="Category" i18n-placeholder [(ngModel)]="filter.segment">
             <mat-option value="" i18n>All Categories</mat-option>
             <mat-option value="professional" i18n>Professional Purchasing</mat-option>
@@ -34,6 +34,6 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button color="accent" (click)="cancel()" i18n>CANCEL</button>
-    <button mat-button color="accent" (click)="accept()" i18n class="accept">ACCEPT</button>
+    <button mat-button color="accent" (click)="cancel()" i18n>Cancel</button>
+    <button mat-button color="accent" (click)="accept()" i18n class="accept">Filter</button>
 </mat-dialog-actions>
