@@ -125,6 +125,11 @@ sf-filtering-tabs {
       color: mat-color($accent);
       opacity: 1;
     }
+    .mat-tab-label:not(.mat-tab-label-active) {
+      .tab-label:hover {
+        color: $black-87-opacity;
+      }
+    }
   }
 
 
