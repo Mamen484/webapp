@@ -240,7 +240,7 @@ describe('OrdersTableComponent', () => {
                     id: 21,
                     status: OrderStatus.created,
                     payment: {
-                        feedAmount: 22,
+                        totalAmount: 22,
                         productAmount: 12,
                         shippingAmount: 10,
                         method: 'some method',

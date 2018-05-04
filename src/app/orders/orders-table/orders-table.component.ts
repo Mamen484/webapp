@@ -170,7 +170,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             reference: order.reference,
             id: order.id,
             status: order.status,
-            total: order.payment.feedAmount,
+            total: order.payment.totalAmount,
             date: new Date(order.createdAt).getTime(),
             updatedAt: order.updatedAt ? new Date(order.updatedAt).getTime() : undefined,
             productAmount: order.payment.productAmount,
