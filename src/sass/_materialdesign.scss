@@ -108,8 +108,13 @@ sf-filter-channels-dialog {
 
 
 .sf-accent {
+  :not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected),
   .mat-calendar-body-selected {
     background-color: mat-color($accent);
+    color: white;
+  }
+  .mat-calendar-period-button {
+    color: mat-color($accent);
   }
 }
 
@@ -121,4 +126,6 @@ sf-filtering-tabs {
       opacity: 1;
     }
   }
+
+
 }
