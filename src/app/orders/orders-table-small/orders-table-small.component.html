@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="dataSource.data.length || isLoadingResults;else noRecordsMessage">
   <mat-card-content>
 
     <div [class.table-container]="isLoadingResults">
@@ -28,3 +28,7 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<ng-template #noRecordsMessage>
+  <div class="no-orders-message" i18n>No orders matching your request.</div>
+</ng-template>
