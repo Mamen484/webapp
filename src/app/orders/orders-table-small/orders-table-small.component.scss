@@ -24,3 +24,8 @@ mat-tab-group {
   justify-content: center;
   height: calc(100vh - #{$toolbar-height} - #{$tabs-height});
 }
+
+.no-orders-message {
+  margin-left: 15px;
+  margin-top: 10px;
+}
