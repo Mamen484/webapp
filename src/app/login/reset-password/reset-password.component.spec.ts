@@ -1,8 +1,8 @@
+import {throwError,  Observable, of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ResetPasswordComponent } from './reset-password.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PasswordRecoveryService } from '../../core/services/password-recovery.service';
-import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute } from '@angular/router';
 
 describe('ResetPasswordComponent', () => {
@@ -12,7 +12,7 @@ describe('ResetPasswordComponent', () => {
     let fixture: ComponentFixture<ResetPasswordComponent>;
     beforeEach(async(() => {
         passwordRecoveryService = jasmine.createSpyObj(['resetPassword']);
-        route = {params: Observable.of({token: 'token12'})};
+        route = {params: of({token: 'token12'})};
         TestBed.configureTestingModule({
             declarations: [ResetPasswordComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -34,7 +34,7 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should send a password recovery request when all fields are valid', () => {
-        passwordRecoveryService.resetPassword.and.returnValue(Observable.of(true));
+        passwordRecoveryService.resetPassword.and.returnValue(of(true));
 
         component.nameControl.setValue('Nikola');
         component.passwordControl.setValue('1');
@@ -73,7 +73,7 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should show a success message when a password recovery request is successful', () => {
-        passwordRecoveryService.resetPassword.and.returnValue(Observable.of(true));
+        passwordRecoveryService.resetPassword.and.returnValue(of(true));
 
         component.nameControl.setValue('Nikola');
         component.passwordControl.setValue('1');
@@ -83,7 +83,7 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should show an error message when a password recovery request  fails', () => {
-        passwordRecoveryService.resetPassword.and.returnValue(Observable.throw(''));
+        passwordRecoveryService.resetPassword.and.returnValue(throwError(''));
 
         component.nameControl.setValue('Nikola');
         component.passwordControl.setValue('1');

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { StatisticsComponent } from './statistics.component';
 import { statisticsMock } from '../../mocks/statistics-mock';
@@ -23,9 +23,9 @@ describe('StatisticsComponent', () => {
             getStoreCharge: jasmine.createSpy('getStoreChannels'),
         };
 
-        channelServiceMock.getStoreChannels.and.callFake(params => Observable.of(storeChannelMock));
-        channelServiceMock.getStatistics.and.callFake(params => Observable.of(statisticsMock));
-        channelServiceMock.getStoreCharge.and.callFake(params => Observable.of({}));
+        channelServiceMock.getStoreChannels.and.callFake(params => of(storeChannelMock));
+        channelServiceMock.getStatistics.and.callFake(params => of(statisticsMock));
+        channelServiceMock.getStoreCharge.and.callFake(params => of({}));
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
             declarations: [
@@ -34,8 +34,8 @@ describe('StatisticsComponent', () => {
             providers: [{
                 provide: Store, useValue: {
                     select: param => param === 'currentStore'
-                        ? Observable.of(aggregatedUserInfoMock._embedded.store[0])
-                        : Observable.of(statisticsMock)
+                        ? of(aggregatedUserInfoMock._embedded.store[0])
+                        : of(statisticsMock)
                 }
             },
                 {provide: StoreService, useValue: channelServiceMock},
@@ -120,7 +120,7 @@ describe('StatisticsComponent', () => {
         });
         it('should disable infinite scroll when all pages are loaded', () => {
             channelServiceMock.getStoreChannels.and.returnValue(
-                Observable.of(Object.assign({}, storeChannelMock, {
+                of(Object.assign({}, storeChannelMock, {
                     page: 17
                 })));
             component.onScroll();

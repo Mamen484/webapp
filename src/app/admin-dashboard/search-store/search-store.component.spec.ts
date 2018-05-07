@@ -4,7 +4,7 @@ import { ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreService } from '../../core/services/store.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlankComponent } from '../../shared/blank.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable, EMPTY } from 'rxjs';
 import { Location } from '@angular/common';
 
 describe('SearchStoreComponent', () => {
@@ -33,7 +33,7 @@ describe('SearchStoreComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SearchStoreComponent);
         component = fixture.componentInstance;
-        storeService.fetchAvailableStores.and.returnValue(Observable.empty());
+        storeService.fetchAvailableStores.and.returnValue(EMPTY);
         fixture.detectChanges();
     });
 

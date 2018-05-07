@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
 
@@ -12,8 +12,8 @@ describe('BaseComponent', () => {
 
     it ('should run autopilot associate with store\'s name and user\'s email', () => {
         store.select.and.returnValues(
-            Observable.of({login: 'login1', email: 'email1'}),
-            Observable.of({name: 'login1'})
+            of({login: 'login1', email: 'email1'}),
+            of({name: 'login1'})
         );
         let component = new BaseComponent(store, <any>{nativeWindow: window});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');
@@ -24,8 +24,8 @@ describe('BaseComponent', () => {
 
     it ('should run autopilot associate with store\'s name and user\'s email', () => {
         store.select.and.returnValues(
-            Observable.of({login: 'login1', email: 'email1'}),
-            Observable.of({name: 'login2'})
+            of({login: 'login1', email: 'email1'}),
+            of({name: 'login2'})
         );
         let component = new BaseComponent(store, <any>{nativeWindow: window});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');

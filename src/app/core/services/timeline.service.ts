@@ -1,11 +1,12 @@
+import { zip } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { TimelineUpdateName as updateName } from '../entities/timeline-update-name.enum';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subject } from 'rxjs';
 import { TimelineUpdate } from '../entities/timeline-update';
 import { TimelineUpdateAction as updateAction } from '../entities/timeline-update-action.enum';
-import { Subject } from 'rxjs/Subject';
 import { TimelineFilter } from '../entities/timeline-filter';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
@@ -48,8 +49,8 @@ export class TimelineService {
                         updateAction.finish,
                         updateAction.error
                     ].join(','))
-            })
-            .map(this.getDistinctUpdates.bind(this))
+            }).pipe(
+            map(this.getDistinctUpdates.bind(this)));
 
     }
 
@@ -59,7 +60,7 @@ export class TimelineService {
 
     emitUpdatedTimeline(storeId) {
         this.timelineStream.next({type: StreamEventType.started});
-        this.getEvents(storeId).zip(this.getEventUpdates(storeId))
+        zip(this.getEvents(storeId), this.getEventUpdates(storeId))
             .subscribe(([events, updates]) => this.timelineStream.next({
                 type: StreamEventType.finished,
                 data: {events, updates}
@@ -85,7 +86,7 @@ export class TimelineService {
         return this.httpClient.head(`${environment.API_URL}/store/${storeId}/timeline`, {
             observe: 'response',
             responseType: 'text',
-        }).map(({headers}) => Number(headers.get('X-New-Events-Count')));
+        }).pipe(map(({headers}) => Number(headers.get('X-New-Events-Count'))));
     }
 
 }

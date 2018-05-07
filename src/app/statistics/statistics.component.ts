@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { take, tap, flatMap } from 'rxjs/operators';
+import { zip } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
 import { Store as AppStore } from '@ngrx/store';
 import { Store } from '../core/entities/store';
@@ -41,17 +43,18 @@ export class StatisticsComponent {
 
     constructor(protected appStore: AppStore<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
 
-        this.appStore.select('currentStore')
-            .do(() => this.displayPageLoading())
-            .do((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics))
-            .flatMap(currentStore => this.fetchData(currentStore))
+        this.appStore.select('currentStore').pipe(
+            tap(() => this.displayPageLoading()),
+            tap((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics)),
+            flatMap(currentStore => this.fetchData(currentStore))
+        )
             .subscribe(([[statistics, channels], charge]) => {
                 this.statistics = statistics;
                 this.initialize(channels);
                 this.processing = false;
                 this.charge = charge.charge;
 
-                this.appStore.select('currentStore').take(1).subscribe(currentStore => {
+                this.appStore.select('currentStore').pipe(take(1)).subscribe(currentStore => {
                     if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
                         this.haveNoChannels = true;
                         this.showNoChannelsDialog();
@@ -66,26 +69,31 @@ export class StatisticsComponent {
             return;
         }
         this.processing = true;
-        this.appStore.select('currentStore').take(1)
-            .flatMap(store => this.storeService.getStoreChannels(
+        this.appStore.select('currentStore').pipe(
+            take(1),
+            flatMap(store => this.storeService.getStoreChannels(
                 store.id,
                 this.getFilterState(),
                 this.isForeignCountry(store.country)
-            )).subscribe(data => {
-            this.updateSuggestedChannels(data);
-            this.processing = false;
-            this.infiniteScrollDisabled = data.page >= data.pages;
-        });
+            ))
+        )
+            .subscribe(data => {
+                this.updateSuggestedChannels(data);
+                this.processing = false;
+                this.infiniteScrollDisabled = data.page >= data.pages;
+            });
     }
 
     onApplyFilter() {
         this.processingFilters = true;
-        this.appStore.select('currentStore').take(1)
-            .flatMap(currentStore => this.storeService.getStoreChannels(
+        this.appStore.select('currentStore').pipe(
+            take(1),
+            flatMap(currentStore => this.storeService.getStoreChannels(
                 currentStore.id,
                 Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}),
                 this.isForeignCountry(currentStore.country)
             ))
+        )
             .subscribe(channels => this.initialize(channels));
     }
 
@@ -139,7 +147,7 @@ export class StatisticsComponent {
         this.channels.pages = Math.ceil(this.channels.total / LOAD_CHANNELS_COUNT);
         this.processingFilters = false;
         this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
-        this.appStore.select('currentStore').take(1).subscribe((store: Store) => {
+        this.appStore.select('currentStore').pipe(take(1)).subscribe((store: Store) => {
             this.internationalMode = this.isForeignCountry(store.country);
         })
 
@@ -161,11 +169,11 @@ export class StatisticsComponent {
     }
 
     protected fetchData(currentStore) {
-        return this.storeService.getStatistics(currentStore.id)
-            .zip(this.storeService.getStoreChannels(
+        return zip(
+            zip(this.storeService.getStatistics(currentStore.id), this.storeService.getStoreChannels(
                 currentStore.id,
                 Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
-            ))
-            .zip(this.storeService.getStoreCharge(currentStore.id))
+            )),
+            this.storeService.getStoreCharge(currentStore.id));
     }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
+import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 import { ChannelCategory } from '../../core/entities/channel-category.enum';
@@ -30,10 +31,11 @@ export class SearchChannelsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges
-            .debounceTime(SEARCH_DEBOUNCE)
-            .filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')
-            .do(searchQuery => this.filter.searchQuery = searchQuery)
+        this.searchControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === ''),
+            tap(searchQuery => this.filter.searchQuery = searchQuery),
+        )
             .subscribe(searchQuery => this.applyFilter.emit(this.filter));
     }
 

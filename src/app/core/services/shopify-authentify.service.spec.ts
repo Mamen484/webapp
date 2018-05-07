@@ -1,14 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { ShopifyAuthentifyService } from './shopify-authentify.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CreateStoreModel } from '../entities/create-store-model';
 
 describe('ShopifyAuthentifyServuce', () => {
     let httpClient;
     beforeEach(() => {
         httpClient = jasmine.createSpyObj('HttpClient', ['get', 'patch']);
-        httpClient.get.and.returnValue(Observable.of({}));
+        httpClient.get.and.returnValue(of({}));
         TestBed.configureTestingModule({
             providers: [
                 ShopifyAuthentifyService,
@@ -27,7 +27,7 @@ describe('ShopifyAuthentifyServuce', () => {
     it('getAuthorizationUrl should return an auth url',
         inject([ShopifyAuthentifyService, HttpClient],
             (service: ShopifyAuthentifyService) => {
-                httpClient.get.and.returnValue(Observable.of({authorizeUrl: 'some url'}));
+                httpClient.get.and.returnValue(of({authorizeUrl: 'some url'}));
                 service.getAuthorizationUrl('someShop.myshopify.com').subscribe(url => {
                     expect(url).toEqual('some url')
                 });

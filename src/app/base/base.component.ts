@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
 import { WindowRefService } from '../core/services/window-ref.service';
+import { combineLatest } from 'rxjs';
 
 declare const Autopilot;
 
@@ -14,8 +15,8 @@ declare const Autopilot;
 export class BaseComponent {
 
     constructor(protected appStore: Store<AppState>, protected windowRef: WindowRefService) {
-        this.appStore.select('userInfo')
-            .combineLatest(this.appStore.select('currentStore'))
+        combineLatest(this.appStore.select('userInfo'),
+            this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
                 if (!environment.RUN_AUTOPILOT || <any>environment.RUN_AUTOPILOT === 'false') {
                     return;

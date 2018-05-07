@@ -1,8 +1,9 @@
-import { Component, Inject, LOCALE_ID } from '@angular/core';
+import {map} from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store } from '../core/entities/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { StoreChannelDetails } from '../core/entities/store-channel-details';
 import { StoreService } from '../core/services/store.service';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
@@ -33,8 +34,8 @@ export class SidebarComponent {
             this.currentStore.id,
             Object.assign(new ChannelsRequestParams,
                 {status: 'installed'})
-        )
-            .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel));
+        ).pipe(
+            map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel)));
 
         this.linkToSupportCenter = this.supportLinkService.supportLink;
         this.media.subscribe(() => this.hideTooltips = this.media.isActive('xs'));

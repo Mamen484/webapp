@@ -1,3 +1,4 @@
+import { mergeMap, tap, filter, debounceTime } from 'rxjs/operators';
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SearchArticlesEntry } from '../../core/entities/search-articles-entry';
 import { FormControl } from '@angular/forms';
@@ -44,11 +45,11 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         this.helpCenterLanguage = this.localeIdService.getHelpCenterLanguage();
-        this.searchControl.valueChanges
-            .debounceTime(SEARCH_DEBOUNCE)
-            .filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH)
-            .do(() => this.processing = true)
-            .flatMap(searchQuery => this.supportService.searchArticles(searchQuery))
+        this.searchControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
+            tap(() => this.processing = true),
+            mergeMap(searchQuery => this.supportService.searchArticles(searchQuery)))
             .subscribe(response => {
                 this.searchResults = [];
                 response._embedded.entries.forEach(entry => {

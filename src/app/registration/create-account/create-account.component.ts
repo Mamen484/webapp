@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, interval } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms
@@ -24,7 +25,7 @@ export class CreateAccountComponent implements OnInit {
     }
 
     protected showProgress() {
-        Observable.interval(this.updateFrequency).take(PERCENTS).subscribe(
+        interval(this.updateFrequency).pipe(take(PERCENTS)).subscribe(
             () => this.progress += 1,
             () => {},
             () => this.onFinish()

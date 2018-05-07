@@ -1,6 +1,7 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Statistics } from '../entities/statistics';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { StoreChannelResponse } from '../entities/store-channel-response';
@@ -31,8 +32,8 @@ export class StoreService {
             .set('status', params.status);
 
         if (foreignChannels) {
-            return <any>this.httpClient.get(`${environment.API_URL}/channel`, {params: httpParams})
-                .map((data: ChannelsResponse) =>
+            return <any>this.httpClient.get(`${environment.API_URL}/channel`, {params: httpParams}).pipe(
+                map((data: ChannelsResponse) =>
                     // we need this to have the same data when the user selects a store country, and another country
                     Object.assign({}, data, {
                         _embedded: {
@@ -41,13 +42,13 @@ export class StoreService {
                                 _embedded: {channel: channel}
                             }))
                         }
-                    }))
+                    })))
                 ;
         }
-        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/channel`, {params: httpParams})
-            .map((data: StoreChannelResponse) =>
+        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/channel`, {params: httpParams}).pipe(
+            map((data: StoreChannelResponse) =>
                 // we use 'channel' property to have the same structure for results in the store country and outside it
-                Object.assign({}, data, {_embedded: {channel: data._embedded.storeChannel}}));
+                Object.assign({}, data, {_embedded: {channel: data._embedded.storeChannel}})));
     }
 
     public getStatistics(storeId): Observable<Statistics> {

@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { async, inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpHeaders } from '@angular/common/http';
+import { take, toArray } from 'rxjs/operators';
 
 describe('TimelineService', () => {
 
@@ -69,7 +70,7 @@ describe('TimelineService', () => {
     it('should pass to subscribers two events: fetch start (empty) and fetch finish (with data) when updated timeline is requested', done => {
         let service = TestBed.get(TimelineService);
         let httpMock = TestBed.get(HttpTestingController);
-        service.getTimelineStream().take(2).toArray().subscribe(streamEvents => {
+        service.getTimelineStream().pipe(take(2), toArray()).subscribe(streamEvents => {
             expect(streamEvents.length).toEqual(2);
             expect(streamEvents[0].type).toEqual(StreamEventType.started);
             expect(streamEvents[1].type).toEqual(StreamEventType.finished);

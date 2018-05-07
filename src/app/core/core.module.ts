@@ -1,7 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import '../../rxjs-imports';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
