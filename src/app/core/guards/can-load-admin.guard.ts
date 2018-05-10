@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { take, flatMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { UserService } from '../services/user.service';
@@ -19,13 +20,13 @@ export class CanLoadAdminGuard implements CanLoad {
 
         return Observable.create(observer => {
             this.appStore.select('userInfo')
-                .take(1)
-                .flatMap(info => info
-                    ? Observable.of(info)
-                    : this.userService.fetchAggregatedInfo().do(userInfo => this.appStore.dispatch({
+                .pipe(take(1))
+                .pipe(flatMap(info => info
+                    ? of(info)
+                    : this.userService.fetchAggregatedInfo().pipe(tap(userInfo => this.appStore.dispatch({
                         type: INITIALIZE_USER_INFO,
                         userInfo
-                    })))
+                    })))))
                 .subscribe(userInfo => {
                         if (!userInfo.isAdmin()) {
                             this.router.navigate(['/home']);

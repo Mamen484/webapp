@@ -4,7 +4,7 @@ import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 import { CarrierInfo } from '../../core/entities/carrier-info';
 
@@ -43,14 +43,14 @@ describe('OrderDetailsComponent', () => {
     });
 
     it('should open snackbar if shipping is confirmed', () => {
-        matDialog.open.and.returnValue({afterClosed: () => Observable.of(new CarrierInfo())});
+        matDialog.open.and.returnValue({afterClosed: () => of(new CarrierInfo())});
         component.shipOrder();
         expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderShippedSnackbarComponent);
     });
 
     it('should NOT open snackbar if shipping is cancelled', () => {
-        matDialog.open.and.returnValue({afterClosed: () => Observable.of(null)});
+        matDialog.open.and.returnValue({afterClosed: () => of(null)});
         component.shipOrder();
         expect(snackbar.openFromComponent).not.toHaveBeenCalled();
     });

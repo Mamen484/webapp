@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { OrdersFilterService } from './orders-filter.service';
 import { OrdersFilter } from '../entities/orders-filter';
+import { take } from 'rxjs/operators';
 
 describe('OrdersFilterService', () => {
     beforeEach(() => {
@@ -32,17 +33,17 @@ describe('OrdersFilterService', () => {
         filter.search = '1';
         filter.tag = '2';
         service.setFilter(filter);
-        subscriber.take(1).subscribe(f => {
+        subscriber.pipe(take(1)).subscribe(f => {
             expect(f.search).toEqual('1');
             expect(f.tag).toEqual('2');
         });
         service.patchFilter('search', '4');
-        subscriber.take(1).subscribe(f => {
+        subscriber.pipe(take(1)).subscribe(f => {
             expect(f.search).toEqual('4');
             expect(f.tag).toEqual('2');
         });
         service.patchFilter('tag', '8');
-        subscriber.take(1).subscribe(f => {
+        subscriber.pipe(take(1)).subscribe(f => {
             expect(f.search).toEqual('4');
             expect(f.tag).toEqual('8');
         });

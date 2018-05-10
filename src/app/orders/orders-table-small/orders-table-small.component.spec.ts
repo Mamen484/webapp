@@ -9,7 +9,7 @@ import { AppState } from '../../core/entities/app-state';
 import { OrdersService } from '../../core/services/orders.service';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { MatTableModule } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
+import { EMPTY } from 'rxjs';
 
 describe('OrdersTableSmallComponent', () => {
     let component: OrdersTableSmallComponent;
@@ -48,8 +48,8 @@ describe('OrdersTableSmallComponent', () => {
     }));
 
     beforeEach(() => {
-        appStore.select.and.returnValue(Observable.empty());
-        filterService.getFilter.and.returnValue(Observable.empty());
+        appStore.select.and.returnValue(EMPTY);
+        filterService.getFilter.and.returnValue(EMPTY);
 
         fixture = TestBed.createComponent(OrdersTableSmallComponent);
         component = fixture.componentInstance;

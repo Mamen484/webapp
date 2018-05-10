@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { LocalStorageService } from './local-storage.service';
 
@@ -15,7 +16,7 @@ export class UserService {
 
     public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
             return this.httpClient.get(`${environment.API_URL}/me`)
-                .map(userInfo => AggregatedUserInfo.create(userInfo))
+                .pipe(map(userInfo => AggregatedUserInfo.create(userInfo)));
     }
 
     public login(username, password) {
@@ -23,9 +24,9 @@ export class UserService {
             grant_type: 'password',
             username,
             password
-        }).do(({token_type, access_token}: any) => {
+        }).pipe(tap(({token_type, access_token}: any) => {
             this.localStorage.setItem('Authorization', `${token_type} ${access_token}`);
-        });
+        }));
     }
 
 }

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { debounceTime, tap, filter } from 'rxjs/operators';
 import { StoreService } from '../../core/services/store.service';
 
 import { Router } from '@angular/router';
@@ -59,11 +60,12 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges
-            .debounceTime(SEARCH_DEBOUNCE)
-            .filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH)
-            .do(() => this.processing = true)
-            .do(searchQuery => this.handleNewSearch(searchQuery))
+        this.searchControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
+            tap(() => this.processing = true),
+            tap(searchQuery => this.handleNewSearch(searchQuery))
+        )
             .subscribe();
     }
 

@@ -1,8 +1,8 @@
+import {throwError, of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SendRecoveryEmailComponent } from './send-recovery-email.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { PasswordRecoveryService } from '../../core/services/password-recovery.service';
-import { Observable } from 'rxjs/Observable';
 
 describe('SendRecoveryEmailComponent', () => {
     let passwordRecoveryService: jasmine.SpyObj<PasswordRecoveryService>;
@@ -31,7 +31,7 @@ describe('SendRecoveryEmailComponent', () => {
     });
 
     it('should send a recovery email request when a username field is not empty', () => {
-        passwordRecoveryService.sendRecoveryEmail.and.returnValue(Observable.of('anything'))
+        passwordRecoveryService.sendRecoveryEmail.and.returnValue(of('anything'))
 
         component.emailControl.setValue('1');
         component.reset();
@@ -45,14 +45,14 @@ describe('SendRecoveryEmailComponent', () => {
     });
 
     it('should show a success message when a password recovery request is successful', () => {
-        passwordRecoveryService.sendRecoveryEmail.and.returnValue(Observable.of(true));
+        passwordRecoveryService.sendRecoveryEmail.and.returnValue(of(true));
         component.emailControl.setValue('1');
         component.reset();
         expect(component.showSuccessMessage).toEqual(true);
     });
 
     it('should show an error message when a password recovery request  fails', () => {
-        passwordRecoveryService.sendRecoveryEmail.and.returnValue(Observable.throw(''));
+        passwordRecoveryService.sendRecoveryEmail.and.returnValue(throwError(''));
         component.emailControl.setValue('1');
         component.reset();
         expect(component.showError).toEqual(true);

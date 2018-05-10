@@ -1,7 +1,7 @@
+import { throwError, of } from 'rxjs';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { InitializeStoreGuard } from './initialize-store.guard';
-import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { StoreService } from '../services/store.service';
@@ -30,10 +30,10 @@ describe('InitializeStoreGuard', () => {
     it('should fetch the store from the server and write it to the app store if the user has an "admin" role and the store param is specified', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
         let dispatchSpy = jasmine.createSpy('dispatch');
         store.select.and.returnValues(
-            Observable.of(AggregatedUserInfo.create({roles: ['admin']})),
+            of(AggregatedUserInfo.create({roles: ['admin']})),
             {dispatch: dispatchSpy}
         );
-        storeService.getStore.and.returnValue(Observable.of({name: 'some amazing store'}));
+        storeService.getStore.and.returnValue(of({name: 'some amazing store'}));
         guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
@@ -44,10 +44,10 @@ describe('InitializeStoreGuard', () => {
     it('should fetch the store from the server and write it to the app store if the user has an "employee" role and the store param is specified', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
         let dispatchSpy = jasmine.createSpy('dispatch');
         store.select.and.returnValues(
-            Observable.of(AggregatedUserInfo.create({roles: ['employee']})),
+            of(AggregatedUserInfo.create({roles: ['employee']})),
             {dispatch: dispatchSpy}
         );
-        storeService.getStore.and.returnValue(Observable.of({name: 'some amazing store'}));
+        storeService.getStore.and.returnValue(of({name: 'some amazing store'}));
         guard.canActivate(<any>{queryParams: {store: 'some store'}}).subscribe(canActivate => {
             expect(canActivate).toEqual(true);
             expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('SET_STORE');
@@ -59,7 +59,7 @@ describe('InitializeStoreGuard', () => {
     it('should write first enabled store from userInfo to the app store when there is no store param in the query', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
         let dispatchSpy = jasmine.createSpy('dispatch');
         store.select.and.returnValues(
-            Observable.of(AggregatedUserInfo.create({
+            of(AggregatedUserInfo.create({
                 roles: ['user'],
                 _embedded: {
                     store: [
@@ -85,7 +85,7 @@ describe('InitializeStoreGuard', () => {
     it('should write to the application store the store, specified in the queryParams', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
         let dispatchSpy = jasmine.createSpy('dispatch');
         store.select.and.returnValues(
-            Observable.of(AggregatedUserInfo.create({
+            of(AggregatedUserInfo.create({
                 roles: ['user'],
                 _embedded: {
                     store: [
@@ -108,7 +108,7 @@ describe('InitializeStoreGuard', () => {
     it('should write to the application store first enabled store, if specified in the queryParams store is deleted', inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
         let dispatchSpy = jasmine.createSpy('dispatch');
         store.select.and.returnValues(
-            Observable.of(AggregatedUserInfo.create({
+            of(AggregatedUserInfo.create({
                 roles: ['user'],
                 _embedded: {
                     store: [
@@ -130,8 +130,8 @@ describe('InitializeStoreGuard', () => {
 
     it('should redirect to store-not-found error page when an admin tries to fetch non-existent store',
         inject([InitializeStoreGuard], (guard: InitializeStoreGuard) => {
-            store.select.and.returnValue(Observable.of(AggregatedUserInfo.create({roles: ['admin']})));
-            storeService.getStore.and.returnValue(Observable.throw({}));
+            store.select.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin']})));
+            storeService.getStore.and.returnValue(throwError({}));
             guard.canActivate(<any>{queryParams: {store: 1}}).subscribe(canActivate => {
                 expect(canActivate).toEqual(false);
                 expect(router.navigate).toHaveBeenCalledTimes(1);

@@ -1,3 +1,4 @@
+import {timer as observableTimer } from 'rxjs';
 import { Component, OnDestroy } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 
@@ -10,7 +11,6 @@ import { WindowRefService } from '../core/services/window-ref.service';
 import { StoreStatus } from '../core/entities/store-status.enum';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
-import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
@@ -45,7 +45,7 @@ export class MenuComponent implements OnDestroy {
             this.currentStore = currentStore;
             this.updateEvents();
         });
-        this.newEventsSubscription = Observable.timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
+        this.newEventsSubscription = observableTimer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
     }
 
     chooseStore(store) {

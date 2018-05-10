@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
@@ -12,7 +13,7 @@ export class DefaultPageGuard implements CanActivate {
 
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
-        this.appStore.select('userInfo').take(1).subscribe((userInfo: AggregatedUserInfo) => {
+        this.appStore.select('userInfo').pipe(take(1)).subscribe((userInfo: AggregatedUserInfo) => {
             if (!route.queryParams.store && userInfo.roles.find(role => role === 'admin' || role === 'employee')) {
                 this.router.navigate(['/admin']);
             } else {

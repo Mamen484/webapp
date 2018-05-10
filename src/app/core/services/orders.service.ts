@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { PagedResponse } from '../entities/paged-response';
 import { Order } from '../entities/orders/order';
 import { OrdersFilter } from '../entities/orders-filter';

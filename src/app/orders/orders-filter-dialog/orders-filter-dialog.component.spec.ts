@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { OrdersFilter } from '../../core/entities/orders-filter';
-import { Observable } from 'rxjs/Observable';
+import { of, EMPTY } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('OrdersFilterDialogComponent', () => {
@@ -41,8 +41,8 @@ describe('OrdersFilterDialogComponent', () => {
             let filter = new OrdersFilter();
             filter.since = undefined;
             filter.until = new Date();
-            ordersFilterService.getFilter.and.returnValue(Observable.of(filter));
-            appStore.select.and.returnValue(Observable.empty());
+            ordersFilterService.getFilter.and.returnValue(of(filter));
+            appStore.select.and.returnValue(EMPTY);
             fixture = TestBed.createComponent(OrdersFilterDialogComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
@@ -55,8 +55,8 @@ describe('OrdersFilterDialogComponent', () => {
             let filter = new OrdersFilter();
             filter.since = new Date(Date.UTC(2017, 5, 14, 2, 22, 41));
             filter.until = new Date(Date.UTC(2017, 5, 14, 2, 22, 42));
-            ordersFilterService.getFilter.and.returnValue(Observable.of(filter));
-            appStore.select.and.returnValue(Observable.empty());
+            ordersFilterService.getFilter.and.returnValue(of(filter));
+            appStore.select.and.returnValue(EMPTY);
             fixture = TestBed.createComponent(OrdersFilterDialogComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
@@ -68,8 +68,8 @@ describe('OrdersFilterDialogComponent', () => {
 
     describe('', () => {
         beforeEach(() => {
-            ordersFilterService.getFilter.and.returnValue(Observable.of(new OrdersFilter()));
-            appStore.select.and.returnValue(Observable.empty());
+            ordersFilterService.getFilter.and.returnValue(of(new OrdersFilter()));
+            appStore.select.and.returnValue(EMPTY);
 
             fixture = TestBed.createComponent(OrdersFilterDialogComponent);
             component = fixture.componentInstance;

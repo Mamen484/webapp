@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CreatePasswordService } from '../../core/services/create-password.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { flatMap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
@@ -34,8 +35,8 @@ export class CreatePasswordComponent implements OnInit {
             this.store = JSON.parse(cache);
             return;
         }
-        this.route.queryParams
-            .flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params))
+        this.route.queryParams.pipe(
+            flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params)))
             .subscribe(store => {
                 this.store = store;
             })

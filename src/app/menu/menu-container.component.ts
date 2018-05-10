@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LoadingFlagService } from '../core/services/loading-flag.service';
 import { ToggleSidebarService } from '../core/services/toggle-sidebar.service';
 import { ActivatedRoute, ActivationEnd, NavigationStart, Router } from '@angular/router';
-import { merge } from 'rxjs/observable/merge';
+import { merge } from 'rxjs';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
 

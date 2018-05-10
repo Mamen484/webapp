@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
+import { take, flatMap } from 'rxjs/operators';
 import { TimelineUpdate } from '../core/entities/timeline-update';
 import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { StreamEventType, TimelineService } from '../core/services/timeline.service';
@@ -30,7 +31,7 @@ export class TimelineComponent {
 
     constructor(protected appStore: Store<AppState>,
                 protected timelineService: TimelineService) {
-        this.appStore.select('currentStore').take(1)
+        this.appStore.select('currentStore').pipe(take(1))
             .subscribe(currentStore => this.timelineService.emitUpdatedTimeline(currentStore.id));
 
         this.timelineService.getTimelineStream().subscribe(({type, data}) => {
@@ -64,8 +65,8 @@ export class TimelineComponent {
 
     applyFilter({filter, isActive}) {
         this.loadingTimeline = true;
-        this.appStore.select('currentStore').flatMap(store =>
-            this.timelineService.getEvents(store.id, filter))
+        this.appStore.select('currentStore').pipe(flatMap(store =>
+            this.timelineService.getEvents(store.id, filter)))
             .subscribe(timeline => {
                 this.initializeEvents(timeline);
                 this.loadingTimeline = false;

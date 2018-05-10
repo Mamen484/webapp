@@ -7,6 +7,8 @@ import { ChannelsRequestParams } from '../core/entities/channels-request-params'
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 import { SET_TAGS } from '../core/reducers/tags-reducer';
+import { combineLatest } from 'rxjs';
+import { flatMap, map } from 'rxjs/operators';
 
 declare const Autopilot;
 
@@ -20,8 +22,8 @@ export class BaseComponent {
     constructor(protected appStore: Store<AppState>,
                 protected windowRef: WindowRefService,
                 protected storeService: StoreService) {
-        this.appStore.select('userInfo')
-            .combineLatest(this.appStore.select('currentStore'))
+        combineLatest(this.appStore.select('userInfo'),
+            this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
                 if (!environment.RUN_AUTOPILOT || <any>environment.RUN_AUTOPILOT === 'false') {
                     return;
@@ -38,14 +40,16 @@ export class BaseComponent {
                         });
                 }
             });
-        this.appStore.select('currentStore')
-            .flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true)))
-            .map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
+            map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
+        )
             .subscribe(channels => {
                 this.appStore.select('installedChannels').dispatch({type: SET_CHANNELS, channels})
             });
-        this.appStore.select('currentStore')
-            .flatMap(store => this.storeService.fetchAvailableTags(store.id))
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.storeService.fetchAvailableTags(store.id))
+        )
             .subscribe(response => {
                 this.appStore.select('tags').dispatch({type: SET_TAGS, tags: response._embedded.tag});
             });

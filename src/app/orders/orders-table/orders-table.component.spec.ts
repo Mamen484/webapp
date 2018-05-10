@@ -7,10 +7,9 @@ import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject, EMPTY, of } from 'rxjs';
 import { Order } from '../../core/entities/orders/order';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { Router } from '@angular/router';
@@ -71,29 +70,29 @@ describe('OrdersTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
-        component.paginator = <any>({page: Observable.empty(), pageIndex: 0});
+        component.paginator = <any>({page: EMPTY, pageIndex: 0});
     });
 
     it('should display a loading spinner while data is being loaded', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
-        ordersService.fetchOrdersList.and.returnValue(Observable.empty());
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.isLoadingResults).toEqual(true);
     });
 
     it('should hide a loading spinner while data is loaded', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
-        ordersService.fetchOrdersList.and.returnValue(Observable.of({_embedded: {order: []}}));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(of({_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isLoadingResults).toEqual(false);
     });
 
     it('should format order data properly', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
-        ordersService.fetchOrdersList.and.returnValue(Observable.of(mockOrder()));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.hasErrors).toEqual(false);
@@ -115,21 +114,21 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should set `imported` property to `true` when the storeReference is defined', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
         let order = mockOrder();
         order._embedded.order[0].storeReference = '121';
-        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].imported).toEqual(true);
     });
 
     it('should set `imported` property to `false` when the storeReference is NOT defined', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
         let order = mockOrder();
         order._embedded.order[0].storeReference = undefined;
-        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].imported).toEqual(false);
     });
@@ -140,18 +139,18 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should perform only 1 fetchOrdersList call on initialization', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
-        ordersService.fetchOrdersList.and.returnValue(Observable.empty());
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
     });
 
     it('should redraw the table when filter data changes', () => {
         let filter$ = new BehaviorSubject(new OrdersFilter());
-        appStore.select.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(filter$.asObservable());
-        ordersService.fetchOrdersList.and.returnValue(Observable.empty());
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
 
@@ -165,28 +164,28 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
         let order = mockOrder();
         order._embedded.order[0].errors = [];
-        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].hasErrors).toEqual(false);
     });
 
     it('should set `hasErrors` to TRUE if errors array is NOT empty', () => {
-        appStore.select.and.returnValue(Observable.of({}));
-        filterService.getFilter.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
         let order = mockOrder();
         order._embedded.order[0].errors = [{type: OrderErrorType.ship, message: 'some message', occuredAt: 'date'}];
-        ordersService.fetchOrdersList.and.returnValue(Observable.of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].hasErrors).toEqual(true);
     });
 
     it('should acknowledge selected orders on click the `acknowledge` button', () => {
-        appStore.select.and.returnValue(Observable.of({id: 190}));
-        ordersService.acknowledge.and.returnValue(Observable.of({}));
+        appStore.select.and.returnValue(of({id: 190}));
+        ordersService.acknowledge.and.returnValue(of({}));
         component.selection.select(<OrdersTableItem>{reference: 'tadada1', hasErrors: false}, <OrdersTableItem>{
             reference: 'tadada2',
             hasErrors: false
@@ -201,20 +200,20 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should open shipping confirmation dialog on click on `ship` button', () => {
-        matDialog.open.and.returnValue({afterClosed: () => Observable.empty()});
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openShippingDialog();
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent);
     });
 
     it('should open snackbar if shipping is confirmed', () => {
-        matDialog.open.and.returnValue({afterClosed: () => Observable.of(true)});
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
         component.openShippingDialog();
         expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderShippedSnackbarComponent);
     });
 
     it('should NOT open snackbar if shipping is cancelled', () => {
-        matDialog.open.and.returnValue({afterClosed: () => Observable.of(false)});
+        matDialog.open.and.returnValue({afterClosed: () => of(false)});
         component.openShippingDialog();
         expect(snackbar.openFromComponent).not.toHaveBeenCalled();
     });

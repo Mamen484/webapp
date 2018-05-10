@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -32,8 +32,8 @@ describe('TimelineComponent', () => {
         beforeEach(async(() => {
 
             timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
-            timelineService.getEventsByLink.and.returnValue(Observable.of(events2));
-            timelineService.getTimelineStream.and.returnValue(Observable.of({
+            timelineService.getEventsByLink.and.returnValue(of(events2));
+            timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
                 data: {events, updates}
             }));
@@ -50,7 +50,7 @@ describe('TimelineComponent', () => {
                     },
                     {
                         provide: Store,
-                        useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
+                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
                     }
                 ]
             })
@@ -181,10 +181,10 @@ describe('TimelineComponent', () => {
                     },
                     {
                         provide: Store,
-                        useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
+                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
                     },
                     LegacyLinkService,
-                    {provide: Store, useValue: {select: () => Observable.of({id: 'storeId'})}},
+                    {provide: Store, useValue: {select: () => of({id: 'storeId'})}},
                     {provide: LocalStorageService, useValue: localStorage}
 
                 ]
@@ -193,7 +193,7 @@ describe('TimelineComponent', () => {
         }));
 
         beforeEach(() => {
-            timelineService.getTimelineStream.and.returnValue(Observable.of({
+            timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
                 data: {events: eventsWithErrors, updates: dataDistinct}
             }));
