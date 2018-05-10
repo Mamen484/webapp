@@ -14,7 +14,8 @@ RUN touch src/messages.xlf
 
 
 # Step 2: build an angular application
-FROM node:8.9 as node
+FROM node:8.11 as node
+RUN npm i -g npm@latest
 WORKDIR /var/www
 COPY ./ /var/www
 
