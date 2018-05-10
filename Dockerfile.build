@@ -15,11 +15,12 @@ RUN touch src/messages.xlf
 RUN crowdin download
 
 # Step 2: build an angular application
-FROM node:8.9 as node
+FROM node:8.11 as node
+RUN npm i -g npm@latest
 WORKDIR /app
 
 COPY ./ /app/
-RUN npm install
+RUN npm ci
 
 # copy translations from crowdin /locale folder into /app
 COPY --from=java /locale/src/locale /app/src/locale
