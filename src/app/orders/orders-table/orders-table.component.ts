@@ -9,7 +9,7 @@ import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
 import { LoadingFlagService } from '../../core/services/loading-flag.service';
@@ -19,6 +19,8 @@ import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowled
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
+import { combineLatest } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
     selector: 'sf-orders-table',
@@ -86,8 +88,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscription = this.appStore.select('currentStore')
-            .combineLatest(this.ordersFilterService.getFilter())
+        this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, filter]) => this.fetchData(store, filter));
 
         this.paginator.page.subscribe(({pageIndex}) => {
@@ -115,11 +116,12 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     // button actions
 
     acknowledge() {
-        this.appStore.select('currentStore')
-            .flatMap(store => this.ordersService.acknowledge(
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService.acknowledge(
                 store.id,
                 this.selection.selected.map(order => ({reference: order.reference, channelName: order.channelName})
                 )))
+        )
             .subscribe(() => {
                 this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
                     duration: 2000,

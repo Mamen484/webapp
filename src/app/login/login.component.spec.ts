@@ -1,10 +1,11 @@
+
+import {throwError, of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { UserService } from '../core/services/user.service';
 import { LocaleIdService } from '../core/services/locale-id.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
 import { cloneDeep } from 'lodash';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { WindowRefService } from '../core/services/window-ref.service';
@@ -86,8 +87,8 @@ describe('LoginComponent', () => {
     });
 
     it('should call user service with correct username and password', () => {
-        loginSpy.and.returnValue(Observable.of({}));
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
+        loginSpy.and.returnValue(of({}));
+        fetchAggregatedinfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
@@ -95,7 +96,7 @@ describe('LoginComponent', () => {
     });
 
     it('should write the error when the UserService returns an error', () => {
-        loginSpy.and.returnValue(Observable.throw({error: {detail: 'bubidu'}}));
+        loginSpy.and.returnValue(throwError({error: {detail: 'bubidu'}}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
@@ -107,8 +108,8 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'deleted';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
-        loginSpy.and.returnValue(Observable.of({}));
+        fetchAggregatedinfoSpy.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
+        loginSpy.and.returnValue(of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();
@@ -120,8 +121,8 @@ describe('LoginComponent', () => {
         userInfo._embedded.store[0].status = 'deleted';
         userInfo._embedded.store[1].status = 'deleted';
         userInfo._embedded.store[2].status = 'suspended';
-        fetchAggregatedinfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(userInfo)));
-        loginSpy.and.returnValue(Observable.of({}));
+        fetchAggregatedinfoSpy.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
+        loginSpy.and.returnValue(of({}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');
         component.login();

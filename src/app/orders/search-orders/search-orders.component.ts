@@ -4,6 +4,7 @@ import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filt
 import { MatDialog } from '@angular/material';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
+import { debounceTime, filter } from 'rxjs/operators';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -20,13 +21,14 @@ export class SearchOrdersComponent implements OnInit {
     filter: OrdersFilter;
 
     constructor(protected dialog: MatDialog, protected ordersFilterService: OrdersFilterService) {
-        this.ordersFilterService.getFilter().subscribe(filter => this.filter = filter);
+        this.ordersFilterService.getFilter().subscribe(f => this.filter = f);
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges
-            .debounceTime(SEARCH_DEBOUNCE)
-            .filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')
+        this.searchControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')
+        )
             .subscribe(searchQuery => this.ordersFilterService.patchFilter('search', searchQuery));
     }
 

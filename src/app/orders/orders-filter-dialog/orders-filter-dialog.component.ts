@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { StoreChannelDetails } from '../../core/entities/store-channel-details';
 import { Tag } from '../../core/entities/tag';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'sf-orders-filter-dialog',
@@ -22,7 +23,7 @@ export class OrdersFilterDialogComponent implements OnInit {
     constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>,
                 protected appStore: Store<AppState>,
                 protected ordersFilterService: OrdersFilterService) {
-        this.ordersFilterService.getFilter().take(1).subscribe(filter => {
+        this.ordersFilterService.getFilter().pipe(take(1)).subscribe(filter => {
             this.filter = Object.assign(new OrdersFilter(), filter)
         });
     }

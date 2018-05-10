@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { LocaleIdService } from '../../core/services/locale-id.service';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
@@ -25,7 +25,7 @@ describe('FilterChannelsDialogComponent', () => {
                 {provide: MatDialogRef, useValue: matDialog},
                 {provide: MAT_DIALOG_DATA, useValue: params},
                 {provide: LocaleIdService, useValue: {localeId: 'en'}},
-                {provide: Store, useValue: {select: () => Observable.of({country: 'en'})}}
+                {provide: Store, useValue: {select: () => of({country: 'en'})}}
             ]
         })
             .compileComponents();

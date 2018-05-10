@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { take, flatMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -32,8 +33,9 @@ export class IsAuthorizedGuard implements CanActivate {
             return false;
         }
         return Observable.create(observer => {
-            this.appStore.select('userInfo').take(1)
-                .flatMap(userInfo => userInfo ? Observable.of(userInfo) : this.userService.fetchAggregatedInfo())
+            this.appStore.select('userInfo')
+                .pipe(take(1))
+                .pipe(flatMap(userInfo => userInfo ? of(userInfo) : this.userService.fetchAggregatedInfo()))
                 .subscribe(
                     userInfo => {
                         if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {

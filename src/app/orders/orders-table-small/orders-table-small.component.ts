@@ -8,7 +8,7 @@ import { Order } from '../../core/entities/orders/order';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import { combineLatest, Subscription } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 import { LoadingFlagService } from '../../core/services/loading-flag.service';
 
@@ -42,8 +42,7 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscription = this.appStore.select('currentStore')
-            .combineLatest(this.ordersFilterService.getFilter())
+        this.subscription =  combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, filter]) => this.fetchData(store, filter));
     }
 

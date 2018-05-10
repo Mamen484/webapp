@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { LegacyLinkService } from './legacy-link.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 
 describe('LegacyLinkService', () => {
@@ -16,7 +16,7 @@ describe('LegacyLinkService', () => {
             providers: [
                 LegacyLinkService,
                 {provide: LocalStorageService, useValue: {getItem: getItemSpy}},
-                {provide: Store, useValue: {select: () => Observable.of({})}}
+                {provide: Store, useValue: {select: () => of({})}}
             ]
         })
         ;

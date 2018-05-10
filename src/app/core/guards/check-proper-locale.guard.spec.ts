@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { CheckProperLocaleGuard } from './check-proper-locale.guard';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { LocaleIdService } from '../services/locale-id.service';
 import { environment } from '../../../environments/environment';
 import { WindowRefService } from '../services/window-ref.service';
@@ -28,7 +28,7 @@ describe('CheckProperLocaleGuard', () => {
         });
 
         it('should return true', inject([CheckProperLocaleGuard], (guard: CheckProperLocaleGuard) => {
-            appStore.select.and.returnValue(Observable.of({language: 'it'}));
+            appStore.select.and.returnValue(of({language: 'it'}));
             environment.production = 'true';
             guard.canActivate().subscribe(canActivate => {
                 expect(canActivate).toEqual(true);
@@ -55,7 +55,7 @@ describe('CheckProperLocaleGuard', () => {
         it('should redirect the user to the valid localization folder and return false',
             inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
                 environment.production = 'true';
-                appStore.select.and.returnValue(Observable.of({language: 'en-US'}));
+                appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('');
                 guard.canActivate().subscribe(canActivate => {
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/');
@@ -66,7 +66,7 @@ describe('CheckProperLocaleGuard', () => {
         it('should add a slash before the whole path if it doesn\'t exist to prevent extra redirects on the server',
             inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
                 environment.production = 'true';
-                appStore.select.and.returnValue(Observable.of({language: 'en-US'}));
+                appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('?store=307');
                 guard.canActivate().subscribe(canActivate => {
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
@@ -77,7 +77,7 @@ describe('CheckProperLocaleGuard', () => {
         it('should NOT add a slash before the whole path if it starts from the slash',
             inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
                 environment.production = 'true';
-                appStore.select.and.returnValue(Observable.of({language: 'en-US'}));
+                appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('/home?store=307');
                 guard.canActivate().subscribe(canActivate => {
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/home?store=307');

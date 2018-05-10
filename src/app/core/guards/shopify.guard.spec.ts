@@ -1,5 +1,5 @@
 import { ShopifyGuard } from './shopify.guard';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('ShopifyGuard', () => {
     let guard;
@@ -25,14 +25,14 @@ describe('ShopifyGuard', () => {
     });
 
     it('should get the url from server and redirect to it if the shop query param is specified but code query param is NOT specified', () => {
-        shopifyService.getAuthorizationUrl.and.returnValue(Observable.of('some url'));
+        shopifyService.getAuthorizationUrl.and.returnValue(of('some url'));
         guard.canActivate({queryParams: {shop: '121'}});
         expect(shopifyService.getAuthorizationUrl).toHaveBeenCalledWith('121');
         expect(windowRef.nativeWindow.location.href).toEqual('some url');
     });
 
     it('canActivate should always return false', () => {
-        shopifyService.getAuthorizationUrl.and.returnValue(Observable.of('some url'));
+        shopifyService.getAuthorizationUrl.and.returnValue(of('some url'));
 
         expect(guard.canActivate({queryParams: {}})).toEqual(false);
         expect(guard.canActivate({queryParams: {shop: '121'}})).toEqual(false);

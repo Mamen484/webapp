@@ -6,7 +6,7 @@ import {
     MatProgressBarModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
 
@@ -72,7 +72,7 @@ describe('SearchChannelsComponent', () => {
         filter.type = 'retargeting';
         filter.country = 'en';
         filter.segment = 'fashion';
-        afterClosedSpy.and.returnValue(Observable.of(filter));
+        afterClosedSpy.and.returnValue(of(filter));
         component.openDialog();
 
     });
@@ -86,12 +86,12 @@ describe('SearchChannelsComponent', () => {
             expect(value.segment).toEqual('fashion');
             done();
         });
-        component.filter.searchQuery = 'babadag'
+        component.filter.searchQuery = 'babadag';
         let filter = new ChannelsRequestParams();
         filter.type = 'retargeting';
         filter.country = 'en';
         filter.segment = 'fashion';
-        afterClosedSpy.and.returnValue(Observable.of(filter));
+        afterClosedSpy.and.returnValue(of(filter));
         component.openDialog();
     });
 

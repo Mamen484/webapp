@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { filter, take, map } from 'rxjs/operators';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { LocaleIdService } from '../services/locale-id.service';
 import { environment } from '../../../environments/environment';
@@ -19,13 +20,16 @@ export class CheckProperLocaleGuard implements CanActivate {
     }
 
     canActivate(): Observable<boolean> {
-        return this.appStore.select('userInfo').filter(userInfo => Boolean(userInfo)).take(1).map((userInfo: AggregatedUserInfo) => {
+        return this.appStore.select('userInfo')
+            .pipe(filter(userInfo => Boolean(userInfo)))
+            .pipe(take(1))
+            .pipe(map((userInfo: AggregatedUserInfo) => {
             if (environment.production === 'true' && LocaleIdService.detectLocale(userInfo.language) !== this.localeIdService.localeId) {
                 let path = this.location.path().slice(0, 1) !== '/' ? '/' + this.location.path() : this.location.path();
                 this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + LocaleIdService.detectLocale(userInfo.language) + path;
                 return false;
             }
             return true;
-        });
+        }));
     }
 }

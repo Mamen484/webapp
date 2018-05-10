@@ -10,6 +10,7 @@ import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
 
+import { take, toArray } from 'rxjs/operators';
 
 describe('TimelineService', () => {
 
@@ -154,7 +155,7 @@ describe('TimelineService', () => {
     it('should pass to subscribers two events: fetch start (empty) and fetch finish (with data) when updated timeline is requested', done => {
         let service = TestBed.get(TimelineService);
         let httpMock = TestBed.get(HttpTestingController);
-        service.getTimelineStream().take(2).toArray().subscribe(streamEvents => {
+        service.getTimelineStream().pipe(take(2), toArray()).subscribe(streamEvents => {
             expect(streamEvents.length).toEqual(2);
             expect(streamEvents[0].type).toEqual(StreamEventType.started);
             expect(streamEvents[1].type).toEqual(StreamEventType.finished);

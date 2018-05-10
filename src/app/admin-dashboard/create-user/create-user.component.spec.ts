@@ -1,8 +1,8 @@
+import {throwError, of, EMPTY } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { CreateUserComponent } from './create-user.component';
 import { StoreService } from '../../core/services/store.service';
 import { MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
 import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
 import { FeedSource } from '../../core/entities/feed-source';
 import { FormArray, FormControl } from '@angular/forms';
@@ -22,7 +22,7 @@ describe('CreateUserComponent', () => {
 
 
         it('should write only not empty values to the images mapping ', () => {
-            storeService.createStore.and.returnValue(Observable.empty());
+            storeService.createStore.and.returnValue(EMPTY);
             (<FormArray>component.mappingsForm.controls.images).push(new FormControl('some image'));
             (<FormArray>component.mappingsForm.controls.images).push(new FormControl(''));
             component.store.feed.source = 'csv';
@@ -34,7 +34,7 @@ describe('CreateUserComponent', () => {
 
 
         it('should remove images property from mapping when all images were deleted', () => {
-            storeService.createStore.and.returnValue(Observable.empty());
+            storeService.createStore.and.returnValue(EMPTY);
             component.store.feed.mapping.images = ['image1', 'image2'];
             component.store.feed.source = 'csv';
             component.form.setValue(createFormMock());
@@ -50,7 +50,7 @@ describe('CreateUserComponent', () => {
         });
 
         it('should send the store creating request when the form is valid', () => {
-            storeService.createStore.and.returnValue(Observable.of({owner: {token: ''}}));
+            storeService.createStore.and.returnValue(of({owner: {token: ''}}));
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
             component.save();
@@ -59,7 +59,7 @@ describe('CreateUserComponent', () => {
 
         it('should clear an error when click save', () => {
             component.error = 'error';
-            storeService.createStore.and.returnValue(Observable.of({owner: {token: ''}}));
+            storeService.createStore.and.returnValue(of({owner: {token: ''}}));
             component.save();
             expect(component.error).toEqual('');
         });
@@ -67,7 +67,7 @@ describe('CreateUserComponent', () => {
         it('should open a dialog with creating results and pass to it login, token and password', () => {
             component.form.setValue(createFormMock({login: 'login1', password: 'password1'}));
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(Observable.of({owner: {token: 'token1'}}));
+            storeService.createStore.and.returnValue(of({owner: {token: 'token1'}}));
             component.save();
             expect(matDialog.open.calls.count()).toEqual(1);
             expect(matDialog.open.calls.first().args[0]).toEqual(UserCreatedDialogComponent);
@@ -77,7 +77,7 @@ describe('CreateUserComponent', () => {
         });
 
         it('should write an error detail when a server error returned', () => {
-            storeService.createStore.and.returnValue(Observable.throw({error: {detail: 'error message'}}));
+            storeService.createStore.and.returnValue(throwError({error: {detail: 'error message'}}));
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
             component.save();
@@ -85,7 +85,7 @@ describe('CreateUserComponent', () => {
         });
 
         it('should write an exception message when a server error detail contains nothing', () => {
-            storeService.createStore.and.returnValue(Observable.throw({error: {exception: {message: 'exception message'}}}));
+            storeService.createStore.and.returnValue(throwError({error: {exception: {message: 'exception message'}}}));
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
             component.save();
@@ -133,7 +133,7 @@ describe('CreateUserComponent', () => {
             });
 
         it('should create a validation errors object', () => {
-            storeService.createStore.and.returnValue(Observable.throw({
+            storeService.createStore.and.returnValue(throwError({
                 error: {
                     validationMessages: {
                         country: {
@@ -157,7 +157,7 @@ describe('CreateUserComponent', () => {
         it('should set processing to true after submitting the form', () => {
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(Observable.empty());
+            storeService.createStore.and.returnValue(EMPTY);
             component.save();
             expect(component.processing).toEqual(true);
         });
@@ -165,7 +165,7 @@ describe('CreateUserComponent', () => {
         it('should set processing to false after successful creating a user', () => {
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(Observable.of({owner: {token: 'token1'}}));
+            storeService.createStore.and.returnValue(of({owner: {token: 'token1'}}));
             component.save();
             expect(component.processing).toEqual(false);
         });
@@ -173,7 +173,7 @@ describe('CreateUserComponent', () => {
         it('should set processing to false after failure while creating a user', () => {
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(Observable.throw({error: {}}));
+            storeService.createStore.and.returnValue(throwError({error: {}}));
             component.save();
             expect(component.processing).toEqual(false);
         });

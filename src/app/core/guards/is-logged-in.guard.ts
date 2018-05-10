@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 import { WindowRefService } from '../services/window-ref.service';
 import { UserService } from '../services/user.service';
 import { LegacyLinkService } from '../services/legacy-link.service';
@@ -29,7 +30,7 @@ export class IsLoggedInGuard implements CanActivate {
         if (auth) {
             return Observable.create(observer => {
                 this.appStore.select('userInfo')
-                    .flatMap(userInfo => userInfo ? Observable.of(userInfo) : this.userService.fetchAggregatedInfo())
+                    .pipe(flatMap(userInfo => userInfo ? of(userInfo) : this.userService.fetchAggregatedInfo()))
                     .subscribe(
                     // token is valid, redirect to the homepage
                     () => {

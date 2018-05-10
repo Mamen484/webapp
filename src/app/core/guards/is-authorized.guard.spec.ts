@@ -1,6 +1,6 @@
+import {throwError,  Observable, of } from 'rxjs';
 import { TestBed, inject } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsAuthorizedGuard } from './is-authorized.guard';
@@ -47,11 +47,11 @@ describe('IsAuthorizedGuard', () => {
     it('should call UserService.fetchAggregatedInfo to check if the authorization is valid',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             store.select.and.returnValues(
-                Observable.of(null),
+                of(null),
                 {dispatch: jasmine.createSpy('dispatch')}
             );
             getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
+            fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
             (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(fetchAggregatedInfoSpy).toHaveBeenCalled();
             });
@@ -60,8 +60,8 @@ describe('IsAuthorizedGuard', () => {
     it('should return false if there is invalid authorization in the local storage',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
-            fetchAggregatedInfoSpy.and.returnValue(Observable.throw(401));
+            store.select.and.returnValue(of(null));
+            fetchAggregatedInfoSpy.and.returnValue(throwError(401));
             (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
                 expect(canActivate).toEqual(false);
             });
@@ -69,9 +69,9 @@ describe('IsAuthorizedGuard', () => {
 
     it('should return true if the authorization is valid ',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            store.select.and.returnValues(Observable.of(null), {dispatch: jasmine.createSpy('dispatch')});
+            store.select.and.returnValues(of(null), {dispatch: jasmine.createSpy('dispatch')});
             getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
+            fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
             (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(canActivate).toEqual(true);
             });
@@ -80,8 +80,8 @@ describe('IsAuthorizedGuard', () => {
     it('should redirect to the homepage if the authorization is invalid ',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
-            fetchAggregatedInfoSpy.and.returnValue(Observable.throw(401));
+            store.select.and.returnValue(of(null));
+            fetchAggregatedInfoSpy.and.returnValue(throwError(401));
             (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
                 expect(canActivate).toEqual(false);
                 expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -91,9 +91,9 @@ describe('IsAuthorizedGuard', () => {
     it('should redirect to the homepage if the user is not admin and does not have enabled stores',
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
+            store.select.and.returnValue(of(null));
             fetchAggregatedInfoSpy.and.returnValue(
-                Observable.of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
+                of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
             (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
                 expect(canActivate).toEqual(false);
                 expect(router.navigate).toHaveBeenCalledWith(['/login']);
@@ -106,7 +106,7 @@ describe('IsAuthorizedGuard', () => {
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             let dispatchSpy = jasmine.createSpy('dispatch');
             store.select.and.returnValues(
-                Observable.of(AggregatedUserInfo.create({
+                of(AggregatedUserInfo.create({
                     roles: ['user'],
                     _embedded: {store: [{name: 'some name', status: 'active'}]}
 
@@ -124,11 +124,11 @@ describe('IsAuthorizedGuard', () => {
         inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
             let dispatchSpy = jasmine.createSpy('dispatch');
             store.select.and.returnValues(
-                Observable.of(null),
+                of(null),
                 {dispatch: dispatchSpy}
             );
             getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create({
+            fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create({
                 roles: ['admin'],
                 _embedded: {store: []}
 
