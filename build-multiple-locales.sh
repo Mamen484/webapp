@@ -4,7 +4,7 @@ for lang in $LOCALES; do \
         npx ng build --output-path=dist$BASE_HREF/$lang \
                  --prod \
                  --base-href $BASE_HREF/$lang/ \
-                 --locale=$lang \
-                 --i18nFile=src/locale/messages.$lang.xlf \
-                 --i18nFormat=xlf
+                 --i18n-locale=$lang \
+                 --i18n-file=src/locale/messages.$lang.xlf \
+                 --i18n-format=xlf
       done
