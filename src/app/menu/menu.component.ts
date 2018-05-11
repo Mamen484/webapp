@@ -26,6 +26,7 @@ export class MenuComponent implements OnDestroy {
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = 0;
+    isManager = false;
 
     protected newEventsSubscription;
 
@@ -36,7 +37,10 @@ export class MenuComponent implements OnDestroy {
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
                 protected router: Router) {
-        this.appStore.select('userInfo').subscribe(userInfo => this.userInfo = userInfo);
+        this.appStore.select('userInfo').subscribe(userInfo => {
+            this.userInfo = userInfo;
+            this.isManager = Boolean(this.userInfo.roles.find(role => role === 'manager'));
+        });
         this.appStore.select('currentStore').subscribe(currentStore => {
             this.currentStore = currentStore;
             this.updateEvents();
@@ -54,7 +58,7 @@ export class MenuComponent implements OnDestroy {
     }
 
     isAdmin() {
-        return this.userInfo.roles.find(role => role === 'admin' || role === 'employee');
+        return Boolean(this.userInfo.roles.find(role => role === 'admin' || role === 'employee'));
     }
 
     navigateToTimeline() {

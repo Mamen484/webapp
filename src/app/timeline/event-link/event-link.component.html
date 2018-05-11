@@ -14,4 +14,5 @@
   <ng-container *ngIf="event.reason === 'check'" i18n>Your source feed wasn't updated because nothing had changed since the last update.</ng-container>
   <ng-container *ngIf="unknownReason()" i18n>Your source feed can't be updated because of an unrecognized error.</ng-container>
 </a>
-<a sfLegacyLink [path]="getChannelLink(event.channel)" *ngIf="event.type === updateNames.export" i18n target="_blank">We can't export your feed to {{event.channel.name}}.</a>
+<a sfLegacyLink [path]="getChannelLink(event.channel)" *ngIf="event.type === updateNames.export && event.operation === updateActions.error" i18n target="_blank">We can't export your feed to {{event.channel.name}}.</a>
+<a sfLegacyLink [path]="getChannelLink(event.channel)" *ngIf="event.type === updateNames.export && event.operation === updateActions.cancel" i18n target="_blank">We canceled your export on {{event.channel.name}} because another export is already in progress.</a>

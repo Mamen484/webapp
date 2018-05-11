@@ -1,0 +1,40 @@
+<div mat-dialog-title i18n>Filters</div>
+<mat-dialog-content>
+  <form fxLayout="column">
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field>
+        <mat-select [(ngModel)]="dateFilter" name="date" placeholder="Date" i18n-placeholder>
+          <mat-option i18n [value]="dateFilterOptions.today">Today</mat-option>
+          <mat-option i18n [value]="dateFilterOptions.yesterday">Yesterday</mat-option>
+          <mat-option i18n [value]="dateFilterOptions.lastWeek">Last Week</mat-option>
+          <mat-option i18n [value]="dateFilterOptions.lastMonth">Last Month</mat-option>
+          <mat-option i18n [value]="dateFilterOptions.custom">Custom</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="dateFilter === dateFilterOptions.custom">
+        <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="dateSince" name="dateSince" placeholder="Min date">
+        <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
+        <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field *ngIf="dateFilter === dateFilterOptions.custom">
+        <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="dateUntil" name="dateUntil" placeholder="Max date">
+        <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
+        <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </form>
+    <mat-form-field>
+      <mat-select [(ngModel)]="typeFilter" name="type" placeholder="Type" i18n-placeholder>
+        <mat-option i18n [value]="typeFilterOptions.all">All Types</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.import">Import</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.export">Export</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.rules">Rules</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.orders">Orders</mat-option>
+        <mat-option i18n [value]="typeFilterOptions.autoRemove">Auto-Remove</mat-option>
+      </mat-select>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="accent" (click)="cancel()" i18n>Cancel</button>
+  <button mat-button color="accent" (click)="accept()" i18n>Filter</button>
+</mat-dialog-actions>

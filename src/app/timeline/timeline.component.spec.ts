@@ -15,9 +15,10 @@ import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
 import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
-import {environment} from "../../environments/environment";
+import { environment } from '../../environments/environment';
+import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 
 describe('TimelineComponent', () => {
     let component: TimelineComponent;
@@ -27,8 +28,8 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline'])
-            timelineService.getEvents.and.returnValue(Observable.of(events2));
+            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService.getEventsByLink.and.returnValue(Observable.of(events2));
             timelineService.getTimelineStream.and.returnValue(Observable.of({
                 type: StreamEventType.finished,
                 data: {events, updates}
@@ -101,7 +102,7 @@ describe('TimelineComponent', () => {
         describe('scroll', () => {
             it('should load next page on scroll', () => {
                 component.onScroll();
-                expect(timelineService.getEvents).toHaveBeenCalledWith(null, '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
+                expect(timelineService.getEventsByLink).toHaveBeenCalledWith('/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
             });
 
             it('should set infiniteScrollDisabled to true when all the pages are loaded', () => {
@@ -125,12 +126,15 @@ describe('TimelineComponent', () => {
 
     });
 
+    @Component({selector: 'sf-timeline-filtering-area', template: ''})
+    class TimelineFilteringAreaComponent {}
+
     describe('integration tests', () => {
         let localStorage;
 
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getTimelineStream', 'emitUpdatedTimeline']);
+            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
 
@@ -147,6 +151,7 @@ describe('TimelineComponent', () => {
                     EventLinkComponent,
                     LegacyLinkDirective,
                     UpdateRowComponent,
+                    TimelineFilteringAreaComponent,
                 ],
                 providers: [
                     {
@@ -169,16 +174,28 @@ describe('TimelineComponent', () => {
         beforeEach(() => {
             timelineService.getTimelineStream.and.returnValue(Observable.of({
                 type: StreamEventType.finished,
-                data: {events: eventsWithErrors, updates}
+                data: {events: eventsWithErrors, updates: dataDistinct}
             }));
             fixture = TestBed.createComponent(TimelineComponent);
             component = fixture.componentInstance;
             fixture.detectChanges();
         });
+
+        it('should convert API data to the correct list of udpates', () => {
+            fixture.whenStable().then(() => {
+                let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
+                expect(items.length).toEqual(4);
+                validateUpdate(items[0], 'vertical_align_top', 'Amazon', 'Completed');
+                validateUpdate(items[1], 'vertical_align_top', 'CDiscount', 'Completed');
+                validateUpdate(items[2], 'vertical_align_bottom', 'Source feed', 'Completed');
+                validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
+            });
+        });
+
         it('should convert API data to the correct list of events', () => {
             fixture.whenStable().then(() => {
                 let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
-                expect(items.length).toEqual(14);
+                expect(items.length).toEqual(15);
                 validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
                 validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
                 validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
@@ -193,6 +210,7 @@ describe('TimelineComponent', () => {
                 validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
                 validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
                 validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+                validateEvent(items[14], 'error_outline', 'We canceled your export on amazon because another export is already in progress.')
             });
         });
     })
@@ -209,3 +227,8 @@ function validateEvent(elem, iconName, text, url?) {
     }
 }
 
+function validateUpdate(elem, iconName, channel, status) {
+    expect(elem.querySelector('.event-icon > mat-icon').textContent).toEqual(iconName);
+    expect(elem.querySelector('.channel-name').textContent.trim()).toEqual(channel);
+    expect(elem.querySelector('.event-description').textContent.trim()).toEqual(status);
+}
