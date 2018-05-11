@@ -7,6 +7,7 @@ import { StoreChannelDetails } from '../../core/entities/store-channel-details';
 import { Tag } from '../../core/entities/tag';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { take } from 'rxjs/operators';
+import { ChannelType } from '../../core/entities/channel-type.enum';
 
 @Component({
     selector: 'sf-orders-filter-dialog',
@@ -35,7 +36,11 @@ export class OrdersFilterDialogComponent implements OnInit {
             this.dateOption = 'custom';
         }
 
-        this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
+        this.appStore.select('installedChannels').subscribe(channels =>
+            this.channels = channels
+                ? channels.filter(channel => channel.type === ChannelType.marketplace.toLowerCase())
+                : []
+        );
         this.appStore.select('tags').subscribe(tags => this.tags = tags);
     }
 

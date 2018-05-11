@@ -182,7 +182,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             invoicingName: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
             storeId: order.storeReference,
             trackingNumber: order.shipment.trackingNumber,
-            imported: Boolean(order.storeReference),
+            imported: Boolean(order.acknowledgedAt),
         }
     }
 }

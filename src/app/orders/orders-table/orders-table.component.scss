@@ -34,10 +34,6 @@ mat-tab-group {
   justify-content: center;
 }
 
-.table-container {
-  min-height: 180px;
-}
-
 .selected-orders {
   color: mat-color($accent);
 }
@@ -49,4 +45,8 @@ mat-tab-group {
 .no-orders-message {
   margin-left: 15px;
   margin-top: 10px;
+}
+
+mat-progress-bar {
+  position: absolute;
 }

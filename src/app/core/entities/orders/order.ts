@@ -14,6 +14,7 @@ export interface Order {
         self: Link
     },
     id: number;
+    acknowledgedAt: any;
     reference: string;
     storeReference: string;
     createdAt: string;

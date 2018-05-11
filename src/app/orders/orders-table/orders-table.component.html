@@ -3,7 +3,7 @@
         <div class="actions" fxLayout="row">
             <div fxFlex>
                 <div class="selected-orders" *ngIf="selection.selected.length" i18n>
-                    {{selection.selected.length}} selected {selection.selected.length, plural, =1 {order} other {orders}}
+                    {{selection.selected.length}} {selection.selected.length, plural, =1 {order} other {orders}} selected
                 </div>
             </div>
             <ng-container
@@ -34,8 +34,8 @@
             </button>
         </div>
         <div [class.table-container]="isLoadingResults">
-            <div class="loading-container" *ngIf="isLoadingResults">
-                <mat-spinner></mat-spinner>
+            <div *ngIf="isLoadingResults">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
             </div>
             <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length || isLoadingResults;else noRecordsMessage">
 
@@ -98,15 +98,15 @@
                     <mat-cell *matCellDef="let row"> {{row.date | date:'fullDate'}}, {{row.date | date:'shortTime'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="updatedAt">
-                    <mat-header-cell *matHeaderCellDef> Updated</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Updated at</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.updatedAt | date:'fullDate'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="productAmount">
-                    <mat-header-cell *matHeaderCellDef> Total Products</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Product amount</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.productAmount}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="shippingAmount">
-                    <mat-header-cell *matHeaderCellDef> Total Shipping</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Shipping amount</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.shippingAmount}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="paymentMethod">
@@ -118,11 +118,11 @@
                     <mat-cell *matCellDef="let row"> {{row.deliveryName}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="invoicingName">
-                    <mat-header-cell *matHeaderCellDef> Invoicing Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Billing Name</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.invoicingName}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="storeId">
-                    <mat-header-cell *matHeaderCellDef> Store ID</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> StoreReference</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.storeId}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="trackingNumber">
@@ -130,7 +130,7 @@
                     <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="imported">
-                    <mat-header-cell *matHeaderCellDef> Imported</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef> Acknowledged</mat-header-cell>
                     <mat-cell *matCellDef="let row">
                         <span *ngIf="row.imported" i18n>Yes</span>
                         <span *ngIf="!row.imported" i18n>No</span>
@@ -147,14 +147,14 @@
 
 <mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated at</mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Total products
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Product amount
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount">Total shipping
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount">Shipping amount
         </mat-checkbox>
     </div>
     <div mat-menu-item>
@@ -166,18 +166,18 @@
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Invoicing name
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName">Billing name
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">Store ID</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">StoreReference</mat-checkbox>
     </div>
     <div mat-menu-item>
         <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Imported</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Acknowledged</mat-checkbox>
     </div>
 </mat-menu>
 
