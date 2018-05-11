@@ -17,6 +17,7 @@
            *ngIf="currentStore.permission.facturation">Membership</a>
         <a mat-menu-item sfLegacyLink path="/tools/access" i18n>Access</a>
         <hr>
+        <ng-container  *ngIf="!isAdmin()">
         <ng-container *ngFor="let store of userInfo._embedded.store">
             <button mat-menu-item *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
                     (click)="chooseStore(store)">{{store.name}}
@@ -24,6 +25,7 @@
             <button mat-menu-item *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
                     disabled title="This store is deleted" i18n-title>{{store.name}}
             </button>
+        </ng-container>
         </ng-container>
         <hr *ngIf="userInfo._embedded.store.length > 1">
         <a mat-menu-item i18n (click)="logout()">Logout</a>
