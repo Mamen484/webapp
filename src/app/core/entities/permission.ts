@@ -29,7 +29,6 @@ export class Permission {
             statistics: '*',
             timeline: '*',
             tools: '*',
-            university: '*',
         });
     }
 }
