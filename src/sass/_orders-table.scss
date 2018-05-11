@@ -4,15 +4,8 @@
 
   overflow-x: auto;
 
-  .mat-cell, .mat-header-cell {
-    padding-right: 5px;
-    padding-left: 5px;
-  }
-
   .mat-column-hasErrors, .mat-column-checkbox {
     flex: 0 0 50px;
-    padding-right: 5px;
-    padding-left: 5px;
   }
 
   .mat-column-total, .mat-column-marketplace {
