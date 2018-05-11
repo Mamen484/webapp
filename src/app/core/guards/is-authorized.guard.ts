@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { WindowRefService } from '../services/window-ref.service';
-import { environment } from '../../../environments/environment';
 import { UserService } from '../services/user.service';
-import { StoreStatus } from '../entities/store-status.enum';
 import { LocalStorageService } from '../services/local-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
+import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 
 /**
- * This guard is used to detect if the user is logged in. If NOT, then redirect to the login page.
+ * This guard is used to detect if the user is logged in.
+ * If NOT, then redirect to the login page.
+ * If YES, then store the userInfo from /me response to the app store.
  * Used on the pages, where authentication is required.
  */
 
 @Injectable()
 export class IsAuthorizedGuard implements CanActivate {
-    constructor(protected windowRef: WindowRefService,
+    constructor(protected router: Router,
                 protected userService: UserService,
-                protected localStorage: LocalStorageService,
-                protected router: Router) {
+                protected localStorage: LocalStorageService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -26,15 +27,14 @@ export class IsAuthorizedGuard implements CanActivate {
         // check Authorization in a storage
         let auth = this.localStorage.getItem('Authorization');
         if (!auth) {
-            this.redirectToLogin();
+            this.router.navigate(['/login']);
             return false;
         }
         return Observable.create(observer => {
             this.userService.fetchAggregatedInfo().subscribe(
                 userInfo => {
 
-                    // activate if no errors and the user has at least 1 enabled store
-                    if (this.hasEnabledStore(userInfo._embedded.store, next.queryParams.store)) {
+                    if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
                         observer.next(true);
                         observer.complete();
                     } else {
@@ -56,19 +56,8 @@ export class IsAuthorizedGuard implements CanActivate {
         });
     }
 
-    protected redirectToLogin() {
-        this.windowRef.nativeWindow.location.href = environment.BASE_HREF + '/' + environment.LOCALE_ID + '/login';
-    }
-
-    protected hasEnabledStore(store, storeQueryParam) {
-        if (storeQueryParam) {
-            return store.find(s => s.status !== StoreStatus.deleted && s.name === storeQueryParam);
-        }
-        return store.find(s => s.status !== StoreStatus.deleted);
-    }
-
     protected isNotAuthorized(observer) {
-        this.redirectToLogin();
+        this.router.navigate(['/login']);
         this.localStorage.removeItem('Authorization');
         observer.next(false);
         observer.complete();

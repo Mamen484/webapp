@@ -16,9 +16,10 @@ export class UserService {
 
     public fetchAggregatedInfo(withoutCache = false) {
         if (!this.aggregatedInfoCache || withoutCache) {
-            this.aggregatedInfoCache = <Observable<AggregatedUserInfo>>this.httpClient.get(`${environment.API_URL}/me`)
-                .publishReplay(1)
-                .refCount();
+            this.aggregatedInfoCache = this.httpClient.get(`${environment.API_URL}/me`)
+                    .map(userInfo => AggregatedUserInfo.create(userInfo))
+                    .publishReplay(1)
+                    .refCount();
         }
         return this.aggregatedInfoCache;
     }

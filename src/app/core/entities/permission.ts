@@ -1,4 +1,4 @@
-export interface Permission {
+export class Permission {
     ads: string;
     affiliation: string;
     buyline: string;
@@ -13,4 +13,23 @@ export interface Permission {
     timeline: string;
     tools: string;
     university: string;
+
+    static createForAdmin() {
+        return Object.assign(new Permission(), {
+            ads: '*',
+            affiliation: '*',
+            buyline: '*',
+            facturation: '*',
+            marketplaces: '*',
+            multiple: '*',
+            owner: '*',
+            retargeting: '*',
+            shopbots: '*',
+            solomo: '*',
+            statistics: '*',
+            timeline: '*',
+            tools: '*',
+            university: '*',
+        });
+    }
 }
