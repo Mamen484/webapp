@@ -95,7 +95,7 @@
 
                 <ng-container matColumnDef="date">
                     <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.date | date:'fullDate'}}</mat-cell>
+                    <mat-cell *matCellDef="let row"> {{row.date | date:'fullDate'}}, {{row.date | date:'shortTime'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="updatedAt">
                     <mat-header-cell *matHeaderCellDef> Updated</mat-header-cell>
