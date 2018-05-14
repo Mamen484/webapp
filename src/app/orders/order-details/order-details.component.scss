@@ -2,25 +2,27 @@
 
 @include order-actions-bar();
 
+$total-price-width: 100px;
+
 mat-card.orders-table {
   padding: 0;
   margin-bottom: 20px;
 }
 
 .totals {
-  display: grid;
-  padding: 20px 0;
+  display: flex;
+  padding: 20px 24px;
 
-  grid-template-columns: 24px 3fr 1fr 1fr 24px;
-  grid-template-areas: "paddingLeft gap description value paddingRight";
-
+  .flex-gap {
+    flex: 3;
+  }
 
   .description {
-    grid-area: description;
+    flex: 1;
   }
 
   .value {
-    grid-area: value;
+    width: $total-price-width;
   }
 
   .total-price {
@@ -90,4 +92,9 @@ sf-orders-subnav .status {
 
 button {
   margin-left: 10px;
+}
+
+
+mat-header-cell:last-child, mat-cell:last-child {
+  flex: 0 0 $total-price-width;
 }
