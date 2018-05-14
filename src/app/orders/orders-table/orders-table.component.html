@@ -35,9 +35,9 @@
         </div>
         <div [class.table-container]="isLoadingResults">
             <div *ngIf="isLoadingResults">
-                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
             </div>
-            <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length || isLoadingResults;else noRecordsMessage">
+            <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length;else noRecordsMessage">
 
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef>
@@ -182,5 +182,5 @@
 </mat-menu>
 
 <ng-template #noRecordsMessage>
-    <div class="no-orders-message" i18n>No orders matching your request.</div>
+    <div class="no-orders-message" i18n *ngIf="!isLoadingResults">No orders matching your request.</div>
 </ng-template>
