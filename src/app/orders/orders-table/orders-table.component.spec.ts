@@ -123,11 +123,11 @@ describe('OrdersTableComponent', () => {
         expect(component.dataSource.data[0].imported).toEqual(true);
     });
 
-    it('should set `imported` property to `false` when the storeReference is NOT defined', () => {
+    it('should set `imported` property to `false` when the acknowledgedAt is NOT defined', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of({}));
         let order = mockOrder();
-        order._embedded.order[0].storeReference = undefined;
+        order._embedded.order[0].acknowledgedAt = undefined;
         ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].imported).toEqual(false);
@@ -258,6 +258,7 @@ describe('OrdersTableComponent', () => {
                     storeId: 21,
                     storeReference: 'some reference',
                     shipment: {trackingNumber: 'some tracking number', carrier: 'some carrier'},
+                    acknowledgedAt: '2018-02-05'
 
                 }]
             }

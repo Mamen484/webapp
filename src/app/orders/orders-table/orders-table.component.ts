@@ -85,11 +85,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.isAllSelected() ?
             this.selection.clear() :
             this.dataSource.data.forEach(row => this.selection.select(row));
-    }
+        }
 
     ngOnInit() {
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
-            .subscribe(([store, filter]) => this.fetchData(store, filter));
+            .subscribe(([store, filter]) => {
+                this.selection.clear();
+                this.fetchData(store, filter);
+            });
 
         this.paginator.page.subscribe(({pageIndex}) => {
             this.ordersFilterService.patchFilter('page', String(pageIndex + 1))
