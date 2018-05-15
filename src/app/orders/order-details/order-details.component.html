@@ -8,7 +8,7 @@
         </mat-list-item>
         <mat-list-item class="sf-fill-space"></mat-list-item>
         <mat-list-item class="status">
-            {{order.status | removeUnderline}}
+            <sf-order-status [status]="order.status"></sf-order-status>
         </mat-list-item>
     </sf-orders-subnav>
     <div fxHide fxShow.xs>
@@ -23,7 +23,7 @@
                             </div>
 
                             <div fxFlex class="order-summary">
-                                <div> {{order.status | removeUnderline}}</div>
+                                <div> <sf-order-status [status]="order.status"></sf-order-status></div>
                                 <div>{{order.createdAt | date:'y/MM/d'}}</div>
                                 <div>{{order.createdAt | date:'h:mm a'}}</div>
                             </div>
@@ -41,7 +41,7 @@
                         <div class="totals-handset mat-body-2" fxLayout="column">
                             <div fxLayout="row">
                                 <div fxFlex i18n>Total products</div>
-                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
+                                <div fxFlex i18n >{{order.payment.productAmount | sfCurrency:order.payment.currency}}
                                 </div>
                             </div>
                             <div fxLayout="row">
@@ -106,7 +106,9 @@
                     <mat-header-cell *matHeaderCellDef>
                         <ng-container i18n>Price</ng-container>
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.price | sfCurrency:order.payment.currency}}</mat-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span class="mat-body-2">{{row.price | sfCurrency:order.payment.currency}}</span>
+                    </mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -132,7 +134,7 @@
                 <div class="value" fxLayout="column" fxLayoutGap="20px">
                     <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
                     <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                    <div class="total-price" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
+                    <div class="total-price mat-body-2" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
                         sfCurrency:order.payment.currency}}
                     </div>
                 </div>
