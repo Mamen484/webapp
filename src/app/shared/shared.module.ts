@@ -23,6 +23,7 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 import { RemoveUnderlinePipe } from './remove-underline.pipe';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
+import { ImageComponent } from './image/image.component';
 
 @NgModule({
     imports: [
@@ -105,6 +106,7 @@ import { CountryAutocompleteComponent } from './country-autocomplete/country-aut
         CountrySelectComponent,
         CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
+        ImageComponent,
 
     ],
     declarations: [
@@ -117,6 +119,7 @@ import { CountryAutocompleteComponent } from './country-autocomplete/country-aut
         ScheduleCallIframeComponent,
         RemoveUnderlinePipe,
         CountryAutocompleteComponent,
+        ImageComponent,
     ]
 })
 export class SharedModule {

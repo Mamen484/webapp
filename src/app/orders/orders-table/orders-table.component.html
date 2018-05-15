@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="dataSource.data.length || isLoadingResults;else noRecordsMessage">
     <mat-card-content>
         <div class="actions" fxLayout="row">
             <div fxFlex>
@@ -6,29 +6,31 @@
                     {{selection.selected.length}} {selection.selected.length, plural, =1 {order} other {orders}} selected
                 </div>
             </div>
-            <ng-container
-                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
-                <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
-                <button mat-button color="accent" i18n class="orders-action">Refund</button>
-            </ng-container>
+            <div *ngIf="!isLoadingResults">
+                <ng-container
+                        *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
+                    <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
+                    <button mat-button color="accent" i18n class="orders-action">Refund</button>
+                </ng-container>
 
-            <ng-container
-                    *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
-                <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge</button>
-            </ng-container>
+                <ng-container
+                        *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
+                    <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge</button>
+                </ng-container>
 
-            <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
-                <button mat-button color="accent" i18n class="orders-action">Accept</button>
-                <button mat-button color="accent" i18n class="orders-action">Refuse</button>
-            </ng-container>
+                <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
+                    <button mat-button color="accent" i18n class="orders-action">Accept</button>
+                    <button mat-button color="accent" i18n class="orders-action">Refuse</button>
+                </ng-container>
 
-            <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
-                <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
-            </ng-container>
+                <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
+                    <button mat-button color="accent" i18n class="orders-action">Unacknowledge</button>
+                </ng-container>
 
-            <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
-                <button mat-button color="accent" i18n class="orders-action">Refund</button>
-            </ng-container>
+                <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
+                    <button mat-button color="accent" i18n class="orders-action">Refund</button>
+                </ng-container>
+            </div>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
                 <mat-icon>view_column</mat-icon>
             </button>
@@ -37,7 +39,7 @@
             <div *ngIf="isLoadingResults">
                 <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
             </div>
-            <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length;else noRecordsMessage">
+            <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length">
 
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef>
@@ -173,5 +175,5 @@
 </mat-menu>
 
 <ng-template #noRecordsMessage>
-    <div class="no-orders-message" i18n *ngIf="!isLoadingResults">No orders matching your request.</div>
+    <div class="no-orders-message" i18n *ngIf="!isLoadingResults"><sf-image source="assets/images/robot.svg" width="60px" verticalAlign="middle"></sf-image> No orders matching your request.</div>
 </ng-template>

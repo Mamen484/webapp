@@ -4,7 +4,7 @@
 @include order-actions-bar();
 
 mat-card {
-  padding:0;
+  padding: 0;
   width: 100%;
 }
 
@@ -28,4 +28,5 @@ mat-tab-group {
 .no-orders-message {
   margin-left: 15px;
   margin-top: 10px;
+  text-align: center;
 }
