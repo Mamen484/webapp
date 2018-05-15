@@ -1,21 +1,24 @@
-<mat-card *ngIf="dataSource.data.length || isLoadingResults;else noRecordsMessage">
+<mat-card>
     <mat-card-content>
         <div class="actions" fxLayout="row">
             <div fxFlex>
                 <div class="selected-orders" *ngIf="selection.selected.length" i18n>
-                    {{selection.selected.length}} {selection.selected.length, plural, =1 {order} other {orders}} selected
+                    {{selection.selected.length}} {selection.selected.length, plural, =1 {order} other {orders}}
+                    selected
                 </div>
             </div>
-            <div *ngIf="!isLoadingResults">
+            <div *ngIf="!isLoadingResults && dataSource.data.length">
                 <ng-container
                         *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
-                    <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship
+                    </button>
                     <button mat-button color="accent" i18n class="orders-action">Refund</button>
                 </ng-container>
 
                 <ng-container
                         *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
-                    <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge
+                    </button>
                 </ng-container>
 
                 <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
@@ -39,7 +42,7 @@
             <div *ngIf="isLoadingResults">
                 <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
             </div>
-            <mat-table #table [dataSource]="dataSource" class="sf-orders-table" *ngIf="dataSource.data.length">
+            <mat-table #table [dataSource]="dataSource" class="sf-orders-table">
 
                 <ng-container matColumnDef="checkbox">
                     <mat-header-cell *matHeaderCellDef>
@@ -133,6 +136,10 @@
                 <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
                 </mat-row>
             </mat-table>
+            <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
+                <sf-image source="assets/images/robot.svg" width="60px" verticalAlign="middle"></sf-image>
+                No orders matching your request.
+            </div>
         </div>
         <mat-paginator [pageSize]="10" [length]="resultsLength"></mat-paginator>
     </mat-card-content>
@@ -140,7 +147,8 @@
 
 <mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated at</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt">Updated at
+        </mat-checkbox>
     </div>
     <div mat-menu-item>
         <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount">Product amount
@@ -163,17 +171,15 @@
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">StoreReference</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId">StoreReference
+        </mat-checkbox>
     </div>
     <div mat-menu-item>
         <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber">Tracking number
         </mat-checkbox>
     </div>
     <div mat-menu-item>
-        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Acknowledged</mat-checkbox>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported">Acknowledged
+        </mat-checkbox>
     </div>
 </mat-menu>
-
-<ng-template #noRecordsMessage>
-    <div class="no-orders-message" i18n *ngIf="!isLoadingResults"><sf-image source="assets/images/robot.svg" width="60px" verticalAlign="middle"></sf-image> No orders matching your request.</div>
-</ng-template>
