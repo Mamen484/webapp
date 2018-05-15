@@ -165,9 +165,7 @@
                         <mat-form-field fxFlex>
                             <input placeholder="City" matInput [(ngModel)]="order.billingAddress.city">
                         </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="Country" matInput>
-                        </mat-form-field>
+                        <sf-country-autocomplete fxFlex [(ngModel)]="order.billingAddress.country"></sf-country-autocomplete>
                     </div>
                     <div fxLayout="row">
                         <mat-form-field fxFlex>
@@ -210,9 +208,7 @@
                         <mat-form-field fxFlex>
                             <input placeholder="City" matInput [(ngModel)]="order.shippingAddress.city">
                         </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="Country" matInput>
-                        </mat-form-field>
+                        <sf-country-autocomplete fxFlex [(ngModel)]="order.shippingAddress.country"></sf-country-autocomplete>
                     </div>
                     <div fxLayout="row">
                         <mat-form-field fxFlex>

@@ -44,11 +44,10 @@ export class OrderDetailsComponent implements OnInit {
         this.matDialog.open(CarrierDetailsDialogComponent)
             .afterClosed().subscribe((data?: CarrierInfo) => {
             if (data) {
-                    this.snackBar.openFromComponent(OrderShippedSnackbarComponent, {
-                        duration: 2000
-                    });
+                this.snackBar.openFromComponent(OrderShippedSnackbarComponent, {
+                    duration: 2000
+                });
             }
         })
     }
-
 }

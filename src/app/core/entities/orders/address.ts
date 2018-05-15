@@ -6,4 +6,5 @@ export interface Address {
     city?: string;
     phone?: string;
     email?: string;
+    country?: string; // ISO alpha-2
 }
