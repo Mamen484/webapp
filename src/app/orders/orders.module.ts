@@ -18,6 +18,7 @@ import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog/confir
 import { OrderShippedSnackbarComponent } from './order-shipped-snackbar/order-shipped-snackbar.component';
 import { CarrierDetailsDialogComponent } from './carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
+import { AddressFormComponent } from './address-form/address-form.component';
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import { OrderStatusComponent } from './order-status/order-status.component';
         OrderShippedSnackbarComponent,
         CarrierDetailsDialogComponent,
         OrderStatusComponent,
+        AddressFormComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,

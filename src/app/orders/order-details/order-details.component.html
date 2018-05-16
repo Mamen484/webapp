@@ -144,90 +144,12 @@
 
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
         <div fxFlex>
-            <div class="mat-body-1">Billing address</div>
-            <mat-card>
-                <mat-card-content>
-                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
-                        <mat-form-field fxFlex>
-                            <input placeholder="First Name" matInput [(ngModel)]="order.billingAddress.firstName">
-                        </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="Last Name" matInput [(ngModel)]="order.billingAddress.lastName">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Address" matInput [(ngModel)]="order.billingAddress.street">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Zip" matInput [(ngModel)]="order.billingAddress.postalCode">
-                        </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="City" matInput [(ngModel)]="order.billingAddress.city">
-                        </mat-form-field>
-                        <sf-country-autocomplete fxFlex [(ngModel)]="order.billingAddress.country"></sf-country-autocomplete>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Phone" matInput [(ngModel)]="order.billingAddress.phone">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Email" matInput [(ngModel)]="order.billingAddress.email">
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button color="accent">CANCEL</button>
-                    <button mat-button color="accent">SAVE</button>
-                </mat-card-actions>
-            </mat-card>
+            <div class="mat-body-1" i18n>Billing address</div>
+            <sf-address-form [address]="order.billingAddress"></sf-address-form>
         </div>
         <div fxFlex>
-            <div class="mat-body-1">Delivery address</div>
-            <mat-card>
-                <mat-card-content>
-                    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
-                        <mat-form-field fxFlex>
-                            <input placeholder="First Name" matInput [(ngModel)]="order.shippingAddress.firstName">
-                        </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="Last Name" matInput [(ngModel)]="order.shippingAddress.lastName">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Address" matInput [(ngModel)]="order.shippingAddress.street">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Zip" matInput [(ngModel)]="order.shippingAddress.postalCode">
-                        </mat-form-field>
-                        <mat-form-field fxFlex>
-                            <input placeholder="City" matInput [(ngModel)]="order.shippingAddress.city">
-                        </mat-form-field>
-                        <sf-country-autocomplete fxFlex [(ngModel)]="order.shippingAddress.country"></sf-country-autocomplete>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Phone" matInput [(ngModel)]="order.shippingAddress.phone">
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row">
-                        <mat-form-field fxFlex>
-                            <input placeholder="Email" matInput [(ngModel)]="order.shippingAddress.email">
-                        </mat-form-field>
-                    </div>
-                </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button color="accent">CANCEL</button>
-                    <button mat-button color="accent">SAVE</button>
-                </mat-card-actions>
-            </mat-card>
+            <div class="mat-body-1" i18n>Delivery address</div>
+            <sf-address-form [address]="order.shippingAddress"></sf-address-form>
         </div>
     </div>
 </div>
