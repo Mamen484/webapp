@@ -95,7 +95,7 @@
                 </ng-container>
                 <ng-container matColumnDef="updatedAt">
                     <mat-header-cell *matHeaderCellDef> Updated at</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.updatedAt | date:'fullDate'}}</mat-cell>
+                    <mat-cell *matCellDef="let row"> {{row.updatedAt | date:'short'}}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="productAmount">
                     <mat-header-cell *matHeaderCellDef> Product amount</mat-header-cell>
