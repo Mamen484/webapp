@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
-    Inject,
+    Inject, Input,
     LOCALE_ID,
     OnInit,
     Optional,
@@ -14,6 +14,7 @@ import { countries } from './countries';
 import { startWith, map, filter, take } from 'rxjs/operators';
 import { Observable } from 'rxjs/Rx';
 import { environment } from '../../../environments/environment';
+import { MatFormFieldAppearance } from '@angular/material';
 
 const defaultLang = 'en';
 
@@ -24,6 +25,8 @@ const defaultLang = 'en';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
+
+    @Input() appearance: MatFormFieldAppearance = 'standard';
 
     @ViewChild('input') input: ElementRef<HTMLInputElement>;
 

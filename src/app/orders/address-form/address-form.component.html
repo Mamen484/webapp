@@ -1,35 +1,42 @@
 <mat-card>
     <mat-card-content>
         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
-            <mat-form-field fxFlex>
-                <input placeholder="First Name" i18n-placeholder matInput [(ngModel)]="address.firstName">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>First Name</mat-label>
+                <input matInput [(ngModel)]="address.firstName">
             </mat-form-field>
-            <mat-form-field fxFlex>
-                <input placeholder="Last Name" i18n-placeholder matInput [(ngModel)]="address.lastName">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>Last Name</mat-label>
+                <input matInput [(ngModel)]="address.lastName">
             </mat-form-field>
         </div>
         <div fxLayout="row">
-            <mat-form-field fxFlex>
-                <input placeholder="Address" i18n-placeholder matInput [(ngModel)]="address.street">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>Address</mat-label>
+                <input matInput [(ngModel)]="address.street">
             </mat-form-field>
         </div>
         <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
-            <mat-form-field fxFlex>
-                <input placeholder="Zip" i18n-placeholder matInput [(ngModel)]="address.postalCode">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>Zip</mat-label>
+                <input matInput [(ngModel)]="address.postalCode">
             </mat-form-field>
-            <mat-form-field fxFlex>
-                <input placeholder="City" i18n-placeholder matInput [(ngModel)]="address.city">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>City</mat-label>
+                <input matInput [(ngModel)]="address.city">
             </mat-form-field>
-            <sf-country-autocomplete fxFlex [(ngModel)]="address.country"></sf-country-autocomplete>
+            <sf-country-autocomplete fxFlex [(ngModel)]="address.country" appearance="outline"></sf-country-autocomplete>
         </div>
         <div fxLayout="row">
-            <mat-form-field fxFlex>
-                <input placeholder="Phone" i18n-placeholder matInput [(ngModel)]="address.phone">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>Phone</mat-label>
+                <input matInput [(ngModel)]="address.phone">
             </mat-form-field>
         </div>
         <div fxLayout="row">
-            <mat-form-field fxFlex>
-                <input placeholder="Email" i18n-placeholder matInput [(ngModel)]="address.email">
+            <mat-form-field appearance="outline" fxFlex color="accent">
+                <mat-label i18n>Email</mat-label>
+                <input matInput [(ngModel)]="address.email">
             </mat-form-field>
         </div>
     </mat-card-content>
