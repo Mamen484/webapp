@@ -15,7 +15,7 @@
         </ng-container>
         <ng-container matColumnDef="total">
           <mat-header-cell *matHeaderCellDef> Total (€)</mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.total}}</mat-cell>
+          <mat-cell *matCellDef="let row"> {{row.total | sfCurrency:row.currency}}</mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="date">

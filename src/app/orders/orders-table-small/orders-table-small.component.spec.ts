@@ -9,6 +9,7 @@ import { OrdersService } from '../../core/services/orders.service';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { MatTableModule } from '@angular/material';
 import { EMPTY } from 'rxjs';
+import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 
 describe('OrdersTableSmallComponent', () => {
     let component: OrdersTableSmallComponent;
@@ -28,7 +29,7 @@ describe('OrdersTableSmallComponent', () => {
         router = jasmine.createSpyObj(['navigate']);
 
         TestBed.configureTestingModule({
-            declarations: [OrdersTableSmallComponent],
+            declarations: [OrdersTableSmallComponent, SfCurrencyPipe],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},

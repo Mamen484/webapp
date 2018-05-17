@@ -71,6 +71,7 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
             id: order.id,
             channelImage: order._embedded.channel._links.image.href,
             total: order.payment.totalAmount,
+            currency: order.payment.currency,
             date: new Date(order.createdAt).getTime(),
         }
 

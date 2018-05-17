@@ -8,6 +8,7 @@ export interface OrdersTableItem {
     id: number;
     status: OrderStatus;
     total: number;
+    currency: string;
     date: number;
     updatedAt: number;
     productAmount: number;
