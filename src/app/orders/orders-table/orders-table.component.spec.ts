@@ -17,6 +17,7 @@ import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
+import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -44,6 +45,7 @@ describe('OrdersTableComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 OrdersTableComponent,
+                SfCurrencyPipe,
             ],
             schemas: [
                 NO_ERRORS_SCHEMA,
