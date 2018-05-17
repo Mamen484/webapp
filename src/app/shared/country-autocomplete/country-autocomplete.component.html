@@ -4,7 +4,7 @@
            (click)="onTouched()">
     <mat-autocomplete #countryAutocomplete="matAutocomplete">
         <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name" (click)="onChange(country.code)">
-            <img src="{{baseHref}}/assets/images/flags-mini/{{country.code.toLowerCase()}}.png" class="sf-flag-filter">
+            <sf-image source="assets/images/flags-mini/{{country.code.toLowerCase()}}.png" class="sf-flag-filter"></sf-image>
             <ng-container>{{country.name}}</ng-container>
         </mat-option>
     </mat-autocomplete>
