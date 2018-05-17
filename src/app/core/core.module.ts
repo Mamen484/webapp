@@ -43,7 +43,6 @@ import { installedChannelsReducer } from './reducers/installed-channels-reducer'
 import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
-import { LoadingFlagService } from './services/loading-flag.service';
 import { SupportLinkService } from './services/support-link.service';
 import { ToggleSidebarService } from './services/toggle-sidebar.service';
 
@@ -68,7 +67,6 @@ import { ToggleSidebarService } from './services/toggle-sidebar.service';
         InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
-        LoadingFlagService,
         LogoutGuard,
         LoginByTokenGuard,
         OrderDetailsResolveGuard,

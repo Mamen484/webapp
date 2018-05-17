@@ -10,7 +10,6 @@ import { AppState } from '../../core/entities/app-state';
 import { Router } from '@angular/router';
 import { combineLatest, Subscription } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
-import { LoadingFlagService } from '../../core/services/loading-flag.service';
 
 @Component({
     selector: 'sf-orders-table-small',
@@ -31,14 +30,11 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
                 protected ordersService: OrdersService,
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
-                protected router: Router,
-                protected loadingFlagService: LoadingFlagService) {
+                protected router: Router) {
     }
 
     goToOrder(orderId: string) {
-        this.loadingFlagService.triggerLoadingStarted();
-        this.router.navigate(['orders', 'detail', orderId])
-            .then(() => this.loadingFlagService.triggerLoadedFinished());
+        this.router.navigate(['orders', 'detail', orderId]);
     }
 
     ngOnInit() {

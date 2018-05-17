@@ -12,7 +12,6 @@ import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
-import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
@@ -63,7 +62,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
                 protected router: Router,
-                protected loadingFlagService: LoadingFlagService,
                 protected snackbar: MatSnackBar) {
     }
 
@@ -75,9 +73,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     goToOrder(orderId: string) {
-        this.loadingFlagService.triggerLoadingStarted();
-        this.router.navigate(['orders', 'detail', orderId])
-            .then(() => this.loadingFlagService.triggerLoadedFinished());
+        this.router.navigate(['orders', 'detail', orderId]);
     }
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */

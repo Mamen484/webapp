@@ -1,7 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LoadingFlagService } from '../core/services/loading-flag.service';
 import { ToggleSidebarService } from '../core/services/toggle-sidebar.service';
-import { ActivatedRoute, ActivationEnd, NavigationStart, Router } from '@angular/router';
+import {
+    ActivatedRoute,
+    ActivationEnd,
+    Event,
+    NavigationCancel,
+    NavigationEnd,
+    NavigationError,
+    NavigationStart,
+    Router
+} from '@angular/router';
 import { merge } from 'rxjs';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
@@ -24,11 +32,10 @@ export class MenuContainerComponent implements OnInit {
      */
     showBackButton?: any[];
 
-    constructor(protected loadingFlagService: LoadingFlagService,
-                protected toggleSidebarService: ToggleSidebarService,
+    constructor(protected toggleSidebarService: ToggleSidebarService,
                 protected route: ActivatedRoute,
                 protected router: Router) {
-        this.loadingFlagService.isLoading().subscribe(isLoading => this.loadingNextRoute = isLoading);
+        this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
     }
 
     ngOnInit() {
@@ -69,5 +76,21 @@ export class MenuContainerComponent implements OnInit {
             route = route.firstChild;
         }
         return dataArray;
+    }
+
+    /**
+     * Show a progressbar in the top of the application when we're loading the next route
+     *
+     * @param {Event} routerEvent
+     */
+    checkRouterEvent(routerEvent: Event) {
+        if (routerEvent instanceof NavigationStart) {
+            this.loadingNextRoute = true;
+        }
+        if (routerEvent instanceof NavigationEnd
+            || routerEvent instanceof NavigationCancel
+            || routerEvent instanceof NavigationError) {
+            this.loadingNextRoute = false;
+        }
     }
 }

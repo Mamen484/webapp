@@ -13,7 +13,6 @@ import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilter } from '../../core/entities/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { Router } from '@angular/router';
-import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
@@ -26,7 +25,6 @@ describe('OrdersTableComponent', () => {
     let cdr: jasmine.SpyObj<ChangeDetectorRef>;
     let filterService: jasmine.SpyObj<OrdersFilterService>;
     let router: jasmine.SpyObj<Router>;
-    let loadingFlagService: jasmine.SpyObj<LoadingFlagService>;
     let snackbar: jasmine.SpyObj<MatSnackBar>;
 
     let component: OrdersTableComponent;
@@ -39,7 +37,6 @@ describe('OrdersTableComponent', () => {
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
         router = jasmine.createSpyObj(['navigate']);
-        loadingFlagService = jasmine.createSpyObj(['triggerLoadingStarted', 'triggerLoadingFinished']);
         snackbar = jasmine.createSpyObj(['openFromComponent']);
 
         TestBed.configureTestingModule({
@@ -57,7 +54,6 @@ describe('OrdersTableComponent', () => {
                 {provide: ChangeDetectorRef, useValue: cdr},
                 {provide: OrdersFilterService, useValue: filterService},
                 {provide: Router, useValue: router},
-                {provide: LoadingFlagService, useValue: loadingFlagService},
                 {provide: MatSnackBar, useValue: snackbar},
 
             ],

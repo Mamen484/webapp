@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrdersTableSmallComponent } from './orders-table-small.component';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { LoadingFlagService } from '../../core/services/loading-flag.service';
 import { Router } from '@angular/router';
 import { AppState } from '../../core/entities/app-state';
 import { OrdersService } from '../../core/services/orders.service';
@@ -20,7 +19,6 @@ describe('OrdersTableSmallComponent', () => {
     let cdr: jasmine.SpyObj<ChangeDetectorRef>;
     let filterService: jasmine.SpyObj<OrdersFilterService>;
     let router: jasmine.SpyObj<Router>;
-    let loadingFlagService: jasmine.SpyObj<LoadingFlagService>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
@@ -28,7 +26,6 @@ describe('OrdersTableSmallComponent', () => {
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
         router = jasmine.createSpyObj(['navigate']);
-        loadingFlagService = jasmine.createSpyObj(['triggetLoadingStarted', 'triggerLoadingFinished']);
 
         TestBed.configureTestingModule({
             declarations: [OrdersTableSmallComponent],
@@ -39,7 +36,6 @@ describe('OrdersTableSmallComponent', () => {
                 {provide: ChangeDetectorRef, useValue: cdr},
                 {provide: OrdersFilterService, useValue: filterService},
                 {provide: Router, useValue: router},
-                {provide: LoadingFlagService, useValue: loadingFlagService},
             ],
             imports: [MatTableModule]
         })
