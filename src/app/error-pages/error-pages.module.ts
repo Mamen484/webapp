@@ -6,6 +6,7 @@ import { CriticalErrorComponent } from './critical-error/critical-error.componen
 import { StoreNotFoundComponent } from './store-not-found/store-not-found.component';
 import { MenuModule } from '../menu/menu.module';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { OrderNotFoundComponent } from './order-not-found/order-not-found.component';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
         CriticalErrorComponent,
         StoreNotFoundComponent,
         NotFoundComponent,
+        OrderNotFoundComponent,
     ]
 })
 export class ErrorPagesModule {
