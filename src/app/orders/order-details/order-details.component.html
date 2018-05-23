@@ -142,13 +142,13 @@
         </mat-card-content>
     </mat-card>
 
-    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="25px" fxLayoutGap.xs="10px">
         <div fxFlex>
-            <div class="mat-body-1" i18n>Billing address</div>
+            <div class="mat-body-1 address-form-title" i18n>Billing address</div>
             <sf-address-form [address]="order.billingAddress"></sf-address-form>
         </div>
         <div fxFlex>
-            <div class="mat-body-1" i18n>Delivery address</div>
+            <div class="mat-body-1 address-form-title" i18n>Delivery address</div>
             <sf-address-form [address]="order.shippingAddress"></sf-address-form>
         </div>
     </div>
