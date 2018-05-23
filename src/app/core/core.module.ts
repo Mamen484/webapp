@@ -45,6 +45,7 @@ import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
 import { ToggleSidebarService } from './services/toggle-sidebar.service';
+import { FullCountriesListService } from './services/full-countries-list.service';
 
 @NgModule({
     imports: [
@@ -64,6 +65,7 @@ import { ToggleSidebarService } from './services/toggle-sidebar.service';
         CanLoadAdminGuard,
         CheckProperLocaleGuard,
         DefaultPageGuard,
+        FullCountriesListService,
         InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,

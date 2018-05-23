@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input, LOCALE_ID, OnInit, Optional, Self, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, Optional, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { countries } from './countries';
 import { filter, map, startWith, take } from 'rxjs/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable, zip } from 'rxjs';
 import { MatFormFieldAppearance } from '@angular/material';
+import { FullCountriesListService } from '../../core/services/full-countries-list.service';
+import { Country } from '../../core/entities/country';
 
-const defaultLang = 'en';
 
 @Component({
     selector: 'sf-country-autocomplete',
@@ -18,16 +18,15 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     @Input() appearance: MatFormFieldAppearance = 'standard';
     @ViewChild('input') input: ElementRef<HTMLInputElement>;
 
-    countries: { code: string, name: string }[];
-    filteredCountries: Observable<{ code: string, name: string }[]>;
+    countries: Country[] = [];
+    filteredCountries: Observable<Country[]>;
 
     onChange: (value: any) => void;
     onTouched: () => void;
 
 
     constructor(@Optional() @Self() public controlDir: NgControl,
-                @Inject(LOCALE_ID) protected localeId) {
-        this.countries = countries.map(country => ({code: country.code, name: country.name[this.localeId] || country.name[defaultLang]}));
+                protected countriesListService: FullCountriesListService) {
 
         if (controlDir) {
             controlDir.valueAccessor = this;
@@ -40,9 +39,8 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
         }
         this.filteredCountries = this.controlDir.control.valueChanges.pipe(
             startWith(''),
-            map(state => state ? this.filterCountries(state) : this.countries.slice())
+            map(state =>  state ? this.filterCountries(state) : this.countries.slice())
         );
-
         this.initializeFirstValue();
     }
 
@@ -62,13 +60,15 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     }
 
     protected initializeFirstValue() {
-        this.controlDir.control.valueChanges.pipe(
+        zip(this.controlDir.control.valueChanges.pipe(
             filter(value => typeof value === 'string'),
             take(1)
-        ).subscribe(value => {
-            let country = this.countries.find(({code}) => code === value);
-            this.controlDir.control.setValue(country ? country.name : '');
-            this.onChange(value);
-        });
+        ), this.countriesListService.getCountries().pipe(filter(countries => countries.length > 0))).pipe(take(1))
+            .subscribe(([value, countries]) => {
+                this.countries = countries;
+                let country = this.countries.find(({code}) => code === value);
+                this.controlDir.control.setValue(country ? country.name : '');
+                this.onChange(value);
+            });
     }
 }

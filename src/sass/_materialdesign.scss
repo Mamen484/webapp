@@ -131,6 +131,10 @@ sf-filtering-tabs {
       }
     }
   }
+}
 
-
+.sf-countries-autocomplete {
+  mat-option {
+    text-transform: capitalize;
+  }
 }
