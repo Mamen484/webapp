@@ -7,7 +7,8 @@ import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrderDetailsItem } from '../../core/entities/orders/order-details-item';
 import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
 import { CarrierInfo } from '../../core/entities/carrier-info';
-import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
+import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -44,8 +45,9 @@ export class OrderDetailsComponent implements OnInit {
         this.matDialog.open(CarrierDetailsDialogComponent)
             .afterClosed().subscribe((data?: CarrierInfo) => {
             if (data) {
-                this.snackBar.openFromComponent(OrderShippedSnackbarComponent, {
-                    duration: 2000
+                this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
+                    duration: 2000,
+                    data: {ordersNumber: 1, action: OrderNotifyAction.ship}
                 });
             }
         })

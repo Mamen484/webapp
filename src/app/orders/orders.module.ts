@@ -15,10 +15,10 @@ import { OrdersListMobileComponent } from './orders-list/orders-list-mobile/orde
 import { OrdersListDesktopComponent } from './orders-list/orders-list-desktop/orders-list-desktop.component';
 import { OrdersTableSmallComponent } from './orders-table-small/orders-table-small.component';
 import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { OrderShippedSnackbarComponent } from './order-shipped-snackbar/order-shipped-snackbar.component';
 import { CarrierDetailsDialogComponent } from './carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
 
 @NgModule({
     imports: [
@@ -39,17 +39,17 @@ import { AddressFormComponent } from './address-form/address-form.component';
         OrdersListDesktopComponent,
         OrdersTableSmallComponent,
         ConfirmShippingDialogComponent,
-        OrderShippedSnackbarComponent,
         CarrierDetailsDialogComponent,
         OrderStatusComponent,
         AddressFormComponent,
+        OrderStatusChangedSnackbarComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,
         LabelsDialogComponent,
         ConfirmShippingDialogComponent,
-        OrderShippedSnackbarComponent,
         CarrierDetailsDialogComponent,
+        OrderStatusChangedSnackbarComponent,
     ]
 })
 export class OrdersModule {

@@ -15,8 +15,8 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { Router } from '@angular/router';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
+import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -207,7 +207,7 @@ describe('OrdersTableComponent', () => {
         matDialog.open.and.returnValue({afterClosed: () => of(true)});
         component.openShippingDialog();
         expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
-        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderShippedSnackbarComponent);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
     });
 
     it('should NOT open snackbar if shipping is cancelled', () => {

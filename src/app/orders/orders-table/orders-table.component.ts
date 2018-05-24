@@ -17,9 +17,10 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 import { combineLatest } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 
 @Component({
     selector: 'sf-orders-table',
@@ -122,9 +123,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 )))
         )
             .subscribe(() => {
-                this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
+                this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
                     duration: 2000,
-                    data: {plural: this.selection.selected.length > 1, action: 'acknowledge'}
+                    data: {ordersNumber: this.selection.selected.length, action: OrderNotifyAction.acknowledge}
                 });
             });
     }
@@ -135,9 +136,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             .subscribe((shippingConfirmed: boolean) => {
                 if (shippingConfirmed) {
                     // @TODO: add a request to the API when an endpoint is implemented
-                    this.snackbar.openFromComponent(OrderShippedSnackbarComponent, {
+                    this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
                         duration: 2000,
-                        data: {plural: this.selection.selected.length > 1, action: 'ship'}
+                        data: {ordersNumber: this.selection.selected.length, action: OrderNotifyAction.ship}
                     });
                 }
             });

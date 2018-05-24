@@ -5,8 +5,8 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { OrderShippedSnackbarComponent } from '../order-shipped-snackbar/order-shipped-snackbar.component';
 import { CarrierInfo } from '../../core/entities/carrier-info';
+import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 
 
 describe('OrderDetailsComponent', () => {
@@ -46,7 +46,7 @@ describe('OrderDetailsComponent', () => {
         matDialog.open.and.returnValue({afterClosed: () => of(new CarrierInfo())});
         component.shipOrder();
         expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
-        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderShippedSnackbarComponent);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
     });
 
     it('should NOT open snackbar if shipping is cancelled', () => {
