@@ -26,4 +26,8 @@ export class OrdersService {
         return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/acknowledge`, {order: orders});
     }
 
+    ship(storeId, orders: {reference: string, channelName: string}[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/acknowledge`, {order: orders});
+    }
+
 }

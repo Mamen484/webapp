@@ -9,7 +9,7 @@ import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { Subscription } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders-filter';
@@ -17,10 +17,10 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { combineLatest } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
+import { filter, flatMap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 
 @Component({
     selector: 'sf-orders-table',
@@ -82,7 +82,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.isAllSelected() ?
             this.selection.clear() :
             this.dataSource.data.forEach(row => this.selection.select(row));
-        }
+    }
 
     ngOnInit() {
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
@@ -116,32 +116,42 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     // button actions
 
     acknowledge() {
-        this.appStore.select('currentStore').pipe(
-            flatMap(store => this.ordersService.acknowledge(
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent);
+            return;
+        }
+        this.notifyStatusChange(OrderNotifyAction.acknowledge)
+            .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.acknowledge));
+    }
+
+    openShippingDialog() {
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent);
+            return;
+        }
+        this.matDialog.open(ConfirmShippingDialogComponent)
+            .afterClosed()
+            .pipe(
+                filter(shippingConfirmed => shippingConfirmed),
+                flatMap(() => this.notifyStatusChange(OrderNotifyAction.ship)),
+            )
+            .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.ship));
+    }
+
+    protected notifyStatusChange(action) {
+        return this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService[action](
                 store.id,
                 this.selection.selected.map(order => ({reference: order.reference, channelName: order.channelName})
                 )))
         )
-            .subscribe(() => {
-                this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-                    duration: 2000,
-                    data: {ordersNumber: this.selection.selected.length, action: OrderNotifyAction.acknowledge}
-                });
-            });
     }
 
-    openShippingDialog() {
-        this.matDialog.open(ConfirmShippingDialogComponent)
-            .afterClosed()
-            .subscribe((shippingConfirmed: boolean) => {
-                if (shippingConfirmed) {
-                    // @TODO: add a request to the API when an endpoint is implemented
-                    this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-                        duration: 2000,
-                        data: {ordersNumber: this.selection.selected.length, action: OrderNotifyAction.ship}
-                    });
-                }
-            });
+    protected showStatusChangedSnackbar(action) {
+        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
+            duration: 2000,
+            data: {ordersNumber: this.selection.selected.length, action}
+        });
     }
 
     protected fetchData(store: Store, filter: OrdersFilter) {

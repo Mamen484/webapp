@@ -17,6 +17,7 @@ import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -32,7 +33,7 @@ describe('OrdersTableComponent', () => {
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge']);
+        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
@@ -182,29 +183,41 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should acknowledge selected orders on click the `acknowledge` button', () => {
-        appStore.select.and.returnValue(of({id: 190}));
-        ordersService.acknowledge.and.returnValue(of({}));
-        component.selection.select(<OrdersTableItem>{reference: 'tadada1', hasErrors: false}, <OrdersTableItem>{
-            reference: 'tadada2',
-            hasErrors: false
-        });
+        checkChangeStatusRequestSent('acknowledge');
+    });
+
+    it('should open `select orders` dialog on click on `acknowledge` button when no orders selected', () => {
         component.acknowledge();
-        expect(ordersService.acknowledge).toHaveBeenCalledTimes(1);
-        expect(ordersService.acknowledge.calls.mostRecent().args[0]).toEqual(190);
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].reference).toEqual('tadada1');
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][1].reference).toEqual('tadada2');
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].hasErrors).not.toBeDefined();
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][1].hasErrors).not.toBeDefined();
+        expect(matDialog.open).toHaveBeenCalledWith(SelectOrdersDialogComponent);
+    });
+
+    it('should ship selected orders on click the `ship` button', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        checkChangeStatusRequestSent('ship', 'openShippingDialog');
     });
 
     it('should open shipping confirmation dialog on click on `ship` button', () => {
+        component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openShippingDialog();
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent);
     });
 
+    it('should NOT open shipping confirmation dialog on click on `ship` button when no orders selected', () => {
+        component.openShippingDialog();
+        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmShippingDialogComponent);
+    });
+
+    it('should open `select orders` dialog on click on `ship` button when no orders selected', () => {
+        component.openShippingDialog();
+        expect(matDialog.open).toHaveBeenCalledWith(SelectOrdersDialogComponent);
+    });
+
     it('should open snackbar if shipping is confirmed', () => {
+        component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.ship.and.returnValue(of({reference: 'some reference', channelName: 'some name'}))
         component.openShippingDialog();
         expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
@@ -263,6 +276,24 @@ describe('OrdersTableComponent', () => {
         }
     }
 
+    function checkChangeStatusRequestSent(action, localMethod = action) {
+        appStore.select.and.returnValue(of({id: 190}));
+        ordersService[action].and.returnValue(of({}));
+        component.selection.select(<OrdersTableItem>{reference: 'tadada1', hasErrors: false}, <OrdersTableItem>{
+            reference: 'tadada2',
+            hasErrors: false
+        });
+        component[localMethod]();
+        expect(ordersService[action]).toHaveBeenCalledTimes(1);
+        expect(ordersService[action].calls.mostRecent().args[0]).toEqual(190);
+        expect(ordersService[action].calls.mostRecent().args[1][0].reference).toEqual('tadada1');
+        expect(ordersService[action].calls.mostRecent().args[1][1].reference).toEqual('tadada2');
+        expect(ordersService[action].calls.mostRecent().args[1][0].hasErrors).not.toBeDefined();
+        expect(ordersService[action].calls.mostRecent().args[1][1].hasErrors).not.toBeDefined();
+    }
+
 });
+
+
 
 

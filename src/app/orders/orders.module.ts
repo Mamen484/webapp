@@ -19,6 +19,7 @@ import { CarrierDetailsDialogComponent } from './carrier-details-dialog/carrier-
 import { OrderStatusComponent } from './order-status/order-status.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
 
 @NgModule({
     imports: [
@@ -43,6 +44,7 @@ import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snac
         OrderStatusComponent,
         AddressFormComponent,
         OrderStatusChangedSnackbarComponent,
+        SelectOrdersDialogComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,
@@ -50,6 +52,7 @@ import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snac
         ConfirmShippingDialogComponent,
         CarrierDetailsDialogComponent,
         OrderStatusChangedSnackbarComponent,
+        SelectOrdersDialogComponent,
     ]
 })
 export class OrdersModule {
