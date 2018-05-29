@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
-                                activeStore.name,
-                                userData.roles.indexOf('admin') !== -1
+                                activeStore.id,
+                                userData.roles.indexOf('admin') !== -1 || userData.roles.indexOf('employee') !== -1
                             );
                             return;
                         }
@@ -74,10 +74,10 @@ export class LoginComponent implements OnInit {
         return userData._embedded.store.find(store => store.status !== StoreStatus.deleted);
     }
 
-    protected buildUrl(token, storeName, isAdmin) {
+    protected buildUrl(token, storeId, isAdmin) {
         let queryParams = new URLSearchParams();
         queryParams.set('token', token);
-        queryParams.set('store', storeName);
+        queryParams.set('store', String(storeId));
         let additionalPath = isAdmin ? '/admin' : '';
         return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }

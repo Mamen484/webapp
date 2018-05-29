@@ -163,7 +163,7 @@ describe('TimelineComponent', () => {
                         useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
                     },
                     LegacyLinkService,
-                    {provide: Store, useValue: {select: () => Observable.of({name: 'storeName'})}},
+                    {provide: Store, useValue: {select: () => Observable.of({id: 'storeId'})}},
                     {provide: LocalStorageService, useValue: localStorage}
 
                 ]
@@ -223,7 +223,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeName');
+            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeId');
     }
 }
 
