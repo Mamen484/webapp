@@ -30,4 +30,17 @@ export class OrdersService {
         return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/ship`, {order: orders});
     }
 
+
+    accept(storeId, orders: { reference: string, channelName: string }[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/accept`, {order: orders});
+    }
+
+    refuse(storeId, orders: { reference: string, channelName: string }[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/refuse`, {order: orders});
+    }
+
+    cancel(storeId, orders: { reference: string, channelName: string }[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/cancel`, {order: orders});
+    }
+
 }

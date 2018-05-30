@@ -53,4 +53,25 @@ describe('OrderStatusChangedSnackbarComponent', () => {
         expect(fixture.debugElement.nativeElement.textContent)
             .toEqual('Order has been acknowledged');
     });
+
+    it('should display a message for an `accept` action', () => {
+        component.action = OrderNotifyAction.accept;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent)
+            .toEqual('Order has been accepted');
+    });
+
+    it('should display a message for an `refuse` action', () => {
+        component.action = OrderNotifyAction.refuse;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent)
+            .toEqual('Order has been refused');
+    });
+
+    it('should display a message for an `cancel` action', () => {
+        component.action = OrderNotifyAction.cancel;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent)
+            .toEqual('Order has been canceled');
+    });
 });

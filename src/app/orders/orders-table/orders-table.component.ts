@@ -116,12 +116,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     // button actions
 
     acknowledge() {
-        if (!this.selection.selected.length) {
-            this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.acknowledge});
-            return;
-        }
-        this.notifyStatusChange(OrderNotifyAction.acknowledge)
-            .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.acknowledge));
+        this.changeStatusForSelectedOrders(OrderNotifyAction.acknowledge);
     }
 
     openShippingDialog() {
@@ -136,6 +131,27 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 flatMap(() => this.notifyStatusChange(OrderNotifyAction.ship)),
             )
             .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.ship));
+    }
+
+    accept() {
+        this.changeStatusForSelectedOrders(OrderNotifyAction.accept);
+    }
+
+    refuse() {
+        this.changeStatusForSelectedOrders(OrderNotifyAction.refuse);
+    }
+
+    cancel() {
+        this.changeStatusForSelectedOrders(OrderNotifyAction.cancel);
+    }
+
+    protected changeStatusForSelectedOrders(action: OrderNotifyAction) {
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent, {data: action});
+            return;
+        }
+        this.notifyStatusChange(action)
+            .subscribe(() => this.showStatusChangedSnackbar(action));
     }
 
     protected notifyStatusChange(action) {

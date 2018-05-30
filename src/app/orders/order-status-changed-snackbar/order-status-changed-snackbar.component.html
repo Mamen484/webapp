@@ -1,4 +1,7 @@
 <div i18n>{ordersNumber, plural, =1 {Order has been } other {Orders have been }}
     <ng-container *ngIf="action === actions.ship">shipped</ng-container>
+    <ng-container *ngIf="action === actions.accept">accepted</ng-container>
+    <ng-container *ngIf="action === actions.refuse">refused</ng-container>
+    <ng-container *ngIf="action === actions.cancel">canceled</ng-container>
     <ng-container *ngIf="action === actions.acknowledge">acknowledged</ng-container>
 </div>

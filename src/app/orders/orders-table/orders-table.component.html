@@ -12,7 +12,7 @@
                         *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
                     <button mat-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship
                     </button>
-                    <button mat-button color="accent" i18n class="orders-action">Cancel</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="cancel()">Cancel</button>
                 </ng-container>
 
                 <ng-container
@@ -22,8 +22,8 @@
                 </ng-container>
 
                 <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
-                    <button mat-button color="accent" i18n class="orders-action">Accept</button>
-                    <button mat-button color="accent" i18n class="orders-action">Refuse</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="accept()">Accept</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="refuse()">Refuse</button>
                 </ng-container>
 
                 <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
@@ -31,7 +31,7 @@
                 </ng-container>
 
                 <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
-                    <button mat-button color="accent" i18n class="orders-action">Cancel</button>
+                    <button mat-button color="accent" i18n class="orders-action" (click)="cancel()">Cancel</button>
                 </ng-container>
             </div>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">

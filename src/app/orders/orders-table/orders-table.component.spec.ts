@@ -34,7 +34,7 @@ describe('OrdersTableComponent', () => {
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship']);
+        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
@@ -183,14 +183,21 @@ describe('OrdersTableComponent', () => {
         expect(component.dataSource.data[0].hasErrors).toEqual(true);
     });
 
-    it('should acknowledge selected orders on click the `acknowledge` button', () => {
-        checkChangeStatusRequestSent('acknowledge');
-    });
+    [
+        OrderNotifyAction.acknowledge,
+        OrderNotifyAction.accept,
+        OrderNotifyAction.refuse,
+        OrderNotifyAction.cancel,
+    ].forEach(action => {
+        it(`should ${action} selected orders on click the ${action} button`, () => {
+            checkChangeStatusRequestSent(action);
+        });
 
-    it('should open `select orders` dialog on click on `acknowledge` button when no orders selected', () => {
-        component.acknowledge();
-        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
-        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(OrderNotifyAction.acknowledge);
+        it(`should open 'select orders' dialog on click on ${action} button when no orders selected`, () => {
+            component[action]();
+            expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+            expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(action);
+        });
     });
 
     it('should ship selected orders on click the `ship` button', () => {

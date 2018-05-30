@@ -6,13 +6,13 @@ import { cloneDeep } from 'lodash';
 import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrderDetailsItem } from '../../core/entities/orders/order-details-item';
 import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
-import { CarrierInfo } from '../../core/entities/carrier-info';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
+import { filter } from 'rxjs/internal/operators';
 
 @Component({
     selector: 'sf-order-details',
@@ -49,23 +49,42 @@ export class OrderDetailsComponent implements OnInit {
 
     shipOrder() {
         this.matDialog.open(CarrierDetailsDialogComponent)
-            .afterClosed().subscribe((data?: CarrierInfo) => {
-            if (data) {
-                this.appStore.select('currentStore').pipe(
-                    flatMap(store => this.ordersService.ship(store.id, [{
-                        reference: this.order.reference,
-                        channelName: this.order._embedded.channel.name,
-                        carrier: data.carrier,
-                        trackingNumber: data.trackingNumber,
-                        trackingLink: data.trackingLink
-                    }]))
-                ).subscribe(() => {
-                    this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-                        duration: 2000,
-                        data: {ordersNumber: 1, action: OrderNotifyAction.ship}
-                    });
-                });
-            }
-        })
+            .afterClosed().pipe(
+            filter(data => Boolean(data)),
+            flatMap(data => this.appStore.select('currentStore').pipe(
+                flatMap(store => this.ordersService.ship(store.id, [{
+                    reference: this.order.reference,
+                    channelName: this.order._embedded.channel.name,
+                    carrier: data.carrier,
+                    trackingNumber: data.trackingNumber,
+                    trackingLink: data.trackingLink
+                }])))
+            ))
+            .subscribe(() => this.showSuccess(OrderNotifyAction.ship));
+    }
+
+    cancelOrder() {
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService.cancel(store.id, [{
+                reference: this.order.reference,
+                channelName: this.order._embedded.channel.name,
+            }]))
+        ).subscribe(() => this.showSuccess(OrderNotifyAction.cancel));
+    }
+
+    acknowledgeOrder() {
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService.acknowledge(store.id, [{
+                reference: this.order.reference,
+                channelName: this.order._embedded.channel.name,
+            }]))
+        ).subscribe(() => this.showSuccess(OrderNotifyAction.acknowledge));
+    }
+
+    protected showSuccess(action) {
+        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
+            duration: 2000,
+            data: {ordersNumber: 1, action}
+        });
     }
 }

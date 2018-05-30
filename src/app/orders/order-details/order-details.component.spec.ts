@@ -26,7 +26,7 @@ describe('OrderDetailsComponent', () => {
         matDialog = jasmine.createSpyObj(['open']);
         route = {};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
-        ordersService = jasmine.createSpyObj(['ship']);
+        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel']);
         appStore = jasmine.createSpyObj(['select']);
 
         TestBed.configureTestingModule({
@@ -88,6 +88,26 @@ describe('OrderDetailsComponent', () => {
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
         expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.ordersNumber).toEqual(1);
         expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual(OrderNotifyAction.ship);
+    });
+
+    it('should send an acknowledge request on acknowledgeOrder() call', () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.acknowledge.and.returnValue(EMPTY);
+        component.acknowledgeOrder();
+        expect(ordersService.acknowledge.calls.mostRecent().args[0]).toEqual(289);
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].reference).toEqual('ref');
+        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].channelName).toEqual('nom');
+    });
+
+    it('should send a cancel request on cancelOrder() call', () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.cancel.and.returnValue(EMPTY);
+        component.cancelOrder();
+        expect(ordersService.cancel.calls.mostRecent().args[0]).toEqual(289);
+        expect(ordersService.cancel.calls.mostRecent().args[1][0].reference).toEqual('ref');
+        expect(ordersService.cancel.calls.mostRecent().args[1][0].channelName).toEqual('nom');
     });
 });
 
