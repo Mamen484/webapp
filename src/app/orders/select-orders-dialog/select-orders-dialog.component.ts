@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'sf-select-orders-dialog',
@@ -9,10 +9,14 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 })
 export class SelectOrdersDialogComponent implements OnInit {
 
-    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction) {
+    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction, protected matDialogRef: MatDialogRef<SelectOrdersDialogComponent>) {
     }
 
     ngOnInit() {
+    }
+
+    close() {
+        this.matDialogRef.close();
     }
 
 }

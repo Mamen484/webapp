@@ -18,6 +18,7 @@ import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confi
 import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
+import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -188,7 +189,8 @@ describe('OrdersTableComponent', () => {
 
     it('should open `select orders` dialog on click on `acknowledge` button when no orders selected', () => {
         component.acknowledge();
-        expect(matDialog.open).toHaveBeenCalledWith(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(OrderNotifyAction.acknowledge);
     });
 
     it('should ship selected orders on click the `ship` button', () => {
@@ -210,7 +212,8 @@ describe('OrdersTableComponent', () => {
 
     it('should open `select orders` dialog on click on `ship` button when no orders selected', () => {
         component.openShippingDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(OrderNotifyAction.ship);
     });
 
     it('should open snackbar if shipping is confirmed', () => {

@@ -168,4 +168,13 @@ describe('OrdersService', () => {
             expect(req.request.body.order[1].reference).toEqual('174');
             httpMock.verify();
         }));
+
+    it('should ship orders',
+        inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
+            service.ship(10, [{reference: '171', channelName: ''}, {reference: '174', channelName: ''}]).subscribe();
+            let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/ship`);
+            expect(req.request.body.order[0].reference).toEqual('171');
+            expect(req.request.body.order[1].reference).toEqual('174');
+            httpMock.verify();
+        }));
 });

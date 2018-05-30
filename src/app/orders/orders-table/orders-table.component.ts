@@ -117,7 +117,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     acknowledge() {
         if (!this.selection.selected.length) {
-            this.matDialog.open(SelectOrdersDialogComponent);
+            this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.acknowledge});
             return;
         }
         this.notifyStatusChange(OrderNotifyAction.acknowledge)
@@ -126,7 +126,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     openShippingDialog() {
         if (!this.selection.selected.length) {
-            this.matDialog.open(SelectOrdersDialogComponent);
+            this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.ship});
             return;
         }
         this.matDialog.open(ConfirmShippingDialogComponent)
