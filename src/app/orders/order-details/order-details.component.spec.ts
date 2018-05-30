@@ -4,9 +4,13 @@ import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
-import { CarrierInfo } from '../../core/entities/carrier-info';
+import { EMPTY, of } from 'rxjs';
+import { OrdersService } from '../../core/services/orders.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
+import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 
 
 describe('OrderDetailsComponent', () => {
@@ -15,11 +19,16 @@ describe('OrderDetailsComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let route;
     let snackbar: jasmine.SpyObj<MatSnackBar>;
+    let ordersService: jasmine.SpyObj<OrdersService>;
+    let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         route = {};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
+        ordersService = jasmine.createSpyObj(['ship']);
+        appStore = jasmine.createSpyObj(['select']);
+
         TestBed.configureTestingModule({
             declarations: [OrderDetailsComponent, RemoveUnderlinePipe, SfCurrencyPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -27,6 +36,8 @@ describe('OrderDetailsComponent', () => {
                 {provide: MatDialog, useValue: matDialog},
                 {provide: ActivatedRoute, useValue: route},
                 {provide: MatSnackBar, useValue: snackbar},
+                {provide: OrdersService, useValue: ordersService},
+                {provide: Store, useValue: appStore},
             ],
             imports: [MatTableModule]
         })
@@ -42,17 +53,41 @@ describe('OrderDetailsComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should open snackbar if shipping is confirmed', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(new CarrierInfo())});
+    it('should open a carrier details dialog when click on `ship` button', () => {
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.shipOrder();
-        expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
-        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+        expect(matDialog.open).toHaveBeenCalledWith(CarrierDetailsDialogComponent);
     });
 
-    it('should NOT open snackbar if shipping is cancelled', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(null)});
+    it('should send a ship request after carrier details confirmed', () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.ship.and.returnValue(EMPTY);
+        matDialog.open.and.returnValue({
+            afterClosed: () => of({
+                carrier: 'ca',
+                trackingNumber: 'cb',
+                trackingLink: 'ce',
+            })
+        });
         component.shipOrder();
-        expect(snackbar.openFromComponent).not.toHaveBeenCalled();
+        expect(ordersService.ship.calls.mostRecent().args[0]).toEqual(289);
+        expect(ordersService.ship.calls.mostRecent().args[1][0].reference).toEqual('ref');
+        expect(ordersService.ship.calls.mostRecent().args[1][0].channelName).toEqual('nom');
+        expect(ordersService.ship.calls.mostRecent().args[1][0].carrier).toEqual('ca');
+        expect(ordersService.ship.calls.mostRecent().args[1][0].trackingNumber).toEqual('cb');
+        expect(ordersService.ship.calls.mostRecent().args[1][0].trackingLink).toEqual('ce');
+    });
+
+    it('should open a success snackbar if status change is successful', () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.ship.and.returnValue(of({}));
+        matDialog.open.and.returnValue({afterClosed: () => of({carrier: 'ca', trackingNumber: 'cb', trackingLink: 'ce'})});
+        component.shipOrder();
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.ordersNumber).toEqual(1);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual(OrderNotifyAction.ship);
     });
 });
 

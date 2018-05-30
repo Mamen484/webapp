@@ -22,11 +22,11 @@ export class OrdersService {
         return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/${orderId}`) as Observable<Order>;
     }
 
-    acknowledge(storeId, orders: {reference: string, channelName: string}[]) {
+    acknowledge(storeId, orders: { reference: string, channelName: string }[]) {
         return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/acknowledge`, {order: orders});
     }
 
-    ship(storeId, orders: {reference: string, channelName: string}[]) {
+    ship(storeId, orders: { reference: string, channelName: string, carrier?: string, trackingLink?: string, trackingNumber?: string }[]) {
         return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/ship`, {order: orders});
     }
 

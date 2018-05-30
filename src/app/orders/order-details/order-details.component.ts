@@ -9,6 +9,10 @@ import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier
 import { CarrierInfo } from '../../core/entities/carrier-info';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrdersService } from '../../core/services/orders.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
     selector: 'sf-order-details',
@@ -23,7 +27,9 @@ export class OrderDetailsComponent implements OnInit {
 
     constructor(protected route: ActivatedRoute,
                 protected matDialog: MatDialog,
-                protected snackBar: MatSnackBar) {
+                protected snackBar: MatSnackBar,
+                protected ordersService: OrdersService,
+                protected appStore: Store<AppState>) {
     }
 
     ngOnInit() {
@@ -45,9 +51,19 @@ export class OrderDetailsComponent implements OnInit {
         this.matDialog.open(CarrierDetailsDialogComponent)
             .afterClosed().subscribe((data?: CarrierInfo) => {
             if (data) {
-                this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-                    duration: 2000,
-                    data: {ordersNumber: 1, action: OrderNotifyAction.ship}
+                this.appStore.select('currentStore').pipe(
+                    flatMap(store => this.ordersService.ship(store.id, [{
+                        reference: this.order.reference,
+                        channelName: this.order._embedded.channel.name,
+                        carrier: data.carrier,
+                        trackingNumber: data.trackingNumber,
+                        trackingLink: data.trackingLink
+                    }]))
+                ).subscribe(() => {
+                    this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
+                        duration: 2000,
+                        data: {ordersNumber: 1, action: OrderNotifyAction.ship}
+                    });
                 });
             }
         })
