@@ -1,9 +1,8 @@
 <mat-form-field color="accent" [appearance]="appearance">
     <mat-label i18n>Country</mat-label>
-    <input type="text" matInput [formControl]="controlDir?.control" [matAutocomplete]="countryAutocomplete" #input
-           (click)="onTouched()">
+    <input type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete">
     <mat-autocomplete #countryAutocomplete="matAutocomplete" class="sf-countries-autocomplete">
-        <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name" (click)="onChange(country.code)">
+        <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name" (click)="valueChanged.emit(country.code)">
             <sf-image source="assets/images/flags-mini/{{country.flag}}" class="sf-flag-filter" verticalAlign="baseline"></sf-image>
             <ng-container>{{country.name}}</ng-container>
         </mat-option>

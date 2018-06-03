@@ -10,6 +10,7 @@ import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-sna
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
+import { Store as UserStore } from '../../core/entities/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
 import { filter } from 'rxjs/internal/operators';
@@ -86,5 +87,21 @@ export class OrderDetailsComponent implements OnInit {
             duration: 2000,
             data: {ordersNumber: 1, action}
         });
+    }
+
+    saveShippingAddress(shippingAddress) {
+        this.appStore.select('currentStore').pipe(
+            flatMap((store: UserStore) => this.ordersService.modifyOrder(
+                store.id,
+                this.order.id,
+                {shippingAddress, billingAddress: this.order.billingAddress}))).subscribe();
+    }
+
+    saveBillingAddress(billingAddress) {
+        this.appStore.select('currentStore').pipe(
+            flatMap((store: UserStore) => this.ordersService.modifyOrder(
+                store.id,
+                this.order.id,
+                {billingAddress, shippingAddress: this.order.shippingAddress}))).subscribe();
     }
 }

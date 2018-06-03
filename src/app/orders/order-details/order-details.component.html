@@ -145,11 +145,11 @@
     <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="25px" fxLayoutGap.xs="10px">
         <div fxFlex>
             <div class="mat-body-1 address-form-title" i18n>Billing address</div>
-            <sf-address-form [address]="order.billingAddress"></sf-address-form>
+            <sf-address-form [address]="order.billingAddress" (onSave)="saveBillingAddress($event)"></sf-address-form>
         </div>
         <div fxFlex>
             <div class="mat-body-1 address-form-title" i18n>Delivery address</div>
-            <sf-address-form [address]="order.shippingAddress"></sf-address-form>
+            <sf-address-form [address]="order.shippingAddress" (onSave)="saveShippingAddress($event)"></sf-address-form>
         </div>
     </div>
 </div>

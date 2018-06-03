@@ -7,4 +7,6 @@ export interface Address {
     phone?: string;
     email?: string;
     country?: string; // ISO alpha-2
+    company?: string;
+    additionalDetails?: string;
 }

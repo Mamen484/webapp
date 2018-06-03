@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Address } from '../../core/entities/orders/address';
+import { clone } from 'lodash';
 
 @Component({
     selector: 'sf-address-form',
@@ -8,12 +9,30 @@ import { Address } from '../../core/entities/orders/address';
 })
 export class AddressFormComponent implements OnInit {
 
-    @Input() address: Address;
+    @Input('address') set data(value: Address) {
+        this.address = clone(value);
+        this.addressCopy = clone(value);
+    }
+
+    @Output() onSave = new EventEmitter();
+    addressCopy: Address;
+    address: Address;
 
     constructor() {
     }
 
     ngOnInit() {
+        this.addressCopy = clone(this.address);
     }
 
+    cancel() {
+        this.address = clone(this.addressCopy);
+    }
+
+    save(formValid) {
+        if (formValid) {
+            this.onSave.emit(clone(this.address));
+        }
+    }
 }
+
