@@ -25,7 +25,7 @@ import { EventLinkPipe } from './event-link/event-link.pipe';
 @Pipe({
     name: 'sfEventIcon'
 })
-export class EventIconPipeShallow implements PipeTransform {
+class EventIconPipeShallow implements PipeTransform {
     transform() {
         return null
     };
@@ -34,7 +34,7 @@ export class EventIconPipeShallow implements PipeTransform {
 @Pipe({
     name: 'sfEventLink'
 })
-export class EventLinkPipeShallow implements PipeTransform {
+class EventLinkPipeShallow implements PipeTransform {
     transform() {
         return null
     };
