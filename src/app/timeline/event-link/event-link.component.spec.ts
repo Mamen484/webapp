@@ -5,7 +5,7 @@ import { LegacyLinkStubDirective } from '../../../mocks/stubs/legacy-link-stub.d
 import { Pipe } from '@angular/core';
 
 @Pipe({name: 'sfEventLink'})
-export class EventLinkPipe {}
+class EventLinkPipe {}
 
 describe('EventLinkComponent', () => {
     let component: EventLinkComponent;
