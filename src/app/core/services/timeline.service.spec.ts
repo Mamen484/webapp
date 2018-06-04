@@ -1,6 +1,5 @@
 import { TimelineService } from './timeline.service';
 import { Timeline } from '../entities/timeline';
-import { TimelineUpdate } from '../entities/timeline-update';
 import { HttpClient } from '@angular/common/http';
 import { data, data2 } from '../../../mocks/updates-for-timeline-service.mock';
 import { environment } from '../../../environments/environment';
@@ -9,7 +8,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
-import { Observable } from 'rxjs/Observable';
+import { TimelineEvent } from '../entities/timeline-event';
 
 describe('TimelineService', () => {
 
@@ -33,7 +32,7 @@ describe('TimelineService', () => {
     it('should create an array of distinct updates: only the one last import and one last export of each channel', () => {
 
 
-        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineUpdate>) => {
+        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
             let upd = updates._embedded.timeline;
             // feed.import
             expect(upd[0].id).toEqual('59e0dcb1ae7b3b02694c3ff1');
