@@ -65,9 +65,11 @@
     <mat-card class="orders-table" fxShow fxHide.xs>
         <div class="actions" fxLayout="row">
             <img [src]="order._embedded.channel._links.image.href" height="40px" class="left">
-            <button mat-button color="accent" i18n class="orders-action" (click)="shipOrder()">Ship</button>
-            <button mat-button color="accent" i18n class="orders-action" (click)="cancelOrder()">Cancel</button>
-            <button mat-button color="accent" i18n class="orders-action" (click)="acknowledgeOrder()">Force Import</button>
+            <sf-action-buttons
+                    [status]="order.status"
+                    [acknowledgment]="acknowedgment"
+                    (actionApplied)="applyStatusAction($event)">
+            </sf-action-buttons>
             <button mat-icon-button>
                 <mat-icon>local_printshop</mat-icon>
             </button>

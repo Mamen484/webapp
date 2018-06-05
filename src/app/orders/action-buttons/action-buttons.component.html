@@ -1,0 +1,29 @@
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.accept)"
+        *ngIf="status === statuses.waiting_store_acceptance">
+    Accept
+</button>
+
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.refuse)"
+        *ngIf="status === statuses.waiting_store_acceptance">
+    Refuse
+</button>
+
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.ship)"
+        *ngIf="status === statuses.waiting_shipment">
+    Ship
+</button>
+
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.cancel)"
+        *ngIf="status === statuses.shipped || status === statuses.waiting_shipment">
+    Cancel
+</button>
+
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.acknowledge)"
+        *ngIf="acknowledgment === acknowledgments.unacknowledged">
+    Acknowledge
+</button>
+
+<button mat-button color="accent" i18n (click)="actionApplied.emit(actions.unacknowledge)"
+        *ngIf="acknowledgment === acknowledgments.acknowledged">
+    Unacknowledge
+</button>

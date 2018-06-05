@@ -14,6 +14,7 @@ import { Store as UserStore } from '../../core/entities/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
 import { filter } from 'rxjs/internal/operators';
+import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -25,6 +26,8 @@ export class OrderDetailsComponent implements OnInit {
     displayedColumns = ['sku', 'name', 'quantity', 'date', 'price'];
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
+    actions = OrderNotifyAction;
+    acknowedgment: OrderAcknowledgement;
 
     constructor(protected route: ActivatedRoute,
                 protected matDialog: MatDialog,
@@ -45,6 +48,9 @@ export class OrderDetailsComponent implements OnInit {
                     price: item.price
                 }
             }));
+            this.acknowedgment = this.order.acknowledgedAt
+                ? OrderAcknowledgement.acknowledged
+                : OrderAcknowledgement.unacknowledged;
         });
     }
 
@@ -64,22 +70,17 @@ export class OrderDetailsComponent implements OnInit {
             .subscribe(() => this.showSuccess(OrderNotifyAction.ship));
     }
 
-    cancelOrder() {
+    applyStatusAction(action: OrderNotifyAction) {
+        if (action === OrderNotifyAction.ship) {
+            this.shipOrder();
+            return;
+        }
         this.appStore.select('currentStore').pipe(
-            flatMap(store => this.ordersService.cancel(store.id, [{
+            flatMap(store => this.ordersService[action](store.id, [{
                 reference: this.order.reference,
                 channelName: this.order._embedded.channel.name,
             }]))
-        ).subscribe(() => this.showSuccess(OrderNotifyAction.cancel));
-    }
-
-    acknowledgeOrder() {
-        this.appStore.select('currentStore').pipe(
-            flatMap(store => this.ordersService.acknowledge(store.id, [{
-                reference: this.order.reference,
-                channelName: this.order._embedded.channel.name,
-            }]))
-        ).subscribe(() => this.showSuccess(OrderNotifyAction.acknowledge));
+        ).subscribe(() => this.showSuccess(action));
     }
 
     protected showSuccess(action) {

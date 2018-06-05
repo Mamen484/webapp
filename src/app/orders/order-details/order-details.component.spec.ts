@@ -26,7 +26,7 @@ describe('OrderDetailsComponent', () => {
         matDialog = jasmine.createSpyObj(['open']);
         route = {};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
-        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel']);
+        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge']);
         appStore = jasmine.createSpyObj(['select']);
 
         TestBed.configureTestingModule({
@@ -70,7 +70,7 @@ describe('OrderDetailsComponent', () => {
                 trackingLink: 'ce',
             })
         });
-        component.shipOrder();
+        component.applyStatusAction(OrderNotifyAction.ship);
         expect(ordersService.ship.calls.mostRecent().args[0]).toEqual(289);
         expect(ordersService.ship.calls.mostRecent().args[1][0].reference).toEqual('ref');
         expect(ordersService.ship.calls.mostRecent().args[1][0].channelName).toEqual('nom');
@@ -90,24 +90,21 @@ describe('OrderDetailsComponent', () => {
         expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual(OrderNotifyAction.ship);
     });
 
-    it('should send an acknowledge request on acknowledgeOrder() call', () => {
-        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
-        appStore.select.and.returnValue(of({id: 289}));
-        ordersService.acknowledge.and.returnValue(EMPTY);
-        component.acknowledgeOrder();
-        expect(ordersService.acknowledge.calls.mostRecent().args[0]).toEqual(289);
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].reference).toEqual('ref');
-        expect(ordersService.acknowledge.calls.mostRecent().args[1][0].channelName).toEqual('nom');
-    });
-
-    it('should send a cancel request on cancelOrder() call', () => {
-        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
-        appStore.select.and.returnValue(of({id: 289}));
-        ordersService.cancel.and.returnValue(EMPTY);
-        component.cancelOrder();
-        expect(ordersService.cancel.calls.mostRecent().args[0]).toEqual(289);
-        expect(ordersService.cancel.calls.mostRecent().args[1][0].reference).toEqual('ref');
-        expect(ordersService.cancel.calls.mostRecent().args[1][0].channelName).toEqual('nom');
+    [
+        OrderNotifyAction.acknowledge,
+        OrderNotifyAction.cancel,
+        OrderNotifyAction.accept,
+        OrderNotifyAction.refuse,
+    ].forEach(action => {
+        it(`should send an acknowledge request on call applyStatusAction with ${action} param`, () => {
+            component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+            appStore.select.and.returnValue(of({id: 289}));
+            ordersService[action].and.returnValue(EMPTY);
+            component.applyStatusAction(action);
+            expect(ordersService[action].calls.mostRecent().args[0]).toEqual(289);
+            expect(ordersService[action].calls.mostRecent().args[1][0].reference).toEqual('ref');
+            expect(ordersService[action].calls.mostRecent().args[1][0].channelName).toEqual('nom');
+        });
     });
 });
 
@@ -119,9 +116,9 @@ export class BlankPipe implements PipeTransform {
 }
 
 @Pipe({name: 'removeUnderline'})
-export class RemoveUnderlinePipe extends BlankPipe implements PipeTransform {
+class RemoveUnderlinePipe extends BlankPipe implements PipeTransform {
 }
 
 @Pipe({name: 'sfCurrency'})
-export class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
 }

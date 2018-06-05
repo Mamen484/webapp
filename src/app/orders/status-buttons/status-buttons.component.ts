@@ -41,7 +41,7 @@ export class StatusButtonsComponent implements OnInit {
             this.activeTab = ActiveTab.toImport;
         } else if (status === OrderStatus.waiting_store_acceptance) {
             this.activeTab = ActiveTab.toValidate;
-        } else if (this.errorType === OrderErrorType.acknowledge){
+        } else if (this.errorType === OrderErrorType.acknowledge) {
             this.activeTab = ActiveTab.importErrors;
         } else if (status === OrderStatus.shipped) {
             this.activeTab = ActiveTab.shipped;

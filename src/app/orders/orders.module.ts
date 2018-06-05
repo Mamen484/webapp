@@ -21,6 +21,7 @@ import { AddressFormComponent } from './address-form/address-form.component';
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
 import { StatusButtonsComponent } from './status-buttons/status-buttons.component';
+import { ActionButtonsComponent } from './action-buttons/action-buttons.component';
 
 @NgModule({
     imports: [
@@ -47,6 +48,7 @@ import { StatusButtonsComponent } from './status-buttons/status-buttons.componen
         OrderStatusChangedSnackbarComponent,
         SelectOrdersDialogComponent,
         StatusButtonsComponent,
+        ActionButtonsComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,

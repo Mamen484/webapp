@@ -49,13 +49,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
     dataSource: MatTableDataSource<OrdersTableItem> = new MatTableDataSource();
-    orderStatus = OrderStatus;
-    errorType = OrderErrorType;
     isLoadingResults = false;
     subscription: Subscription;
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
-    acknowledgement = OrderAcknowledgement;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
