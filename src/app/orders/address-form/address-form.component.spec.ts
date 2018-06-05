@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddressFormComponent } from './address-form.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 describe('AddressFormComponent', () => {
     let component: AddressFormComponent;
@@ -11,6 +12,7 @@ describe('AddressFormComponent', () => {
         TestBed.configureTestingModule({
             declarations: [AddressFormComponent],
             schemas: [NO_ERRORS_SCHEMA],
+            imports: [FormsModule]
         })
             .compileComponents();
     }));

@@ -194,7 +194,7 @@ describe('OrdersTableComponent', () => {
         });
 
         it(`should open 'select orders' dialog on click on ${action} button when no orders selected`, () => {
-            component[action]();
+            component.applyStatusAction(action);
             expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
             expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(action);
         });
@@ -202,7 +202,7 @@ describe('OrdersTableComponent', () => {
 
     it('should ship selected orders on click the `ship` button', () => {
         matDialog.open.and.returnValue({afterClosed: () => of(true)});
-        checkChangeStatusRequestSent('ship', 'openShippingDialog');
+        checkChangeStatusRequestSent('ship');
     });
 
     it('should open shipping confirmation dialog on click on `ship` button', () => {
@@ -286,14 +286,14 @@ describe('OrdersTableComponent', () => {
         }
     }
 
-    function checkChangeStatusRequestSent(action, localMethod = action) {
+    function checkChangeStatusRequestSent(action) {
         appStore.select.and.returnValue(of({id: 190}));
         ordersService[action].and.returnValue(of({}));
         component.selection.select(<OrdersTableItem>{reference: 'tadada1', hasErrors: false}, <OrdersTableItem>{
             reference: 'tadada2',
             hasErrors: false
         });
-        component[localMethod]();
+        component.applyStatusAction(action);
         expect(ordersService[action]).toHaveBeenCalledTimes(1);
         expect(ordersService[action].calls.mostRecent().args[0]).toEqual(190);
         expect(ordersService[action].calls.mostRecent().args[1][0].reference).toEqual('tadada1');

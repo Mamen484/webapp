@@ -20,6 +20,7 @@ import { OrderStatusComponent } from './order-status/order-status.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
+import { StatusButtonsComponent } from './status-buttons/status-buttons.component';
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { SelectOrdersDialogComponent } from './select-orders-dialog/select-order
         AddressFormComponent,
         OrderStatusChangedSnackbarComponent,
         SelectOrdersDialogComponent,
+        StatusButtonsComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,

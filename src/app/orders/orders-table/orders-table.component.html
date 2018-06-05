@@ -8,31 +8,11 @@
                 </div>
             </div>
             <div *ngIf="!isLoadingResults && dataSource.data.length">
-                <ng-container
-                        *ngIf="ordersFilter.status === orderStatus.waiting_shipment && !ordersFilter.acknowledgement || ordersFilter.error === errorType.ship">
-                    <button mat-button color="accent" i18n class="orders-action" (click)="cancel()">Cancel</button>
-                    <button mat-raised-button color="accent" i18n class="orders-action" (click)="openShippingDialog()">Ship</button>
-                </ng-container>
-
-                <ng-container
-                        *ngIf="ordersFilter.status === orderStatus.waiting_shipment && ordersFilter.acknowledgement === acknowledgement.unacknowledged">
-                    <button mat-raised-button color="accent" i18n class="orders-action" (click)="acknowledge()">Acknowledge
-                    </button>
-                </ng-container>
-
-                <!-- To Validate tab -->
-                <ng-container *ngIf="ordersFilter.status === orderStatus.waiting_store_acceptance">
-                    <button mat-button color="accent" i18n class="orders-action" (click)="refuse()">Refuse</button>
-                    <button mat-raised-button color="accent" i18n class="orders-action" (click)="accept()">Accept</button>
-                </ng-container>
-
-                <ng-container *ngIf="ordersFilter.error === errorType.acknowledge">
-                    <button mat-raised-button color="accent" i18n class="orders-action">Unacknowledge</button>
-                </ng-container>
-
-                <ng-container *ngIf="ordersFilter.status === orderStatus.shipped">
-                    <button mat-raised-button color="accent" i18n class="orders-action" (click)="cancel()">Cancel</button>
-                </ng-container>
+                <sf-status-buttons [status]="ordersFilter.status"
+                                   [acknowledgment]="ordersFilter.acknowledgement"
+                                   [errorType]="ordersFilter.error"
+                                   (actionApplied)="applyStatusAction($event)">
+                </sf-status-buttons>
             </div>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
                 <mat-icon>view_column</mat-icon>
