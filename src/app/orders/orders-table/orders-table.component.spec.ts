@@ -34,7 +34,7 @@ describe('OrdersTableComponent', () => {
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept']);
+        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
@@ -185,6 +185,7 @@ describe('OrdersTableComponent', () => {
 
     [
         OrderNotifyAction.acknowledge,
+        OrderNotifyAction.unacknowledge,
         OrderNotifyAction.accept,
         OrderNotifyAction.refuse,
         OrderNotifyAction.cancel,

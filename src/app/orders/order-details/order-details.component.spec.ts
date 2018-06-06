@@ -92,6 +92,7 @@ describe('OrderDetailsComponent', () => {
 
     [
         OrderNotifyAction.acknowledge,
+        OrderNotifyAction.unacknowledge,
         OrderNotifyAction.cancel,
         OrderNotifyAction.accept,
         OrderNotifyAction.refuse,

@@ -162,6 +162,10 @@ describe('OrdersService', () => {
         checkStatusChangeRequestSent(OrderNotifyAction.acknowledge);
     });
 
+    it('should unacknowledge orders', () => {
+        checkStatusChangeRequestSent(OrderNotifyAction.unacknowledge);
+    });
+
     it('should accept orders', () => {
         checkStatusChangeRequestSent(OrderNotifyAction.ship);
     });
@@ -178,7 +182,7 @@ describe('OrdersService', () => {
         checkStatusChangeRequestSent(OrderNotifyAction.cancel);
     });
 
-    function checkStatusChangeRequestSent(action){
+    function checkStatusChangeRequestSent(action) {
         service[action](10, [{reference: '171', channelName: ''}, {reference: '174', channelName: ''}]).subscribe();
         let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/${action}`);
         expect(req.request.body.order[0].reference).toEqual('171');
