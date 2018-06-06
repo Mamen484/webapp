@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({

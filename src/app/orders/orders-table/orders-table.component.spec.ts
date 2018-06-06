@@ -10,7 +10,7 @@ import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component'
 import { BehaviorSubject, EMPTY, of } from 'rxjs';
 import { Order } from '../../core/entities/orders/order';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { Router } from '@angular/router';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
@@ -18,7 +18,7 @@ import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confi
 import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;

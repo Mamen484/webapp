@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActionButtonsComponent } from './action-buttons.component';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
+import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 
 describe('ActionButtonsComponent', () => {
     let component: ActionButtonsComponent;
@@ -49,14 +49,14 @@ describe('ActionButtonsComponent', () => {
     });
 
     it('should display correct buttons when the order is unacknowledged', () => {
-        component.acknowledgment = OrderAcknowledgement.unacknowledged;
+        component.acknowledgment = OrderAcknowledgment.unacknowledged;
         fixture.detectChanges();
         expect(elements()[0].textContent.trim()).toEqual('Acknowledge');
         expect(elements().length).toEqual(1);
     });
 
     it('should display correct buttons when the order is acknowledged', () => {
-        component.acknowledgment = OrderAcknowledgement.acknowledged;
+        component.acknowledgment = OrderAcknowledgment.acknowledged;
         fixture.detectChanges();
         expect(elements()[0].textContent.trim()).toEqual('Unacknowledge');
         expect(elements().length).toEqual(1);
@@ -64,7 +64,7 @@ describe('ActionButtonsComponent', () => {
 
     it('should display correct buttons for an acknowledged order with `waiting_shipment` status', () => {
         component.status = OrderStatus.waiting_shipment;
-        component.acknowledgment = OrderAcknowledgement.acknowledged;
+        component.acknowledgment = OrderAcknowledgment.acknowledged;
         fixture.detectChanges();
         expect(elements()[0].textContent.trim()).toEqual('Ship');
         expect(elements()[1].textContent.trim()).toEqual('Cancel');
@@ -74,7 +74,7 @@ describe('ActionButtonsComponent', () => {
 
     it('should display correct buttons for an unacknowledged order with `waiting_store_acceptance` status', () => {
         component.status = OrderStatus.waiting_store_acceptance;
-        component.acknowledgment = OrderAcknowledgement.unacknowledged;
+        component.acknowledgment = OrderAcknowledgment.unacknowledged;
         fixture.detectChanges();
         expect(elements()[0].textContent.trim()).toEqual('Accept');
         expect(elements()[1].textContent.trim()).toEqual('Refuse');

@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 
 describe('OrderDetailsComponent', () => {

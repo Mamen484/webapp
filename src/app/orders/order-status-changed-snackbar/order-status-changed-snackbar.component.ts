@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 @Component({
     selector: 'sf-order-status-changed-snackbar',

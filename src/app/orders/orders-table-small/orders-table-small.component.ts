@@ -3,7 +3,7 @@ import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { Store } from '../../core/entities/store';
 import { MatTableDataSource } from '@angular/material';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { Order } from '../../core/entities/orders/order';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';

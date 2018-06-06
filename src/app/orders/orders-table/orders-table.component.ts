@@ -11,12 +11,12 @@ import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { combineLatest, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { filter, flatMap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 
 @Component({

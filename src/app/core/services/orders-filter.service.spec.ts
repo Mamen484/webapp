@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { OrdersFilterService } from './orders-filter.service';
-import { OrdersFilter } from '../entities/orders-filter';
+import { OrdersFilter } from '../entities/orders/orders-filter';
 import { take } from 'rxjs/operators';
 
 describe('OrdersFilterService', () => {

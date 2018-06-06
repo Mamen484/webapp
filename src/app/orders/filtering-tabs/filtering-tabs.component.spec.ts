@@ -4,7 +4,7 @@ import { take } from 'rxjs/operators';
 import { FilteringTabsComponent } from './filtering-tabs.component';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 

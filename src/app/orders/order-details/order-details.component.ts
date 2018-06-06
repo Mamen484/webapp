@@ -7,14 +7,14 @@ import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrderDetailsItem } from '../../core/entities/orders/order-details-item';
 import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
 import { Store as UserStore } from '../../core/entities/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
 import { filter } from 'rxjs/internal/operators';
-import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
+import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -27,7 +27,7 @@ export class OrderDetailsComponent implements OnInit {
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
     actions = OrderNotifyAction;
-    acknowedgment: OrderAcknowledgement;
+    acknowedgment: OrderAcknowledgment;
 
     constructor(protected route: ActivatedRoute,
                 protected matDialog: MatDialog,
@@ -49,8 +49,8 @@ export class OrderDetailsComponent implements OnInit {
                 }
             }));
             this.acknowedgment = this.order.acknowledgedAt
-                ? OrderAcknowledgement.acknowledged
-                : OrderAcknowledgement.unacknowledged;
+                ? OrderAcknowledgment.acknowledged
+                : OrderAcknowledgment.unacknowledged;
         });
     }
 

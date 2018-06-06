@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectOrdersDialogComponent } from './select-orders-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('SelectOrdersDialogComponent', () => {

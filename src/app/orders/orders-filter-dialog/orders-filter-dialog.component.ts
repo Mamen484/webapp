@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';

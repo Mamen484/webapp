@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
-import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
+import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -11,12 +11,12 @@ import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum'
 export class ActionButtonsComponent implements OnInit {
 
     @Input() status: OrderStatus.waiting_store_acceptance | OrderStatus.waiting_shipment | OrderStatus.shipped;
-    @Input() acknowledgment: OrderAcknowledgement;
+    @Input() acknowledgment: OrderAcknowledgment;
     @Output() actionApplied = new EventEmitter<OrderNotifyAction>();
 
     actions = OrderNotifyAction;
     statuses = OrderStatus;
-    acknowledgments = OrderAcknowledgement;
+    acknowledgments = OrderAcknowledgment;
 
     constructor() {
     }

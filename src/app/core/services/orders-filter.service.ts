@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { OrdersFilter } from '../entities/orders-filter';
+import { OrdersFilter } from '../entities/orders/orders-filter';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { cloneDeep } from 'lodash';

@@ -1,12 +1,12 @@
 import { OrderStatus } from './order-status.enum';
 import { OrderErrorType } from './order-error-type.enum';
-import { OrderAcknowledgement } from './order-acknowledgement.enum';
+import { OrderAcknowledgment } from './order-acknowledgment.enum';
 
 export class OrdersFilterPatch {
     page = '1';
     status: OrderStatus = undefined;
     error: OrderErrorType = undefined;
-    acknowledgement: OrderAcknowledgement = undefined;
+    acknowledgment: OrderAcknowledgment = undefined;
 
     static get AllOrders(): OrdersFilterPatch {
         return new OrdersFilterPatch();
@@ -21,7 +21,7 @@ export class OrdersFilterPatch {
     static get OrdersToImport(): OrdersFilterPatch {
         let patch = new OrdersFilterPatch();
         patch.status = OrderStatus.waiting_shipment;
-        patch.acknowledgement = OrderAcknowledgement.unacknowledged;
+        patch.acknowledgment = OrderAcknowledgment.unacknowledged;
         return patch;
     }
 

@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StatusButtonsComponent } from './status-buttons.component';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-import { ActiveTab } from '../../core/entities/active-tab.enum';
+import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
+import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 
 describe('StatusButtonsComponent', () => {
     let component: StatusButtonsComponent;
@@ -39,7 +39,7 @@ describe('StatusButtonsComponent', () => {
     it('should display appropriate buttons for `to import` tab', () => {
         setComponentInputs(
             OrderStatus.waiting_shipment,
-            OrderAcknowledgement.unacknowledged
+            OrderAcknowledgment.unacknowledged
         );
         expect(component.activeTab).toEqual(ActiveTab.toImport);
         expect(element().length).toEqual(1);
@@ -94,7 +94,7 @@ describe('StatusButtonsComponent', () => {
     }
 
     function setComponentInputs(status: OrderStatus,
-                                acknowledgment: OrderAcknowledgement = undefined,
+                                acknowledgment: OrderAcknowledgment = undefined,
                                 errorType: OrderErrorType = undefined) {
         component.status = status;
         component.acknowledgment = acknowledgment;

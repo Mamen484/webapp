@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
 import { MatDialog } from '@angular/material';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { debounceTime, filter } from 'rxjs/operators';
 

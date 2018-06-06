@@ -4,7 +4,7 @@ import { OrdersFilterDialogComponent } from './orders-filter-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { OrdersFilter } from '../../core/entities/orders-filter';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { of, EMPTY } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 

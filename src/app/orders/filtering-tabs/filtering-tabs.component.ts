@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { OrdersFilterPatch } from '../../core/entities/orders/orders-filter-patch';
-import { ActiveTab } from '../../core/entities/active-tab.enum';
+import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
 import { DetermineActiveTab } from '../../core/entities/determine-active-tab';
 
 @Component({
@@ -25,7 +25,7 @@ export class FilteringTabsComponent {
 
     constructor(protected ordersFilterService: OrdersFilterService) {
         this.ordersFilterService.getFilter().subscribe(filter => {
-            this.activeTab = DetermineActiveTab.determine(filter.status, filter.acknowledgement, filter.error);
+            this.activeTab = DetermineActiveTab.determine(filter.status, filter.acknowledgment, filter.error);
         });
     }
 

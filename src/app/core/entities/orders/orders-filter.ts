@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
-import { OrderStatus } from './orders/order-status.enum';
-import { OrderErrorType } from './orders/order-error-type.enum';
-import { OrderAcknowledgement } from './orders/order-acknowledgement.enum';
+import { OrderStatus } from './order-status.enum';
+import { OrderErrorType } from './order-error-type.enum';
+import { OrderAcknowledgment } from './order-acknowledgment.enum';
 
 const DAY = 1000 * 60 * 60 * 24;
 
@@ -15,7 +15,7 @@ export class OrdersFilter {
     search = '';
     status?: OrderStatus;
     error?: OrderErrorType;
-    acknowledgement?: OrderAcknowledgement;
+    acknowledgment?: OrderAcknowledgment;
 
     static aDayBefore() {
         let date = new Date().toDateString();
@@ -59,8 +59,8 @@ export class OrdersFilter {
             params = params.set('error', this.error);
         }
 
-        if (this.acknowledgement) {
-            params = params.set('acknowledgement', this.acknowledgement);
+        if (this.acknowledgment) {
+            params = params.set('acknowledgment', this.acknowledgment);
         }
 
         if (this.page) {

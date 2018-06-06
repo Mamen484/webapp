@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { PagedResponse } from '../entities/paged-response';
 import { Order } from '../entities/orders/order';
-import { OrdersFilter } from '../entities/orders-filter';
+import { OrdersFilter } from '../entities/orders/orders-filter';
 import { Address } from '../entities/orders/address';
 
 @Injectable()

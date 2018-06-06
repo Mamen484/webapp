@@ -9,7 +9,7 @@
             </div>
             <div *ngIf="!isLoadingResults && dataSource.data.length">
                 <sf-status-buttons [status]="ordersFilter.status"
-                                   [acknowledgment]="ordersFilter.acknowledgement"
+                                   [acknowledgment]="ordersFilter.acknowledgment"
                                    [errorType]="ordersFilter.error"
                                    (actionApplied)="applyStatusAction($event)">
                 </sf-status-buttons>
