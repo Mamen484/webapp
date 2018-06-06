@@ -4,7 +4,7 @@ import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowled
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
 
-enum ActiveTab {
+export enum ActiveTab {
     toShip,
     shippingErrors,
     toImport,
@@ -37,13 +37,13 @@ export class StatusButtonsComponent implements OnInit {
             this.activeTab = ActiveTab.toShip;
         } else if (this.errorType === OrderErrorType.ship) {
             this.activeTab = ActiveTab.shippingErrors;
-        } else if (status === OrderStatus.waiting_shipment && this.acknowledgment === OrderAcknowledgement.unacknowledged) {
+        } else if (this.status === OrderStatus.waiting_shipment && this.acknowledgment === OrderAcknowledgement.unacknowledged) {
             this.activeTab = ActiveTab.toImport;
-        } else if (status === OrderStatus.waiting_store_acceptance) {
+        } else if (this.status === OrderStatus.waiting_store_acceptance) {
             this.activeTab = ActiveTab.toValidate;
         } else if (this.errorType === OrderErrorType.acknowledge) {
             this.activeTab = ActiveTab.importErrors;
-        } else if (status === OrderStatus.shipped) {
+        } else if (this.status === OrderStatus.shipped) {
             this.activeTab = ActiveTab.shipped;
         }
     }
