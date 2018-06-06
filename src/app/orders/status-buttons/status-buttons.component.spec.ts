@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActiveTab, StatusButtonsComponent } from './status-buttons.component';
+import { StatusButtonsComponent } from './status-buttons.component';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { ActiveTab } from '../../core/entities/active-tab.enum';
 
 describe('StatusButtonsComponent', () => {
     let component: StatusButtonsComponent;

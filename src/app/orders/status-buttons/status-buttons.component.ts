@@ -3,15 +3,8 @@ import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrderAcknowledgement } from '../../core/entities/orders/order-acknowledgement.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderNotifyAction } from '../../core/entities/order-notify-action.enum';
-
-export enum ActiveTab {
-    toShip,
-    shippingErrors,
-    toImport,
-    toValidate,
-    importErrors,
-    shipped,
-}
+import { ActiveTab } from '../../core/entities/active-tab.enum';
+import { DetermineActiveTab } from '../../core/entities/determine-active-tab';
 
 @Component({
     selector: 'sf-status-buttons',
@@ -33,19 +26,7 @@ export class StatusButtonsComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.status === OrderStatus.waiting_shipment && !this.acknowledgment) {
-            this.activeTab = ActiveTab.toShip;
-        } else if (this.errorType === OrderErrorType.ship) {
-            this.activeTab = ActiveTab.shippingErrors;
-        } else if (this.status === OrderStatus.waiting_shipment && this.acknowledgment === OrderAcknowledgement.unacknowledged) {
-            this.activeTab = ActiveTab.toImport;
-        } else if (this.status === OrderStatus.waiting_store_acceptance) {
-            this.activeTab = ActiveTab.toValidate;
-        } else if (this.errorType === OrderErrorType.acknowledge) {
-            this.activeTab = ActiveTab.importErrors;
-        } else if (this.status === OrderStatus.shipped) {
-            this.activeTab = ActiveTab.shipped;
-        }
+        this.activeTab = DetermineActiveTab.determine(this.status, this.acknowledgment, this.errorType);
     }
 
 }

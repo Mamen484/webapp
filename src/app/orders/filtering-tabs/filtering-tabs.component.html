@@ -1,4 +1,4 @@
-<mat-tab-group color="accent" (selectedTabChange)="changeTab($event)">
+<mat-tab-group color="accent" (selectedTabChange)="changeTab($event)" [selectedIndex]="activeTab">
     <mat-tab>
         <ng-template mat-tab-label>
             <span class="tab-label" i18n>All orders</span>
@@ -25,7 +25,7 @@
             <span class="tab-label" i18n>To ship</span>
         </ng-template>
     </mat-tab>
-    <mat-tab>
+    <mat-tab >
         <ng-template mat-tab-label>
             <mat-icon color="warn">error</mat-icon>
             <span class="tab-label" i18n>Shipping errors</span>
