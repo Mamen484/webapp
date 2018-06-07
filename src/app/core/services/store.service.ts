@@ -56,8 +56,8 @@ export class StoreService {
         return <Observable<Statistics>>this.httpClient.get(`${environment.API_URL}/stat/store/${storeId}`);
     }
 
-    public getStoreCharge(storeId): Observable<{ charge: StoreCharge }> {
-        return <Observable<{ charge: StoreCharge }>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
+    public getStoreCharge(storeId): Observable<StoreCharge> {
+        return <Observable<StoreCharge>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
     }
 
     public fetchAvailableStores(filter: string) {
