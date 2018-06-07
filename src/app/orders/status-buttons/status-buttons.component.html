@@ -6,7 +6,7 @@
         Ship
     </button>
 </ng-container>
-<ng-container *ngIf="activeTab === tabs.toImport">
+<ng-container *ngIf="activeTab === tabs.toImport || activeTab === tabs.importErrors">
     <button mat-raised-button color="accent" i18n
             (click)="actionApplied.emit(actions.acknowledge)">
         Acknowledge
@@ -18,12 +18,6 @@
     </button>
     <button mat-raised-button color="accent" i18n (click)="actionApplied.emit(actions.accept)">
         Accept
-    </button>
-</ng-container>
-<ng-container *ngIf="activeTab === tabs.importErrors">
-    <button mat-raised-button color="accent" i18n
-            (click)="actionApplied.emit(actions.unacknowledge)">
-        Unacknowledge
     </button>
 </ng-container>
 <ng-container *ngIf="activeTab === tabs.shipped">

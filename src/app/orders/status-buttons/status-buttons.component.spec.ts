@@ -54,7 +54,7 @@ describe('StatusButtonsComponent', () => {
         );
         expect(component.activeTab).toEqual(ActiveTab.importErrors);
         expect(element().length).toEqual(1);
-        expect(element()[0].textContent.trim()).toEqual('Unacknowledge');
+        expect(element()[0].textContent.trim()).toEqual('Acknowledge');
     });
 
     it('should display appropriate buttons for `to ship` tab', () => {
