@@ -1,50 +1,38 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
-import { TimelineEventFormatted } from '../../core/entities/timeline-event-formatted';
-import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enum';
-import { Channel } from '../../core/entities/channel';
 import { TimelineErrorReason } from '../../core/entities/timeline-error-reason';
-import { TimelineUpdateAction } from '../../core/entities/timeline-update-action.enum';
+import { TimelineEvent } from '../../core/entities/timeline-event';
 
 @Component({
     selector: 'sf-event-link',
     templateUrl: './event-link.component.html',
     styleUrls: ['./event-link.component.scss']
 })
-export class EventLinkComponent {
+export class EventLinkComponent implements OnInit {
 
 
-    @Input() event: TimelineEventFormatted;
+    @Input() event: TimelineEvent;
     actions = TimelineEventAction;
     names = TimelineEventName;
-    updateNames = TimelineUpdateName;
-    updateActions = TimelineUpdateAction;
+    ruleName: string;
+    unknownReason = false;
 
     constructor() {
     }
 
-    getLink() {
-        switch (this.event.type) {
-            case this.names.orderLifecycle:
-                return `/marketplaces/orders/${this.event.reference}`;
-            case this.names.ruleSegmentation:
-                return `/tools/segmentations#${this.event.reference}`;
-            case this.names.ruleTransformation:
-                return `/tools/rules#${this.event.reference}`;
-        }
+    ngOnInit() {
+        this.ruleName = this.event.name === TimelineEventName.ruleTransformation || this.event.name === TimelineEventName.ruleSegmentation
+            ? this.event.data.name
+            : '';
+
+        this.unknownReason = this.checkReason();
     }
 
-    getChannelLink(channel: Channel) {
-        return channel.type === 'marketplace'
-            ? `/${channel.name}`
-            : `/${channel.type}/manage/${channel.name}`;
-    }
-
-    unknownReason() {
-        return !this.event.reason ||
+    checkReason() {
+        return !this.event.data || !this.event.data.reason ||
             (<TimelineErrorReason[]>['open', 'categories', 'products', 'check', 'references', 'mapping', 'settings'])
-                .indexOf(this.event.reason) === -1;
+                .indexOf(this.event.data.reason) === -1;
     }
 
 }

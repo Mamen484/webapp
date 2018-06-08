@@ -1,17 +1,16 @@
 <div class="event-icon mat-body-1" fxShow fxHide.xs>
-    <mat-icon *ngIf="update.name === updateTypes.export">vertical_align_top</mat-icon>
-    <mat-icon *ngIf="update.name === updateTypes.import">vertical_align_bottom</mat-icon>
+    <mat-icon>{{update.name | sfEventIcon}}</mat-icon>
 </div>
-<div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.import">
+<div class="channel-name mat-body-1" *ngIf="update.name === names.import">
     Source feed
 </div>
-<div class="channel-name mat-body-1" *ngIf="update.name === updateTypes.export">
+<div class="channel-name mat-body-1" *ngIf="update.name === names.export">
     {{update._embedded.channel.name}}
 </div>
 <div class="event-description mat-body-1">
-    <span *ngIf="update.action === updateActions.start" i18n>In progress</span>
-    <span *ngIf="update.action === updateActions.ask" i18n>Scheduled</span>
-    <span *ngIf="update.action === updateActions.finish" i18n>Completed</span>
-    <span *ngIf="update.action === updateActions.error" i18n>Error</span>
+    <span *ngIf="update.action === actions.start" i18n>In progress</span>
+    <span *ngIf="update.action === actions.ask" i18n>Scheduled</span>
+    <span *ngIf="update.action === actions.finish" i18n>Completed</span>
+    <span *ngIf="update.action === actions.error" i18n>Error</span>
 </div>
 <div class="event-time mat-body-1">{{update.occurredAt | date:'shortTime'}}</div>

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { TimelineUpdate } from '../../core/entities/timeline-update';
-import { TimelineUpdateAction } from '../../core/entities/timeline-update-action.enum';
-import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enum';
+import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
+import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
+import { TimelineEvent } from '../../core/entities/timeline-event';
 
 @Component({
     selector: 'sf-update-row',
@@ -10,10 +10,10 @@ import { TimelineUpdateName } from '../../core/entities/timeline-update-name.enu
 })
 export class UpdateRowComponent {
 
-    @Input() update: TimelineUpdate;
+    @Input() update: TimelineEvent;
 
-    updateTypes = TimelineUpdateName;
-    updateActions = TimelineUpdateAction;
+    names = TimelineEventName;
+    actions = TimelineEventAction;
 
     constructor() {
     }

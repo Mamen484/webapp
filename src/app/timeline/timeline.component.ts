@@ -5,11 +5,10 @@ import { TimelineUpdate } from '../core/entities/timeline-update';
 import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
-import { TimelineEventFormatted } from '../core/entities/timeline-event-formatted';
 import { Timeline } from '../core/entities/timeline';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
+import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
 
 @Component({
     selector: 'sf-timeline',
@@ -20,8 +19,8 @@ import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 export class TimelineComponent {
 
     events;
-    updates: TimelineUpdate[];
-    updateOperations = TimelineUpdateAction;
+    updates: TimelineEvent[];
+    actions = TimelineEventAction;
     updatesInProgress = 0;
     nextLink = null;
     processing = false;
@@ -54,7 +53,7 @@ export class TimelineComponent {
         this.processing = true;
         this.timelineService.getEventsByLink(this.nextLink).subscribe(timeline => {
             this.nextLink = timeline._links.next && timeline._links.next.href;
-            this.events = this.mergeEvents(this.formatEvents(timeline._embedded.timeline));
+            this.events = this.mergeEvents(this.groupEvents(timeline._embedded.timeline));
 
             if (!this.nextLink) {
                 this.infiniteScrollDisabled = true;
@@ -73,14 +72,6 @@ export class TimelineComponent {
             });
         // display updates block only if no filters applied
         this.showUpdates = !isActive;
-    }
-
-    getUpdateLink(update: TimelineUpdate) {
-        if (update.name === TimelineUpdateName.import) {
-            return '/tools/infos';
-        } else {
-            return this.getChannelLink(update);
-        }
     }
 
     /**
@@ -118,23 +109,19 @@ export class TimelineComponent {
     }
 
     protected initializeEvents(timeline) {
-        this.events = this.formatEvents(timeline._embedded.timeline);
+        this.events = this.groupEvents(timeline._embedded.timeline);
         this.nextLink = timeline._links.next && timeline._links.next.href;
         this.infiniteScrollDisabled = !this.nextLink;
     }
 
-    protected formatEvents(timeline: TimelineEvent[]) {
-        return toPairs(groupBy(timeline, (event: TimelineEvent) => event.occurredAt.split('T')[0]))
-            .map(eventGroup => ([
-                eventGroup[0],
-                eventGroup[1].map((event: TimelineEvent) => new TimelineEventFormatted(event))
-            ]));
+    protected groupEvents(timeline: TimelineEvent[]) {
+        return toPairs(groupBy(timeline, (event: TimelineEvent) => event.occurredAt.split('T')[0]));
     }
 
-    protected initializeUpdates(updates: Timeline<TimelineUpdate>) {
+    protected initializeUpdates(updates: Timeline<TimelineEvent>) {
         this.updates = updates._embedded.timeline;
         this.updatesInProgress = updates._embedded.timeline
-            .filter(update => update.action === this.updateOperations.start).length;
+            .filter(update => update.action === this.actions.start).length;
     }
 
     // TOFIX: refactor duplicated logic from suggested-channel

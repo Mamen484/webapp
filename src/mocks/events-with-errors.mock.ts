@@ -113,6 +113,23 @@ export const eventsWithErrors = {
                 }
             }
         }
+        , {
+                id: 'import_setting_error',
+                name: 'feed.import',
+                action: 'finish',
+                occurredAt: '2017-10-03T19:45:47+00:00',
+            }, {
+                id: 'export_cancelled_error',
+                name: 'feed.export',
+                action: 'finish',
+                occurredAt: '2017-10-03T19:45:47+00:00',
+                _embedded: {
+                    channel: {
+                        name: 'javascript_marketplace',
+                        type: 'marketplace'
+                    }
+                }
+            }
         ]
     }
 };

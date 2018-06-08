@@ -107,4 +107,13 @@ describe('TimelineFilter', () => {
         let filter = TimelineFilter.createFrom(data);
         expect(filter.name.toString()).toEqual('order.lifecycle');
     });
+    it('should add a finish action when the filter is active', () => {
+        let data = new TimelineFilterData();
+        data.isActive = true;
+        let filter = TimelineFilter.createFrom(data);
+        expect(filter.since).not.toBeDefined();
+        expect(filter.until).not.toBeDefined();
+        expect(filter.name.join(',')).toEqual('feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation');
+        expect(filter.action.join(',')).toEqual('create,push,delete,ship,update,error,finish');
+    });
 });

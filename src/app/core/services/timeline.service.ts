@@ -6,7 +6,12 @@ import { environment } from '../../../environments/environment';
 import { TimelineUpdateName as updateName } from '../entities/timeline-update-name.enum';
 import { TimelineUpdate } from '../entities/timeline-update';
 import { TimelineUpdateAction as updateAction } from '../entities/timeline-update-action.enum';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { TimelineFilter } from '../entities/timeline-filter';
+import { TimelineEvent } from '../entities/timeline-event';
+import { TimelineEventAction } from '../entities/timeline-event-action.enum';
+import { TimelineEventName } from '../entities/timeline-event-name.enum';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
 const MAX_UPDATES = 200;
@@ -39,14 +44,14 @@ export class TimelineService {
         return this.httpClient.get(`${environment.API_URL}/store/${storeId}/timeline`,
             {
                 params: new HttpParams()
-                    .set('name', `${updateName.export},${updateName.import}`)
+                    .set('name', `${TimelineEventName.export},${TimelineEventName.import}`)
                     .set('since', new Date(Date.now() - UPDATES_PERIOD).toISOString())
                     .set('limit', String(MAX_UPDATES))
                     .set('action', [
-                        updateAction.ask,
-                        updateAction.start,
-                        updateAction.finish,
-                        updateAction.error
+                        TimelineEventAction.ask,
+                        TimelineEventAction.start,
+                        TimelineEventAction.finish,
+                        TimelineEventAction.error
                     ].join(','))
             }).pipe(
             map(this.getDistinctUpdates.bind(this)));
@@ -72,10 +77,10 @@ export class TimelineService {
         return updates;
     }
 
-    protected pushNextUpdate(updatedTimeline: TimelineUpdate[], update: TimelineUpdate) {
-        let predicate = update.name === updateName.import
-            ? item => item.name === updateName.import
-            : item => item.name === updateName.export && item._embedded.channel.name === update._embedded.channel.name;
+    protected pushNextUpdate(updatedTimeline: TimelineEvent[], update: TimelineEvent) {
+        let predicate = update.name === TimelineEventName.import
+            ? item => item.name === TimelineEventName.import
+            : item => item.name === TimelineEventName.export && item._embedded.channel.name === update._embedded.channel.name;
 
         return updatedTimeline.find(predicate) ? updatedTimeline : updatedTimeline.concat(update);
     }
