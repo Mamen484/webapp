@@ -18,104 +18,106 @@
                 <mat-icon>view_column</mat-icon>
             </button>
         </div>
-        <div [class.table-container]="isLoadingResults">
+        <div [class.table-container]="isLoadingResults" class="table-scrollable">
             <div *ngIf="isLoadingResults">
                 <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
             </div>
-            <mat-table #table [dataSource]="dataSource" class="sf-orders-table">
+
+
+            <table mat-table [dataSource]="dataSource">
 
                 <ng-container matColumnDef="checkbox">
-                    <mat-header-cell *matHeaderCellDef>
+                    <th mat-header-cell *matHeaderCellDef>
                         <mat-checkbox (click)="$event.stopPropagation()"
                                       (change)="$event ? masterToggle() : null"
                                       [checked]="selection.hasValue() && isAllSelected()"
                                       [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let row">
+                    </th>
+                    <td mat-cell *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation()"
                                       (change)="$event ? selection.toggle(row) : null"
                                       [checked]="selection.isSelected(row)"></mat-checkbox>
-                    </mat-cell>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="hasErrors">
-                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                    <mat-cell *matCellDef="let row">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row">
                         <mat-icon *ngIf="row.hasErrors" color="warn">error</mat-icon>
-                    </mat-cell>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="marketplace">
-                    <mat-header-cell *matHeaderCellDef> Marketplace</mat-header-cell>
-                    <mat-cell *matCellDef="let row">
+                    <th mat-header-cell *matHeaderCellDef> Marketplace</th>
+                    <td mat-cell *matCellDef="let row">
                         <img [src]="row.channelImage" class="marketplace-logo" width="65">
-                    </mat-cell>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="reference">
-                    <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.reference}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Id</th>
+                    <td mat-cell *matCellDef="let row"> {{row.reference}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                    <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
-                    <mat-cell *matCellDef="let row">
+                    <th mat-header-cell *matHeaderCellDef> Status</th>
+                    <td mat-cell *matCellDef="let row">
                         <sf-order-status [status]="row.status"></sf-order-status>
-                    </mat-cell>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="total">
-                    <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.total | sfCurrency:row.currency}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Total</th>
+                    <td mat-cell *matCellDef="let row"> {{row.total | sfCurrency:row.currency}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="date">
-                    <mat-header-cell *matHeaderCellDef> Date</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.date | date:'short'}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Date</th>
+                    <td mat-cell *matCellDef="let row"> {{row.date | date:'short'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="updatedAt">
-                    <mat-header-cell *matHeaderCellDef> Updated at</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.updatedAt | date:'short'}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Updated at</th>
+                    <td mat-cell *matCellDef="let row"> {{row.updatedAt | date:'short'}}</td>
                 </ng-container>
                 <ng-container matColumnDef="productAmount">
-                    <mat-header-cell *matHeaderCellDef> Product amount</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.productAmount | sfCurrency:row.currency}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Product amount</th>
+                    <td mat-cell *matCellDef="let row"> {{row.productAmount | sfCurrency:row.currency}}</td>
                 </ng-container>
                 <ng-container matColumnDef="shippingAmount">
-                    <mat-header-cell *matHeaderCellDef> Shipping amount</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.shippingAmount | sfCurrency:row.currency}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Shipping amount</th>
+                    <td mat-cell *matCellDef="let row"> {{row.shippingAmount | sfCurrency:row.currency}}</td>
                 </ng-container>
                 <ng-container matColumnDef="paymentMethod">
-                    <mat-header-cell *matHeaderCellDef> Payment Method</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.paymentMethod}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Payment Method</th>
+                    <td mat-cell *matCellDef="let row"> {{row.paymentMethod}}</td>
                 </ng-container>
                 <ng-container matColumnDef="deliveryName">
-                    <mat-header-cell *matHeaderCellDef> Delivery Name</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.deliveryName}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Delivery Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.deliveryName}}</td>
                 </ng-container>
                 <ng-container matColumnDef="invoicingName">
-                    <mat-header-cell *matHeaderCellDef> Billing Name</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.invoicingName}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Billing Name</th>
+                    <td mat-cell *matCellDef="let row"> {{row.invoicingName}}</td>
                 </ng-container>
                 <ng-container matColumnDef="storeId">
-                    <mat-header-cell *matHeaderCellDef> StoreReference</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.storeId}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Store Reference</th>
+                    <td mat-cell *matCellDef="let row"> {{row.storeId}}</td>
                 </ng-container>
                 <ng-container matColumnDef="trackingNumber">
-                    <mat-header-cell *matHeaderCellDef> Tracking Number</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.trackingNumber}}</mat-cell>
+                    <th mat-header-cell *matHeaderCellDef> Tracking Number</th>
+                    <td mat-cell *matCellDef="let row"> {{row.trackingNumber}}</td>
                 </ng-container>
                 <ng-container matColumnDef="imported">
-                    <mat-header-cell *matHeaderCellDef> Acknowledged</mat-header-cell>
-                    <mat-cell *matCellDef="let row">
+                    <th mat-header-cell *matHeaderCellDef> Acknowledged</th>
+                    <td mat-cell *matCellDef="let row">
                         <span *ngIf="row.imported" i18n>Yes</span>
                         <span *ngIf="!row.imported" i18n>No</span>
-                    </mat-cell>
+                    </td>
                 </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
-                </mat-row>
-            </mat-table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToOrder(row.id)">{{row.name}}
+                </tr>
+            </table>
             <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
                 No orders matching your request.
             </div>

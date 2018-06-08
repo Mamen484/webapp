@@ -59,3 +59,14 @@ mat-progress-bar {
 button {
   margin-left: 10px;
 }
+
+.table-scrollable {
+  overflow-x: auto;
+}
+
+table {
+  min-width: 100%;
+  th, td {
+    padding: 0 25px;
+  }
+}
