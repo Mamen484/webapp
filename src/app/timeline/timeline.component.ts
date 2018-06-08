@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
 import { take, flatMap } from 'rxjs/operators';
-import { TimelineUpdate } from '../core/entities/timeline-update';
-import { TimelineUpdateAction } from '../core/entities/timeline-update-action.enum';
 import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { Timeline } from '../core/entities/timeline';
@@ -122,13 +120,6 @@ export class TimelineComponent {
         this.updates = updates._embedded.timeline;
         this.updatesInProgress = updates._embedded.timeline
             .filter(update => update.action === this.actions.start).length;
-    }
-
-    // TOFIX: refactor duplicated logic from suggested-channel
-    protected getChannelLink(update) {
-        return update._embedded.channel.type === 'marketplace'
-            ? `/${update._embedded.channel.name}`
-            : `/${update._embedded.channel.type}/manage/${update._embedded.channel.name}`;
     }
 
 }

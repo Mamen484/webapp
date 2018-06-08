@@ -7,7 +7,7 @@ import { LocalStorageService } from '../core/services/local-storage.service';
 import { WindowRefService } from '../core/services/window-ref.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { EMPTY, of } from 'rxjs';
 import { MatMenuModule } from '@angular/material';
 import { PaymentType } from '../core/entities/payment-type.enum';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,7 +48,7 @@ describe('MenuComponent', () => {
     });
 
     beforeEach(() => {
-        timelineService.getUpdatesNumber.and.returnValue(Observable.empty());
+        timelineService.getUpdatesNumber.and.returnValue(EMPTY);
 
         fixture = TestBed.createComponent(MenuComponent);
         component = fixture.componentInstance;
@@ -59,7 +59,7 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership` link when facturation permission exists', () => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {facturation: '*'}
         }));
         fixture.detectChanges();
@@ -69,7 +69,7 @@ describe('MenuComponent', () => {
     });
 
     it('should NOT display `Membership` link when facturation permission does not exist', () => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {}
         }));
         fixture.detectChanges();
@@ -78,8 +78,8 @@ describe('MenuComponent', () => {
     });
 
 
-    it('should display `Membership link` when paymentType is credit_card',() => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+    it('should display `Membership link` when paymentType is credit_card', () => {
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {facturation: '*'}, paymentType: PaymentType.creditCard
         }));
         fixture.detectChanges();
@@ -89,8 +89,8 @@ describe('MenuComponent', () => {
         expect(membershipElement().textContent).toEqual('Membership');
     });
 
-    it('should display `Membership link` when paymentType is bank_transfer',() => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+    it('should display `Membership link` when paymentType is bank_transfer', () => {
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {facturation: '*'}, paymentType: PaymentType.bankTransfer
         }));
         fixture.detectChanges();
@@ -100,8 +100,8 @@ describe('MenuComponent', () => {
         expect(membershipElement().textContent).toEqual('Membership');
     });
 
-    it('should display `Membership link` when paymentType is sepa',() => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+    it('should display `Membership link` when paymentType is sepa', () => {
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {facturation: '*'}, paymentType: PaymentType.sepa
         }));
         fixture.detectChanges();
@@ -111,8 +111,8 @@ describe('MenuComponent', () => {
         expect(membershipElement().textContent).toEqual('Membership');
     });
 
-    it('should display `Membership link` when paymentType is `other`',() => {
-        appStore.select.and.returnValues(Observable.of({roles: ['user'], _embedded: {store: []}}), Observable.of({
+    it('should display `Membership link` when paymentType is `other`', () => {
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
             permission: {facturation: '*'}, paymentType: PaymentType.other
         }));
         fixture.detectChanges();
@@ -121,11 +121,11 @@ describe('MenuComponent', () => {
         expect(membershipElement()).toBeNull();
     });
 
-    function membershipElement(){
+    function membershipElement() {
         return document.querySelector('[path="/facturation"]') as HTMLLinkElement;
     }
 
-    function openAccountMenu(){
+    function openAccountMenu() {
         fixture.debugElement.nativeElement.querySelectorAll('.sf-nav-icon')[1].click();
     }
 });

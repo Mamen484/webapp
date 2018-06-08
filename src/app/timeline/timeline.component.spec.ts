@@ -3,9 +3,7 @@ import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-    MatCardModule, MatChipsModule, MatIconModule, MatListModule, MatProgressSpinnerModule
-} from '@angular/material';
+import { MatCardModule, MatChipsModule, MatIconModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
@@ -20,7 +18,6 @@ import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { environment } from '../../environments/environment';
-import { TimelineUpdateName } from '../core/entities/timeline-update-name.enum';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
@@ -52,7 +49,7 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
             timelineService.getEventsByLink.and.returnValue(of(events2));
             timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
@@ -103,7 +100,9 @@ describe('TimelineComponent', () => {
         describe('scroll', () => {
             it('should load next page on scroll', () => {
                 component.onScroll();
-                expect(timelineService.getEventsByLink).toHaveBeenCalledWith('/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
+                expect(timelineService.getEventsByLink).toHaveBeenCalledWith(
+                    '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10'
+                );
             });
 
             it('should set infiniteScrollDisabled to true when all the pages are loaded', () => {
@@ -112,44 +111,32 @@ describe('TimelineComponent', () => {
                 expect(component.infiniteScrollDisabled).toEqual(true);
             });
 
-            it('if the date of the last event on page 1 equals to the date of first event on page 2, should merge events for this same date to one group', () => {
-                component.onScroll();
-                expect(component.events[1][0]).toEqual('2017-10-02');
-                expect(component.events[1][1].length).toEqual(8);
+            it(
+                'if the date of the last event on page 1 equals to the date of first event on page 2,' +
+                ' should merge events for this same date to one group', () => {
+                    component.onScroll();
+                    expect(component.events[1][0]).toEqual('2017-10-02');
+                    expect(component.events[1][1].length).toEqual(8);
 
-                expect(component.events.length).toEqual(3);
+                    expect(component.events.length).toEqual(3);
 
-                expect(component.events[2][0]).toEqual('2017-10-01');
-                expect(component.events[2][1].length).toEqual(6);
-            });
+                    expect(component.events[2][0]).toEqual('2017-10-01');
+                    expect(component.events[2][1].length).toEqual(6);
+                });
         });
-
-        it ('should return a `/tools/info` link when calling getUpdateLink(), passing update with name that equals feed.import', () => {
-            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.import});
-            expect(link).toEqual('/tools/infos');
-        });
-
-        it ('should return a link to the channel when the type of channel is marketplace and the name is feed.export', () => {
-            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'marketplace', name: 'amazon'}}});
-            expect(link).toEqual('/amazon');
-        });
-
-        it ('should return a link to the channel when the type of channel is NOT marketplace and the name is feed.export', () => {
-            let link = component.getUpdateLink(<any>{name: TimelineUpdateName.export, _embedded: {channel: {type: 'ads', name: 'amazon'}}});
-            expect(link).toEqual('/ads/manage/amazon');
-        });
-
 
     });
 
     @Component({selector: 'sf-timeline-filtering-area', template: ''})
-    class TimelineFilteringAreaComponent {}
+    class TimelineFilteringAreaComponent {
+    }
+
     describe('integration tests', () => {
         let localStorage;
 
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
+            timelineService = jasmine.createSpyObj( ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
 

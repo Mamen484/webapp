@@ -1,7 +1,5 @@
 import { StreamEventType, TimelineService } from './timeline.service';
 import { Timeline } from '../entities/timeline';
-import { HttpClient } from '@angular/common/http';
-import { TimelineUpdate } from '../entities/timeline-update';
 import { data, data2 } from '../../../mocks/updates-for-timeline-service.mock';
 import { environment } from '../../../environments/environment';
 import { async, inject, TestBed } from '@angular/core/testing';
@@ -60,7 +58,7 @@ describe('TimelineService', () => {
     });
 
     it('should create an array of distinct updates: only the one last import and one last export of each channel', () => {
-        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineUpdate>) => {
+        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
             let upd = updates._embedded.timeline;
             // feed.export - Amazon
             expect(upd[0].id).toEqual('5a8be8cf14f698306a067839');
@@ -124,7 +122,7 @@ describe('TimelineService', () => {
     it('should create an array of distinct updates: only the one last import and one last export of each channel',
         inject([TimelineService, HttpTestingController], (service: TimelineService, httpMock: HttpTestingController) => {
             jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
-            service.getEventUpdates(307).subscribe((updates: Timeline<TimelineUpdate>) => {
+            service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
                 let upd = updates._embedded.timeline;
                 // feed.import
                 expect(upd[0].id).toEqual('59e0dcb1ae7b3b02694c3ff1');
@@ -201,6 +199,4 @@ describe('TimelineService', () => {
         let req = httpMock.expectOne(`${environment.API_URL}/store/11/timeline`);
         req.flush({}, {headers: new HttpHeaders().set('X-New-Events-Count', '676')});
     });
-
-
 });
