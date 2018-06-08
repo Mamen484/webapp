@@ -58,7 +58,7 @@ export class MenuComponent implements OnDestroy {
     }
 
     isAdmin() {
-        return Boolean(this.userInfo.roles.find(role => role === 'admin'));
+        return Boolean(this.userInfo.roles.find(role => role === 'admin' || role === 'employee'));
     }
 
     navigateToTimeline() {

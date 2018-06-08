@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
                                 activeStore.id,
-                                userData.roles.indexOf('admin') !== -1
+                                userData.roles.indexOf('admin') !== -1 || userData.roles.indexOf('employee') !== -1
                             );
                             return;
                         }
