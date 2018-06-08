@@ -1,5 +1,5 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {timer as observableTimer } from 'rxjs';
-import { Component, OnDestroy } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 
 import { AppState } from '../core/entities/app-state';
@@ -12,6 +12,7 @@ import { StoreStatus } from '../core/entities/store-status.enum';
 import { LocalStorageService } from '../core/services/local-storage.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PaymentType } from '../core/entities/payment-type.enum';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 
@@ -20,13 +21,14 @@ const UPDATE_EVENTS_INTERVAL = 6e4;
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent implements OnDestroy {
+export class MenuComponent implements OnInit, OnDestroy {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
     storeStatus = StoreStatus;
     appUrl = environment.APP_URL;
     newEvents = 0;
     isManager = false;
+    paymentTypes = PaymentType;
 
     protected newEventsSubscription;
 
@@ -37,6 +39,9 @@ export class MenuComponent implements OnDestroy {
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
                 protected router: Router) {
+    }
+
+    ngOnInit() {
         this.appStore.select('userInfo').subscribe(userInfo => {
             this.userInfo = userInfo;
             this.isManager = Boolean(this.userInfo.roles.find(role => role === 'manager'));
