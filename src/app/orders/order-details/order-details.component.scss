@@ -7,6 +7,7 @@ $total-price-width: 100px;
 mat-card.orders-table {
   padding: 0;
   margin-bottom: 40px;
+  margin-top: 20px;
 }
 
 .totals {
@@ -23,10 +24,6 @@ mat-card.orders-table {
 
   .value {
     width: $total-price-width;
-  }
-
-  .total-price {
-    color: mat-color($accent);
   }
 }
 
@@ -52,11 +49,9 @@ sf-orders-subnav .status {
 }
 
 .channel-image {
-  position: relative;
 
   img {
-    height: auto;
-    width: 80%;
+    width: 94px;
   }
 }
 
@@ -94,4 +89,8 @@ mat-header-cell:last-child, mat-cell:last-child {
 
 .address-form-title {
   margin-bottom: 20px;
+}
+
+.order-head-date {
+  text-align: right;
 }

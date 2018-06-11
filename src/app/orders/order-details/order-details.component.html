@@ -18,14 +18,10 @@
                 <mat-list>
                     <mat-list-item>
                         <div fxLayout="row" fxLayoutGap="10px">
-                            <div fxFlex class="channel-image">
-                                <img [src]="order._embedded.channel._links.image.href">
-                            </div>
-
                             <div fxFlex class="order-summary">
                                 <div> <sf-order-status [status]="order.status"></sf-order-status></div>
-                                <div>{{order.createdAt | date:'y/MM/d'}}</div>
-                                <div>{{order.createdAt | date:'h:mm a'}}</div>
+                                <div>{{order.createdAt | date:'shortDate'}}</div>
+                                <div>{{order.createdAt | date:'shortTime'}}</div>
                             </div>
                         </div>
                     </mat-list-item>
@@ -62,17 +58,25 @@
 
     </div>
 
+    <div fxLayout="row" fxShow fxHide.xs>
+        <div fxFlex class="channel-image">
+            <img [src]="order._embedded.channel._links.image.href">
+        </div>
+        <div class="order-head-date">
+            <div i18n>Store reference {{order.storeReference}}</div>
+            <div>{{order.createdAt | date:'short'}}</div>
+        </div>
+    </div>
     <mat-card class="orders-table" fxShow fxHide.xs>
         <div class="actions" fxLayout="row">
-            <img [src]="order._embedded.channel._links.image.href" height="40px" class="left">
             <sf-action-buttons
                     [status]="order.status"
                     [acknowledgment]="acknowedgment"
                     (actionApplied)="applyStatusAction($event)">
             </sf-action-buttons>
-            <button mat-icon-button>
+            <a mat-icon-button sfLegacyLink path="/marketplaces/invoice/">
                 <mat-icon>local_printshop</mat-icon>
-            </button>
+            </a>
         </div>
         <mat-card-content>
             <mat-table [dataSource]="data">
@@ -95,13 +99,6 @@
                         <ng-container i18n>Quantity</ng-container>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let row">{{row.quantity}}</mat-cell>
-                </ng-container>
-
-                <ng-container matColumnDef="date">
-                    <mat-header-cell *matHeaderCellDef>
-                        <ng-container i18n>Date</ng-container>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.date}}</mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="price">
@@ -131,12 +128,12 @@
                 <div class="description" fxLayout="column" fxLayoutGap="20px">
                     <div i18n>Total products</div>
                     <div i18n>Total delivery</div>
-                    <div class="total-price" i18n>Total price</div>
+                    <div class="mat-body-2" i18n>Total price</div>
                 </div>
                 <div class="value" fxLayout="column" fxLayoutGap="20px">
                     <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
                     <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                    <div class="total-price mat-body-2" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
+                    <div class="mat-body-2" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
                         sfCurrency:order.payment.currency}}
                     </div>
                 </div>

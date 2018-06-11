@@ -23,7 +23,7 @@ import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledg
 })
 export class OrderDetailsComponent implements OnInit {
 
-    displayedColumns = ['sku', 'name', 'quantity', 'date', 'price'];
+    displayedColumns = ['sku', 'name', 'quantity', 'price'];
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
     actions = OrderNotifyAction;
