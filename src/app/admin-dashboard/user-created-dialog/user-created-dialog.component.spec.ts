@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -22,31 +22,27 @@ describe('UserCreatedDialogComponent', () => {
         fixture = TestBed.createComponent(UserCreatedDialogComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
-        jasmine.clock().install();
     });
 
-    afterEach(() => {
-        jasmine.clock().uninstall();
-    });
 
-    it('should set loginCopied to true and after 3 seconds change it back to false when login is copied', () => {
+    it('should set loginCopied to true and after 3 seconds change it back to false when login is copied', fakeAsync(() => {
         component.markAsCopied('login');
         expect(component.loginCopied).toEqual(true);
-        jasmine.clock().tick(3000);
+        tick(3000);
         expect(component.loginCopied).toEqual(false);
-    });
+    }));
 
-    it('should set passwordCopied to true and after 3 seconds change it back to false when password is copied', () => {
+    it('should set passwordCopied to true and after 3 seconds change it back to false when password is copied', fakeAsync(() => {
         component.markAsCopied('password');
         expect(component.passwordCopied).toEqual(true);
-        jasmine.clock().tick(3000);
+        tick(3000);
         expect(component.passwordCopied).toEqual(false);
-    });
+    }));
 
-    it('should set tokenCopied to true and after 3 seconds change it back to false when token is copied', () => {
+    it('should set tokenCopied to true and after 3 seconds change it back to false when token is copied', fakeAsync(() => {
         component.markAsCopied('token');
         expect(component.tokenCopied).toEqual(true);
-        jasmine.clock().tick(3000);
+        tick(3000);
         expect(component.tokenCopied).toEqual(false);
-    });
+    }));
 });
