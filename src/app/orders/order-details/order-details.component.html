@@ -44,16 +44,16 @@
                     <mat-list-item>
                         <div class="totals-handset mat-body-2" fxLayout="column">
                             <div fxLayout="row">
-                                <div fxFlex i18n>Total products</div>
+                                <div fxFlex i18n>Products Amount</div>
                                 <div fxFlex i18n >{{order.payment.productAmount | sfCurrency:order.payment.currency}}
                                 </div>
                             </div>
                             <div fxLayout="row">
-                                <div fxFlex i18n>Total delivery</div>
+                                <div fxFlex i18n>Shipping Amount</div>
                                 <div fxFlex>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
                             </div>
                             <div fxLayout="row">
-                                <div fxFlex i18n>Total price</div>
+                                <div fxFlex i18n>Total Price</div>
                                 <div fxFlex>{{order.payment.productAmount + order.payment.shippingAmount |
                                     sfCurrency:order.payment.currency}}
                                 </div>
