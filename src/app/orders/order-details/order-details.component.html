@@ -11,6 +11,14 @@
             <sf-order-status [status]="order.status"></sf-order-status>
         </mat-list-item>
     </sf-orders-subnav>
+
+    <div class="sf-warn-alert">
+        <div *ngFor="let error of order.errors">
+            <mat-icon color="warn">error</mat-icon>
+            {{error.message}}
+        </div>
+    </div>
+
     <div fxHide fxShow.xs>
         <div i18n>Order ID {{order.reference}}</div>
         <mat-card class="handset-order-details">
