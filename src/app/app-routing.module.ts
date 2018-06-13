@@ -35,7 +35,7 @@ const routes: Routes = [
         ],
         children: [
             {path: '', component: BlankComponent, canActivate: [DefaultPageGuard]},
-            //@TODO: check if we still need ChannelsRouteGuard
+            // @TODO: check if we still need ChannelsRouteGuard
             {path: 'home', loadChildren: 'app/statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
             {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
             {path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
