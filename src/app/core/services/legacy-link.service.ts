@@ -27,7 +27,7 @@ export class LegacyLinkService {
         if (auth) {
             queryParams.set('token', auth.replace('Bearer ', ''));
         }
-        if (this.currentStore && this.currentStore.id) {
+        if (!(<any>params).store && this.currentStore && this.currentStore.id) {
             queryParams.set('store', this.currentStore.id.toString());
         }
         return environment.APP_URL + path + '?' + queryParams.toString();

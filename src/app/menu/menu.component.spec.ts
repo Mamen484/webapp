@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { LocalStorageService } from '../core/services/local-storage.service';
@@ -11,6 +11,7 @@ import { EMPTY, of } from 'rxjs';
 import { MatMenuModule } from '@angular/material';
 import { PaymentType } from '../core/entities/payment-type.enum';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreStatus } from '../core/entities/store-status.enum';
 
 describe('MenuComponent', () => {
 
@@ -32,7 +33,7 @@ describe('MenuComponent', () => {
         route = <any>{};
         router = <any>{routeReuseStrategy: {shouldDetach: jasmine.createSpy('shouldDetach'), navigate: jasmine.createSpy('navigate')}};
         TestBed.configureTestingModule({
-            declarations: [MenuComponent],
+            declarations: [MenuComponent, LegacyLinkDirective],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},
@@ -121,11 +122,47 @@ describe('MenuComponent', () => {
         expect(membershipElement()).toBeNull();
     });
 
+    it('should display correct links to legacy stores for a multistore user`', () => {
+        const store = [
+            {id: 10, status: StoreStatus.active},
+            {id: 11, status: StoreStatus.demo},
+            {id: 12, status: StoreStatus.deleted},
+            {id: 13, status: StoreStatus.suspended},
+        ];
+        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store}}), of({
+            permission: {facturation: '*'}, paymentType: PaymentType.other, id: 11
+        }));
+        fixture.detectChanges();
+        openAccountMenu();
+        expect(component.currentStore.id).toEqual(11);
+        let stores = multiStoreLinks();
+        expect(stores[0].getAttribute('path')).toEqual('/');
+        expect(stores[0].getAttribute('ng-reflect-store-id')).toEqual('10');
+        expect(stores[0].hasAttribute('disabled')).toEqual(false);
+        expect(stores[1].hasAttribute('disabled')).toEqual(true);
+        expect(stores[2].getAttribute('path')).toEqual('/');
+        expect(stores[2].getAttribute('ng-reflect-store-id')).toEqual('13');
+        expect(stores[2].hasAttribute('disabled')).toEqual(false);
+        expect(stores.length).toEqual(3);
+    });
+
     function membershipElement() {
-        return document.querySelector('[path="/facturation"]') as HTMLLinkElement;
+        return document.querySelector('.account-menu [path="/facturation"]') as HTMLLinkElement;
+    }
+
+    function multiStoreLinks() {
+        return document.querySelectorAll('.account-menu .store-link') as NodeListOf<HTMLLinkElement>;
     }
 
     function openAccountMenu() {
         fixture.debugElement.nativeElement.querySelectorAll('.sf-nav-icon')[1].click();
+    }
+
+    @Directive({
+        selector: '[sfLegacyLink]'
+    })
+    class LegacyLinkDirective {
+        @Input() path;
+        @Input() storeId;
     }
 });
