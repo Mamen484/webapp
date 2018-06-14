@@ -4,6 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { SupportAuthInterceptor } from './support-auth-interceptor';
+import { allowNoExpectations } from '../entities/allow-no-expectaions';
 
 describe('SupportAuthInterceptor', () => {
     beforeEach(() => {
@@ -36,8 +37,7 @@ describe('SupportAuthInterceptor', () => {
                 httpMock.expectOne(req =>
                     req.headers.has('Authorization') === false
                     && req.headers.has('Accept') === false);
-
-
+                allowNoExpectations();
                 httpMock.verify();
             }));
 });

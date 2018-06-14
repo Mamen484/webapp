@@ -5,6 +5,7 @@ import { StoreService } from './store.service';
 import { environment } from '../../../environments/environment';
 import { LocaleIdService } from './locale-id.service';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
+import { allowNoExpectations } from '../entities/allow-no-expectaions';
 
 describe('StoreService', () => {
     beforeEach(() => {
@@ -44,6 +45,7 @@ describe('StoreService', () => {
             (service: StoreService, httpMock: HttpTestingController) => {
                 service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false).subscribe();
                 httpMock.expectOne(environment.API_URL + '/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                allowNoExpectations();
                 httpMock.verify();
             }));
 
@@ -52,6 +54,7 @@ describe('StoreService', () => {
             (service: StoreService, httpMock: HttpTestingController) => {
                 service.getStoreChannels(11,  Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), true).subscribe();
                 httpMock.expectOne(environment.API_URL + '/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                allowNoExpectations();
                 httpMock.verify();
             }));
 
