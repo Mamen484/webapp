@@ -15,6 +15,7 @@ import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
 import { filter } from 'rxjs/internal/operators';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -28,6 +29,7 @@ export class OrderDetailsComponent implements OnInit {
     order: Order;
     actions = OrderNotifyAction;
     acknowedgment: OrderAcknowledgment;
+    errorTypes = OrderErrorType;
 
     constructor(protected route: ActivatedRoute,
                 protected matDialog: MatDialog,

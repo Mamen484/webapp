@@ -11,6 +11,7 @@ import { AppState } from '../../core/entities/app-state';
 import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
 
 describe('OrderDetailsComponent', () => {
@@ -24,7 +25,7 @@ describe('OrderDetailsComponent', () => {
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
-        route = {};
+        route = {data: EMPTY};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
         ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge']);
         appStore = jasmine.createSpyObj(['select']);
@@ -106,6 +107,44 @@ describe('OrderDetailsComponent', () => {
             expect(ordersService[action].calls.mostRecent().args[1][0].reference).toEqual('ref');
             expect(ordersService[action].calls.mostRecent().args[1][0].channelName).toEqual('nom');
         });
+    });
+
+    it('should display a ship error', () => {
+        component.order = <any>{
+            errors: [{type: OrderErrorType.ship}],
+            reference: '11-ref',
+            payment: {},
+            _embedded: {channel: {_links: {image: {}}}}
+        };
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to ship your order 11-ref');
+    });
+
+    it('should display an acknowledge error', () => {
+        component.order = <any>{
+            errors: [{type: OrderErrorType.acknowledge}],
+            reference: '11-ref',
+            payment: {},
+            _embedded: {channel: {_links: {image: {}}}}
+        };
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to import your order 11-ref');
+    });
+
+    it('should NOT display errors when errors array is empty', () => {
+        component.order = <any>{
+            errors: [],
+            reference: '11-ref',
+            payment: {},
+            _embedded: {channel: {_links: {image: {}}}}
+        };
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(0);
     });
 });
 
