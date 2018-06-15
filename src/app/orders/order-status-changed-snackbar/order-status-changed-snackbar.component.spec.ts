@@ -74,4 +74,11 @@ describe('OrderStatusChangedSnackbarComponent', () => {
         expect(fixture.debugElement.nativeElement.textContent)
             .toEqual('Order has been canceled');
     });
+
+    it('should display a message for an `save` action', () => {
+        component.action = 'save';
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent)
+            .toEqual('Order has been saved');
+    });
 });

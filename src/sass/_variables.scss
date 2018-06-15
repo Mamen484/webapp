@@ -14,7 +14,7 @@ $toolbar-height: 64px;
 $tabs-height: 49px;
 $left-sidebar-width: 75px;
 
-$sf-typography: mat-typography-config(
+$config: mat-typography-config(
         $font-family: '"Noto Sans", sans-serif',
         $body-2: mat-typography-level(14px, 24px, 700),
         $button: mat-typography-level(14px, 14px, 700),
@@ -25,8 +25,6 @@ $sf-typography: mat-typography-config(
 $mobile-tabs-background: #385370;
 
 $content-margin: 20px;
-
-$config: mat-typography-config();
 $min-width: 1024px;
 
 // media queries according to material spec

@@ -3,7 +3,7 @@
 @include mat-core();
 @include angular-material-theme($theme);
 
-@include angular-material-typography($sf-typography);
+@include angular-material-typography($config);
 
 body {
   font-family: 'Noto Sans', sans-serif;

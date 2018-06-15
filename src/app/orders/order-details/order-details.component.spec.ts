@@ -4,7 +4,7 @@ import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -26,8 +26,8 @@ describe('OrderDetailsComponent', () => {
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         route = {data: EMPTY};
-        snackbar = jasmine.createSpyObj(['openFromComponent']);
-        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge']);
+        snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
+        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder']);
         appStore = jasmine.createSpyObj(['select']);
 
         TestBed.configureTestingModule({
@@ -145,6 +145,60 @@ describe('OrderDetailsComponent', () => {
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
         expect(warn.length).toEqual(0);
+    });
+
+    it('should call a modify order endpoint on save shipping address', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(EMPTY);
+        component.order = <any>{id: 141};
+        component.saveShippingAddress({});
+        expect(ordersService.modifyOrder.calls.mostRecent().args[0]).toEqual(22);
+        expect(ordersService.modifyOrder.calls.mostRecent().args[1]).toEqual(141);
+    });
+
+    it('should show a success snackbar if shipping address was updated successfully', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(of({}));
+        component.order = <any>{id: 141};
+        component.saveShippingAddress({});
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual('save');
+    });
+
+    it('should show an error snackbar if an error occures on saving shipping address', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(throwError({message: 'some error occured'}));
+        component.order = <any>{id: 141};
+        component.saveShippingAddress({});
+        expect(snackbar.open.calls.mostRecent().args[0]).toEqual('some error occured');
+        expect(snackbar.open.calls.mostRecent().args[2].panelClass).toEqual('sf-snackbar-error');
+    });
+
+    it('should call a modify order endpoint on save billing address', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(EMPTY);
+        component.order = <any>{id: 141};
+        component.saveBillingAddress({});
+        expect(ordersService.modifyOrder.calls.mostRecent().args[0]).toEqual(22);
+        expect(ordersService.modifyOrder.calls.mostRecent().args[1]).toEqual(141);
+    });
+
+    it('should show a success snackbar if billing address was updated successfully', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(of({}));
+        component.order = <any>{id: 141};
+        component.saveBillingAddress({});
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual('save');
+    });
+
+    it('should show an error snackbar if an error occures on saving billing address', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(throwError({message: 'some error occured'}));
+        component.order = <any>{id: 141};
+        component.saveBillingAddress({});
+        expect(snackbar.open.calls.mostRecent().args[0]).toEqual('some error occured');
+        expect(snackbar.open.calls.mostRecent().args[2].panelClass).toEqual('sf-snackbar-error');
     });
 });
 

@@ -97,7 +97,13 @@ export class OrderDetailsComponent implements OnInit {
             flatMap((store: UserStore) => this.ordersService.modifyOrder(
                 store.id,
                 this.order.id,
-                {shippingAddress, billingAddress: this.order.billingAddress}))).subscribe();
+                {shippingAddress, billingAddress: this.order.billingAddress}))).subscribe(
+            () => this.showSuccess('save'),
+            error => this.snackBar.open(error.message,  '', {
+                panelClass: 'sf-snackbar-error',
+                duration: 5000,
+            })
+        );
     }
 
     saveBillingAddress(billingAddress) {
@@ -105,6 +111,12 @@ export class OrderDetailsComponent implements OnInit {
             flatMap((store: UserStore) => this.ordersService.modifyOrder(
                 store.id,
                 this.order.id,
-                {billingAddress, shippingAddress: this.order.shippingAddress}))).subscribe();
+                {billingAddress, shippingAddress: this.order.shippingAddress}))).subscribe(
+            () => this.showSuccess('save'),
+            error => this.snackBar.open(error.message, '', {
+                panelClass: 'sf-snackbar-error',
+                duration: 5000,
+            })
+        );
     }
 }

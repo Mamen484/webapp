@@ -10,7 +10,7 @@ import { OrderNotifyAction } from '../../core/entities/orders/order-notify-actio
 export class OrderStatusChangedSnackbarComponent implements OnInit {
 
     ordersNumber;
-    action: OrderNotifyAction;
+    action: OrderNotifyAction | 'save';
     actions = OrderNotifyAction;
 
     constructor(@Inject(MAT_SNACK_BAR_DATA) {ordersNumber, action}: { ordersNumber: number, action: OrderNotifyAction}) {
