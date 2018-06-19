@@ -1,7 +1,7 @@
-import { map } from 'rxjs/operators';
+import { map, publishReplay } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, ConnectableObservable } from 'rxjs';
 import { Statistics } from '../entities/statistics';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { StoreChannelResponse } from '../entities/store-channel-response';
@@ -15,6 +15,8 @@ import { Tag } from '../entities/tag';
 
 @Injectable()
 export class StoreService {
+
+    charge$: ConnectableObservable<StoreCharge>;
 
     constructor(protected httpClient: HttpClient) {
     }
@@ -57,7 +59,12 @@ export class StoreService {
     }
 
     public getStoreCharge(storeId): Observable<StoreCharge> {
-        return <Observable<StoreCharge>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`);
+        if (!this.charge$) {
+            this.charge$ = this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`)
+                .pipe(publishReplay()) as ConnectableObservable<StoreCharge>;
+            this.charge$.connect();
+        }
+        return this.charge$;
     }
 
     public fetchAvailableStores(filter: string) {
@@ -73,7 +80,7 @@ export class StoreService {
     }
 
     public fetchAvailableTags(storeId) {
-        return <Observable<PagedResponse<{tag: Tag[]}>>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`);
+        return <Observable<PagedResponse<{ tag: Tag[] }>>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`);
     }
 }
 

@@ -1,28 +1,35 @@
-<mat-dialog-content>
-    <div i18n class="top-text mat-headline">List your {{data.charge.references.count}} SKU's on</div>
+<mat-dialog-content *ngIf="charge; else loadingContainer">
+    <div i18n class="top-text mat-headline">List your {{charge.references.count}} SKU's on</div>
     <img [src]="data.logo" class="channel-logo" alt="channel">
 
-    <div class="mat-display-1 price" i18n>Only {{data.charge.charge.amount |
-        sfCurrency:data.charge.charge.currency}}/Month
+    <div class="mat-display-1 price" i18n>Only {{charge.charge.amount | sfCurrency:charge.charge.currency}}/Month
     </div>
 
     <div fxFlexLayout="row" fxLayoutGap="36px">
-        <div fxFlex="1 1 calc(33% - 36px)">
-            <div class="oppo-icon"><img src="{{baseHref}}/assets/images/cloudplus3.svg" alt="Cloud Icon"></div>
+        <div fxFlex="1 1 calc(33% - 36px)" class="premium-channels">
+            <div class="oppo-icon"><sf-image source="assets/images/cloudplus3.svg" alt="Cloud Icon"></sf-image></div>
             <div class="oppo-title" i18n>3 premium channels</div>
-            <div><ng-container i18n>included in each of our</ng-container> <a [href]="pricesLink" target="_blank" class="plans-link" i18n>plans</a></div>
+            <div><ng-container i18n>included in each of our </ng-container>
+                <a href="http://www.shopping-feed.com/pricing/" target="_blank" class="plans-link" i18n>plans</a></div>
         </div>
-        <div fxFlex="1 1 calc(33% - 36px)">
-            <div class="oppo-icon"><img src="{{baseHref}}/assets/images/calendar.svg" alt="Calendar Icon"></div>
+        <div fxFlex="1 1 calc(33% - 36px)" class="free-trial">
+            <div class="oppo-icon"><sf-image source="assets/images/calendar.svg" alt="Calendar Icon"></sf-image></div>
             <div class="oppo-title" i18n>30 days free trial</div>
             <div i18n>with onboarding and setup assistance</div>
         </div>
-        <div fxFlex="1 1 calc(33% - 36px)">
-            <div class="oppo-icon"><img src="{{baseHref}}/assets/images/s-icon.svg" alt="Flat Fee Icon"></div>
+        <div fxFlex="1 1 calc(33% - 36px)" class="monthly-fee">
+            <div class="oppo-icon"><sf-image source="assets/images/s-icon.svg" alt="Flat Fee Icon"></sf-image></div>
             <div class="oppo-title" i18n>flat monthly fee</div>
             <div i18n>no contracts, sales limits, or commissions</div>
         </div>
     </div>
-
     <a mat-raised-button color="accent" sfLegacyLink [path]="data.link" class="start-trial-button" i18n>Start Trial</a>
 </mat-dialog-content>
+
+<ng-template #loadingContainer>
+    <mat-dialog-content>
+        <div class="spinner-parent">
+            <mat-spinner></mat-spinner>
+        </div>
+    </mat-dialog-content>
+</ng-template>

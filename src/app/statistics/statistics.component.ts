@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { take, tap, flatMap } from 'rxjs/operators';
+import { flatMap, take, tap } from 'rxjs/operators';
 import { zip } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
 import { Store as AppStore } from '@ngrx/store';
@@ -13,7 +13,6 @@ import { PagedResponse } from '../core/entities/paged-response';
 import { MatDialog } from '@angular/material';
 import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
-import { StoreCharge } from '../core/entities/store-charge';
 import { cloneDeep } from 'lodash';
 
 const LOAD_CHANNELS_COUNT = 6;
@@ -38,7 +37,6 @@ export class StatisticsComponent {
     internationalMode = false;
     filterState = new ChannelsRequestParams();
     haveNoChannels = false;
-    charge: StoreCharge;
     hasStatisticsPermission = false;
 
     constructor(protected appStore: AppStore<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
@@ -48,11 +46,10 @@ export class StatisticsComponent {
             tap((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics)),
             flatMap(currentStore => this.fetchData(currentStore))
         )
-            .subscribe(([[statistics, channels], charge]) => {
+            .subscribe(([statistics, channels]) => {
                 this.statistics = statistics;
                 this.initialize(channels);
                 this.processing = false;
-                this.charge = charge;
 
                 this.appStore.select('currentStore').pipe(take(1)).subscribe(currentStore => {
                     if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
@@ -169,11 +166,9 @@ export class StatisticsComponent {
     }
 
     protected fetchData(currentStore) {
-        return zip(
-            zip(this.storeService.getStatistics(currentStore.id), this.storeService.getStoreChannels(
-                currentStore.id,
-                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
-            )),
-            this.storeService.getStoreCharge(currentStore.id));
+        return zip(this.storeService.getStatistics(currentStore.id), this.storeService.getStoreChannels(
+            currentStore.id,
+            Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+        ))
     }
 }

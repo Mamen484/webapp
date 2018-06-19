@@ -44,3 +44,11 @@ a.plans-link {
 img.channel-logo {
   transform: scale(0.8);
 }
+
+.spinner-parent {
+  display: flex;
+  margin: 10px;
+  mat-spinner {
+    margin: auto;
+  }
+}
