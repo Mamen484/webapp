@@ -1,23 +1,18 @@
 [
   {
-    "code": "UK",
-    "name": "united kingdom",
-    "flag": "uk.png"
-  },
-  {
     "code": "AF",
     "name": "afghanistan",
     "flag": "af.png"
   },
   {
+    "code": "AX",
+    "name": "aland islands",
+    "flag": "ax.png"
+  },
+  {
     "code": "AL",
     "name": "albania",
     "flag": "al.png"
-  },
-  {
-    "code": "AQ",
-    "name": "antarctica",
-    "flag": "aq.png"
   },
   {
     "code": "DZ",
@@ -40,19 +35,34 @@
     "flag": "ao.png"
   },
   {
+    "code": "AI",
+    "name": "anguilla",
+    "flag": "ai.png"
+  },
+  {
+    "code": "AQ",
+    "name": "antarctica",
+    "flag": "aq.png"
+  },
+  {
     "code": "AG",
     "name": "antigua and barbuda",
     "flag": "ag.png"
   },
   {
-    "code": "AZ",
-    "name": "azerbaijan",
-    "flag": "az.png"
-  },
-  {
     "code": "AR",
     "name": "argentina",
     "flag": "ar.png"
+  },
+  {
+    "code": "AM",
+    "name": "armenia",
+    "flag": "am.png"
+  },
+  {
+    "code": "AW",
+    "name": "aruba",
+    "flag": "aw.png"
   },
   {
     "code": "AU",
@@ -63,6 +73,11 @@
     "code": "AT",
     "name": "austria",
     "flag": "at.png"
+  },
+  {
+    "code": "AZ",
+    "name": "azerbaijan",
+    "flag": "az.png"
   },
   {
     "code": "BS",
@@ -80,19 +95,29 @@
     "flag": "bd.png"
   },
   {
-    "code": "AM",
-    "name": "armenia",
-    "flag": "am.png"
-  },
-  {
     "code": "BB",
     "name": "barbados",
     "flag": "bb.png"
   },
   {
+    "code": "BY",
+    "name": "belarus",
+    "flag": "by.png"
+  },
+  {
     "code": "BE",
     "name": "belgium",
     "flag": "be.png"
+  },
+  {
+    "code": "BZ",
+    "name": "belize",
+    "flag": "bz.png"
+  },
+  {
+    "code": "BJ",
+    "name": "benin",
+    "flag": "bj.png"
   },
   {
     "code": "BM",
@@ -108,6 +133,11 @@
     "code": "BO",
     "name": "bolivia, plurinational state of",
     "flag": "bo.png"
+  },
+  {
+    "code": "BQ",
+    "name": "bonaire, sint eustatius and saba",
+    "flag": "bq.png"
   },
   {
     "code": "BA",
@@ -130,24 +160,9 @@
     "flag": "br.png"
   },
   {
-    "code": "BZ",
-    "name": "belize",
-    "flag": "bz.png"
-  },
-  {
     "code": "IO",
     "name": "british indian ocean territory",
     "flag": "io.png"
-  },
-  {
-    "code": "SB",
-    "name": "solomon islands",
-    "flag": "sb.png"
-  },
-  {
-    "code": "VG",
-    "name": "virgin islands, british",
-    "flag": "vg.png"
   },
   {
     "code": "BN",
@@ -160,19 +175,14 @@
     "flag": "bg.png"
   },
   {
-    "code": "MM",
-    "name": "myanmar",
-    "flag": "mm.png"
+    "code": "BF",
+    "name": "burkina faso",
+    "flag": "bf.png"
   },
   {
     "code": "BI",
     "name": "burundi",
     "flag": "bi.png"
-  },
-  {
-    "code": "BY",
-    "name": "belarus",
-    "flag": "by.png"
   },
   {
     "code": "KH",
@@ -205,11 +215,6 @@
     "flag": "cf.png"
   },
   {
-    "code": "LK",
-    "name": "sri lanka",
-    "flag": "lk.png"
-  },
-  {
     "code": "TD",
     "name": "chad",
     "flag": "td.png"
@@ -223,11 +228,6 @@
     "code": "CN",
     "name": "china",
     "flag": "cn.png"
-  },
-  {
-    "code": "TW",
-    "name": "taiwan, province of china",
-    "flag": "tw.png"
   },
   {
     "code": "CX",
@@ -248,11 +248,6 @@
     "code": "KM",
     "name": "comoros",
     "flag": "km.png"
-  },
-  {
-    "code": "YT",
-    "name": "mayotte",
-    "flag": "yt.png"
   },
   {
     "code": "CG",
@@ -285,6 +280,11 @@
     "flag": "cu.png"
   },
   {
+    "code": "CW",
+    "name": "curaçao",
+    "flag": "cw.png"
+  },
+  {
     "code": "CY",
     "name": "cyprus",
     "flag": "cy.png"
@@ -295,14 +295,19 @@
     "flag": "cz.png"
   },
   {
-    "code": "BJ",
-    "name": "benin",
-    "flag": "bj.png"
+    "code": "CI",
+    "name": "côte d'ivoire",
+    "flag": "ci.png"
   },
   {
     "code": "DK",
     "name": "denmark",
     "flag": "dk.png"
+  },
+  {
+    "code": "DJ",
+    "name": "djibouti",
+    "flag": "dj.png"
   },
   {
     "code": "DM",
@@ -320,6 +325,11 @@
     "flag": "ec.png"
   },
   {
+    "code": "EG",
+    "name": "egypt",
+    "flag": "eg.png"
+  },
+  {
     "code": "SV",
     "name": "el salvador",
     "flag": "sv.png"
@@ -328,11 +338,6 @@
     "code": "GQ",
     "name": "equatorial guinea",
     "flag": "gq.png"
-  },
-  {
-    "code": "ET",
-    "name": "ethiopia",
-    "flag": "et.png"
   },
   {
     "code": "ER",
@@ -345,9 +350,9 @@
     "flag": "ee.png"
   },
   {
-    "code": "FO",
-    "name": "faroe islands",
-    "flag": "fo.png"
+    "code": "ET",
+    "name": "ethiopia",
+    "flag": "et.png"
   },
   {
     "code": "FK",
@@ -355,9 +360,9 @@
     "flag": "fk.png"
   },
   {
-    "code": "GS",
-    "name": "south georgia and the south sandwich islands",
-    "flag": "gs.png"
+    "code": "FO",
+    "name": "faroe islands",
+    "flag": "fo.png"
   },
   {
     "code": "FJ",
@@ -368,11 +373,6 @@
     "code": "FI",
     "name": "finland",
     "flag": "fi.png"
-  },
-  {
-    "code": "AX",
-    "name": "aland islands",
-    "flag": "ax.png"
   },
   {
     "code": "FR",
@@ -395,19 +395,9 @@
     "flag": "tf.png"
   },
   {
-    "code": "DJ",
-    "name": "djibouti",
-    "flag": "dj.png"
-  },
-  {
     "code": "GA",
     "name": "gabon",
     "flag": "ga.png"
-  },
-  {
-    "code": "GE",
-    "name": "georgia",
-    "flag": "ge.png"
   },
   {
     "code": "GM",
@@ -415,9 +405,9 @@
     "flag": "gm.png"
   },
   {
-    "code": "PS",
-    "name": "palestine, state of",
-    "flag": "ps.png"
+    "code": "GE",
+    "name": "georgia",
+    "flag": "ge.png"
   },
   {
     "code": "DE",
@@ -433,11 +423,6 @@
     "code": "GI",
     "name": "gibraltar",
     "flag": "gi.png"
-  },
-  {
-    "code": "KI",
-    "name": "kiribati",
-    "flag": "ki.png"
   },
   {
     "code": "GR",
@@ -470,9 +455,19 @@
     "flag": "gt.png"
   },
   {
+    "code": "GG",
+    "name": "guernsey",
+    "flag": "gg.png"
+  },
+  {
     "code": "GN",
     "name": "guinea",
     "flag": "gn.png"
+  },
+  {
+    "code": "GW",
+    "name": "guinea-bissau",
+    "flag": "gw.png"
   },
   {
     "code": "GY",
@@ -540,6 +535,11 @@
     "flag": "ie.png"
   },
   {
+    "code": "IM",
+    "name": "isle of man",
+    "flag": "im.png"
+  },
+  {
     "code": "IL",
     "name": "israel",
     "flag": "il.png"
@@ -548,11 +548,6 @@
     "code": "IT",
     "name": "italy",
     "flag": "it.png"
-  },
-  {
-    "code": "CI",
-    "name": "côte d'ivoire",
-    "flag": "ci.png"
   },
   {
     "code": "JM",
@@ -565,9 +560,9 @@
     "flag": "jp.png"
   },
   {
-    "code": "KZ",
-    "name": "kazakhstan",
-    "flag": "kz.png"
+    "code": "JE",
+    "name": "jersey",
+    "flag": "je.png"
   },
   {
     "code": "JO",
@@ -575,9 +570,19 @@
     "flag": "jo.png"
   },
   {
+    "code": "KZ",
+    "name": "kazakhstan",
+    "flag": "kz.png"
+  },
+  {
     "code": "KE",
     "name": "kenya",
     "flag": "ke.png"
+  },
+  {
+    "code": "KI",
+    "name": "kiribati",
+    "flag": "ki.png"
   },
   {
     "code": "KP",
@@ -605,6 +610,11 @@
     "flag": "la.png"
   },
   {
+    "code": "LV",
+    "name": "latvia",
+    "flag": "lv.png"
+  },
+  {
     "code": "LB",
     "name": "lebanon",
     "flag": "lb.png"
@@ -613,11 +623,6 @@
     "code": "LS",
     "name": "lesotho",
     "flag": "ls.png"
-  },
-  {
-    "code": "LV",
-    "name": "latvia",
-    "flag": "lv.png"
   },
   {
     "code": "LR",
@@ -650,6 +655,11 @@
     "flag": "mo.png"
   },
   {
+    "code": "MK",
+    "name": "macedonia, the former yugoslav republic of",
+    "flag": "mk.png"
+  },
+  {
     "code": "MG",
     "name": "madagascar",
     "flag": "mg.png"
@@ -680,6 +690,11 @@
     "flag": "mt.png"
   },
   {
+    "code": "MH",
+    "name": "marshall islands",
+    "flag": "mh.png"
+  },
+  {
     "code": "MQ",
     "name": "martinique",
     "flag": "mq.png"
@@ -695,9 +710,24 @@
     "flag": "mu.png"
   },
   {
+    "code": "YT",
+    "name": "mayotte",
+    "flag": "yt.png"
+  },
+  {
     "code": "MX",
     "name": "mexico",
     "flag": "mx.png"
+  },
+  {
+    "code": "FM",
+    "name": "micronesia, federated states of",
+    "flag": "fm.png"
+  },
+  {
+    "code": "MD",
+    "name": "moldova, republic of",
+    "flag": "md.png"
   },
   {
     "code": "MC",
@@ -708,11 +738,6 @@
     "code": "MN",
     "name": "mongolia",
     "flag": "mn.png"
-  },
-  {
-    "code": "MD",
-    "name": "moldova, republic of",
-    "flag": "md.png"
   },
   {
     "code": "ME",
@@ -735,9 +760,9 @@
     "flag": "mz.png"
   },
   {
-    "code": "OM",
-    "name": "oman",
-    "flag": "om.png"
+    "code": "MM",
+    "name": "myanmar",
+    "flag": "mm.png"
   },
   {
     "code": "NA",
@@ -760,34 +785,9 @@
     "flag": "nl.png"
   },
   {
-    "code": "CW",
-    "name": "curaçao",
-    "flag": "cw.png"
-  },
-  {
-    "code": "AW",
-    "name": "aruba",
-    "flag": "aw.png"
-  },
-  {
-    "code": "SX",
-    "name": "sint maarten (dutch part)",
-    "flag": "sx.png"
-  },
-  {
-    "code": "BQ",
-    "name": "bonaire, sint eustatius and saba",
-    "flag": "bq.png"
-  },
-  {
     "code": "NC",
     "name": "new caledonia",
     "flag": "nc.png"
-  },
-  {
-    "code": "VU",
-    "name": "vanuatu",
-    "flag": "vu.png"
   },
   {
     "code": "NZ",
@@ -820,29 +820,24 @@
     "flag": "nf.png"
   },
   {
-    "code": "NO",
-    "name": "norway",
-    "flag": "no.png"
-  },
-  {
     "code": "MP",
     "name": "northern mariana islands",
     "flag": "mp.png"
   },
   {
-    "code": "UM",
-    "name": "united states minor outlying islands",
-    "flag": "um.png"
+    "code": "NO",
+    "name": "norway",
+    "flag": "no.png"
   },
   {
-    "code": "FM",
-    "name": "micronesia, federated states of",
-    "flag": "fm.png"
+    "code": "OM",
+    "name": "oman",
+    "flag": "om.png"
   },
   {
-    "code": "MH",
-    "name": "marshall islands",
-    "flag": "mh.png"
+    "code": "PK",
+    "name": "pakistan",
+    "flag": "pk.png"
   },
   {
     "code": "PW",
@@ -850,9 +845,9 @@
     "flag": "pw.png"
   },
   {
-    "code": "PK",
-    "name": "pakistan",
-    "flag": "pk.png"
+    "code": "PS",
+    "name": "palestine, state of",
+    "flag": "ps.png"
   },
   {
     "code": "PA",
@@ -895,16 +890,6 @@
     "flag": "pt.png"
   },
   {
-    "code": "GW",
-    "name": "guinea-bissau",
-    "flag": "gw.png"
-  },
-  {
-    "code": "TL",
-    "name": "timor-leste",
-    "flag": "tl.png"
-  },
-  {
     "code": "PR",
     "name": "puerto rico",
     "flag": "pr.png"
@@ -945,11 +930,6 @@
     "flag": "kn.png"
   },
   {
-    "code": "AI",
-    "name": "anguilla",
-    "flag": "ai.png"
-  },
-  {
     "code": "LC",
     "name": "saint lucia",
     "flag": "lc.png"
@@ -968,6 +948,11 @@
     "code": "VC",
     "name": "saint vincent and the grenadines",
     "flag": "vc.png"
+  },
+  {
+    "code": "WS",
+    "name": "samoa",
+    "flag": "ws.png"
   },
   {
     "code": "SM",
@@ -1010,19 +995,24 @@
     "flag": "sg.png"
   },
   {
+    "code": "SX",
+    "name": "sint maarten (dutch part)",
+    "flag": "sx.png"
+  },
+  {
     "code": "SK",
     "name": "slovakia",
     "flag": "sk.png"
   },
   {
-    "code": "VN",
-    "name": "viet nam",
-    "flag": "vn.png"
-  },
-  {
     "code": "SI",
     "name": "slovenia",
     "flag": "si.png"
+  },
+  {
+    "code": "SB",
+    "name": "solomon islands",
+    "flag": "sb.png"
   },
   {
     "code": "SO",
@@ -1035,14 +1025,9 @@
     "flag": "za.png"
   },
   {
-    "code": "ZW",
-    "name": "zimbabwe",
-    "flag": "zw.png"
-  },
-  {
-    "code": "ES",
-    "name": "spain",
-    "flag": "es.png"
+    "code": "GS",
+    "name": "south georgia and the south sandwich islands",
+    "flag": "gs.png"
   },
   {
     "code": "SS",
@@ -1050,14 +1035,19 @@
     "flag": "ss.png"
   },
   {
+    "code": "ES",
+    "name": "spain",
+    "flag": "es.png"
+  },
+  {
+    "code": "LK",
+    "name": "sri lanka",
+    "flag": "lk.png"
+  },
+  {
     "code": "SD",
     "name": "sudan",
     "flag": "sd.png"
-  },
-  {
-    "code": "EH",
-    "name": "western sahara",
-    "flag": "eh.png"
   },
   {
     "code": "SR",
@@ -1090,14 +1080,29 @@
     "flag": "sy.png"
   },
   {
+    "code": "TW",
+    "name": "taiwan, province of china",
+    "flag": "tw.png"
+  },
+  {
     "code": "TJ",
     "name": "tajikistan",
     "flag": "tj.png"
   },
   {
+    "code": "TZ",
+    "name": "tanzania, united republic of",
+    "flag": "tz.png"
+  },
+  {
     "code": "TH",
     "name": "thailand",
     "flag": "th.png"
+  },
+  {
+    "code": "TL",
+    "name": "timor-leste",
+    "flag": "tl.png"
   },
   {
     "code": "TG",
@@ -1118,11 +1123,6 @@
     "code": "TT",
     "name": "trinidad and tobago",
     "flag": "tt.png"
-  },
-  {
-    "code": "AE",
-    "name": "united arab emirates",
-    "flag": "ae.png"
   },
   {
     "code": "TN",
@@ -1160,14 +1160,14 @@
     "flag": "ua.png"
   },
   {
-    "code": "MK",
-    "name": "macedonia, the former yugoslav republic of",
-    "flag": "mk.png"
+    "code": "AE",
+    "name": "united arab emirates",
+    "flag": "ae.png"
   },
   {
-    "code": "EG",
-    "name": "egypt",
-    "flag": "eg.png"
+    "code": "UK",
+    "name": "united kingdom",
+    "flag": "uk.png"
   },
   {
     "code": "GB",
@@ -1175,39 +1175,14 @@
     "flag": "gb.png"
   },
   {
-    "code": "GG",
-    "name": "guernsey",
-    "flag": "gg.png"
-  },
-  {
-    "code": "JE",
-    "name": "jersey",
-    "flag": "je.png"
-  },
-  {
-    "code": "IM",
-    "name": "isle of man",
-    "flag": "im.png"
-  },
-  {
-    "code": "TZ",
-    "name": "tanzania, united republic of",
-    "flag": "tz.png"
-  },
-  {
     "code": "US",
     "name": "united states",
     "flag": "us.png"
   },
   {
-    "code": "VI",
-    "name": "virgin islands, u.s.",
-    "flag": "vi.png"
-  },
-  {
-    "code": "BF",
-    "name": "burkina faso",
-    "flag": "bf.png"
+    "code": "UM",
+    "name": "united states minor outlying islands",
+    "flag": "um.png"
   },
   {
     "code": "UY",
@@ -1220,9 +1195,29 @@
     "flag": "uz.png"
   },
   {
+    "code": "VU",
+    "name": "vanuatu",
+    "flag": "vu.png"
+  },
+  {
     "code": "VE",
     "name": "venezuela, bolivarian republic of",
     "flag": "ve.png"
+  },
+  {
+    "code": "VN",
+    "name": "viet nam",
+    "flag": "vn.png"
+  },
+  {
+    "code": "VG",
+    "name": "virgin islands, british",
+    "flag": "vg.png"
+  },
+  {
+    "code": "VI",
+    "name": "virgin islands, u.s.",
+    "flag": "vi.png"
   },
   {
     "code": "WF",
@@ -1230,9 +1225,9 @@
     "flag": "wf.png"
   },
   {
-    "code": "WS",
-    "name": "samoa",
-    "flag": "ws.png"
+    "code": "EH",
+    "name": "western sahara",
+    "flag": "eh.png"
   },
   {
     "code": "YE",
@@ -1243,5 +1238,10 @@
     "code": "ZM",
     "name": "zambia",
     "flag": "zm.png"
+  },
+  {
+    "code": "ZW",
+    "name": "zimbabwe",
+    "flag": "zw.png"
   }
 ]
