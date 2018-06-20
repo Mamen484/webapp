@@ -4,4 +4,5 @@ export interface OrderDetailsItem {
     quantity: number;
     date: string;
     price: number;
+    image: string;
 }

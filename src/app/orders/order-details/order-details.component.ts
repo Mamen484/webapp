@@ -16,6 +16,7 @@ import { flatMap } from 'rxjs/operators';
 import { filter } from 'rxjs/internal/operators';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { ApiSpecialValue } from '../../core/entities/api-special-value.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -24,7 +25,7 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 })
 export class OrderDetailsComponent implements OnInit {
 
-    displayedColumns = ['sku', 'name', 'quantity', 'price'];
+    displayedColumns = ['sku', 'image', 'name', 'quantity', 'price'];
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
     actions = OrderNotifyAction;
@@ -44,10 +45,11 @@ export class OrderDetailsComponent implements OnInit {
             this.data = new MatTableDataSource(order.items.map((item: OrderItem) => {
                 return <OrderDetailsItem>{
                     sku: item.reference,
-                    name: item.name,
+                    name: item.name === ApiSpecialValue.absent ? '' : item.name,
                     quantity: item.quantity,
                     date: order.createdAt,
-                    price: item.price
+                    price: item.price,
+                    image: item.image === ApiSpecialValue.absent ? '' : item.image
                 }
             }));
             this.acknowledgment = this.order.acknowledgedAt

@@ -98,6 +98,15 @@
                     <mat-cell *matCellDef="let row">{{row.sku}}</mat-cell>
                 </ng-container>
 
+                <ng-container matColumnDef="image">
+                    <mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Visual</ng-container>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <img [src]="row.image" [alt]="row.name" *ngIf="row.image" class="product-visual">
+                    </mat-cell>
+                </ng-container>
+
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef>
                         <ng-container i18n>Name</ng-container>
@@ -161,14 +170,16 @@
                         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>First Name</mat-label>
-                                <input matInput [(ngModel)]="address.firstName" name="firstName" required #firstName="ngModel">
+                                <input matInput [(ngModel)]="address.firstName" name="firstName" required
+                                       #firstName="ngModel">
                                 <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" i18n>
                                     Please, specify the first name.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Last Name</mat-label>
-                                <input matInput [(ngModel)]="address.lastName" name="lastName" required #lastName="ngModel">
+                                <input matInput [(ngModel)]="address.lastName" name="lastName" required
+                                       #lastName="ngModel">
                                 <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" i18n>
                                     Please, specify the last name.
                                 </mat-error>
@@ -195,7 +206,8 @@
                         <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Zip</mat-label>
-                                <input matInput [(ngModel)]="address.postalCode" name="postalCode" required #postalCode="ngModel">
+                                <input matInput [(ngModel)]="address.postalCode" name="postalCode" required
+                                       #postalCode="ngModel">
                                 <mat-error *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" i18n>
                                     Please, specify the zip code.
                                 </mat-error>
@@ -207,13 +219,15 @@
                                     Please, specify the city.
                                 </mat-error>
                             </mat-form-field>
-                            <sf-country-autocomplete fxFlex [value]="address.country" (valueChanged)="address.country = $event"
+                            <sf-country-autocomplete fxFlex [value]="address.country"
+                                                     (valueChanged)="address.country = $event"
                                                      appearance="outline"></sf-country-autocomplete>
                         </div>
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Company</mat-label>
-                                <input matInput [(ngModel)]="address.company" name="company" required #company="ngModel">
+                                <input matInput [(ngModel)]="address.company" name="company" required
+                                       #company="ngModel">
                                 <mat-error *ngIf="company.invalid && (company.dirty || company.touched)" i18n>
                                     Please, specify the company.
                                 </mat-error>
@@ -234,7 +248,8 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Email</mat-label>
-                                <input matInput [(ngModel)]="address.email" name="email" type="email" email #email="ngModel">
+                                <input matInput [(ngModel)]="address.email" name="email" type="email" email
+                                       #email="ngModel">
                                 <mat-error *ngIf="email.invalid && (email.dirty || email.touched)" i18n>
                                     Email is not valid.
                                 </mat-error>

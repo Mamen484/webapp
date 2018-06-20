@@ -4,7 +4,7 @@ import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, of, throwError } from 'rxjs';
+import { EMPTY, of, throwError, Subject } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -13,6 +13,7 @@ import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-sna
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { FormsModule } from '@angular/forms';
+import { Order } from '../../core/entities/orders/order';
 
 
 describe('OrderDetailsComponent', () => {
@@ -23,10 +24,12 @@ describe('OrderDetailsComponent', () => {
     let snackbar: jasmine.SpyObj<MatSnackBar>;
     let ordersService: jasmine.SpyObj<OrdersService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
+    let dataSubject$: Subject<{ order: Order }>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
-        route = {data: EMPTY};
+        dataSubject$ = new Subject();
+        route = {data: dataSubject$.asObservable()};
         snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
         ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder']);
         appStore = jasmine.createSpyObj(['select']);
@@ -179,6 +182,25 @@ describe('OrderDetailsComponent', () => {
         component.save({});
         expect(snackbar.open.calls.mostRecent().args[0]).toEqual('some error occured');
         expect(snackbar.open.calls.mostRecent().args[2].panelClass).toEqual('sf-snackbar-error');
+    });
+
+    it('should replace a special absent api value into an empty string', () => {
+        component.order = <any>{billingAddress: {}, shippingAddress: {}, payment: {},
+            _embedded: {channel: {_links: {image: {}}}},};
+        fixture.detectChanges();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.acknowledge}],
+                reference: '11-ref',
+                payment: {},
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+                items: [{name: '@_absent', image: '@_absent'}],
+            }
+        });
+        expect(component.data.data[0].image).toEqual('');
+        expect(component.data.data[0].name).toEqual('');
     });
 
 });
