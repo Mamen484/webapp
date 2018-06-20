@@ -17,7 +17,6 @@ import { OrdersTableSmallComponent } from './orders-table-small/orders-table-sma
 import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { CarrierDetailsDialogComponent } from './carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
-import { AddressFormComponent } from './address-form/address-form.component';
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
 import { StatusButtonsComponent } from './status-buttons/status-buttons.component';
@@ -44,7 +43,6 @@ import { ActionButtonsComponent } from './action-buttons/action-buttons.componen
         ConfirmShippingDialogComponent,
         CarrierDetailsDialogComponent,
         OrderStatusComponent,
-        AddressFormComponent,
         OrderStatusChangedSnackbarComponent,
         SelectOrdersDialogComponent,
         StatusButtonsComponent,

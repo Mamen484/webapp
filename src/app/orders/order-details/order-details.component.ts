@@ -28,7 +28,7 @@ export class OrderDetailsComponent implements OnInit {
     data: MatTableDataSource<OrderDetailsItem>;
     order: Order;
     actions = OrderNotifyAction;
-    acknowedgment: OrderAcknowledgment;
+    acknowledgment: OrderAcknowledgment;
     errorTypes = OrderErrorType;
 
     constructor(protected route: ActivatedRoute,
@@ -50,7 +50,7 @@ export class OrderDetailsComponent implements OnInit {
                     price: item.price
                 }
             }));
-            this.acknowedgment = this.order.acknowledgedAt
+            this.acknowledgment = this.order.acknowledgedAt
                 ? OrderAcknowledgment.acknowledged
                 : OrderAcknowledgment.unacknowledged;
         });
@@ -92,26 +92,19 @@ export class OrderDetailsComponent implements OnInit {
         });
     }
 
-    saveShippingAddress(shippingAddress) {
-        this.appStore.select('currentStore').pipe(
-            flatMap((store: UserStore) => this.ordersService.modifyOrder(
-                store.id,
-                this.order.id,
-                {shippingAddress, billingAddress: this.order.billingAddress}))).subscribe(
-            () => this.showSuccess('save'),
-            error => this.snackBar.open(error.message,  '', {
-                panelClass: 'sf-snackbar-error',
-                duration: 5000,
-            })
-        );
+    cancel() {
+
     }
 
-    saveBillingAddress(billingAddress) {
+    save(valid) {
+        if (!valid) {
+            return;
+        }
         this.appStore.select('currentStore').pipe(
             flatMap((store: UserStore) => this.ordersService.modifyOrder(
                 store.id,
                 this.order.id,
-                {billingAddress, shippingAddress: this.order.shippingAddress}))).subscribe(
+                {shippingAddress: this.order.shippingAddress, billingAddress: this.order.billingAddress}))).subscribe(
             () => this.showSuccess('save'),
             error => this.snackBar.open(error.message, '', {
                 panelClass: 'sf-snackbar-error',

@@ -24,7 +24,7 @@ export class OrdersService {
     }
 
     modifyOrder(storeId, orderId, order: { billingAddress: Address, shippingAddress: Address }) {
-        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/${orderId}`, order);
+        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order});
     }
 
     acknowledge(storeId, orders: { reference: string, channelName: string }[]) {

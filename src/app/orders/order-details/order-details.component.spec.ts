@@ -12,6 +12,7 @@ import { CarrierDetailsDialogComponent } from '../carrier-details-dialog/carrier
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { FormsModule } from '@angular/forms';
 
 
 describe('OrderDetailsComponent', () => {
@@ -40,7 +41,7 @@ describe('OrderDetailsComponent', () => {
                 {provide: OrdersService, useValue: ordersService},
                 {provide: Store, useValue: appStore},
             ],
-            imports: [MatTableModule]
+            imports: [MatTableModule, FormsModule]
         })
             .compileComponents();
     }));
@@ -114,7 +115,9 @@ describe('OrderDetailsComponent', () => {
             errors: [{type: OrderErrorType.ship}],
             reference: '11-ref',
             payment: {},
-            _embedded: {channel: {_links: {image: {}}}}
+            _embedded: {channel: {_links: {image: {}}}},
+            billingAddress: {},
+            shippingAddress: {},
         };
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
@@ -127,7 +130,9 @@ describe('OrderDetailsComponent', () => {
             errors: [{type: OrderErrorType.acknowledge}],
             reference: '11-ref',
             payment: {},
-            _embedded: {channel: {_links: {image: {}}}}
+            _embedded: {channel: {_links: {image: {}}}},
+            billingAddress: {},
+            shippingAddress: {},
         };
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
@@ -140,66 +145,42 @@ describe('OrderDetailsComponent', () => {
             errors: [],
             reference: '11-ref',
             payment: {},
-            _embedded: {channel: {_links: {image: {}}}}
+            _embedded: {channel: {_links: {image: {}}}},
+            billingAddress: {},
+            shippingAddress: {},
         };
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
         expect(warn.length).toEqual(0);
     });
 
-    it('should call a modify order endpoint on save shipping address', () => {
+    it('should call a modify order endpoint on save the order', () => {
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.modifyOrder.and.returnValue(EMPTY);
         component.order = <any>{id: 141};
-        component.saveShippingAddress({});
+        component.save({});
         expect(ordersService.modifyOrder.calls.mostRecent().args[0]).toEqual(22);
         expect(ordersService.modifyOrder.calls.mostRecent().args[1]).toEqual(141);
     });
 
-    it('should show a success snackbar if shipping address was updated successfully', () => {
+    it('should show a success snackbar if the order was updated successfully', () => {
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.modifyOrder.and.returnValue(of({}));
         component.order = <any>{id: 141};
-        component.saveShippingAddress({});
+        component.save({});
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
         expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual('save');
     });
 
-    it('should show an error snackbar if an error occures on saving shipping address', () => {
+    it('should show an error snackbar if an error occures on saving the order', () => {
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.modifyOrder.and.returnValue(throwError({message: 'some error occured'}));
         component.order = <any>{id: 141};
-        component.saveShippingAddress({});
+        component.save({});
         expect(snackbar.open.calls.mostRecent().args[0]).toEqual('some error occured');
         expect(snackbar.open.calls.mostRecent().args[2].panelClass).toEqual('sf-snackbar-error');
     });
 
-    it('should call a modify order endpoint on save billing address', () => {
-        appStore.select.and.returnValue(of({id: 22}));
-        ordersService.modifyOrder.and.returnValue(EMPTY);
-        component.order = <any>{id: 141};
-        component.saveBillingAddress({});
-        expect(ordersService.modifyOrder.calls.mostRecent().args[0]).toEqual(22);
-        expect(ordersService.modifyOrder.calls.mostRecent().args[1]).toEqual(141);
-    });
-
-    it('should show a success snackbar if billing address was updated successfully', () => {
-        appStore.select.and.returnValue(of({id: 22}));
-        ordersService.modifyOrder.and.returnValue(of({}));
-        component.order = <any>{id: 141};
-        component.saveBillingAddress({});
-        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
-        expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.action).toEqual('save');
-    });
-
-    it('should show an error snackbar if an error occures on saving billing address', () => {
-        appStore.select.and.returnValue(of({id: 22}));
-        ordersService.modifyOrder.and.returnValue(throwError({message: 'some error occured'}));
-        component.order = <any>{id: 141};
-        component.saveBillingAddress({});
-        expect(snackbar.open.calls.mostRecent().args[0]).toEqual('some error occured');
-        expect(snackbar.open.calls.mostRecent().args[2].panelClass).toEqual('sf-snackbar-error');
-    });
 });
 
 
