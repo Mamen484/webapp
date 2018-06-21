@@ -35,6 +35,23 @@ describe('SelectOrdersDialogComponent', () => {
             .toEqual('Please, select orders to ship');
     });
 
+    [
+        OrderNotifyAction.unacknowledge,
+        OrderNotifyAction.refuse,
+        OrderNotifyAction.cancel,
+        OrderNotifyAction.ship,
+        OrderNotifyAction.acknowledge,
+        OrderNotifyAction.accept,
+        'export',
+    ].forEach((action) => {
+        it(`should display a valid message for ${action} action`, () => {
+            component.action = <any>action;
+            fixture.detectChanges();
+            expect(fixture.debugElement.nativeElement.querySelector('mat-dialog-content').textContent.trim())
+                .toEqual(`Please, select orders to ${action}`);
+        });
+    });
+
     it('should close the dialog on click on `ok` button', () => {
         component.close();
         expect(dialogRef.close).toHaveBeenCalledTimes(1);

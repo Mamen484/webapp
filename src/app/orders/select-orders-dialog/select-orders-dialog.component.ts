@@ -9,7 +9,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class SelectOrdersDialogComponent implements OnInit {
 
-    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction, protected matDialogRef: MatDialogRef<SelectOrdersDialogComponent>) {
+    actions = OrderNotifyAction;
+
+    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction | 'export', protected matDialogRef: MatDialogRef<SelectOrdersDialogComponent>) {
     }
 
     ngOnInit() {

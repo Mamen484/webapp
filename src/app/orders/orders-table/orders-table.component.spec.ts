@@ -240,6 +240,18 @@ describe('OrdersTableComponent', () => {
         expect(snackbar.openFromComponent).not.toHaveBeenCalled();
     });
 
+    it('should show a SelectOrders dialog when click on print icon and no orders selected', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        fixture.debugElement.nativeElement.querySelector('.print-button').click();
+        fixture.detectChanges();
+        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual('export');
+    });
+
+
     function mockOrder() {
         return {
             _embedded: {

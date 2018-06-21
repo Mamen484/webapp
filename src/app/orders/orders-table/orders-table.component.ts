@@ -28,6 +28,7 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
     selection = new SelectionModel<OrdersTableItem>(true, []);
 
     resultsLength = 0;
@@ -131,6 +132,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.changeStatusForSelectedOrders(action);
     }
 
+    showSelectOrdersDialog() {
+        this.matDialog.open(SelectOrdersDialogComponent, {data: 'export'});
+    }
 
     protected changeStatusForSelectedOrders(action: OrderNotifyAction) {
         if (!this.selection.selected.length) {
