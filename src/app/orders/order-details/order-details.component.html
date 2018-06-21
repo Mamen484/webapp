@@ -170,7 +170,7 @@
                         <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>First Name</mat-label>
-                                <input matInput [(ngModel)]="address.firstName" name="firstName" required
+                                <input matInput [(ngModel)]="address.firstName" name="firstName{{i}}" required
                                        #firstName="ngModel">
                                 <mat-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" i18n>
                                     Please, specify the first name.
@@ -178,7 +178,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Last Name</mat-label>
-                                <input matInput [(ngModel)]="address.lastName" name="lastName" required
+                                <input matInput [(ngModel)]="address.lastName" name="lastName{{i}}" required
                                        #lastName="ngModel">
                                 <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" i18n>
                                     Please, specify the last name.
@@ -188,7 +188,7 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Address</mat-label>
-                                <input matInput [(ngModel)]="address.street" name="street" required #street="ngModel">
+                                <input matInput [(ngModel)]="address.street" name="street{{i}}" required #street="ngModel">
                                 <mat-error *ngIf="street.invalid && (street.dirty || street.touched)" i18n>
                                     Please, specify the address.
                                 </mat-error>
@@ -197,7 +197,7 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Address 2</mat-label>
-                                <input matInput [(ngModel)]="address.street2" name="street2" #street2="ngModel">
+                                <input matInput [(ngModel)]="address.street2" name="street2{{i}}" #street2="ngModel">
                                 <mat-error *ngIf="street2.invalid && (street2.dirty || street2.touched)" i18n>
                                     Please, specify the address 2.
                                 </mat-error>
@@ -206,7 +206,7 @@
                         <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Zip</mat-label>
-                                <input matInput [(ngModel)]="address.postalCode" name="postalCode" required
+                                <input matInput [(ngModel)]="address.postalCode" name="postalCode{{i}}" required
                                        #postalCode="ngModel">
                                 <mat-error *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)" i18n>
                                     Please, specify the zip code.
@@ -214,7 +214,7 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>City</mat-label>
-                                <input matInput [(ngModel)]="address.city" name="city" required #city="ngModel">
+                                <input matInput [(ngModel)]="address.city" name="city{{i}}" required #city="ngModel">
                                 <mat-error *ngIf="city.invalid && (city.dirty || city.touched)" i18n>
                                     Please, specify the city.
                                 </mat-error>
@@ -226,7 +226,7 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Company</mat-label>
-                                <input matInput [(ngModel)]="address.company" name="company" required
+                                <input matInput [(ngModel)]="address.company" name="company{{i}}" required
                                        #company="ngModel">
                                 <mat-error *ngIf="company.invalid && (company.dirty || company.touched)" i18n>
                                     Please, specify the company.
@@ -236,19 +236,19 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Phone</mat-label>
-                                <input type="tel" matInput [(ngModel)]="address.phone" name="phone">
+                                <input type="tel" matInput [(ngModel)]="address.phone" name="phone{{i}}">
                             </mat-form-field>
                         </div>
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Mobile phone</mat-label>
-                                <input type="tel" matInput [(ngModel)]="address.mobilePhone" name="mobilePhone">
+                                <input type="tel" matInput [(ngModel)]="address.mobilePhone" name="mobilePhone{{i}}">
                             </mat-form-field>
                         </div>
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Email</mat-label>
-                                <input matInput [(ngModel)]="address.email" name="email" type="email" email
+                                <input matInput [(ngModel)]="address.email" name="email{{i}}" type="email" email
                                        #email="ngModel">
                                 <mat-error *ngIf="email.invalid && (email.dirty || email.touched)" i18n>
                                     Email is not valid.
@@ -258,7 +258,7 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Additional Details</mat-label>
-                                <input matInput [(ngModel)]="address.other" name="additionalDetails" #details="ngModel">
+                                <input matInput [(ngModel)]="address.other" name="additionalDetails{{i}}" #details="ngModel">
                                 <mat-error *ngIf="details.invalid && (details.dirty || details.touched)" i18n>
                                     Please, specify the additional details.
                                 </mat-error>

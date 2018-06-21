@@ -4,7 +4,7 @@ import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrderDetailsComponent } from './order-details.component';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, of, throwError, Subject } from 'rxjs';
+import { EMPTY, of, Subject, throwError } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -14,6 +14,7 @@ import { OrderNotifyAction } from '../../core/entities/orders/order-notify-actio
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { FormsModule } from '@angular/forms';
 import { Order } from '../../core/entities/orders/order';
+import { ValidationErrorsSnackbarComponent } from '../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
 
 
 describe('OrderDetailsComponent', () => {
@@ -166,6 +167,22 @@ describe('OrderDetailsComponent', () => {
         expect(ordersService.modifyOrder.calls.mostRecent().args[1]).toEqual(141);
     });
 
+    it('should NOT call a modify order endpoint on save the order if validation fails', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(EMPTY);
+        component.order = <any>{id: 141};
+        component.save(false);
+        expect(ordersService.modifyOrder).not.toHaveBeenCalled();
+    });
+
+    it('should show a snackbar on save the order if validation fails', () => {
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.modifyOrder.and.returnValue(EMPTY);
+        component.order = <any>{id: 141};
+        component.save(false);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(ValidationErrorsSnackbarComponent);
+    });
+
     it('should show a success snackbar if the order was updated successfully', () => {
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.modifyOrder.and.returnValue(of({}));
@@ -185,8 +202,10 @@ describe('OrderDetailsComponent', () => {
     });
 
     it('should replace a special absent api value into an empty string', () => {
-        component.order = <any>{billingAddress: {}, shippingAddress: {}, payment: {},
-            _embedded: {channel: {_links: {image: {}}}},};
+        component.order = <any>{
+            billingAddress: {}, shippingAddress: {}, payment: {},
+            _embedded: {channel: {_links: {image: {}}}},
+        };
         fixture.detectChanges();
         dataSubject$.next({
             order: <any>{

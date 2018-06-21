@@ -24,6 +24,7 @@ import { RemoveUnderlinePipe } from './remove-underline.pipe';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
 import { ImageComponent } from './image/image.component';
+import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
 
 @NgModule({
     imports: [
@@ -107,6 +108,7 @@ import { ImageComponent } from './image/image.component';
         CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
         ImageComponent,
+        ValidationErrorsSnackbarComponent
 
     ],
     declarations: [
@@ -120,7 +122,9 @@ import { ImageComponent } from './image/image.component';
         RemoveUnderlinePipe,
         CountryAutocompleteComponent,
         ImageComponent,
-    ]
+        ValidationErrorsSnackbarComponent,
+    ],
+    entryComponents: [ValidationErrorsSnackbarComponent]
 })
 export class SharedModule {
 }

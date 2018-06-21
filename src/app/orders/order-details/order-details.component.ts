@@ -17,6 +17,7 @@ import { filter } from 'rxjs/internal/operators';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { ApiSpecialValue } from '../../core/entities/api-special-value.enum';
+import { ValidationErrorsSnackbarComponent } from '../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
 
 @Component({
     selector: 'sf-order-details',
@@ -100,6 +101,10 @@ export class OrderDetailsComponent implements OnInit {
 
     save(valid) {
         if (!valid) {
+            this.snackBar.openFromComponent(ValidationErrorsSnackbarComponent, {
+                duration: 5000,
+                panelClass: 'sf-snackbar-error',
+            });
             return;
         }
         this.appStore.select('currentStore').pipe(
