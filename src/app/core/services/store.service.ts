@@ -78,9 +78,5 @@ export class StoreService {
     public createStore(store: Store) {
         return this.httpClient.post(`${environment.API_URL}/store`, {store});
     }
-
-    public fetchAvailableTags(storeId) {
-        return <Observable<PagedResponse<{ tag: Tag[] }>>>this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`);
-    }
 }
 

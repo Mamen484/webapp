@@ -46,6 +46,7 @@ import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
 import { ToggleSidebarService } from './services/toggle-sidebar.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
+import { TagsService } from './services/tags.service';
 
 @NgModule({
     imports: [
@@ -65,14 +66,12 @@ import { FullCountriesListService } from './services/full-countries-list.service
         CanLoadAdminGuard,
         CheckProperLocaleGuard,
         DefaultPageGuard,
-        FullCountriesListService,
         InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
         LoginByTokenGuard,
         OrderDetailsResolveGuard,
-        OrdersFilterService,
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
@@ -80,6 +79,7 @@ import { FullCountriesListService } from './services/full-countries-list.service
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
+        FullCountriesListService,
         ShopifyAuthentifyService,
         RegistrationCacheGuard,
         CreatePasswordService,
@@ -91,8 +91,10 @@ import { FullCountriesListService } from './services/full-countries-list.service
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        OrdersFilterService,
         OrdersService,
         SupportLinkService,
+        TagsService,
         ToggleSidebarService,
 
         {provide: HttpClient, useClass: HttpClientService},

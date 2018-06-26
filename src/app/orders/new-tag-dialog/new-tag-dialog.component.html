@@ -1,0 +1,13 @@
+<h1 matDialogTitle>Tag</h1>
+
+<mat-dialog-content>
+    <mat-form-field color="accent">
+        <input matInput [(ngModel)]="tagName">
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose>Cancel</button>
+    <button mat-button (click)="save()">Save</button>
+</mat-dialog-actions>

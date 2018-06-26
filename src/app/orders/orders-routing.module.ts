@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderDetailsResolveGuard } from '../core/guards/order-details-resolve.guard';
+import { TagsManagementComponent } from './tags-management/tags-management.component';
 
 const routes: Routes = [
     {path: '', component: OrdersListComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
             order: OrderDetailsResolveGuard
         },
         data: {showBackButton: ['/orders']}
-    }
+    },
+    {path: 'tag-management', component: TagsManagementComponent}
 ];
 
 @NgModule({

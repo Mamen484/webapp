@@ -20,7 +20,7 @@ describe('BaseComponent', () => {
             EMPTY,
             EMPTY,
         );
-        let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService);
+        let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService, <any>{});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');
         expect(window.Autopilot.run.calls.mostRecent().args[1]._simpleAssociate).toEqual(true);
         expect(window.Autopilot.run.calls.mostRecent().args[1].Email).toEqual('email1');
@@ -34,7 +34,7 @@ describe('BaseComponent', () => {
             EMPTY,
             EMPTY,
         );
-        let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService);
+        let component = new BaseComponent(store, <any>{nativeWindow: window}, storeService, <any>{});
         expect(window.Autopilot.run.calls.mostRecent().args[0]).toEqual('associate');
         expect(window.Autopilot.run.calls.mostRecent().args[1]._simpleAssociate).toEqual(true);
         expect(window.Autopilot.run.calls.mostRecent().args[1].Email).toEqual(environment.DEFAULT_AUTOPILOT_EMAIL);

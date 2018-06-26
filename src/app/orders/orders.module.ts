@@ -21,6 +21,8 @@ import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snac
 import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
 import { StatusButtonsComponent } from './status-buttons/status-buttons.component';
 import { ActionButtonsComponent } from './action-buttons/action-buttons.component';
+import { TagsManagementComponent } from './tags-management/tags-management.component';
+import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component';
 
 @NgModule({
     imports: [
@@ -47,6 +49,8 @@ import { ActionButtonsComponent } from './action-buttons/action-buttons.componen
         SelectOrdersDialogComponent,
         StatusButtonsComponent,
         ActionButtonsComponent,
+        TagsManagementComponent,
+        NewTagDialogComponent,
     ],
     entryComponents: [
         OrdersFilterDialogComponent,
@@ -55,6 +59,7 @@ import { ActionButtonsComponent } from './action-buttons/action-buttons.componen
         CarrierDetailsDialogComponent,
         OrderStatusChangedSnackbarComponent,
         SelectOrdersDialogComponent,
+        NewTagDialogComponent,
     ]
 })
 export class OrdersModule {

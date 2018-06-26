@@ -9,6 +9,7 @@ import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { combineLatest } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
+import { TagsService } from '../core/services/tags.service';
 
 declare const Autopilot;
 
@@ -21,7 +22,8 @@ export class BaseComponent {
 
     constructor(protected appStore: Store<AppState>,
                 protected windowRef: WindowRefService,
-                protected storeService: StoreService) {
+                protected storeService: StoreService,
+                protected tagsService: TagsService) {
         combineLatest(this.appStore.select('userInfo'),
             this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
@@ -48,7 +50,7 @@ export class BaseComponent {
                 this.appStore.select('installedChannels').dispatch({type: SET_CHANNELS, channels})
             });
         this.appStore.select('currentStore').pipe(
-            flatMap(store => this.storeService.fetchAvailableTags(store.id))
+            flatMap(store => this.tagsService.fetchAll(store.id))
         )
             .subscribe(response => {
                 this.appStore.select('tags').dispatch({type: SET_TAGS, tags: response._embedded.tag});
