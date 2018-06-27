@@ -51,6 +51,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
+    exports: any[];
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -89,6 +90,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.paginator.page.subscribe(({pageIndex}) => {
             this.ordersFilterService.patchFilter('page', String(pageIndex + 1))
         });
+
+        this.appStore.select('currentStore')
+            .pipe(flatMap(store => this.ordersService.fetchExports(store.id)))
+            .subscribe(response => this.exports = response._embedded.export);
     }
 
     ngOnDestroy() {

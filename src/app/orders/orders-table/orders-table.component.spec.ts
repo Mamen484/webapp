@@ -34,7 +34,7 @@ describe('OrdersTableComponent', () => {
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge']);
+        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter']);
@@ -71,6 +71,27 @@ describe('OrdersTableComponent', () => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
         component.paginator = <any>({page: EMPTY, pageIndex: 0});
+        ordersService.fetchExports.and.returnValue(EMPTY);
+    });
+
+    it('should assign exports on init', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(of({
+            _embedded: {
+                'export': [
+                    {id: 1, name: 'one'},
+                    {id: 2, name: 'two'},
+                ]
+            }
+        }));
+        fixture.detectChanges();
+        expect(component.exports.length).toEqual(2);
+        expect(component.exports[0].id).toEqual(1);
+        expect(component.exports[0].name).toEqual('one');
+        expect(component.exports[1].id).toEqual(2);
+        expect(component.exports[1].name).toEqual('two');
     });
 
     it('should display a loading spinner while data is being loaded', () => {
