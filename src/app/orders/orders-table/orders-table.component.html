@@ -172,8 +172,7 @@
 </mat-menu>
 
 <mat-menu #printMenu="matMenu">
-    <a mat-menu-item *ngFor="let exp of exports" sfLegacyLink
-       [path]="'/marketplaces/exportOrder?list_order=all&id_export='+exp.id+'&order_unit=false'">
-        {{exp.name}}
-    </a>
+    <button mat-menu-item (click)="printPdf()" i18n>Invoices</button>
+    <button mat-menu-item *ngFor="let exp of exports" (click)="printCsv(exp.id)">{{exp.name}}
+    </button>
 </mat-menu>

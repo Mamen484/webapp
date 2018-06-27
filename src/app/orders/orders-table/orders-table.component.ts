@@ -137,6 +137,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.changeStatusForSelectedOrders(action);
     }
 
+    printPdf() {
+        this.ordersService.exportOrdersPDF(this.selection.selected.map(item => item.id)).subscribe();
+    }
+
+    printCsv(exportId) {
+        this.ordersService.exportOrdersCSV(this.selection.selected.map(item => item.id), exportId).subscribe();
+    }
+
     showSelectOrdersDialog() {
         this.matDialog.open(SelectOrdersDialogComponent, {data: 'export'});
     }
