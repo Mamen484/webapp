@@ -124,7 +124,7 @@ describe('AuthInterceptor', () => {
         httpMock.verify();
     });
 
-    fit('should add User Authorization and Accept headers to an http request when the user requests GET /store/112/tag resource', () => {
+    it('should add User Authorization and Accept headers to an http request when the user requests GET /store/112/tag resource', () => {
         getItemSpy.and.returnValue('tarampapam');
         http.get(environment.API_URL + '/store/112/tag', {}).subscribe();
         const req = httpMock.expectOne(environment.API_URL + '/store/112/tag');
@@ -134,7 +134,7 @@ describe('AuthInterceptor', () => {
         httpMock.verify();
     });
 
-    fit('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/tag resource', () => {
+    it('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/tag resource', () => {
         getItemSpy.and.returnValue('tarampapam');
         http.post(environment.API_URL + '/store/112/tag', {}).subscribe();
         const req = httpMock.expectOne(environment.API_URL + '/store/112/tag');

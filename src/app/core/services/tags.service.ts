@@ -26,7 +26,7 @@ export class TagsService {
         return this.httpClient.delete(`${environment.API_URL}/store/${storeId}/tag/${tagId}`);
     }
 
-    public update(storeId, tagId, tag: Tag) {
-        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/tag/${tagId}`, {tag});
+    public update(storeId, tagId, {name, color, orders = []}: Tag) {
+        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/tag/${tagId}`, {tag: {name, color, orders}});
     }
 }

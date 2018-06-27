@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
     selector: 'sf-new-tag-dialog',
@@ -10,10 +10,16 @@ export class NewTagDialogComponent implements OnInit {
 
     tagName = '';
 
-    constructor(protected matDialogRef: MatDialogRef<NewTagDialogComponent>) {
+    constructor(protected matDialogRef: MatDialogRef<NewTagDialogComponent>, @Optional() @Inject(MAT_DIALOG_DATA) public data) {
+        if (!this.data) {
+            this.data = {};
+        }
     }
 
     ngOnInit() {
+        if (this.data.name) {
+            this.tagName = this.data.name;
+        }
     }
 
     save() {

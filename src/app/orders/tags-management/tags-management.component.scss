@@ -12,3 +12,11 @@ mat-card {
   }
 }
 
+.tags-container {
+  position: relative;
+
+  mat-progress-bar {
+    position: absolute;
+    z-index: 10;
+  }
+}

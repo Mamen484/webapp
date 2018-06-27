@@ -15,7 +15,7 @@ const routes: Routes = [
         },
         data: {showBackButton: ['/orders']}
     },
-    {path: 'tag-management', component: TagsManagementComponent}
+    {path: 'tags-management', component: TagsManagementComponent}
 ];
 
 @NgModule({

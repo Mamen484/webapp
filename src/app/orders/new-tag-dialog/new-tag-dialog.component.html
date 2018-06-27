@@ -1,13 +1,14 @@
 <h1 matDialogTitle>Tag</h1>
 
 <mat-dialog-content>
+    <div i18n *ngIf="!data.name">Create tag with descriptive keywords to improve your organization.</div>
     <mat-form-field color="accent">
-        <input matInput [(ngModel)]="tagName">
+        <mat-label></mat-label>
+        <input matInput [(ngModel)]="tagName" placeholder="Example: Printed" i18n-placeholder>
     </mat-form-field>
-
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button matDialogClose>Cancel</button>
-    <button mat-button (click)="save()">Save</button>
+    <button mat-button matDialogClose i18n>Cancel</button>
+    <button mat-button (click)="save()" i18n>Save</button>
 </mat-dialog-actions>

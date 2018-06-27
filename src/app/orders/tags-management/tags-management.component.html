@@ -6,21 +6,7 @@
     </sf-orders-subnav>
 
     <div fxLayout="row" fxLayoutGap="60px">
-        <div fxLayout="row" fxLayoutGap="60px">
-            <div fxFlex fxLayout="column">
-                <div i18n class="mat-subheading-1">Reporting</div>
-                <div i18n class="mat-subheading-1">Test order</div>
-                <div i18n class="mat-subheading-1">Order import</div>
-                <div i18n class="mat-subheading-1">Tag management</div>
-            </div>
-            <div fxLayout="column" fxLayoutGap="16px">
-                <mat-icon>play_arrow</mat-icon>
-                <mat-icon>play_arrow</mat-icon>
-                <mat-icon>play_arrow</mat-icon>
-                <mat-icon>play_arrow</mat-icon>
-            </div>
-        </div>
-        <div fxFlex>
+        <div fxFlex class="tags-container">
             <mat-card>
                 <mat-card-content>
                     <div fxLayout="row" fxLayoutAlign="start center">
@@ -31,6 +17,7 @@
                     </div>
                 </mat-card-content>
             </mat-card>
+            <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
             <ng-container *ngFor="let tag of tags">
                 <mat-divider></mat-divider>
                 <mat-card>
@@ -41,10 +28,10 @@
                                     <mat-chip>{{tag.name}}</mat-chip>
                                 </mat-chip-list>
                             </div>
-                            <button mat-icon-button>
+                            <button mat-icon-button (click)="updateTag(tag.id, tag.name)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button>
+                            <button mat-icon-button (click)="removeTag(tag.id)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </div>
