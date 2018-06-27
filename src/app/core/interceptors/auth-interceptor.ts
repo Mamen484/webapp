@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
             || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
             || (req.url.indexOf(environment.API_URL + '/store') === 0
                 && (req.method === 'POST' || req.method === 'PATCH')
-                && req.url.indexOf('/order') === -1)
+                && req.url.indexOf('/order') === -1  && req.url.indexOf('/tag') === -1)
     }
 
     protected notApiCall(req) {
