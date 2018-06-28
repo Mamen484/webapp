@@ -154,11 +154,6 @@ describe('OrdersTableComponent', () => {
         expect(component.dataSource.data[0].imported).toEqual(false);
     });
 
-    it('should open LabelsDialogComponent on addLabel() call', () => {
-        component.addLabel();
-        expect(matDialog.open).toHaveBeenCalledWith(LabelsDialogComponent);
-    });
-
     it('should perform only 1 fetchOrdersList call on initialization', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of({}));

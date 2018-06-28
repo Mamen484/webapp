@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
 import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
@@ -14,11 +13,12 @@ import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { filter, flatMap } from 'rxjs/operators';
+import { filter, flatMap, take } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { OrdersExport } from '../../core/entities/orders/orders-export';
+import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
 
 @Component({
     selector: 'sf-orders-table',
@@ -45,7 +45,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         trackingNumber: false,
         imported: false,
     };
-    requiredColumns = ['checkbox', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
+    requiredColumns = ['checkbox', 'tags', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     displayedColumns = this.requiredColumns;
     dataSource: MatTableDataSource<OrdersTableItem> = new MatTableDataSource();
     isLoadingResults = false;
@@ -84,7 +84,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, filter]) => {
-                this.selection.clear();
                 this.fetchData(store, filter);
             });
 
@@ -103,9 +102,20 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
     }
 
-    // tags/labels functionality is planned for next releases
-    addLabel() {
-        this.matDialog.open(LabelsDialogComponent);
+    manageTags() {
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent, {data: 'assignTags'});
+            return;
+        }
+        this.matDialog.open(AssignTagsDialogComponent, {
+            data: {
+                orders: this.selection.selected
+            }
+        }).afterClosed().subscribe(tagsChanged => {
+            if (tagsChanged) {
+                this.updateData();
+            }
+        })
     }
 
     setDisplayedColumns() {
@@ -148,10 +158,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.ordersService.exportOrdersPDF(this.selection.selected.map(item => item.id)).subscribe();
     }
 
-    printCsv(exportId) {
-        this.ordersService.exportOrdersCSV(this.selection.selected.map(item => item.id), exportId).subscribe();
-    }
-
     showSelectOrdersDialog() {
         this.matDialog.open(SelectOrdersDialogComponent, {data: 'export'});
     }
@@ -190,6 +196,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
         this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, filter)
             .subscribe(ordersPage => {
+                this.selection.clear();
                 this.isLoadingResults = false;
 
                 this.resultsLength = ordersPage.total;
@@ -221,6 +228,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             storeId: order.storeReference,
             trackingNumber: order.shipment.trackingNumber,
             imported: Boolean(order.acknowledgedAt),
+            tags: order._embedded.tag && order._embedded.tag.length ? order._embedded.tag : [],
         }
+    }
+
+    protected updateData() {
+        this.appStore.select('currentStore').pipe(take(1))
+            .subscribe(store => {
+                this.fetchData(store, this.ordersFilter);
+            })
     }
 }

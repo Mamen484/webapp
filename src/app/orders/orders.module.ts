@@ -23,6 +23,7 @@ import { StatusButtonsComponent } from './status-buttons/status-buttons.componen
 import { ActionButtonsComponent } from './action-buttons/action-buttons.component';
 import { TagsManagementComponent } from './tags-management/tags-management.component';
 import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component';
+import { AssignTagsDialogComponent } from './assign-tags-dialog/assign-tags-dialog.component';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component
         OrdersRoutingModule
     ],
     declarations: [
+        AssignTagsDialogComponent,
         OrdersListComponent,
         OrdersFilterDialogComponent,
         SearchOrdersComponent,
@@ -53,6 +55,7 @@ import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component
         NewTagDialogComponent,
     ],
     entryComponents: [
+        AssignTagsDialogComponent,
         OrdersFilterDialogComponent,
         LabelsDialogComponent,
         ConfirmShippingDialogComponent,

@@ -11,7 +11,7 @@ export class SelectOrdersDialogComponent implements OnInit {
 
     actions = OrderNotifyAction;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction | 'export', protected matDialogRef: MatDialogRef<SelectOrdersDialogComponent>) {
+    constructor(@Inject(MAT_DIALOG_DATA) public action: OrderNotifyAction | 'export' | 'assignTags', protected matDialogRef: MatDialogRef<SelectOrdersDialogComponent>) {
     }
 
     ngOnInit() {

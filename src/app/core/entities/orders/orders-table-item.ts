@@ -1,4 +1,5 @@
 import { OrderStatus } from './order-status.enum';
+import { OrderTag } from './order-tag';
 
 export interface OrdersTableItem {
     hasErrors: boolean;
@@ -19,4 +20,5 @@ export interface OrdersTableItem {
     storeId: string;
     trackingNumber: string;
     imported: boolean;
+    tags: OrderTag[];
 }

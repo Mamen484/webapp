@@ -28,7 +28,7 @@ export interface Order {
     _embedded: {
         channel?: Channel,
         store?: Store,
-        tag?: OrderTag
+        tag?: OrderTag[],
     },
     errors?: OrderError[];
     items?: OrderItem[];

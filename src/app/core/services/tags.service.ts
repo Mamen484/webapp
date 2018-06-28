@@ -29,4 +29,13 @@ export class TagsService {
     public update(storeId, tagId, {name, color}: Tag) {
         return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/tag/${tagId}`, {tag: {name, color}});
     }
+
+    public assignTags(storeId, tagLink: {tagId: number, orderId: number}[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tagLink`, {tagLink});
+    }
+
+    public unassignTags(storeId, tagLink: {tagId: number, orderId: number}[]) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tagLink`, {tagLink});
+    }
+
 }
