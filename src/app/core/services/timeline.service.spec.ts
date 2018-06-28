@@ -83,7 +83,7 @@ describe('TimelineService', () => {
     it('should pass proper params on getEvents call', () => {
         service.getEvents(114).subscribe();
 
-        httpMock.expectOne(`${environment.API_URL}/store/114/timeline?name=feed.import,feed.export,order.lifecycle,` +
+        httpMock.expectOne(`${environment.API_URL}/store/114/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         allowNoExpectations();
         httpMock.verify();
@@ -115,7 +115,7 @@ describe('TimelineService', () => {
         filter.until = new Date(new Date().getTime() + 2000);
 
         service.getEvents(115, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/115/timeline?name=rule.segmentation,order.lifecycle&action=delete,ship&` +
+        httpMock.expectOne(`${environment.API_URL}/store/115/timeline?limit=50&name=rule.segmentation,order.lifecycle&action=delete,ship&` +
             `since=2017-06-14T02:22:41.000Z&until=2017-06-14T02:22:43.000Z`);
         allowNoExpectations();
     });
@@ -147,7 +147,7 @@ describe('TimelineService', () => {
         service.emitUpdatedTimeline(124);
         httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.export,feed.import&` +
             `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.import,feed.export,order.lifecycle,` +
+        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         allowNoExpectations();
         httpMock.verify();
@@ -171,7 +171,7 @@ describe('TimelineService', () => {
 
         const updates = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=feed.export,feed.import&` +
             `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        const events = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=feed.import,feed.export,order.lifecycle,` +
+        const events = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
 
         updates.flush({test: 112, _embedded: {timeline: []}});

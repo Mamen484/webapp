@@ -10,6 +10,7 @@ import { TimelineEventName } from '../entities/timeline-event-name.enum';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
 const MAX_UPDATES = 200;
+const MAX_EVENTS = 50;
 
 export const enum StreamEventType {started, finished}
 
@@ -23,6 +24,7 @@ export class TimelineService {
 
     getEvents(storeId, dateFilter: TimelineFilter = new TimelineFilter()): any {
         let params = new HttpParams()
+            .set('limit', String(MAX_EVENTS))
             .set('name', dateFilter.name.join(','))
             .set('action', dateFilter.action.join(','));
         params = dateFilter.since ? params.set('since', dateFilter.since.toJSON()) : params;
