@@ -124,20 +124,20 @@ describe('AuthInterceptor', () => {
         httpMock.verify();
     });
 
-    it('should add User Authorization and Accept headers to an http request when the user requests GET /store/112/tag resource', () => {
+    it('should add User Authorization and Accept headers to an http request when the user requests GET /store/112/order/tag resource', () => {
         getItemSpy.and.returnValue('tarampapam');
-        http.get(environment.API_URL + '/store/112/tag', {}).subscribe();
-        const req = httpMock.expectOne(environment.API_URL + '/store/112/tag');
+        http.get(environment.API_URL + '/store/112/order/tag', {}).subscribe();
+        const req = httpMock.expectOne(environment.API_URL + '/store/112/order/tag');
         expect(req.request.method).toEqual('GET');
         expect(req.request.headers.get('Authorization')).toEqual('tarampapam');
         expect(req.request.headers.get('Accept')).toEqual('application/json');
         httpMock.verify();
     });
 
-    it('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/tag resource', () => {
+    it('should add User Authorization and Accept headers to an http request when the user requests POST /store/112/order/tag resource', () => {
         getItemSpy.and.returnValue('tarampapam');
-        http.post(environment.API_URL + '/store/112/tag', {}).subscribe();
-        const req = httpMock.expectOne(environment.API_URL + '/store/112/tag');
+        http.post(environment.API_URL + '/store/112/order/tag', {}).subscribe();
+        const req = httpMock.expectOne(environment.API_URL + '/store/112/order/tag');
         expect(req.request.method).toEqual('POST');
         expect(req.request.headers.get('Authorization')).toEqual('tarampapam');
         expect(req.request.headers.get('Accept')).toEqual('application/json');

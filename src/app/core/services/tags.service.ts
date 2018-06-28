@@ -14,19 +14,19 @@ export class TagsService {
     }
 
     public fetchAll(storeId) {
-        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/tag`) as
+        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/tag`) as
             Observable<PagedResponse<{ tag: Tag[] }>>;
     }
 
-    public create(storeId, {name, color, orders = []}: Tag) {
-        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/tag`, {tag: {name, color, orders}});
+    public create(storeId, {name, color}: Tag) {
+        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tag`, {tag: {name, color}});
     }
 
     public remove(storeId, tagId) {
-        return this.httpClient.delete(`${environment.API_URL}/store/${storeId}/tag/${tagId}`);
+        return this.httpClient.delete(`${environment.API_URL}/store/${storeId}/order/tag/${tagId}`);
     }
 
-    public update(storeId, tagId, {name, color, orders = []}: Tag) {
-        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/tag/${tagId}`, {tag: {name, color, orders}});
+    public update(storeId, tagId, {name, color}: Tag) {
+        return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/tag/${tagId}`, {tag: {name, color}});
     }
 }

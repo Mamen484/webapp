@@ -3,5 +3,4 @@ export interface Tag {
     storeId?: number; // required when fetch tags
     name: string;
     color: string;
-    orders?: string[];
 }
