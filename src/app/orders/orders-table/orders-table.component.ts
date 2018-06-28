@@ -18,6 +18,7 @@ import { filter, flatMap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
+import { OrdersExport } from '../../core/entities/orders/orders-export';
 
 @Component({
     selector: 'sf-orders-table',
@@ -135,6 +136,12 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             return;
         }
         this.changeStatusForSelectedOrders(action);
+    }
+
+    getExportParams(exp: OrdersExport) {
+        let params = this.selection.selected.reduce((acc, order) => acc + `list_order[]=${order.id}&`, '');
+        params += `id_export=${exp.id}&order_unit=false`;
+        return params;
     }
 
     printPdf() {

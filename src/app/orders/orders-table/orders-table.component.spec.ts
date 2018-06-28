@@ -272,6 +272,12 @@ describe('OrdersTableComponent', () => {
         expect(matDialog.open.calls.mostRecent().args[1].data).toEqual('export');
     });
 
+    it('should create correct params for a link to export orders', () => {
+        component.selection = <any>{selected: [{id: 3389435486}, {id: 3389435484}]};
+        expect(component.getExportParams(<any>{id: 1234}))
+            .toEqual('list_order[]=3389435486&list_order[]=3389435484&id_export=1234&order_unit=false');
+    });
+
 
     function mockOrder() {
         return {

@@ -14,10 +14,12 @@
                                    (actionApplied)="applyStatusAction($event)">
                 </sf-status-buttons>
             </div>
-            <button mat-icon-button [matMenuTriggerFor]="printMenu" *ngIf="selection.selected.length" class="print-button">
+            <button mat-icon-button [matMenuTriggerFor]="printMenu" *ngIf="selection.selected.length"
+                    class="print-button">
                 <mat-icon>local_printshop</mat-icon>
             </button>
-            <button mat-icon-button (click)="showSelectOrdersDialog()" *ngIf="!selection.selected.length" class="print-button">
+            <button mat-icon-button (click)="showSelectOrdersDialog()" *ngIf="!selection.selected.length"
+                    class="print-button">
                 <mat-icon>local_printshop</mat-icon>
             </button>
             <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
@@ -173,6 +175,7 @@
 
 <mat-menu #printMenu="matMenu">
     <button mat-menu-item (click)="printPdf()" i18n>Invoices</button>
-    <button mat-menu-item *ngFor="let exp of exports" (click)="printCsv(exp.id)">{{exp.name}}
-    </button>
+    <a mat-menu-item *ngFor="let exp of exports" sfLegacyLink
+       [path]="'/Marketplaces/exportOrder?'+getExportParams(exp)">{{exp.name}}
+    </a>
 </mat-menu>
