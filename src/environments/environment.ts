@@ -15,5 +15,6 @@ export const environment = {
     SUPPORT_EMAIL: 'support@shopping-feed.com',
     DEFAULT_AUTOPILOT_EMAIL: 'default@shopping-feed.com',
     DEFAULT_AUTOPILOT_STORENAME: 'default',
-    RUN_AUTOPILOT: true
+    RUN_AUTOPILOT: true,
+    GTAG_ID: 'UA-78261662-1',
 };
