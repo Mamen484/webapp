@@ -58,7 +58,7 @@ export class OrdersService {
 
     fetchExports(storeId) {
         if (!this.exports$) {
-            this.exports$ = this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/export`, {params: {count: '200'}})
+            this.exports$ = this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/export`, {params: {limit: '200'}})
                 .pipe(publishReplay()) as ConnectableObservable<PagedResponse<{ export: OrdersExport[] }>>;
             this.exports$.connect();
         }

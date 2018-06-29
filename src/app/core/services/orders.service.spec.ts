@@ -32,14 +32,14 @@ describe('OrdersService', () => {
 
     it('should call appropriate endpoint on fetchExport()', async () => {
         service.fetchExports(23).subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/store/23/order/export?count=200`);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/23/order/export?limit=200`);
         expect(req.request.method).toEqual('GET');
     });
 
     it('should cache exports and call server only once on multiple fetchExport() calls', async () => {
         service.fetchExports(23).subscribe();
         service.fetchExports(23).subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/store/23/order/export?count=200`);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/23/order/export?limit=200`);
         expect(req.request.method).toEqual('GET');
     });
 
