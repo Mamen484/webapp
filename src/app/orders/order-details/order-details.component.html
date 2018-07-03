@@ -14,9 +14,9 @@
 
     <div class="sf-warn-alert" *ngIf="order.errors?.length">
         <mat-icon color="warn">error</mat-icon>
-        <span *ngIf="order.errors[0].type === errorTypes.ship" i18n>
+        <span *ngIf="order.errors[0].type === errorTypes.ship" i18n class="mat-body-1">
             We were unable to ship your order {{order.reference}}</span>
-        <span *ngIf="order.errors[0].type === errorTypes.acknowledge" i18n>
+        <span *ngIf="order.errors[0].type === errorTypes.acknowledge" i18n class="mat-body-1">
             We were unable to import your order {{order.reference}}</span>
     </div>
 

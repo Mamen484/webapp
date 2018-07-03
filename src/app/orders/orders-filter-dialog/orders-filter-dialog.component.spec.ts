@@ -131,12 +131,6 @@ describe('OrdersFilterDialogComponent', () => {
             expect(component.filter.since).not.toBeDefined();
         });
 
-        it('should close a dialog on close() call', () => {
-            expect(dialogRef.close).not.toHaveBeenCalled()
-            component.close();
-            expect(dialogRef.close).toHaveBeenCalledTimes(1);
-        });
-
         it('should pass a filter into OrdersFilterService and close the dialog on applyFilter() call', () => {
             component.applyFilter();
             expect(ordersFilterService.setFilter).toHaveBeenCalled();

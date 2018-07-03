@@ -70,3 +70,7 @@ table {
     padding: 0 25px;
   }
 }
+
+mat-icon[color="warn"]{
+  color: mat-color($warn, 900);
+}

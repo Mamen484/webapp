@@ -4,9 +4,7 @@
       <div class="search-container">
         <mat-icon>search</mat-icon>
         <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder placeholder="Search orders">
-        <button mat-button mat-icon-button (click)="openDialog()">
-          <mat-icon>filter_list</mat-icon>
-        </button>
+        <button mat-stroked-button (click)="openDialog()" color="accent">FILTER</button>
       </div>
       <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
     </mat-card-content>
