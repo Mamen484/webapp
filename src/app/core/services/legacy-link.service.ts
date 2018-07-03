@@ -16,21 +16,28 @@ export class LegacyLinkService {
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
 
-    getLegacyLink(path, params = {}) {
+    getLegacyLink(path, params = {}, addAuthorization = true) {
         let queryParams = new URLSearchParams();
         for (let param in params) {
             if (params.hasOwnProperty(param) && params[param]) {
                 queryParams.set(param, params[param]);
             }
         }
-        let auth = this.localStorage.getItem('Authorization');
-        if (auth) {
-            queryParams.set('token', auth.replace('Bearer ', ''));
+        if (addAuthorization) {
+            let auth = this.localStorage.getItem('Authorization');
+            if (auth) {
+                queryParams.set('token', auth.replace('Bearer ', ''));
+            }
+            if (!(<any>params).store && this.currentStore && this.currentStore.id) {
+                queryParams.set('store', this.currentStore.id.toString());
+            }
         }
-        if (!(<any>params).store && this.currentStore && this.currentStore.id) {
-            queryParams.set('store', this.currentStore.id.toString());
-        }
-        return environment.APP_URL + path + '?' + queryParams.toString();
+
+        let paramsString = queryParams.toString();
+
+        return paramsString
+            ? environment.APP_URL + path + '?' + queryParams.toString()
+            : environment.APP_URL + path;
     }
 
 }

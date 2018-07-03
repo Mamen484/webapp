@@ -8,6 +8,7 @@ export class LegacyLinkDirective implements OnChanges {
 
     @Input() storeId: number;
     @Input() path: string;
+    @Input() addAuthorization = true;
 
     constructor(protected elementRef: ElementRef,
                 protected legacyLink: LegacyLinkService) {
@@ -19,7 +20,7 @@ export class LegacyLinkDirective implements OnChanges {
 
     protected setLinkHref() {
         let params = this.storeId ? {store: this.storeId} : {};
-        (<HTMLLinkElement>this.elementRef.nativeElement).href = this.legacyLink.getLegacyLink(this.path, params);
+        (<HTMLLinkElement>this.elementRef.nativeElement).href = this.legacyLink.getLegacyLink(this.path, params, this.addAuthorization);
     }
 
 }

@@ -34,7 +34,7 @@ describe('LegacyLinkService', () => {
 
     it('should return a link without a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
         getItemSpy.and.returnValue('');
-        expect(service.getLegacyLink('/some/path')).toEqual(environment.APP_URL + '/some/path?');
+        expect(service.getLegacyLink('/some/path')).toEqual(environment.APP_URL + '/some/path');
     }));
 
     it('should return a link with a token', inject([LegacyLinkService], (service: LegacyLinkService) => {
@@ -57,5 +57,11 @@ describe('LegacyLinkService', () => {
         getItemSpy.and.returnValue('Bearer xsw');
         currentStore$.next(<any>{id: 119});
         expect(service.getLegacyLink('/some/path', {store: 232})).toEqual(environment.APP_URL + '/some/path?store=232&token=xsw');
+    }));
+
+    it('should return a link WITHOUT a token and a store id from current store when addAuthorization param is falsy', inject([LegacyLinkService], (service: LegacyLinkService) => {
+        getItemSpy.and.returnValue('Bearer xsw');
+        currentStore$.next(<any>{id: 119});
+        expect(service.getLegacyLink('/some/path', {}, false)).toEqual(environment.APP_URL + '/some/path');
     }));
 });
