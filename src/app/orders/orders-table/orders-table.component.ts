@@ -154,6 +154,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         return params;
     }
 
+    getExportPdfParams() {
+        return this.selection.selected.map((order) => `list_order[]=${order.id}`).join('&');
+    }
+
     printPdf() {
         this.ordersService.exportOrdersPDF(this.selection.selected.map(item => item.id)).subscribe();
     }

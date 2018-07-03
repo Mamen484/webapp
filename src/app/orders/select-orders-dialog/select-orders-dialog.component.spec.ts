@@ -51,9 +51,4 @@ describe('SelectOrdersDialogComponent', () => {
                 .toEqual(`Please, select orders to ${action}`);
         });
     });
-
-    it('should close the dialog on click on `ok` button', () => {
-        component.close();
-        expect(dialogRef.close).toHaveBeenCalledTimes(1);
-    });
 });
