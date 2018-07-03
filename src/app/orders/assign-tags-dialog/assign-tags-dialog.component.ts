@@ -17,7 +17,7 @@ import { of, zip } from 'rxjs';
 export class AssignTagsDialogComponent implements OnInit {
 
     assignedTags = [];
-    protected tags: Tag[];
+    tags: Tag[];
     protected tagsToAdd: Tag[] = [];
     protected tagsToRemove: Tag[] = [];
 
