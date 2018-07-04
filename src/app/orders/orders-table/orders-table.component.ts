@@ -158,10 +158,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         return this.selection.selected.map((order) => `list_order[]=${order.id}`).join('&');
     }
 
-    printPdf() {
-        this.ordersService.exportOrdersPDF(this.selection.selected.map(item => item.id)).subscribe();
-    }
-
     showSelectOrdersDialog() {
         this.matDialog.open(SelectOrdersDialogComponent, {data: 'export'});
     }

@@ -64,17 +64,4 @@ export class OrdersService {
         }
         return this.exports$;
     }
-
-    exportOrdersPDF(orders: number[]) {
-        return this.httpClient.post(`${environment.APP_URL}/Marketplaces/AjaxExportOrderPdf`, {list_order: orders});
-    }
-
-    exportOrdersCSV(orders, exportId) {
-        return this.httpClient.post(`${environment.APP_URL}/Marketplaces/AjaxExportOrder`, {
-            list_order: orders,
-            id_export: exportId,
-            order_unit: true
-        });
-    }
-
 }
