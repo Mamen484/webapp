@@ -105,13 +105,15 @@ export class StatisticsComponent {
 
     protected updateSuggestedChannels({page, _embedded}: PagedResponse<{ channel: StoreChannel[] }>) {
         this.channels.page = page;
-        this.channels._embedded.channel.push(..._embedded.channel.map(channel => {
+        this.channels._embedded.channel.push(..._embedded.channel.map((channel: StoreChannel) => {
             if (channel.installed) {
                 let installedChannel = Object.assign({},
                     channel,
                     {statistics: this.statistics._embedded.channel.find(ch => ch.id === channel.id)}
                 );
-                installedChannel.statistics.currency = this.statistics.currency;
+                if (installedChannel.statistics) {
+                    installedChannel.statistics.currency = this.statistics.currency;
+                }
                 return installedChannel;
             }
             return channel;
@@ -129,10 +131,12 @@ export class StatisticsComponent {
     protected initialize(data) {
 
         this.channels = cloneDeep(data);
-        this.channels._embedded.channel.forEach(channel => {
+        this.channels._embedded.channel.forEach((channel: StoreChannel) => {
             if (channel.installed) {
-                (<StoreChannel>channel).statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);
-                (<StoreChannel>channel).statistics.currency = this.statistics.currency;
+                channel.statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);
+                if (channel.statistics) {
+                    channel.statistics.currency = this.statistics.currency;
+                }
             }
         });
         this.channels.page = INITIAL_PAGES_AMOUNT;
