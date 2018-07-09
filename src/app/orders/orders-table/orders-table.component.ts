@@ -3,7 +3,6 @@ import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angul
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
-import { Order } from '../../core/entities/orders/order';
 import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
@@ -17,7 +16,6 @@ import { filter, flatMap, take } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
-import { OrdersExport } from '../../core/entities/orders/orders-export';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
 
 @Component({
@@ -83,8 +81,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
-            .subscribe(([store, filter]) => {
-                this.fetchData(store, filter);
+            .subscribe(([store, ordersFilter]) => {
+                this.fetchData(store, ordersFilter);
             });
 
         this.paginator.page.subscribe(({pageIndex}) => {
@@ -92,7 +90,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         });
 
         this.appStore.select('currentStore')
-            .pipe(flatMap(store => this.ordersService.fetchExports(store.id)))
+            .pipe(flatMap((store: Store) => this.ordersService.fetchExports(store.id)))
             .subscribe(response => this.exports = response._embedded.export);
     }
 
@@ -148,16 +146,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.changeStatusForSelectedOrders(action);
     }
 
-    getExportParams(exp: OrdersExport) {
-        let params = this.selection.selected.reduce((acc, order) => acc + `list_order[]=${order.id}&`, '');
-        params += `id_export=${exp.id}&order_unit=false`;
-        return params;
-    }
-
-    getExportPdfParams() {
-        return this.selection.selected.map((order) => `list_order[]=${order.id}`).join('&');
-    }
-
     showSelectOrdersDialog() {
         this.matDialog.open(SelectOrdersDialogComponent, {data: 'export'});
     }
@@ -173,7 +161,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     protected notifyStatusChange(action) {
         return this.appStore.select('currentStore').pipe(
-            flatMap(store => this.ordersService[action](
+            flatMap((store: Store) => this.ordersService[action](
                 store.id,
                 this.selection.selected.map(order => ({reference: order.reference, channelName: order.channelName})
                 )))
@@ -187,49 +175,25 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected fetchData(store: Store, filter: OrdersFilter) {
+    protected fetchData(store: Store, ordersFilter: OrdersFilter) {
         this.isLoadingResults = true;
-        this.ordersFilter = filter;
+        this.ordersFilter = ordersFilter;
         this.changeDetectorRef.detectChanges();
         if (this.fetchSubscription && !this.fetchSubscription.closed) {
             this.fetchSubscription.unsubscribe();
         }
-        this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, filter)
+        this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, ordersFilter)
             .subscribe(ordersPage => {
                 this.selection.clear();
                 this.isLoadingResults = false;
 
                 this.resultsLength = ordersPage.total;
-                this.paginator.pageIndex = +filter.page - 1;
+                this.paginator.pageIndex = + ordersFilter.page - 1;
 
-                this.dataSource.data = ordersPage._embedded.order.map(order => this.formatOrder(order));
+                this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
                 this.changeDetectorRef.markForCheck();
             });
 
-    }
-
-    protected formatOrder(order: Order) {
-        return <OrdersTableItem>{
-            hasErrors: Boolean(order.errors && order.errors.length),
-            channelImage: order._embedded.channel._links.image.href,
-            channelName: order._embedded.channel.name,
-            reference: order.reference,
-            id: order.id,
-            status: order.status,
-            total: order.payment.totalAmount,
-            currency: order.payment.currency,
-            date: new Date(order.createdAt).getTime(),
-            updatedAt: order.updatedAt ? new Date(order.updatedAt).getTime() : undefined,
-            productAmount: order.payment.productAmount,
-            shippingAmount: order.payment.shippingAmount,
-            paymentMethod: order.payment.method,
-            deliveryName: order.shippingAddress.firstName + ' ' + order.shippingAddress.lastName,
-            invoicingName: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
-            storeId: order.storeReference,
-            trackingNumber: order.shipment.trackingNumber,
-            imported: Boolean(order.acknowledgedAt),
-            tags: order._embedded.tag && order._embedded.tag.length ? order._embedded.tag : [],
-        }
     }
 
     protected updateData() {

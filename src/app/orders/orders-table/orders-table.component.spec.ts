@@ -6,7 +6,6 @@ import { MatDialog, MatMenuModule, MatSnackBar, MatTableModule } from '@angular/
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { LabelsDialogComponent } from '../labels-dialog/labels-dialog.component';
 import { BehaviorSubject, EMPTY, of } from 'rxjs';
 import { Order } from '../../core/entities/orders/order';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
@@ -19,6 +18,8 @@ import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
+import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
+import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -45,6 +46,8 @@ describe('OrdersTableComponent', () => {
             declarations: [
                 OrdersTableComponent,
                 SfCurrencyPipe,
+                InvoicesLinkPipe,
+                OrdersExportLinkPipe,
             ],
             schemas: [
                 NO_ERRORS_SCHEMA,
@@ -265,18 +268,6 @@ describe('OrdersTableComponent', () => {
         fixture.detectChanges();
         expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
         expect(matDialog.open.calls.mostRecent().args[1].data).toEqual('export');
-    });
-
-    it('should create correct params for a link to export orders csv', () => {
-        component.selection = <any>{selected: [{id: 3389435486}, {id: 3389435484}]};
-        expect(component.getExportParams(<any>{id: 1234}))
-            .toEqual('list_order[]=3389435486&list_order[]=3389435484&id_export=1234&order_unit=false');
-    });
-
-    it('should create correct params for a link to export orders pdf', () => {
-        component.selection = <any>{selected: [{id: 3389435486}, {id: 3389435484}]};
-        expect(component.getExportPdfParams())
-            .toEqual('list_order[]=3389435486&list_order[]=3389435484');
     });
 
 

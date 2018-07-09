@@ -25,6 +25,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
 import { ImageComponent } from './image/image.component';
 import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
+import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
+import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
 
 @NgModule({
     imports: [
@@ -99,6 +101,8 @@ import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/
         RemoveUnderlinePipe,
         SfCurrencyPipe,
         SfNumberPipe,
+        InvoicesLinkPipe,
+        OrdersExportLinkPipe,
 
         // directives
         LegacyLinkDirective,
@@ -123,6 +127,8 @@ import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/
         CountryAutocompleteComponent,
         ImageComponent,
         ValidationErrorsSnackbarComponent,
+        InvoicesLinkPipe,
+        OrdersExportLinkPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

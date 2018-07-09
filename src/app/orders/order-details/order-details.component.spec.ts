@@ -15,6 +15,7 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { FormsModule } from '@angular/forms';
 import { Order } from '../../core/entities/orders/order';
 import { ValidationErrorsSnackbarComponent } from '../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 
 
 describe('OrderDetailsComponent', () => {
@@ -36,7 +37,7 @@ describe('OrderDetailsComponent', () => {
         appStore = jasmine.createSpyObj(['select']);
 
         TestBed.configureTestingModule({
-            declarations: [OrderDetailsComponent, RemoveUnderlinePipe, SfCurrencyPipe],
+            declarations: [OrderDetailsComponent, RemoveUnderlinePipe, SfCurrencyPipe, InvoicesLinkPipe],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: MatDialog, useValue: matDialog},
