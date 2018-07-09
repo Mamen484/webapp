@@ -85,7 +85,7 @@
                     [acknowledgment]="acknowledgment"
                     (actionApplied)="applyStatusAction($event)">
             </sf-action-buttons>
-            <a mat-icon-button sfLegacyLink [path]="[order] | invoicesLink" [addAuthorization]="false">
+            <a mat-icon-button sfLegacyLink path="/marketplaces/invoice/{{order.id}}">
                 <mat-icon>local_printshop</mat-icon>
             </a>
         </div>
