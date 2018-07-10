@@ -21,7 +21,10 @@ export class SearchOrdersComponent implements OnInit {
     filter: OrdersFilter;
 
     constructor(protected dialog: MatDialog, protected ordersFilterService: OrdersFilterService) {
-        this.ordersFilterService.getFilter().subscribe(f => this.filter = f);
+        this.ordersFilterService.getFilter().subscribe(f => {
+            this.filter = f;
+            this.searchControl.setValue(f.search, {emitEvent: false});
+        });
     }
 
     ngOnInit() {
