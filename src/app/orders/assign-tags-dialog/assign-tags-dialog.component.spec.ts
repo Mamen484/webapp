@@ -56,8 +56,8 @@ describe('AssignTagsDialogComponent', () => {
             {id: 9, name: 'nine'},
         ]));
         component.data.orders = <any>[
-            {_embedded: {tag: [{id: 1}, {id: 5}]}},
-            {_embedded: {tag: [{id: 5}, {id: 7}]}},
+            {tags: [{id: 5}, {id: 7}]},
+            {tags: [{id: 1}, {id: 5}]},
         ];
         fixture.detectChanges();
         expect(component.assignedTags.length).toEqual(3);
@@ -133,15 +133,13 @@ describe('AssignTagsDialogComponent', () => {
         component.assignTag(tags[4]);
         component.assignTag(tags[3]);
         component.save();
-        expect(tagsService.assignTags.calls.mostRecent().args[0]).toEqual(34);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][0].orderId).toEqual(3);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][0].tagId).toEqual(9);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][1].orderId).toEqual(4);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][1].tagId).toEqual(9);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][2].orderId).toEqual(3);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][2].tagId).toEqual(7);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][3].orderId).toEqual(4);
-        expect(tagsService.assignTags.calls.mostRecent().args[1][3].tagId).toEqual(7);
+
+        expect(tagsService.assignTags.calls.count()).toEqual(1);
+
+        expect(tagsService.assignTags.calls.argsFor(0)[0]).toEqual(34);
+        expect(tagsService.assignTags.calls.argsFor(0)[1][0].id).toEqual(9);
+        expect(tagsService.assignTags.calls.argsFor(0)[1][1].id).toEqual(7);
+        expect(tagsService.assignTags.calls.argsFor(0)[2]).toEqual([3, 4]);
     });
 
     it('should pass to the server newly unassigned tags', () => {
@@ -161,15 +159,13 @@ describe('AssignTagsDialogComponent', () => {
         component.unassignTag(tags[0]);
         component.unassignTag(tags[2]);
         component.save();
-        expect(tagsService.unassignTags.calls.mostRecent().args[0]).toEqual(34);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][0].orderId).toEqual(3);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][0].tagId).toEqual(1);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][1].orderId).toEqual(4);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][1].tagId).toEqual(1);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][2].orderId).toEqual(3);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][2].tagId).toEqual(5);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][3].orderId).toEqual(4);
-        expect(tagsService.unassignTags.calls.mostRecent().args[1][3].tagId).toEqual(5);
+
+        expect(tagsService.unassignTags.calls.count()).toEqual(1);
+
+        expect(tagsService.unassignTags.calls.argsFor(0)[0]).toEqual(34);
+        expect(tagsService.unassignTags.calls.argsFor(0)[1][0].id).toEqual(1);
+        expect(tagsService.unassignTags.calls.argsFor(0)[1][1].id).toEqual(5);
+        expect(tagsService.unassignTags.calls.argsFor(0)[2]).toEqual([3, 4]);
     });
 
     it('should NOT pass to the server newly assigned tags, that were later removed', () => {

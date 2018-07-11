@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/index';
+import { Observable, zip } from 'rxjs';
 import { Tag } from '../entities/tag';
 import { PagedResponse } from '../entities/paged-response';
 import { HttpClient } from '@angular/common/http';
@@ -30,12 +30,19 @@ export class TagsService {
         return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/tag/${tagId}`, {tag: {name, color}});
     }
 
-    public assignTags(storeId, tagLink: {tagId: number, orderId: number}[]) {
-        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tagLink`, {tagLink});
+    public assignTags(storeId, tags: Tag[], order: number[]) {
+        return zip(...tags.map(tag =>
+                this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tag/${tag.id}/link`, {order})
+            )
+        );
     }
 
-    public unassignTags(storeId, tagLink: {tagId: number, orderId: number}[]) {
-        return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/tagLink`, {tagLink});
+    public unassignTags(storeId, tags: Tag[], order: number[]) {
+        return zip(...tags.map(tag =>
+            this.httpClient.delete(
+                `${environment.API_URL}/store/${storeId}/order/tag/${tag.id}/link?order=${order.join(',')}`,
+            )
+        ));
     }
 
 }

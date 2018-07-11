@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Tag } from '../../core/entities/tag';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
-import { Order } from '../../core/entities/orders/order';
 import { flatten, uniq } from 'lodash';
 import { TagsService } from '../../core/services/tags.service';
 import { flatMap } from 'rxjs/operators';
 import { of, zip } from 'rxjs';
+import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 
 @Component({
     selector: 'sf-assign-tags-dialog',
@@ -22,7 +22,7 @@ export class AssignTagsDialogComponent implements OnInit {
     protected tagsToRemove: Tag[] = [];
 
     constructor(protected appStore: Store<AppState>,
-                @Inject(MAT_DIALOG_DATA) public data: { orders: Order[] },
+                @Inject(MAT_DIALOG_DATA) public data: { orders: OrdersTableItem[] },
                 protected tagsService: TagsService,
                 protected matDialogRef: MatDialogRef<AssignTagsDialogComponent>,
                 protected snackBar: MatSnackBar) {
@@ -50,6 +50,10 @@ export class AssignTagsDialogComponent implements OnInit {
         if (indexToRemove !== -1) {
             this.tagsToRemove.splice(indexToRemove, 1);
         }
+    }
+
+    close() {
+        this.matDialogRef.close();
     }
 
     /**
@@ -91,19 +95,11 @@ export class AssignTagsDialogComponent implements OnInit {
      * Walk the orders and find all the tags that are currently assigned.
      */
     protected findAssignedTags() {
-        let tagIds = uniq(flatten(this.data.orders.map(order => order._embedded.tag.map(tag => tag.id))));
+        let tagIds = uniq(flatten(this.data.orders
+            .filter(order => order.tags)
+            .map(order => order.tags.map(tag => tag.id))
+        ));
         this.assignedTags = this.tags.filter(tag => tagIds.indexOf(tag.id) !== -1);
-    }
-
-    /**
-     * Prepare an array of links between tags/orders, acceptable by a server.
-     *
-     * @param {Tag[]} tags
-     * @returns Array<{tagId: number; orderId: number}>
-     */
-    protected makeLinksArray(tags: Tag[]): { tagId: number, orderId: number }[] {
-        return tags.reduce((acc, tag) =>
-            acc.concat(this.data.orders.map(order => ({tagId: tag.id, orderId: order.id}))), []);
     }
 
     /**
@@ -114,7 +110,7 @@ export class AssignTagsDialogComponent implements OnInit {
      */
     protected prepareAssignRequest(storeId) {
         return this.tagsToAdd.length
-            ? this.tagsService.assignTags(storeId, this.makeLinksArray(this.tagsToAdd))
+            ? this.tagsService.assignTags(storeId, this.tagsToAdd, this.data.orders.map(({id}) => id))
             : of({});
     }
 
@@ -126,7 +122,7 @@ export class AssignTagsDialogComponent implements OnInit {
      */
     protected prepareUnassignRequest(storeId) {
         return this.tagsToRemove.length
-            ? this.tagsService.unassignTags(storeId, this.makeLinksArray(this.tagsToRemove))
+            ? this.tagsService.unassignTags(storeId, this.tagsToRemove, this.data.orders.map(({id}) => id))
             : of({});
     }
 

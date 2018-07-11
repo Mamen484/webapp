@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { TagsService } from './tags.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '../../../environments/environment';
+import { Tag } from '../entities/tag';
 
 describe('TagsService', () => {
     let service: TagsService;
@@ -55,4 +56,28 @@ describe('TagsService', () => {
         httpMock.verify();
         expect(req.request.method).toEqual('DELETE');
     });
+
+    it('should POST /store/${storeId}/order/tag/{$tagId}/link when call assignTags', () => {
+        service.assignTags(14, <Tag[]>[{id: 2}, {id: 3}], [15, 16]).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/14/order/tag/2/link`);
+        expect(req.request.method).toEqual('POST');
+        expect(req.request.body.order).toEqual([15, 16]);
+
+        req = httpMock.expectOne(`${environment.API_URL}/store/14/order/tag/3/link`);
+        expect(req.request.method).toEqual('POST');
+        expect(req.request.body.order).toEqual([15, 16]);
+        httpMock.verify();
+    });
+
+    it('should DELETE /store/${storeId}/order/tag/{$tagId}/link when call unassignTags', () => {
+        service.unassignTags(14, <Tag[]>[{id: 2}, {id: 3}], [15, 16]).subscribe();
+        console.log(httpMock);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/14/order/tag/2/link?order=15,16`);
+        expect(req.request.method).toEqual('DELETE');
+
+        req = httpMock.expectOne(`${environment.API_URL}/store/14/order/tag/3/link?order=15,16`);
+        expect(req.request.method).toEqual('DELETE');
+        httpMock.verify();
+    });
+
 });
