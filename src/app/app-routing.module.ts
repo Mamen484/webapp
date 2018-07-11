@@ -14,7 +14,6 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
-import { DefaultPageGuard } from './core/guards/default-page.guard';
 import { CanLoadAdminGuard } from './core/guards/can-load-admin.guard';
 import { ChannelsRouteGuard } from './core/guards/channels-route.guard';
 import { OrdersRouteGuard } from './core/guards/orders-route.guard';
@@ -34,7 +33,7 @@ const routes: Routes = [
             InitializeStoreGuard,
         ],
         children: [
-            {path: '', component: BlankComponent, canActivate: [DefaultPageGuard]},
+            {path: '', redirectTo: '/home', pathMatch: 'full'},
             // @TODO: check if we still need ChannelsRouteGuard
             {path: 'home', loadChildren: 'app/statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
             {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
