@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../environments/environment';
+import { StoreCharge } from '../../core/entities/store-charge';
 
 @Component({
     selector: 'sf-accept-channel-dialog',
@@ -11,8 +12,8 @@ export class AcceptChannelDialogComponent {
 
     baseHref = environment.BASE_HREF + '/' + environment.LOCALE_ID;
     // @TODO: consider refactoring this link into some file
-    pricesLink = 'http://www.shopping-feed.com/pricing/';
+    pricesLink = 'https://www.shopping-feed.com/shopify-privilege-pricing/';
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data) {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: {logo: string, link: string, charge: StoreCharge}) {
     }
 }
