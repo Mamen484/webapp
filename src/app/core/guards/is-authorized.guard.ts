@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { take, flatMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -19,7 +20,8 @@ import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 export class IsAuthorizedGuard implements CanActivate {
     constructor(protected router: Router,
                 protected userService: UserService,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: LocalStorageService,
+                protected appStore: Store<AppState>) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -31,28 +33,31 @@ export class IsAuthorizedGuard implements CanActivate {
             return false;
         }
         return Observable.create(observer => {
-            this.userService.fetchAggregatedInfo().subscribe(
-                userInfo => {
+            this.appStore.select('userInfo')
+                .pipe(take(1))
+                .pipe(flatMap(userInfo => userInfo ? of(userInfo) : this.userService.fetchAggregatedInfo()))
+                .subscribe(
+                    userInfo => {
+                        if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
+                            this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
+                            observer.next(true);
+                            observer.complete();
+                        } else {
+                            this.isNotAuthorized(observer)
+                        }
+                    },
+                    // do not activate and redirect to /login when an error
+                    (error: HttpErrorResponse) => {
+                        if (error.status >= 400 && error.status < 500) { // client error
+                            this.isNotAuthorized(observer);
+                        } else if (error.status >= 500) { // server error
+                            this.router.navigate(['/critical-error'], {skipLocationChange: true});
+                            observer.next(false);
+                            observer.complete();
+                        }
 
-                    if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
-                        observer.next(true);
-                        observer.complete();
-                    } else {
-                        this.isNotAuthorized(observer)
                     }
-                },
-                // do not activate and redirect to /login when an error
-                (error: HttpErrorResponse) => {
-                    if (error.status >= 400 && error.status < 500) { // client error
-                        this.isNotAuthorized(observer);
-                    } else if (error.status >= 500) { // server error
-                        this.router.navigate(['/critical-error'], {skipLocationChange: true});
-                        observer.next(false);
-                        observer.complete();
-                    }
-
-                }
-            );
+                );
         });
     }
 

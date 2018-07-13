@@ -1,46 +1,43 @@
 @import '../../sass/variables';
 
-mat-sidenav {
-  position: sticky;
-  bottom: 0;
-  left: 0;
-  width: $left-sidebar-width;
-  min-width: $left-sidebar-width;
-  background-color: mat-color($grey, A100);
-  text-align: center;
-  top: 0;
-  height: calc(100vh - #{$toolbar-height});
-  border-right: 1px solid mat-color($grey, 200);
+mat-icon {
+  font-size: mat-font-size($config, headline);
+  color: $black-54-opacity;
+  cursor: pointer;
+  margin: auto;
 
-  mat-icon {
-    font-size: mat-font-size($config, headline);
-    color: $black-54-opacity;
-    cursor: pointer;
-    margin: auto;
+  &.active {
+    color: mat-color($accent);
+  }
 
-    &.active {
-      color: mat-color($accent);
-    }
+  &:hover {
+    color: mat-color($accent);
+  }
 
-    &:hover {
-      color: mat-color($accent);
+  @media #{$xs} {
+    margin-right: 10px;
+    margin-left: 10px;
+
+    & + span {
+      text-transform: capitalize;
+      margin-right: 10px;
     }
   }
-}
-
-mat-sidenav-container {
-  float: left;
-  min-height: 100%;
-  max-width: 100%;
-  transform: none;
-  height: auto;
-  margin: 0;
 }
 
 .sf-sidebar-bottom-help {
   position: absolute;
   width: 100%;
   bottom: 20px;
+
+  @media #{$xs}{
+    padding: 0 16px;
+    text-align: left;
+  }
+
+  a {
+    outline: none;
+  }
 }
 
 a.channel-logo:hover, a.channel-logo:focus {
@@ -53,4 +50,8 @@ a.channel-logo {
     vertical-align: middle;
     max-width: 100px;
   }
+}
+
+span.support-label {
+  vertical-align: super;
 }

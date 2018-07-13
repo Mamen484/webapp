@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
+import { take, flatMap } from 'rxjs/operators';
 import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { Timeline } from '../core/entities/timeline';
@@ -27,7 +28,7 @@ export class TimelineComponent {
 
     constructor(protected appStore: Store<AppState>,
                 protected timelineService: TimelineService) {
-        this.appStore.select('currentStore').take(1)
+        this.appStore.select('currentStore').pipe(take(1))
             .subscribe(currentStore => this.timelineService.emitUpdatedTimeline(currentStore.id));
 
         this.timelineService.getTimelineStream().subscribe(({type, data}) => {
@@ -61,8 +62,8 @@ export class TimelineComponent {
 
     applyFilter({filter, isActive}) {
         this.loadingTimeline = true;
-        this.appStore.select('currentStore').flatMap(store =>
-            this.timelineService.getEvents(store.id, filter))
+        this.appStore.select('currentStore').pipe(flatMap(store =>
+            this.timelineService.getEvents(store.id, filter)))
             .subscribe(timeline => {
                 this.initializeEvents(timeline);
                 this.loadingTimeline = false;
@@ -119,13 +120,6 @@ export class TimelineComponent {
         this.updates = updates._embedded.timeline;
         this.updatesInProgress = updates._embedded.timeline
             .filter(update => update.action === this.actions.start).length;
-    }
-
-    // TOFIX: refactor duplicated logic from suggested-channel
-    protected getChannelLink(update) {
-        return update._embedded.channel.type === 'marketplace'
-            ? `/${update._embedded.channel.name}`
-            : `/${update._embedded.channel.type}/manage/${update._embedded.channel.name}`;
     }
 
 }

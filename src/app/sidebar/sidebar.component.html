@@ -1,41 +1,49 @@
-<mat-sidenav-container>
-    <mat-sidenav class="sidenav sidenav-main" #sidenav mode="side" [opened]="opened" disableClose="true">
-        <mat-list>
-            <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS" matTooltipPosition="after"
-                          i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()">
-                <mat-icon class="active">wb_cloudy</mat-icon>
-            </mat-list-item>
-
-            <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
-                          *ngIf="currentStore.permission.marketplaces">
-                <mat-icon [ngClass]="{'sf-badge': currentStore._embedded.order.newCount > 0}"
-                         [attr.data-badge]="currentStore._embedded.order.newCount">shopping_basket</mat-icon>
-            </mat-list-item>
-
-            <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS"  (onMenuOpen)="onMenuOpen()"
-                          i18n-matTooltip matTooltipPosition="after" *ngIf="currentStore.permission.statistics">
-                <mat-icon>trending_up</mat-icon>
-            </mat-list-item>
-
-            <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
-                          i18n-matTooltip *ngIf="currentStore.permission.tools" (onMenuOpen)="onMenuOpen()">
-                <mat-icon>build</mat-icon>
-            </mat-list-item>
-
-            <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS"  i18n-matTooltip
-                          matTooltipPosition="after" *ngIf="currentStore.permission.tools">
-                <mat-icon>apps</mat-icon>
-            </mat-list-item>
-        </mat-list>
-        <div class="sf-sidebar-bottom-help" matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip>
-            <a [href]="linkToSupportCenter" target="_blank"><mat-icon>help</mat-icon></a>
-        </div>
-    </mat-sidenav>
+<sf-sidebar-container>
+    <mat-list>
+        <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
+                       matTooltipPosition="after"
+                       i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()"  [matTooltipDisabled]="hideTooltips">
+            <mat-icon [class.active]="currentRoute === 'channels'">wb_cloudy</mat-icon>
+            <span fxHide fxShow.xs i18n>Channels</span>
+        </mat-list-item>
 
 
-</mat-sidenav-container>
+        <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
+                       *ngIf="currentStore.permission.marketplaces" [matTooltipDisabled]="hideTooltips">
+            <mat-icon [class.sf-badge]="currentStore._embedded.order.newCount" [class.active]="currentRoute === 'orders'"
+                      [attr.data-badge]="currentStore._embedded.order.newCount">shopping_basket
+            </mat-icon>
+            <span fxHide fxShow.xs i18n>Orders</span>
+        </mat-list-item>
+
+        <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS" (onMenuOpen)="onMenuOpen()"
+                       i18n-matTooltip matTooltipPosition="after" *ngIf="currentStore.permission.statistics" [matTooltipDisabled]="hideTooltips">
+            <mat-icon>trending_up</mat-icon>
+            <span fxHide fxShow.xs i18n>Statistics</span>
+        </mat-list-item>
+
+
+        <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
+                       i18n-matTooltip *ngIf="currentStore.permission.tools" (onMenuOpen)="onMenuOpen()" [matTooltipDisabled]="hideTooltips">
+            <mat-icon>build</mat-icon>
+            <span fxHide fxShow.xs i18n>Tools</span>
+        </mat-list-item>
+
+        <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS" i18n-matTooltip
+                       matTooltipPosition="after" *ngIf="currentStore.permission.tools" [matTooltipDisabled]="hideTooltips">
+            <mat-icon>apps</mat-icon>
+            <span fxHide fxShow.xs i18n>Apps</span>
+        </mat-list-item>
+    </mat-list>
+    <div class="sf-sidebar-bottom-help" matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
+        <a [href]="linkToSupportCenter" target="_blank"><mat-icon>help</mat-icon></a>
+        <span fxHide fxShow.xs i18n class="support-label">Support</span>
+    </div>
+</sf-sidebar-container>
+
 <mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu">
-    <a mat-menu-item *ngFor="let channel of (channels | async)" class="channel-logo" sfLegacyLink [path]="getChannelLink(channel)">
+    <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sfLegacyLink
+       [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
     <a mat-menu-item sfLegacyLink path="/tools/export" i18n>Custom data feeds</a>

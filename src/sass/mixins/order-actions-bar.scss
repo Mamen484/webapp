@@ -1,0 +1,20 @@
+@import '../variables';
+
+@mixin order-actions-bar(){
+  .actions {
+    padding: 10px;
+    border-bottom: 1px solid $black-12-opacity;
+    justify-content: flex-end;
+    align-items: center;
+
+    mat-icon {
+      vertical-align: middle;
+      color: $black-54-opacity;
+    }
+  }
+
+  .left {
+    margin-right: auto;
+    margin-left: 15px;
+  }
+}

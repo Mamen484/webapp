@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { ChannelLogoService } from '../../core/services/channel_logo.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-plateform',

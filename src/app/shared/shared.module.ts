@@ -4,11 +4,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
     MatAutocompleteModule, MatButtonModule, MatCardModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
     MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule, MatProgressBarModule, MatProgressSpinnerModule,
-    MatSelectModule, MatSidenavModule, MatSnackBarModule,
-    MatToolbarModule, MatTooltipModule
+    MatSelectModule, MatSidenavModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule,
+    MatTabsModule, MatTableModule, MatCheckboxModule, MatPaginatorModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { ClipboardModule } from 'ngx-clipboard';
 
 import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
@@ -16,13 +17,25 @@ import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
 import { LegacyLinkDirective } from './legacy-link.directive';
 import { BlankComponent } from './blank.component';
+import { CountrySelectComponent } from './country-select/country-select.component';
+
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
+import { RemoveUnderlinePipe } from './remove-underline.pipe';
+import { LayoutModule } from '@angular/cdk/layout';
+import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
+import { ImageComponent } from './image/image.component';
+import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
+import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
+import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
+
 @NgModule({
     imports: [
+        ClipboardModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -37,22 +50,31 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
         MatTooltipModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatTableModule,
+        MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
     ],
     exports: [
         // modules
+        ClipboardModule,
         CommonModule,
         FlexLayoutModule,
         FormsModule,
         InfiniteScrollModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
+        MatCheckboxModule,
         MatChipsModule,
         MatDatepickerModule,
         MatDialogModule,
@@ -61,9 +83,12 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
         MatListModule,
         MatMenuModule,
         MatNativeDateModule,
+        MatTableModule,
+        MatTabsModule,
         MatSelectModule,
         MatSidenavModule,
         MatSnackBarModule,
+        MatPaginatorModule,
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatToolbarModule,
@@ -73,17 +98,39 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 
         // pipes
         LargeNumberSuffixPipe,
+        RemoveUnderlinePipe,
         SfCurrencyPipe,
         SfNumberPipe,
+        InvoicesLinkPipe,
+        OrdersExportLinkPipe,
 
         // directives
         LegacyLinkDirective,
 
         // components
+        CountrySelectComponent,
+        CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
+        ImageComponent,
+        ValidationErrorsSnackbarComponent
 
     ],
-    declarations: [LargeNumberSuffixPipe, SfCurrencyPipe, SfNumberPipe, LegacyLinkDirective, BlankComponent, ScheduleCallIframeComponent],
+    declarations: [
+        LargeNumberSuffixPipe,
+        SfCurrencyPipe,
+        SfNumberPipe,
+        LegacyLinkDirective,
+        BlankComponent,
+        CountrySelectComponent,
+        ScheduleCallIframeComponent,
+        RemoveUnderlinePipe,
+        CountryAutocompleteComponent,
+        ImageComponent,
+        ValidationErrorsSnackbarComponent,
+        InvoicesLinkPipe,
+        OrdersExportLinkPipe,
+    ],
+    entryComponents: [ValidationErrorsSnackbarComponent]
 })
 export class SharedModule {
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { Observable ,  Observer } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 import { ServerErrorComponent } from '../../snackbars/server-error/server-error.component';
 
 const RETRY_INTERVAL = 3000;
@@ -30,6 +29,10 @@ export class HttpClientService extends HttpClient {
         super.get.apply(this, args).subscribe(
             data => this.applyData(observer, data),
             (error: HttpErrorResponse) => {
+                if (error.status < 500) {
+                    observer.error(error);
+                    return;
+                }
                 if (retries > 0) {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {

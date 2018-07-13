@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { Observable, of, throwError } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
-import { Observable } from 'rxjs/Observable';
 import { WindowRefService } from '../services/window-ref.service';
 import { LocalStorageService } from '../services/local-storage.service';
 import { IsAuthorizedGuard } from './is-authorized.guard';
@@ -16,6 +16,7 @@ describe('IsAuthorizedGuard', () => {
     let fetchAggregatedInfoSpy: jasmine.Spy;
     let store;
     let router: jasmine.SpyObj<Router>;
+    let guard: IsAuthorizedGuard;
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
@@ -33,67 +34,97 @@ describe('IsAuthorizedGuard', () => {
                 {provide: Router, useValue: router},
                 {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
             ]
-        })
-        ;
+        });
     });
 
-    it('should return false and redirect to the login page when if there is no authorization in the local storage',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            getItemSpy.and.returnValue(null);
-            expect(guard.canActivate(<any>{})).toEqual(false);
-            expect(router.navigate).toHaveBeenCalledWith(['/login'])
-        }));
+    beforeEach(() => {
+        guard = TestBed.get(IsAuthorizedGuard);
+    });
 
-    it('should call UserService.fetchAggregatedInfo to check if the authorization is valid',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            store.select.and.returnValue({dispatch: jasmine.createSpy('dispatch')});
-            getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
-            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
-                expect(fetchAggregatedInfoSpy).toHaveBeenCalled();
-            });
-        }));
+    it('should return false and redirect to the login page when if there is no authorization in the local storage', () => {
+        getItemSpy.and.returnValue(null);
+        expect(guard.canActivate(<any>{})).toEqual(false);
+        expect(router.navigate).toHaveBeenCalledWith(['/login'])
+    });
 
-    it('should return false if there is invalid authorization in the local storage',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
-            fetchAggregatedInfoSpy.and.returnValue(Observable.throw(401));
-            (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
-                expect(canActivate).toEqual(false);
-            });
-        }));
+    it('should call UserService.fetchAggregatedInfo to check if the authorization is valid', async () => {
+        store.select.and.returnValues(
+            of(null),
+            {dispatch: jasmine.createSpy('dispatch')}
+        );
+        getItemSpy.and.returnValue('some token');
+        fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
+        await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
+        expect(fetchAggregatedInfoSpy).toHaveBeenCalled();
+    });
 
-    it('should return true if the authorization is valid ',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            store.select.and.returnValues(Observable.of(null), {dispatch: jasmine.createSpy('dispatch')});
-            getItemSpy.and.returnValue('some token');
-            fetchAggregatedInfoSpy.and.returnValue(Observable.of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
-            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
-                expect(canActivate).toEqual(true);
-            });
-        }));
+    it('should return false if there is invalid authorization in the local storage', async () => {
+        getItemSpy.and.returnValue('some token');
+        store.select.and.returnValue(of(null));
+        fetchAggregatedInfoSpy.and.returnValue(throwError({status: 401}));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
+        expect(canActivate).toEqual(false);
+    });
 
-    it('should redirect to the homepage if the authorization is invalid ',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
-            fetchAggregatedInfoSpy.and.returnValue(Observable.throw(401));
-            (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {
-                expect(canActivate).toEqual(false);
-                expect(router.navigate).toHaveBeenCalledWith(['/login']);
-            });
-        }));
+    it('should return true if the authorization is valid ', async () => {
+        store.select.and.returnValues(of(null), {dispatch: jasmine.createSpy('dispatch')});
+        getItemSpy.and.returnValue('some token');
+        fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
+        expect(canActivate).toEqual(true);
+    });
 
-    it('should redirect to the homepage if the user is not admin and does not have enabled stores',
-        inject([IsAuthorizedGuard], (guard: IsAuthorizedGuard) => {
-            getItemSpy.and.returnValue('some token');
-            store.select.and.returnValue(Observable.of(null));
-            fetchAggregatedInfoSpy.and.returnValue(
-                Observable.of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
-            (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).subscribe(canActivate => {
-                expect(canActivate).toEqual(false);
-                expect(router.navigate).toHaveBeenCalledWith(['/login']);
-            });
-        }));
+    it('should redirect to the homepage if the authorization is invalid ', async () => {
+        getItemSpy.and.returnValue('some token');
+        store.select.and.returnValue(of(null));
+        fetchAggregatedInfoSpy.and.returnValue(throwError({status: 401}));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
+        expect(canActivate).toEqual(false);
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+
+    it('should redirect to the homepage if the user is not admin and does not have enabled stores', async () => {
+        getItemSpy.and.returnValue('some token');
+        store.select.and.returnValue(of(null));
+        fetchAggregatedInfoSpy.and.returnValue(
+            of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
+        expect(canActivate).toEqual(false);
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+
+    it('should write the userData to the app store, if the user has an enabled store', async () => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            of(AggregatedUserInfo.create({
+                roles: ['user'],
+                _embedded: {store: [{name: 'some name', status: 'active'}]}
+
+            })),
+            {dispatch: dispatchSpy}
+        );
+        getItemSpy.and.returnValue('some token');
+        await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
+        expect(store.select).toHaveBeenCalledWith('userInfo');
+        expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
+    });
+
+    it('should write the userData to the app store, if the user has an "admin" role', async () => {
+        let dispatchSpy = jasmine.createSpy('dispatch');
+        store.select.and.returnValues(
+            of(null),
+            {dispatch: dispatchSpy}
+        );
+        getItemSpy.and.returnValue('some token');
+        fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create({
+            roles: ['admin'],
+            _embedded: {store: []}
+
+        })));
+        await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
+        expect(store.select).toHaveBeenCalledWith('userInfo');
+        expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
+    });
 });

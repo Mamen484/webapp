@@ -4,6 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { SupportService } from './support.service';
 import { LocaleIdService } from './locale-id.service';
 import { environment } from '../../../environments/environment';
+import { allowNoExpectations } from '../entities/allow-no-expectaions';
 
 describe('SupportService', () => {
     beforeEach(() => {
@@ -20,6 +21,7 @@ describe('SupportService', () => {
     it('should call support service with specified params', inject([SupportService, HttpTestingController],
         (service: SupportService, httpMock: HttpTestingController) => {
             service.searchArticles('something').subscribe();
-            httpMock.expectOne(environment.API_URL + '/desk/articles/search?text=something&in_support_center=true&locale=fr_fr')
+            httpMock.expectOne(environment.API_URL + '/desk/articles/search?text=something&in_support_center=true&locale=fr_fr');
+            allowNoExpectations();
         }));
 });

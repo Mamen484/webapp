@@ -1,6 +1,9 @@
-@import '~@angular/material/theming';
 @import '../../sass/variables';
 
 .content {
   margin-left: $left-sidebar-width + $content-margin;
+
+  @media #{$xs} {
+    margin-left: 0;
+  }
 }

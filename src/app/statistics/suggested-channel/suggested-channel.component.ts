@@ -19,7 +19,6 @@ export class SuggestedChannelComponent {
     @Input() channel: StoreChannel;
     @Input() internationalMode = false;
     @Input() firstChannel = false;
-    @Input() charge: StoreCharge;
 
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService) {
@@ -49,7 +48,6 @@ export class SuggestedChannelComponent {
             data: {
                 logo: this.channel._embedded.channel._links.image.href,
                 link: this.getChannelLink(this.channel._embedded.channel),
-                charge: this.charge
             }
         });
     }

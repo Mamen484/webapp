@@ -1,0 +1,51 @@
+@import '../../../sass/variables';
+
+.scrollable-container {
+  align-items: flex-start;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  &.two-column {
+    & > div {
+      display: flex;
+      align-items: baseline;
+
+      label {
+        flex: 1;
+        margin-right: 10px;
+      }
+      mat-form-field {
+        flex: 1;
+      }
+
+    }
+  }
+
+}
+
+mat-card-actions {
+  text-align: right;
+}
+
+sf-country-select {
+  width: 100%;
+}
+
+.form-actions {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.mappings-form-card[data-show-mappings-card="false"] {
+  @media #{$xs} {
+    display: none;
+  }
+}

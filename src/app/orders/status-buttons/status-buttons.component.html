@@ -1,0 +1,27 @@
+<ng-container *ngIf="activeTab === tabs.shippingErrors || activeTab === tabs.toShip">
+    <button mat-button color="accent" i18n (click)="actionApplied.emit(actions.cancel)">
+        Cancel
+    </button>
+    <button mat-raised-button color="accent" i18n (click)="actionApplied.emit(actions.ship)">
+        Ship
+    </button>
+</ng-container>
+<ng-container *ngIf="activeTab === tabs.toImport || activeTab === tabs.importErrors">
+    <button mat-raised-button color="accent" i18n
+            (click)="actionApplied.emit(actions.acknowledge)">
+        Acknowledge
+    </button>
+</ng-container>
+<ng-container *ngIf="activeTab === tabs.toValidate">
+    <button mat-button color="accent" i18n (click)="actionApplied.emit(actions.refuse)">
+        Refuse
+    </button>
+    <button mat-raised-button color="accent" i18n (click)="actionApplied.emit(actions.accept)">
+        Accept
+    </button>
+</ng-container>
+<ng-container *ngIf="activeTab === tabs.shipped">
+    <button mat-raised-button color="accent" i18n (click)="actionApplied.emit(actions.cancel)">
+        Cancel
+    </button>
+</ng-container>

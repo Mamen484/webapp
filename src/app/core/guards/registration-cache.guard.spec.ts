@@ -1,5 +1,5 @@
 import { RegistrationCacheGuard } from './registration-cache.guard';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 describe('RegistrationCacheGuard', () => {
@@ -34,7 +34,7 @@ describe('RegistrationCacheGuard', () => {
 
         guard = new RegistrationCacheGuard(<any>{
             updateStore: updateStoreSpy,
-            getStoreData: () => Observable.of({owner: {token: 'token'}})
+            getStoreData: () => of({owner: {token: 'token'}})
         }, <any>window, <any>localStorage);
 
     });
@@ -59,7 +59,7 @@ describe('RegistrationCacheGuard', () => {
 
     it('should update the store and return false when localStorage does contain store and the store.storeId is higher than 0', done => {
         getItemSpy.and.returnValue('{"storeId": 1}');
-        updateStoreSpy.and.returnValue(Observable.of({}));
+        updateStoreSpy.and.returnValue(of({}));
         guard.canActivate(<any>{queryParams: {something1: 12, something2: 25}}).subscribe(canActivate => {
             expect(updateStoreSpy).toHaveBeenCalled();
             expect(canActivate).toEqual(false);
@@ -71,7 +71,7 @@ describe('RegistrationCacheGuard', () => {
 
     it('should redirect the user to the homepage when cached store.storeId is higher than 0', done => {
         getItemSpy.and.returnValue('{"storeId": 1}');
-        updateStoreSpy.and.returnValue(Observable.of({}));
+        updateStoreSpy.and.returnValue(of({}));
         guard.canActivate(<any>{queryParams: {something1: 12, something2: 25}}).subscribe(canActivate => {
             expect(locationHrefSpy).toHaveBeenCalledWith(environment.APP_URL + '?token=undefined');
             done();

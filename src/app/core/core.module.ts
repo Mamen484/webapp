@@ -1,8 +1,6 @@
-import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import '../../rxjs-imports';
-import { MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
 
 import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
@@ -10,11 +8,9 @@ import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
-import { statisticsReducer } from './reducers/statistics-reducer';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { LocaleIdService } from './services/locale-id.service';
-import { environment } from '../../environments/environment';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
@@ -35,9 +31,21 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
 import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
+import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
+import { currentRouteReducer } from './reducers/current-route-reducer';
+import { ChannelsRouteGuard } from './guards/channels-route.guard';
+import { OrdersRouteGuard } from './guards/orders-route.guard';
+import { OrdersService } from './services/orders.service';
 import { HttpClientService } from './services/http-client.service';
+import { installedChannelsReducer } from './reducers/installed-channels-reducer';
+import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
+import { tagsReducer } from './reducers/tags-reducer';
+import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
+import { ToggleSidebarService } from './services/toggle-sidebar.service';
+import { FullCountriesListService } from './services/full-countries-list.service';
+import { TagsService } from './services/tags.service';
 
 @NgModule({
     imports: [
@@ -46,23 +54,30 @@ import { SupportLinkService } from './services/support-link.service';
         StoreModule.forRoot({
             userInfo: userInfoReducer,
             currentStore: currentStoreReducer,
-            storeStatistics: statisticsReducer,
+            currentRoute: currentRouteReducer,
+            installedChannels: installedChannelsReducer,
+            tags: tagsReducer,
         })
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
+        ChannelsRouteGuard,
+        CanLoadAdminGuard,
         CheckProperLocaleGuard,
         InitializeStoreGuard,
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
         LoginByTokenGuard,
+        OrderDetailsResolveGuard,
+        OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
 
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
+        FullCountriesListService,
         ShopifyAuthentifyService,
         RegistrationCacheGuard,
         CreatePasswordService,
@@ -74,14 +89,16 @@ import { SupportLinkService } from './services/support-link.service';
         LegacyLinkService,
         LocalStorageService,
         TimelineService,
+        OrdersFilterService,
+        OrdersService,
         SupportLinkService,
+        TagsService,
+        ToggleSidebarService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        {provide: LOCALE_ID, useValue: environment.LOCALE_ID},
-        {provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
         ],
     declarations: []
 })

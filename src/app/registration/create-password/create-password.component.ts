@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CreatePasswordService } from '../../core/services/create-password.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { flatMap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
@@ -34,15 +35,19 @@ export class CreatePasswordComponent implements OnInit {
             this.store = JSON.parse(cache);
             return;
         }
-        this.route.queryParams
-            .flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params))
+        this.route.queryParams.pipe(
+            flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params)))
             .subscribe(store => {
                 this.store = store;
             })
     }
 
     public createPassword() {
-        if (this.emailControl.hasError('required') || this.passwordControl.hasError('required')) {
+        if (this.emailControl.hasError('required')
+            || this.passwordControl.hasError('required')
+            || this.emailControl.hasError('email')
+            || this.passwordControl.hasError('minlength')
+        ) {
             return;
         }
         // This is currently shopify specific
@@ -50,9 +55,9 @@ export class CreatePasswordComponent implements OnInit {
         this.store.owner.password = this.passwordControl.value;
         this.service.createPassword(this.store)
             .subscribe((store: CreateStoreModel) => {
-                this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
-                this.router.navigate(['register', 'create-account']);
-            },
+                    this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+                    this.router.navigate(['register', 'create-account']);
+                },
                 () => this.displayServerError = true);
 
         return false;

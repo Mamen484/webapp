@@ -1,0 +1,22 @@
+<h1 matDialogTitle i18n>Tags</h1>
+
+<mat-dialog-content>
+    <div i18n>Tag orders with keywords list to easily organize them.</div>
+    <div><a routerLink="/orders/tags-management" i18n (click)="close()">To create and manage tags, go to Settings</a></div>
+    <mat-form-field>
+        <mat-select placeholder="Available tags" i18n-placeholder>
+            <mat-option *ngFor="let tag of tags" (click)="assignTag(tag)">{{tag.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-chip-list>
+        <mat-chip *ngFor="let tag of assignedTags" (removed)="unassignTag(tag)" [removable]="true" color="accent" [selected]="true">
+            {{tag.name}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose i18n color="accent">Cancel</button>
+    <button mat-button i18n color="accent" (click)="save()">Save</button>
+</mat-dialog-actions>

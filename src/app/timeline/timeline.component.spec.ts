@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatCardModule, MatChipsModule } from '@angular/material';
+import { MatCardModule, MatChipsModule, MatIconModule, MatListModule, MatProgressSpinnerModule } from '@angular/material';
 import { TimelineComponent } from './timeline.component';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
@@ -49,9 +49,9 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelineService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
-            timelineService.getEventsByLink.and.returnValue(Observable.of(events2));
-            timelineService.getTimelineStream.and.returnValue(Observable.of({
+            timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService.getEventsByLink.and.returnValue(of(events2));
+            timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
                 data: {events, updates}
             }));
@@ -70,7 +70,7 @@ describe('TimelineComponent', () => {
                     },
                     {
                         provide: Store,
-                        useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
+                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
                     }
                 ]
             })
@@ -100,7 +100,9 @@ describe('TimelineComponent', () => {
         describe('scroll', () => {
             it('should load next page on scroll', () => {
                 component.onScroll();
-                expect(timelineService.getEventsByLink).toHaveBeenCalledWith('/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10');
+                expect(timelineService.getEventsByLink).toHaveBeenCalledWith(
+                    '/v1/store/307/timeline?name=rule.transformation%2C+rule.segmentation%2C+order.lifecycle&page=2&limit=10'
+                );
             });
 
             it('should set infiniteScrollDisabled to true when all the pages are loaded', () => {
@@ -109,29 +111,32 @@ describe('TimelineComponent', () => {
                 expect(component.infiniteScrollDisabled).toEqual(true);
             });
 
-            it('if the date of the last event on page 1 equals to the date of first event on page 2, should merge events for this same date to one group', () => {
-                component.onScroll();
-                expect(component.events[1][0]).toEqual('2017-10-02');
-                expect(component.events[1][1].length).toEqual(8);
+            it(
+                'if the date of the last event on page 1 equals to the date of first event on page 2,' +
+                ' should merge events for this same date to one group', () => {
+                    component.onScroll();
+                    expect(component.events[1][0]).toEqual('2017-10-02');
+                    expect(component.events[1][1].length).toEqual(8);
 
-                expect(component.events.length).toEqual(3);
+                    expect(component.events.length).toEqual(3);
 
-                expect(component.events[2][0]).toEqual('2017-10-01');
-                expect(component.events[2][1].length).toEqual(6);
-            });
+                    expect(component.events[2][0]).toEqual('2017-10-01');
+                    expect(component.events[2][1].length).toEqual(6);
+                });
         });
-
 
     });
 
     @Component({selector: 'sf-timeline-filtering-area', template: ''})
-    class TimelineFilteringAreaComponent {}
+    class TimelineFilteringAreaComponent {
+    }
+
     describe('integration tests', () => {
         let localStorage;
 
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj('TimelinService', ['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
+            timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
 
@@ -142,6 +147,9 @@ describe('TimelineComponent', () => {
                     FlexLayoutModule,
                     MatCardModule,
                     MatChipsModule,
+                    MatListModule,
+                    MatIconModule,
+                    MatProgressSpinnerModule,
                 ],
                 declarations: [
                     TimelineComponent,
@@ -159,10 +167,10 @@ describe('TimelineComponent', () => {
                     },
                     {
                         provide: Store,
-                        useValue: {select: param => Observable.of(aggregatedUserInfoMock._embedded.store[0])}
+                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
                     },
                     LegacyLinkService,
-                    {provide: Store, useValue: {select: () => Observable.of({id: 'storeId'})}},
+                    {provide: Store, useValue: {select: () => of({id: 'storeId'})}},
                     {provide: LocalStorageService, useValue: localStorage}
 
                 ]
@@ -171,7 +179,7 @@ describe('TimelineComponent', () => {
         }));
 
         beforeEach(() => {
-            timelineService.getTimelineStream.and.returnValue(Observable.of({
+            timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
                 data: {events: eventsWithErrors, updates: dataDistinct}
             }));
@@ -180,39 +188,50 @@ describe('TimelineComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should convert API data to the correct list of udpates', () => {
-            fixture.whenStable().then(() => {
-                let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
-                expect(items.length).toEqual(4);
-                validateUpdate(items[0], 'vertical_align_top', 'Amazon', 'Completed');
-                validateUpdate(items[1], 'vertical_align_top', 'CDiscount', 'Completed');
-                validateUpdate(items[2], 'vertical_align_bottom', 'Source feed', 'Completed');
-                validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
-            });
+        it('should convert API data to the correct list of udpates', async () => {
+            await fixture.whenStable();
+            let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
+            expect(items.length).toEqual(4);
+            validateUpdate(items[0], 'vertical_align_top', 'Amazon', 'Completed');
+            validateUpdate(items[1], 'vertical_align_top', 'CDiscount', 'Completed');
+            validateUpdate(items[2], 'vertical_align_bottom', 'Source feed', 'Completed');
+            validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
         });
 
-        it('should convert API data to the correct list of events', () => {
-            fixture.whenStable().then(() => {
-                let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
-                expect(items.length).toEqual(17);
-                validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
-                validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
-                validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
-                validateEvent(items[3], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
-                validateEvent(items[4], 'error_outline', 'We can\'t update your source feed because too many categories changes.', '/tools/infos');
-                validateEvent(items[5], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
-                validateEvent(items[6], 'error_outline', 'We can\'t update your source feed because we can\'t open it.', '/tools/infos');
-                validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
-                validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
-                validateEvent(items[9], 'error_outline', 'Your source feed wasn\'t updated because nothing had changed since the last update.', '/tools/infos');
-                validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
-                validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
-                validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
-                validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
-                validateEvent(items[14], 'error_outline', 'We canceled your export on amazon because another export is already in progress.')
-                validateEvent(items[15], 'vertical_align_bottom', 'Your feed has been imported.', '/tools/infos');
-                validateEvent(items[16], 'vertical_align_top', 'Your feed has been exported to javascript_marketplace.', '/javascript_marketplace');
-            });
+        it('should convert API data to the correct list of events', async () => {
+            await fixture.whenStable()
+            let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
+            expect(items.length).toEqual(17);
+            validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
+            validateEvent(items[1], 'shopping_basket', 'The order 59d53a6b2b26b can\'t be imported to your store.', '/marketplaces/orders/59d53a6b2b26b');
+            validateEvent(items[2], 'build', 'The Auto-Remove rule "some name" has been deleted.', '/tools/segmentations#353433dfd');
+            // feed.import - no reason
+            validateEvent(items[3], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
+            // feed.import - reason: categories
+            validateEvent(items[4], 'error_outline', 'We can\'t update your source feed because too many categories changes.', '/tools/infos');
+            // feed.import - reason: products
+            validateEvent(items[5], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
+            // feed.import - reason: open
+            validateEvent(items[6], 'error_outline', 'We can\'t update your source feed because we can\'t open it.', '/tools/infos');
+            // feed.export - channel: amazon
+            validateEvent(items[7], 'error_outline', 'We can\'t export your feed to amazon.', '/amazon');
+            // feed.export - channel: some_ad
+            validateEvent(items[8], 'error_outline', 'We can\'t export your feed to some_ad.', '/ads/manage/some_ad');
+            // feed.import - reason: check
+            validateEvent(items[9], 'error_outline', 'Your source feed wasn\'t updated because nothing had changed since the last update.', '/tools/infos');
+            // feed.import - reason: references
+            validateEvent(items[10], 'error_outline', 'We can\'t update your source feed because too many products changed.', '/tools/infos');
+            // feed.import - reason: mapping
+            validateEvent(items[11], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+            // feed.import - reason: abracadabra
+            validateEvent(items[12], 'error_outline', 'Your source feed can\'t be updated because of an unrecognized error.', '/tools/infos');
+            // feed.import - reason: settings
+            validateEvent(items[13], 'error_outline', 'We can\'t update your source feed because columns changed.', '/tools/infos');
+            // feed.export - action: cancel
+            validateEvent(items[14], 'error_outline', 'We canceled your export on amazon because another export is already in progress.')
+            validateEvent(items[15], 'vertical_align_bottom', 'Your feed has been imported.', '/tools/infos');
+            validateEvent(items[16], 'vertical_align_top', 'Your feed has been exported to javascript_marketplace.', '/javascript_marketplace');
+
         });
     })
 

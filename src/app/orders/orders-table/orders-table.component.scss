@@ -1,0 +1,76 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/order-actions-bar.scss';
+
+@include order-actions-bar();
+
+.actions {
+  justify-content: flex-start;
+  padding-left: 29px;
+
+  &.accent {
+    background-color: mat-color($accent, 0.1);
+  }
+}
+
+mat-card {
+  padding:0;
+  width: calc(100% - #{$content-margin});
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-tab-group {
+  text-transform: uppercase;
+}
+
+.loading-container {
+  position: absolute;
+  top: 117px;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-orders {
+  color: mat-color($accent);
+}
+
+.marketplace-logo {
+  vertical-align: middle;
+}
+
+.no-orders-message {
+  margin-left: 15px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+mat-progress-bar {
+  position: absolute;
+}
+
+button:not([mat-menu-item]) {
+  margin-left: 10px;
+}
+
+.table-scrollable {
+  overflow-x: auto;
+}
+
+table {
+  min-width: 100%;
+  th, td {
+    padding: 0 25px;
+  }
+}
+
+mat-icon[color="warn"]{
+  color: mat-color($warn, 900);
+}

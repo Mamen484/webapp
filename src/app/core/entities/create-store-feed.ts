@@ -1,8 +1,11 @@
+import { FeedSource } from './feed-source';
+
 export class CreateStoreFeed {
     url = '';
-    source = '';
-    mapping: {[key: string]: string} = {};
+    source: FeedSource;
+    mapping: {[key: string]: string} = <{[key: string]: string}>{};
     settings = {
-        xmlProductNode: ''
+        xmlProductNode: '',
+        csvFieldSeparator: ''
     }
 }

@@ -41,7 +41,44 @@ $badge-font-level: caption;
   top: 47px;
 }
 
+
+.scrollable-container {
+  padding: $content-margin $content-margin $content-margin 5px;
+
+  display: block;
+  // viewport height - toolbar height - top padding - bottom padding
+  height: calc(100vh - #{$toolbar-height} - (2 * #{$content-margin}));
+  overflow: auto;
+}
+
 .spinner-parent {
   margin-top: 10px;
   margin-bottom: 30px;
 }
+
+.sf-warn-alert {
+  background-color: mat-color($warn, 900, 0.1);
+  color: mat-color($warn, 900);
+  border: mat-color($warn, 900) 1px solid;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  mat-icon.mat-icon.mat-warn {
+    vertical-align: top;
+    color: mat-color($warn, 900);
+  }
+}
+
+.sf-snackbar-error {
+  color: mat-color($warn);
+  font-weight: mat-font-weight($config, body-2);
+}
+
+//.sf-tags-chips {
+//  .mat-chip-list-wrapper {
+//    display: flex;
+//    flex-direction: column;
+//    align-items: center;
+//    align-content: space-around;
+//  }
+//}

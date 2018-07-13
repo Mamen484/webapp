@@ -1,0 +1,41 @@
+<div matDialogTitle i18n>Filters</div>
+<mat-dialog-content fxLayout="row" fxLayoutGap="30px">
+    <div fxLayout="column">
+        <mat-form-field color="accent">
+            <mat-select placeholder="Date" i18n-placeholder [(ngModel)]="dateOption" (selectionChange)="changeDate($event.value)">
+                <mat-option value="anytime" i18n>Anytime</mat-option>
+                <mat-option value="today" i18n>Today</mat-option>
+                <mat-option value="week" i18n>Last 7 days</mat-option>
+                <mat-option value="month" i18n>Last 30 days</mat-option>
+                <mat-option value="custom" i18n>Custom</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field color="accent">
+            <mat-select [(ngModel)]="filter.channel">
+                <mat-option value="all" i18n>All channels</mat-option>
+                <mat-option *ngFor="let channel of channels" [value]="channel.id">
+                    {{channel.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px" *ngIf="dateOption === 'custom'">
+        <mat-form-field color="accent">
+            <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="filter.since"
+                   placeholder="Min date">
+            <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
+            <mat-datepicker panelClass="sf-accent" #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field color="accent">
+            <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="filter.until"
+                   placeholder="Max date">
+            <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
+            <mat-datepicker panelClass="sf-accent" #maxDate (selectedChanged)="setUntil($event)"></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button color="accent" i18n mat-dialog-close>CANCEL</button>
+    <button mat-button color="accent" i18n (click)="applyFilter()">FILTER</button>
+</mat-dialog-actions>

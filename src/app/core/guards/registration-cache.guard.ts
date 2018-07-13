@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { filter, flatMap, tap, map, count } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
 import { WindowRefService } from '../services/window-ref.service';
 import { environment } from '../../../environments/environment';
-import { toPairs } from 'lodash';
-import { Helpers } from '../entities/helpers';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
@@ -22,25 +21,25 @@ export class RegistrationCacheGuard implements CanActivate {
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
         return this.getExistingStore(next.queryParams)
-            .filter(store => store.storeId > 0)
-            .flatMap(store => this.shopifyService.updateStore(store))
-            .map(() => {
+            .pipe(filter(store => store.storeId > 0))
+            .pipe(flatMap(store => this.shopifyService.updateStore(store)))
+            .pipe(map(() => {
                 this.localStorage.removeItem('sf.registration');
                 this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + this.token;
-            })
-            .count()
-            .map(count => !count);
+            }))
+            .pipe(count())
+            .pipe(map(number => !number));
     }
 
     protected getExistingStore(params) {
         let cache = this.getStoreFromCache();
         if (cache) {
-            return Observable.of(JSON.parse(cache));
+            return of(JSON.parse(cache));
         }
         return this.shopifyService.getStoreData(params['shop'], params)
         // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
-            .do(store => this.localStorage.setItem('sf.registration', JSON.stringify(store)))
-            .do(store => this.autoLoginUser(store));
+            .pipe(tap(store => this.localStorage.setItem('sf.registration', JSON.stringify(store))))
+            .pipe(tap(store => this.autoLoginUser(store)));
     }
 
     protected getStoreFromCache() {

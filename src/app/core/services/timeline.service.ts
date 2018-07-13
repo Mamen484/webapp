@@ -1,8 +1,8 @@
+import { zip ,  Observable ,  Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { TimelineFilter } from '../entities/timeline-filter';
 import { TimelineEvent } from '../entities/timeline-event';
 import { TimelineEventAction } from '../entities/timeline-event-action.enum';
@@ -10,19 +10,21 @@ import { TimelineEventName } from '../entities/timeline-event-name.enum';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
 const MAX_UPDATES = 200;
+const MAX_EVENTS = 50;
 
 export const enum StreamEventType {started, finished}
 
 @Injectable()
 export class TimelineService {
 
-    timelineStream = new Subject();
+    protected timelineStream = new Subject();
 
     constructor(protected httpClient: HttpClient) {
     }
 
     getEvents(storeId, dateFilter: TimelineFilter = new TimelineFilter()): any {
         let params = new HttpParams()
+            .set('limit', String(MAX_EVENTS))
             .set('name', dateFilter.name.join(','))
             .set('action', dateFilter.action.join(','));
         params = dateFilter.since ? params.set('since', dateFilter.since.toJSON()) : params;
@@ -48,8 +50,8 @@ export class TimelineService {
                         TimelineEventAction.finish,
                         TimelineEventAction.error
                     ].join(','))
-            })
-            .map(this.getDistinctUpdates.bind(this))
+            }).pipe(
+            map(this.getDistinctUpdates.bind(this)));
 
     }
 
@@ -59,7 +61,7 @@ export class TimelineService {
 
     emitUpdatedTimeline(storeId) {
         this.timelineStream.next({type: StreamEventType.started});
-        this.getEvents(storeId).zip(this.getEventUpdates(storeId))
+        zip(this.getEvents(storeId), this.getEventUpdates(storeId))
             .subscribe(([events, updates]) => this.timelineStream.next({
                 type: StreamEventType.finished,
                 data: {events, updates}
@@ -85,7 +87,7 @@ export class TimelineService {
         return this.httpClient.head(`${environment.API_URL}/store/${storeId}/timeline`, {
             observe: 'response',
             responseType: 'text',
-        }).map(({headers}) => Number(headers.get('X-New-Events-Count')));
+        }).pipe(map(({headers}) => Number(headers.get('X-New-Events-Count'))));
     }
 
 }

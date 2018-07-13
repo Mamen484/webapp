@@ -1,0 +1,32 @@
+@import 'variables';
+
+mat-list.sf-subnav.mat-list {
+  &>mat-list-item {
+    height: 100%;
+    padding: 0 9px;
+    color: white;
+    box-sizing: border-box;
+
+    &:first-child:hover, &.active {
+      background-color: $white-12-opacity;
+      border-bottom: 2px solid mat-color($accent, 600);
+
+      a {
+        margin-top: 2px;
+      }
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      text-transform: uppercase;
+      display: flex;
+      align-items: flex-end;
+
+      mat-icon {
+        vertical-align: top;
+        margin-right: 10px;
+        height: 23px;
+      }
+    }
+  }
+}

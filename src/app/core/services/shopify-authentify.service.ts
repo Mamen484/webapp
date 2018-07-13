@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Params } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { CreateStoreModel } from '../entities/create-store-model';
@@ -14,9 +15,8 @@ export class ShopifyAuthentifyService {
     }
 
     public getAuthorizationUrl(shop: string): Observable<string> {
-
         return this.httpClient.get(this.apiUrl + '/shopify/auth/' + this.getShopName(shop))
-            .map((data: { authorizeUrl: string }) => data.authorizeUrl);
+            .pipe(map((data: { authorizeUrl: string }) => data.authorizeUrl));
     }
 
     public getStoreData(shop: string, {code, timestamp, hmac}: Params): Observable<CreateStoreModel> {
@@ -27,10 +27,10 @@ export class ShopifyAuthentifyService {
                     .set('timestamp', timestamp)
                     .set('hmac', hmac)
             })
-                .map((data: any) => CreateStoreModel.createFromResponse(data, this.getShopName(shop)))
-                .do(data => this.storeData = data);
+                .pipe(map((data: any) => CreateStoreModel.createFromResponse(data, this.getShopName(shop))))
+                .pipe(tap(data => this.storeData = data));
         }
-        return Observable.of(this.storeData);
+        return of(this.storeData);
 
     }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { LocalStorageService } from '../services/local-storage.service';
 
@@ -15,11 +15,9 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     protected formatRequest(req) {
-
         if (this.notApiCall(req)) {
             return req;
         }
-
         if (this.appTokenNeeded(req)) {
             return req.clone({
                 headers: req.headers
@@ -27,7 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
                     .set('Authorization', environment.APP_AUTHORIZATION)
             })
         }
-
         if (this.notLoggedIn(req)) {
             return req.clone({
                 headers: req.headers.set('Accept', 'application/json')
@@ -46,7 +43,9 @@ export class AuthInterceptor implements HttpInterceptor {
     protected appTokenNeeded(req) {
         return (req.url.indexOf(environment.API_URL + '/shopify/auth') === 0 && req.method === 'GET')
             || (req.url.indexOf(environment.API_URL + '/shopify/store') === 0 && req.method === 'GET')
-            || (req.url.indexOf(environment.API_URL + '/store') === 0 && (req.method === 'POST' || req.method === 'PATCH'))
+            || (req.url.indexOf(environment.API_URL + '/store') === 0
+                && (req.method === 'POST' || req.method === 'PATCH')
+                && req.url.indexOf('/order') === -1)
     }
 
     protected notApiCall(req) {
@@ -55,6 +54,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     protected notLoggedIn(req) {
         let authString = this.localStorage.getItem('Authorization');
-        return (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0 );
+        return (!authString || req.url.indexOf(environment.API_URL + '/auth') === 0);
     }
 }

@@ -1,0 +1,14 @@
+<div mat-dialog-title i18n>No orders selected</div>
+<mat-dialog-content>
+    <ng-container *ngIf="action === actions.unacknowledge" i18n>Please, select orders to unacknowledge</ng-container>
+    <ng-container *ngIf="action === actions.accept" i18n>Please, select orders to accept</ng-container>
+    <ng-container *ngIf="action === actions.acknowledge" i18n>Please, select orders to acknowledge</ng-container>
+    <ng-container *ngIf="action === actions.ship" i18n>Please, select orders to ship</ng-container>
+    <ng-container *ngIf="action === actions.cancel" i18n>Please, select orders to cancel</ng-container>
+    <ng-container *ngIf="action === actions.refuse" i18n>Please, select orders to refuse</ng-container>
+    <ng-container *ngIf="action === 'export'" i18n>Please, select orders to export</ng-container>
+    <ng-container *ngIf="action === 'assignTags'" i18n>Please, select orders to assign tags</ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close i18n color="accent">OK</button>
+</mat-dialog-actions>
