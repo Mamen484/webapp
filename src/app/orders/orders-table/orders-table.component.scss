@@ -67,6 +67,11 @@ button:not([mat-menu-item]) {
 
 table {
   min-width: 100%;
+
+  td {
+    white-space: nowrap;
+  }
+
   th, td {
     padding: 0 15px;
 
