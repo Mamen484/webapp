@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
 import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
@@ -6,17 +15,19 @@ import { AppState } from '../../core/entities/app-state';
 import { Store } from '../../core/entities/store';
 import { toPairs } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { filter, flatMap, take } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, take } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
+
+const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 
 @Component({
     selector: 'sf-orders-table',
@@ -53,6 +64,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     ordersFilter: OrdersFilter;
     exports: any[];
     showStickyBorder = false;
+    resize$ = new Subject();
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -62,6 +74,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected router: Router,
                 protected snackbar: MatSnackBar,
                 protected elementRef: ElementRef<HTMLElement>) {
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resize$.next(event);
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -97,6 +114,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             .subscribe(response => this.exports = response._embedded.export);
 
         this.updateStickyColumnsStyles();
+        this.resize$.pipe(
+            debounceTime(UPDATE_TABLE_ON_RESIZE_INTERVAL)
+        ).subscribe(() => this.updateStickyColumnsStyles());
     }
 
     ngOnDestroy() {
