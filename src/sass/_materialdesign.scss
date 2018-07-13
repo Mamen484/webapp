@@ -92,6 +92,7 @@ mat-sidenav-container {
 sf-filtering-tabs mat-tab-header {
   z-index: 0;
 }
+
 sf-filter-channels-dialog {
   .mat-focused {
     label.mat-input-placeholder {
@@ -105,7 +106,6 @@ sf-filter-channels-dialog {
   }
 
 }
-
 
 .sf-accent {
   :not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected),
@@ -136,5 +136,13 @@ sf-filtering-tabs {
 .sf-countries-autocomplete {
   mat-option {
     text-transform: capitalize;
+  }
+}
+
+sf-orders-table {
+  table {
+    .mat-chip-list-wrapper {
+      width: min-content;
+    }
   }
 }

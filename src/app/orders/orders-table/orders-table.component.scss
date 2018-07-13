@@ -13,8 +13,8 @@
 }
 
 mat-card {
-  padding:0;
-  width: calc(100% - #{$content-margin});
+  padding: 0;
+  width: 100%;
 }
 
 mat-spinner {
@@ -54,6 +54,7 @@ mat-tab-group {
 
 mat-progress-bar {
   position: absolute;
+  z-index: 10;
 }
 
 button:not([mat-menu-item]) {
@@ -67,10 +68,27 @@ button:not([mat-menu-item]) {
 table {
   min-width: 100%;
   th, td {
-    padding: 0 25px;
+    padding: 0 15px;
+
+    &.column-tags, &.column-hasErrors {
+      padding: 0;
+    }
+    &.column-tags mat-chip-list, &.column-hasErrors mat-icon {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
   }
 }
 
-mat-icon[color="warn"]{
+mat-icon[color="warn"] {
   color: mat-color($warn, 900);
+}
+
+mat-chip {
+  white-space: nowrap;
+}
+
+.right-bordered {
+  border-right: 1px solid mat-color($grey);
 }

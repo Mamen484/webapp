@@ -43,7 +43,7 @@ $badge-font-level: caption;
 
 
 .scrollable-container {
-  padding: $content-margin $content-margin $content-margin 5px;
+  padding: $content-margin $content-margin+5px $content-margin 5px;
 
   display: block;
   // viewport height - toolbar height - top padding - bottom padding
