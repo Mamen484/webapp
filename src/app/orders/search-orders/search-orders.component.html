@@ -11,8 +11,8 @@
   </mat-card>
 </label>
 <mat-chip-list [selectable]="false">
-  <mat-chip *ngIf="filter.channel && filter.channel !== 'all'">
-    Channel: {{filter.channel}}
+  <mat-chip *ngIf="selectedChannel">
+    Channel: {{selectedChannel}}
     <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
   </mat-chip>
   <mat-chip *ngIf="filter.since">

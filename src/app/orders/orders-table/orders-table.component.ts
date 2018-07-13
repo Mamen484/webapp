@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -27,6 +27,7 @@ import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dia
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatTable) ordersTable: MatTable<OrdersTableItem>;
 
     selection = new SelectionModel<OrdersTableItem>(true, []);
 
@@ -51,6 +52,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
     exports: any[];
+    showStickyBorder = false;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -58,7 +60,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
                 protected router: Router,
-                protected snackbar: MatSnackBar) {
+                protected snackbar: MatSnackBar,
+                protected elementRef: ElementRef<HTMLElement>) {
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -92,6 +95,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.appStore.select('currentStore')
             .pipe(flatMap((store: Store) => this.ordersService.fetchExports(store.id)))
             .subscribe(response => this.exports = response._embedded.export);
+
+        this.updateStickyColumnsStyles();
     }
 
     ngOnDestroy() {
@@ -119,6 +124,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     setDisplayedColumns() {
         this.displayedColumns = this.requiredColumns
             .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
+        this.updateStickyColumnsStyles();
 
     }
 
@@ -188,10 +194,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 this.isLoadingResults = false;
 
                 this.resultsLength = ordersPage.total;
-                this.paginator.pageIndex = + ordersFilter.page - 1;
+                this.paginator.pageIndex = +ordersFilter.page - 1;
 
                 this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
-                this.changeDetectorRef.markForCheck();
+                this.updateStickyColumnsStyles();
             });
 
     }
@@ -201,5 +207,18 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             .subscribe(store => {
                 this.fetchData(store, this.ordersFilter);
             })
+    }
+
+    protected updateStickyColumnsStyles() {
+        this.changeDetectorRef.detectChanges();
+        this.updateStickyBorder();
+        this.ordersTable.updateStickyColumnStyles();
+        this.changeDetectorRef.markForCheck();
+    }
+
+    protected updateStickyBorder() {
+        const tableWidth = this.elementRef.nativeElement.querySelector('table.orders-table').getBoundingClientRect().width;
+        const containerWidth = this.elementRef.nativeElement.querySelector('.table-scrollable').getBoundingClientRect().width;
+        this.showStickyBorder = tableWidth > containerWidth;
     }
 }
