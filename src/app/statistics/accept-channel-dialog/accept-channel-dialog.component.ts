@@ -14,7 +14,7 @@ import { StoreCharge } from '../../core/entities/store-charge';
 export class AcceptChannelDialogComponent implements OnInit {
     charge: StoreCharge;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data,
+    constructor(@Inject(MAT_DIALOG_DATA) public data: { logo: string, link: string },
                 protected storeService: StoreService,
                 protected appStore: Store<AppState>) {
     }
