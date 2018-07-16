@@ -67,6 +67,11 @@ button:not([mat-menu-item]) {
 
 table {
   min-width: 100%;
+
+  td {
+    white-space: nowrap;
+  }
+
   th, td {
     padding: 0 15px;
 
@@ -90,5 +95,5 @@ mat-chip {
 }
 
 .right-bordered {
-  border-right: 1px solid mat-color($grey);
+  border-right: 1px solid $black-12-opacity;
 }
