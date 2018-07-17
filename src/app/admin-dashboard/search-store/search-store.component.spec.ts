@@ -26,7 +26,7 @@ describe('SearchStoreComponent', () => {
                 Location,
             ],
             imports: [RouterTestingModule.withRoutes([
-                {path: 'home', component: BlankComponent}])]
+                {path: '', component: BlankComponent}])]
         });
     }));
 
@@ -37,11 +37,11 @@ describe('SearchStoreComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should go to home?store={storeId} on selectStore call', fakeAsync(() => {
+    it('should go to ?store={storeId} on selectStore call', fakeAsync(() => {
         let location: Location = TestBed.get(Location);
         component.selectStore(295);
         tick();
-        expect(location.path()).toEqual('/home?store=295');
+        expect(location.path()).toEqual('?store=295');
     }));
 
     it('should set processing to true on selectStore call', fakeAsync(() => {
