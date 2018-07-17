@@ -48,7 +48,7 @@
                         <div class="totals-handset mat-body-2" fxLayout="column">
                             <div fxLayout="row">
                                 <div fxFlex i18n>Products Amount</div>
-                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
+                                <div fxFlex>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
                                 </div>
                             </div>
                             <div fxLayout="row">
@@ -151,9 +151,9 @@
                     <div class="mat-body-2" i18n>Total price</div>
                 </div>
                 <div class="value" fxLayout="column" fxLayoutGap="20px">
-                    <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
-                    <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                    <div class="mat-body-2" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
+                    <div>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                    <div>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                    <div class="mat-body-2">{{order.payment.productAmount + order.payment.shippingAmount |
                         sfCurrency:order.payment.currency}}
                     </div>
                 </div>
