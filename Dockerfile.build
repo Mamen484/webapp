@@ -3,7 +3,7 @@
 FROM node:8.11 as node
 
 RUN  apt-get update && \
- apt-get install zip
+ apt-get install -y zip
 
 RUN npm i -g npm@latest
 WORKDIR /app
