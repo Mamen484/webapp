@@ -52,7 +52,7 @@ export class StatisticsComponent {
                 this.processing = false;
 
                 this.appStore.select('currentStore').pipe(take(1)).subscribe(currentStore => {
-                    if (currentStore.feed.source === 'Shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
+                    if (currentStore.feed.source && currentStore.feed.source.toLowerCase() === 'shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
                         this.haveNoChannels = true;
                         this.showNoChannelsDialog();
                     }

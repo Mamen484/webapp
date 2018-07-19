@@ -78,9 +78,9 @@ describe('CheckProperLocaleGuard', () => {
             inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
                 environment.production = 'true';
                 appStore.select.and.returnValue(of({language: 'en-US'}));
-                locationSpy.path.and.returnValue('/home?store=307');
+                locationSpy.path.and.returnValue('/?store=307');
                 guard.canActivate().subscribe(canActivate => {
-                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/home?store=307');
+                    expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
                     expect(canActivate).toEqual(false);
                 })
             }));
