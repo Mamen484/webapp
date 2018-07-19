@@ -1,6 +1,10 @@
 ## We use this configuration to get a kubernetes build on a testing environment.
 # Step 1: build an angular application
 FROM node:8.11 as node
+
+RUN  apt-get update && \
+ apt-get install zip
+
 RUN npm i -g npm@latest
 WORKDIR /app
 
@@ -9,9 +13,9 @@ RUN npm ci
 
 # download translations
 ARG CROWDIN_API_KEY
-curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
-curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
-unzip -o all.zip
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
+RUN unzip -o all.zip
 
 ARG env=prod
 ARG LOCALES="en fr es pt de it"
