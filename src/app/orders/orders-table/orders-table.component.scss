@@ -97,3 +97,10 @@ mat-chip {
 .right-bordered {
   border-right: 1px solid $black-12-opacity;
 }
+
+.sf-tags-chips {
+  mat-chip[color="accent"] {
+    background-color: mat-color($accent, 0.3);
+    color: black;
+  }
+}
