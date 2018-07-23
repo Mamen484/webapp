@@ -16,25 +16,38 @@ declare const gtag: any;
 })
 export class AppComponent implements OnInit {
 
+    showLivechat = false;
+    livechatId = environment.LIVECHAT_LICENSE_ID;
+
     constructor(protected appStore: Store<AppState>, protected router: Router) {
     }
 
     ngOnInit(): void {
-        if (environment.RUN_AUTOPILOT && <any>environment.RUN_AUTOPILOT !== 'false') {
-            LOAD_AUTOPILOT();
-        }
-
         this.appStore.select('userInfo').pipe(filter(info => Boolean(info)))
             .subscribe((userInfo: AggregatedUserInfo) => {
-                gtag('config', environment.GTAG_ID, {
-                    'user_id': userInfo.token,
-                });
+                if (!userInfo.isAdmin()) {
+                    this.enableAutopilot();
+                    this.configureGoogleAnalytics(userInfo);
+                    this.showLivechat = true;
+                }
             });
+    }
+
+    protected configureGoogleAnalytics(userInfo) {
+        gtag('config', environment.GTAG_ID, {
+            'user_id': userInfo.token,
+        });
 
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
                 gtag('config', 'GA_TRACKING_ID', {'page_path': event.urlAfterRedirects});
             }
         });
+    }
+
+    protected enableAutopilot() {
+        if (environment.RUN_AUTOPILOT && <any>environment.RUN_AUTOPILOT !== 'false') {
+            LOAD_AUTOPILOT();
+        }
     }
 }
