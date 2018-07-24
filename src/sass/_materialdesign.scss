@@ -154,3 +154,7 @@ mat-sidenav-container {
     }
   }
 }
+
+mat-chip.mat-chip.sf-tag {
+  background-color: mat-color($accent, 0.3);
+}

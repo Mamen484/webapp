@@ -8,7 +8,7 @@ import { WindowRefService } from './core/services/window-ref.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
     let component: AppComponent;
     let fixture: ComponentFixture<AppComponent>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
