@@ -142,7 +142,7 @@
                 No orders matching your request.
             </div>
         </div>
-        <mat-paginator [pageSize]="10" [length]="resultsLength"></mat-paginator>
+        <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions" (page)="pageChanged($event)"></mat-paginator>
     </mat-card-content>
 </mat-card>
 

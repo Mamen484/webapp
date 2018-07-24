@@ -63,6 +63,7 @@ button:not([mat-menu-item]) {
 
 .table-scrollable {
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 table {
