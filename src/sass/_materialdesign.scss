@@ -158,3 +158,8 @@ mat-sidenav-container {
 mat-chip.mat-chip.sf-tag {
   background-color: mat-color($accent, 0.3);
 }
+
+button[mat-stroked-button][color="accent"] {
+  text-transform: uppercase;
+  border-color: $black-12-opacity;
+}
