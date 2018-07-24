@@ -146,3 +146,11 @@ sf-orders-table {
     }
   }
 }
+
+mat-sidenav-container {
+  &.mat-sidenav-container {
+    &.mat-drawer-container {
+      overflow: visible;
+    }
+  }
+}
