@@ -17,4 +17,5 @@ export const environment = {
     DEFAULT_AUTOPILOT_STORENAME: 'default',
     RUN_AUTOPILOT: true,
     GTAG_ID: 'UA-78261662-1',
+    LIVECHAT_LICENSE_ID: '9950095',
 };

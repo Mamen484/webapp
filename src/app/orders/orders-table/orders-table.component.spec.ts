@@ -20,6 +20,7 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
+import { LocalStorageService } from '../../core/services/local-storage.service';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -32,6 +33,7 @@ describe('OrdersTableComponent', () => {
 
     let component: OrdersTableComponent;
     let fixture: ComponentFixture<OrdersTableComponent>;
+    let localStorage: jasmine.SpyObj<LocalStorageService>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
@@ -41,6 +43,7 @@ describe('OrdersTableComponent', () => {
         filterService = jasmine.createSpyObj(['getFilter']);
         router = jasmine.createSpyObj(['navigate']);
         snackbar = jasmine.createSpyObj(['openFromComponent']);
+        localStorage = jasmine.createSpyObj(['getItem', 'setItem']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -60,6 +63,7 @@ describe('OrdersTableComponent', () => {
                 {provide: OrdersFilterService, useValue: filterService},
                 {provide: Router, useValue: router},
                 {provide: MatSnackBar, useValue: snackbar},
+                {provide: LocalStorageService, useValue: localStorage},
 
             ],
             imports: [

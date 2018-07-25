@@ -15,6 +15,7 @@
     "@angular/platform-browser-dynamic": "^6.0.9",
     "@angular/platform-server": "^6.0.9",
     "@angular/router": "^6.0.9",
+    "@livechat/angular-widget": "0.0.6",
     "@ngrx/store": "^5.2.0",
     "@types/lodash": "^4.14.111",
     "core-js": "^2.5.7",

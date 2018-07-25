@@ -6,8 +6,8 @@ import { AppState } from './core/entities/app-state';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
-
-declare const gtag: any;
+import { Store as UserStore } from './core/entities/store';
+import { WindowRefService } from './core/services/window-ref.service';
 
 @Component({
     selector: 'app-root',
@@ -16,24 +16,49 @@ declare const gtag: any;
 })
 export class AppComponent implements OnInit {
 
-    constructor(protected appStore: Store<AppState>, protected router: Router) {
+    showLivechat = false;
+    livechatId = environment.LIVECHAT_LICENSE_ID;
+
+    constructor(protected appStore: Store<AppState>,
+                protected router: Router,
+                protected windowRef: WindowRefService) {
     }
 
     ngOnInit(): void {
-        if (environment.RUN_AUTOPILOT && <any>environment.RUN_AUTOPILOT !== 'false') {
-            LOAD_AUTOPILOT();
-        }
-
         this.appStore.select('userInfo').pipe(filter(info => Boolean(info)))
             .subscribe((userInfo: AggregatedUserInfo) => {
-                gtag('config', environment.GTAG_ID, {
-                    'user_id': userInfo.token,
-                });
+                if (!userInfo.isAdmin()) {
+                    this.enableAutopilot();
+                    this.configureGoogleAnalytics(userInfo);
+                    this.configureLivechat();
+                }
             });
+    }
+
+    protected configureGoogleAnalytics(userInfo) {
+        this.windowRef.nativeWindow.gtag('config', environment.GTAG_ID, {
+            'user_id': userInfo.token,
+        });
 
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
-                gtag('config', 'GA_TRACKING_ID', {'page_path': event.urlAfterRedirects});
+                this.windowRef.nativeWindow.gtag('config', environment.GTAG_ID,
+                    {'page_path': event.urlAfterRedirects}
+                );
+            }
+        });
+    }
+
+    protected enableAutopilot() {
+        if (environment.RUN_AUTOPILOT && <any>environment.RUN_AUTOPILOT !== 'false') {
+            LOAD_AUTOPILOT();
+        }
+    }
+
+    protected configureLivechat() {
+        this.appStore.select('currentStore').subscribe((store: UserStore) => {
+            if (store && store.country && store.country.toLowerCase() === 'us') {
+                this.showLivechat = true;
             }
         });
     }
