@@ -1,4 +1,7 @@
 mat-card-content {
+
+  line-height: 24px;
+
   img {
     max-width: 100%;
     max-height: 100%;
@@ -7,5 +10,11 @@ mat-card-content {
   sf-order-status {
     margin: auto;
     text-align: right;
+  }
+}
+
+mat-chip-list {
+  mat-chip {
+    margin-top: 15px;
   }
 }

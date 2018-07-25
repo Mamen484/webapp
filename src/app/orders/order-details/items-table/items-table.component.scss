@@ -1,0 +1,31 @@
+@import '../../../../sass/mixins/order-actions-bar';
+
+@include order-actions-bar();
+
+$side-padding: 25px;
+
+mat-card.orders-table {
+  padding: 0;
+}
+
+table {
+  min-width: 100%;
+  table-layout: auto;
+  th, td {
+    padding: 0 $side-padding;
+
+    &:last-child {
+      // set the Price column width to the minimum available,
+      // to have the proper align with totals values
+      width: 1px;
+    }
+  }
+
+  td:last-child {
+    text-align: right;
+  }
+}
+
+.totals {
+    padding: 30px $side-padding;
+}

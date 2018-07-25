@@ -4,6 +4,7 @@
           "summary items-table"
           "addresses items-table";
   grid-template-columns: 1fr 2fr;
+  grid-gap: 20px;
 }
 
 .summary {

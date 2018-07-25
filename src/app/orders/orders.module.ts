@@ -25,6 +25,7 @@ import { TagsManagementComponent } from './tags-management/tags-management.compo
 import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component';
 import { AssignTagsDialogComponent } from './assign-tags-dialog/assign-tags-dialog.component';
 import { SummaryBlockComponent } from './order-details/summary-block/summary-block.component';
+import { ItemsTableComponent } from './order-details/items-table/items-table.component';
 
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { SummaryBlockComponent } from './order-details/summary-block/summary-blo
         TagsManagementComponent,
         NewTagDialogComponent,
         SummaryBlockComponent,
+        ItemsTableComponent,
     ],
     entryComponents: [
         AssignTagsDialogComponent,

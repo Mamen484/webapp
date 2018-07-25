@@ -12,7 +12,8 @@
         <div class="mat-body-2" i18n>Order ID {{order.reference}}</div>
         <div i18n>Store reference {{order.storeReference}}</div>
         <div i18n>{{order.createdAt | date:'short'}}</div>
-        <mat-chip-list>
+        <div i18n *ngIf="order.acknowledgedAt">Acknowledged at {{order.acknowledgedAt | date:'short'}}</div>
+        <mat-chip-list *ngIf="order._embedded.tag && order._embedded.tag.length">
             <mat-chip color="accent" [selected]="true" *ngFor="let tag of order._embedded.tag">
                 {{tag.name}}
             </mat-chip>
