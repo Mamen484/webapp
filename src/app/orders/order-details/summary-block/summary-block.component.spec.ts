@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SummaryBlockComponent } from './summary-block.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('SummaryBlockComponent', () => {
     let component: SummaryBlockComponent;
@@ -8,7 +9,8 @@ describe('SummaryBlockComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SummaryBlockComponent]
+            declarations: [SummaryBlockComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));
@@ -16,7 +18,6 @@ describe('SummaryBlockComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SummaryBlockComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {

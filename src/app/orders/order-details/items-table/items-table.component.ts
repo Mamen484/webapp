@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
 import { OrderItem } from '../../../core/entities/orders/order-item';
-import { ApiSpecialValue } from '../../../core/entities/api-special-value.enum';
 import { OrderDetailsItem } from '../../../core/entities/orders/order-details-item';
 import { MatDialog, MatSnackBar, MatTableDataSource } from '@angular/material';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
@@ -82,11 +81,11 @@ export class ItemsTableComponent implements OnInit {
         this.tableData = new MatTableDataSource(this.order.items.map((item: OrderItem) => {
             return <OrderDetailsItem>{
                 sku: item.reference,
-                name: item.name === ApiSpecialValue.absent ? '' : item.name,
+                name: item.name,
                 quantity: item.quantity,
                 date: this.order.createdAt,
                 price: item.price,
-                image: item.image === ApiSpecialValue.absent ? '' : item.image
+                image: item.image,
             }
         }));
     }
