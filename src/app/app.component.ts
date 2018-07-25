@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
 
     protected configureLivechat() {
         this.appStore.select('currentStore').subscribe((store: UserStore) => {
-            if (store.country && store.country.toLowerCase() === 'us') {
+            if (store && store.country && store.country.toLowerCase() === 'us') {
                 this.showLivechat = true;
             }
         });
