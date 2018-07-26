@@ -26,6 +26,9 @@ import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component
 import { AssignTagsDialogComponent } from './assign-tags-dialog/assign-tags-dialog.component';
 import { SummaryBlockComponent } from './order-details/summary-block/summary-block.component';
 import { ItemsTableComponent } from './order-details/items-table/items-table.component';
+import { AddressesComponent } from './order-details/addresses/addresses.component';
+import { AddressFormComponent } from './order-details/address-form/address-form.component';
+import { AddressSavedSnackbarComponent } from './order-details/address-saved-snackbar/address-saved-snackbar.component';
 
 @NgModule({
     imports: [
@@ -57,6 +60,9 @@ import { ItemsTableComponent } from './order-details/items-table/items-table.com
         NewTagDialogComponent,
         SummaryBlockComponent,
         ItemsTableComponent,
+        AddressesComponent,
+        AddressFormComponent,
+        AddressSavedSnackbarComponent,
     ],
     entryComponents: [
         AssignTagsDialogComponent,
@@ -67,6 +73,7 @@ import { ItemsTableComponent } from './order-details/items-table/items-table.com
         OrderStatusChangedSnackbarComponent,
         SelectOrdersDialogComponent,
         NewTagDialogComponent,
+        AddressSavedSnackbarComponent,
     ]
 })
 export class OrdersModule {

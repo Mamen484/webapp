@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-content>
+        <mat-tab-group color="accent">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label" i18n>Delivery address</span>
+                </ng-template>
+                <sf-address-form [address]="orderCopy.shippingAddress"
+                                 (onSave)="saveShippingAddress()"
+                (reset)="resetShippingAddress()"></sf-address-form>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label" i18n>Billing address</span>
+                </ng-template>
+                <sf-address-form [address]="orderCopy.billingAddress"
+                                 (onSave)="saveBillingAddress()"
+                                 (reset)="resetBillingAddress()"></sf-address-form>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>
