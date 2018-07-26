@@ -89,6 +89,7 @@ export class TagsManagementComponent implements OnInit {
     }
 
     protected showServerError({message}) {
+        this.loading = false;
         return this.snackBar.open(message, '', {
                 panelClass: 'sf-snackbar-error',
                 duration: 5000,

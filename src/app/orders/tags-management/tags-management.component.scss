@@ -3,10 +3,6 @@
 mat-card {
   height: fit-content;
 
-  mat-chip {
-    background-color: mat-color($accent, 0.3);
-  }
-
   mat-icon {
     color: $black-54-opacity;
   }

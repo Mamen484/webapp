@@ -48,7 +48,7 @@
                         <div class="totals-handset mat-body-2" fxLayout="column">
                             <div fxLayout="row">
                                 <div fxFlex i18n>Products Amount</div>
-                                <div fxFlex i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
+                                <div fxFlex>{{order.payment.productAmount | sfCurrency:order.payment.currency}}
                                 </div>
                             </div>
                             <div fxLayout="row">
@@ -151,9 +151,9 @@
                     <div class="mat-body-2" i18n>Total price</div>
                 </div>
                 <div class="value" fxLayout="column" fxLayoutGap="20px">
-                    <div i18n>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
-                    <div i18n>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                    <div class="mat-body-2" i18n>{{order.payment.productAmount + order.payment.shippingAmount |
+                    <div>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                    <div>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                    <div class="mat-body-2">{{order.payment.productAmount + order.payment.shippingAmount |
                         sfCurrency:order.payment.currency}}
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Company</mat-label>
                                 <input matInput [(ngModel)]="address.company" name="company{{i}}" required
-                                       #company="ngModel" autocomplete="off">
+                                       #company="ngModel">
                                 <mat-error *ngIf="company.invalid && (company.dirty || company.touched)" i18n>
                                     Please, specify the company.
                                 </mat-error>
@@ -236,20 +236,20 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Phone</mat-label>
-                                <input type="tel" matInput [(ngModel)]="address.phone" name="phone{{i}}" autocomplete="off">
+                                <input type="tel" matInput [(ngModel)]="address.phone" name="phone{{i}}">
                             </mat-form-field>
                         </div>
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Mobile phone</mat-label>
-                                <input type="tel" matInput [(ngModel)]="address.mobilePhone" name="mobilePhone{{i}}" autocomplete="off">
+                                <input type="tel" matInput [(ngModel)]="address.mobilePhone" name="mobilePhone{{i}}">
                             </mat-form-field>
                         </div>
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Email</mat-label>
                                 <input matInput [(ngModel)]="address.email" name="email{{i}}" type="email" email
-                                       #email="ngModel" autocomplete="off">
+                                       #email="ngModel">
                                 <mat-error *ngIf="email.invalid && (email.dirty || email.touched)" i18n>
                                     Email is not valid.
                                 </mat-error>
@@ -258,7 +258,7 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Additional Details</mat-label>
-                                <input matInput [(ngModel)]="address.other" name="additionalDetails{{i}}" #details="ngModel" autocomplete="off">
+                                <input matInput [(ngModel)]="address.other" name="additionalDetails{{i}}" #details="ngModel">
                                 <mat-error *ngIf="details.invalid && (details.dirty || details.touched)" i18n>
                                     Please, specify the additional details.
                                 </mat-error>

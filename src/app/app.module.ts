@@ -10,6 +10,7 @@ import { LoginModule } from './login/login.module';
 import { SnackbarsModule } from './snackbars/snackbars.module';
 import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LivechatWidgetModule } from '@livechat/angular-widget';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         SnackbarsModule,
         AppRoutingModule,
         LoginModule,
+        LivechatWidgetModule,
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
     ],

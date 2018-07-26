@@ -39,15 +39,6 @@ describe('AcceptChannelDialogComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should display correct texts', () => {
-        storeService.getStoreCharge.and.returnValue(of({charge: {amount: 22, currency: 'EUR'}, references: {count: 10}}));
-        fixture.detectChanges();
-        expect(element('.top-text').textContent.trim()).toEqual('List your 10 SKU\'s on');
-        expect(element('.price').textContent.trim()).toEqual('Only 22,00 €/Month');
-        expect(element('.premium-channels').textContent.trim()).toEqual('3 premium channelsincluded in each of our plans');
-        expect(element('.free-trial').textContent.trim()).toEqual('30 days free trialwith onboarding and setup assistance');
-        expect(element('.monthly-fee').textContent.trim()).toEqual('flat monthly feeno contracts, sales limits, or commissions');
-    });
 
     function element(selector) {
         return fixture.debugElement.nativeElement.querySelector(selector);

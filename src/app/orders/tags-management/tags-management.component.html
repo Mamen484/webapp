@@ -1,7 +1,7 @@
 <div class="scrollable-container">
     <sf-orders-subnav>
-        <mat-list-item><a routerLink="/orders" class="mat-body-2">Orders</a></mat-list-item>
-        <mat-list-item class="active"><a sfLegacyLink path="/marketplaces/listexport" class="mat-body-2">Settings</a>
+        <mat-list-item><a routerLink="/orders" class="mat-body-2" i18n>Orders</a></mat-list-item>
+        <mat-list-item class="active"><a sfLegacyLink path="/marketplaces/listexport" class="mat-body-2" i18n>Settings</a>
         </mat-list-item>
     </sf-orders-subnav>
 
@@ -25,7 +25,7 @@
                         <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center">
                             <div fxFlex>
                                 <mat-chip-list>
-                                    <mat-chip>{{tag.name}}</mat-chip>
+                                    <mat-chip class="sf-tag">{{tag.name}}</mat-chip>
                                 </mat-chip-list>
                             </div>
                             <button mat-icon-button (click)="updateTag(tag.id, tag.name)">

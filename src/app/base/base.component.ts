@@ -10,8 +10,8 @@ import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { combineLatest } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { TagsService } from '../core/services/tags.service';
-
-declare const Autopilot;
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { Store as AppStore } from '../core/entities/store';
 
 @Component({
     selector: 'app-homepage',
@@ -24,24 +24,9 @@ export class BaseComponent {
                 protected windowRef: WindowRefService,
                 protected storeService: StoreService,
                 protected tagsService: TagsService) {
-        combineLatest(this.appStore.select('userInfo'),
-            this.appStore.select('currentStore'))
-            .subscribe(([userInfo, currentStore]) => {
-                if (!environment.RUN_AUTOPILOT || <any>environment.RUN_AUTOPILOT === 'false') {
-                    return;
-                }
-                if (userInfo.login === currentStore.name) {
-                    (<any>this.windowRef.nativeWindow).Autopilot.run('associate',
-                        {_simpleAssociate: true, Email: userInfo.email, FirstName: currentStore.name});
-                } else {
-                    (<any>this.windowRef.nativeWindow).Autopilot.run('associate',
-                        {
-                            _simpleAssociate: true,
-                            Email: environment.DEFAULT_AUTOPILOT_EMAIL,
-                            FirstName: environment.DEFAULT_AUTOPILOT_STORENAME,
-                        });
-                }
-            });
+
+        this.configureAutopilot();
+
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
             map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
@@ -55,5 +40,32 @@ export class BaseComponent {
             .subscribe(response => {
                 this.appStore.select('tags').dispatch({type: SET_TAGS, tags: response._embedded.tag});
             });
+    }
+
+
+    protected configureAutopilot() {
+        combineLatest(this.appStore.select('userInfo'), this.appStore.select('currentStore'))
+            .subscribe(([userInfo, currentStore]) => {
+                if (!userInfo
+                    || userInfo.isAdmin()
+                    || !environment.RUN_AUTOPILOT
+                    || <any>environment.RUN_AUTOPILOT === 'false') {
+                    return;
+                }
+
+                this.windowRef.nativeWindow.Autopilot.run('associate', this.getDataForAssociate(userInfo, currentStore));
+
+            });
+    }
+
+    protected getDataForAssociate(info: AggregatedUserInfo, store: AppStore) {
+        return info.login === store.name
+            ? {_simpleAssociate: true, Email: info.email, FirstName: store.name}
+            : {
+                _simpleAssociate: true,
+                Email: environment.DEFAULT_AUTOPILOT_EMAIL,
+                FirstName: environment.DEFAULT_AUTOPILOT_STORENAME,
+            };
+
     }
 }

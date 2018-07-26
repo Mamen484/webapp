@@ -1,22 +1,36 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatTableDataSource } from '@angular/material';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+    ViewChild
+} from '@angular/core';
+import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource, PageEvent } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '../../core/entities/store';
-import { toPairs } from 'lodash';
+import { toPairs, uniq } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { combineLatest, Subscription } from 'rxjs';
+import { combineLatest, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { filter, flatMap, take } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, take } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
+import { LocalStorageService } from '../../core/services/local-storage.service';
+import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
+
+const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
+const DEFAULT_PAGE_SIZE = '10';
 
 @Component({
     selector: 'sf-orders-table',
@@ -27,6 +41,7 @@ import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dia
 export class OrdersTableComponent implements OnInit, OnDestroy {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatTable) ordersTable: MatTable<OrdersTableItem>;
 
     selection = new SelectionModel<OrdersTableItem>(true, []);
 
@@ -51,6 +66,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
     exports: any[];
+    showStickyBorder = false;
+    resize$ = new Subject();
+    pageSizeOptions = [10, 25, 50, 100];
+    pageSize = DEFAULT_PAGE_SIZE;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -58,7 +77,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
                 protected router: Router,
-                protected snackbar: MatSnackBar) {
+                protected snackbar: MatSnackBar,
+                protected elementRef: ElementRef<HTMLElement>,
+                protected localStorage: LocalStorageService) {
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.resize$.next(event);
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -80,8 +106,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.setDefaultsFromStorage();
+
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, ordersFilter]) => {
+                this.pageSize = ordersFilter.limit;
                 this.fetchData(store, ordersFilter);
             });
 
@@ -92,6 +121,12 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.appStore.select('currentStore')
             .pipe(flatMap((store: Store) => this.ordersService.fetchExports(store.id)))
             .subscribe(response => this.exports = response._embedded.export);
+
+        this.updateStickyColumnsStyles();
+        this.resize$.pipe(
+            debounceTime(UPDATE_TABLE_ON_RESIZE_INTERVAL)
+        ).subscribe(() => this.updateStickyColumnsStyles());
+
     }
 
     ngOnDestroy() {
@@ -116,9 +151,18 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         })
     }
 
+    pageChanged(event: PageEvent) {
+        if (event.pageIndex === event.previousPageIndex) {
+            this.localStorage.setItem(LocalStorageKey.ordersPageSize, event.pageSize.toString());
+            this.ordersFilterService.patchFilter('limit', event.pageSize);
+        }
+    }
+
     setDisplayedColumns() {
         this.displayedColumns = this.requiredColumns
             .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
+        this.localStorage.setItem(LocalStorageKey.ordersDisplayedColumns, this.displayedColumns.toString());
+        this.updateStickyColumnsStyles();
 
     }
 
@@ -188,12 +232,30 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 this.isLoadingResults = false;
 
                 this.resultsLength = ordersPage.total;
-                this.paginator.pageIndex = + ordersFilter.page - 1;
+                this.paginator.pageIndex = +ordersFilter.page - 1;
 
                 this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
-                this.changeDetectorRef.markForCheck();
+                this.updateStickyColumnsStyles();
             });
 
+    }
+
+    protected setDefaultsFromStorage() {
+        const pageSize = this.localStorage.getItem(LocalStorageKey.ordersPageSize);
+        if (pageSize) {
+            this.ordersFilterService.patchFilter('limit', pageSize);
+        }
+
+        const savedColumns = this.localStorage.getItem(LocalStorageKey.ordersDisplayedColumns);
+        this.displayedColumns = uniq(this.requiredColumns.concat(savedColumns && savedColumns.split(',') || []));
+
+        if (savedColumns && savedColumns.length) {
+            savedColumns.split(',').forEach(column => {
+                if (typeof this.optionalColumns[column] !== 'undefined'){
+                    this.optionalColumns[column] = true;
+                }
+            });
+        }
     }
 
     protected updateData() {
@@ -201,5 +263,18 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             .subscribe(store => {
                 this.fetchData(store, this.ordersFilter);
             })
+    }
+
+    protected updateStickyColumnsStyles() {
+        this.changeDetectorRef.detectChanges();
+        this.updateStickyBorder();
+        this.ordersTable.updateStickyColumnStyles();
+        this.changeDetectorRef.markForCheck();
+    }
+
+    protected updateStickyBorder() {
+        const tableWidth = this.elementRef.nativeElement.querySelector('table.orders-table').getBoundingClientRect().width;
+        const containerWidth = this.elementRef.nativeElement.querySelector('.table-scrollable').getBoundingClientRect().width;
+        this.showStickyBorder = tableWidth > containerWidth;
     }
 }

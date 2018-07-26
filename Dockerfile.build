@@ -1,29 +1,21 @@
 ## We use this configuration to get a kubernetes build on a testing environment.
-
-## Step 1: install Crowdin and download translations
-FROM openjdk:7 as java
-WORKDIR /locale
-RUN  apt-get update && \
- wget -qO - https://artifacts.crowdin.com/repo/GPG-KEY-crowdin | apt-key add - && \
- echo "deb https://artifacts.crowdin.com/repo/deb/ /" > /etc/apt/sources.list.d/crowdin.list && \
- apt-get install apt-transport-https && \
- apt-get update && apt-get install crowdin
-COPY crowdin.yaml /locale
-ARG CROWDIN_API_KEY
-RUN mkdir src
-RUN touch src/messages.xlf
-RUN crowdin download
-
-# Step 2: build an angular application
+# Step 1: build an angular application
 FROM node:8.11 as node
+
+RUN  apt-get update && \
+ apt-get install -y zip
+
 RUN npm i -g npm@latest
 WORKDIR /app
 
 COPY ./ /app/
 RUN npm ci
 
-# copy translations from crowdin /locale folder into /app
-COPY --from=java /locale/src/locale /app/src/locale
+# download translations
+ARG CROWDIN_API_KEY
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
+RUN unzip -o all.zip
 
 ARG env=prod
 ARG LOCALES="en fr es pt de it"

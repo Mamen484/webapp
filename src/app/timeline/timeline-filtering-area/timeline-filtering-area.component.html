@@ -1,7 +1,6 @@
 <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start end">
-    <button mat-button (click)="openFilterDialog()">
-        <span class="mat-body-1 filter-caption" i18n>Filters</span>
-        <mat-icon>filter_list</mat-icon>
+    <button mat-stroked-button color="accent" (click)="openFilterDialog()" i18n>
+      Filters
     </button>
     <div *ngIf="activeFilter.isActive" fxLayout="row" fxLayoutAlign="start center">
         <mat-chip-list>
