@@ -27,11 +27,13 @@ describe('OrderDetailsComponent', () => {
     let ordersService: jasmine.SpyObj<OrdersService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let dataSubject$: Subject<{ order: Order }>;
+    let paramsSubject$: Subject<{ errorType: OrderErrorType }>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         dataSubject$ = new Subject();
-        route = {data: dataSubject$.asObservable()};
+        paramsSubject$ = new Subject();
+        route = {data: dataSubject$.asObservable(), queryParams: paramsSubject$.asObservable()};
         snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
         ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder']);
         appStore = jasmine.createSpyObj(['select']);
@@ -116,44 +118,141 @@ describe('OrderDetailsComponent', () => {
     });
 
     it('should display a ship error', () => {
-        component.order = <any>{
-            errors: [{type: OrderErrorType.ship}],
-            reference: '11-ref',
-            payment: {},
-            _embedded: {channel: {_links: {image: {}}}},
-            billingAddress: {},
-            shippingAddress: {},
-        };
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.ship}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        paramsSubject$.next();
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
         expect(warn.length).toEqual(1);
-        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to ship your order 11-ref');
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to ship your order 11-ref.');
+    });
+
+    it('should display a ship error with a reason', () => {
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.ship, message: 'some reason'}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        paramsSubject$.next();
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to ship your order 11-ref. Reason: some reason');
+    });
+
+    it('should display only a ship error if we have a `errorType` query param, specifying that we have a ship error,' +
+        'and we also have an acknowledge error in the errors list', () => {
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.acknowledge}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        paramsSubject$.next({errorType: OrderErrorType.ship});
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to ship your order 11-ref.');
     });
 
     it('should display an acknowledge error', () => {
-        component.order = <any>{
-            errors: [{type: OrderErrorType.acknowledge}],
-            reference: '11-ref',
-            payment: {},
-            _embedded: {channel: {_links: {image: {}}}},
-            billingAddress: {},
-            shippingAddress: {},
-        };
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.acknowledge}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        paramsSubject$.next();
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
         expect(warn.length).toEqual(1);
-        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to import your order 11-ref');
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to import your order 11-ref.');
+    });
+
+    it('should display an acknowledge error with a reason', () => {
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.acknowledge, message: 'some reason'}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        paramsSubject$.next();
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to import your order 11-ref. Reason: some reason');
+    });
+
+    it('should display only an acknowledge error if we have a `errorType` query param, specifying that we have a acknowledge error,' +
+        'and we also have a ship error in the errors list', () => {
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [{type: OrderErrorType.ship}],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
+        fixture.detectChanges();
+        paramsSubject$.next({errorType: OrderErrorType.acknowledge});
+        fixture.detectChanges();
+        let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
+        expect(warn.length).toEqual(1);
+        expect(warn[0].querySelector('span').textContent.trim()).toEqual('We were unable to import your order 11-ref.');
     });
 
     it('should NOT display errors when errors array is empty', () => {
-        component.order = <any>{
-            errors: [],
-            reference: '11-ref',
-            payment: {},
-            _embedded: {channel: {_links: {image: {}}}},
-            billingAddress: {},
-            shippingAddress: {},
-        };
+        component.ngOnInit();
+        dataSubject$.next({
+            order: <any>{
+                errors: [],
+                reference: '11-ref',
+                payment: {},
+                items: [],
+                _embedded: {channel: {_links: {image: {}}}},
+                billingAddress: {},
+                shippingAddress: {},
+            }
+        });
         fixture.detectChanges();
         let warn = fixture.debugElement.nativeElement.querySelectorAll('.sf-warn-alert');
         expect(warn.length).toEqual(0);
