@@ -5,7 +5,7 @@
                 <mat-icon>search</mat-icon>
                 <input [formControl]="searchControl" class="mat-subheading-1" [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel">
                 <button mat-stroked-button color="accent" (click)="openDialog()">
-                    Filters
+                    Filter
                 </button>
             </div>
             <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
