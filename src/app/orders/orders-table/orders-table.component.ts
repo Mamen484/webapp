@@ -95,7 +95,13 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     goToOrder(orderId: string) {
-        this.router.navigate(['orders', 'detail', orderId]);
+        let queryParams = {};
+        if (this.ordersFilter.error) {
+            (<any>queryParams).errorType = this.ordersFilter.error;
+        }
+        this.router.navigate(['orders', 'detail', orderId], {
+            queryParams,
+        });
     }
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -251,7 +257,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
         if (savedColumns && savedColumns.length) {
             savedColumns.split(',').forEach(column => {
-                if (typeof this.optionalColumns[column] !== 'undefined'){
+                if (typeof this.optionalColumns[column] !== 'undefined') {
                     this.optionalColumns[column] = true;
                 }
             });
