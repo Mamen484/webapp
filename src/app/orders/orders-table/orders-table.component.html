@@ -5,7 +5,7 @@
                 <div class="selected-orders" *ngIf="selection.selected.length" i18n>
                     {{selection.selected.length}} {selection.selected.length, plural, =1 {order} other {orders}}
                     <!-- can differ for non-english versions -->
-                    {{selection.selected.length}} {selection.selected.length, plural, =1 {selected} other {selected}}
+                    {selection.selected.length, plural, =1 {selected} other {selected}}
                 </div>
             </div>
             <div *ngIf="!isLoadingResults && dataSource.data.length">
