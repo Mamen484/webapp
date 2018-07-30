@@ -7,7 +7,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { MatSnackBar } from '@angular/material';
-import { AddressSavedSnackbarComponent } from '../address-saved-snackbar/address-saved-snackbar.component';
+import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'sf-addresses',
@@ -37,22 +38,23 @@ export class AddressesComponent implements OnInit {
     }
 
     saveBillingAddress() {
-        this.saveAddress({
-            shippingAddress: this.order.shippingAddress,
-            billingAddress: this.orderCopy.billingAddress
-        }, 'billingAddress');
+        this.saveAddress((store) => this.ordersService.modifyBillingAddress(
+            store.id,
+            this.orderCopy.id,
+            this.orderCopy.billingAddress), AddressType.billingAddress);
     }
+
 
     saveShippingAddress() {
-        this.saveAddress({
-            shippingAddress: this.orderCopy.shippingAddress,
-            billingAddress: this.order.billingAddress
-        }, 'shippingAddress');
+        this.saveAddress((store) => this.ordersService.modifyShippingAddress(
+            store.id,
+            this.orderCopy.id,
+            this.orderCopy.shippingAddress), AddressType.shippingAddress);
     }
 
-    protected saveAddress(data, addressType) {
+    protected saveAddress(updateRequest: (store: UserStore) => Observable<any>, addressType: AddressType) {
         this.appStore.select('currentStore').pipe(
-            flatMap((store: UserStore) => this.ordersService.modifyOrder(store.id, this.orderCopy.id, data)))
+            flatMap((store: UserStore) => updateRequest(store)))
             .subscribe(
                 () => {
                     this.order[addressType] = cloneDeep(this.orderCopy[addressType]);

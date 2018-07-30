@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { ConnectableObservable, Observable } from 'rxjs';
+import { ConnectableObservable, Observable, of } from 'rxjs';
 import { PagedResponse } from '../entities/paged-response';
 import { Order } from '../entities/orders/order';
 import { OrdersFilter } from '../entities/orders/orders-filter';
@@ -29,6 +29,16 @@ export class OrdersService {
 
     modifyOrder(storeId, orderId, order: { billingAddress: Address, shippingAddress: Address }) {
         return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order});
+    }
+
+    modifyShippingAddress(storeId, orderId, address: Address) {
+        // @TODO: implement real server call
+        return of({});
+    }
+
+    modifyBillingAddress(storeId, orderId, address: Address) {
+        // @TODO: implement real server call
+        return of({});
     }
 
     acknowledge(storeId, orders: { reference: string, channelName: string }[]) {

@@ -1,3 +1,6 @@
-<p>
-  address-saved-snackbar works!
-</p>
+<div i18n *ngIf="addressType === addressTypes.billingAddress">
+    Your billing address has been saved.
+</div>
+<div i18n *ngIf="addressType === addressTypes.shippingAddress">
+    Your shipping address has been saved.
+</div>

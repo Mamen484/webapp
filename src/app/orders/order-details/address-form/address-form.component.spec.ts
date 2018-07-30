@@ -1,14 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddressFormComponent } from './address-form.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { Address } from '../../../core/entities/orders/address';
+import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
 
 describe('AddressFormComponent', () => {
     let component: AddressFormComponent;
     let fixture: ComponentFixture<AddressFormComponent>;
 
+    let snackBar: jasmine.SpyObj<MatSnackBar>;
+
     beforeEach(async(() => {
+        snackBar = jasmine.createSpyObj(['open', 'openFromComponent']);
+
         TestBed.configureTestingModule({
-            declarations: [AddressFormComponent]
+            declarations: [AddressFormComponent],
+            schemas: [NO_ERRORS_SCHEMA],
+            imports: [FormsModule],
+            providers: [
+                {provide: MatSnackBar, useValue: snackBar},
+            ],
         })
             .compileComponents();
     }));
@@ -16,10 +30,36 @@ describe('AddressFormComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(AddressFormComponent);
         component = fixture.componentInstance;
+        component.address = <Address>{};
         fixture.detectChanges();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should emit onSave event on save() if the form is valid', () => {
+        spyOn(component.onSave, 'emit');
+        component.save(true);
+        expect(component.onSave.emit).toHaveBeenCalledTimes(1);
+    });
+
+    it('should emit onSave event on save() if the form is NOT valid', () => {
+        spyOn(component.onSave, 'emit');
+        component.save(false);
+        expect(component.onSave.emit).not.toHaveBeenCalled();
+    });
+
+    it('should show an error snackbar on save() if the form is NOT valid', async () => {
+        component.save(false);
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ValidationErrorsSnackbarComponent, {
+            duration: 5000,
+            panelClass: 'sf-snackbar-error',
+        });
+    });
+
+    it('should NOT show an error snackbar on save() if the form is valid', async () => {
+        component.save(true);
+        expect(snackBar.openFromComponent).not.toHaveBeenCalled();
     });
 });
