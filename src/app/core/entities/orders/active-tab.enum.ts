@@ -2,9 +2,9 @@
 export enum ActiveTab {
     allOrders,
     toValidate,
-    toImport,
     importErrors,
     toShip,
     shippingErrors,
     shipped,
+    toImport,
 }

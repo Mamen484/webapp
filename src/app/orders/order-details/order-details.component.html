@@ -12,12 +12,17 @@
         </mat-list-item>
     </sf-orders-subnav>
 
-    <div class="sf-warn-alert" *ngIf="order.errors?.length">
+
+    <div class="sf-warn-alert" *ngIf="errorType">
         <mat-icon color="warn">error</mat-icon>
-        <span *ngIf="order.errors[0].type === errorTypes.ship" i18n class="mat-body-1">
-            We were unable to ship your order {{order.reference}}</span>
-        <span *ngIf="order.errors[0].type === errorTypes.acknowledge" i18n class="mat-body-1">
-            We were unable to import your order {{order.reference}}</span>
+        <span *ngIf="errorType === errorTypes.ship" i18n class="mat-body-1">
+            We were unable to ship your order {{order.reference}}.
+            <ng-container *ngIf="errorMessage">Reason: {{errorMessage}}</ng-container>
+        </span>
+        <span *ngIf="errorType === errorTypes.acknowledge" i18n class="mat-body-1">
+            We were unable to import your order {{order.reference}}.
+            <ng-container *ngIf="errorMessage">Reason: {{errorMessage}}</ng-container>
+        </span>
     </div>
 
     <div fxHide fxShow.xs>
@@ -226,11 +231,8 @@
                         <div fxLayout="row">
                             <mat-form-field appearance="outline" fxFlex color="accent">
                                 <mat-label i18n>Company</mat-label>
-                                <input matInput [(ngModel)]="address.company" name="company{{i}}" required
+                                <input matInput [(ngModel)]="address.company" name="company{{i}}"
                                        #company="ngModel">
-                                <mat-error *ngIf="company.invalid && (company.dirty || company.touched)" i18n>
-                                    Please, specify the company.
-                                </mat-error>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row">

@@ -18,6 +18,7 @@ import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledg
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { ApiSpecialValue } from '../../core/entities/api-special-value.enum';
 import { ValidationErrorsSnackbarComponent } from '../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 
 @Component({
     selector: 'sf-order-details',
@@ -32,6 +33,8 @@ export class OrderDetailsComponent implements OnInit {
     actions = OrderNotifyAction;
     acknowledgment: OrderAcknowledgment;
     errorTypes = OrderErrorType;
+    errorMessage: string;
+    errorType: OrderErrorType;
 
     constructor(protected route: ActivatedRoute,
                 protected matDialog: MatDialog,
@@ -41,6 +44,7 @@ export class OrderDetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+
         this.route.data.subscribe(({order}: { order: Order }) => {
             this.order = cloneDeep(order);
             this.data = new MatTableDataSource(order.items.map((item: OrderItem) => {
@@ -56,6 +60,19 @@ export class OrderDetailsComponent implements OnInit {
             this.acknowledgment = this.order.acknowledgedAt
                 ? OrderAcknowledgment.acknowledged
                 : OrderAcknowledgment.unacknowledged;
+
+            this.route.queryParams.subscribe(params => {
+                if (params && params.errorType && this.errorTypes[params.errorType]) {
+                    this.errorType = params.errorType;
+                    try {
+                        this.errorMessage = this.order.errors.find(error => error.type === this.errorType).message;
+                    } catch (err) {
+                    }
+                } else if (this.order.errors && this.order.errors.length) {
+                    this.errorType = this.order.errors[0].type;
+                    this.errorMessage = this.order.errors[0].message;
+                }
+            });
         });
     }
 
