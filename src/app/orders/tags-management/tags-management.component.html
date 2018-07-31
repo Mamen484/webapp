@@ -1,11 +1,26 @@
 <div class="scrollable-container">
     <sf-orders-subnav>
         <mat-list-item><a routerLink="/orders" class="mat-body-2" i18n>Orders</a></mat-list-item>
-        <mat-list-item class="active"><a sfLegacyLink path="/marketplaces/listexport" class="mat-body-2" i18n>Settings</a>
+        <mat-list-item class="active"><a sfLegacyLink path="/marketplaces/listexport" class="mat-body-2"
+                                         i18n>Settings</a>
         </mat-list-item>
     </sf-orders-subnav>
 
-    <div fxLayout="row" fxLayoutGap="60px">
+    <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
+        <div fxFlex="25%" fxLayout="column" fxLayoutGap="20px" class="settings-navigation">
+            <div fxLayout="row" class="nav-active">
+                <div i18n fxFlex class="mat-body-2">Tags management</div>
+                <mat-icon>arrow_right</mat-icon>
+            </div>
+            <div fxLayout="row">
+                <a sfLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
+                <mat-icon>arrow_right</mat-icon>
+            </div>
+            <div fxLayout="row">
+                <a sfLegacyLink path="/marketplaces/createorder" i18n fxFlex class="mat-body-1">Test order</a>
+                <mat-icon>arrow_right</mat-icon>
+            </div>
+        </div>
         <div fxFlex class="tags-container">
             <mat-card>
                 <mat-card-content>
