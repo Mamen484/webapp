@@ -58,11 +58,7 @@
     <div fxLayout="row">
         <mat-form-field appearance="outline" fxFlex color="accent">
             <mat-label i18n>Company</mat-label>
-            <input matInput [(ngModel)]="address.company" name="company" required
-                   #company="ngModel">
-            <mat-error *ngIf="company.invalid && (company.dirty || company.touched)" i18n>
-                Please, specify the company.
-            </mat-error>
+            <input matInput [(ngModel)]="address.company" name="company" #company="ngModel">
         </mat-form-field>
     </div>
     <div fxLayout="row">
