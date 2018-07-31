@@ -1,11 +1,17 @@
-<div class="details-container scrollable-container">
-    <div class="summary">
-        <sf-summary-block [order]="order"></sf-summary-block>
-    </div>
-    <div class="addresses">
-        <sf-addresses [order]="order"></sf-addresses>
-    </div>
-    <div class="items-table">
-        <sf-items-table [order]="order"></sf-items-table>
+<div class="scrollable-container">
+
+    <div class="details-container">
+        <div class="order-error">
+            <sf-order-error-message [order]="order"></sf-order-error-message>
+        </div>
+        <div class="summary">
+            <sf-summary-block [order]="order"></sf-summary-block>
+        </div>
+        <div class="addresses">
+            <sf-addresses [order]="order"></sf-addresses>
+        </div>
+        <div class="items-table">
+            <sf-items-table [order]="order"></sf-items-table>
+        </div>
     </div>
 </div>

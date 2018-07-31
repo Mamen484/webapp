@@ -29,6 +29,7 @@ import { ItemsTableComponent } from './order-details/items-table/items-table.com
 import { AddressesComponent } from './order-details/addresses/addresses.component';
 import { AddressFormComponent } from './order-details/address-form/address-form.component';
 import { AddressSavedSnackbarComponent } from './order-details/address-saved-snackbar/address-saved-snackbar.component';
+import { OrderErrorMessageComponent } from './order-details/order-error-message/order-error-message.component';
 
 @NgModule({
     imports: [
@@ -63,6 +64,7 @@ import { AddressSavedSnackbarComponent } from './order-details/address-saved-sna
         AddressesComponent,
         AddressFormComponent,
         AddressSavedSnackbarComponent,
+        OrderErrorMessageComponent,
     ],
     entryComponents: [
         AssignTagsDialogComponent,

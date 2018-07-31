@@ -1,8 +1,14 @@
 .details-container {
   display: grid;
-  grid-template-areas: "summary items-table" "addresses items-table";
+  grid-template-areas: "order-error order-error"
+                       "summary items-table"
+                       "addresses items-table";
   grid-template-columns: 1fr 2fr;
   grid-gap: 20px;
+}
+
+.order-error {
+  grid-area: order-error;
 }
 
 .summary {
