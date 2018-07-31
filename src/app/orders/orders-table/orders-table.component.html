@@ -16,7 +16,7 @@
                                    (actionApplied)="applyStatusAction($event)">
                 </sf-status-buttons>
             </div>
-            <button mat-icon-button (click)="manageTags()">
+            <button mat-icon-button (click)="manageTags()" matTooltip="Add Tags" i18n-matTooltip matTooltipPosition="above">
                 <mat-icon>label</mat-icon>
             </button>
             <button mat-icon-button [matMenuTriggerFor]="printMenu" *ngIf="selection.selected.length"
@@ -24,10 +24,10 @@
                 <mat-icon>local_printshop</mat-icon>
             </button>
             <button mat-icon-button (click)="showSelectOrdersDialog()" *ngIf="!selection.selected.length"
-                    class="print-button">
+                    class="print-button" matTooltip="Export" i18n-matTooltip matTooltipPosition="above">
                 <mat-icon>local_printshop</mat-icon>
             </button>
-            <button mat-icon-button [matMenuTriggerFor]="columnsMenu">
+            <button mat-icon-button [matMenuTriggerFor]="columnsMenu" matTooltip="Add Columns" i18n-matTooltip matTooltipPosition="above">
                 <mat-icon>view_column</mat-icon>
             </button>
         </div>
