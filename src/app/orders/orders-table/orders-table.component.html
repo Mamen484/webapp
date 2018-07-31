@@ -6,6 +6,7 @@
                     {{selection.selected.length}} {selection.selected.length, plural, =1 {order } other {orders }}
                     <!-- can differ for non-english versions -->
                     {selection.selected.length, plural, =1 {selected} other {selected}}
+                    <ng-container *ngIf="false">This is for showing translation with interpolations only</ng-container>
                 </div>
             </div>
             <div *ngIf="!isLoadingResults && dataSource.data.length">

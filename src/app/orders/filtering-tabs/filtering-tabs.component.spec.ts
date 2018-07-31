@@ -7,6 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
+import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
 
 describe('FilteringTabsComponent', () => {
     let component: FilteringTabsComponent;
@@ -52,7 +53,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set undefined status and errorType when the first tab (all orders) chosen', () => {
-        component.changeTab({index: 0});
+        component.changeTab({index: ActiveTab.allOrders});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
             expect(filter.error).not.toBeDefined();
@@ -60,7 +61,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set waiting_store_acceptance status and undefined errorType when the second tab (to validate) chosen', () => {
-        component.changeTab({index: 1});
+        component.changeTab({index: ActiveTab.toValidate});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.waiting_store_acceptance);
             expect(filter.error).not.toBeDefined();
@@ -68,7 +69,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set undefined status and `import` errorType when the fourth tab (import errors) chosen', () => {
-        component.changeTab({index: 3});
+        component.changeTab({index: ActiveTab.importErrors});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
             expect(filter.error).toEqual(OrderErrorType.acknowledge);
@@ -76,7 +77,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set waiting_shipment status and undefined errorType when the fifth tab (to ship) chosen', () => {
-        component.changeTab({index: 4});
+        component.changeTab({index: ActiveTab.toShip});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.waiting_shipment);
             expect(filter.error).not.toBeDefined();
@@ -84,7 +85,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set undefined status and `ship` errorType when sixth tab (shipping errors) chosen', () => {
-        component.changeTab({index: 5});
+        component.changeTab({index: ActiveTab.shippingErrors});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).not.toBeDefined();
             expect(filter.error).toEqual(OrderErrorType.ship);
@@ -92,7 +93,7 @@ describe('FilteringTabsComponent', () => {
     });
 
     it('should set `shipped` status and undefined errorType when the seventh tab (shipped) chosen', () => {
-        component.changeTab({index: 6});
+        component.changeTab({index: ActiveTab.shipped});
         service.getFilter().pipe(take(1)).subscribe(filter => {
             expect(filter.status).toEqual(OrderStatus.shipped);
             expect(filter.error).not.toBeDefined();

@@ -19,4 +19,9 @@ mat-list.sf-subnav {
   padding: 0;
   align-items: flex-start;
 
+  @media #{$xs}{
+    left: 0;
+    width: 100vw;
+  }
+
 }
