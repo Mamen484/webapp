@@ -184,6 +184,21 @@ describe('OrdersService', () => {
         checkStatusChangeRequestSent(OrderNotifyAction.cancel);
     });
 
+    it('should call modify billing address endpoint on modifyBillingAddress() call', () => {
+        service.modifyBillingAddress(1, 2, <any>{lastName: '22'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({order: {billingAddress: {lastName: '22'}}})
+    });
+
+    it('should call modify shipping address endpoint on modifyShippingAddress() call', () => {
+        service.modifyShippingAddress(1, 2, <any>{lastName: '22'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({order: {shippingAddress: {lastName: '22'}}})
+    });
+
+
     function checkStatusChangeRequestSent(action) {
         service[action](10, [{reference: '171', channelName: ''}, {reference: '174', channelName: ''}]).subscribe();
         let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/${action}`);

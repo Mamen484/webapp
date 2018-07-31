@@ -31,14 +31,12 @@ export class OrdersService {
         return this.httpClient.put(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order});
     }
 
-    modifyShippingAddress(storeId, orderId, address: Address) {
-        // @TODO: implement real server call
-        return of({});
+    modifyShippingAddress(storeId, orderId, shippingAddress: Address) {
+        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {shippingAddress}});
     }
 
-    modifyBillingAddress(storeId, orderId, address: Address) {
-        // @TODO: implement real server call
-        return of({});
+    modifyBillingAddress(storeId, orderId, billingAddress: Address) {
+        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {billingAddress}});
     }
 
     acknowledge(storeId, orders: { reference: string, channelName: string }[]) {
