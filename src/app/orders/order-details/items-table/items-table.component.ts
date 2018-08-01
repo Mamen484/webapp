@@ -11,6 +11,8 @@ import { filter, flatMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
+import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
+import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 
 @Component({
     selector: 'sf-items-table',
@@ -35,6 +37,19 @@ export class ItemsTableComponent implements OnInit {
         this.initializeTableData();
     }
 
+    applyStatusAction(action: OrderNotifyAction) {
+        if (action === OrderNotifyAction.ship) {
+            this.shipOrder();
+            return;
+        }
+        this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService[action](store.id, [{
+                reference: this.order.reference,
+                channelName: this.order._embedded.channel.name,
+            }]))
+        ).subscribe(() => this.showSuccess(action));
+    }
+
     shipOrder() {
         this.matDialog.open(CarrierDetailsDialogComponent)
             .afterClosed().pipe(
@@ -51,23 +66,14 @@ export class ItemsTableComponent implements OnInit {
             .subscribe(() => this.showSuccess(OrderNotifyAction.ship));
     }
 
-    applyStatusAction(action: OrderNotifyAction) {
-        if (action === OrderNotifyAction.ship) {
-            this.shipOrder();
-            return;
-        }
-        this.appStore.select('currentStore').pipe(
-            flatMap(store => this.ordersService[action](store.id, [{
-                reference: this.order.reference,
-                channelName: this.order._embedded.channel.name,
-            }]))
-        ).subscribe(() => this.showSuccess(action));
-    }
-
-    protected showSuccess(action) {
-        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: 1, action}
+    updateItemReference(row: OrderDetailsItem) {
+        this.matDialog.open(SkuModificationDialogComponent, {
+            data: {sku: row.sku},
+        })
+            .afterClosed().subscribe(updatedSku => {
+            if (updatedSku) {
+                this.updateSku(row, updatedSku);
+            }
         });
     }
 
@@ -88,6 +94,32 @@ export class ItemsTableComponent implements OnInit {
                 image: item.image,
             }
         }));
+    }
+
+    protected showSuccess(action) {
+        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
+            duration: 2000,
+            data: {ordersNumber: 1, action}
+        });
+    }
+
+    protected showUpdateSkuError({message}) {
+        this.snackBar.open(message, '', {
+            panelClass: 'sf-snackbar-error',
+            duration: 5000,
+        })
+    }
+
+    protected updateSku(row, updatedSku) {
+        return this.appStore.select('currentStore').pipe(
+            flatMap(store => this.ordersService
+                .updateSkuMapping(store.id, this.order.id, {[row.sku]: updatedSku})))
+            .subscribe(() => {
+                row.sku = updatedSku;
+                this.snackBar.openFromComponent(SkuSavedSnackbarComponent, {
+                    duration: 2000,
+                })
+            }, error => this.showUpdateSkuError(error));
     }
 
 }

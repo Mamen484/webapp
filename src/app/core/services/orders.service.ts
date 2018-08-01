@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { ConnectableObservable, Observable, of } from 'rxjs';
+import { ConnectableObservable, Observable } from 'rxjs';
 import { PagedResponse } from '../entities/paged-response';
 import { Order } from '../entities/orders/order';
 import { OrdersFilter } from '../entities/orders/orders-filter';
@@ -37,6 +37,10 @@ export class OrdersService {
 
     modifyBillingAddress(storeId, orderId, billingAddress: Address) {
         return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {billingAddress}});
+    }
+
+    updateSkuMapping(storeId, orderId, skuMapping) {
+        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {skuMapping}});
     }
 
     acknowledge(storeId, orders: { reference: string, channelName: string }[]) {

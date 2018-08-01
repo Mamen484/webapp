@@ -1,0 +1,12 @@
+<h1 matDialogTitle>SKU</h1>
+
+<mat-dialog-content>
+    <mat-form-field color="accent">
+        <input matInput [(ngModel)]="sku">
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose color="accent">Cancel</button>
+    <button mat-button (click)="save()" color="accent">Save</button>
+</mat-dialog-actions>

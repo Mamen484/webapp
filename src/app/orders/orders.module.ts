@@ -30,6 +30,8 @@ import { AddressesComponent } from './order-details/addresses/addresses.componen
 import { AddressFormComponent } from './order-details/address-form/address-form.component';
 import { AddressSavedSnackbarComponent } from './order-details/address-saved-snackbar/address-saved-snackbar.component';
 import { OrderErrorMessageComponent } from './order-details/order-error-message/order-error-message.component';
+import { SkuModificationDialogComponent } from './order-details/sku-modification-dialog/sku-modification-dialog.component';
+import { SkuSavedSnackbarComponent } from './order-details/sku-saved-snackbar/sku-saved-snackbar.component';
 
 @NgModule({
     imports: [
@@ -65,6 +67,8 @@ import { OrderErrorMessageComponent } from './order-details/order-error-message/
         AddressFormComponent,
         AddressSavedSnackbarComponent,
         OrderErrorMessageComponent,
+        SkuModificationDialogComponent,
+        SkuSavedSnackbarComponent,
     ],
     entryComponents: [
         AssignTagsDialogComponent,
@@ -76,6 +80,8 @@ import { OrderErrorMessageComponent } from './order-details/order-error-message/
         SelectOrdersDialogComponent,
         NewTagDialogComponent,
         AddressSavedSnackbarComponent,
+        SkuModificationDialogComponent,
+        SkuSavedSnackbarComponent,
     ]
 })
 export class OrdersModule {

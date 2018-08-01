@@ -9,9 +9,11 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
-import { EMPTY, of } from 'rxjs/index';
+import { EMPTY, of, throwError } from 'rxjs';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
+import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
+import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 
 describe('ItemsTableComponent', () => {
     let component: ItemsTableComponent;
@@ -26,7 +28,7 @@ describe('ItemsTableComponent', () => {
 
         matDialog = jasmine.createSpyObj(['open']);
         snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
-        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder']);
+        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder', 'updateSkuMapping']);
         appStore = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
             declarations: [ItemsTableComponent, SfCurrencyPipe],
@@ -144,6 +146,54 @@ describe('ItemsTableComponent', () => {
             expect(ordersService[action].calls.mostRecent().args[0]).toEqual(289);
             expect(ordersService[action].calls.mostRecent().args[1][0].reference).toEqual('ref');
             expect(ordersService[action].calls.mostRecent().args[1][0].channelName).toEqual('nom');
+        });
+    });
+
+    it('should open SkuModificationDialogComponent when call updateItemReference', () => {
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        component.updateItemReference(<any>{sku: 234});
+        expect(matDialog.open).toHaveBeenCalledWith(SkuModificationDialogComponent, {data: {sku: 234}});
+    });
+
+    it('should call a modifySkuMapping endpoint when sku modification dialog returns a value', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        ordersService.updateSkuMapping.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(of({id: 34}));
+        component.order = <any>{id: 12};
+        component.updateItemReference(<any>{sku: '234'});
+        expect(ordersService.updateSkuMapping).toHaveBeenCalledWith(34, 12, {234: 'some_sku'})
+    });
+
+    it('should change displayed sku on successful sku modification', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        ordersService.updateSkuMapping.and.returnValue(of({}));
+        appStore.select.and.returnValue(of({id: 34}));
+        component.order = <any>{id: 12};
+        const row = {sku: '234'};
+        component.updateItemReference(<any>row);
+        expect(row.sku).toBe('some_sku');
+    });
+
+    it('should open SkuSavedSnackbarComponent on successful sku modification', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        ordersService.updateSkuMapping.and.returnValue(of({}));
+        appStore.select.and.returnValue(of({id: 34}));
+        component.order = <any>{id: 12};
+        component.updateItemReference(<any>{sku: '234'});
+        expect(snackbar.openFromComponent).toHaveBeenCalledWith(SkuSavedSnackbarComponent, {
+            duration: 2000,
+        });
+    });
+
+    it('should show an error snackbar when save sku fails', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        ordersService.updateSkuMapping.and.returnValue(throwError({message: 'err'}));
+        appStore.select.and.returnValue(of({id: 34}));
+        component.order = <any>{id: 12};
+        component.updateItemReference(<any>{sku: '234'});
+        expect(snackbar.open).toHaveBeenCalledWith('err', '', {
+            panelClass: 'sf-snackbar-error',
+            duration: 5000,
         });
     });
 });
