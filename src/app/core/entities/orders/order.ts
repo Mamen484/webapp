@@ -25,6 +25,7 @@ export interface Order {
     billingAddress: Address;
     payment: Payment;
     shipment: Shipment;
+    additionalFields: {[key: string]: any}
     _embedded: {
         channel?: Channel,
         store?: Store,

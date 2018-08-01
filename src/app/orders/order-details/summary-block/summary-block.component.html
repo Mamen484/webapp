@@ -18,5 +18,8 @@
                 {{tag.name}}
             </mat-chip>
         </mat-chip-list>
+        <div *ngFor="let field of additionalFields">
+            {{field[0]}}: {{field[1]}}
+        </div>
     </mat-card-content>
 </mat-card>
