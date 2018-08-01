@@ -40,3 +40,8 @@ img.product-visual {
 .edit-sku {
   color: mat-color($grey);
 }
+
+.items-table {
+  max-width:100%;
+  overflow: auto;
+}

@@ -10,58 +10,59 @@
         </a>
     </div>
     <mat-card-content>
-        <table mat-table [dataSource]="tableData">
-            <ng-container matColumnDef="sku">
-                <th mat-header-cell *matHeaderCellDef>
-                    <ng-container i18n>SKU</ng-container>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                    <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between center">
-                        <div fxFlex>{{row.sku}}</div>
-                        <mat-icon (click)="updateItemReference(row)" class="edit-sku">edit</mat-icon>
-                    </div>
-                </td>
-            </ng-container>
+        <div class="items-table">
+            <table mat-table [dataSource]="tableData">
+                <ng-container matColumnDef="sku">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>SKU</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between center">
+                            <div fxFlex>{{row.sku}}</div>
+                            <mat-icon (click)="updateItemReference(row)" class="edit-sku">edit</mat-icon>
+                        </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="image">
-                <th mat-header-cell *matHeaderCellDef>
-                    <ng-container i18n>Visual</ng-container>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                    <img [src]="row.image" [alt]="row.name" *ngIf="row.image" class="product-visual">
-                <td>
-            </ng-container>
+                <ng-container matColumnDef="image">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Visual</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <img [src]="row.image" [alt]="row.name" *ngIf="row.image" class="product-visual">
+                    <td>
+                </ng-container>
 
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>
-                    <ng-container i18n>Name</ng-container>
-                </th>
-                <td mat-cell *matCellDef="let row">{{row.name}}
-                <td>
-            </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Name</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.name}}
+                    <td>
+                </ng-container>
 
-            <ng-container matColumnDef="quantity">
-                <th mat-header-cell *matHeaderCellDef>
-                    <ng-container i18n>Quantity</ng-container>
-                </th>
-                <td mat-cell *matCellDef="let row">{{row.quantity}}
-                <td>
-            </ng-container>
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Quantity</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row">{{row.quantity}}
+                    <td>
+                </ng-container>
 
-            <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef>
-                    <ng-container i18n>Price</ng-container>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                    {{row.price | sfCurrency:order.payment.currency}}
-                <td>
-            </ng-container>
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <ng-container i18n>Price</ng-container>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.price | sfCurrency:order.payment.currency}}
+                    <td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
 
-        </table>
-
+            </table>
+        </div>
         <div class="totals" fxLayout="column" fxLayoutGap="20px">
             <div fxLayout="row" fxLayoutGap="20px">
                 <div i18n fxFlex>Total products</div>
