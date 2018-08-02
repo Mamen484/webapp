@@ -32,6 +32,7 @@ describe('OrderDetailsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrderDetailsComponent);
         component = fixture.componentInstance;
+        component.order = <any>{};
         fixture.detectChanges();
     });
 
