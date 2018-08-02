@@ -86,14 +86,20 @@ export class ItemsTableComponent implements OnInit {
     protected initializeTableData() {
         this.tableData = new MatTableDataSource(this.order.items.map((item: OrderItem) => {
             return <OrderDetailsItem>{
-                sku: item.reference,
+                sku: this.determineSku(item),
                 name: item.name,
                 quantity: item.quantity,
                 date: this.order.createdAt,
                 price: item.price,
                 image: item.image,
+                reference: item.reference,
             }
         }));
+    }
+
+    protected determineSku(item: OrderItem) {
+        const aliases = this.order.itemsReferencesAliases;
+        return aliases && aliases[item.reference] || item.reference;
     }
 
     protected showSuccess(action) {
@@ -110,10 +116,10 @@ export class ItemsTableComponent implements OnInit {
         })
     }
 
-    protected updateSku(row, updatedSku) {
+    protected updateSku(row: OrderDetailsItem, updatedSku: string) {
         return this.appStore.select('currentStore').pipe(
             flatMap(store => this.ordersService
-                .updateSkuMapping(store.id, this.order.id, {[row.sku]: updatedSku})))
+                .updateItemsReferences(store.id, this.order.id, {[row.reference]: updatedSku})))
             .subscribe(() => {
                 row.sku = updatedSku;
                 this.snackBar.openFromComponent(SkuSavedSnackbarComponent, {

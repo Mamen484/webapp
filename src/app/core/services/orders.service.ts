@@ -39,8 +39,8 @@ export class OrdersService {
         return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {billingAddress}});
     }
 
-    updateSkuMapping(storeId, orderId, skuMapping) {
-        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {skuMapping}});
+    updateItemsReferences(storeId, orderId, itemsReferencesAliases) {
+        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}/order/${orderId}`, {order: {itemsReferencesAliases}});
     }
 
     acknowledge(storeId, orders: { reference: string, channelName: string }[]) {

@@ -199,10 +199,10 @@ describe('OrdersService', () => {
     });
 
     it('should call modify sku endpoint on updateSkuMapping() call', () => {
-        service.updateSkuMapping(1, 2, <any>{'old': 'new'}).subscribe();
+        service.updateItemsReferences(1, 2, <any>{'old': 'new'}).subscribe();
         let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
         expect(req.request.method).toBe('PATCH');
-        expect(req.request.body).toEqual({order: {skuMapping: {old: 'new'}}});
+        expect(req.request.body).toEqual({order: {itemsReferencesAliases: {old: 'new'}}});
     });
 
 

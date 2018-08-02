@@ -28,7 +28,7 @@ describe('ItemsTableComponent', () => {
 
         matDialog = jasmine.createSpyObj(['open']);
         snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
-        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder', 'updateSkuMapping']);
+        ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder', 'updateItemsReferences']);
         appStore = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
             declarations: [ItemsTableComponent, SfCurrencyPipe],
@@ -82,6 +82,17 @@ describe('ItemsTableComponent', () => {
         };
         fixture.detectChanges();
         expect(component.tableData.data[0].sku).toEqual(1324);
+    });
+
+    it('should take an item reference alias if exists', () => {
+        component.order = <any>{
+            createdAt: new Date('2012-12-12').getTime(),
+            items: [{reference: 1324}],
+            itemsReferencesAliases: {1324: 'some_alias'},
+            payment: {},
+        };
+        fixture.detectChanges();
+        expect(component.tableData.data[0].sku).toEqual('some_alias');
     });
 
     it('should open a carrier details dialog when click on `ship` button', () => {
@@ -155,18 +166,18 @@ describe('ItemsTableComponent', () => {
         expect(matDialog.open).toHaveBeenCalledWith(SkuModificationDialogComponent, {data: {sku: 234}});
     });
 
-    it('should call a modifySkuMapping endpoint when sku modification dialog returns a value', () => {
+    it('should call a updateItemsReferences endpoint when sku modification dialog returns a value', () => {
         matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
-        ordersService.updateSkuMapping.and.returnValue(EMPTY);
+        ordersService.updateItemsReferences.and.returnValue(EMPTY);
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
-        component.updateItemReference(<any>{sku: '234'});
-        expect(ordersService.updateSkuMapping).toHaveBeenCalledWith(34, 12, {234: 'some_sku'})
+        component.updateItemReference(<any>{sku: '234', reference: '251'});
+        expect(ordersService.updateItemsReferences).toHaveBeenCalledWith(34, 12, {251: 'some_sku'})
     });
 
     it('should change displayed sku on successful sku modification', () => {
         matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
-        ordersService.updateSkuMapping.and.returnValue(of({}));
+        ordersService.updateItemsReferences.and.returnValue(of({}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
         const row = {sku: '234'};
@@ -176,7 +187,7 @@ describe('ItemsTableComponent', () => {
 
     it('should open SkuSavedSnackbarComponent on successful sku modification', () => {
         matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
-        ordersService.updateSkuMapping.and.returnValue(of({}));
+        ordersService.updateItemsReferences.and.returnValue(of({}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
         component.updateItemReference(<any>{sku: '234'});
@@ -187,7 +198,7 @@ describe('ItemsTableComponent', () => {
 
     it('should show an error snackbar when save sku fails', () => {
         matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
-        ordersService.updateSkuMapping.and.returnValue(throwError({message: 'err'}));
+        ordersService.updateItemsReferences.and.returnValue(throwError({message: 'err'}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
         component.updateItemReference(<any>{sku: '234'});
