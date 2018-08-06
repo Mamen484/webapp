@@ -2,17 +2,12 @@
 
 .details-container {
   display: grid;
-  grid-template-areas: "order-error order-error"
-                       "summary items-table"
-                       "addresses items-table";
+  grid-template-areas: "order-error order-error" "summary items-table" "addresses items-table";
   grid-template-columns: 1fr 2fr;
   grid-gap: 20px;
 
   @media #{$lt-md}{
-    grid-template-areas: "order-error"
-                         "summary"
-                         "items-table"
-                         "addresses";
+    grid-template-areas: "order-error" "summary" "items-table" "addresses";
     grid-template-columns: 1fr;
   }
 }
@@ -32,4 +27,5 @@
 .items-table {
   grid-area: items-table;
   overflow: hidden;
+  padding: 0;
 }

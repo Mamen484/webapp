@@ -19,8 +19,10 @@
         <div class="addresses">
             <sf-addresses [order]="order"></sf-addresses>
         </div>
-        <div class="items-table">
-            <sf-items-table [order]="order"></sf-items-table>
-        </div>
+        <mat-card class="items-table">
+            <mat-card-content>
+                <sf-items-table [order]="order"></sf-items-table>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

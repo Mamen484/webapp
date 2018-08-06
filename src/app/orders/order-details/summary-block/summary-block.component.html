@@ -13,8 +13,8 @@
         <div i18n>Store reference {{order.storeReference}}</div>
         <div i18n>{{order.createdAt | date:'short'}}</div>
         <div i18n *ngIf="order.acknowledgedAt">Acknowledged at {{order.acknowledgedAt | date:'short'}}</div>
-        <mat-chip-list *ngIf="order._embedded.tag && order._embedded.tag.length">
-            <mat-chip color="accent" [selected]="true" *ngFor="let tag of order._embedded.tag">
+        <mat-chip-list class="sf-tags-chips" *ngIf="order._embedded.tag && order._embedded.tag.length">
+            <mat-chip class="sf-tag" *ngFor="let tag of order._embedded.tag">
                 {{tag.name}}
             </mat-chip>
         </mat-chip-list>
