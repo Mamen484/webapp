@@ -5,7 +5,7 @@
             (actionApplied)="applyStatusAction($event)">
     </sf-action-buttons>
     <a mat-icon-button sfLegacyLink path="/marketplaces/invoice/{{order.id}}" matTooltip="Export" i18n-matTooltip
-       target="_blank">
+       matTooltipPosition="above" target="_blank">
         <mat-icon>local_printshop</mat-icon>
     </a>
 </div>
@@ -19,7 +19,7 @@
                 <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between center">
                     <div fxFlex>{{row.sku}}</div>
                     <mat-icon (click)="updateItemReference(row)" class="edit-sku"
-                    matTooltip="Modify" i18n-matTooltip>edit</mat-icon>
+                    matTooltip="Modify" i18n-matTooltip matTooltipPosition="above">edit</mat-icon>
                 </div>
             </td>
         </ng-container>
