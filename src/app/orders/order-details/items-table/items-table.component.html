@@ -5,7 +5,7 @@
                 [acknowledgment]="acknowledgment"
                 (actionApplied)="applyStatusAction($event)">
         </sf-action-buttons>
-        <a mat-icon-button sfLegacyLink path="/marketplaces/invoice/{{order.id}}" target="_blank">
+        <a mat-icon-button sfLegacyLink path="/marketplaces/invoice/{{order.id}}" matTooltip="Export" i18n-matTooltip target="_blank">
             <mat-icon>local_printshop</mat-icon>
         </a>
     </div>

@@ -4,12 +4,8 @@
         <mat-list-item>
             <a routerLink="/orders">
                 <mat-icon>keyboard_backspace</mat-icon>
-                <ng-container i18n>Order ID {{order.reference}}</ng-container>
+                <ng-container i18n>Back to order dashboard</ng-container>
             </a>
-        </mat-list-item>
-        <mat-list-item class="sf-fill-space"></mat-list-item>
-        <mat-list-item class="status">
-            <sf-order-status [status]="order.status"></sf-order-status>
         </mat-list-item>
     </sf-orders-subnav>
 
