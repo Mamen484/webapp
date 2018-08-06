@@ -10,9 +10,9 @@
             <sf-order-status fxFlex="1 1 50%" [status]="order.status" class="mat-subheading-2"></sf-order-status>
         </div>
         <div class="mat-body-2" i18n>Order ID {{order.reference}}</div>
-        <div i18n>Store reference {{order.storeReference}}</div>
-        <div i18n>{{order.createdAt | date:'short'}}</div>
+        <div>{{order.createdAt | date:'short'}}</div>
         <div i18n *ngIf="order.acknowledgedAt">Acknowledged at {{order.acknowledgedAt | date:'short'}}</div>
+        <div i18n>Store reference {{order.storeReference}}</div>
         <mat-chip-list class="sf-tags-chips" *ngIf="order._embedded.tag && order._embedded.tag.length">
             <mat-chip class="sf-tag" *ngFor="let tag of order._embedded.tag">
                 {{tag.name}}
