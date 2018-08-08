@@ -7,14 +7,16 @@ import { Order } from '../entities/orders/order';
 import { OrdersFilter } from '../entities/orders/orders-filter';
 import { Address } from '../entities/orders/address';
 import { OrdersExport } from '../entities/orders/orders-export';
-import { publishReplay } from 'rxjs/operators';
+import { flatMap, publishReplay } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
 
 @Injectable()
 export class OrdersService {
 
     exports$: ConnectableObservable<PagedResponse<{ export: OrdersExport[] }>>
 
-    constructor(protected httpClient: HttpClient) {
+    constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
     fetchOrdersList(storeId, filter: OrdersFilter = new OrdersFilter()) {
@@ -66,6 +68,16 @@ export class OrdersService {
 
     cancel(storeId, orders: { reference: string, channelName: string }[]) {
         return this.httpClient.post(`${environment.API_URL}/store/${storeId}/order/cancel`, {order: orders});
+    }
+
+    notifyRefund(order: {
+        reference: string,
+        channelName: string,
+        refund: { shipping: boolean, products: { reference: string, quantity: number }[] }
+    }[]) {
+        return this.appStore.select('currentStore').pipe(flatMap(store =>
+            this.httpClient.post(`${environment.API_URL}/store/${store.id}/order/refund`, {order})
+        ));
     }
 
     fetchExports(storeId) {

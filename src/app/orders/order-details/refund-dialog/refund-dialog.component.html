@@ -1,0 +1,10 @@
+<h1 matDialogTitle>Refund</h1>
+
+<mat-dialog-content>
+    <sf-items-table [order]="order" mode="refund"></sf-items-table>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose color="accent">Cancel</button>
+    <button mat-button color="accent" (click)="refund()">Refund</button>
+</mat-dialog-actions>

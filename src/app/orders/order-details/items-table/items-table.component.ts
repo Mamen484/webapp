@@ -10,6 +10,7 @@ import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
     selector: 'sf-items-table',
@@ -19,9 +20,11 @@ import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snack
 export class ItemsTableComponent implements OnInit {
 
     @Input() order: Order;
+    @Input() mode: 'normal' | 'refund' = 'normal';
     acknowledgment: OrderAcknowledgment;
     tableData;
     displayedColumns = ['sku', 'image', 'name', 'quantity', 'price'];
+    selection = new SelectionModel<OrderDetailsItem>(true, []);
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -31,6 +34,9 @@ export class ItemsTableComponent implements OnInit {
 
     ngOnInit() {
         this.initializeTableData();
+        if (this.mode === 'refund') {
+            this.displayedColumns.unshift('checkbox');
+        }
     }
 
     updateItemReference(row: OrderDetailsItem) {

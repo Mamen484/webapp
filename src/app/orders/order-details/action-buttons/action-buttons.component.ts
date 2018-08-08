@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -52,7 +53,7 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     openRefundDialog() {
-
+        this.matDialog.open(RefundDialogComponent, {data: this.order});
     }
 
     shipOrder() {

@@ -21,6 +21,9 @@
         </div>
         <mat-card class="items-table">
             <mat-card-content>
+                <div class="actions">
+                    <sf-action-buttons [order]="order"></sf-action-buttons>
+                </div>
                 <sf-items-table [order]="order"></sf-items-table>
             </mat-card-content>
         </mat-card>

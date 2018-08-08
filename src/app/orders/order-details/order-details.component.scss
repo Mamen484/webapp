@@ -1,4 +1,7 @@
 @import '../../../sass/variables';
+@import '../../../sass/mixins/order-actions-bar';
+
+@include order-actions-bar();
 
 .details-container {
   display: grid;
