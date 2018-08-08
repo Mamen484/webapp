@@ -20,7 +20,7 @@ import { OrderStatusComponent } from './order-status/order-status.component';
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from './select-orders-dialog/select-orders-dialog.component';
 import { StatusButtonsComponent } from './status-buttons/status-buttons.component';
-import { ActionButtonsComponent } from './action-buttons/action-buttons.component';
+import { ActionButtonsComponent } from './order-details/action-buttons/action-buttons.component';
 import { TagsManagementComponent } from './tags-management/tags-management.component';
 import { NewTagDialogComponent } from './new-tag-dialog/new-tag-dialog.component';
 import { AssignTagsDialogComponent } from './assign-tags-dialog/assign-tags-dialog.component';
