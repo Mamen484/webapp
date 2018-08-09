@@ -7,6 +7,7 @@ import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { SelectItemsDialogComponent } from '../select-items-dialog/select-items-dialog.component';
+import { cloneDeep } from 'lodash';
 
 @Component({
     selector: 'sf-refund-dialog',
@@ -16,19 +17,21 @@ import { SelectItemsDialogComponent } from '../select-items-dialog/select-items-
 export class RefundDialogComponent implements OnInit {
 
     @ViewChild(ItemsTableComponent) itemsTable: ItemsTableComponent;
+    order: Order;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public order: Order,
+    constructor(@Inject(MAT_DIALOG_DATA) public data: Order,
                 protected ordersService: OrdersService,
                 protected matDialogRef: MatDialogRef<RefundDialogComponent>,
                 protected snackBar: MatSnackBar,
     ) {
+        this.order = cloneDeep(this.data);
     }
 
     ngOnInit() {
     }
 
     refund() {
-        if (!this.itemsTable.selection.selected.length) {
+        if (!this.itemsTable.selection.selected.length && !this.itemsTable.refundShipping) {
             this.snackBar.openFromComponent(SelectItemsDialogComponent, {
                 duration: 5000
             });
@@ -38,8 +41,11 @@ export class RefundDialogComponent implements OnInit {
             reference: this.order.reference,
             channelName: this.order._embedded.channel.name,
             refund: {
-                shipping: false,
-                products: this.itemsTable.selection.selected.map(item => ({reference: item.reference, quantity: item.quantity})),
+                shipping: this.itemsTable.refundShipping,
+                products: this.itemsTable.selection.selected.map(item => ({
+                    reference: item.reference,
+                    quantity: this.itemsTable.selectedQuantity[item.reference],
+                })),
             },
         }]).subscribe(() => {
             this.showSuccess();

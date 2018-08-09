@@ -22,9 +22,11 @@ export class ItemsTableComponent implements OnInit {
     @Input() order: Order;
     @Input() mode: 'normal' | 'refund' = 'normal';
     acknowledgment: OrderAcknowledgment;
-    tableData;
+    tableData: MatTableDataSource<OrderDetailsItem>;
     displayedColumns = ['sku', 'image', 'name', 'quantity', 'price'];
     selection = new SelectionModel<OrderDetailsItem>(true, []);
+    refundShipping = false;
+    selectedQuantity = {};
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -36,6 +38,7 @@ export class ItemsTableComponent implements OnInit {
         this.initializeTableData();
         if (this.mode === 'refund') {
             this.displayedColumns.unshift('checkbox');
+            this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
         }
     }
 

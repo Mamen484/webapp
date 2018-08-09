@@ -19,8 +19,6 @@ export class OrderDetailsComponent implements OnInit {
     ngOnInit() {
         this.route.data.subscribe(({order}: { order: Order }) => {
             this.order = cloneDeep(order);
-            // this.order.status = OrderStatus.shipped;
-            // this.order._embedded.channel.name = 'Laredoute';
         });
     }
 

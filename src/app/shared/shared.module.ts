@@ -27,6 +27,7 @@ import { ImageComponent } from './image/image.component';
 import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
 import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
+import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe';
 
 @NgModule({
     imports: [
@@ -97,6 +98,7 @@ import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pi
         RouterModule,
 
         // pipes
+        ArrayFromNumberPipe,
         LargeNumberSuffixPipe,
         RemoveUnderlinePipe,
         SfCurrencyPipe,
@@ -129,6 +131,7 @@ import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pi
         ValidationErrorsSnackbarComponent,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
+        ArrayFromNumberPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

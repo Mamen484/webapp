@@ -57,7 +57,7 @@ describe('ItemsTableComponent', () => {
             payment: {},
         };
         fixture.detectChanges();
-        expect(component.tableData.data[0].sku).toEqual(1324);
+        expect(component.tableData.data[0].sku).toEqual('1324');
     });
 
     it('should take an item reference alias if exists', () => {
