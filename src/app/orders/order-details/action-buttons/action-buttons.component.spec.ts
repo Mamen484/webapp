@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
 
 describe('ActionButtonsComponent', () => {
     let component: ActionButtonsComponent;
@@ -146,6 +147,11 @@ describe('ActionButtonsComponent', () => {
         component.order._embedded.channel.name = 'LaRedoute';
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(false);
+    });
+
+    it('should open a refund dialog on openRefundDialog() call, passing an order into it', () => {
+        component.openRefundDialog();
+        expect(matDialog.open).toHaveBeenCalledWith(RefundDialogComponent, {data: <any>{_embedded: {channel: {name: 'amazon'}}}})
     });
 
     it('should initialize acknowledgment property on component init as acknowledged if order acknowledgedAt is defined', () => {

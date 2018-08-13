@@ -23,11 +23,10 @@ export class RefundDialogComponent implements OnInit {
                 protected ordersService: OrdersService,
                 protected matDialogRef: MatDialogRef<RefundDialogComponent>,
                 protected snackBar: MatSnackBar,
-    ) {
-        this.order = cloneDeep(this.data);
-    }
+    ) {}
 
     ngOnInit() {
+        this.order = cloneDeep(this.data);
     }
 
     refund() {

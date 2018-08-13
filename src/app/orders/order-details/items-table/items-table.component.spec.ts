@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { EMPTY, of, throwError } from 'rxjs';
 import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
+import { ArrayFromNumberPipe } from '../../../shared/array-from-number/array-from-number.pipe';
 
 describe('ItemsTableComponent', () => {
     let component: ItemsTableComponent;
@@ -27,7 +28,7 @@ describe('ItemsTableComponent', () => {
         ordersService = jasmine.createSpyObj(['updateItemsReferences']);
         appStore = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
-            declarations: [ItemsTableComponent, SfCurrencyPipe],
+            declarations: [ItemsTableComponent, SfCurrencyPipe, ArrayFromNumberPipe],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: MatDialog, useValue: matDialog},
@@ -53,7 +54,7 @@ describe('ItemsTableComponent', () => {
     it('should initialize a datatable on component init', () => {
         component.order = <any>{
             createdAt: new Date('2012-12-12').getTime(),
-            items: [{reference: 1324}],
+            items: [{reference: '1324'}],
             payment: {},
         };
         fixture.detectChanges();
@@ -117,6 +118,27 @@ describe('ItemsTableComponent', () => {
             panelClass: 'sf-snackbar-error',
             duration: 5000,
         });
+    });
+
+    it('should NOT display a checkbox if the mode is `normal`', () => {
+        component.order = <any>{items: []};
+        component.mode = 'normal';
+        component.ngOnInit();
+        expect(component.displayedColumns).not.toContain('checkbox');
+    });
+
+    it('should display a checkbox if the mode is `refund`', () => {
+        component.order = <any>{items: []};
+        component.mode = 'refund';
+        component.ngOnInit();
+        expect(component.displayedColumns).toContain('checkbox');
+    });
+
+    it('should initialize a selectedQuantity field if the mode is `refund`', () => {
+        component.order = <any>{items: [{reference: '135', quantity: 55}, {reference: '159', quantity: 89}]};
+        component.mode = 'refund';
+        component.ngOnInit();
+        expect(component.selectedQuantity).toEqual({135: 55, 159: 89});
     });
 });
 

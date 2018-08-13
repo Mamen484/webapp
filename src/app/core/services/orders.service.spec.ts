@@ -196,12 +196,13 @@ describe('OrdersService', () => {
 
     it('should refund orders', () => {
         appStore.select.and.returnValue(of({id: 10}));
-        service[OrderNotifyAction.refund]([{
+        service.notifyRefund([{
             reference: '171',
             channelName: '',
             refund: {shipping: false, products: [{reference: '123', quantity: 1}]}
         }]).subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/refund}`);
+        console.log(httpMock);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/refund`);
         expect(req.request.body).toEqual({
             order: [{
                 reference: '171',
