@@ -10,7 +10,7 @@ export class ChannelsRouteGuard implements CanLoad {
     }
 
     canLoad(): true {
-        this.appStore.select('currentRoute').dispatch({type: SET_ROUTE, routeName: 'channels'});
+        this.appStore.dispatch({type: SET_ROUTE, routeName: 'channels'});
         return true;
     }
 }

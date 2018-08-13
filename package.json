@@ -16,7 +16,7 @@
     "@angular/platform-server": "^6.1.2",
     "@angular/router": "^6.1.2",
     "@livechat/angular-widget": "0.0.6",
-    "@ngrx/store": "^5.2.0",
+    "@ngrx/store": "^6.1.0",
     "@types/lodash": "^4.14.116",
     "core-js": "^2.5.7",
     "currency-formatter": "^1.4.3",

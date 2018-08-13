@@ -102,7 +102,7 @@ export class TagsManagementComponent implements OnInit {
             take(1),
             flatMap(store => this.tagsService.fetchAll(store.id))
         )
-            .subscribe(response => response && this.appStore.select('tags')
+            .subscribe(response => response && this.appStore
                 .dispatch({type: SET_TAGS, tags: response._embedded.tag}));
     }
 

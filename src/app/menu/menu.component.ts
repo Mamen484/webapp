@@ -54,7 +54,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
 
     chooseStore(store) {
-        this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+        this.appStore.dispatch({type: SET_STORE, store});
     }
 
     logout() {

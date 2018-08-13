@@ -22,7 +22,7 @@ describe('TagsManagementComponent', () => {
 
         matDialog = jasmine.createSpyObj(['open']);
         tagsService = jasmine.createSpyObj(['create', 'fetchAll', 'remove', 'update']);
-        appStore = jasmine.createSpyObj(['select']);
+        appStore = jasmine.createSpyObj(['select', 'dispatch']);
         snackBar = jasmine.createSpyObj(['open']);
         TestBed.configureTestingModule({
             declarations: [TagsManagementComponent],
@@ -136,13 +136,12 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should dispatch updated tags info when the new tags fetched', () => {
-        const dispatchSpy = jasmine.createSpy();
         matDialog.open.and.returnValue({afterClosed: () => of('important')});
-        appStore.select.and.returnValues(of({id: 29}), of({id: 29}), {dispatch: dispatchSpy});
+        appStore.select.and.returnValues(of({id: 29}), of({id: 29}));
         tagsService.create.and.returnValue(of({}));
         tagsService.fetchAll.and.returnValue(of({_embedded: {tag: ['some', 'data']}}));
         component.createNewTag();
-        expect(dispatchSpy).toHaveBeenCalledTimes(1);
+        expect(appStore.dispatch).toHaveBeenCalledTimes(1);
     });
 
     it('should show a snack bar if an error returned on tag creation', () => {

@@ -22,7 +22,7 @@ describe('IsAuthorizedGuard', () => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
         removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
-        store = jasmine.createSpyObj('store', ['select']);
+        store = jasmine.createSpyObj('store', ['select', 'dispatch']);
         router = jasmine.createSpyObj('Router', ['navigate']);
 
         TestBed.configureTestingModule({
@@ -48,10 +48,7 @@ describe('IsAuthorizedGuard', () => {
     });
 
     it('should call UserService.fetchAggregatedInfo to check if the authorization is valid', async () => {
-        store.select.and.returnValues(
-            of(null),
-            {dispatch: jasmine.createSpy('dispatch')}
-        );
+        store.select.and.returnValue(of(null));
         getItemSpy.and.returnValue('some token');
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
@@ -67,7 +64,7 @@ describe('IsAuthorizedGuard', () => {
     });
 
     it('should return true if the authorization is valid ', async () => {
-        store.select.and.returnValues(of(null), {dispatch: jasmine.createSpy('dispatch')});
+        store.select.and.returnValue(of(null));
         getItemSpy.and.returnValue('some token');
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
@@ -96,27 +93,21 @@ describe('IsAuthorizedGuard', () => {
 
 
     it('should write the userData to the app store, if the user has an enabled store', async () => {
-        let dispatchSpy = jasmine.createSpy('dispatch');
-        store.select.and.returnValues(
+        store.select.and.returnValue(
             of(AggregatedUserInfo.create({
                 roles: ['user'],
                 _embedded: {store: [{name: 'some name', status: 'active'}]}
 
-            })),
-            {dispatch: dispatchSpy}
+            }))
         );
         getItemSpy.and.returnValue('some token');
         await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
         expect(store.select).toHaveBeenCalledWith('userInfo');
-        expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
+        expect(store.dispatch.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
     });
 
     it('should write the userData to the app store, if the user has an "admin" role', async () => {
-        let dispatchSpy = jasmine.createSpy('dispatch');
-        store.select.and.returnValues(
-            of(null),
-            {dispatch: dispatchSpy}
-        );
+        store.select.and.returnValue(of(null));
         getItemSpy.and.returnValue('some token');
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['admin'],
@@ -125,6 +116,6 @@ describe('IsAuthorizedGuard', () => {
         })));
         await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
         expect(store.select).toHaveBeenCalledWith('userInfo');
-        expect(dispatchSpy.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
+        expect(store.dispatch.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
     });
 });
