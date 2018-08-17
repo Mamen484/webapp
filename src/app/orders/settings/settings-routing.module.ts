@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { TagsManagementComponent } from './tags-management/tags-management.component';
+import { SettingsBaseComponent } from './settings-base/settings-base.component';
 
 const routes: Routes = [
-    {path: 'tags-management', component: TagsManagementComponent}
+    {
+        path: '', component: SettingsBaseComponent, children: [
+            {path: 'tags-management', component: TagsManagementComponent},
+        ],
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class SettingsRoutingModule { }
+export class SettingsRoutingModule {
+}

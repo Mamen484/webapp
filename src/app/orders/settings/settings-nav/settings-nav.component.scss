@@ -1,0 +1,19 @@
+@import '../../../../sass/mixins/order-actions-bar';
+
+.settings-navigation {
+  .nav-active {
+    color: mat-color($accent);
+  }
+  a {
+    text-decoration: none;
+    color: initial;
+  }
+
+  ul {
+    padding: 0;
+
+    li {
+      margin-bottom: 20px;
+    }
+  }
+}
