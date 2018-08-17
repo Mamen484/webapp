@@ -5,8 +5,11 @@
 
 .details-container {
   display: grid;
-  grid-template-areas: "order-error order-error" "summary items-table" "addresses items-table";
-  grid-template-columns: 1fr 2fr;
+  grid-template-areas: "order-error order-error"
+                       "summary addresses"
+                       "items-table addresses";
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-gap: 20px;
 
   @media #{$lt-md}{
@@ -31,4 +34,9 @@
   grid-area: items-table;
   overflow: hidden;
   padding: 0;
+}
+
+.actions {
+  // for the case when the buttons don't fit available width (e.g. 1000px)
+  overflow: auto;
 }

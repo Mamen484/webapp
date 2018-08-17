@@ -1,5 +1,5 @@
 <form #form="ngForm">
-    <div fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="column">
         <mat-form-field appearance="outline" fxFlex color="accent">
             <mat-label i18n>First Name</mat-label>
             <input matInput [(ngModel)]="address.firstName" name="firstName" #firstName="ngModel" autocomplete="off">
@@ -31,7 +31,7 @@
             </mat-error>
         </mat-form-field>
     </div>
-    <div fxLayout="column" fxLayout.gt-lg="row" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap.gt-xs="10px">
         <mat-form-field appearance="outline" fxFlex color="accent">
             <mat-label i18n>Zip</mat-label>
             <input matInput [(ngModel)]="address.postalCode" name="postalCode" required
@@ -47,9 +47,11 @@
                 Please, specify the city.
             </mat-error>
         </mat-form-field>
+    </div>
+    <div fxLayout="row">
         <sf-country-autocomplete fxFlex [value]="address.country"
                                  (valueChanged)="address.country = $event"
-                                 appearance="outline"></sf-country-autocomplete>
+                                 appearance="outline" fxFlex></sf-country-autocomplete>
     </div>
     <div fxLayout="row">
         <mat-form-field appearance="outline" fxFlex color="accent">
@@ -57,13 +59,11 @@
             <input matInput [(ngModel)]="address.company" name="company" #company="ngModel">
         </mat-form-field>
     </div>
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap.gt-xs="10px">
         <mat-form-field appearance="outline" fxFlex color="accent">
             <mat-label i18n>Phone</mat-label>
             <input type="tel" matInput [(ngModel)]="address.phone" name="phone">
         </mat-form-field>
-    </div>
-    <div fxLayout="row">
         <mat-form-field appearance="outline" fxFlex color="accent">
             <mat-label i18n>Mobile phone</mat-label>
             <input type="tel" matInput [(ngModel)]="address.mobilePhone" name="mobilePhone">
