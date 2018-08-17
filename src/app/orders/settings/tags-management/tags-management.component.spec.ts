@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TagsManagementComponent } from './tags-management.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { TagsService } from '../../core/services/tags.service';
+import { TagsService } from '../../../core/services/tags.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
+import { AppState } from '../../../core/entities/app-state';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { EMPTY, of, throwError } from 'rxjs';
-import { NewTagDialogComponent } from '../new-tag-dialog/new-tag-dialog.component';
+import { NewTagDialogComponent } from '../../new-tag-dialog/new-tag-dialog.component';
 
 describe('TagsManagementComponent', () => {
     let component: TagsManagementComponent;

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { NewTagDialogComponent } from '../new-tag-dialog/new-tag-dialog.component';
-import { TagsService } from '../../core/services/tags.service';
+import { NewTagDialogComponent } from '../../new-tag-dialog/new-tag-dialog.component';
+import { TagsService } from '../../../core/services/tags.service';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
+import { AppState } from '../../../core/entities/app-state';
 import { flatMap, take } from 'rxjs/operators';
-import { SET_TAGS } from '../../core/reducers/tags-reducer';
-import { Tag } from '../../core/entities/tag';
+import { SET_TAGS } from '../../../core/reducers/tags-reducer';
+import { Tag } from '../../../core/entities/tag';
 
 @Component({
     selector: 'sf-tags-management',
