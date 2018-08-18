@@ -1,0 +1,33 @@
+@import '../../../../sass/variables';
+
+table {
+  tr {
+    th {
+      text-align: left;
+    }
+    th, td {
+      width: 80px;
+      &:first-child {
+        width: 100%;
+      }
+      &:not(:last-child){
+        padding-right: 40px;
+      }
+    }
+
+    td {
+      mat-form-field {
+        width: 100%;
+      }
+
+      .add-item, .remove-item {
+        min-width: 50px;
+        border: 1px solid $black-12-opacity;
+        border-radius: 3px;
+        mat-icon {
+          color: mat-color($accent);
+        }
+      }
+    }
+  }
+}

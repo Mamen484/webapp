@@ -1,0 +1,62 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
+    <sf-settings-nav fxFlex="25%" activeLink="test-order"></sf-settings-nav>
+    <div fxLayout="column" fxLayoutGap="20px" fxFlex>
+        <mat-card>
+            <mat-card-content fxLayout="row wrap" fxLayoutGap="25px">
+                <mat-form-field appearance="outline" color="accent" fxFlex>
+                    <mat-label i18n>Channel</mat-label>
+                    <input matInput name="channel" [(ngModel)]="order.channel">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent" fxFlex>
+                    <mat-label i18n>Carrier</mat-label>
+                    <input matInput name="carrier" [(ngModel)]="order.shipment.carrier">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent" fxFlex>
+                    <mat-label i18n>Payment</mat-label>
+                    <input matInput name="payment" [(ngModel)]="order.shipment.paymentMethod">
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="accent" fxFlex>
+                    <mat-label i18n>Relay Number</mat-label>
+                    <input matInput name="relay" [(ngModel)]="order.shipment.relayNumber">
+                </mat-form-field>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <table>
+                    <tr>
+                        <th i18n>SKU</th>
+                        <th i18n>Qty</th>
+                        <th i18n>Price</th>
+                    </tr>
+                    <tr *ngFor="let item of order.items; index as i">
+                        <td>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="item.reference" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="item.quantity">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="item.price" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <button mat-button class="add-item" *ngIf="i < order.items.length - 1" (click)="removeItem(i)">
+                                <mat-icon class="mat-18">remove</mat-icon>
+                            </button>
+                            <button mat-button class="add-item" *ngIf="i === order.items.length - 1" (click)="addItem()">
+                                <mat-icon class="mat-18">add</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+</div>

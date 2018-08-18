@@ -2,7 +2,10 @@
 
 .settings-navigation {
   .nav-active {
-    color: mat-color($accent);
+    &, a {
+      color: mat-color($accent);
+    }
+
   }
   a {
     text-decoration: none;

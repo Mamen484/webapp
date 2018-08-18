@@ -6,6 +6,7 @@ import { TagsManagementComponent } from './tags-management/tags-management.compo
 import { SharedModule } from '../shared/shared.module';
 import { SettingsNavComponent } from './settings-nav/settings-nav.component';
 import { SettingsBaseComponent } from './settings-base/settings-base.component';
+import { CreateTestOrderComponent } from './create-test-order/create-test-order.component';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import { SettingsBaseComponent } from './settings-base/settings-base.component';
         TagsManagementComponent,
         SettingsNavComponent,
         SettingsBaseComponent,
+        CreateTestOrderComponent,
     ]
 })
 export class SettingsModule {
