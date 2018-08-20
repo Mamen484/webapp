@@ -10,6 +10,7 @@ import { OrdersExport } from '../entities/orders/orders-export';
 import { flatMap, publishReplay } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
+import { TestOrder } from '../entities/orders/test-order';
 
 @Injectable()
 export class OrdersService {
@@ -87,5 +88,11 @@ export class OrdersService {
             this.exports$.connect();
         }
         return this.exports$;
+    }
+
+    create(order: TestOrder) {
+        return this.appStore.select('currentStore').pipe(flatMap(store =>
+            this.httpClient.post(`${environment.API_URL}/store/${store.id}/order`, {order})
+        ));
     }
 }
