@@ -6,7 +6,7 @@ table {
       text-align: left;
     }
     th, td {
-      width: 80px;
+      max-width: 120px;
       &:first-child {
         width: 100%;
       }
@@ -18,6 +18,11 @@ table {
     td {
       mat-form-field {
         width: 100%;
+        min-width: 120px;
+
+        input {
+          width: 100%;
+        }
       }
 
       .add-item, .remove-item {
@@ -34,6 +39,7 @@ table {
       td > div {
         display: grid;
         grid-template-rows: 40px 40px 40px;
+        grid-template-columns: 100%;
         align-items: center;
       }
     }
@@ -42,4 +48,14 @@ table {
 
 mat-card {
   overflow: auto;
+
+  &.order-extras {
+    mat-form-field {
+      min-width: 180px;
+    }
+  }
+}
+
+.buttons {
+  margin-top: 25px;
 }
