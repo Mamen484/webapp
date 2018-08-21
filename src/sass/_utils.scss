@@ -35,12 +35,10 @@ $badge-font-level: caption;
   flex: 1;
 }
 
-
 .tooltip-over-update {
   position: relative;
   top: 47px;
 }
-
 
 .scrollable-container {
   padding: $content-margin $content-margin+5px $content-margin 5px;
@@ -72,6 +70,15 @@ $badge-font-level: caption;
 .sf-snackbar-error {
   color: mat-color($warn);
   font-weight: mat-font-weight($config, body-2);
+}
+
+// avoid double gaps on the grid where we have a gap between two elements, and one of them
+// contains nothing (conditionally displayed content, for instance)
+.sf-gap-compensate-parent {
+  margin-top: -$default-grid-gap;
+  .sf-gap-compensate-child {
+    margin-top: $default-grid-gap;
+  }
 }
 
 //.sf-tags-chips {

@@ -10,7 +10,7 @@
                        "items-table addresses";
   grid-template-columns: 2fr 1fr;
   grid-template-rows: auto auto 1fr;
-  grid-gap: 20px;
+  gap: $default-grid-gap;
 
   @media #{$lt-md}{
     grid-template-areas: "order-error" "summary" "items-table" "addresses";
