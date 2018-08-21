@@ -14,16 +14,12 @@
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="outline" color="accent">
-                            <mat-label i18n>Carrier</mat-label>
-                            <input matInput name="carrier" [(ngModel)]="order.shipment.carrier">
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Payment</mat-label>
                             <input matInput name="payment" [(ngModel)]="order.shipment.paymentMethod">
                         </mat-form-field>
                         <mat-form-field appearance="outline" color="accent">
-                            <mat-label i18n>Relay Number</mat-label>
-                            <input matInput name="relay" type="number" [(ngModel)]="order.shipment.relayNumber">
+                            <mat-label i18n>Carrier</mat-label>
+                            <input matInput name="carrier" [(ngModel)]="order.shipment.carrier">
                         </mat-form-field>
                     </mat-card-content>
                 </mat-card>
