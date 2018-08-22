@@ -7,23 +7,27 @@ $side-padding: 25px;
 table {
   min-width: 100%;
   table-layout: auto;
-  th, td {
-    padding: 0 $side-padding;
 
+  &.order-items {
+    th, td {
+      padding: 0 $side-padding;
+    }
+  }
+
+  &.totals {
+    margin-top: 10px;
+    td {
+      padding: 10px $side-padding;
+    }
+  }
+
+  th, td {
     &:last-child {
       // set the Price column width to the minimum available,
       // to have the proper align with totals values
       width: 1px;
     }
   }
-
-  td:last-child {
-    text-align: right;
-  }
-}
-
-.totals {
-  padding: 30px $side-padding;
 }
 
 img.product-visual {
@@ -40,6 +44,11 @@ img.product-visual {
 }
 
 .items-table {
-  max-width:100%;
+  max-width: 100%;
   overflow: auto;
+  margin: 0 2px;
+}
+
+.sku {
+  white-space: nowrap;
 }
