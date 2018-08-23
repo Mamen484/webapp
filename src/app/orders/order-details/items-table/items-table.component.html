@@ -72,11 +72,12 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="20px">
+    <div fxFlex></div>
     <div *ngIf="mode === 'refund'">
         <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null"
                       [checked]="refundShipping" class="refund-shipping"></mat-checkbox>
     </div>
-    <table class="totals" [class.refundable-shipping]="mode === 'refund'">
+    <table class="totals" [class.refundable-shipping]="mode === 'refund'" fxFlex="300px">
         <tbody>
         <tr>
             <td i18n>Total products</td>
