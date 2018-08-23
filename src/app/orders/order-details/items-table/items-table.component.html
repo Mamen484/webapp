@@ -6,7 +6,8 @@
                 <mat-checkbox *ngIf="mode === 'refund' && row.status !== statuses.refunded"
                         (change)="$event ? selection.toggle(row) : null"
                               [checked]="selection.isSelected(row)"></mat-checkbox>
-                <mat-icon *ngIf="row.status === statuses.refunded" class="refunded-icon">compare_arrows</mat-icon>
+                <mat-icon *ngIf="row.status === statuses.refunded" class="refunded-icon"
+                matTooltip="Refunded" i18n-matTooltip>compare_arrows</mat-icon>
             </td>
         </ng-container>
         <ng-container matColumnDef="sku">
