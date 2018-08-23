@@ -120,20 +120,6 @@ describe('ItemsTableComponent', () => {
         });
     });
 
-    it('should NOT display a checkbox if the mode is `normal`', () => {
-        component.order = <any>{items: []};
-        component.mode = 'normal';
-        component.ngOnInit();
-        expect(component.displayedColumns).not.toContain('checkbox');
-    });
-
-    it('should display a checkbox if the mode is `refund`', () => {
-        component.order = <any>{items: []};
-        component.mode = 'refund';
-        component.ngOnInit();
-        expect(component.displayedColumns).toContain('checkbox');
-    });
-
     it('should initialize a selectedQuantity field if the mode is `refund`', () => {
         component.order = <any>{items: [{reference: '135', quantity: 55}, {reference: '159', quantity: 89}]};
         component.mode = 'refund';

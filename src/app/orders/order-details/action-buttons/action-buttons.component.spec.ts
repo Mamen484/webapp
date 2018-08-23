@@ -128,6 +128,22 @@ describe('ActionButtonsComponent', () => {
         expect(elements().length).toEqual(2);
     });
 
+    it('should display a refund button if the channel is laredoute and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'LaRedoute';
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
+
+    it('should set supportsRefund property to true if the channel is laredoute and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'LaRedoute';
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+    });
+
     it('should set supportsRefund property to true if the channel is laredoute and status is shipped', () => {
         component.order.status = OrderStatus.shipped;
         component.order._embedded.channel.name = 'LaRedoute';
@@ -142,8 +158,8 @@ describe('ActionButtonsComponent', () => {
         expect(component.supportsRefund).toEqual(false);
     });
 
-    it('should set supportsRefund property to false if the channel is laredoute and status is NOT shipped', () => {
-        component.order.status = OrderStatus.partially_refunded;
+    it('should set supportsRefund property to false if the channel is laredoute and status is NOT shipped and is NOT partially_refunded', () => {
+        component.order.status = OrderStatus.cancelled;
         component.order._embedded.channel.name = 'LaRedoute';
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(false);

@@ -88,7 +88,7 @@ export class ActionButtonsComponent implements OnInit {
     protected checkIfRefundable() {
         this.supportsRefund =
             this.order._embedded.channel.name.toLowerCase() === 'laredoute'
-            && this.order.status === OrderStatus.shipped;
+            && (this.order.status === OrderStatus.shipped || this.order.status === OrderStatus.partially_refunded);
     }
 
 }

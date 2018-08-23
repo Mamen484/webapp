@@ -3,6 +3,7 @@
 @include order-actions-bar();
 
 $side-padding: 25px;
+$shadow-containing-space: 2px;
 
 table {
   min-width: 100%;
@@ -11,6 +12,18 @@ table {
   &.order-items {
     th, td {
       padding: 0 $side-padding;
+      mat-icon.refunded-icon {
+        vertical-align: -10px;
+      }
+
+      &:first-child {
+        width:1px;
+      }
+
+      &.no-padding {
+        padding: 0;
+      }
+
     }
   }
 
@@ -28,6 +41,11 @@ table {
       width: 1px;
     }
   }
+
+  &.refundable-shipping {
+    // substract a place containing a checkbox
+    min-width: calc(100% - 67px);
+  }
 }
 
 img.product-visual {
@@ -38,17 +56,30 @@ img.product-visual {
 }
 
 .edit-sku {
-  color: mat-color($grey);
   cursor: pointer;
   vertical-align: text-bottom;
+}
+
+mat-icon {
+  &.refunded-icon, &.edit-sku{
+    color: mat-color($grey, 600);
+  }
 }
 
 .items-table {
   max-width: 100%;
   overflow: auto;
-  margin: 0 2px;
+  margin: 0 $shadow-containing-space;
 }
 
 .sku {
   white-space: nowrap;
+}
+
+.refund-shipping {
+  margin-left: $side-padding + $shadow-containing-space;
+}
+
+.total-price {
+  font-weight: bold;
 }

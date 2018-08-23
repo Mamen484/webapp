@@ -11,6 +11,7 @@ import { OrdersService } from '../../../core/services/orders.service';
 import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
 
 @Component({
     selector: 'sf-items-table',
@@ -23,10 +24,11 @@ export class ItemsTableComponent implements OnInit {
     @Input() mode: 'normal' | 'refund' = 'normal';
     acknowledgment: OrderAcknowledgment;
     tableData: MatTableDataSource<OrderDetailsItem>;
-    displayedColumns = ['sku', 'image', 'name', 'quantity', 'price'];
+    displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'price'];
     selection = new SelectionModel<OrderDetailsItem>(true, []);
     refundShipping = false;
     selectedQuantity = {};
+    statuses = OrderStatus;
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -36,10 +38,7 @@ export class ItemsTableComponent implements OnInit {
 
     ngOnInit() {
         this.initializeTableData();
-        if (this.mode === 'refund') {
-            this.displayedColumns.unshift('checkbox');
-            this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
-        }
+        this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
     }
 
     updateItemReference(row: OrderDetailsItem) {
@@ -63,6 +62,7 @@ export class ItemsTableComponent implements OnInit {
                 price: item.price,
                 image: item.image,
                 reference: item.reference,
+                status: item.status,
             }
         }));
     }
