@@ -5,12 +5,13 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
-import { MatSnackBar } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule, MatSnackBar } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EMPTY, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { StoreService } from '../../../core/services/store.service';
 
 describe('CreateTestOrderComponent', () => {
     let component: CreateTestOrderComponent;
@@ -20,12 +21,14 @@ describe('CreateTestOrderComponent', () => {
     let ordersService: jasmine.SpyObj<OrdersService>;
     let snackBar: jasmine.SpyObj<MatSnackBar>;
     let router: jasmine.SpyObj<Router>;
+    let storeService: jasmine.SpyObj<StoreService>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['pipe']);
         ordersService = jasmine.createSpyObj(['create']);
         snackBar = jasmine.createSpyObj(['open', 'openFromComponent']);
         router = jasmine.createSpyObj(['navigate']);
+        storeService = jasmine.createSpyObj(['getStoreChannels']);
 
         TestBed.configureTestingModule({
             declarations: [CreateTestOrderComponent],
@@ -35,8 +38,13 @@ describe('CreateTestOrderComponent', () => {
                 {provide: OrdersService, useValue: ordersService},
                 {provide: MatSnackBar, useValue: snackBar},
                 {provide: Router, useValue: router},
+                {provide: StoreService, useValue: storeService},
             ],
-            imports: [FormsModule],
+            imports: [
+                FormsModule,
+                ReactiveFormsModule,
+                MatAutocompleteModule,
+            ],
         })
             .compileComponents();
     }));
@@ -92,13 +100,6 @@ describe('CreateTestOrderComponent', () => {
         expect(component.order.items.length).toEqual(1);
     });
 
-    it('should initialize channels on init', () => {
-        component.order = new TestOrder();
-        appStore.pipe.and.returnValue(of([{something: 1}]));
-        fixture.detectChanges();
-        expect(component.channels.length).toEqual(1);
-    });
-
     it('should add one order item on addItem() call', () => {
         component.order = new TestOrder();
         appStore.pipe.and.returnValue(EMPTY);
@@ -149,5 +150,15 @@ describe('CreateTestOrderComponent', () => {
         ordersService.create.and.returnValue(of({}));
         component.create();
         expect(router.navigate).toHaveBeenCalledWith(['/orders']);
+    });
+
+    it('should return a channel name or undefined on channelDisplayFn() call', () => {
+        expect(component.channelDisplayFn()).toBe(undefined);
+        expect(component.channelDisplayFn(<any>{name: 'some name'})).toBe('some name');
+    });
+
+    it('should write a channel on selectChannel() call', () => {
+        component.selectChannel({option: {value: {id: 22}}});
+        expect(component.order.channel).toBe(22);
     });
 });

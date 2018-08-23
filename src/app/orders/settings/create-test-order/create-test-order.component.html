@@ -5,22 +5,35 @@
             <div fxLayout="column" fxLayoutGap="20px" fxLayout.xl="row" fxLayoutGap.xl="20px">
                 <mat-card class="order-extras" fxFlex.xl="25%" fxFlex="100%">
                     <mat-card-content fxLayout="row wrap" fxLayout.xl="column" fxLayoutGap="25px">
+
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Channel</mat-label>
-                            <mat-select [(value)]="order.channel">
-                                <mat-option *ngFor="let channel of channels" [value]="channel.id">{{channel.name}}
-                                </mat-option>
-                                <mat-option *ngIf="!channels" disabled i18n>Loading...</mat-option>
-                            </mat-select>
+                            <input type="text" matInput [matAutocomplete]="auto" [formControl]="channelControl">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectChannel($event)" [displayWith]="channelDisplayFn">
+                                <mat-optgroup label="Installed" i18n-label *ngIf="filteredChannels">
+                                    <mat-option *ngFor="let channel of filteredChannels" [value]="channel">{{channel.name}}
+                                    </mat-option>
+                                    <mat-option *ngIf="!filteredChannels.length" disabled i18n>No channels found</mat-option>
+                                </mat-optgroup>
+                                <mat-option *ngIf="!filteredChannels || !filteredNewChannels" disabled i18n>Loading...</mat-option>
+                                <mat-optgroup label="New" i18n-label *ngIf="filteredNewChannels">
+                                    <mat-option *ngFor="let channel of filteredNewChannels" [value]="channel">{{channel.name}}
+                                    </mat-option>
+                                    <mat-option *ngIf="!filteredNewChannels.length" disabled i18n>No channels found</mat-option>
+                                </mat-optgroup>
+                            </mat-autocomplete>
                         </mat-form-field>
+
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Payment</mat-label>
                             <input matInput name="payment" [(ngModel)]="order.shipment.paymentMethod">
                         </mat-form-field>
+
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Carrier</mat-label>
                             <input matInput name="carrier" [(ngModel)]="order.shipment.carrier">
                         </mat-form-field>
+
                     </mat-card-content>
                 </mat-card>
                 <mat-card fxFlex.lg="75%" fxFlex="100%">
