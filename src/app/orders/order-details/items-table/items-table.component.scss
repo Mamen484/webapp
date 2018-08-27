@@ -27,10 +27,13 @@ table {
     }
   }
 
-  &.totals {
-    margin-top: 10px;
-    td {
-      padding: 10px $side-padding;
+  td[mat-footer-cell] {
+    padding: $side-padding;
+  }
+
+  .total-captions, .total-values {
+    div:not(:last-child) {
+      padding-bottom: 20px;
     }
   }
 
@@ -74,10 +77,6 @@ mat-icon {
 
 .sku {
   white-space: nowrap;
-}
-
-.refund-shipping {
-  margin-left: $side-padding + $shadow-containing-space;
 }
 
 .total-price {

@@ -25,6 +25,7 @@ export class ItemsTableComponent implements OnInit {
     acknowledgment: OrderAcknowledgment;
     tableData: MatTableDataSource<OrderDetailsItem>;
     displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'price'];
+    footerColumns = ['left-gap', 'total-captions', 'total-values'];
     selection = new SelectionModel<OrderDetailsItem>(true, []);
     refundShipping = false;
     selectedQuantity = {};
