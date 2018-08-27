@@ -18,11 +18,11 @@
             </th>
             <td mat-cell *matCellDef="let row">
                 <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between center" class="sku">
-                    <div fxFlex>
-                        {{row.sku}}
+                    <div fxFlex fxLayout="row" fxLayoutAlign="flex-start center">
                         <mat-icon (click)="updateItemReference(row)" class="edit-sku" *ngIf="mode === 'normal'"
                                   matTooltip="Edit SKU" i18n-matTooltip matTooltipPosition="above">edit
                         </mat-icon>
+                        {{row.sku}}
                     </div>
 
                 </div>
@@ -67,22 +67,19 @@
         </ng-container>
 
         <ng-container matColumnDef="left-gap">
-            <td mat-footer-cell *matFooterCellDef colspan="3"></td>
+            <td mat-footer-cell *matFooterCellDef colspan="3">
+                <div *ngIf="mode === 'refund'" class="shipping-refund-checkbox">
+                    <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null"
+                                  [checked]="refundShipping"></mat-checkbox>
+                </div>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="total-captions">
             <td mat-footer-cell *matFooterCellDef colspan="2">
-                <div fxLayout="row" fxLayoutGap="20px">
-                    <div *ngIf="mode === 'refund'" fxFlexAlign="center">
-                        <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null"
-                                      [checked]="refundShipping"></mat-checkbox>
-                    </div>
-                    <div fxFlex class="total-captions">
-                        <div i18n>Total products</div>
-                        <div i18n>Total delivery</div>
-                        <div i18n>Total price</div>
-                    </div>
-                </div>
+                <div i18n>Total products</div>
+                <div i18n>Total delivery</div>
+                <div i18n>Total price</div>
             </td>
         </ng-container>
 
