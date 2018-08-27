@@ -95,7 +95,7 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
-        <tr mat-footer-row *matFooterRowDef="footerColumns; sticky: true"></tr>
+        <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
     </table>
 </div>
 
