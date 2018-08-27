@@ -40,6 +40,7 @@ export class CreateTestOrderComponent implements OnInit {
         this.addItem();
         this.updateTotalPrice();
         this.filterAutocompleteOptions();
+        this.initializeDefaultChannel();
     }
 
     addItem() {
@@ -103,6 +104,10 @@ export class CreateTestOrderComponent implements OnInit {
     protected filterChannels(value, channels: Channel[]) {
         const filterValue = typeof value === 'object' ? (<any>value).name.toLowerCase() : value.toLowerCase();
         return channels.filter(channel => channel.name.toLowerCase().includes(filterValue));
+    }
+
+    protected initializeDefaultChannel() {
+        this.getInstalledChannels().subscribe(channels => this.channelControl.setValue(channels[0]));
     }
 
 }
