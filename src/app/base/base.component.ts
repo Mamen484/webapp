@@ -32,13 +32,13 @@ export class BaseComponent {
             map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
         )
             .subscribe(channels => {
-                this.appStore.select('installedChannels').dispatch({type: SET_CHANNELS, channels})
+                this.appStore.dispatch({type: SET_CHANNELS, channels})
             });
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.tagsService.fetchAll(store.id))
         )
             .subscribe(response => {
-                this.appStore.select('tags').dispatch({type: SET_TAGS, tags: response._embedded.tag});
+                this.appStore.dispatch({type: SET_TAGS, tags: response._embedded.tag});
             });
     }
 

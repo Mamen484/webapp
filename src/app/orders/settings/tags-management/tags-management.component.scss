@@ -1,0 +1,18 @@
+@import '../../../../sass/mixins/order-actions-bar';
+
+mat-card {
+  height: fit-content;
+
+  mat-icon {
+    color: $black-54-opacity;
+  }
+}
+
+.tags-container {
+  position: relative;
+
+  mat-progress-bar {
+    position: absolute;
+    z-index: 10;
+  }
+}

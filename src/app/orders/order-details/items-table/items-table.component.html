@@ -1,0 +1,101 @@
+<div class="items-table">
+    <table mat-table [dataSource]="tableData" class="order-items">
+        <ng-container matColumnDef="refund-specific">
+            <th mat-header-cell *matHeaderCellDef class="no-padding"></th>
+            <td mat-cell *matCellDef="let row"
+                [class.no-padding]="mode === 'normal' && row.status !== statuses.refunded">
+                <mat-checkbox *ngIf="mode === 'refund' && row.status !== statuses.refunded"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"></mat-checkbox>
+                <mat-icon *ngIf="row.status === statuses.refunded" class="refunded-icon"
+                          matTooltip="Refunded" i18n-matTooltip>compare_arrows
+                </mat-icon>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="sku">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>SKU</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="space-between center" class="sku">
+                    <div fxFlex fxLayout="row" fxLayoutAlign="flex-start center">
+                        <mat-icon (click)="updateItemReference(row)" class="edit-sku" *ngIf="mode === 'normal'"
+                                  matTooltip="Edit SKU" i18n-matTooltip matTooltipPosition="above">edit
+                        </mat-icon>
+                        {{row.sku}}
+                    </div>
+
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>Visual</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <img [src]="row.image" [alt]="row.name" *ngIf="row.image" class="product-visual">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>Name</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">{{row.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>Quantity</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <ng-container *ngIf="mode === 'normal'">{{row.quantity}}</ng-container>
+                <mat-select *ngIf="mode === 'refund'" [(ngModel)]="selectedQuantity[row.reference]" placeholder="">
+                    <mat-option [value]="i" *ngFor="let i of (row.quantity | arrayFromNumber)">{{i}}</mat-option>
+                </mat-select>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>Price</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{row.price | sfCurrency:order.payment.currency}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="left-gap">
+            <td mat-footer-cell *matFooterCellDef colspan="3">
+                <div *ngIf="mode === 'refund'" class="shipping-refund-checkbox">
+                    <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null"
+                                  [checked]="refundShipping"></mat-checkbox>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total-captions">
+            <td mat-footer-cell *matFooterCellDef colspan="2">
+                <div i18n>Total products</div>
+                <div i18n>Total delivery</div>
+                <div i18n>Total price</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total-values">
+            <td mat-footer-cell *matFooterCellDef class="total-values">
+                <div>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                <div>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
+                <div>{{order.payment.productAmount + order.payment.shippingAmount |
+                    sfCurrency:order.payment.currency}}
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
+        <tr mat-footer-row *matFooterRowDef="footerColumns"></tr>
+    </table>
+</div>
+

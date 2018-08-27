@@ -57,8 +57,10 @@ sf-filter-channels-dialog {
 
 }
 
-button[mat-button] {
-  text-transform: uppercase;
+button {
+  &[mat-button], &[mat-raised-button]{
+    text-transform: uppercase;
+  }
 }
 
 sf-admin-menu {
@@ -162,4 +164,8 @@ mat-chip.mat-chip.sf-tag {
 button[mat-stroked-button][color="accent"] {
   text-transform: uppercase;
   border-color: $black-12-opacity;
+}
+
+.mat-tooltip {
+  text-transform: uppercase;
 }

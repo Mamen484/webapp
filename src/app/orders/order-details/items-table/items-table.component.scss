@@ -1,0 +1,82 @@
+@import '../../../../sass/mixins/order-actions-bar';
+
+@include order-actions-bar();
+
+$side-padding: 25px;
+$shadow-containing-space: 2px;
+
+table {
+  min-width: 100%;
+  table-layout: auto;
+
+  &.order-items {
+    th, td {
+      padding: 0 $side-padding;
+      mat-icon.refunded-icon {
+        vertical-align: -10px;
+      }
+
+      &:first-child {
+        width:1px;
+      }
+
+      &.no-padding {
+        padding: 0;
+      }
+
+    }
+  }
+
+  td[mat-footer-cell] {
+    padding: $side-padding;
+  }
+
+  td[mat-footer-cell] {
+    & > div:not(:last-child) {
+      padding-bottom: 20px;
+    }
+
+    .shipping-refund-checkbox {
+      text-align: right;
+    }
+  }
+
+  th, td {
+    &:last-child {
+      // set the Price column width to the minimum available,
+      // to have the proper align with totals values
+      width: 1px;
+    }
+  }
+}
+
+img.product-visual {
+  max-width: 100%;
+  max-height: 55px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.edit-sku {
+  cursor: pointer;
+}
+
+mat-icon {
+  &.refunded-icon, &.edit-sku{
+    color: mat-color($grey, 600);
+  }
+}
+
+.items-table {
+  max-width: 100%;
+  overflow: auto;
+  margin: 0 $shadow-containing-space;
+}
+
+.sku {
+  white-space: nowrap;
+}
+
+.total-price {
+  font-weight: bold;
+}

@@ -4,5 +4,6 @@ export enum OrderNotifyAction {
     unacknowledge = 'unacknowledge',
     accept = 'accept',
     refuse = 'refuse',
-    cancel = 'cancel'
+    cancel = 'cancel',
+    refund = 'refund',
 }

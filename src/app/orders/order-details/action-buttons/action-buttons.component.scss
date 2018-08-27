@@ -1,0 +1,15 @@
+@import '../../../../sass/variables';
+
+button {
+  text-transform: uppercase;
+  margin-left: 10px;
+}
+
+mat-icon {
+  color: $black-54-opacity;
+}
+
+div.action-buttons {
+  // buttons shouldn't overflow each other on some resolutions, e.g. width=1000px
+  min-width: fit-content;
+}

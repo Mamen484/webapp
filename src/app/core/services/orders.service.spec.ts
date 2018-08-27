@@ -1,4 +1,4 @@
-import { inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { OrdersService } from './orders.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -8,16 +8,25 @@ import { environment } from '../../../environments/environment';
 import { OrderErrorType } from '../entities/orders/order-error-type.enum';
 import { OrderAcknowledgment } from '../entities/orders/order-acknowledgment.enum';
 import { OrderNotifyAction } from '../entities/orders/order-notify-action.enum';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
+import { of } from 'rxjs';
 
 describe('OrdersService', () => {
 
     let service: OrdersService;
     let httpMock: HttpTestingController;
+    let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(() => {
+
+        appStore = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
-            providers: [OrdersService],
-            imports: [HttpClientTestingModule]
+            providers: [
+                OrdersService,
+                {provide: Store, useValue: appStore},
+            ],
+            imports: [HttpClientTestingModule],
         });
     });
 
@@ -119,12 +128,12 @@ describe('OrdersService', () => {
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&tag=tadada&page=1`);
         });
 
-        it('should NOT include status param to endpoint params if it has undefined value', inject([OrdersService, HttpTestingController], (service: OrdersService, httpMock: HttpTestingController) => {
+        it('should NOT include status param to endpoint params if it has undefined value', () => {
             filter.status = undefined;
             filter.error = OrderErrorType.ship;
             service.fetchOrdersList(11, filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
-        }));
+        });
 
         it('should NOT include acknowledgment param to endpoint params if it has undefined value', () => {
             filter.acknowledgment = undefined;
@@ -150,8 +159,9 @@ describe('OrdersService', () => {
             filter.channel = 'channel132';
             filter.acknowledgment = OrderAcknowledgment.unacknowledged;
             service.fetchOrdersList(11, filter).subscribe();
-            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2010-01-01T00:00:00.000Z&until=2030-01-01T00:00:00.000Z` +
-                `&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance&error=acknowledge&acknowledgment=unacknowledged&page=1`);
+            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2010-01-01T00:00:00.000Z`
+                + `&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance`
+                + `&error=acknowledge&acknowledgment=unacknowledged&page=1`);
         });
 
         it('should fetch an order on fetchOrder() call', () => {
@@ -183,6 +193,47 @@ describe('OrdersService', () => {
     it('should cancel orders', () => {
         checkStatusChangeRequestSent(OrderNotifyAction.cancel);
     });
+
+    it('should refund orders', () => {
+        appStore.select.and.returnValue(of({id: 10}));
+        service.notifyRefund([{
+            reference: '171',
+            channelName: '',
+            refund: {shipping: false, products: [{reference: '123', quantity: 1}]}
+        }]).subscribe();
+        console.log(httpMock);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/refund`);
+        expect(req.request.body).toEqual({
+            order: [{
+                reference: '171',
+                channelName: '',
+                refund: {shipping: false, products: [{reference: '123', quantity: 1}]}
+            }]
+        });
+        httpMock.verify();
+    });
+
+    it('should call modify billing address endpoint on modifyBillingAddress() call', () => {
+        service.modifyBillingAddress(1, 2, <any>{lastName: '22'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({order: {billingAddress: {lastName: '22'}}})
+    });
+
+    it('should call modify shipping address endpoint on modifyShippingAddress() call', () => {
+        service.modifyShippingAddress(1, 2, <any>{lastName: '22'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({order: {shippingAddress: {lastName: '22'}}})
+    });
+
+    it('should call modify sku endpoint on updateSkuMapping() call', () => {
+        service.updateItemsReferences(1, 2, <any>{'old': 'new'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
+        expect(req.request.method).toBe('PATCH');
+        expect(req.request.body).toEqual({order: {itemsReferencesAliases: {old: 'new'}}});
+    });
+
 
     function checkStatusChangeRequestSent(action) {
         service[action](10, [{reference: '171', channelName: ''}, {reference: '174', channelName: ''}]).subscribe();

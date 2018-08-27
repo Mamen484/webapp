@@ -9,7 +9,7 @@ describe('BaseComponent', () => {
     let store, window = {Autopilot: <any>{}};
     let storeService: jasmine.SpyObj<StoreService>;
     beforeEach(() => {
-        store = jasmine.createSpyObj('Store', ['select']);
+        store = jasmine.createSpyObj('Store', ['select', 'dispatch']);
         window.Autopilot = jasmine.createSpyObj('Autopilot', ['run']);
         storeService = jasmine.createSpyObj('StoreService', ['getStoreChannels']);
     });

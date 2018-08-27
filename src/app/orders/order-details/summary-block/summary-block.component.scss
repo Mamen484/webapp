@@ -1,0 +1,19 @@
+mat-card-content {
+
+  line-height: 24px;
+
+  img {
+    max-height: 45px;
+  }
+
+  sf-order-status {
+    margin: auto;
+    text-align: right;
+  }
+}
+
+mat-chip-list {
+  mat-chip {
+    margin-top: 15px;
+  }
+}

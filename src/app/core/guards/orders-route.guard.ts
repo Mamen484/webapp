@@ -11,7 +11,7 @@ export class OrdersRouteGuard implements CanLoad {
     }
 
     canLoad(): true {
-        this.appStore.select('currentRoute').dispatch({type: SET_ROUTE, routeName: 'orders'});
+        this.appStore.dispatch({type: SET_ROUTE, routeName: 'orders'});
         return true;
     }
 }

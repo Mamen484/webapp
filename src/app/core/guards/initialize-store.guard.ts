@@ -25,7 +25,7 @@ export class InitializeStoreGuard implements CanActivate {
             if (userInfo.isAdmin() && next.queryParams.store) {
                 return this.storeService.getStore(next.queryParams.store).pipe(map((store: Store) => {
                     store.permission = Permission.createForAdmin();
-                    this.appStore.select('currentStore').dispatch({type: SET_STORE, store});
+                    this.appStore.dispatch({type: SET_STORE, store});
                     return true;
                 })).pipe(catchError(error => {
                     this.router.navigate(['/store-not-found'], {skipLocationChange: true});
@@ -33,7 +33,7 @@ export class InitializeStoreGuard implements CanActivate {
                 }));
             }
             let enabledStore = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();
-            this.appStore.select('currentStore').dispatch({type: SET_STORE, store: enabledStore});
+            this.appStore.dispatch({type: SET_STORE, store: enabledStore});
 
             return of(true);
         }));

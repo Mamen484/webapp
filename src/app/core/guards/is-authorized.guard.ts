@@ -39,7 +39,7 @@ export class IsAuthorizedGuard implements CanActivate {
                 .subscribe(
                     userInfo => {
                         if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
-                            this.appStore.select('userInfo').dispatch({type: INITIALIZE_USER_INFO, userInfo});
+                            this.appStore.dispatch({type: INITIALIZE_USER_INFO, userInfo});
                             observer.next(true);
                             observer.complete();
                         } else {

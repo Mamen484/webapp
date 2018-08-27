@@ -1,0 +1,61 @@
+@import '../../../../sass/variables';
+
+table {
+  tr {
+    th {
+      text-align: left;
+    }
+    th, td {
+      max-width: 120px;
+      &:first-child {
+        width: 100%;
+      }
+      &:not(:last-child){
+        padding-right: 40px;
+      }
+    }
+
+    td {
+      mat-form-field {
+        width: 100%;
+        min-width: 120px;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      .add-item, .remove-item {
+        min-width: 50px;
+        border: 1px solid $black-12-opacity;
+        border-radius: 3px;
+        mat-icon {
+          color: mat-color($accent);
+        }
+      }
+    }
+
+    &.totals {
+      td > div {
+        display: grid;
+        grid-template-rows: 40px 40px 40px;
+        grid-template-columns: 100%;
+        align-items: center;
+      }
+    }
+  }
+}
+
+mat-card {
+  overflow: auto;
+
+  &.order-extras {
+    mat-form-field {
+      min-width: 180px;
+    }
+  }
+}
+
+.buttons {
+  margin-top: 25px;
+}

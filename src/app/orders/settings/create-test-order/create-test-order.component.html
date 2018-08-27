@@ -1,0 +1,118 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
+    <sf-settings-nav fxFlex="25%" activeLink="test-order"></sf-settings-nav>
+    <div fxLayout="column" fxLayoutGap="20px" fxFlex="75%" class="cards-container">
+        <form #form="ngForm">
+            <div fxLayout="column" fxLayoutGap="20px" fxLayout.xl="row" fxLayoutGap.xl="20px">
+                <mat-card class="order-extras" fxFlex.xl="25%" fxFlex="100%">
+                    <mat-card-content fxLayout="row wrap" fxLayout.xl="column" fxLayoutGap="25px">
+
+                        <mat-form-field appearance="outline" color="accent">
+                            <mat-label i18n>Channel</mat-label>
+                            <input type="text" matInput [matAutocomplete]="auto" [formControl]="channelControl">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectChannel($event)" [displayWith]="channelDisplayFn">
+                                <mat-optgroup label="Installed" i18n-label *ngIf="filteredChannels">
+                                    <mat-option *ngFor="let channel of filteredChannels" [value]="channel">{{channel.name}}
+                                    </mat-option>
+                                    <mat-option *ngIf="!filteredChannels.length" disabled i18n>No channels found</mat-option>
+                                </mat-optgroup>
+                                <mat-option *ngIf="!filteredChannels || !filteredNewChannels" disabled i18n>Loading...</mat-option>
+                                <mat-optgroup label="New" i18n-label *ngIf="filteredNewChannels">
+                                    <mat-option *ngFor="let channel of filteredNewChannels" [value]="channel">{{channel.name}}
+                                    </mat-option>
+                                    <mat-option *ngIf="!filteredNewChannels.length" disabled i18n>No channels found</mat-option>
+                                </mat-optgroup>
+                            </mat-autocomplete>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" color="accent">
+                            <mat-label i18n>Payment</mat-label>
+                            <input matInput name="payment" [(ngModel)]="order.shipment.paymentMethod">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" color="accent">
+                            <mat-label i18n>Carrier</mat-label>
+                            <input matInput name="carrier" [(ngModel)]="order.shipment.carrier">
+                        </mat-form-field>
+
+                    </mat-card-content>
+                </mat-card>
+                <mat-card fxFlex.lg="75%" fxFlex="100%">
+                    <mat-card-content>
+                        <table>
+                            <tr>
+                                <th i18n required>SKU</th>
+                                <th i18n>Qty</th>
+                                <th i18n required>Price</th>
+                            </tr>
+                            <tr *ngFor="let item of order.items; index as i">
+                                <td>
+                                    <mat-form-field>
+                                        <input name="itemReference{{i}}" matInput [(ngModel)]="item.reference" required
+                                               #itemReference="ngModel">
+                                        <mat-error
+                                                *ngIf="itemReference.invalid && (itemReference.dirty || itemReference.touched)"
+                                                i18n>
+                                            Please, specify SKU
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input name="itemQuantity{{i}}" matInput [(ngModel)]="item.quantity">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field>
+                                        <input name="itemPrice{{i}}" matInput type="number" [(ngModel)]="item.price"
+                                               (change)="updateTotalPrice()" required #itemPrice="ngModel">
+                                        <mat-error *ngIf="itemPrice.invalid && (itemPrice.dirty || itemPrice.touched)"
+                                                   i18n>
+                                            Please, specify price
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <button mat-button class="add-item" *ngIf="i < order.items.length - 1"
+                                            (click)="removeItem(i); updateTotalPrice();">
+                                        <mat-icon class="mat-18">remove</mat-icon>
+                                    </button>
+                                    <button mat-button class="add-item" *ngIf="i === order.items.length - 1"
+                                            (click)="addItem()">
+                                        <mat-icon class="mat-18">add</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="totals">
+                                <td>
+                                    <div>
+                                        <div i18n>Product total</div>
+                                        <div i18n>Delivery cost</div>
+                                        <div i18n class="mat-body-2">Total</div>
+                                    </div>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <div>
+                                        <div>{{order.items.length}}</div>
+                                        <mat-form-field><input type="number"
+                                                               matInput name="shippingCost"
+                                                               (change)="updateTotalPrice()"
+                                                               [(ngModel)]="order.shipment.shippingAmount">
+                                        </mat-form-field>
+                                        <div class="mat-body-2">{{totalPrice}}</div>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="flex-end center" class="buttons">
+                <button mat-button color="accent" i18n>Cancel</button>
+                <button mat-raised-button color="accent" i18n (click)="create()">Create</button>
+            </div>
+        </form>
+    </div>
+</div>

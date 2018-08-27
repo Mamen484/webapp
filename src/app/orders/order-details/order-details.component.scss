@@ -1,108 +1,42 @@
+@import '../../../sass/variables';
 @import '../../../sass/mixins/order-actions-bar';
 
 @include order-actions-bar();
 
-$total-price-width: 100px;
+.details-container {
+  display: grid;
+  grid-template-areas: "order-error order-error"
+                       "summary addresses"
+                       "items-table addresses";
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto auto 1fr;
+  gap: $default-grid-gap;
 
-mat-card.orders-table {
+  @media #{$lt-md}{
+    grid-template-areas: "order-error" "summary" "items-table" "addresses";
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-error {
+  grid-area: order-error;
+}
+
+.summary {
+  grid-area: summary;
+}
+
+.addresses {
+  grid-area: addresses;
+}
+
+.items-table {
+  grid-area: items-table;
+  overflow: hidden;
   padding: 0;
-  margin-bottom: 40px;
-  margin-top: 20px;
 }
 
-.totals {
-  display: flex;
-  padding: 20px 24px;
-
-  .flex-gap {
-    flex: 3;
-  }
-
-  .description {
-    flex: 1;
-  }
-
-  .value {
-    width: $total-price-width;
-  }
-}
-
-.totals-handset {
-  width: 100%;
-  & > div > div:last-child {
-    text-align: right;
-  }
-}
-
-.order-summary {
-  text-align: right;
-}
-
-sf-orders-subnav .status {
-  text-transform: capitalize;
-}
-
-.scrollable-container {
-  @media #{$xs} {
-    padding-left: 20px;
-  }
-}
-
-.channel-image {
-
-  img {
-    width: 94px;
-  }
-}
-
-@media #{$xs} {
-
-  mat-card.handset-order-details {
-    padding: 0;
-    margin: 10px 0;
-    mat-card-content {
-      font-size: mat-font-size($config, subheading-2);
-
-      mat-list {
-        padding: 0;
-      }
-      mat-list-item {
-        padding: 10px 24px;
-        height: auto;
-
-        &:not(:last-child) {
-          border-bottom: 1px solid mat-color($grey, 400);
-        }
-      }
-    }
-  }
-}
-
-button {
-  margin-left: 10px;
-}
-
-
-mat-header-cell:last-child, mat-cell:last-child {
-  flex: 0 0 $total-price-width;
-}
-
-.address-form-title {
-  margin-bottom: 20px;
-}
-
-.order-head-date {
-  text-align: right;
-}
-
-.buttons {
-  text-align: right;
-  margin-top: 10px;
-}
-
-img.product-visual {
-  max-width: 100%;
-  max-height: 55px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+.actions {
+  // for the case when the buttons don't fit available width (e.g. 1000px)
+  overflow: auto;
 }

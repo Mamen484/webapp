@@ -1,23 +1,23 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { ChannelsRouteGuard } from './channels-route.guard';
+import { AppState } from '../entities/app-state';
 
 describe('ChannelsRouteGuard', () => {
-    let dispatchSpy: jasmine.Spy;
+    let store: jasmine.SpyObj<Store<AppState>>;
     beforeEach(() => {
-        dispatchSpy = jasmine.createSpy('dispatch');
+        store = jasmine.createSpyObj(['dispatch']);
         TestBed.configureTestingModule({
             providers: [
                 ChannelsRouteGuard,
-                {provide: Store, useValue: {select: () => ({dispatch: dispatchSpy})}}
+                {provide: Store, useValue: store}
             ]
         });
     });
 
     it('should write \'channels\' as the currentRoute value and return true', inject([ChannelsRouteGuard], (guard: ChannelsRouteGuard) => {
         expect(guard.canLoad()).toEqual(true);
-        expect(dispatchSpy.calls.first().args[0].type).toEqual('SET_ROUTE');
-        expect(dispatchSpy.calls.first().args[0].routeName).toEqual('channels');
+        expect(store.dispatch).toHaveBeenCalledWith( {type: 'SET_ROUTE', routeName: 'channels'});
     }));
 
 });

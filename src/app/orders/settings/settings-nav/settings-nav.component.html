@@ -1,0 +1,18 @@
+<nav class="settings-navigation">
+    <ul>
+        <li fxLayout="row" [class.nav-active]="activeLink === 'test-order'">
+            <a sfLegacyLink path="/marketplaces/createorder" i18n fxFlex class="mat-body-1">Test order</a>
+            <mat-icon>arrow_right</mat-icon>
+        </li>
+        <li fxLayout="row" [class.nav-active]="activeLink === 'reporting'">
+            <a sfLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
+            <mat-icon>arrow_right</mat-icon>
+        </li>
+        <li fxLayout="row" [class.nav-active]="activeLink === 'tags-management'">
+            <a routerLink="/orders/tags-management" i18n fxFlex [class.mat-body-2]="activeLink === 'tags-management'"
+                 [class.mat-body-1]="activeLink !== 'tags-management'">Tags management
+            </a>
+            <mat-icon>arrow_right</mat-icon>
+        </li>
+    </ul>
+</nav>
