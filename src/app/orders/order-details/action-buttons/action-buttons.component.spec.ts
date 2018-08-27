@@ -13,6 +13,7 @@ import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
+import { Order } from '../../../core/entities/orders/order';
 
 describe('ActionButtonsComponent', () => {
     let component: ActionButtonsComponent;
@@ -22,6 +23,7 @@ describe('ActionButtonsComponent', () => {
     let snackbar: jasmine.SpyObj<MatSnackBar>;
     let ordersService: jasmine.SpyObj<OrdersService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
+    let mockOrder: Order;
 
     beforeEach(async(() => {
 
@@ -43,9 +45,10 @@ describe('ActionButtonsComponent', () => {
     }));
 
     beforeEach(() => {
+        mockOrder = <any>{items: [{status: OrderStatus.waiting_shipment}], _embedded: {channel: {name: 'amazon'}}}
         fixture = TestBed.createComponent(ActionButtonsComponent);
         component = fixture.componentInstance;
-        component.order = <any>{_embedded: {channel: {name: 'amazon'}}};
+        component.order = mockOrder;
     });
 
     it('should create', () => {
@@ -128,6 +131,17 @@ describe('ActionButtonsComponent', () => {
         expect(elements().length).toEqual(2);
     });
 
+    it('should NOT display a refund button if the channel is laredoute, status is partially_refunded, but all items have the refunded status',
+        () => {
+            component.order.status = OrderStatus.partially_refunded;
+            component.order.items = <any>[{status: OrderStatus.refunded}, {status: OrderStatus.refunded}];
+            component.order._embedded.channel.name = 'LaRedoute';
+            fixture.detectChanges();
+            expect(component.supportsRefund).toEqual(false);
+            expect(elements()[0].textContent.trim()).not.toEqual('Refund');
+            expect(elements().length).toEqual(1);
+        });
+
     it('should display a refund button if the channel is laredoute and status is partially_refunded', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'LaRedoute';
@@ -167,7 +181,7 @@ describe('ActionButtonsComponent', () => {
 
     it('should open a refund dialog on openRefundDialog() call, passing an order into it', () => {
         component.openRefundDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(RefundDialogComponent, {data: <any>{_embedded: {channel: {name: 'amazon'}}}})
+        expect(matDialog.open).toHaveBeenCalledWith(RefundDialogComponent, {data: mockOrder});
     });
 
     it('should initialize acknowledgment property on component init as acknowledged if order acknowledgedAt is defined', () => {
