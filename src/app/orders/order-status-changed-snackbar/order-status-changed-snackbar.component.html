@@ -1,10 +1,21 @@
-<div i18n>Order
-    <ng-container *ngIf="action === actions.ship">ship </ng-container>
-    <ng-container *ngIf="action === actions.accept">accept </ng-container>
-    <ng-container *ngIf="action === actions.refuse">refuse </ng-container>
-    <ng-container *ngIf="action === actions.cancel">cancel </ng-container>
-    <ng-container *ngIf="action === actions.acknowledge">acknowledge </ng-container>
-    <ng-container *ngIf="action === actions.unacknowledge">unacknowledge </ng-container>
-    <ng-container *ngIf="action === actions.refund">refund</ng-container>
-    {ordersNumber, plural, =1 {request has been sent} other {requests have been sent}}
+<div *ngIf="action === actions.ship" i18n>
+    {ordersNumber, plural, =1 {Order shipment request has been sent} other {Order shipment requests have been sent}}
+</div>
+<div *ngIf="action === actions.accept" i18n>
+    {ordersNumber, plural, =1 {Order acceptation request has been sent} other {Order acceptation requests have been sent}}
+</div>
+<div *ngIf="action === actions.cancel" i18n>
+    {ordersNumber, plural, =1 {Order cancellation request has been sent} other {Order cancellation requests have been sent}}
+</div>
+<div *ngIf="action === actions.acknowledge" i18n>
+    {ordersNumber, plural, =1 {Order acknowledgment request has been sent} other {Order acknowledgment requests have been sent}}
+</div>
+<div *ngIf="action === actions.unacknowledge" i18n>
+    {ordersNumber, plural, =1 {Order unacknowledgment request has been sent} other {Order unacknowledgment requests have been sent}}
+</div>
+<div *ngIf="action === actions.refund" i18n>
+    {ordersNumber, plural, =1 {Order refund request has been sent} other {Order refund requests have been sent}}
+</div>
+<div *ngIf="action === actions.refuse" i18n>
+    {ordersNumber, plural, =1 {Order refuse request has been sent} other {Order refund requests have been sent}}
 </div>
