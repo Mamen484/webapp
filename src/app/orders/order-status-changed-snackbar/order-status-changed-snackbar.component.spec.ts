@@ -30,35 +30,35 @@ describe('OrderStatusChangedSnackbarComponent', () => {
 
     it('should display a message for 1 order', () => {
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order ship request has been sent');
+            .toEqual('Order shipment request has been sent');
     });
 
     it('should display a message for 2 orders', () => {
         component.ordersNumber = 2;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order ship requests have been sent');
+            .toEqual('Order shipment requests have been sent');
     });
 
     it('should display a message for 21 order', () => {
         component.ordersNumber = 21;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order ship requests have been sent');
+            .toEqual('Order shipment requests have been sent');
     });
 
     it('should display a message for an `acknowledge` action', () => {
         component.action = OrderNotifyAction.acknowledge;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order acknowledge request has been sent');
+            .toEqual('Order acknowledgment request has been sent');
     });
 
     it('should display a message for an `accept` action', () => {
         component.action = OrderNotifyAction.accept;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order accept request has been sent');
+            .toEqual('Order acceptation request has been sent');
     });
 
     it('should display a message for an `refuse` action', () => {
@@ -72,7 +72,14 @@ describe('OrderStatusChangedSnackbarComponent', () => {
         component.action = OrderNotifyAction.cancel;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent)
-            .toEqual('Order cancel request has been sent');
+            .toEqual('Order cancellation request has been sent');
+    });
+
+    it('should display a message for an `refund` action', () => {
+        component.action = OrderNotifyAction.refund;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent)
+            .toEqual('Order refund request has been sent');
     });
 
 });
