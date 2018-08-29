@@ -7,7 +7,7 @@ const DAY = 1000 * 60 * 60 * 24;
 
 export class OrdersFilter {
     until?;
-    since: Date = OrdersFilter.aMonthBefore();
+    since: Date;
     channel = 'all';
     tag = 'all';
     limit = '10';
