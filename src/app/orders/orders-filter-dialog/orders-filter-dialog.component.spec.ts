@@ -138,7 +138,6 @@ describe('OrdersFilterDialogComponent', () => {
         });
 
         it('should assign a `since` filter property on setSince() call ', () => {
-            expect(component.filter.since).not.toBeDefined();
             component.setSince(1496802161000);
             expect(component.filter.since.getTime()).toEqual(1496802161000);
         });

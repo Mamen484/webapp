@@ -60,6 +60,7 @@ describe('OrdersService', () => {
         beforeEach(() => {
             req = {};
             filter = new OrdersFilter();
+            filter.since = undefined;
         });
         afterEach(() => {
             expect(req.request.method).toEqual('GET');
