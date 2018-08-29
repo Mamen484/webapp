@@ -64,6 +64,7 @@ img.product-visual {
 mat-icon {
   &.refunded-icon, &.edit-sku{
     color: mat-color($grey, 600);
+    margin-right: 20px;
   }
 }
 
@@ -79,4 +80,8 @@ mat-icon {
 
 .total-price {
   font-weight: bold;
+}
+
+mat-form-field.quantity-dropdown {
+  max-width: 60px;
 }
