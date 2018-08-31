@@ -1,0 +1,39 @@
+@import '../../../sass/variables';
+
+mat-card {
+  height: calc(100vh - #{$toolbar-height} - #{$content-margin});
+  min-width: 300px;
+  overflow: auto;
+}
+
+section {
+  padding: 20px 0;
+
+  mat-divider {
+    margin-top: 20px;
+  }
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  & > div {
+    line-height: 40px;
+    &.mat-body-2 {
+      line-height: 48px;
+    }
+  }
+}
+
+.view-link {
+  text-align: right;
+  a {
+    color: mat-color($accent);
+  }
+}
+
+mat-chip[color="warn"]{
+  background-color: mat-color($warn, 800, 0.3);
+  color: mat-color($warn, 800);
+  font-weight: normal;
+}

@@ -14,6 +14,9 @@ import { NoChannelsDialogComponent } from './no-channels-dialog/no-channels-dial
 import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 import { AcceptChannelDialogComponent } from './accept-channel-dialog/accept-channel-dialog.component';
 import { StatisticsRoutingModule } from './statistics-routing.module';
+import { LastEventsComponent } from './last-events/last-events.component';
+import { EventStatsRowComponent } from './event-stats-row/event-stats-row.component';
+import { OrderErrorRowComponent } from './order-error-row/order-error-row.component';
 
 @NgModule({
     imports: [
@@ -34,6 +37,9 @@ import { StatisticsRoutingModule } from './statistics-routing.module';
         ScheduleCallDialogComponent,
         NoChannelsDialogComponent,
         AcceptChannelDialogComponent,
+        LastEventsComponent,
+        EventStatsRowComponent,
+        OrderErrorRowComponent,
     ],
     entryComponents: [
         FilterChannelsDialogComponent,

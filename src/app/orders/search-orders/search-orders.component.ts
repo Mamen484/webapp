@@ -8,6 +8,9 @@ import { debounceTime, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
+import { ActivatedRoute } from '@angular/router';
+import { OrdersFilterPatch } from '../../core/entities/orders/orders-filter-patch';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -24,7 +27,11 @@ export class SearchOrdersComponent implements OnInit {
     filter: OrdersFilter;
     selectedChannel;
 
-    constructor(protected dialog: MatDialog, protected ordersFilterService: OrdersFilterService, protected appStore: Store<AppState>) {
+    constructor(protected dialog: MatDialog,
+                protected ordersFilterService: OrdersFilterService,
+                protected appStore: Store<AppState>,
+                protected route: ActivatedRoute) {
+
         combineLatest(this.ordersFilterService.getFilter(), this.appStore.select('installedChannels'))
             .subscribe(([f, channels]) => {
                 this.filter = f;
@@ -34,6 +41,7 @@ export class SearchOrdersComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.initializeTab();
         this.ordersFilterService.patchFilter('since', OrdersFilter.aMonthBefore());
         this.searchControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
@@ -48,6 +56,22 @@ export class SearchOrdersComponent implements OnInit {
 
     cancelFilter(filterName, filterValue) {
         this.ordersFilterService.patchFilter(filterName, filterValue);
+    }
+
+    protected initializeTab() {
+        this.route.queryParams.subscribe(params => {
+            if (params.error) {
+                switch (params.error) {
+                    case OrderErrorType.acknowledge:
+                        this.ordersFilterService.patchFilter(OrdersFilterPatch.OrdersWithImportErrors);
+                        break;
+
+                    case OrderErrorType.ship:
+                        this.ordersFilterService.patchFilter(OrdersFilterPatch.OrdersWithShippingErrors);
+                        break;
+                }
+            }
+        });
     }
 
     protected setSelectedChannel(f, channels) {
