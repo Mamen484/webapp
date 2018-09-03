@@ -7,11 +7,11 @@
                             [processing]="processingFilters"></sf-search-channels>
         <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="start stretch" class="channels-list">
 
-            <mat-card class="channel-card" [attr.fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(50% - 20px)' : '0 0 calc(33.33% - 20px)'"
-                      [attr.fxFlex.sm]="lastEvents.isDisplayed ?  '1 1 100%' : '0 0 calc(50% - 20px)'"
-                      fxFlex.xs="1 1 100%"
-                      [attr.fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(33.33% - 20px)' : '0 0 calc(25% - 20px)'"
-                      [attr.fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(25% - 20px)' : '0 0 calc(16.66% - 20px)'"
+            <mat-card class="channel-card"
+                      fxFlex.lt-md="1 1 100%"
+                      [fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(100% - 20px)' : '0 0 calc(50% - 20px)'"
+                      [fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(50% - 20px)' : '0 0 calc(33% - 20px)'"
+                      [fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(33% - 20px)' : '0 0 calc(25% - 20px)'"
                       *ngFor="let channel of channels._embedded.channel"
                       [class.suggested-channel]="!channel.installed">
                 <sf-configured-channel [channel]="channel" *ngIf="channel.installed"
@@ -30,5 +30,5 @@
         </div>
 
     </div>
-    <sf-last-events #lastEvents fxHide.xs></sf-last-events>
+    <sf-last-events #lastEvents fxHide.xs fxHide.sm></sf-last-events>
 </div>

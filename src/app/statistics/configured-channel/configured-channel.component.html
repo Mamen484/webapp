@@ -1,25 +1,24 @@
-<mat-card-content fxFlex fxLayout="column">
-    <a class="channel-logo" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)"><img mat-card-image [src]="channel._embedded.channel._links.image.href"
-              [alt]="channel._embedded.channel.name"></a>
-    <a class="channel-info-line channel-revenue" sfLegacyLink path="/statistics" *ngIf="hasStatisticsPermission">
-        <mat-icon>monetization_on</mat-icon>
-        <span *ngIf="statisticsExistsFor('revenue'); else unavailable">
-            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
-    </a>
-    <a class="channel-info-line channel-checked" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
-        <mat-icon>check_circle</mat-icon>
-        <span *ngIf="statisticsExistsFor('selected'); else unavailable">
-            {{channel.statistics.selected | largeNumberSuffix }} <ng-container i18n>checked</ng-container></span>
-    </a>
-    <a class="channel-info-line channel-issues" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
-        <mat-icon>error</mat-icon>
-        <span  *ngIf="statisticsExistsFor('selected') && statisticsExistsFor('exported'); else unavailable">
-            {{channel.statistics.selected - channel.statistics.exported | largeNumberSuffix }} <ng-container i18n>issues</ng-container></span>
-    </a>
-    <div class="channel-info-line quickfix">
-        <mat-icon>open_in_new</mat-icon>
-        <span><a sfLegacyLink path="/tools/relaunch" target="_blank" i18n>Quickfix</a></span>
+<mat-card-content fxFlex fxLayout="row">
+    <div fxFlex="50%" class="channel-logo-container">
+        <a class="channel-logo" sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
+            <img mat-card-image [src]="channel._embedded.channel._links.image.href"
+                 [alt]="channel._embedded.channel.name"></a>
     </div>
+    <div fxFlex="50%">
+        <div class="mat-caption" i18n>Turnover</div>
+        <div class="mat-display-1 channel-turnover">
+            <span *ngIf="statisticsExistsFor('revenue'); else unavailable">
+            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
+        </div>
+        <div class="mat-caption" i18n>Online</div>
+        <div class="mat-display-1 channel-online" [class.online-low]="channelsOnline <= 30"
+             [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
+             [class.online-high]="channelsOnline >= 75">
+            <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
+        </div>
+    </div>
+
+
 </mat-card-content>
 <ng-template #unavailable>
     <ng-container i18n>Unavailable</ng-container>

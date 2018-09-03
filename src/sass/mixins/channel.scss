@@ -1,15 +1,14 @@
-@mixin channel-common-styles (){
+@mixin channel-common-styles() {
+  .channel-logo-container {
+    display: flex;
+    align-items: center;
+  }
+
   .channel-logo {
-    padding: 20px 80px 0 80px;
+    text-align: center;
+    img {
+      width: 70%;
+      margin: 0;
+    }
   }
-
-  mat-card-content {
-    height: 100%;
-  }
-
-  .channel-info-line {
-    margin-bottom: 15px;
-    cursor: pointer;
-  }
-
 }

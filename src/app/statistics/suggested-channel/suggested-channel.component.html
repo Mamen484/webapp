@@ -1,11 +1,7 @@
-<mat-card-content fxFlex fxLayout="column">
-    <div class="channel-logo"><img mat-card-image [src]="channel._embedded.channel._links.image.href"
+<mat-card-content fxFlex fxLayout="row">
+    <div class="channel-logo" fxFlex="50%"><img mat-card-image [src]="channel._embedded.channel._links.image.href"
                                    [alt]="channel._embedded.channel.name"></div>
-    <div class="channel-info-line">
-        <a sfLegacyLink path="/statistics"><span class="mat-subheading-2">{{channel._embedded.channel.name}}</span></a>
-    </div>
-    <div class="sf-fill-space"></div>
-    <div class="connect-button">
+    <div class="connect-button" fxFlex="50%">
         <a mat-raised-button #link color="accent" *ngIf="!internationalMode && !firstChannel"
            sfLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
         <a mat-raised-button #link color="accent" *ngIf="!internationalMode && firstChannel"
