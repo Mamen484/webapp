@@ -5,11 +5,13 @@
                  [alt]="channel._embedded.channel.name"></a>
     </div>
     <div fxFlex="50%">
-        <div class="mat-caption" i18n>Turnover</div>
-        <div class="mat-display-1 channel-turnover">
+        <ng-container *ngIf="hasStatisticsPermission">
+            <div class="mat-caption" i18n>Turnover</div>
+            <div class="mat-display-1 channel-turnover">
             <span *ngIf="statisticsExistsFor('revenue'); else unavailable">
             {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
-        </div>
+            </div>
+        </ng-container>
         <div class="mat-caption" i18n>Online</div>
         <div class="mat-display-1 channel-online" [class.online-low]="channelsOnline <= 30"
              [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"

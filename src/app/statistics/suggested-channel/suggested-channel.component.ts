@@ -7,7 +7,6 @@ import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialo
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 import { StoreChannel } from '../../core/entities/store-channel';
 import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-channel-dialog.component';
-import { StoreCharge } from '../../core/entities/store-charge';
 
 @Component({
     selector: 'sf-suggested-channel',

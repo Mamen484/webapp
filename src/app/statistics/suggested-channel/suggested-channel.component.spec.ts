@@ -71,5 +71,5 @@ describe('SuggestedChannelComponent', () => {
         requestSpy.and.returnValue(throwError({}));
         component.showInternationalChannelDialog();
         expect(openSpy).toHaveBeenCalledWith(RequestFailedDialogComponent);
-    })
+    });
 });

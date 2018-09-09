@@ -12,6 +12,7 @@ import { shipmentErrorsResponse } from './mocks/shipment-errors';
 import { TimelineEvent } from '../../core/entities/timeline-event';
 import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
+import { Order } from '../../core/entities/orders/order';
 
 describe('LastEventsComponent', () => {
     let component: LastEventsComponent;
@@ -41,6 +42,44 @@ describe('LastEventsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set `isDisplayed to false when no data got from server', () => {
+        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        fixture.detectChanges();
+        expect(component.isDisplayed).toBe(false);
+    });
+
+    it('should set `isDisplayed` to true when at least one import received from server', () => {
+        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: [{name: TimelineEventName.import}]}}), of({_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        fixture.detectChanges();
+        expect(component.isDisplayed).toBe(true);
+    });
+
+    it('should set `isDisplayed` to true when at least one export received from server', () => {
+        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}),
+            of({_embedded: {timeline: [{name: TimelineEventName.import, _embedded: {channel: {name: 'any name'}}}]}}));
+        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        fixture.detectChanges();
+        expect(component.isDisplayed).toBe(true);
+    });
+
+    it('should set `isDisplayed` to true when at least one order with acknowledgment error received from server', () => {
+        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}),
+            of({_embedded: {order: []}}));
+        fixture.detectChanges();
+        expect(component.isDisplayed).toBe(true);
+    });
+
+    it('should set `isDisplayed` to true when at least one order with shipping error received from server', () => {
+        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}),
+            of({_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}));
+        fixture.detectChanges();
+        expect(component.isDisplayed).toBe(true);
     });
 
     it('should initialize proper data', () => {
@@ -77,14 +116,15 @@ describe('LastEventsComponent', () => {
         expect(importObject.occurredAt).toBe(date);
     }
 
-    function validateExport(exportObject: TimelineEvent, action: TimelineEventAction, date: string,) {
+    function validateExport(exportObject: TimelineEvent, action: TimelineEventAction, date: string) {
         expect(exportObject.name).toBe(TimelineEventName.export);
         expect(exportObject.action).toBe(action);
         expect(exportObject.occurredAt).toBe(date);
         expect(exportObject._embedded.channel.name).toBe('SmartFeed');
     }
 
-    function validateError(order, channelName, reference) {
-
+    function validateError(order: Order, channelName: string, reference: string) {
+        expect(order._embedded.channel.name).toBe(channelName);
+        expect(order.reference).toBe(reference);
     }
 });
