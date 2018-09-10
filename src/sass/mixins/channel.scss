@@ -6,8 +6,10 @@
 
   .channel-logo {
     text-align: center;
+    width: 100%;
     img {
-      width: 70%;
+      max-height: 67px;
+      width: auto;
       margin: 0;
     }
   }

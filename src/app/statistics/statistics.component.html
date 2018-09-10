@@ -5,13 +5,13 @@
         <sf-store-statistics [statistics]="statistics" *ngIf="hasStatisticsPermission"></sf-store-statistics>
         <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
                             [processing]="processingFilters"></sf-search-channels>
-        <div fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="start stretch" class="channels-list">
+        <div fxLayout="row wrap" fxLayoutGap="30px" fxLayoutAlign="start stretch" class="channels-list">
 
             <mat-card class="channel-card"
                       fxFlex.lt-md="1 1 100%"
-                      [fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(100% - 20px)' : '0 0 calc(50% - 20px)'"
-                      [fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(50% - 20px)' : '0 0 calc(33% - 20px)'"
-                      [fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(33% - 20px)' : '0 0 calc(25% - 20px)'"
+                      [fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(100% - 30px)' : '0 0 calc(50% - 30px)'"
+                      [fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(50% - 30px)' : '0 0 calc(33.33% - 30px)'"
+                      [fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(33.33% - 30px)' : '0 0 calc(25% - 30px)'"
                       *ngFor="let channel of channels._embedded.channel"
                       [class.suggested-channel]="!channel.installed">
                 <sf-configured-channel [channel]="channel" *ngIf="channel.installed"
