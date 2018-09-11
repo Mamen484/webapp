@@ -64,7 +64,7 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     updateTotalPrice() {
-        this.totalPrice = this.calculateItemsPrice() + Number(this.order.shipment.shippingAmount || 0);
+        this.totalPrice = this.calculateItemsPrice() + Number(this.order.payment.shippingAmount || 0);
     }
 
     filterAutocompleteOptions() {
@@ -82,9 +82,9 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     selectChannel({option}) {
-        this.order.channel = option.value.id;
+        this.order.channelId = option.value.id;
         if (this.haveDefaultPayment.find(el => el === option.value.name.toLowerCase())) {
-            this.order.shipment.paymentMethod = this.paymentMethod.nativeElement.getAttribute('attr.defaultValue');
+            this.order.payment.method = this.paymentMethod.nativeElement.getAttribute('attr.defaultValue');
         }
     }
 

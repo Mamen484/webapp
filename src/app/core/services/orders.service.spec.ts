@@ -11,6 +11,7 @@ import { OrderNotifyAction } from '../entities/orders/order-notify-action.enum';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { of } from 'rxjs';
+import { TestOrder } from '../entities/orders/test-order';
 
 describe('OrdersService', () => {
 
@@ -202,7 +203,6 @@ describe('OrdersService', () => {
             channelName: '',
             refund: {shipping: false, products: [{reference: '123', quantity: 1}]}
         }]).subscribe();
-        console.log(httpMock);
         let req = httpMock.expectOne(`${environment.API_URL}/store/10/order/refund`);
         expect(req.request.body).toEqual({
             order: [{
@@ -233,6 +233,15 @@ describe('OrdersService', () => {
         let req = httpMock.expectOne(`${environment.API_URL}/store/1/order/2`);
         expect(req.request.method).toBe('PATCH');
         expect(req.request.body).toEqual({order: {itemsReferencesAliases: {old: 'new'}}});
+    });
+
+    it('should send a proper request to create a test order', () => {
+        appStore.select.and.returnValue(of({id: 10}));
+        const order = new TestOrder();
+        service.create(order).subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/store/10/order`);
+        expect(req.request.method).toBe('POST');
+        expect(req.request.body).toEqual({order});
     });
 
 

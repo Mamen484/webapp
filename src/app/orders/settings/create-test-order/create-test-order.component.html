@@ -26,7 +26,7 @@
 
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Payment</mat-label>
-                            <input matInput name="payment" [(ngModel)]="order.shipment.paymentMethod"
+                            <input matInput name="payment" [(ngModel)]="order.payment.method"
                                    attr.defaultValue="Shipped by merchant" i18n-attr.defaultValue #paymentMethod>
                         </mat-form-field>
 
@@ -99,7 +99,7 @@
                                         <mat-form-field><input type="number"
                                                                matInput name="shippingCost"
                                                                (change)="updateTotalPrice()"
-                                                               [(ngModel)]="order.shipment.shippingAmount">
+                                                               [(ngModel)]="order.payment.shippingAmount">
                                         </mat-form-field>
                                         <div class="mat-body-2">{{totalPrice}}</div>
                                     </div>

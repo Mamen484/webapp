@@ -59,36 +59,43 @@ describe('CreateTestOrderComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    it('should initialize a default channel on load', () => {
+        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
+        appStore.select.and.returnValues(EMPTY, EMPTY, of([{id: 22, name: 'default channel'}]));
+        fixture.detectChanges();
+        expect(component.channelControl.value).toEqual({id: 22, name: 'default channel'});
+    });
+
     it('should calculate a valid total price if price is specified', () => {
-        component.order = <any>{shipment: {shippingAmount: '0'}, items: [{price: '22'}]};
+        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(22);
     });
 
     it('should calculate a valid total price if shippingAmount is specified', () => {
-        component.order = <any>{shipment: {shippingAmount: '31'}, items: [{price: '0'}]};
+        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{price: '0'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(31);
     });
 
     it('should calculate a valid total price if shippingAmount is undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: undefined}, items: [{price: '24'}]};
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{price: '24'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(24);
     });
 
     it('should calculate a valid total price if item price is undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: '51'}, items: [{price: undefined}]};
+        component.order = <any>{payment: {shippingAmount: '51'}, shipment: {}, items: [{price: undefined}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(51);
     });
 
     it('should calculate a valid total price if both shippingAmount and item price are undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: undefined}, items: [{price: undefined}]};
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{price: undefined}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(0);
@@ -160,25 +167,25 @@ describe('CreateTestOrderComponent', () => {
 
     it('should write a channel on selectChannel() call', () => {
         component.selectChannel({option: {value: {id: 22, name: 'some channel'}}});
-        expect(component.order.channel).toBe(22);
+        expect(component.order.channelId).toBe(22);
     });
 
     it('should assign a default payment value if `amazon` channel selected', () => {
         component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
         component.selectChannel({option: {value: {id: 22, name: 'Amazon'}}});
-        expect(component.order.shipment.paymentMethod).toBe('some default value');
+        expect(component.order.payment.method).toBe('some default value');
     });
 
     it('should assign a default payment value if `amazon` channel selected', () => {
         component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
         component.selectChannel({option: {value: {id: 22, name: 'CDiscount'}}});
-        expect(component.order.shipment.paymentMethod).toBe('some default value');
+        expect(component.order.payment.method).toBe('some default value');
     });
 
     it('should assign a default payment value if `amazon` channel selected', () => {
         component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
         component.selectChannel({option: {value: {id: 22, name: 'Manomano'}}});
-        expect(component.order.shipment.paymentMethod).toBe('some default value');
+        expect(component.order.payment.method).toBe('some default value');
     });
 
     it('should add an empty order item on init', () => {

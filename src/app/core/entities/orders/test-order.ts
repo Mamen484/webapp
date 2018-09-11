@@ -1,10 +1,13 @@
 export class TestOrder {
-    channel: number;
+    channelId: number;
     shipment: {
         carrier?: string,
-        relayNumber?: number,
+        trackingNumber?: number,
+    } = {};
+    payment: {
         shippingAmount?: number,
-        paymentMethod?: string,
+        currency?: string,
+        method?: string,
     } = {};
     items: { reference: string, price: number, quantity?: number }[] = [];
 }
