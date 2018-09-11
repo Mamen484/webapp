@@ -12,19 +12,19 @@
 </label>
 <mat-chip-list [selectable]="false">
   <mat-chip *ngIf="selectedChannel">
-    Channel: {{selectedChannel}}
+    <ng-container i18n>Channel: {{selectedChannel}}</ng-container>
     <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
   </mat-chip>
   <mat-chip *ngIf="filter.since">
-    Since: {{filter.since | date:'short'}}
+    <ng-container i18n>Since: {{filter.since | date:'short'}}</ng-container>
     <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
   </mat-chip>
   <mat-chip *ngIf="filter.until">
-    Until: {{filter.until | date:'short'}}
+    <ng-container i18n>Until: {{filter.until | date:'short'}}</ng-container>
     <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
   </mat-chip>
   <mat-chip *ngIf="filter.tag && filter.tag !== 'all'">
-   Tag: {{filter.tag}}
+    <ng-container i18n>Tag: {{filter.tag}}</ng-container>
     <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
   </mat-chip>
 </mat-chip-list>

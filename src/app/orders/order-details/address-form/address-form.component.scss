@@ -6,6 +6,10 @@ form {
 
 .buttons {
   text-align: right;
+
+  button:not(:last-child){
+    margin-right: 10px;
+  }
 }
 
 mat-form-field {
