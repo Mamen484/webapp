@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Address } from '../../../core/entities/orders/address';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 describe('AddressFormComponent', () => {
     let component: AddressFormComponent;
@@ -52,10 +53,7 @@ describe('AddressFormComponent', () => {
 
     it('should show an error snackbar on save() if the form is NOT valid', async () => {
         component.save(false);
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ValidationErrorsSnackbarComponent, {
-            duration: 5000,
-            panelClass: 'sf-snackbar-error',
-        });
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
     });
 
     it('should NOT show an error snackbar on save() if the form is valid', async () => {

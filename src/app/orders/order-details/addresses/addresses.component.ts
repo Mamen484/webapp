@@ -9,6 +9,8 @@ import { OrdersService } from '../../../core/services/orders.service';
 import { MatSnackBar } from '@angular/material';
 import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
 import { Observable } from 'rxjs';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
+import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
 
 @Component({
     selector: 'sf-addresses',
@@ -19,6 +21,7 @@ export class AddressesComponent implements OnInit {
 
     @Input() order: Order;
     orderCopy: Order;
+    validationMessages;
 
     constructor(protected appStore: Store<AppState>,
                 protected ordersService: OrdersService,
@@ -60,7 +63,10 @@ export class AddressesComponent implements OnInit {
                     this.order[addressType] = cloneDeep(this.orderCopy[addressType]);
                     this.notifySuccess(addressType)
                 },
-                error => this.notifyError(error),
+                error => {
+                    this.validationMessages = error.error.validationMessages;
+                    this.notifyError(error);
+                }
             );
     }
 
@@ -72,10 +78,11 @@ export class AddressesComponent implements OnInit {
     }
 
     protected notifyError({message}) {
-        this.snackBar.open(message, '', {
-            panelClass: 'sf-snackbar-error',
-            duration: 5000,
-        })
+        if (this.validationMessages) {
+            this.snackBar.openFromComponent(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
+        } else {
+            this.snackBar.open(message, '', new ErrorSnackbarConfig());
+        }
     }
 }
 
