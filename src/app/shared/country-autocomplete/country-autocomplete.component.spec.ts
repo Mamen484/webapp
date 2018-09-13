@@ -32,7 +32,7 @@ describe('CountryAutocompleteComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(CountryAutocompleteComponent);
             component = fixture.componentInstance;
-            component.control = <any>{valueChanges, setValue: jasmine.createSpy()};
+            component.control = <any>{valueChanges, setValue: jasmine.createSpy(), hasError: () => jasmine.createSpy()};
             fixture.detectChanges();
         });
 
@@ -41,13 +41,13 @@ describe('CountryAutocompleteComponent', () => {
         });
 
         it('should NOT display any country initially if not ISO-alpha-2 value provided.', () => {
-            component.value = 'France';
+            component.writeValue('France');
             countries.next([{code: 'FR', name: 'France', flag: 'fr'}]);
             expect(component.control.setValue).toHaveBeenCalledWith('');
         });
 
         it('should display a country that matches provided initially ISO-alpha-2 code.', () => {
-            component.value = 'FR';
+            component.writeValue('FR');
             countries.next([{code: 'FR', name: 'France', flag: 'fr'}]);
             expect(component.control.setValue).toHaveBeenCalledWith('France');
         });
