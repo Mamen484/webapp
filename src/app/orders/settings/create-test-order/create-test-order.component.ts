@@ -82,10 +82,13 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     reset() {
-        this.order = new TestOrder();
-        this.addItem();
-        this.updateTotalPrice();
-
+        // use setTimeout to prevent quantity field emptying
+        setTimeout(() => {
+            this.order = new TestOrder();
+            this.addItem();
+            this.updateTotalPrice();
+            this.initializeDefaultChannel();
+        });
     }
 
     selectChannel({option}) {
