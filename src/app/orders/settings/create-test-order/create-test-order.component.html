@@ -35,7 +35,7 @@
                             <input matInput name="payment" [(ngModel)]="order.payment.method"
                                    *ngIf="paymentInputMode === 'custom'" #paymentMethod>
                             <mat-select (selectionChange)="setPaymentMethod($event)"
-                                        *ngIf="paymentInputMode === 'predefined'">
+                                        *ngIf="paymentInputMode === 'predefined'" value="Shipped by merchant" i18n-value>
                                 <mat-option i18n value="Shipped by merchant" i18n-value>Shipped by merchant</mat-option>
                                 <mat-option i18n value="FBA" *ngIf="order.channelId === channelMap.amazon">
                                     FBA
