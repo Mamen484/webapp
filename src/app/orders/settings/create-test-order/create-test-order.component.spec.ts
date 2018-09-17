@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateTestOrderComponent } from './create-test-order.component';
-import { ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
@@ -170,22 +170,24 @@ describe('CreateTestOrderComponent', () => {
         expect(component.order.channelId).toBe(22);
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'Amazon'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `amazon` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.amazon, name: 'Amazon'}}});
+        expect(component.paymentInputMode).toBe('predefined');
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'CDiscount'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `cdiscount` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.cdiscount, name: 'CDiscount'}}});
+        expect(component.paymentInputMode).toBe('predefined');
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'Manomano'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `monechelle` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.monechelle, name: 'Monechelle'}}});
+        expect(component.paymentInputMode).toBe('predefined');
+    });
+
+    it('should assign a paymentMode into `custom` if any other channel selected', () => {
+        component.selectChannel({option: {value: {id: 777, name: 'any channel'}}});
+        expect(component.paymentInputMode).toBe('custom');
     });
 
     it('should add an empty order item on init', () => {

@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { AppState } from '../../../core/entities/app-state';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { OrdersService } from '../../../core/services/orders.service';
 import { filter, flatMap, map, startWith, take } from 'rxjs/operators';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
@@ -23,14 +23,14 @@ import { Store as UserStore } from '../../../core/entities/store';
 export class CreateTestOrderComponent implements OnInit {
 
     @ViewChild(NgForm) form: NgForm;
-    @ViewChild('paymentMethod') paymentMethod: ElementRef<HTMLInputElement>;
 
     order = new TestOrder();
     totalPrice: number;
     channelControl = new FormControl();
     filteredChannels: Channel[];
     filteredNewChannels: Channel[];
-    haveDefaultPayment = ['amazon', 'cdiscount', 'manomano'];
+    paymentInputMode: 'custom' | 'predefined' = 'custom';
+    channelMap = {amazon: 66, cdiscount: 111, monechelle: 259};
 
     constructor(protected appStore: Store<AppState>,
                 protected ordersService: OrdersService,
@@ -47,7 +47,7 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     addItem() {
-        this.order.items.push(<any>{});
+        this.order.items.push(<any>{quantity: 1});
     }
 
     removeItem(index) {
@@ -81,10 +81,27 @@ export class CreateTestOrderComponent implements OnInit {
         return channel && channel.name;
     }
 
+    reset() {
+        this.order = new TestOrder();
+        this.addItem();
+        this.updateTotalPrice();
+
+    }
+
     selectChannel({option}) {
         this.order.channelId = option.value.id;
-        if (this.haveDefaultPayment.find(el => el === option.value.name.toLowerCase())) {
-            this.order.payment.method = this.paymentMethod.nativeElement.getAttribute('attr.defaultValue');
+        this.order.payment.method = '';
+        this.paymentInputMode = values(this.channelMap).find(el => el === option.value.id)
+            ? 'predefined'
+            : 'custom';
+    }
+
+    setPaymentMethod(method: { value: string | 'custom' }) {
+        if (method.value === 'custom') {
+            this.paymentInputMode = 'custom';
+            this.order.payment.method = '';
+        } else {
+            this.order.payment.method = method.value;
         }
     }
 

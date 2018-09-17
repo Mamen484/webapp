@@ -9,17 +9,23 @@
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Channel</mat-label>
                             <input type="text" matInput [matAutocomplete]="auto" [formControl]="channelControl">
-                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectChannel($event)" [displayWith]="channelDisplayFn">
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectChannel($event)"
+                                              [displayWith]="channelDisplayFn">
                                 <mat-optgroup label="Installed" i18n-label *ngIf="filteredChannels">
-                                    <mat-option *ngFor="let channel of filteredChannels" [value]="channel">{{channel.name}}
+                                    <mat-option *ngFor="let channel of filteredChannels" [value]="channel">
+                                        {{channel.name}}
                                     </mat-option>
-                                    <mat-option *ngIf="!filteredChannels.length" disabled i18n>No channels found</mat-option>
+                                    <mat-option *ngIf="!filteredChannels.length" disabled i18n>No channels found
+                                    </mat-option>
                                 </mat-optgroup>
-                                <mat-option *ngIf="!filteredChannels || !filteredNewChannels" disabled i18n>Loading...</mat-option>
+                                <mat-option *ngIf="!filteredChannels || !filteredNewChannels" disabled i18n>Loading...
+                                </mat-option>
                                 <mat-optgroup label="New" i18n-label *ngIf="filteredNewChannels">
-                                    <mat-option *ngFor="let channel of filteredNewChannels" [value]="channel">{{channel.name}}
+                                    <mat-option *ngFor="let channel of filteredNewChannels" [value]="channel">
+                                        {{channel.name}}
                                     </mat-option>
-                                    <mat-option *ngIf="!filteredNewChannels.length" disabled i18n>No channels found</mat-option>
+                                    <mat-option *ngIf="!filteredNewChannels.length" disabled i18n>No channels found
+                                    </mat-option>
                                 </mat-optgroup>
                             </mat-autocomplete>
                         </mat-form-field>
@@ -27,7 +33,21 @@
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Payment</mat-label>
                             <input matInput name="payment" [(ngModel)]="order.payment.method"
-                                   attr.defaultValue="Shipped by merchant" i18n-attr.defaultValue #paymentMethod>
+                                   *ngIf="paymentInputMode === 'custom'" #paymentMethod>
+                            <mat-select (selectionChange)="setPaymentMethod($event)"
+                                        *ngIf="paymentInputMode === 'predefined'">
+                                <mat-option i18n value="Shipped by merchant" i18n-value>Shipped by merchant</mat-option>
+                                <mat-option i18n value="FBA" *ngIf="order.channelId === channelMap.amazon">
+                                    FBA
+                                </mat-option>
+                                <mat-option i18n value="CLogistique" *ngIf="order.channelId === channelMap.cdiscount">
+                                    CLogistique
+                                </mat-option>
+                                <mat-option i18n value="EPMM" *ngIf="order.channelId === channelMap.monechelle">
+                                    EPMM
+                                </mat-option>
+                                <mat-option i18n value="custom">Set custom</mat-option>
+                            </mat-select>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" color="accent">
@@ -59,7 +79,8 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input name="itemQuantity{{i}}" matInput [(ngModel)]="item.quantity">
+                                        <input type="number" name="itemQuantity{{i}}" matInput
+                                               [(ngModel)]="item.quantity">
                                     </mat-form-field>
                                 </td>
                                 <td>
@@ -111,7 +132,7 @@
                 </mat-card>
             </div>
             <div fxLayout="row" fxLayoutAlign="flex-end center" class="buttons">
-                <button mat-button color="accent" i18n>Cancel</button>
+                <button type="reset" mat-button color="accent" i18n (click)="reset()">Cancel</button>
                 <button mat-raised-button color="accent" i18n (click)="create()">Create</button>
             </div>
         </form>
