@@ -32,7 +32,8 @@ export class StoreService {
             .set('name', params.searchQuery)
             .set('type', params.type)
             .set('segment', params.segment)
-            .set('status', params.status);
+            .set('status', params.status)
+            .set('embed', 'stats');
 
         if (foreignChannels) {
             return <any>this.httpClient.get(`${environment.API_URL}/channel`, {params: httpParams}).pipe(
