@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Channel } from '../../core/entities/channel';
 import { MatDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
@@ -13,14 +13,21 @@ import { AcceptChannelDialogComponent } from '../accept-channel-dialog/accept-ch
     templateUrl: './suggested-channel.component.html',
     styleUrls: ['./suggested-channel.component.scss']
 })
-export class SuggestedChannelComponent {
+export class SuggestedChannelComponent implements OnInit {
 
     @Input() channel: StoreChannel;
     @Input() internationalMode = false;
     @Input() firstChannel = false;
+    @Input() currency: string;
+    clientsConnected: number;
+    hasStats = false;
 
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService) {
+    }
+
+    ngOnInit() {
+        this.initializeStats();
     }
 
     showInternationalChannelDialog() {
@@ -49,6 +56,14 @@ export class SuggestedChannelComponent {
                 link: this.getChannelLink(this.channel._embedded.channel),
             }
         });
+    }
+
+    protected initializeStats() {
+        const stats = this.channel.stats;
+        this.hasStats = Boolean(stats && stats.totalStores && stats.connectedStores && stats.turnoverAverage);
+        if (this.hasStats) {
+            this.clientsConnected = Math.ceil(stats.connectedStores / stats.totalStores * 100);
+        }
     }
 
 }

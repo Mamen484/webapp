@@ -1,12 +1,29 @@
-<mat-card-content fxFlex fxLayout="row">
-    <div class="channel-logo" fxFlex="50%"><img mat-card-image [src]="channel._embedded.channel._links.image.href"
-                                   [alt]="channel._embedded.channel.name"></div>
-    <div class="connect-button" fxFlex="50%">
-        <a mat-raised-button #link color="accent" *ngIf="!internationalMode && !firstChannel"
-           sfLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
-        <a mat-raised-button #link color="accent" *ngIf="!internationalMode && firstChannel"
-           (click)="openAcceptChannelDialog(channel._embedded.channel)" i18n>CONNECT</a>
-        <a mat-raised-button #link color="accent" *ngIf="internationalMode"
-           (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
+<mat-card-content>
+    <div [fxFlex]="hasStats ? '50%' : '100%'" [class.has-stats]="hasStats" class="channel-connect">
+        <div class="channel-logo">
+            <img mat-card-image [src]="channel._embedded.channel._links.image.href"
+                 [alt]="channel._embedded.channel.name">
+        </div>
+        <div class="connect-button">
+            <a mat-raised-button #link color="accent" *ngIf="!internationalMode && !firstChannel"
+               sfLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
+            <a mat-raised-button #link color="accent" *ngIf="!internationalMode && firstChannel"
+               (click)="openAcceptChannelDialog(channel._embedded.channel)" i18n>CONNECT</a>
+            <a mat-raised-button #link color="accent" *ngIf="internationalMode"
+               (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
+        </div>
+    </div>
+    <div fxFlex="50%" *ngIf="hasStats" class="channel-stats">
+        <ng-container>
+            <div class="mat-caption" i18n>Potential turnover</div>
+            <div class="mat-display-1 channel-turnover">
+                {{channel.stats.turnoverAverage | sfCurrency:currency}}
+            </div>
+        </ng-container>
+        <div class="mat-caption" i18n>Clients connected</div>
+        <div class="mat-display-1 channel-online">
+            <span>{{clientsConnected}}%</span>
+        </div>
     </div>
 </mat-card-content>
+

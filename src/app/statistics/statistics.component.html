@@ -18,7 +18,7 @@
                                        [hasStatisticsPermission]="hasStatisticsPermission"></sf-configured-channel>
 
                 <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
-                                      [firstChannel]="haveNoChannels"></sf-suggested-channel>
+                                      [firstChannel]="haveNoChannels" [currency]="statistics.currency"></sf-suggested-channel>
             </mat-card>
         </div>
         <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">

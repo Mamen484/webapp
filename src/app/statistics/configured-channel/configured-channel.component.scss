@@ -3,8 +3,8 @@
 
 @include channel-common-styles();
 
-mat-card-content {
-  margin-bottom: 0;
+.channel-logo-container {
+  text-align: center;
 }
 
 .channel-online {
@@ -19,8 +19,4 @@ mat-card-content {
   &.online-high {
     color: mat-color($green);
   }
-}
-
-.channel-turnover, .channel-online {
-  margin-bottom: 16px;
 }
