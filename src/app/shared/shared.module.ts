@@ -28,6 +28,7 @@ import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/
 import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
 import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe';
+import { MinNumberDirective } from './min-number/min-number.directive';
 
 @NgModule({
     imports: [
@@ -108,6 +109,7 @@ import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe'
 
         // directives
         LegacyLinkDirective,
+        MinNumberDirective,
 
         // components
         CountrySelectComponent,
@@ -132,6 +134,7 @@ import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe'
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
         ArrayFromNumberPipe,
+        MinNumberDirective,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

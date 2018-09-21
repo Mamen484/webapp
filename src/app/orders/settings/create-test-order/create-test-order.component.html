@@ -8,7 +8,7 @@
 
                         <mat-form-field appearance="outline" color="accent">
                             <mat-label i18n>Channel</mat-label>
-                            <input type="text" matInput [matAutocomplete]="auto" [formControl]="channelControl">
+                            <input type="text" matInput [matAutocomplete]="auto" [formControl]="channelControl" required>
                             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectChannel($event)"
                                               [displayWith]="channelDisplayFn">
                                 <mat-optgroup label="Installed" i18n-label *ngIf="filteredChannels">
@@ -79,14 +79,14 @@
                                 </td>
                                 <td>
                                     <mat-form-field>
-                                        <input type="number" name="itemQuantity{{i}}" matInput
-                                               [(ngModel)]="item.quantity">
+                                        <input type="number" name="itemQuantity{{i}}" matInput #quantity="ngModel"
+                                               [(ngModel)]="item.quantity" sfMinNumber="1" min="1">
                                     </mat-form-field>
                                 </td>
                                 <td>
                                     <mat-form-field>
                                         <input name="itemPrice{{i}}" matInput type="number" [(ngModel)]="item.price"
-                                               (change)="updateTotalPrice()" required #itemPrice="ngModel">
+                                               (change)="updateTotalPrice()" required sfMinNumber="1" min="1" #itemPrice="ngModel">
                                         <mat-error *ngIf="itemPrice.invalid && (itemPrice.dirty || itemPrice.touched)"
                                                    i18n>
                                             Please, specify price
@@ -116,10 +116,13 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <div>{{order.items.length}}</div>
+                                        <div>{{productsTotal}}</div>
                                         <mat-form-field><input type="number"
+                                                               #shippingCost="ngModel"
                                                                matInput name="shippingCost"
                                                                (change)="updateTotalPrice()"
+                                                               sfMinNumber="0"
+                                                               min="0"
                                                                [(ngModel)]="order.payment.shippingAmount">
                                         </mat-form-field>
                                         <div class="mat-body-2">{{totalPrice}}</div>

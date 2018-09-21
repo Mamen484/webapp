@@ -59,13 +59,6 @@ describe('CreateTestOrderComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should initialize a default channel on load', () => {
-        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
-        appStore.select.and.returnValues(EMPTY, EMPTY, of([{id: 22, name: 'default channel'}]));
-        fixture.detectChanges();
-        expect(component.channelControl.value).toEqual({id: 22, name: 'default channel'});
-    });
-
     it('should calculate a valid total price if price is specified', () => {
         component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
         appStore.select.and.returnValue(EMPTY);
