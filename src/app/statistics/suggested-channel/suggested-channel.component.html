@@ -15,12 +15,12 @@
     </div>
     <div fxFlex="50%" *ngIf="hasStats" class="channel-stats">
         <ng-container>
-            <div class="mat-caption" i18n>Potential turnover</div>
+            <div class="mat-caption" i18n matTooltip="Per Month" i18n-matTooltip>Potential turnover</div>
             <div class="mat-display-1 channel-turnover">
                 {{channel.stats.turnoverAverage | sfCurrency:currency}}
             </div>
         </ng-container>
-        <div class="mat-caption" i18n>Clients connected</div>
+        <div class="mat-caption" i18n matTooltip="Per Month" i18n-matTooltip>Clients connected</div>
         <div class="mat-display-1 channel-online">
             <span>{{clientsConnected}}%</span>
         </div>
