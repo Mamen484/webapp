@@ -6,16 +6,18 @@
     </div>
     <div fxFlex="50%">
         <ng-container *ngIf="hasStatisticsPermission">
-            <div class="mat-caption" i18n>Turnover</div>
+            <div class="mat-caption sf-color-grey" i18n>Turnover</div>
             <div class="mat-display-1 channel-turnover">
-            <span *ngIf="statisticsExistsFor('revenue'); else unavailable">
-            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}</span>
+                <span *ngIf="statisticsExistsFor('revenue'); else unavailable">
+                    {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}
+                </span>
             </div>
         </ng-container>
-        <div class="mat-caption" i18n>Online</div>
-        <div class="mat-display-1 channel-online" [class.online-low]="channelsOnline <= 30"
+        <div class="mat-caption sf-color-grey" i18n>Online</div>
+        <div class="channel-online" [class.online-low]="channelsOnline <= 30"
              [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
-             [class.online-high]="channelsOnline >= 75">
+             [class.online-high]="channelsOnline >= 75" [class.mat-display-1]="channelsOnline >= 0"
+             [class.mat-subheading-2]="!channelsOnline && channelsOnline !== 0">
             <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
         </div>
     </div>
@@ -23,6 +25,6 @@
 
 </mat-card-content>
 <ng-template #unavailable>
-    <ng-container i18n>Unavailable</ng-container>
+    <span i18n class="sf-color-grey">Unavailable</span>
 </ng-template>
 
