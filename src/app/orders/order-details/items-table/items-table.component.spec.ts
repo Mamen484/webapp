@@ -82,9 +82,9 @@ describe('ItemsTableComponent', () => {
         matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
         ordersService.updateItemsReferences.and.returnValue(EMPTY);
         appStore.select.and.returnValue(of({id: 34}));
-        component.order = <any>{id: 12};
+        component.order = <any>{id: 12, itemsReferencesAliases: {100: 'anything', 200: 'anything else', 251: 'one more anything'}};
         component.updateItemReference(<any>{sku: '234', reference: '251'});
-        expect(ordersService.updateItemsReferences).toHaveBeenCalledWith(34, 12, {251: 'some_sku'})
+        expect(ordersService.updateItemsReferences).toHaveBeenCalledWith(34, 12, {100: 'anything', 200: 'anything else', 251: 'some_sku'})
     });
 
     it('should change displayed sku on successful sku modification', () => {
