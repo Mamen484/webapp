@@ -112,7 +112,7 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     protected calculateItemsPrice() {
-        return this.order.items.reduce((acc, item) => +(item.price || 0) + acc, 0);
+        return this.order.items.reduce((acc, item) => +(item.quantity || 0) * +(item.price || 0) + acc, 0);
     }
 
     protected getInstalledChannels() {
