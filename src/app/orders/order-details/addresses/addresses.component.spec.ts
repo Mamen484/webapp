@@ -6,8 +6,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { MatSnackBar } from '@angular/material';
-import { of, throwError } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 describe('AddressesComponent', () => {
     let component: AddressesComponent;
@@ -67,6 +68,7 @@ describe('AddressesComponent', () => {
 
     it('should call a modify billing address service on saveBillingAddress() call', () => {
         appStore.select.and.returnValue(of({id: 90}));
+        ordersService.modifyBillingAddress.and.returnValue(EMPTY);
         component.saveBillingAddress();
         expect(ordersService.modifyBillingAddress).toHaveBeenCalledTimes(1);
         expect(ordersService.modifyBillingAddress)
@@ -95,16 +97,14 @@ describe('AddressesComponent', () => {
     it('should show a snackbar after billing address save failed', () => {
         appStore.select.and.returnValue(of({id: 90}));
         component.orderCopy.billingAddress.firstName = 'some firstname';
-        ordersService.modifyBillingAddress.and.returnValue(throwError({message: 'error message'}));
+        ordersService.modifyBillingAddress.and.returnValue(throwError({message: 'error message', error: {}}));
         component.saveBillingAddress();
-        expect(snackBar.open).toHaveBeenCalledWith('error message', '', {
-            panelClass: 'sf-snackbar-error',
-            duration: 5000,
-        });
+        expect(snackBar.open).toHaveBeenCalledWith('error message', '', new ErrorSnackbarConfig());
     });
 
     it('should call a modify shipping address service on saveShippingAddress() call', () => {
         appStore.select.and.returnValue(of({id: 90}));
+        ordersService.modifyShippingAddress.and.returnValue(EMPTY);
         component.saveShippingAddress();
         expect(ordersService.modifyShippingAddress).toHaveBeenCalledTimes(1);
         expect(ordersService.modifyShippingAddress)
@@ -133,11 +133,8 @@ describe('AddressesComponent', () => {
     it('should show a snackbar after shipping address save failed', () => {
         appStore.select.and.returnValue(of({id: 90}));
         component.orderCopy.shippingAddress.firstName = 'some firstname';
-        ordersService.modifyShippingAddress.and.returnValue(throwError({message: 'error message'}));
+        ordersService.modifyShippingAddress.and.returnValue(throwError({message: 'error message', error: {}}));
         component.saveShippingAddress();
-        expect(snackBar.open).toHaveBeenCalledWith('error message', '', {
-            panelClass: 'sf-snackbar-error',
-            duration: 5000,
-        });
+        expect(snackBar.open).toHaveBeenCalledWith('error message', '', new ErrorSnackbarConfig());
     });
 });

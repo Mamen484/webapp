@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { filter, map, startWith, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { MatFormFieldAppearance } from '@angular/material';
+import { MatFormFieldAppearance, MatOption } from '@angular/material';
 import { FullCountriesListService } from '../../core/services/full-countries-list.service';
 import { Country } from '../../core/entities/country';
 
@@ -11,26 +11,35 @@ import { Country } from '../../core/entities/country';
     selector: 'sf-country-autocomplete',
     templateUrl: './country-autocomplete.component.html',
     styleUrls: ['./country-autocomplete.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CountryAutocompleteComponent),
+            multi: true
+        },
+    ],
 })
-export class CountryAutocompleteComponent implements OnInit {
+export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
 
     @Input() appearance: MatFormFieldAppearance = 'standard';
+    @Input() valid = true;
 
-    @Input()
-    set value(value) {
-        this.formatDisplayedValue(value);
+    @Input() set serverError(value) {
+        this.validationError = value;
+        this.changeDetectorRef.detectChanges();
+        this.control.updateValueAndValidity();
     }
 
-    @Output() valueChanged = new EventEmitter();
+    protected validationError;
 
     countries: Country[] = [];
     filteredCountries: Observable<Country[]>;
+    onChange: (value: string) => any;
 
-    control = new FormControl();
+    control = new FormControl('', () => this.validationError ? {serverError: true} : null);
 
 
-    constructor(protected countriesListService: FullCountriesListService) {
+    constructor(protected countriesListService: FullCountriesListService, protected changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -59,9 +68,38 @@ export class CountryAutocompleteComponent implements OnInit {
         });
     }
 
+    protected matchCountryByName(value: string) {
+        return this.getCountries().pipe(map(countries => {
+            return countries.find(({name}) => name === value);
+        }));
+    }
+
 
     protected getCountries() {
         return this.countriesListService.getCountries()
             .pipe(filter(countries => countries.length > 0), take(1));
     }
+
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: any): void {
+    }
+
+    writeValue(countryCode: string): void {
+        if (countryCode) {
+            this.formatDisplayedValue(countryCode);
+        }
+    }
+
+    optionSelected({option}: { option: MatOption }) {
+        this.matchCountryByName(option.value).subscribe((country: Country) => {
+            if (country) {
+                this.onChange(country.code);
+            }
+        });
+    }
+
+
 }
