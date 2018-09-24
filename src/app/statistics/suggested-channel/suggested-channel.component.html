@@ -16,19 +16,17 @@
     <div fxFlex="50%" class="channel-stats">
         <ng-container>
             <div class="mat-caption" i18n matTooltip="Per Month" i18n-matTooltip>Potential turnover</div>
-            <div class="channel-turnover" [class.mat-display-1]="hasStats"
-                 [class.mat-subheading-2]="!hasStats">
+            <div class="channel-turnover mat-display-1">
                 <span *ngIf="hasStats; else unavailable">{{channel.stats.turnoverAverage | sfCurrency:currency}}</span>
             </div>
         </ng-container>
         <div class="mat-caption" i18n matTooltip="Per Month" i18n-matTooltip>Clients connected</div>
-        <div class="channel-online"  [class.mat-display-1]="hasStats"
-             [class.mat-subheading-2]="!hasStats">
+        <div class="channel-online mat-display-1">
             <span *ngIf="hasStats; else unavailable">{{clientsConnected}}%</span>
         </div>
     </div>
 </mat-card-content>
 
 <ng-template #unavailable>
-    <span i18n class="sf-color-grey">Unavailable</span>
+    <span i18n class="sf-color-grey" matTooltip="Unavailable" i18n-matTooltip matTooltipPosition="right">--</span>
 </ng-template>
