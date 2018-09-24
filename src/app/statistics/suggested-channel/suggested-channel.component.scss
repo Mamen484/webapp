@@ -1,34 +1,52 @@
 @import '../../../sass/variables';
 @import '../../../sass/mixins/channel';
 
+$logo-bottom-margin: 20px;
+
 @include channel-common-styles();
 
 :host {
   height: 100%;
 }
 
-.channel-info-line {
-  margin-bottom: 15px;
+div.connect-button {
+  text-align: center;
+}
 
-  & > span {
-    vertical-align: middle;
+.has-stats {
+  .channel-logo {
+    margin-top: -#{$logo-bottom-margin};
   }
 
-  &.channel-description {
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  & > a {
-    text-decoration: none;
-    color: $black-87-opacity;
+  .connect-button {
+    margin-top: $logo-bottom-margin;
   }
 }
 
-div.connect-button {
-  text-align: center;
+.channel-stats {
+  color: $black-54-opacity;
+}
+
+.channel-connect {
+  display: flex;
+  padding-right: $card-padding;
+
+  &:not(.has-stats){
+    .channel-logo {
+      flex: 1;
+    }
+
+    .connect-button {
+      flex: 1;
+      text-align: left;
+    }
+  }
+
+  &.has-stats {
+    flex-direction: column;
+  }
+}
+
+mat-card-content {
+  height: 100%;
 }

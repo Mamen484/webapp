@@ -21,6 +21,7 @@ import { environment } from '../../environments/environment';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
+import { AppState } from '../core/entities/app-state';
 
 @Pipe({
     name: 'sfEventIcon'
@@ -49,7 +50,7 @@ describe('TimelineComponent', () => {
     describe('shallow tests', () => {
         beforeEach(async(() => {
 
-            timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline'])
+            timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             timelineService.getEventsByLink.and.returnValue(of(events2));
             timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
@@ -64,14 +65,7 @@ describe('TimelineComponent', () => {
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
-                    {
-                        provide: TimelineService,
-                        useValue: timelineService
-                    },
-                    {
-                        provide: Store,
-                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
-                    }
+                    {provide: TimelineService, useValue: timelineService}
                 ]
             })
                 .compileComponents();
@@ -133,12 +127,14 @@ describe('TimelineComponent', () => {
 
     describe('integration tests', () => {
         let localStorage;
+        let appStore: jasmine.SpyObj<Store<AppState>>;
 
         beforeEach(async(() => {
 
             timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
+            appStore = jasmine.createSpyObj(['select']);
 
             TestBed.configureTestingModule({
                 imports: [
@@ -161,18 +157,10 @@ describe('TimelineComponent', () => {
                     EventLinkPipe,
                 ],
                 providers: [
-                    {
-                        provide: TimelineService,
-                        useValue: timelineService
-                    },
-                    {
-                        provide: Store,
-                        useValue: {select: param => of(aggregatedUserInfoMock._embedded.store[0])}
-                    },
+                    {provide: TimelineService, useValue: timelineService},
                     LegacyLinkService,
-                    {provide: Store, useValue: {select: () => of({id: 'storeId'})}},
-                    {provide: LocalStorageService, useValue: localStorage}
-
+                    {provide: LocalStorageService, useValue: localStorage},
+                    {provide: Store, useValue: appStore},
                 ]
             })
                 .compileComponents();
@@ -185,6 +173,7 @@ describe('TimelineComponent', () => {
             }));
             fixture = TestBed.createComponent(TimelineComponent);
             component = fixture.componentInstance;
+            appStore.select.and.returnValue(of({id: 100}));
             fixture.detectChanges();
         });
 
@@ -243,7 +232,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual(environment.APP_URL + url + '?token=someToken&store=storeId');
+            .toEqual(environment.APP_URL + url + '?token=someToken&store=100');
     }
 }
 

@@ -12,6 +12,7 @@ import { MatMenuModule } from '@angular/material';
 import { PaymentType } from '../core/entities/payment-type.enum';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreStatus } from '../core/entities/store-status.enum';
+import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 
 describe('MenuComponent', () => {
 
@@ -60,9 +61,9 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership` link when facturation permission exists', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
-            permission: {facturation: '*'}
-        }));
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create(
+            {roles: ['user'], _embedded: {store: []}}
+        )), of({permission: {facturation: '*'}}));
         fixture.detectChanges();
         openAccountMenu();
         expect(membershipElement()).toBeTruthy();
@@ -70,9 +71,7 @@ describe('MenuComponent', () => {
     });
 
     it('should NOT display `Membership` link when facturation permission does not exist', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
-            permission: {}
-        }));
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({permission: {}}));
         fixture.detectChanges();
         openAccountMenu();
         expect(membershipElement()).toBeNull();
@@ -80,7 +79,7 @@ describe('MenuComponent', () => {
 
 
     it('should display `Membership link` when paymentType is credit_card', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
             permission: {facturation: '*'}, paymentType: PaymentType.creditCard
         }));
         fixture.detectChanges();
@@ -91,7 +90,7 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is bank_transfer', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
             permission: {facturation: '*'}, paymentType: PaymentType.bankTransfer
         }));
         fixture.detectChanges();
@@ -102,7 +101,7 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is sepa', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
             permission: {facturation: '*'}, paymentType: PaymentType.sepa
         }));
         fixture.detectChanges();
@@ -113,7 +112,7 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is `other`', () => {
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store: []}}), of({
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
             permission: {facturation: '*'}, paymentType: PaymentType.other
         }));
         fixture.detectChanges();
@@ -122,14 +121,14 @@ describe('MenuComponent', () => {
         expect(membershipElement()).toBeNull();
     });
 
-    it('should display correct links to legacy stores for a multistore user`', () => {
+    it('should display correct links to legacy stores for a multistore user', () => {
         const store = [
             {id: 10, status: StoreStatus.active},
             {id: 11, status: StoreStatus.demo},
             {id: 12, status: StoreStatus.deleted},
             {id: 13, status: StoreStatus.suspended},
         ];
-        appStore.select.and.returnValues(of({roles: ['user'], _embedded: {store}}), of({
+        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store}})), of({
             permission: {facturation: '*'}, paymentType: PaymentType.other, id: 11
         }));
         fixture.detectChanges();

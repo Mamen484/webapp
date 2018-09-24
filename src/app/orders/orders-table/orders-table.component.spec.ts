@@ -183,7 +183,7 @@ describe('OrdersTableComponent', () => {
         filter.tag = 'l';
         filter$.next(filter);
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
-        expect(ordersService.fetchOrdersList.calls.mostRecent().args[1]).toEqual(filter);
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(filter);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {

@@ -117,7 +117,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, ordersFilter]) => {
                 this.pageSize = ordersFilter.limit;
-                this.fetchData(store, ordersFilter);
+                this.fetchData(ordersFilter);
             });
 
         this.paginator.page.subscribe(({pageIndex}) => {
@@ -152,7 +152,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             }
         }).afterClosed().subscribe(tagsChanged => {
             if (tagsChanged) {
-                this.updateData();
+                this.fetchData(this.ordersFilter);
             }
         })
     }
@@ -225,14 +225,14 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected fetchData(store: Store, ordersFilter: OrdersFilter) {
+    protected fetchData(ordersFilter: OrdersFilter) {
         this.isLoadingResults = true;
         this.ordersFilter = ordersFilter;
         this.changeDetectorRef.detectChanges();
         if (this.fetchSubscription && !this.fetchSubscription.closed) {
             this.fetchSubscription.unsubscribe();
         }
-        this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, ordersFilter)
+        this.fetchSubscription = this.ordersService.fetchOrdersList(ordersFilter)
             .subscribe(ordersPage => {
                 this.selection.clear();
                 this.isLoadingResults = false;
@@ -262,13 +262,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 }
             });
         }
-    }
-
-    protected updateData() {
-        this.appStore.select('currentStore').pipe(take(1))
-            .subscribe(store => {
-                this.fetchData(store, this.ordersFilter);
-            })
     }
 
     protected updateStickyColumnsStyles() {

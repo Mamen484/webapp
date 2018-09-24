@@ -27,7 +27,7 @@ describe('StoreService', () => {
             (service: StoreService, httpMock: HttpTestingController) => {
                 service.getStoreChannels(24, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18})).subscribe();
 
-                const req = httpMock.expectOne(environment.API_URL + '/store/24/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                const req = httpMock.expectOne(environment.API_URL + '/store/24/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats');
                 expect(req.request.method).toEqual('GET');
                 httpMock.verify();
             }));
@@ -44,7 +44,7 @@ describe('StoreService', () => {
         inject([StoreService, HttpTestingController],
             (service: StoreService, httpMock: HttpTestingController) => {
                 service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false).subscribe();
-                httpMock.expectOne(environment.API_URL + '/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                httpMock.expectOne(environment.API_URL + '/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats');
                 allowNoExpectations();
                 httpMock.verify();
             }));
@@ -53,7 +53,7 @@ describe('StoreService', () => {
         inject([StoreService, HttpTestingController],
             (service: StoreService, httpMock: HttpTestingController) => {
                 service.getStoreChannels(11,  Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), true).subscribe();
-                httpMock.expectOne(environment.API_URL + '/channel?page=1&limit=18&country=&name=&type=&segment=&status=');
+                httpMock.expectOne(environment.API_URL + '/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats');
                 allowNoExpectations();
                 httpMock.verify();
             }));
