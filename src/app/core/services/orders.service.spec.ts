@@ -62,6 +62,7 @@ describe('OrdersService', () => {
             req = {};
             filter = new OrdersFilter();
             filter.since = undefined;
+            appStore.select.and.returnValue(of({id: 11}));
         });
         afterEach(() => {
             expect(req.request.method).toEqual('GET');
@@ -71,83 +72,83 @@ describe('OrdersService', () => {
 
         it('should call appropriate endpoint when filter.status is specified', async () => {
             filter.status = OrderStatus.shipped;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&status=shipped&page=1`);
 
         });
 
         it('should call appropriate endpoint when filter.errorType is specified', () => {
             filter.error = OrderErrorType.ship;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
         });
 
         it('should call appropriate endpoint when filter.since is specified', () => {
             filter.since = new Date('2025-02-25');
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2025-02-25T00:00:00.000Z&page=1`);
         });
 
         it('should call appropriate endpoint when filter.until is specified', () => {
             filter.until = new Date('2025-02-25');
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&until=2025-02-25T00:00:00.000Z&page=1`);
         });
 
         it('should NOT include channel to endpoint params if channel value is `all`', () => {
             filter.channel = 'all';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
         });
 
         it('should call appropriate endpoint when filter.channel is specified', () => {
             filter.channel = 'some-channel';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&channel=some-channel&page=1`);
         });
 
         it('should NOT include search to endpoint params if search value is empty', () => {
             filter.search = '';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
         });
 
         it('should call appropriate endpoint when filter.search is specified', () => {
             filter.search = 'tadada';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&search=tadada&page=1`);
         });
 
         it('should NOT include tag to endpoint params if tag value is `all`', () => {
             filter.tag = 'all';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&page=1`);
         });
 
         it('should call appropriate endpoint when filter.tag is specified', () => {
             filter.tag = 'tadada';
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&tag=tadada&page=1`);
         });
 
         it('should NOT include status param to endpoint params if it has undefined value', () => {
             filter.status = undefined;
             filter.error = OrderErrorType.ship;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
         });
 
         it('should NOT include acknowledgment param to endpoint params if it has undefined value', () => {
             filter.acknowledgment = undefined;
             filter.error = OrderErrorType.ship;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&error=ship&page=1`);
         });
 
         it('should NOT include errorType param to endpoint params if it has undefined value', () => {
             filter.status = OrderStatus.shipped;
             filter.error = undefined;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&status=shipped&page=1`);
         });
 
@@ -160,7 +161,7 @@ describe('OrdersService', () => {
             filter.until = new Date('2030-01-01');
             filter.channel = 'channel132';
             filter.acknowledgment = OrderAcknowledgment.unacknowledged;
-            service.fetchOrdersList(11, filter).subscribe();
+            service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2010-01-01T00:00:00.000Z`
                 + `&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance`
                 + `&error=acknowledge&acknowledgment=unacknowledged&page=1`);

@@ -11,22 +11,31 @@ import { TimelineEventAction } from '../entities/timeline-event-action.enum';
 import { TimelineEvent } from '../entities/timeline-event';
 import { take, toArray } from 'rxjs/operators';
 import { allowNoExpectations } from '../entities/allow-no-expectaions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../entities/app-state';
+import { of } from 'rxjs';
 
 describe('TimelineService', () => {
 
     let service;
     let httpClient: jasmine.SpyObj<HttpClient>;
     let httpMock: HttpTestingController;
+    let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
+        appStore = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
-            providers: [TimelineService],
+            providers: [
+                TimelineService,
+                {provide: Store, useValue: appStore},
+            ],
             imports: [HttpClientTestingModule]
         });
 
         service = TestBed.get(TimelineService);
         httpClient = TestBed.get(HttpClient);
         httpMock = TestBed.get(HttpTestingController);
+        appStore.select.and.returnValue(of({id: 909}));
 
         let baseTime = new Date(Date.UTC(2017, 5, 14, 2, 22, 41));
         jasmine.clock().mockDate(baseTime);
@@ -35,7 +44,7 @@ describe('TimelineService', () => {
     it('should create an array of distinct updates: only the one last import and one last export of each channel', () => {
 
 
-        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
+        service.getEventUpdates().subscribe((updates: Timeline<TimelineEvent>) => {
             let upd = updates._embedded.timeline;
             // feed.import
             expect(upd[0].id).toEqual('59e0dcb1ae7b3b02694c3ff1');
@@ -48,7 +57,7 @@ describe('TimelineService', () => {
             expect(upd.length).toEqual(3);
         });
 
-        let req = httpMock.expectOne(`${environment.API_URL}/store/307/timeline?name=feed.export,feed.import` +
+        let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import` +
             `&since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error`);
 
         req.flush(data);
@@ -58,7 +67,7 @@ describe('TimelineService', () => {
     });
 
     it('should create an array of distinct updates: only the one last import and one last export of each channel', () => {
-        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
+        service.getEventUpdates().subscribe((updates: Timeline<TimelineEvent>) => {
             let upd = updates._embedded.timeline;
             // feed.export - Amazon
             expect(upd[0].id).toEqual('5a8be8cf14f698306a067839');
@@ -72,7 +81,7 @@ describe('TimelineService', () => {
             expect(upd.length).toEqual(4);
         });
 
-        let req = httpMock.expectOne(`${environment.API_URL}/store/307/timeline?name=feed.export,feed.import&` +
+        let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
             `since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error`);
 
         req.flush(data2);
@@ -81,27 +90,27 @@ describe('TimelineService', () => {
     });
 
     it('should pass proper params on getEvents call', () => {
-        service.getEvents(114).subscribe();
+        service.getEvents().subscribe();
 
-        httpMock.expectOne(`${environment.API_URL}/store/114/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
+        httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         allowNoExpectations();
         httpMock.verify();
     });
 
     it('should fetch appropriate link on getEventsByLink call', () => {
-        service.getEventsByLink('/v1/store/307/timeline?name=feed.import&feed.export&order.lifecycle&rule.transformation&' +
+        service.getEventsByLink('/v1/store/909/timeline?name=feed.import&feed.export&order.lifecycle&rule.transformation&' +
             'rule.segmentation&action=create&push&delete&ship&update&error&page=2&limit=10').subscribe();
-        httpMock.expectOne(`${environment.API_URL_WITHOUT_VERSION}/v1/store/307/timeline?name=feed.import&feed.export&order.lifecycle&` +
+        httpMock.expectOne(`${environment.API_URL_WITHOUT_VERSION}/v1/store/909/timeline?name=feed.import&feed.export&order.lifecycle&` +
             `rule.transformation&rule.segmentation&action=create&push&delete&ship&update&error&page=2&limit=10`);
         allowNoExpectations();
         httpMock.verify();
     });
 
     it('should pass proper params on getEventUpdates call', () => {
-        service.getEventUpdates(118).subscribe();
+        service.getEventUpdates().subscribe();
 
-        httpMock.expectOne(`${environment.API_URL}/store/118/timeline?name=feed.export,feed.import&since=2017-06-13T02:22:41.000Z&` +
+        httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&since=2017-06-13T02:22:41.000Z&` +
             `limit=200&action=ask,start,finish,error`);
         allowNoExpectations();
         httpMock.verify();
@@ -114,15 +123,15 @@ describe('TimelineService', () => {
         filter.since = new Date();
         filter.until = new Date(new Date().getTime() + 2000);
 
-        service.getEvents(115, filter).subscribe();
-        httpMock.expectOne(`${environment.API_URL}/store/115/timeline?limit=50&name=rule.segmentation,order.lifecycle&action=delete,ship&` +
+        service.getEvents(filter).subscribe();
+        httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=rule.segmentation,order.lifecycle&action=delete,ship&` +
             `since=2017-06-14T02:22:41.000Z&until=2017-06-14T02:22:43.000Z`);
         allowNoExpectations();
     });
 
     it('should create an array of distinct updates: only the one last import and one last export of each channel', () => {
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
-        service.getEventUpdates(307).subscribe((updates: Timeline<TimelineEvent>) => {
+        service.getEventUpdates().subscribe((updates: Timeline<TimelineEvent>) => {
             let upd = updates._embedded.timeline;
             // feed.import
             expect(upd[0].id).toEqual('59e0dcb1ae7b3b02694c3ff1');
@@ -134,7 +143,7 @@ describe('TimelineService', () => {
             expect(upd[2].id).toEqual('59e0dc80ae7b3b02656ab2c3');
             expect(upd.length).toEqual(3);
         });
-        let req = httpMock.expectOne(`${environment.API_URL}/store/307/timeline?name=feed.export,feed.import&` +
+        let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
             `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
         req.flush(data);
         httpMock.verify();
@@ -144,10 +153,10 @@ describe('TimelineService', () => {
 
     it('should fetch both events and updates when timeline update emitted', () => {
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
-        service.emitUpdatedTimeline(124);
-        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?name=feed.export,feed.import&` +
+        service.emitUpdatedTimeline();
+        httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
             `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        httpMock.expectOne(`${environment.API_URL}/store/124/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
+        httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
         allowNoExpectations();
         httpMock.verify();
@@ -167,11 +176,11 @@ describe('TimelineService', () => {
         });
 
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
-        service.emitUpdatedTimeline(116);
+        service.emitUpdatedTimeline();
 
-        const updates = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?name=feed.export,feed.import&` +
+        const updates = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
             `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
-        const events = httpMock.expectOne(`${environment.API_URL}/store/116/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
+        const events = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
             `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
 
         updates.flush({test: 112, _embedded: {timeline: []}});
@@ -181,21 +190,20 @@ describe('TimelineService', () => {
 
     it('should send HEAD request to the timeline resource when updates number requested', () => {
 
-        service.getUpdatesNumber(11).subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/store/11/timeline`);
+        service.getUpdatesNumber().subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline`);
         expect(req.request.method).toEqual('HEAD');
         httpMock.verify();
     });
 
     it('should extract the number of updates from the headers of timeline HEAD response', done => {
-
-        service.getUpdatesNumber(11).subscribe(count => {
+        service.getUpdatesNumber().subscribe(count => {
             expect(count).toEqual(676);
             httpMock.verify();
             done();
         });
 
-        let req = httpMock.expectOne(`${environment.API_URL}/store/11/timeline`);
+        let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline`);
         req.flush({}, {headers: new HttpHeaders().set('X-New-Events-Count', '676')});
     });
 });

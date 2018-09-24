@@ -3,38 +3,21 @@
 
 @include channel-common-styles();
 
-mat-card-content {
-  margin-bottom: 0;
+.channel-logo-container {
+  text-align: center;
+  padding-right: $card-padding;
 }
 
-.channel-info-line {
-  font-size: mat-font-size($config, body-1);
-  text-decoration: none;
-  color: initial;
-  display: block;
-
-  &>mat-icon, &>span {
-    vertical-align: middle;
-    margin-right: 10px;
+.channel-online {
+  &.online-low {
+    color: mat-color($warn);
   }
 
-  &.channel-revenue {
-    color: mat-color($primary);
-  }
-  &.channel-checked {
-    color: mat-color($green, 400);
-  }
-  &.channel-issues {
-    color: mat-color($warn, 900);
+  &.online-middle {
+    color: mat-color($accent);
   }
 
-  a {
-    text-decoration: none;
-    color: $black-87-opacity;
-  }
-
-  &.quickfix {
-    margin-bottom: 0;
-    a { cursor: pointer;}
+  &.online-high {
+    color: mat-color($green);
   }
 }

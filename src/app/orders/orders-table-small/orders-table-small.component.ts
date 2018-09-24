@@ -1,14 +1,11 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { Store } from '../../core/entities/store';
 import { MatTableDataSource } from '@angular/material';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { Order } from '../../core/entities/orders/order';
-import { Store as AppStore } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
 import { Router } from '@angular/router';
-import { combineLatest, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { OrdersService } from '../../core/services/orders.service';
 
 @Component({
@@ -26,8 +23,7 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
     fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
 
-    constructor(protected appStore: AppStore<AppState>,
-                protected ordersService: OrdersService,
+    constructor(protected ordersService: OrdersService,
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
                 protected router: Router) {
@@ -38,8 +34,7 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.subscription =  combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
-            .subscribe(([store, filter]) => this.fetchData(store, filter));
+        this.subscription = this.ordersFilterService.getFilter().subscribe(filter => this.fetchData(filter));
     }
 
     ngOnDestroy() {
@@ -48,14 +43,14 @@ export class OrdersTableSmallComponent implements OnInit, OnDestroy {
         }
     }
 
-    protected fetchData(store: Store, filter: OrdersFilter) {
+    protected fetchData(filter: OrdersFilter) {
         this.isLoadingResults = true;
         this.ordersFilter = filter;
         this.changeDetectorRef.detectChanges();
         if (this.fetchSubscription && !this.fetchSubscription.closed) {
             this.fetchSubscription.unsubscribe();
         }
-        this.fetchSubscription = this.ordersService.fetchOrdersList(store.id, filter)
+        this.fetchSubscription = this.ordersService.fetchOrdersList(filter)
             .subscribe(ordersPage => {
                 this.isLoadingResults = false;
 

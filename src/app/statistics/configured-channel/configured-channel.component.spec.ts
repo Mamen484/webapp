@@ -33,7 +33,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.revenue = 22;
         component.channel.statistics.currency = 'EUR';
         fixture.detectChanges();
-        expect(element('.channel-revenue span').textContent.trim()).toEqual('22,00 €');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('22,00 €');
     });
 
     it('should display channel revenue if it equals 0', () => {
@@ -42,7 +42,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.revenue = 0;
         component.channel.statistics.currency = 'EUR';
         fixture.detectChanges();
-        expect(element('.channel-revenue span').textContent.trim()).toEqual('0,00 €');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('0,00 €');
     });
 
     it('should NOT display channel revenue a store does not have statistics permission', () => {
@@ -51,7 +51,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.revenue = 22;
         component.channel.statistics.currency = 'EUR';
         fixture.detectChanges();
-        expect(element('.channel-revenue')).toBeNull();
+        expect(element('.channel-turnover')).toBeNull();
     });
 
     it('should display `unavailable` if revenue is NOT in the response', () => {
@@ -59,58 +59,80 @@ describe('ConfiguredChannelComponent', () => {
         component.hasStatisticsPermission = true;
         expect(component.channel.statistics.revenue).not.toBeDefined();
         fixture.detectChanges();
-        expect(element('.channel-revenue').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-turnover').textContent.trim()).toContain('Unavailable');
     });
 
-    it('should display channel selected issues if it is in the response', () => {
-        component.channel = <any>mockChannel();
-        component.channel.statistics.selected = 129092;
-        fixture.detectChanges();
-        expect(element('.channel-checked span').textContent.trim()).toEqual('129.09K checked');
-    });
-
-    it('should display channel selected issues if it equals 0', () => {
-        component.channel = <any>mockChannel();
-        component.channel.statistics.selected = 0;
-        fixture.detectChanges();
-        expect(element('.channel-checked span').textContent.trim()).toEqual('0 checked');
-    });
-
-    it('should display `unavailable` if selected is NOT in the response', () => {
-        component.channel = <any>mockChannel();
-        expect(component.channel.statistics.selected).not.toBeDefined();
-        fixture.detectChanges();
-        expect(element('.channel-checked').textContent.trim()).toContain('Unavailable');
-    });
-
-    it('should display channel export issues if selected and exported is in the response', () => {
+    it('should display online products if selected and exported is in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.selected = 1290920;
         component.channel.statistics.exported = 1000;
         fixture.detectChanges();
-        expect(element('.channel-issues span').textContent.trim()).toEqual('1.29M issues');
+        expect(element('.channel-online span').textContent.trim()).toEqual('0%');
     });
 
-    it('should display channel export issues if selected or exported is 0', () => {
+    it('should display online products if selected and exported is in the response', () => {
+        component.channel = <any>mockChannel();
+        component.channel.statistics.selected = 1290920;
+        component.channel.statistics.exported = 700000;
+        fixture.detectChanges();
+        expect(element('.channel-online span').textContent.trim()).toEqual('54%');
+    });
+
+    it('should add `online-low` class when the number of products online is not higher than 30%', () => {
+        component.channel = <any>mockChannel();
+        component.channel.statistics.selected = 100;
+        component.channel.statistics.exported = 30;
+        fixture.detectChanges();
+        expect(element('.channel-online span').textContent.trim()).toEqual('30%');
+        expect(element('.channel-online').className).toContain('online-low')
+    });
+
+    it('should add `online-middle` class when the number of products online is higher than 30% but lower than 75%', () => {
+        component.channel = <any>mockChannel();
+        component.channel.statistics.selected = 100;
+        component.channel.statistics.exported = 74;
+        fixture.detectChanges();
+        expect(element('.channel-online span').textContent.trim()).toEqual('74%');
+        expect(element('.channel-online').className).toContain('online-middle')
+    });
+
+    it('should add `online-low` class when the number of products online is not lower than 75%', () => {
+        component.channel = <any>mockChannel();
+        component.channel.statistics.selected = 100;
+        component.channel.statistics.exported = 75;
+        fixture.detectChanges();
+        expect(element('.channel-online span').textContent.trim()).toEqual('75%');
+        expect(element('.channel-online').className).toContain('online-high')
+    });
+
+    it('should display channel online if exported is 0', () => {
+        component.channel = <any>mockChannel();
+        component.channel.statistics.selected = 12000;
+        component.channel.statistics.exported = 0;
+        fixture.detectChanges();
+        expect(element('.channel-online span').textContent.trim()).toEqual('0%');
+    });
+
+    it('should display channel online `unavailable` if selected is 0', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.selected = 0;
         component.channel.statistics.exported = 0;
         fixture.detectChanges();
-        expect(element('.channel-issues span').textContent.trim()).toEqual('0 issues');
+        expect(element('.channel-online').textContent.trim()).toEqual('Unavailable');
     });
 
     it('should display `unavailable` instead of number of issues if selected is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.exported = 1000;
         fixture.detectChanges();
-        expect(element('.channel-issues').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-online').textContent.trim()).toContain('Unavailable');
     });
 
     it('should display `unavailable` instead of number of issues if exported is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.selected = 1000;
         fixture.detectChanges();
-        expect(element('.channel-issues').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-online').textContent.trim()).toContain('Unavailable');
     });
 
     it('should NOT fails is statistics is not defined at all', () => {

@@ -1,4 +1,4 @@
-import { throwError,  of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialog } from '@angular/material';
 import { SuggestedChannelComponent } from './suggested-channel.component';
@@ -7,6 +7,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
 import { LegacyLinkStubDirective } from '../../../mocks/stubs/legacy-link-stub.directive';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
+import { BlankPipe } from '../../orders/order-details/items-table/items-table.component.spec';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
@@ -23,7 +25,8 @@ describe('SuggestedChannelComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [MatCardModule, MatButtonModule, InfiniteScrollModule],
-            declarations: [SuggestedChannelComponent, LegacyLinkStubDirective],
+            declarations: [SuggestedChannelComponent, LegacyLinkStubDirective, SfCurrencyPipe],
+            schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: MatDialog, useValue: {open: openSpy}},
                 {
@@ -71,5 +74,92 @@ describe('SuggestedChannelComponent', () => {
         requestSpy.and.returnValue(throwError({}));
         component.showInternationalChannelDialog();
         expect(openSpy).toHaveBeenCalledWith(RequestFailedDialogComponent);
-    })
+    });
+
+    it('should set setStats to true if there are properties `turnoverAverage`, `connectedStores` and `totalStores`', () => {
+        component.channel.stats = {
+            turnoverAverage: 100,
+            connectedStores: 20,
+            totalStores: 900,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(true);
+    });
+
+    it('should set setStats to false if the store does not have stats', () => {
+        component.channel.stats = undefined;
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `turnoverAverage` property is missing', () => {
+        component.channel.stats = {
+            connectedStores: 20,
+            totalStores: 900,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `connectedStores` property is missing', () => {
+        component.channel.stats = {
+            turnoverAverage: 20,
+            totalStores: 900,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `totalStores` property is missing', () => {
+        component.channel.stats = {
+            turnoverAverage: 20,
+            connectedStores: 10,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `turnoverAverage` property equals to zero', () => {
+        component.channel.stats = {
+            turnoverAverage: 0,
+            connectedStores: 20,
+            totalStores: 900,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `connectedStores` property equals to zero', () => {
+        component.channel.stats = {
+            turnoverAverage: 20,
+            connectedStores: 0,
+            totalStores: 900,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should set setStats to false if the `totalStores` property equals to zero', () => {
+        component.channel.stats = {
+            turnoverAverage: 20,
+            connectedStores: 10,
+            totalStores: 0,
+        };
+        component.ngOnInit();
+        expect(component.hasStats).toBe(false);
+    });
+
+    it('should calculate a correct value of clientsConnected', () => {
+        component.channel.stats = {
+            turnoverAverage: 20,
+            connectedStores: 92,
+            totalStores: 1000,
+        };
+        component.ngOnInit();
+        expect(component.clientsConnected).toBe(10);
+    });
 });
+
+@Pipe({name: 'sfCurrency'})
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}

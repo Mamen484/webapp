@@ -6,6 +6,7 @@
                     <span class="tab-label" i18n>Delivery address</span>
                 </ng-template>
                 <sf-address-form [address]="orderCopy.shippingAddress"
+                                 [validationError]="validationMessages?.shippingAddress"
                                  (onSave)="saveShippingAddress()"
                                  (reset)="resetShippingAddress()"></sf-address-form>
             </mat-tab>
@@ -14,6 +15,7 @@
                     <span class="tab-label" i18n>Billing address</span>
                 </ng-template>
                 <sf-address-form [address]="orderCopy.billingAddress"
+                                 [validationError]="validationMessages?.billingAddress"
                                  (onSave)="saveBillingAddress()"
                                  (reset)="resetBillingAddress()"></sf-address-form>
             </mat-tab>
