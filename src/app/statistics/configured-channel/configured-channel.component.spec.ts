@@ -59,7 +59,7 @@ describe('ConfiguredChannelComponent', () => {
         component.hasStatisticsPermission = true;
         expect(component.channel.statistics.revenue).not.toBeDefined();
         fixture.detectChanges();
-        expect(element('.channel-turnover').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-turnover').textContent.trim()).toContain('--');
     });
 
     it('should display online products if selected and exported is in the response', () => {
@@ -118,21 +118,21 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.selected = 0;
         component.channel.statistics.exported = 0;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toEqual('Unavailable');
+        expect(element('.channel-online').textContent.trim()).toEqual('--');
     });
 
     it('should display `unavailable` instead of number of issues if selected is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.exported = 1000;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-online').textContent.trim()).toContain('--');
     });
 
     it('should display `unavailable` instead of number of issues if exported is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.selected = 1000;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toContain('Unavailable');
+        expect(element('.channel-online').textContent.trim()).toContain('--');
     });
 
     it('should NOT fails is statistics is not defined at all', () => {

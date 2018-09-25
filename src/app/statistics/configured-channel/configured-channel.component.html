@@ -14,10 +14,9 @@
             </div>
         </ng-container>
         <div class="mat-caption sf-color-grey" i18n>Online</div>
-        <div class="channel-online" [class.online-low]="channelsOnline <= 30"
+        <div class="channel-online mat-display-1" [class.online-low]="channelsOnline <= 30"
              [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
-             [class.online-high]="channelsOnline >= 75" [class.mat-display-1]="channelsOnline >= 0"
-             [class.mat-subheading-2]="!channelsOnline && channelsOnline !== 0">
+             [class.online-high]="channelsOnline >= 75">
             <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
         </div>
     </div>
@@ -25,6 +24,6 @@
 
 </mat-card-content>
 <ng-template #unavailable>
-    <span i18n class="sf-color-grey">Unavailable</span>
+    <span i18n class="sf-color-grey" matTooltip="Unavailable" i18n-matTooltip matTooltipPosition="right">--</span>
 </ng-template>
 

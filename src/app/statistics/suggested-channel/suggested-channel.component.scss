@@ -30,6 +30,7 @@ div.connect-button {
 .channel-connect {
   display: flex;
   padding-right: $card-padding;
+  flex-direction: column;
 
   &:not(.has-stats){
     .channel-logo {
