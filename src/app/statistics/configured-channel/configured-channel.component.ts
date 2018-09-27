@@ -40,5 +40,9 @@ export class ConfiguredChannelComponent implements OnInit {
             Number(this.channel.statistics.exported)
             / Number(this.channel.statistics.selected)
             * 100);
+
+        if (this.channelsOnline > 100) {
+            this.channelsOnline = 100;
+        }
     }
 }
