@@ -81,9 +81,10 @@ export class ItemsTableComponent implements OnInit {
     }
 
     protected updateSku(row: OrderDetailsItem, updatedSku: string) {
+        const itemsReferencesAliases = Object.assign({}, this.order.itemsReferencesAliases, {[row.reference]: updatedSku});
         return this.appStore.select('currentStore').pipe(
             flatMap(store => this.ordersService
-                .updateItemsReferences(store.id, this.order.id, {[row.reference]: updatedSku})))
+                .updateItemsReferences(store.id, this.order.id, itemsReferencesAliases)))
             .subscribe(() => {
                 row.sku = updatedSku;
                 this.snackBar.openFromComponent(SkuSavedSnackbarComponent, {
