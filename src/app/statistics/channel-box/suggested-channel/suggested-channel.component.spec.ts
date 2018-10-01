@@ -2,13 +2,13 @@ import { of, throwError } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialog } from '@angular/material';
 import { SuggestedChannelComponent } from './suggested-channel.component';
-import { InternationalAccountService } from '../../core/services/international-account.service';
+import { InternationalAccountService } from '../../../core/services/international-account.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { IntlRequestSuccessDialogComponent } from '../intl-request-success-dialog/intl-request-success-dialog.component';
-import { RequestFailedDialogComponent } from '../request-failed-dialog/request-failed-dialog.component';
-import { LegacyLinkStubDirective } from '../../../mocks/stubs/legacy-link-stub.directive';
+import { IntlRequestSuccessDialogComponent } from '../../intl-request-success-dialog/intl-request-success-dialog.component';
+import { RequestFailedDialogComponent } from '../../request-failed-dialog/request-failed-dialog.component';
+import { LegacyLinkStubDirective } from '../../../../mocks/stubs/legacy-link-stub.directive';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { BlankPipe } from '../../orders/order-details/items-table/items-table.component.spec';
+import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;

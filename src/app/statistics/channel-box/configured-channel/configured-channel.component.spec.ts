@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguredChannelComponent } from './configured-channel.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
-import { LargeNumberSuffixPipe } from '../../shared/large-number-suffix.pipe';
+import { SfCurrencyPipe } from '../../../shared/sf-currency.pipe';
+import { LargeNumberSuffixPipe } from '../../../shared/large-number-suffix.pipe';
 
 describe('ConfiguredChannelComponent', () => {
     let component: ConfiguredChannelComponent;

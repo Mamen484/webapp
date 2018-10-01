@@ -1,0 +1,28 @@
+<sf-channel-box>
+    <div class="channel-logo" sfChannelLogo>
+        <img mat-card-image [src]="channel._embedded.channel._links.image.href"
+             [alt]="channel._embedded.channel.name">
+    </div>
+
+    <div class="connect-button" sfConnectButton>
+        <a mat-raised-button #link color="accent" *ngIf="!internationalMode && !firstChannel"
+           sfLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
+        <a mat-raised-button #link color="accent" *ngIf="!internationalMode && firstChannel"
+           (click)="openAcceptChannelDialog(channel._embedded.channel)" i18n>CONNECT</a>
+        <a mat-raised-button #link color="accent" *ngIf="internationalMode"
+           (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
+    </div>
+
+    <sf-channel-turnover>
+        <span sfTitle i18n matTooltip="Per month" matTooltipPosition="right" i18n-matTooltip>Potential turnover</span>
+        <span *ngIf="hasStats; else unavailable">{{channel.stats.turnoverAverage | sfCurrency:currency}}</span>
+    </sf-channel-turnover>
+    <sf-channel-online>
+        <span sfTitle i18n matTooltip="Per month" matTooltipPosition="right" i18n-matTooltip>Clients connected</span>
+        <span *ngIf="hasStats; else unavailable">{{clientsConnected}}%</span>
+    </sf-channel-online>
+
+    <ng-template #unavailable>
+        <sf-stats-unavailable></sf-stats-unavailable>
+    </ng-template>
+</sf-channel-box>

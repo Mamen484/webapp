@@ -1,0 +1,9 @@
+<mat-card-content fxFlex fxLayout="row">
+    <div fxFlex="50%" class="channel-logo-container">
+        <ng-content select="[sfChannelLogo]"></ng-content>
+        <ng-content select="[sfConnectButton]"></ng-content>
+    </div>
+    <div fxFlex="50%">
+        <ng-content></ng-content>
+    </div>
+</mat-card-content>
