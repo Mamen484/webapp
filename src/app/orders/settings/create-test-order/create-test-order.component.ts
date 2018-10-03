@@ -55,6 +55,9 @@ export class CreateTestOrderComponent implements OnInit {
 
     removeItem(index) {
         this.order.items.splice(index, 1);
+        if (!this.order.items.length) {
+            this.addItem();
+        }
     }
 
     create() {
@@ -79,6 +82,12 @@ export class CreateTestOrderComponent implements OnInit {
                 this.filteredChannels = this.filterChannels(value, channels);
                 this.filteredNewChannels = this.filterChannels(value, newChannels);
             });
+    }
+
+    changeCarrier() {
+        if (!this.order.shipment.carrier) {
+            this.order.shipment.trackingNumber = undefined;
+        }
     }
 
     channelDisplayFn(channel?: Channel) {

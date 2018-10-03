@@ -60,21 +60,21 @@ describe('CreateTestOrderComponent', () => {
     });
 
     it('should calculate a valid total price if price is specified', () => {
-        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
+        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{quantity: 1, price: '22'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(22);
     });
 
     it('should calculate a valid total price if shippingAmount is specified', () => {
-        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{price: '0'}]};
+        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{quantity: 1, price: '0'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(31);
     });
 
     it('should calculate a valid total price if shippingAmount is undefined', () => {
-        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{price: '24'}]};
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{quantity: 1, price: '24'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(24);
@@ -123,6 +123,18 @@ describe('CreateTestOrderComponent', () => {
             {reference: '1', price: 1},
             {reference: '2', price: 2},
             {reference: '4', price: 4},
+        ]);
+    });
+
+    it('should reset the item if it is being removed and it is the only item', () => {
+        component.order = new TestOrder();
+        component.order.items = [
+            {reference: '1', price: 1},
+        ];
+        appStore.select.and.returnValue(EMPTY);
+        component.removeItem(0);
+        expect(component.order.items).toEqual([
+            <any>{quantity: 1},
         ]);
     });
 

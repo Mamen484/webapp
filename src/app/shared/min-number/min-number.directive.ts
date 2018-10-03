@@ -1,5 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Directive({
     selector: '[sfMinNumber]',
@@ -10,7 +9,7 @@ export class MinNumberDirective implements OnInit {
     @Output() invalidValueSet = new EventEmitter();
     protected el: HTMLInputElement;
 
-    constructor(protected element: ElementRef, protected renderer: Renderer2) {
+    constructor(protected element: ElementRef) {
     }
 
     ngOnInit() {

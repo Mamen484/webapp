@@ -13,6 +13,13 @@ table {
       &:not(:last-child){
         padding-right: 40px;
       }
+
+      .add-item, .remove-item {
+        min-width: 50px;
+        mat-icon {
+          color: mat-color($accent);
+        }
+      }
     }
 
     td {
@@ -26,12 +33,8 @@ table {
       }
 
       .add-item, .remove-item {
-        min-width: 50px;
         border: 1px solid $black-12-opacity;
         border-radius: 3px;
-        mat-icon {
-          color: mat-color($accent);
-        }
       }
     }
 
