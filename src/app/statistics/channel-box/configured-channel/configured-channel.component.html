@@ -3,7 +3,9 @@
         <img mat-card-image [src]="channel._embedded.channel._links.image.href"
              [alt]="channel._embedded.channel.name"></a>
     <sf-channel-turnover>
-        <span sfTitle i18n>Turnover</span>
+        <span sfTitle i18n matTooltip="Last 30 days - Includes Taxes"
+              i18n-matTooltip
+              matTooltipPosition="right">Turnover</span>
         <span *ngIf="statisticsExistsFor('revenue') && hasStatisticsPermission; else unavailable">
             {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}
         </span>

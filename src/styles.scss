@@ -16,6 +16,7 @@ html, body, app-root {
   @media #{$gt-xs} {
     background-color: mat-color($grey, 50);
   }
+  overflow: hidden;
 }
 
 hr {
