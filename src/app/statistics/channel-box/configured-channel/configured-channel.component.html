@@ -2,9 +2,11 @@
     <a class="channel-logo" sfChannelLogo sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
         <img mat-card-image [src]="channel._embedded.channel._links.image.href"
              [alt]="channel._embedded.channel.name"></a>
-    <sf-channel-turnover *ngIf="statisticsExistsFor('revenue'); else unavailable">
+    <sf-channel-turnover>
         <span sfTitle i18n>Turnover</span>
-        {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}
+        <span *ngIf="statisticsExistsFor('revenue') && hasStatisticsPermission; else unavailable">
+            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency}}
+        </span>
     </sf-channel-turnover>
     <sf-channel-online [class.online-low]="channelsOnline <= 30"
                        [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"

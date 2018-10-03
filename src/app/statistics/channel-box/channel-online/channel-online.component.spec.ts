@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelOnlineComponent } from './channel-online.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ChannelOnlineComponent', () => {
     let component: ChannelOnlineComponent;
@@ -8,7 +9,8 @@ describe('ChannelOnlineComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ChannelOnlineComponent]
+            declarations: [ChannelOnlineComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelTurnoverComponent } from './channel-turnover.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ChannelTurnoverComponent', () => {
     let component: ChannelTurnoverComponent;
@@ -8,7 +9,8 @@ describe('ChannelTurnoverComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ChannelTurnoverComponent]
+            declarations: [ChannelTurnoverComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));
