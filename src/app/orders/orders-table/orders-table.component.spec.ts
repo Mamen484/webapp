@@ -36,7 +36,7 @@ describe('OrdersTableComponent', () => {
     let localStorage: jasmine.SpyObj<LocalStorageService>;
 
     beforeEach(async(() => {
-        appStore = jasmine.createSpyObj(['select']);
+        appStore = jasmine.createSpyObj(['select', 'pipe']);
         ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);

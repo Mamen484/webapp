@@ -7,6 +7,7 @@ import { ChannelBoxComponent } from '../channel-box.component';
 import { ChannelTurnoverComponent } from '../channel-turnover/channel-turnover.component';
 import { ChannelOnlineComponent } from '../channel-online/channel-online.component';
 import { StatsUnavailableComponent } from '../stats-unavailable/stats-unavailable.component';
+import { Store } from '@ngrx/store';
 
 describe('ConfiguredChannelComponent', () => {
     let component: ConfiguredChannelComponent;
@@ -22,6 +23,9 @@ describe('ConfiguredChannelComponent', () => {
                 ChannelTurnoverComponent,
                 ChannelOnlineComponent,
                 StatsUnavailableComponent,
+            ],
+            providers: [
+                {provide: Store, useValue: {}},
             ],
             schemas: [NO_ERRORS_SCHEMA]
         })
@@ -43,18 +47,18 @@ describe('ConfiguredChannelComponent', () => {
         component.channel = <any>mockChannel();
         component.hasStatisticsPermission = true;
         component.channel.statistics.revenue = 22;
-        component.channel.statistics.currency = 'EUR';
+        component.channel.statistics.currency = 'USD';
         fixture.detectChanges();
-        expect(element('.channel-turnover span').textContent.trim()).toEqual('22,00 €');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('$22');
     });
 
     it('should display channel revenue if it equals 0', () => {
         component.channel = <any>mockChannel();
         component.hasStatisticsPermission = true;
         component.channel.statistics.revenue = 0;
-        component.channel.statistics.currency = 'EUR';
+        component.channel.statistics.currency = 'USD';
         fixture.detectChanges();
-        expect(element('.channel-turnover span').textContent.trim()).toEqual('0,00 €');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('$0');
     });
 
     it('should NOT display channel revenue a store does not have statistics permission', () => {

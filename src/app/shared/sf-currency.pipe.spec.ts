@@ -1,11 +1,15 @@
 import { SfCurrencyPipe } from './sf-currency.pipe';
+import { Store } from '@ngrx/store';
+import { AppState } from '../core/entities/app-state';
 
 describe('SfCurrencyPipe', () => {
 
-    let pipe;
+    let pipe: SfCurrencyPipe;
+    let appStore: Store<AppState>;
 
     beforeEach(() => {
-        pipe = new SfCurrencyPipe();
+        appStore = jasmine.createSpyObj(['pipe']);
+        pipe = new SfCurrencyPipe(appStore, 'en-US');
     });
 
     it('create an instance', () => {

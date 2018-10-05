@@ -75,7 +75,8 @@ export class SuggestedChannelComponent implements OnInit {
     }
 
     protected findPotentialTurnover(value) {
-        return this.potentialTurnoverValues.find(item => value >= item) || this.potentialTurnoverValues[this.potentialTurnoverValues.length - 1];
+        return this.potentialTurnoverValues.find(item => value >= item)
+            || this.potentialTurnoverValues[this.potentialTurnoverValues.length - 1];
     }
 
     findConnectedClients(connected, total) {

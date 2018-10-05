@@ -8,6 +8,7 @@ import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { MatTableModule } from '@angular/material';
 import { EMPTY } from 'rxjs';
 import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
+import { Store } from '@ngrx/store';
 
 describe('OrdersTableSmallComponent', () => {
     let component: OrdersTableSmallComponent;
@@ -32,6 +33,7 @@ describe('OrdersTableSmallComponent', () => {
                 {provide: ChangeDetectorRef, useValue: cdr},
                 {provide: OrdersFilterService, useValue: filterService},
                 {provide: Router, useValue: router},
+                {provide: Store, useValue: {}},
             ],
             imports: [MatTableModule]
         })
