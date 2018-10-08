@@ -42,7 +42,6 @@ describe('SuggestedChannelComponent', () => {
         fixture = TestBed.createComponent(SuggestedChannelComponent);
         component = fixture.componentInstance;
         component.channel = <any>{_links: {image: {href: ''}}, name: '', _embedded: {channel: {_links: {image: ''}}}};
-        fixture.detectChanges();
     });
 
     it('should be created', () => {
@@ -76,77 +75,69 @@ describe('SuggestedChannelComponent', () => {
         expect(openSpy).toHaveBeenCalledWith(RequestFailedDialogComponent);
     });
 
-    it('should set setStats to true if there are properties `turnoverAverage`, `connectedStores` and `totalStores`', () => {
-        component.channel.stats = {
-            turnoverAverage: 100,
-            connectedStores: 20,
-            totalStores: 900,
-        };
-        component.ngOnInit();
-        expect(component.hasStats).toBe(true);
-    });
-
-    it('should set setStats to false if the store does not have stats', () => {
+    it('should assign potentialTurnover and clientsConnected to the minimum values if there is no stats', () => {
         component.channel.stats = undefined;
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.potentialTurnover).toBe(500);
+        expect(component.clientsConnected).toBe(5);
     });
 
-    it('should set setStats to false if the `turnoverAverage` property is missing', () => {
+    it('should set potentialTurnover to the minimum value if the `turnoverAverage` property is missing', () => {
         component.channel.stats = {
             connectedStores: 20,
             totalStores: 900,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.potentialTurnover).toBe(500);
     });
 
-    it('should set setStats to false if the `connectedStores` property is missing', () => {
+    it('should set clientsConnected to the minimmum value if the `connectedStores` property is missing', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             totalStores: 900,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.clientsConnected).toBe(5);
     });
 
-    it('should set setStats to false if the `totalStores` property is missing', () => {
+    it('should assign potentialTurnover and clientsConnected to the minimum values if the `totalStores` property is missing', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             connectedStores: 10,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.potentialTurnover).toBe(500);
+        expect(component.clientsConnected).toBe(5);
     });
 
-    it('should set setStats to false if the `turnoverAverage` property equals to zero', () => {
+    it('should assign potentialTurnover to the minimum value if the `turnoverAverage` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 0,
             connectedStores: 20,
             totalStores: 900,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.potentialTurnover).toBe(500);
     });
 
-    it('should set setStats to false if the `connectedStores` property equals to zero', () => {
+    it('should assign clientsConnected to the minimum value if the `connectedStores` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             connectedStores: 0,
             totalStores: 900,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.clientsConnected).toBe(5);
     });
 
-    it('should set setStats to false if the `totalStores` property equals to zero', () => {
+    it('should assign clientsConnected to the minimum value if the `totalStores` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             connectedStores: 10,
             totalStores: 0,
         };
         component.ngOnInit();
-        expect(component.hasStats).toBe(false);
+        expect(component.clientsConnected).toBe(5);
     });
 
     describe('potential turnover calculation', () => {

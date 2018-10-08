@@ -8,6 +8,8 @@ import { RequestFailedDialogComponent } from '../../request-failed-dialog/reques
 import { StoreChannel } from '../../../core/entities/store-channel';
 import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept-channel-dialog.component';
 
+const MIN_ONLINE = 5;
+
 @Component({
     selector: 'sf-suggested-channel',
     templateUrl: './suggested-channel.component.html',
@@ -24,7 +26,6 @@ export class SuggestedChannelComponent implements OnInit {
     potentialTurnoverValues = [100000, 50000, 25000, 10000, 7500, 5000, 2500, 1000, 500];
 
     clientsConnected: number;
-    hasStats = false;
 
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService) {
@@ -32,9 +33,7 @@ export class SuggestedChannelComponent implements OnInit {
 
     ngOnInit() {
         this.initializeStats();
-        if (this.hasStats) {
-            this.potentialTurnover = this.findPotentialTurnover(this.channel.stats.turnoverAverage);
-        }
+        this.potentialTurnover = this.findPotentialTurnover();
 
     }
 
@@ -67,25 +66,27 @@ export class SuggestedChannelComponent implements OnInit {
     }
 
     protected initializeStats() {
-        const stats = this.channel.stats;
-        this.hasStats = Boolean(stats && stats.totalStores && stats.connectedStores && stats.turnoverAverage);
-        if (this.hasStats) {
-            this.clientsConnected = this.findConnectedClients(this.channel.stats.connectedStores, this.channel.stats.totalStores);
-        }
+        const stats = this.channel.stats || {};
+        this.clientsConnected = this.findConnectedClients(stats.connectedStores, stats.totalStores);
     }
 
-    protected findPotentialTurnover(value) {
+    protected findPotentialTurnover() {
+        const value = this.channel.stats && this.channel.stats.turnoverAverage || 0;
         return this.potentialTurnoverValues.find(item => value >= item)
             || this.potentialTurnoverValues[this.potentialTurnoverValues.length - 1];
     }
 
     findConnectedClients(connected, total) {
 
+        if (!connected || !total) {
+            return MIN_ONLINE;
+        }
+
         // we use 10 to round the value to the number, multiple of 10 (10, 20, 30, ...)
         const value = connected / total * 10;
 
         if (value < 1) {
-            return 5;
+            return MIN_ONLINE;
         } else {
             return Math.floor(value) * 10;
         }

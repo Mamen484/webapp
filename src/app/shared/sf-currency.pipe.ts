@@ -15,7 +15,13 @@ export class SfCurrencyPipe implements PipeTransform {
             .subscribe((store: UserStore) => this.country = store.country && store.country.replace('_', '-'));
     }
 
-    transform(value: any, currencyCode, maximumFractionDigits = 2): string | null {
-        return Intl.NumberFormat(this.country, {style: 'currency', currency: currencyCode, maximumFractionDigits, minimumFractionDigits: 0}).format(value);
+    transform(value: any, currencyCode, fractionDigits = 2): string | null {
+        return Intl.NumberFormat(this.country, {
+                style: 'currency',
+                currency: currencyCode,
+                maximumFractionDigits: fractionDigits,
+                minimumFractionDigits: fractionDigits
+            }
+        ).format(value);
     }
 }
