@@ -1,13 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguredChannelComponent } from './configured-channel.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { SfCurrencyPipe } from '../../../shared/sf-currency.pipe';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { LargeNumberSuffixPipe } from '../../../shared/large-number-suffix.pipe';
 import { ChannelBoxComponent } from '../channel-box.component';
 import { ChannelTurnoverComponent } from '../channel-turnover/channel-turnover.component';
 import { ChannelOnlineComponent } from '../channel-online/channel-online.component';
 import { StatsUnavailableComponent } from '../stats-unavailable/stats-unavailable.component';
-import { Store } from '@ngrx/store';
+import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
 
 describe('ConfiguredChannelComponent', () => {
     let component: ConfiguredChannelComponent;
@@ -23,9 +22,6 @@ describe('ConfiguredChannelComponent', () => {
                 ChannelTurnoverComponent,
                 ChannelOnlineComponent,
                 StatsUnavailableComponent,
-            ],
-            providers: [
-                {provide: Store, useValue: {}},
             ],
             schemas: [NO_ERRORS_SCHEMA]
         })
@@ -49,7 +45,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.revenue = 22;
         component.channel.statistics.currency = 'USD';
         fixture.detectChanges();
-        expect(element('.channel-turnover span').textContent.trim()).toEqual('$22');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('22');
     });
 
     it('should display channel revenue if it equals 0', () => {
@@ -58,7 +54,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.revenue = 0;
         component.channel.statistics.currency = 'USD';
         fixture.detectChanges();
-        expect(element('.channel-turnover span').textContent.trim()).toEqual('$0');
+        expect(element('.channel-turnover span').textContent.trim()).toEqual('0');
     });
 
     it('should NOT display channel revenue a store does not have statistics permission', () => {
@@ -175,3 +171,6 @@ describe('ConfiguredChannelComponent', () => {
     }
 });
 
+@Pipe({name: 'sfCurrency'})
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}

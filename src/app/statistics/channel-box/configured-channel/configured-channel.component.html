@@ -7,7 +7,7 @@
               i18n-matTooltip
               matTooltipPosition="right">Turnover</span>
         <span *ngIf="statisticsExistsFor('revenue') && hasStatisticsPermission; else unavailable">
-            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:'symbol':'1.0-0'}}
+            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:0}}
         </span>
     </sf-channel-turnover>
     <sf-channel-online [class.online-low]="channelsOnline <= 30"

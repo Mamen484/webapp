@@ -1,29 +1,21 @@
-import { Inject, LOCALE_ID, Pipe } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store as UserStore } from '../core/entities/store';
-import { environment } from '../../environments/environment';
 
 @Pipe({
     name: 'sfCurrency'
 })
-export class SfCurrencyPipe extends CurrencyPipe {
+export class SfCurrencyPipe implements PipeTransform {
 
     protected country;
 
-    constructor(protected appStore: Store<AppState>, @Inject(LOCALE_ID) localeId) {
-        super(localeId);
-        if (environment.production === 'true') {
-            this.appStore.pipe(select('currentStore'))
-                .subscribe((store: UserStore) => this.country = store.country && store.country.replace('_', '-'));
-        } else {
-            this.country = localeId;
-        }
-
+    constructor(protected appStore: Store<AppState>) {
+        this.appStore.pipe(select('currentStore'))
+            .subscribe((store: UserStore) => this.country = store.country && store.country.replace('_', '-'));
     }
 
-    transform(value: any, currencyCode?: string, display?, digitsInfo?: string, locale = this.country): string | null {
-        return super.transform(value, currencyCode, display, digitsInfo, locale);
+    transform(value: any, currencyCode, maximumFractionDigits = 2): string | null {
+        return Intl.NumberFormat(this.country, {style: 'currency', currency: currencyCode, maximumFractionDigits, minimumFractionDigits: 0}).format(value);
     }
 }

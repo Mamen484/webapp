@@ -15,7 +15,7 @@
 
     <sf-channel-turnover>
         <span sfTitle i18n matTooltip="Per month" matTooltipPosition="right" i18n-matTooltip>Potential turnover</span>
-        <span *ngIf="hasStats; else unavailable">&gt;{{potentialTurnover | sfCurrency:currency:'symbol':'1.0-0'}}</span>
+        <span *ngIf="hasStats; else unavailable">&gt;{{potentialTurnover | sfCurrency:currency:0}}</span>
     </sf-channel-turnover>
     <sf-channel-online>
         <span sfTitle i18n matTooltip="This month" matTooltipPosition="right" i18n-matTooltip>Clients connected</span>
