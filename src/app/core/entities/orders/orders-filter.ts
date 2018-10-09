@@ -41,14 +41,14 @@ export class OrdersFilter {
             params = params.set('until', this.until.toJSON());
         }
         if (this.channel && this.channel !== 'all') {
-            params = params.set('channel', this.channel);
+            params = params.set('channelId', this.channel);
         }
 
         if (this.search) {
             params = params.set('search', this.search);
         }
         if (this.tag && this.tag !== 'all') {
-            params = params.set('tag', this.tag);
+            params = params.set('tagName', this.tag);
         }
 
         if (this.status) {
