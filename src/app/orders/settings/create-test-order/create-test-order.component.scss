@@ -65,4 +65,8 @@ mat-card {
 
 .buttons {
   margin-top: 25px;
+
+  button:not(:last-child) {
+    margin-right: 10px;
+  }
 }
