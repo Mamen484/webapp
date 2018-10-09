@@ -78,14 +78,14 @@
                                 <th i18n required>Price</th>
                                 <th>
                                     <button mat-button class="add-item" (click)="addItem()" matTooltip="Add line"
-                                    i18n-matTooltip matTooltipPosition="above" type="button">
+                                            i18n-matTooltip matTooltipPosition="above" type="button">
                                         <mat-icon class="mat-18">add</mat-icon>
                                     </button>
                                 </th>
                             </tr>
                             <tr *ngFor="let item of order.items; index as i">
                                 <td>
-                                    <mat-form-field color="accent">
+                                    <mat-form-field color="accent" appearance="outline">
                                         <input name="itemReference{{i}}" matInput [(ngModel)]="item.reference" required
                                                #itemReference="ngModel">
                                         <mat-error
@@ -96,7 +96,7 @@
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-form-field color="accent">
+                                    <mat-form-field color="accent" appearance="outline">
                                         <input type="number" name="itemQuantity{{i}}" matInput #quantity="ngModel"
                                                [(ngModel)]="item.quantity" sfMinNumber="1" min="1"
                                                (invalidValueSet)="item.quantity = 1; updateTotalPrice()"
@@ -104,7 +104,7 @@
                                     </mat-form-field>
                                 </td>
                                 <td>
-                                    <mat-form-field color="accent">
+                                    <mat-form-field color="accent" appearance="outline">
                                         <input name="itemPrice{{i}}" matInput type="number" [(ngModel)]="item.price"
                                                (change)="updateTotalPrice()" required sfMinNumber="1" min="1"
                                                #itemPrice="ngModel"
@@ -135,14 +135,15 @@
                                 <td>
                                     <div>
                                         <div>{{productsTotal}}</div>
-                                        <mat-form-field color="accent"><input type="number"
-                                                               #shippingCost="ngModel"
-                                                               matInput name="shippingCost"
-                                                               (change)="updateTotalPrice()"
-                                                               sfMinNumber="0"
-                                                               min="0"
-                                                               (invalidValueSet)="order.payment.shippingAmount = 0; updateTotalPrice()"
-                                                               [(ngModel)]="order.payment.shippingAmount">
+                                        <mat-form-field color="accent" appearance="outline">
+                                            <input type="number"
+                                                   #shippingCost="ngModel"
+                                                   matInput name="shippingCost"
+                                                   (change)="updateTotalPrice()"
+                                                   sfMinNumber="0"
+                                                   min="0"
+                                                   (invalidValueSet)="order.payment.shippingAmount = 0; updateTotalPrice()"
+                                                   [(ngModel)]="order.payment.shippingAmount">
                                         </mat-form-field>
                                         <div class="mat-body-2">{{totalPrice}}</div>
                                     </div>

@@ -10,7 +10,7 @@ table {
       &:first-child {
         width: 100%;
       }
-      &:not(:last-child){
+      &:not(:last-child) {
         padding-right: 40px;
       }
 
@@ -41,9 +41,13 @@ table {
     &.totals {
       td > div {
         display: grid;
-        grid-template-rows: 40px 40px 40px;
+        grid-template-rows: 60px 60px 60px;
         grid-template-columns: 100%;
         align-items: center;
+      }
+
+      mat-form-field {
+        margin-top: 15px;
       }
     }
   }
