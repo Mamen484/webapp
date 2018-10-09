@@ -18,11 +18,13 @@
                                     <mat-option *ngFor="let channel of filteredChannels" [value]="channel">
                                         {{channel.name}}
                                     </mat-option>
-                                    <mat-divider *ngIf="filteredChannels.length && filteredNewChannels.length"></mat-divider>
+                                    <mat-divider
+                                            *ngIf="filteredChannels.length && filteredNewChannels.length"></mat-divider>
                                     <mat-option *ngFor="let channel of filteredNewChannels" [value]="channel">
                                         {{channel.name}}
                                     </mat-option>
-                                    <mat-option *ngIf="!filteredNewChannels.length && !filteredChannels.length" disabled i18n>
+                                    <mat-option *ngIf="!filteredNewChannels.length && !filteredChannels.length" disabled
+                                                i18n>
                                         No channels found
                                     </mat-option>
                                 </ng-container>
