@@ -6,13 +6,13 @@ import { OrderAcknowledgment } from './orders/order-acknowledgment.enum';
 export class DetermineActiveTab {
 
     static determine(status: OrderStatus, acknowledgment: OrderAcknowledgment, errorType: OrderErrorType) {
-        if (status === OrderStatus.waiting_shipment && !acknowledgment) {
+        if (status === OrderStatus.waiting_shipment && !acknowledgment && !errorType) {
             return ActiveTab.toShip;
         }
         if (errorType === OrderErrorType.ship) {
             return ActiveTab.shippingErrors;
         }
-        if (status === OrderStatus.waiting_shipment && acknowledgment === OrderAcknowledgment.unacknowledged) {
+        if (status === OrderStatus.waiting_shipment && acknowledgment === OrderAcknowledgment.unacknowledged && !errorType) {
             return ActiveTab.toImport;
         }
         if (status === OrderStatus.waiting_store_acceptance) {

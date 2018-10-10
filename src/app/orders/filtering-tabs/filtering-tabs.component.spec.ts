@@ -87,8 +87,8 @@ describe('FilteringTabsComponent', () => {
     it('should set undefined status and `ship` errorType when sixth tab (shipping errors) chosen', () => {
         component.changeTab({index: ActiveTab.shippingErrors});
         service.getFilter().pipe(take(1)).subscribe(filter => {
-            expect(filter.status).not.toBeDefined();
-            expect(filter.error).toEqual(OrderErrorType.ship);
+            expect(filter.status).toBe(OrderStatus.waiting_shipment);
+            expect(filter.error).toBe(OrderErrorType.ship);
         });
     });
 

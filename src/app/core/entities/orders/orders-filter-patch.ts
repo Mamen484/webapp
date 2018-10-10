@@ -40,6 +40,7 @@ export class OrdersFilterPatch {
     static get OrdersWithShippingErrors() {
         let patch = new OrdersFilterPatch();
         patch.error = OrderErrorType.ship;
+        patch.status = OrderStatus.waiting_shipment;
         return patch;
     }
 
