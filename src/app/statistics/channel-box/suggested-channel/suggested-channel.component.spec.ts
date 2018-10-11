@@ -156,7 +156,7 @@ describe('SuggestedChannelComponent', () => {
 
         it('should assign a generated value to the potential turnover when the value is less then 850', () => {
             setStats(20);
-            channelStorage.getGeneratedTurnover.and.returnValue(900)
+            channelStorage.getGeneratedTurnover.and.returnValue(900);
             component.ngOnInit();
             expect(component.potentialTurnover).toBe(900);
         });
@@ -187,9 +187,9 @@ describe('SuggestedChannelComponent', () => {
         });
 
         it('should assign a returned from a server value if the value is more then 4% of stores', () => {
-            setStats(55);
+            setStats(60);
             component.ngOnInit();
-            expect(component.clientsConnected).toBe(5);
+            expect(component.clientsConnected).toBe(6);
         });
 
         function setStats(connected) {

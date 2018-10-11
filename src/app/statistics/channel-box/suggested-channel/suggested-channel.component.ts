@@ -81,7 +81,7 @@ export class SuggestedChannelComponent implements OnInit {
             return this.channelStorage.getGeneratedOnline(this.channel.id);
         }
 
-        const value = connected / total * 100;
+        const value = Math.round(connected / total * 100);
 
         return value < MIN_ONLINE
             ? this.channelStorage.getGeneratedOnline(this.channel.id)
