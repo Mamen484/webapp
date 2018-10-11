@@ -101,6 +101,9 @@ export class CreateTestOrderComponent implements OnInit {
             this.addItem();
             this.updateTotalPrice();
             this.paymentInputMode = 'custom';
+            this.channelControl.setValue('');
+            this.channelControl.markAsPristine();
+            this.channelControl.markAsUntouched();
         });
     }
 
