@@ -189,7 +189,7 @@ describe('SuggestedChannelComponent', () => {
         it('should assign a returned from a server value if the value is more then 4% of stores', () => {
             setStats(55);
             component.ngOnInit();
-            expect(component.clientsConnected).toBe(5.5);
+            expect(component.clientsConnected).toBe(5);
         });
 
         function setStats(connected) {

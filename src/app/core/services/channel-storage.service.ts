@@ -21,13 +21,14 @@ export class ChannelStorageService {
     }
 
     getGeneratedOnline(channelId) {
-        return this.getGeneratedValue(ONLINE_STORAGE_KEY, channelId, MIN_ONLINE, MAX_ONLINE_DEVIATION);
+        return this.getGeneratedValue(ONLINE_STORAGE_KEY, channelId, MIN_ONLINE, MAX_ONLINE_DEVIATION, true);
     }
 
-    protected getGeneratedValue(storageKey, channelId, minValue, deviation) {
+    protected getGeneratedValue(storageKey, channelId, minValue, deviation, round = false) {
         const memoryCache = JSON.parse(this.localStorage.getItem(storageKey) || '{}');
         if (!memoryCache[channelId]) {
-            memoryCache[channelId] = minValue + Math.random() * deviation;
+            const newValue = minValue + Math.random() * deviation;
+            memoryCache[channelId] = round ? Math.round(newValue) : newValue;
         }
         this.localStorage.setItem(storageKey, JSON.stringify(memoryCache));
         return memoryCache[channelId];
