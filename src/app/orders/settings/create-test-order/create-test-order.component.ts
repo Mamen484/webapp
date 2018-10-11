@@ -100,6 +100,7 @@ export class CreateTestOrderComponent implements OnInit {
             this.order = new TestOrder();
             this.addItem();
             this.updateTotalPrice();
+            this.paymentInputMode = 'custom';
         });
     }
 
