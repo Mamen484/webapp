@@ -15,10 +15,10 @@
 
     <sf-channel-turnover>
         <span sfTitle i18n matTooltip="Per month" matTooltipPosition="right" i18n-matTooltip>Potential turnover</span>
-        <span class="sf-color-grey">&gt;{{potentialTurnover | sfCurrency:currency:0}}</span>
+        <span class="sf-color-grey">{{potentialTurnover | sfCurrency:currency}}</span>
     </sf-channel-turnover>
     <sf-channel-online>
         <span sfTitle i18n matTooltip="This month" matTooltipPosition="right" i18n-matTooltip>Clients connected</span>
-        <span class="sf-color-grey">&gt;{{clientsConnected}}%</span>
+        <span class="sf-color-grey">{{clientsConnected}}%</span>
     </sf-channel-online>
 </sf-channel-box>

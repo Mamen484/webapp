@@ -9,6 +9,7 @@ import { RequestFailedDialogComponent } from '../../request-failed-dialog/reques
 import { LegacyLinkStubDirective } from '../../../../mocks/stubs/legacy-link-stub.directive';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
+import { ChannelStorageService } from '../../../core/services/channel-storage.service';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
@@ -16,12 +17,14 @@ describe('SuggestedChannelComponent', () => {
     let afterClosedSpy;
     let requestSpy;
     let openSpy;
+    let channelStorage: jasmine.SpyObj<ChannelStorageService>;
 
     beforeEach(async(() => {
         afterClosedSpy = jasmine.createSpy('afterClosed');
         requestSpy = jasmine.createSpy('sendInternationalAccountRequestSpy');
         openSpy = jasmine.createSpy('dialog.open');
         openSpy.and.returnValue({afterClosed: afterClosedSpy});
+        channelStorage = jasmine.createSpyObj(['getGeneratedTurnover', 'getGeneratedOnline']);
 
         TestBed.configureTestingModule({
             imports: [MatCardModule, MatButtonModule, InfiniteScrollModule],
@@ -33,6 +36,7 @@ describe('SuggestedChannelComponent', () => {
                     provide: InternationalAccountService,
                     useValue: {sendInternationalAccountRequest: requestSpy}
                 },
+                {provide: ChannelStorageService, useValue: channelStorage},
             ]
         })
             .compileComponents();
@@ -75,131 +79,92 @@ describe('SuggestedChannelComponent', () => {
         expect(openSpy).toHaveBeenCalledWith(RequestFailedDialogComponent);
     });
 
-    it('should assign potentialTurnover and clientsConnected to the minimum values if there is no stats', () => {
+    it('should assign potentialTurnover and clientsConnected to the generated values if there is no stats', () => {
         component.channel.stats = undefined;
+        channelStorage.getGeneratedOnline.and.returnValue(4.65);
+        channelStorage.getGeneratedTurnover.and.returnValue(896.92);
         component.ngOnInit();
-        expect(component.potentialTurnover).toBe(500);
-        expect(component.clientsConnected).toBe(5);
+        expect(component.potentialTurnover).toBe(896.92);
+        expect(component.clientsConnected).toBe(4.65);
     });
 
-    it('should set potentialTurnover to the minimum value if the `turnoverAverage` property is missing', () => {
+    it('should set potentialTurnover to a generated value if the `turnoverAverage` property is missing', () => {
         component.channel.stats = {
             connectedStores: 20,
             totalStores: 900,
         };
+        channelStorage.getGeneratedTurnover.and.returnValue(896.92);
         component.ngOnInit();
-        expect(component.potentialTurnover).toBe(500);
+        expect(component.potentialTurnover).toBe(896.92);
     });
 
-    it('should set clientsConnected to the minimmum value if the `connectedStores` property is missing', () => {
+    it('should set clientsConnected to a generated value if the `connectedStores` property is missing', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             totalStores: 900,
         };
+        channelStorage.getGeneratedOnline.and.returnValue(4.65);
         component.ngOnInit();
-        expect(component.clientsConnected).toBe(5);
+        expect(component.clientsConnected).toBe(4.65);
     });
 
-    it('should assign potentialTurnover and clientsConnected to the minimum values if the `totalStores` property is missing', () => {
+    it('should assign clientsConnected a generated value if the `totalStores` property is missing', () => {
         component.channel.stats = {
-            turnoverAverage: 20,
+            turnoverAverage: 1920,
             connectedStores: 10,
         };
+        channelStorage.getGeneratedOnline.and.returnValue(4.65);
         component.ngOnInit();
-        expect(component.potentialTurnover).toBe(500);
-        expect(component.clientsConnected).toBe(5);
+        expect(component.potentialTurnover).toBe(1920);
+        expect(component.clientsConnected).toBe(4.65);
     });
 
-    it('should assign potentialTurnover to the minimum value if the `turnoverAverage` property equals to zero', () => {
+    it('should assign potentialTurnover to a generated value if the `turnoverAverage` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 0,
             connectedStores: 20,
             totalStores: 900,
         };
+        channelStorage.getGeneratedTurnover.and.returnValue(896.92);
         component.ngOnInit();
-        expect(component.potentialTurnover).toBe(500);
+        expect(component.potentialTurnover).toBe(896.92);
     });
 
-    it('should assign clientsConnected to the minimum value if the `connectedStores` property equals to zero', () => {
+    it('should assign clientsConnected to a generated value if the `connectedStores` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             connectedStores: 0,
             totalStores: 900,
         };
+        channelStorage.getGeneratedOnline.and.returnValue(4.65);
         component.ngOnInit();
-        expect(component.clientsConnected).toBe(5);
+        expect(component.clientsConnected).toBe(4.65);
     });
 
-    it('should assign clientsConnected to the minimum value if the `totalStores` property equals to zero', () => {
+    it('should assign clientsConnected to a generated value if the `totalStores` property equals to zero', () => {
         component.channel.stats = {
             turnoverAverage: 20,
             connectedStores: 10,
             totalStores: 0,
         };
+        channelStorage.getGeneratedOnline.and.returnValue(4.65);
         component.ngOnInit();
-        expect(component.clientsConnected).toBe(5);
+        expect(component.clientsConnected).toBe(4.65);
     });
 
     describe('potential turnover calculation', () => {
 
-        it('should assign 500 to the potential turnover when the value is less then 500', () => {
+        it('should assign a generated value to the potential turnover when the value is less then 850', () => {
             setStats(20);
+            channelStorage.getGeneratedTurnover.and.returnValue(900)
             component.ngOnInit();
-            expect(component.potentialTurnover).toBe(500);
+            expect(component.potentialTurnover).toBe(900);
         });
 
-        it('should assign 500 to the potential turnover when the value is less then 1000', () => {
-            setStats(650.4);
+        it('should assign a returned from a server value if the value is larger then 850', () => {
+            setStats(1650.4);
             component.ngOnInit();
-            expect(component.potentialTurnover).toBe(500);
-        });
-
-        it('should assign 1000 to the potential turnover when the value is less then 2500', () => {
-            setStats(1228.989879);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(1000);
-        });
-
-        it('should assign 2.5000 to the potential turnover when the value is less then 5000', () => {
-            setStats(2500);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(2500);
-        });
-
-        it('should assign 5000 to the potential turnover when the value is less then 10000', () => {
-            setStats(5200);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(5000);
-        });
-
-        it('should assign 10000 to the potential turnover when the value is less then 25000', () => {
-            setStats(24999.99);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(10000);
-        });
-
-        it('should assign 25000 to the potential turnover when the value is less then 50000', () => {
-            setStats(25000);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(25000);
-        });
-
-        it('should assign 50000 to the potential turnover when the value is less then 100000', () => {
-            setStats(67890);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(50000);
-        });
-
-        it('should assign 100000 to the potential turnover when the value is more then 100000', () => {
-            setStats(120000);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(100000);
-        });
-
-        it('should assign 100000 to the potential turnover when the value is much more then 100000', () => {
-            setStats(31120000);
-            component.ngOnInit();
-            expect(component.potentialTurnover).toBe(100000);
+            expect(component.potentialTurnover).toBe(1650.4);
         });
 
         function setStats(turnoverAverage) {
@@ -212,78 +177,19 @@ describe('SuggestedChannelComponent', () => {
         }
     });
 
-    describe('potential turnover calculation', () => {
+    describe('clientsConnected calculation', () => {
 
-        it('should assign 5 to the clientsConnected when connected less then 5% of stores', () => {
-            setStats(20);
+        it('should assign a generated value to the clientsConnected when connected less then 4% of stores', () => {
+            setStats(10);
+            channelStorage.getGeneratedOnline.and.returnValue(5.75);
             component.ngOnInit();
-            expect(component.clientsConnected).toBe(5);
+            expect(component.clientsConnected).toBe(5.75);
         });
 
-        it('should assign 5 to the clientsConnected when connected less then 10% of stores', () => {
-            setStats(90);
+        it('should assign a returned from a server value if the value is more then 4% of stores', () => {
+            setStats(55);
             component.ngOnInit();
-            expect(component.clientsConnected).toBe(5);
-        });
-
-        it('should assign 10 to the clientsConnected when connected exactly 10% of stores', () => {
-            setStats(100);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(10);
-        });
-
-        it('should assign 10 to the clientsConnected when connected less then 20% of stores', () => {
-            setStats(160);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(10);
-        });
-
-        it('should assign 20 to the clientsConnected when connected less then 30% of stores', () => {
-            setStats(275);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(20);
-        });
-
-        it('should assign 30 to the clientsConnected when connected less then 40% of stores', () => {
-            setStats(344);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(30);
-        });
-
-        it('should assign 40 to the clientsConnected when connected less then 50% of stores', () => {
-            setStats(499);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(40);
-        });
-
-        it('should assign 50 to the clientsConnected when connected less then 60% of stores', () => {
-            setStats(511);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(50);
-        });
-
-        it('should assign 60 to the clientsConnected when connected less then 70% of stores', () => {
-            setStats(637);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(60);
-        });
-
-        it('should assign 70 to the clientsConnected when connected less then 80% of stores', () => {
-            setStats(739);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(70);
-        });
-
-        it('should assign 80 to the clientsConnected when connected less then 90% of stores', () => {
-            setStats(890);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(80);
-        });
-
-        it('should assign 90 to the clientsConnected when connected less then 100% of stores', () => {
-            setStats(920);
-            component.ngOnInit();
-            expect(component.clientsConnected).toBe(90);
+            expect(component.clientsConnected).toBe(5.5);
         });
 
         function setStats(connected) {

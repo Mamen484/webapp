@@ -7,8 +7,7 @@ import { IntlRequestSuccessDialogComponent } from '../../intl-request-success-di
 import { RequestFailedDialogComponent } from '../../request-failed-dialog/request-failed-dialog.component';
 import { StoreChannel } from '../../../core/entities/store-channel';
 import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept-channel-dialog.component';
-
-const MIN_ONLINE = 5;
+import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -23,12 +22,11 @@ export class SuggestedChannelComponent implements OnInit {
     @Input() currency: string;
 
     potentialTurnover: number;
-    potentialTurnoverValues = [100000, 50000, 25000, 10000, 7500, 5000, 2500, 1000, 500];
-
     clientsConnected: number;
 
     constructor(protected dialog: MatDialog,
-                protected internationalAccountService: InternationalAccountService) {
+                protected internationalAccountService: InternationalAccountService,
+                protected channelStorage: ChannelStorageService) {
     }
 
     ngOnInit() {
@@ -71,25 +69,23 @@ export class SuggestedChannelComponent implements OnInit {
     }
 
     protected findPotentialTurnover() {
-        const value = this.channel.stats && this.channel.stats.turnoverAverage || 0;
-        return this.potentialTurnoverValues.find(item => value >= item)
-            || this.potentialTurnoverValues[this.potentialTurnoverValues.length - 1];
+        const turnover = this.channel.stats && this.channel.stats.turnoverAverage || 0;
+        return turnover < MIN_TURNOVER
+            ? this.channelStorage.getGeneratedTurnover(this.channel.id)
+            : turnover;
     }
 
     findConnectedClients(connected, total) {
 
         if (!connected || !total) {
-            return MIN_ONLINE;
+            return this.channelStorage.getGeneratedOnline(this.channel.id);
         }
 
-        // we use 10 to round the value to the number, multiple of 10 (10, 20, 30, ...)
-        const value = connected / total * 10;
+        const value = connected / total * 100;
 
-        if (value < 1) {
-            return MIN_ONLINE;
-        } else {
-            return Math.floor(value) * 10;
-        }
+        return value < MIN_ONLINE
+            ? this.channelStorage.getGeneratedOnline(this.channel.id)
+            : value;
     }
 
 }
