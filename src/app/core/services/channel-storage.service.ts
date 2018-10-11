@@ -25,11 +25,11 @@ export class ChannelStorageService {
     }
 
     protected getGeneratedValue(storageKey, channelId, minValue, deviation) {
-        const memoryCache = this.localStorage.getItem(storageKey) || {};
+        const memoryCache = JSON.parse(this.localStorage.getItem(storageKey) || '{}');
         if (!memoryCache[channelId]) {
             memoryCache[channelId] = minValue + Math.random() * deviation;
         }
-        this.localStorage.setItem(storageKey, memoryCache);
+        this.localStorage.setItem(storageKey, JSON.stringify(memoryCache));
         return memoryCache[channelId];
     }
 }
