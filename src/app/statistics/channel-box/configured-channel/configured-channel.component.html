@@ -13,7 +13,9 @@
     <sf-channel-online [class.online-low]="channelsOnline <= 30"
                        [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
                        [class.online-high]="channelsOnline >= 75">
-        <span sfTitle i18n>Online</span>
+        <span sfTitle i18n matTooltip="Products successfully sent to channel"
+              i18n-matTooltip
+              matTooltipPosition="right">Online</span>
         <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
     </sf-channel-online>
 
