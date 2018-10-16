@@ -4,10 +4,11 @@ import { LOAD_AUTOPILOT } from '../autopilot';
 import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Store as UserStore } from './core/entities/store';
 import { WindowRefService } from './core/services/window-ref.service';
+import { LOAD_FULLSTORY } from '../fullstory';
 
 @Component({
     selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
                     this.enableAutopilot();
                     this.configureGoogleAnalytics(userInfo);
                     this.configureLivechat();
+                    this.enableFullstory(userInfo.email);
                 }
             });
     }
@@ -61,5 +63,22 @@ export class AppComponent implements OnInit {
                 this.showLivechat = true;
             }
         });
+    }
+
+    protected enableFullstory(userEmail) {
+        this.appStore.select('currentStore')
+            .pipe(
+                filter((store: UserStore) => {
+                    return store && store.country && store.country.toLowerCase() === 'us' && UserStore.storeIsNew(store)
+                }),
+                take(1),
+            )
+            .subscribe((store: UserStore) => {
+                LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
+                this.windowRef.nativeWindow.FS.identify(store.id, {
+                    displayName: store.name,
+                    email: userEmail,
+                });
+            });
     }
 }
