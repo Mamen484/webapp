@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { WindowRefService } from './core/services/window-ref.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
+import { Location } from '@angular/common';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -14,17 +15,21 @@ describe('AppComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let router = <any>{};
     let windowRef = <any>{};
+    let location: jasmine.SpyObj<Location>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
         router.events = new Subject();
         windowRef.nativeWindow = {gtag: jasmine.createSpy(), FS: {identify: jasmine.createSpy()}};
+        location = jasmine.createSpyObj(['path']);
+        location.path.and.returnValue('/');
         TestBed.configureTestingModule({
             declarations: [AppComponent],
             providers: [
                 {provide: Store, useValue: appStore},
                 {provide: Router, useValue: router},
                 {provide: WindowRefService, useValue: windowRef},
+                {provide: Location, useValue: location},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         })

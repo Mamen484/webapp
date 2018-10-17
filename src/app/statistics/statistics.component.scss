@@ -10,7 +10,7 @@
   padding-top: $content-margin;
   display: block;
   height: calc(100vh - #{$toolbar-height} - #{$content-margin});
-  overflow: scroll;
+  overflow: auto;
 
   @media #{$xs} {
     padding-left: 20px;

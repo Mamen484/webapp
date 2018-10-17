@@ -1,14 +1,27 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import * as cf from 'currency-formatter';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../core/entities/app-state';
+import { Store as UserStore } from '../core/entities/store';
 
 @Pipe({
     name: 'sfCurrency'
 })
 export class SfCurrencyPipe implements PipeTransform {
 
+    protected country;
 
-    transform(value: number, currency): string {
-        return cf.format(value, {code: currency});
+    constructor(protected appStore: Store<AppState>) {
+        this.appStore.pipe(select('currentStore'))
+            .subscribe((store: UserStore) => this.country = store.country && store.country.replace('_', '-'));
     }
 
+    transform(value: any, currencyCode, fractionDigits = 2): string | null {
+        return Intl.NumberFormat(this.country, {
+                style: 'currency',
+                currency: currencyCode,
+                maximumFractionDigits: fractionDigits,
+                minimumFractionDigits: fractionDigits
+            }
+        ).format(value);
+    }
 }
