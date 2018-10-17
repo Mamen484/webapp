@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { debounceTime, filter, flatMap, take } from 'rxjs/operators';
+import { debounceTime, filter, flatMap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
@@ -31,6 +31,7 @@ import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
+
 
 @Component({
     selector: 'sf-orders-table',
@@ -99,6 +100,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         if (this.ordersFilter.error) {
             (<any>queryParams).errorType = this.ordersFilter.error;
         }
+        this.rememberSelection();
         this.router.navigate(['orders', 'detail', orderId], {
             queryParams,
         });
@@ -152,6 +154,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             }
         }).afterClosed().subscribe(tagsChanged => {
             if (tagsChanged) {
+                this.rememberSelection();
                 this.fetchData(this.ordersFilter);
             }
         })
@@ -241,9 +244,31 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 this.paginator.pageIndex = +ordersFilter.page - 1;
 
                 this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
+                this.restoreSelection();
                 this.updateStickyColumnsStyles();
             });
 
+    }
+
+    protected rememberSelection() {
+        if (!this.selection.selected.length) {
+            return;
+        }
+        this.localStorage.setItem(LocalStorageKey.ordersSelection, JSON.stringify(this.selection.selected.map(order => order.id)));
+    }
+
+    protected restoreSelection() {
+        const memory: string = this.localStorage.getItem(LocalStorageKey.ordersSelection);
+        if (!memory) {
+            return;
+        }
+        const selection: number[] = JSON.parse(memory);
+        this.dataSource.data.forEach(item => {
+            if (selection.includes(item.id)) {
+                this.selection.select(item);
+            }
+        });
+        this.localStorage.removeItem(LocalStorageKey.ordersSelection);
     }
 
     protected setDefaultsFromStorage() {
