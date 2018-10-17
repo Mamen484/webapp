@@ -32,6 +32,14 @@ export class OrdersFilter {
         return new Date(date);
     }
 
+    constructor(filter = {}) {
+        for (let field in filter) {
+            if (filter.hasOwnProperty(field)) {
+                this[field] = filter[field];
+            }
+        }
+    }
+
     toHttpParams() {
         let params = new HttpParams().set('limit', this.limit);
         if (this.since) {
