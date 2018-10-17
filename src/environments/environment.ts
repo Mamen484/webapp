@@ -18,4 +18,5 @@ export const environment = {
     RUN_AUTOPILOT: true,
     GTAG_ID: 'UA-78261662-1',
     LIVECHAT_LICENSE_ID: '9950095',
+    FULLSTORY_ORG_ID: 'D6X8Q',
 };
