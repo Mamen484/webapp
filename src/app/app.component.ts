@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../environments/environment';
-import { LOAD_AUTOPILOT } from '../autopilot';
+import { LOAD_AUTOPILOT } from '../trackers/autopilot';
 import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { NavigationEnd, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { filter, take } from 'rxjs/operators';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Store as UserStore } from './core/entities/store';
 import { WindowRefService } from './core/services/window-ref.service';
-import { LOAD_FULLSTORY } from '../fullstory';
+import { LOAD_FULLSTORY } from '../trackers/fullstory';
 import { Location } from '@angular/common';
 
 const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
