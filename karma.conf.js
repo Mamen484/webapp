@@ -17,8 +17,16 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
       files: [
-          './node_modules/intl/locale-data/jsonp/en.js',
           './node_modules/intl/locale-data/jsonp/fr.js',
+          './node_modules/intl/locale-data/jsonp/it.js',
+          './node_modules/intl/locale-data/jsonp/es.js',
+          './node_modules/intl/locale-data/jsonp/de.js',
+          './node_modules/intl/locale-data/jsonp/en-AU.js',
+          './node_modules/intl/locale-data/jsonp/en-US.js',
+          './node_modules/intl/locale-data/jsonp/en-GB.js',
+          './node_modules/intl/locale-data/jsonp/en-CA.js',
+          './node_modules/intl/locale-data/jsonp/en-IN.js',
+          './node_modules/intl/locale-data/jsonp/pt-BR.js',
       ],
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
