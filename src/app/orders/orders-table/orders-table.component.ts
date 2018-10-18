@@ -28,6 +28,7 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
+import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
@@ -177,6 +178,20 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     // button actions
 
+    openCancelDialog() {
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.cancel});
+            return;
+        }
+        this.matDialog.open(ConfirmCancellationDialogComponent, {data: this.selection.selected.length})
+            .afterClosed()
+            .pipe(
+                filter(confirmed => confirmed),
+                flatMap(() => this.notifyStatusChange(OrderNotifyAction.cancel)),
+            )
+            .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.cancel));
+    }
+
     openShippingDialog() {
         if (!this.selection.selected.length) {
             this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.ship});
@@ -194,6 +209,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     applyStatusAction(action: OrderNotifyAction) {
         if (action === OrderNotifyAction.ship) {
             this.openShippingDialog();
+            return;
+        }
+        if (action === OrderNotifyAction.cancel) {
+            this.openCancelDialog();
             return;
         }
         this.changeStatusForSelectedOrders(action);

@@ -21,6 +21,7 @@ import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe'
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
+import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -211,7 +212,6 @@ describe('OrdersTableComponent', () => {
         OrderNotifyAction.unacknowledge,
         OrderNotifyAction.accept,
         OrderNotifyAction.refuse,
-        OrderNotifyAction.cancel,
     ].forEach(action => {
         it(`should ${action} selected orders on click the ${action} button`, () => {
             checkChangeStatusRequestSent(action);
@@ -223,6 +223,47 @@ describe('OrdersTableComponent', () => {
             expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(action);
         });
     });
+
+
+    it('should ship selected orders on click the `cancel` button', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        checkChangeStatusRequestSent('cancel');
+    });
+
+    it('should open confirm cancellation dialog on click on `cancel` button', () => {
+        component.selection.selected.length = 2;
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        component.openCancelDialog();
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: 2});
+    });
+
+    it('should NOT open confirm cancellation dialog on click on `cancel` button when no orders selected', () => {
+        component.openCancelDialog();
+        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: 0});
+    });
+
+    it('should open `select orders` dialog on click on `cancel` button when no orders selected', () => {
+        component.openCancelDialog();
+        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(OrderNotifyAction.cancel);
+    });
+
+    it('should open snackbar if cancellation is confirmed', () => {
+        component.selection.selected.length = 2;
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.cancel.and.returnValue(of({reference: 'some reference', channelName: 'some name'}))
+        component.openCancelDialog();
+        expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+    });
+
+    it('should NOT open snackbar if cancellation is cancelled', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        component.openCancelDialog();
+        expect(snackbar.openFromComponent).not.toHaveBeenCalled();
+    });
+
 
     it('should ship selected orders on click the `ship` button', () => {
         matDialog.open.and.returnValue({afterClosed: () => of(true)});
