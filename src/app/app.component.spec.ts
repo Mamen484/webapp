@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { WindowRefService } from './core/services/window-ref.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
+import { Location } from '@angular/common';
 
 describe('AppComponent', () => {
     let component: AppComponent;
@@ -14,17 +15,21 @@ describe('AppComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let router = <any>{};
     let windowRef = <any>{};
+    let location: jasmine.SpyObj<Location>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
         router.events = new Subject();
-        windowRef.nativeWindow = jasmine.createSpyObj(['gtag']);
+        windowRef.nativeWindow = {gtag: jasmine.createSpy(), FS: {identify: jasmine.createSpy()}};
+        location = jasmine.createSpyObj(['path']);
+        location.path.and.returnValue('/');
         TestBed.configureTestingModule({
             declarations: [AppComponent],
             providers: [
                 {provide: Store, useValue: appStore},
                 {provide: Router, useValue: router},
                 {provide: WindowRefService, useValue: windowRef},
+                {provide: Location, useValue: location},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         })
@@ -61,6 +66,7 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1'})),
             of({country: 'US'}),
+            of({country: 'US'}),
         );
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(false);
@@ -69,6 +75,7 @@ describe('AppComponent', () => {
     it('should NOT show livechat if a user is an NOT admin and country is NOT US', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})),
+            of({country: 'FR'}),
             of({country: 'FR'}),
         );
         fixture.detectChanges();
@@ -79,8 +86,72 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})),
             of({country: 'US'}),
+            of({country: 'US'}),
         );
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(true);
+    });
+
+    it('should run fullstory code if the user is not admin, the store is created less then then 7 days before' +
+        ' and the country is US', () => {
+
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+        );
+        fixture.detectChanges();
+        expect(windowRef.nativeWindow.FS.identify).toHaveBeenCalledWith('some_id', {
+            displayName: 'some_name',
+            email: 'some_email',
+        });
+    });
+
+    it('should NOT run fullstory code if the user has role admin', () => {
+
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+        );
+        fixture.detectChanges();
+        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+    });
+
+    it('should NOT run fullstory code if the user has role employee', () => {
+
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['employee'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+        );
+        fixture.detectChanges();
+        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+    });
+
+    it('should NOT run fullstory code if the store is created more then then 7 days before', () => {
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-10T12:26:21+00:00', name: 'some_name'}),
+            of({id: 'some_id', country: 'US', createdAt: '2025-12-10T12:26:21+00:00', name: 'some_name'}),
+        );
+        fixture.detectChanges();
+        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+    });
+
+    it('should NOT run fullstory code if the store country is not US', () => {
+
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'FR', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+            of({id: 'some_id', country: 'FR', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
+        );
+        fixture.detectChanges();
+        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
     });
 });

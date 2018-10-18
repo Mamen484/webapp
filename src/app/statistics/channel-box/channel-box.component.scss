@@ -1,0 +1,27 @@
+@import '../../../sass/variables';
+
+.channel-logo-container {
+  text-align: center;
+  padding-right: $card-padding;
+}
+
+::ng-deep {
+  mat-card-content {
+    margin-bottom: 0;
+    &, & > div {
+      align-items: center;
+    }
+  }
+
+  .channel-logo {
+    text-align: center;
+    width: 100%;
+    img {
+      max-height: 67px;
+      max-width: calc(100% - #{$card-padding});
+      width: auto;
+      height: auto;
+      margin: -17px 0 0 0;
+    }
+  }
+}

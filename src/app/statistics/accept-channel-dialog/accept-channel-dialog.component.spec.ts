@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AcceptChannelDialogComponent } from './accept-channel-dialog.component';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { StoreService } from '../../core/services/store.service';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
+import { BlankPipe } from '../../orders/order-details/items-table/items-table.component.spec';
 
 describe('AcceptChannelDialogComponent', () => {
     let component: AcceptChannelDialogComponent;
@@ -44,3 +44,7 @@ describe('AcceptChannelDialogComponent', () => {
         return fixture.debugElement.nativeElement.querySelector(selector);
     }
 });
+
+@Pipe({name: 'sfCurrency'})
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}
