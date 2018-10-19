@@ -3,6 +3,15 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Store as UserStore } from '../core/entities/store';
 
+const countryLocalePairs = {
+    us: 'en-US',
+    uk: 'en-GB',
+    ca: 'en-CA',
+    au: 'en-AU',
+    in: 'en-IN',
+    br: 'pt-BR'
+};
+
 @Pipe({
     name: 'sfCurrency'
 })
@@ -12,7 +21,10 @@ export class SfCurrencyPipe implements PipeTransform {
 
     constructor(protected appStore: Store<AppState>) {
         this.appStore.pipe(select('currentStore'))
-            .subscribe((store: UserStore) => this.country = store.country && store.country.replace('_', '-'));
+            .subscribe((store: UserStore) => {
+                this.country = store.country && store.country.replace('_', '-');
+                this.country = countryLocalePairs[this.country.toLowerCase()] || this.country;
+            });
     }
 
     transform(value: any, currencyCode, fractionDigits = 2): string | null {
