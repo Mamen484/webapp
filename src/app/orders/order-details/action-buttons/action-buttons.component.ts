@@ -54,7 +54,7 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     cancelOrder() {
-        this.matDialog.open(ConfirmCancellationDialogComponent)
+        this.matDialog.open(ConfirmCancellationDialogComponent, {data: 1})
             .afterClosed().pipe(
             filter(data => Boolean(data)),
         )

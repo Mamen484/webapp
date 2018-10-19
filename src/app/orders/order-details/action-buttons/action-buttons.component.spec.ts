@@ -211,7 +211,7 @@ describe('ActionButtonsComponent', () => {
     it('should open a confirm cancellation dialog when click on `cancel` button', () => {
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.cancelOrder();
-        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent);
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: 1});
     });
 
     it(`should send an cancel request when a user confirms cancelling an order`, () => {
