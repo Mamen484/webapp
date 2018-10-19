@@ -98,7 +98,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     goToOrder(orderId: string) {
         let queryParams = {};
-        if (this.ordersFilter.error) {
+        if (this.ordersFilter && this.ordersFilter.error) {
             (<any>queryParams).errorType = this.ordersFilter.error;
         }
         this.rememberSelection();
@@ -282,11 +282,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             return;
         }
         const selection: number[] = JSON.parse(memory);
-        this.dataSource.data.forEach(item => {
-            if (selection.includes(item.id)) {
-                this.selection.select(item);
-            }
-        });
+        this.selection.select(...this.dataSource.data.filter(item => selection.indexOf(item.id) !== -1));
         this.localStorage.removeItem(LocalStorageKey.ordersSelection);
     }
 

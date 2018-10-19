@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { OrdersTableComponent } from './orders-table.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -22,6 +23,7 @@ import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-exp
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -41,10 +43,10 @@ describe('OrdersTableComponent', () => {
         ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
-        filterService = jasmine.createSpyObj(['getFilter']);
+        filterService = jasmine.createSpyObj(['getFilter', 'patchFilter']);
         router = jasmine.createSpyObj(['navigate']);
         snackbar = jasmine.createSpyObj(['openFromComponent']);
-        localStorage = jasmine.createSpyObj(['getItem', 'setItem']);
+        localStorage = jasmine.createSpyObj(['getItem', 'setItem', 'removeItem']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -185,6 +187,68 @@ describe('OrdersTableComponent', () => {
         filter$.next(filter);
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
         expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(filter);
+    });
+
+    it('should clear selection when filter data changes', () => {
+        let filter$ = new BehaviorSubject(new OrdersFilter());
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(filter$.asObservable());
+        const order = mockOrder();
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[0]);
+        expect(component.selection.selected.length).toEqual(1);
+
+        // emit a new filter value
+        let filter = new OrdersFilter();
+        filter.status = OrderStatus.shipped;
+        filter.tag = 'l';
+        filter$.next(filter);
+        expect(component.selection.selected.length).toEqual(0);
+    });
+
+    it('should keep selection when tags assigned', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(new OrdersFilter()));
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        localStorage.getItem.and.callFake(key => key === LocalStorageKey.ordersSelection ? '[2,4]' : undefined);
+        const order = mockOrder();
+        order._embedded.order.push(
+            cloneDeep(order._embedded.order[0]),
+            cloneDeep(order._embedded.order[0]),
+            cloneDeep(order._embedded.order[0])
+        );
+        order._embedded.order[0].id = 1;
+        order._embedded.order[1].id = 2;
+        order._embedded.order[2].id = 3;
+        order._embedded.order[3].id = 4;
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[1]);
+        component.selection.select(component.dataSource.data[3]);
+        component.manageTags();
+        expect(component.selection.selected.length).toEqual(2);
+        expect(component.selection.selected[0].id).toEqual(2);
+        expect(component.selection.selected[1].id).toEqual(4);
+        expect(localStorage.removeItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection);
+    });
+
+    it('should store selection into a local storage when tags assigned', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(new OrdersFilter()));
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        const order = mockOrder();
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[0]);
+        component.manageTags();
+        expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[21]');
+    });
+
+    it('should remember selection before navigation to the order details', () => {
+        component.selection = <any>{selected: [{id: 23}, {id: 91}]};
+        component.goToOrder('12');
+        expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[23,91]');
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
