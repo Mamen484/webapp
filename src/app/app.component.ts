@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { environment } from '../environments/environment';
 import { LOAD_AUTOPILOT } from '../trackers/autopilot';
 import { Store } from '@ngrx/store';
@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
     constructor(protected appStore: Store<AppState>,
                 protected router: Router,
                 protected windowRef: WindowRefService,
-                protected location: Location) {
+                protected location: Location,
+                protected renderer: Renderer2) {
     }
 
     ngOnInit(): void {
@@ -39,8 +40,7 @@ export class AppComponent implements OnInit {
                 if (!userInfo.isAdmin()) {
                     this.enableAutopilot();
                     this.configureGoogleAnalytics(userInfo);
-                    this.configureLivechat();
-                    this.enableFullstory(userInfo.email);
+                    this.runCountrySpecificCode(userInfo);
                 }
             });
     }
@@ -65,28 +65,49 @@ export class AppComponent implements OnInit {
         }
     }
 
-    protected configureLivechat() {
-        this.appStore.select('currentStore').subscribe((store: UserStore) => {
-            if (store && store.country && store.country.toLowerCase() === 'us') {
-                this.showLivechat = true;
-            }
+    protected runCountrySpecificCode(userInfo: AggregatedUserInfo) {
+        this.appStore.select('currentStore').pipe(
+            filter(store => Boolean(store) && typeof store.country === 'string' && store.country.toLowerCase() === 'us'),
+            take(1),
+        ).subscribe((store: UserStore) => {
+            this.configureLivechat(store);
+            this.enableFullstory(store, userInfo.email);
+            this.enableAppcues(store, userInfo.email);
         });
     }
 
-    protected enableFullstory(userEmail) {
-        this.appStore.select('currentStore')
-            .pipe(
-                filter((store: UserStore) => {
-                    return store && store.country && store.country.toLowerCase() === 'us' && UserStore.storeIsNew(store)
-                }),
-                take(1),
-            )
-            .subscribe((store: UserStore) => {
-                LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
-                this.windowRef.nativeWindow.FS.identify(store.id, {
-                    displayName: store.name,
-                    email: userEmail,
-                });
+    protected configureLivechat(store: UserStore) {
+        if (store && store.country && store.country.toLowerCase() === 'us') {
+            this.showLivechat = true;
+        }
+    }
+
+    protected enableFullstory(store: UserStore, userEmail: string) {
+        if (!UserStore.storeIsNew(store)) {
+            return;
+        }
+        LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
+        this.windowRef.nativeWindow.FS.identify(store.id, {
+            displayName: store.name,
+            email: userEmail,
+        });
+    }
+
+    protected enableAppcues(store: UserStore, userEmail: string) {
+        if (!store.feed || !store.feed.source || store.feed.source.toLowerCase() !== 'shopify') {
+            return false;
+        }
+        const script: HTMLScriptElement = this.renderer.createElement('script');
+        script.src = '//fast.appcues.com/28284.js';
+        script.onload = () => {
+            this.windowRef.nativeWindow.Appcues.identify(store.id, {
+                name: store.name,
+                email: userEmail,
+                created_at: new Date(store.createdAt).getTime(),
             });
+        };
+
+        this.renderer.appendChild(document.body, script);
     }
 }
+

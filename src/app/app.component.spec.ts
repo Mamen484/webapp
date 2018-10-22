@@ -5,7 +5,7 @@ import { AppState } from './core/entities/app-state';
 import { of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { WindowRefService } from './core/services/window-ref.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Location } from '@angular/common';
 
@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select']);
         router.events = new Subject();
-        windowRef.nativeWindow = {gtag: jasmine.createSpy(), FS: {identify: jasmine.createSpy()}};
+        windowRef.nativeWindow = {gtag: jasmine.createSpy(), FS: {identify: jasmine.createSpy()}, Appcues: {identify: jasmine.createSpy()}};
         location = jasmine.createSpyObj(['path']);
         location.path.and.returnValue('/');
         TestBed.configureTestingModule({
@@ -66,7 +66,6 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1'})),
             of({country: 'US'}),
-            of({country: 'US'}),
         );
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(false);
@@ -75,7 +74,6 @@ describe('AppComponent', () => {
     it('should NOT show livechat if a user is an NOT admin and country is NOT US', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})),
-            of({country: 'FR'}),
             of({country: 'FR'}),
         );
         fixture.detectChanges();
@@ -86,19 +84,17 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})),
             of({country: 'US'}),
-            of({country: 'US'}),
         );
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(true);
     });
 
-    it('should run fullstory code if the user is not admin, the store is created less then then 7 days before' +
+    it('should run fullstory code if the user is not admin, the store is created less then 7 days before' +
         ' and the country is US', () => {
 
         jasmine.clock().mockDate(new Date('2025-12-20'));
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
-            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
             of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
         );
         fixture.detectChanges();
@@ -114,7 +110,6 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1', email: 'some_email'})),
             of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
-            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
@@ -126,7 +121,6 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['employee'], token: 'token_1', email: 'some_email'})),
             of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
-            of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
@@ -136,7 +130,6 @@ describe('AppComponent', () => {
         jasmine.clock().mockDate(new Date('2025-12-20'));
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
-            of({id: 'some_id', country: 'US', createdAt: '2025-12-10T12:26:21+00:00', name: 'some_name'}),
             of({id: 'some_id', country: 'US', createdAt: '2025-12-10T12:26:21+00:00', name: 'some_name'}),
         );
         fixture.detectChanges();
@@ -149,9 +142,52 @@ describe('AppComponent', () => {
         appStore.select.and.returnValues(
             of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
             of({id: 'some_id', country: 'FR', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
-            of({id: 'some_id', country: 'FR', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}),
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+    });
+
+    it('should run Appcues code if the user is not admin and the country is US and the source is shopify', () => {
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}}),
+        );
+        const renderer = fixture.debugElement.injector.get(Renderer2);
+        spyOn(renderer, 'appendChild');
+        fixture.detectChanges();
+        expect(renderer.appendChild).toHaveBeenCalled();
+    });
+
+    it('should NOT run Appcues code if the user is admin and the country is US and the source is shopify', () => {
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}}),
+        );
+        const renderer = fixture.debugElement.injector.get(Renderer2);
+        spyOn(renderer, 'appendChild');
+        fixture.detectChanges();
+        expect(renderer.appendChild).not.toHaveBeenCalled();
+    });
+
+    it('should NOT run Appcues code if the user is not admin and the country is NOT US and the source is shopify', () => {
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'FR', name: 'some_name', feed: {source: 'Shopify'}}),
+        );
+        const renderer = fixture.debugElement.injector.get(Renderer2);
+        spyOn(renderer, 'appendChild');
+        fixture.detectChanges();
+        expect(renderer.appendChild).not.toHaveBeenCalled();
+    });
+
+    it('should NOT run Appcues code if the user is not admin and the country is US and the source is NOT shopify', () => {
+        appStore.select.and.returnValues(
+            of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1', email: 'some_email'})),
+            of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'prestashop'}}),
+        );
+        const renderer = fixture.debugElement.injector.get(Renderer2);
+        spyOn(renderer, 'appendChild');
+        fixture.detectChanges();
+        expect(renderer.appendChild).not.toHaveBeenCalled();
     });
 });
