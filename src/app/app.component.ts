@@ -31,10 +31,15 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.location.path().match(TOKEN_IN_URL)) {
-            // remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar
-            this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
-        }
+        this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
+            if (this.location.path().match(TOKEN_IN_URL)) {
+                // remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar
+                // we perform it only after navigation ends to prevent removing the token before route guards finish their work
+                // otherwise the logging in by a token can be broke
+                this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
+            }
+        });
+
         this.appStore.select('userInfo').pipe(filter(info => Boolean(info)))
             .subscribe((userInfo: AggregatedUserInfo) => {
                 if (!userInfo.isAdmin()) {
