@@ -9,9 +9,6 @@ import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Store as UserStore } from './core/entities/store';
 import { WindowRefService } from './core/services/window-ref.service';
 import { LOAD_FULLSTORY } from '../trackers/fullstory';
-import { Location } from '@angular/common';
-
-const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
 
 @Component({
     selector: 'app-root',
@@ -26,15 +23,10 @@ export class AppComponent implements OnInit {
     constructor(protected appStore: Store<AppState>,
                 protected router: Router,
                 protected windowRef: WindowRefService,
-                protected location: Location,
                 protected renderer: Renderer2) {
     }
 
     ngOnInit(): void {
-        if (this.location.path().match(TOKEN_IN_URL)) {
-            // remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar
-            this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
-        }
         this.appStore.select('userInfo').pipe(filter(info => Boolean(info)))
             .subscribe((userInfo: AggregatedUserInfo) => {
                 if (!userInfo.isAdmin()) {

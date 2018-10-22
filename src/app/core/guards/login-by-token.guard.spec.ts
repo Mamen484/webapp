@@ -23,7 +23,7 @@ describe('LoginByTokenGuard', () => {
             ],
             providers: [
                 LoginByTokenGuard,
-                {provide: LocalStorageService, useValue: {setItem: setitemSpy}}
+                {provide: LocalStorageService, useValue: {setItem: setitemSpy}},
             ],
             declarations: [BlankComponent]
         });
