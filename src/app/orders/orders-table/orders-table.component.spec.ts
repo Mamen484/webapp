@@ -376,7 +376,7 @@ describe('OrdersTableComponent', () => {
         component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openCancelDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: 2});
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
     });
 
     it('should NOT open confirm cancellation dialog on click on `cancel` button when no orders selected', () => {
@@ -416,12 +416,12 @@ describe('OrdersTableComponent', () => {
         component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openShippingDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent);
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
     });
 
     it('should NOT open shipping confirmation dialog on click on `ship` button when no orders selected', () => {
         component.openShippingDialog();
-        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmShippingDialogComponent);
+        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmShippingDialogComponent, {data: {ordersNumber: 0}});
     });
 
     it('should open `select orders` dialog on click on `ship` button when no orders selected', () => {

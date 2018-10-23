@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ConfirmDialogData } from '../../../core/entities/orders/confirm-dialog-data';
 
 @Component({
     selector: 'sf-confirm-cancellation-dialog',
@@ -10,7 +11,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 export class ConfirmCancellationDialogComponent implements OnInit {
 
     constructor(protected matDialogRef: MatDialogRef<CarrierDetailsDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public ordersNumber = 1) {
+                @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
     }
 
     ngOnInit() {

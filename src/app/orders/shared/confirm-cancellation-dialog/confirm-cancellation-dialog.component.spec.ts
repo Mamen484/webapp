@@ -17,7 +17,7 @@ describe('ConfirmCancellationDialogComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: MatDialogRef, useValue: matDialogRef},
-                {provide: MAT_DIALOG_DATA, useValue: 1},
+                {provide: MAT_DIALOG_DATA, useValue: {ordersNumber: 1, orderReference: 'AAA'}},
             ]
         })
             .compileComponents();

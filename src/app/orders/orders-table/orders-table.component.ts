@@ -29,7 +29,7 @@ import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dia
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
-import { ChannelMap } from '../../core/entities/channel-map.enum';
+import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
@@ -185,7 +185,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.cancel});
             return;
         }
-        this.matDialog.open(ConfirmCancellationDialogComponent, {data: this.selection.selected.length})
+        this.matDialog.open(ConfirmCancellationDialogComponent, {data: this.getConfirmDialogData()})
             .afterClosed()
             .pipe(
                 filter(confirmed => confirmed),
@@ -199,7 +199,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.ship});
             return;
         }
-        this.matDialog.open(ConfirmShippingDialogComponent)
+        this.matDialog.open(ConfirmShippingDialogComponent, {data: this.getConfirmDialogData()})
             .afterClosed()
             .pipe(
                 filter(shippingConfirmed => shippingConfirmed),
@@ -231,6 +231,13 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
         this.notifyStatusChange(action)
             .subscribe(() => this.showStatusChangedSnackbar(action));
+    }
+
+    protected getConfirmDialogData(): ConfirmDialogData {
+        return {
+            ordersNumber: this.selection.selected.length,
+            orderReference: this.selection.selected.length === 1 ? this.selection.selected[0].reference : undefined,
+        }
     }
 
     protected notifyStatusChange(action) {
