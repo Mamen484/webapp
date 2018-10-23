@@ -29,6 +29,7 @@ import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dia
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { ChannelMap } from '../../core/entities/channel-map.enum';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
@@ -51,6 +52,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     optionalColumns = {
         updatedAt: false,
+        services: false,
         productAmount: false,
         shippingAmount: false,
         paymentMethod: false,

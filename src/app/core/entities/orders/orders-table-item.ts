@@ -1,6 +1,8 @@
 import { OrderStatus } from './order-status.enum';
 import { OrderTag } from './order-tag';
 import { Order } from './order';
+import { ChannelMap } from '../channel-map.enum';
+import { get, toLower } from 'lodash';
 
 export class OrdersTableItem {
     hasErrors: boolean;
@@ -22,13 +24,20 @@ export class OrdersTableItem {
     trackingNumber: string;
     imported: boolean;
     tags: OrderTag[];
+    services: {
+        paymentIsAfn: boolean;
+        paymentIsClogistique: boolean;
+        shippedByManomano: boolean;
+        isAmazonPrime: boolean;
+    };
 
     static createFromOrder(order: Order): OrdersTableItem {
         const item = new OrdersTableItem();
+        const channel = order._embedded.channel;
 
         item.hasErrors = Boolean(order.errors && order.errors.length);
-        item.channelImage = order._embedded.channel._links.image.href;
-        item.channelName = order._embedded.channel.name;
+        item.channelImage = channel._links.image.href;
+        item.channelName = channel.name;
         item.reference = order.reference;
         item.id = order.id;
         item.status = order.status;
@@ -45,7 +54,34 @@ export class OrdersTableItem {
         item.trackingNumber = order.shipment.trackingNumber;
         item.imported = Boolean(order.acknowledgedAt);
         item.tags = order._embedded.tag && order._embedded.tag.length ? order._embedded.tag : [];
+        item.services = OrdersTableItem.getEnabledServices(order);
 
         return item;
+    }
+
+    static getEnabledServices(order) {
+        let services = {
+            paymentIsAfn: false,
+            paymentIsClogistique: false,
+            shippedByManomano: false,
+            isAmazonPrime: false,
+        };
+        const payment = get(order, ['payment', 'method'], '').toLowerCase();
+        const additionalFields = order.additionalFields || {};
+        switch (order._embedded.channel.id) {
+            case ChannelMap.amazon:
+
+                services.paymentIsAfn = payment === 'afn';
+                services.isAmazonPrime = Boolean(additionalFields.is_prime);
+                break;
+
+            case ChannelMap.cdiscount:
+                services.paymentIsClogistique = payment === 'clogistique';
+                break;
+
+            case ChannelMap.manomano:
+                services.shippedByManomano = toLower(additionalFields.env) === 'epmm';
+        }
+        return services;
     }
 }

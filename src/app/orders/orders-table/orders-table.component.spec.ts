@@ -24,6 +24,7 @@ import { LocalStorageService } from '../../core/services/local-storage.service';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
+import { ChannelMap } from '../../core/entities/channel-map.enum';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -117,7 +118,7 @@ describe('OrdersTableComponent', () => {
         filterService.getFilter.and.returnValue(of({}));
         ordersService.fetchOrdersList.and.returnValue(of({_embedded: {order: []}}));
         fixture.detectChanges();
-        expect(component.isLoadingResults).toEqual(false);
+        expect(component.isLoadingResults).toBe(false);
     });
 
     it('should format order data properly', () => {
@@ -126,22 +127,99 @@ describe('OrdersTableComponent', () => {
         ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
-        expect(data.hasErrors).toEqual(false);
-        expect(data.channelImage).toEqual('image link');
-        expect(data.reference).toEqual('ref');
-        expect(data.id).toEqual(21);
-        expect(data.status).toEqual('created');
-        expect(data.total).toEqual(22);
-        expect(data.date).toEqual(1515417927773);
+        expect(data.hasErrors).toBe(false);
+        expect(data.channelImage).toBe('image link');
+        expect(data.reference).toBe('ref');
+        expect(data.id).toBe(21);
+        expect(data.status).toBe('created');
+        expect(data.total).toBe(22);
+        expect(data.date).toBe(1515417927773);
         expect(data.updatedAt).not.toBeDefined();
-        expect(data.productAmount).toEqual(12);
-        expect(data.shippingAmount).toEqual(10);
-        expect(data.paymentMethod).toEqual('some method');
-        expect(data.deliveryName).toEqual('name1 surname1');
-        expect(data.invoicingName).toEqual('name2 surname2');
-        expect(data.storeId).toEqual('some reference');
-        expect(data.trackingNumber).toEqual('some tracking number');
-        expect(data.imported).toEqual(true);
+        expect(data.productAmount).toBe(12);
+        expect(data.shippingAmount).toBe(10);
+        expect(data.paymentMethod).toBe('some method');
+        expect(data.deliveryName).toBe('name1 surname1');
+        expect(data.invoicingName).toBe('name2 surname2');
+        expect(data.storeId).toBe('some reference');
+        expect(data.trackingNumber).toBe('some tracking number');
+        expect(data.imported).toBe(true);
+    });
+
+    it('should have paymentIsAfn service if the channel is amazon and payment.method is AFN', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].payment.method = 'AFN';
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(true);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have paymentIsClogistique service if the channel is Cdiscount and payment.method is Clogistique', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.cdiscount;
+        order._embedded.order[0].payment.method = 'Clogistique';
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(true);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have shippedByManomano service if the channel is Manomano and there is additional field env = EPMM', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.manomano;
+        order._embedded.order[0].additionalFields = {env: 'EPMM'};
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(true);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have isAmazonPrime service if the channel is Amazon and there is additional field is_prime = true', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].additionalFields = {is_prime: true};
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(true);
+    });
+
+    it('should have multiple services if available', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].additionalFields = {is_prime: true};
+        order._embedded.order[0].payment.method = 'AFN';
+
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(true);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(true);
     });
 
     it('should set `imported` property to `true` when the storeReference is defined', () => {
