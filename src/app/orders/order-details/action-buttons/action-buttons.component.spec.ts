@@ -14,6 +14,7 @@ import { OrdersService } from '../../../core/services/orders.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
 import { Order } from '../../../core/entities/orders/order';
+import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 
 describe('ActionButtonsComponent', () => {
     let component: ActionButtonsComponent;
@@ -207,6 +208,37 @@ describe('ActionButtonsComponent', () => {
         expect(component.acknowledgment).toEqual(OrderAcknowledgment.unacknowledged);
     });
 
+    it('should open a confirm cancellation dialog when click on `cancel` button', () => {
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        component.order.reference = '22';
+        component.cancelOrder();
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 1, orderReference: '22'}});
+    });
+
+    it(`should send an cancel request when a user confirms cancelling an order`, () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.cancel.and.returnValue(EMPTY);
+        matDialog.open.and.returnValue({
+            afterClosed: () => of(true)
+        });
+        component.cancelOrder();
+        expect(ordersService.cancel.calls.mostRecent().args[0]).toEqual(289);
+        expect(ordersService.cancel.calls.mostRecent().args[1][0].reference).toEqual('ref');
+        expect(ordersService.cancel.calls.mostRecent().args[1][0].channelName).toEqual('nom');
+    });
+
+    it(`should NOT send an cancel request when a user denies cancelling an order`, () => {
+        component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+        appStore.select.and.returnValue(of({id: 289}));
+        ordersService.cancel.and.returnValue(EMPTY);
+        matDialog.open.and.returnValue({
+            afterClosed: () => of(undefined)
+        });
+        component.cancelOrder();
+        expect(ordersService.cancel).not.toHaveBeenCalled();
+    });
+
     it('should open a carrier details dialog when click on `ship` button', () => {
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.shipOrder();
@@ -257,7 +289,6 @@ describe('ActionButtonsComponent', () => {
     [
         OrderNotifyAction.acknowledge,
         OrderNotifyAction.unacknowledge,
-        OrderNotifyAction.cancel,
         OrderNotifyAction.accept,
         OrderNotifyAction.refuse,
     ].forEach(action => {

@@ -14,7 +14,7 @@
         Ship
     </button>
 
-    <button mat-button color="accent" i18n (click)="applyStatusAction(actions.cancel)"
+    <button mat-button color="accent" i18n (click)="cancelOrder()"
             *ngIf="!supportsRefund && (order.status === statuses.shipped || order.status === statuses.waiting_shipment)">
         Cancel
     </button>

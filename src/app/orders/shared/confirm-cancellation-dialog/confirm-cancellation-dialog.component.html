@@ -1,0 +1,10 @@
+<div matDialogTitle i18n>Do you want to cancel {data.ordersNumber, plural, =1 {Order {{data.orderReference}}} other {selected orders}}?</div>
+
+<mat-dialog-content i18n>
+    If you cancel {data.ordersNumber, plural, =1 {this order} other {these orders}}, it will not be possible to recover {data.ordersNumber, plural, =1 {it} other {them}}.
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button color="accent" i18n (click)="cancel()">Dismiss</button>
+    <button mat-button color="accent" i18n (click)="accept()">Cancel {data.ordersNumber, plural, =1 {Order} other {Orders}}</button>
+</mat-dialog-actions>

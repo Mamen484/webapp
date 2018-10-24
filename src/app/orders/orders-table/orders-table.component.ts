@@ -21,16 +21,19 @@ import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { debounceTime, filter, flatMap, take } from 'rxjs/operators';
+import { debounceTime, filter, flatMap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
+import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
+
 
 @Component({
     selector: 'sf-orders-table',
@@ -49,6 +52,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     optionalColumns = {
         updatedAt: false,
+        services: false,
         productAmount: false,
         shippingAmount: false,
         paymentMethod: false,
@@ -96,9 +100,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     goToOrder(orderId: string) {
         let queryParams = {};
-        if (this.ordersFilter.error) {
+        if (this.ordersFilter && this.ordersFilter.error) {
             (<any>queryParams).errorType = this.ordersFilter.error;
         }
+        this.rememberSelection();
         this.router.navigate(['orders', 'detail', orderId], {
             queryParams,
         });
@@ -152,6 +157,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
             }
         }).afterClosed().subscribe(tagsChanged => {
             if (tagsChanged) {
+                this.rememberSelection();
                 this.fetchData(this.ordersFilter);
             }
         })
@@ -174,12 +180,26 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
     // button actions
 
+    openCancelDialog() {
+        if (!this.selection.selected.length) {
+            this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.cancel});
+            return;
+        }
+        this.matDialog.open(ConfirmCancellationDialogComponent, {data: this.getConfirmDialogData()})
+            .afterClosed()
+            .pipe(
+                filter(confirmed => confirmed),
+                flatMap(() => this.notifyStatusChange(OrderNotifyAction.cancel)),
+            )
+            .subscribe(() => this.showStatusChangedSnackbar(OrderNotifyAction.cancel));
+    }
+
     openShippingDialog() {
         if (!this.selection.selected.length) {
             this.matDialog.open(SelectOrdersDialogComponent, {data: OrderNotifyAction.ship});
             return;
         }
-        this.matDialog.open(ConfirmShippingDialogComponent)
+        this.matDialog.open(ConfirmShippingDialogComponent, {data: this.getConfirmDialogData()})
             .afterClosed()
             .pipe(
                 filter(shippingConfirmed => shippingConfirmed),
@@ -191,6 +211,10 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     applyStatusAction(action: OrderNotifyAction) {
         if (action === OrderNotifyAction.ship) {
             this.openShippingDialog();
+            return;
+        }
+        if (action === OrderNotifyAction.cancel) {
+            this.openCancelDialog();
             return;
         }
         this.changeStatusForSelectedOrders(action);
@@ -207,6 +231,13 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
         this.notifyStatusChange(action)
             .subscribe(() => this.showStatusChangedSnackbar(action));
+    }
+
+    protected getConfirmDialogData(): ConfirmDialogData {
+        return {
+            ordersNumber: this.selection.selected.length,
+            orderReference: this.selection.selected.length === 1 ? this.selection.selected[0].reference : undefined,
+        }
     }
 
     protected notifyStatusChange(action) {
@@ -241,9 +272,27 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 this.paginator.pageIndex = +ordersFilter.page - 1;
 
                 this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
+                this.restoreSelection();
                 this.updateStickyColumnsStyles();
             });
 
+    }
+
+    protected rememberSelection() {
+        if (!this.selection.selected.length) {
+            return;
+        }
+        this.localStorage.setItem(LocalStorageKey.ordersSelection, JSON.stringify(this.selection.selected.map(order => order.id)));
+    }
+
+    protected restoreSelection() {
+        const memory: string = this.localStorage.getItem(LocalStorageKey.ordersSelection);
+        if (!memory) {
+            return;
+        }
+        const selection: number[] = JSON.parse(memory);
+        this.selection.select(...this.dataSource.data.filter(item => selection.indexOf(item.id) !== -1));
+        this.localStorage.removeItem(LocalStorageKey.ordersSelection);
     }
 
     protected setDefaultsFromStorage() {
