@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()

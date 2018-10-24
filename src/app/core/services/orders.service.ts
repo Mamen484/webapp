@@ -20,10 +20,11 @@ export class OrdersService {
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
-    fetchOrdersList(storeId, filter: OrdersFilter = new OrdersFilter()) {
-        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order`, {
-            params: filter.toHttpParams()
-        }) as Observable<PagedResponse<{ order: Order[] }>>;
+    fetchOrdersList(filter: OrdersFilter = new OrdersFilter()) {
+        return this.appStore.select('currentStore').pipe(flatMap(store =>
+            this.httpClient.get(`${environment.API_URL}/store/${store.id}/order`, {
+                params: filter.toHttpParams()
+            }))) as Observable<PagedResponse<{ order: Order[] }>>;
     }
 
     fetchOrder(storeId, orderId): Observable<Order> {

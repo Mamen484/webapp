@@ -1,0 +1,5 @@
+<ng-container *ngIf="action === actions.finish" i18n>
+    <ng-container *ngIf="channelName">{{channelName}} </ng-container>Completed {{date | date:'short'}}</ng-container>
+
+<ng-container *ngIf="action === actions.error" i18n>
+    <ng-container *ngIf="channelName">{{channelName}} </ng-container>Error {{date | date:'short'}}</ng-container>

@@ -25,10 +25,10 @@ export class MenuComponent implements OnInit, OnDestroy {
     userInfo: AggregatedUserInfo;
     currentStore: Store;
     storeStatus = StoreStatus;
-    appUrl = environment.APP_URL;
     newEvents = 0;
     isManager = false;
     paymentTypes = PaymentType;
+    isAdmin = false;
 
     protected newEventsSubscription;
 
@@ -42,28 +42,18 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.appStore.select('userInfo').subscribe(userInfo => {
+        this.appStore.select('userInfo').subscribe((userInfo: AggregatedUserInfo) => {
             this.userInfo = userInfo;
             this.isManager = Boolean(this.userInfo.roles.find(role => role === 'manager'));
+            this.isAdmin = userInfo.isAdmin();
         });
-        this.appStore.select('currentStore').subscribe(currentStore => {
-            this.currentStore = currentStore;
-            this.updateEvents();
-        });
-        this.newEventsSubscription = observableTimer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEvents());
-    }
-
-    chooseStore(store) {
-        this.appStore.dispatch({type: SET_STORE, store});
+        this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
+        this.newEventsSubscription = observableTimer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
     }
 
     logout() {
         this.localStorage.removeItem('Authorization');
-        this.windowRef.nativeWindow.location.href = `${this.appUrl}/index/logout`;
-    }
-
-    isAdmin() {
-        return Boolean(this.userInfo.roles.find(role => role === 'admin' || role === 'employee'));
+        this.windowRef.nativeWindow.location.href = `${environment.APP_URL}/index/logout`;
     }
 
     navigateToTimeline() {
@@ -71,14 +61,14 @@ export class MenuComponent implements OnInit, OnDestroy {
         this.router.navigate(['/timeline']).then(data => {
             if (!data) {
                 // user tries to load timeline route, that is active now, so we need to reload the timeline data
-                this.timelineService.emitUpdatedTimeline(this.currentStore.id);
+                this.timelineService.emitUpdatedTimeline();
             }
         });
 
     }
 
-    protected updateEvents() {
-        this.timelineService.getUpdatesNumber(this.currentStore.id)
+    protected updateEventsNumber() {
+        this.timelineService.getUpdatesNumber()
             .subscribe(events => this.newEvents = events);
     }
 

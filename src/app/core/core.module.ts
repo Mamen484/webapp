@@ -46,6 +46,7 @@ import { SupportLinkService } from './services/support-link.service';
 import { ToggleSidebarService } from './services/toggle-sidebar.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
+import { ChannelStorageService } from './services/channel-storage.service';
 
 @NgModule({
     imports: [
@@ -77,6 +78,7 @@ import { TagsService } from './services/tags.service';
         LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
+        ChannelStorageService,
         FullCountriesListService,
         ShopifyAuthentifyService,
         RegistrationCacheGuard,

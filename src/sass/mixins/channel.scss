@@ -1,15 +1,26 @@
-@mixin channel-common-styles (){
-  .channel-logo {
-    padding: 20px 80px 0 80px;
-  }
+@import '../../sass/variables';
 
+@mixin channel-common-styles() {
   mat-card-content {
-    height: 100%;
+    margin-bottom: 0;
+    &, & > div {
+      align-items: center;
+    }
   }
 
-  .channel-info-line {
-    margin-bottom: 15px;
-    cursor: pointer;
+  .channel-logo {
+    text-align: center;
+    width: 100%;
+    img {
+      max-height: 67px;
+      max-width: calc(100% - #{$card-padding});
+      width: auto;
+      height: auto;
+      margin: -17px 0 0 0;
+    }
   }
 
+  .channel-turnover, .channel-online {
+    margin-bottom: 16px;
+  }
 }

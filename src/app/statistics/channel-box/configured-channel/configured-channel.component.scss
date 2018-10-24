@@ -1,0 +1,13 @@
+@import '../../../../sass/variables';
+
+.online-low {
+  color: mat-color($warn);
+}
+
+.online-middle {
+  color: mat-color($accent);
+}
+
+.online-high {
+  color: mat-color($green);
+}

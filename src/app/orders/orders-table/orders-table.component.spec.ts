@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { OrdersService } from '../../core/services/orders.service';
 import { MatDialog, MatMenuModule, MatSnackBar, MatTableModule } from '@angular/material';
-import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ChangeDetectorRef, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject, EMPTY, of } from 'rxjs';
@@ -14,13 +14,13 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { Router } from '@angular/router';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
 import { LocalStorageService } from '../../core/services/local-storage.service';
+import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -36,7 +36,7 @@ describe('OrdersTableComponent', () => {
     let localStorage: jasmine.SpyObj<LocalStorageService>;
 
     beforeEach(async(() => {
-        appStore = jasmine.createSpyObj(['select']);
+        appStore = jasmine.createSpyObj(['select', 'pipe']);
         ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
@@ -183,7 +183,7 @@ describe('OrdersTableComponent', () => {
         filter.tag = 'l';
         filter$.next(filter);
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
-        expect(ordersService.fetchOrdersList.calls.mostRecent().args[1]).toEqual(filter);
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(filter);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
@@ -340,6 +340,6 @@ describe('OrdersTableComponent', () => {
 
 });
 
-
-
-
+@Pipe({name: 'sfCurrency'})
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}

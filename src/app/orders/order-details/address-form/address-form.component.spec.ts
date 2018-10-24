@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddressFormComponent } from './address-form.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Address } from '../../../core/entities/orders/address';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 describe('AddressFormComponent', () => {
     let component: AddressFormComponent;
@@ -17,7 +18,7 @@ describe('AddressFormComponent', () => {
         snackBar = jasmine.createSpyObj(['open', 'openFromComponent']);
 
         TestBed.configureTestingModule({
-            declarations: [AddressFormComponent],
+            declarations: [AddressFormComponent, CountryAutocompleteStubComponent],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [FormsModule],
             providers: [
@@ -52,14 +53,31 @@ describe('AddressFormComponent', () => {
 
     it('should show an error snackbar on save() if the form is NOT valid', async () => {
         component.save(false);
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ValidationErrorsSnackbarComponent, {
-            duration: 5000,
-            panelClass: 'sf-snackbar-error',
-        });
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
     });
 
     it('should NOT show an error snackbar on save() if the form is valid', async () => {
         component.save(true);
         expect(snackBar.openFromComponent).not.toHaveBeenCalled();
     });
+
+    @Component({
+        selector: 'sf-country-autocomplete', template: '',
+        providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CountryAutocompleteStubComponent), multi: true}]
+    })
+    class CountryAutocompleteStubComponent implements ControlValueAccessor {
+        registerOnChange(fn: any): void {
+        }
+
+        registerOnTouched(fn: any): void {
+        }
+
+        setDisabledState(isDisabled: boolean): void {
+        }
+
+        writeValue(obj: any): void {
+        }
+
+    }
 });
+
