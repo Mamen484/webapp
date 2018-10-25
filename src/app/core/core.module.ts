@@ -6,7 +6,6 @@ import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
-import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
@@ -46,6 +45,7 @@ import { SupportLinkService } from './services/support-link.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
+import { ModuleImportGuard } from 'sfl-shared';
 
 @NgModule({
     imports: [
@@ -104,6 +104,6 @@ import { ChannelStorageService } from './services/channel-storage.service';
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+        ModuleImportGuard.throwIfAlreadyLoaded(parentModule, 'CoreModule');
     }
 }

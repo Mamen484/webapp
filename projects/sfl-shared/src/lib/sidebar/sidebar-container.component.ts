@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ObservableMedia } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
-import { SflToggleSidebarService } from './toggle-sidebar.service';
+import { SflToggleSidebarService } from '../core/toggle-sidebar.service';
 
 @Component({
     selector: 'sfl-sidebar-container',

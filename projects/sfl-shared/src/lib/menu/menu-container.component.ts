@@ -10,12 +10,12 @@ import {
     Router
 } from '@angular/router';
 import { merge } from 'rxjs';
-import { SflToggleSidebarService } from 'sfl-shared';
+import { SflToggleSidebarService } from '../core/toggle-sidebar.service';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
 
 @Component({
-    selector: 'sf-menu-container',
+    selector: 'sfl-menu-container',
     templateUrl: './menu-container.component.html',
     styleUrls: ['./menu-container.component.scss']
 })
@@ -27,8 +27,6 @@ export class MenuContainerComponent implements OnInit {
     /**
      * contains false if we don't need to show 'back to login' button,
      * otherwise contains a route to follow after click on 'back' button
-     *
-     * @type {boolean | string}
      */
     showBackButton?: any[];
 
@@ -80,8 +78,6 @@ export class MenuContainerComponent implements OnInit {
 
     /**
      * Show a progressbar in the top of the application when we're loading the next route
-     *
-     * @param {Event} routerEvent
      */
     checkRouterEvent(routerEvent: Event) {
         if (routerEvent instanceof NavigationStart) {
