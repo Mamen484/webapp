@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { OrdersTableComponent } from './orders-table.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -21,6 +22,9 @@ import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe'
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
 import { LocalStorageService } from '../../core/services/local-storage.service';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
+import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
+import { ChannelMap } from '../../core/entities/channel-map.enum';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -40,10 +44,10 @@ describe('OrdersTableComponent', () => {
         ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
-        filterService = jasmine.createSpyObj(['getFilter']);
+        filterService = jasmine.createSpyObj(['getFilter', 'patchFilter']);
         router = jasmine.createSpyObj(['navigate']);
         snackbar = jasmine.createSpyObj(['openFromComponent']);
-        localStorage = jasmine.createSpyObj(['getItem', 'setItem']);
+        localStorage = jasmine.createSpyObj(['getItem', 'setItem', 'removeItem']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -114,7 +118,7 @@ describe('OrdersTableComponent', () => {
         filterService.getFilter.and.returnValue(of({}));
         ordersService.fetchOrdersList.and.returnValue(of({_embedded: {order: []}}));
         fixture.detectChanges();
-        expect(component.isLoadingResults).toEqual(false);
+        expect(component.isLoadingResults).toBe(false);
     });
 
     it('should format order data properly', () => {
@@ -123,22 +127,99 @@ describe('OrdersTableComponent', () => {
         ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
-        expect(data.hasErrors).toEqual(false);
-        expect(data.channelImage).toEqual('image link');
-        expect(data.reference).toEqual('ref');
-        expect(data.id).toEqual(21);
-        expect(data.status).toEqual('created');
-        expect(data.total).toEqual(22);
-        expect(data.date).toEqual(1515417927773);
+        expect(data.hasErrors).toBe(false);
+        expect(data.channelImage).toBe('image link');
+        expect(data.reference).toBe('ref');
+        expect(data.id).toBe(21);
+        expect(data.status).toBe('created');
+        expect(data.total).toBe(22);
+        expect(data.date).toBe(1515417927773);
         expect(data.updatedAt).not.toBeDefined();
-        expect(data.productAmount).toEqual(12);
-        expect(data.shippingAmount).toEqual(10);
-        expect(data.paymentMethod).toEqual('some method');
-        expect(data.deliveryName).toEqual('name1 surname1');
-        expect(data.invoicingName).toEqual('name2 surname2');
-        expect(data.storeId).toEqual('some reference');
-        expect(data.trackingNumber).toEqual('some tracking number');
-        expect(data.imported).toEqual(true);
+        expect(data.productAmount).toBe(12);
+        expect(data.shippingAmount).toBe(10);
+        expect(data.paymentMethod).toBe('some method');
+        expect(data.deliveryName).toBe('name1 surname1');
+        expect(data.invoicingName).toBe('name2 surname2');
+        expect(data.storeId).toBe('some reference');
+        expect(data.trackingNumber).toBe('some tracking number');
+        expect(data.imported).toBe(true);
+    });
+
+    it('should have paymentIsAfn service if the channel is amazon and payment.method is AFN', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].payment.method = 'AFN';
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(true);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have paymentIsClogistique service if the channel is Cdiscount and payment.method is Clogistique', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.cdiscount;
+        order._embedded.order[0].payment.method = 'Clogistique';
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(true);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have shippedByManomano service if the channel is Manomano and there is additional field env = EPMM', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.manomano;
+        order._embedded.order[0].additionalFields = {env: 'EPMM'};
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(true);
+        expect(data.services.isAmazonPrime).toBe(false);
+    });
+
+    it('should have isAmazonPrime service if the channel is Amazon and there is additional field is_prime = true', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].additionalFields = {is_prime: true};
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(true);
+    });
+
+    it('should have multiple services if available', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
+        order._embedded.order[0].additionalFields = {is_prime: true};
+        order._embedded.order[0].payment.method = 'AFN';
+
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(true);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(true);
     });
 
     it('should set `imported` property to `true` when the storeReference is defined', () => {
@@ -186,6 +267,68 @@ describe('OrdersTableComponent', () => {
         expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(filter);
     });
 
+    it('should clear selection when filter data changes', () => {
+        let filter$ = new BehaviorSubject(new OrdersFilter());
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(filter$.asObservable());
+        const order = mockOrder();
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[0]);
+        expect(component.selection.selected.length).toEqual(1);
+
+        // emit a new filter value
+        let filter = new OrdersFilter();
+        filter.status = OrderStatus.shipped;
+        filter.tag = 'l';
+        filter$.next(filter);
+        expect(component.selection.selected.length).toEqual(0);
+    });
+
+    it('should keep selection when tags assigned', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(new OrdersFilter()));
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        localStorage.getItem.and.callFake(key => key === LocalStorageKey.ordersSelection ? '[2,4]' : undefined);
+        const order = mockOrder();
+        order._embedded.order.push(
+            cloneDeep(order._embedded.order[0]),
+            cloneDeep(order._embedded.order[0]),
+            cloneDeep(order._embedded.order[0])
+        );
+        order._embedded.order[0].id = 1;
+        order._embedded.order[1].id = 2;
+        order._embedded.order[2].id = 3;
+        order._embedded.order[3].id = 4;
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[1]);
+        component.selection.select(component.dataSource.data[3]);
+        component.manageTags();
+        expect(component.selection.selected.length).toEqual(2);
+        expect(component.selection.selected[0].id).toEqual(2);
+        expect(component.selection.selected[1].id).toEqual(4);
+        expect(localStorage.removeItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection);
+    });
+
+    it('should store selection into a local storage when tags assigned', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(new OrdersFilter()));
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        const order = mockOrder();
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[0]);
+        component.manageTags();
+        expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[21]');
+    });
+
+    it('should remember selection before navigation to the order details', () => {
+        component.selection = <any>{selected: [{id: 23}, {id: 91}]};
+        component.goToOrder('12');
+        expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[23,91]');
+    });
+
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of({}));
@@ -211,7 +354,6 @@ describe('OrdersTableComponent', () => {
         OrderNotifyAction.unacknowledge,
         OrderNotifyAction.accept,
         OrderNotifyAction.refuse,
-        OrderNotifyAction.cancel,
     ].forEach(action => {
         it(`should ${action} selected orders on click the ${action} button`, () => {
             checkChangeStatusRequestSent(action);
@@ -224,6 +366,47 @@ describe('OrdersTableComponent', () => {
         });
     });
 
+
+    it('should ship selected orders on click the `cancel` button', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        checkChangeStatusRequestSent('cancel');
+    });
+
+    it('should open confirm cancellation dialog on click on `cancel` button', () => {
+        component.selection.selected.length = 2;
+        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        component.openCancelDialog();
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
+    });
+
+    it('should NOT open confirm cancellation dialog on click on `cancel` button when no orders selected', () => {
+        component.openCancelDialog();
+        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: 0});
+    });
+
+    it('should open `select orders` dialog on click on `cancel` button when no orders selected', () => {
+        component.openCancelDialog();
+        expect(matDialog.open.calls.mostRecent().args[0]).toEqual(SelectOrdersDialogComponent);
+        expect(matDialog.open.calls.mostRecent().args[1].data).toEqual(OrderNotifyAction.cancel);
+    });
+
+    it('should open snackbar if cancellation is confirmed', () => {
+        component.selection.selected.length = 2;
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        appStore.select.and.returnValue(of({id: 22}));
+        ordersService.cancel.and.returnValue(of({reference: 'some reference', channelName: 'some name'}))
+        component.openCancelDialog();
+        expect(snackbar.openFromComponent).toHaveBeenCalledTimes(1);
+        expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
+    });
+
+    it('should NOT open snackbar if cancellation is cancelled', () => {
+        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        component.openCancelDialog();
+        expect(snackbar.openFromComponent).not.toHaveBeenCalled();
+    });
+
+
     it('should ship selected orders on click the `ship` button', () => {
         matDialog.open.and.returnValue({afterClosed: () => of(true)});
         checkChangeStatusRequestSent('ship');
@@ -233,12 +416,12 @@ describe('OrdersTableComponent', () => {
         component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openShippingDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent);
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
     });
 
     it('should NOT open shipping confirmation dialog on click on `ship` button when no orders selected', () => {
         component.openShippingDialog();
-        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmShippingDialogComponent);
+        expect(matDialog.open).not.toHaveBeenCalledWith(ConfirmShippingDialogComponent, {data: {ordersNumber: 0}});
     });
 
     it('should open `select orders` dialog on click on `ship` button when no orders selected', () => {

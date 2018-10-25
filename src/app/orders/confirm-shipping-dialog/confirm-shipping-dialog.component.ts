@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
 
 @Component({
     selector: 'sf-confirm-shipping-dialog',
@@ -8,7 +9,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class ConfirmShippingDialogComponent implements OnInit {
 
-    constructor(protected dialogRef: MatDialogRef<ConfirmShippingDialogComponent>) {
+    constructor(protected dialogRef: MatDialogRef<ConfirmShippingDialogComponent>,
+                @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
     }
 
     ngOnInit() {

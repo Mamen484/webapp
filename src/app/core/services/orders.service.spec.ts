@@ -104,7 +104,7 @@ describe('OrdersService', () => {
         it('should call appropriate endpoint when filter.channel is specified', () => {
             filter.channel = 'some-channel';
             service.fetchOrdersList(filter).subscribe();
-            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&channel=some-channel&page=1`);
+            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&channelId=some-channel&page=1`);
         });
 
         it('should NOT include search to endpoint params if search value is empty', () => {
@@ -128,7 +128,7 @@ describe('OrdersService', () => {
         it('should call appropriate endpoint when filter.tag is specified', () => {
             filter.tag = 'tadada';
             service.fetchOrdersList(filter).subscribe();
-            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&tag=tadada&page=1`);
+            req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&tagName=tadada&page=1`);
         });
 
         it('should NOT include status param to endpoint params if it has undefined value', () => {
@@ -163,7 +163,7 @@ describe('OrdersService', () => {
             filter.acknowledgment = OrderAcknowledgment.unacknowledged;
             service.fetchOrdersList(filter).subscribe();
             req = httpMock.expectOne(`${environment.API_URL}/store/11/order?limit=10&since=2010-01-01T00:00:00.000Z`
-                + `&until=2030-01-01T00:00:00.000Z&channel=channel132&search=pamparam&tag=tadada&status=waiting_store_acceptance`
+                + `&until=2030-01-01T00:00:00.000Z&channelId=channel132&search=pamparam&tagName=tadada&status=waiting_store_acceptance`
                 + `&error=acknowledge&acknowledgment=unacknowledged&page=1`);
         });
 

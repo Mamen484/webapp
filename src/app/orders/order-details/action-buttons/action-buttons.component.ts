@@ -11,6 +11,7 @@ import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
+import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -50,6 +51,15 @@ export class ActionButtonsComponent implements OnInit {
                 channelName: this.order._embedded.channel.name,
             }]))
         ).subscribe(() => this.showSuccess(action));
+    }
+
+    cancelOrder() {
+        this.matDialog.open(ConfirmCancellationDialogComponent,
+            {data: {ordersNumber: 1, orderReference: this.order.reference}})
+            .afterClosed().pipe(
+            filter(data => Boolean(data)),
+        )
+            .subscribe(() => this.applyStatusAction(OrderNotifyAction.cancel));
     }
 
     openRefundDialog() {
