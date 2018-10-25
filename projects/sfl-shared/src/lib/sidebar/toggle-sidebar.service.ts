@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable()
-export class ToggleSidebarService {
+export class SflToggleSidebarService {
 
     subject$ = new Subject();
 

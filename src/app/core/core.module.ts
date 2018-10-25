@@ -43,7 +43,6 @@ import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
-import { ToggleSidebarService } from './services/toggle-sidebar.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
@@ -95,7 +94,6 @@ import { ChannelStorageService } from './services/channel-storage.service';
         OrdersService,
         SupportLinkService,
         TagsService,
-        ToggleSidebarService,
 
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},

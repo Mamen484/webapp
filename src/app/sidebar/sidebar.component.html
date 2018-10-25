@@ -1,4 +1,4 @@
-<sf-sidebar-container>
+<sfl-sidebar-container>
     <mat-list>
         <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
                        matTooltipPosition="after"
@@ -39,7 +39,7 @@
         <a [href]="linkToSupportCenter" target="_blank"><mat-icon>help</mat-icon></a>
         <span fxHide fxShow.xs i18n class="support-label">Support</span>
     </div>
-</sf-sidebar-container>
+</sfl-sidebar-container>
 
 <mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu">
     <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sfLegacyLink

@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ObservableMedia } from '@angular/flex-layout';
-import { ToggleSidebarService } from '../core/services/toggle-sidebar.service';
 import { MatSidenav } from '@angular/material';
+import { SflToggleSidebarService } from './toggle-sidebar.service';
 
 @Component({
-    selector: 'sf-sidebar-container',
+    selector: 'sfl-sidebar-container',
     templateUrl: './sidebar-container.component.html',
     styleUrls: ['./sidebar-container.component.scss']
 })
-export class SidebarContainerComponent implements OnInit {
+export class SflSidebarContainerComponent implements OnInit {
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 
     opened = true;
     isMobile = false;
 
-    constructor(protected mediaObserver: ObservableMedia, protected toggleSidebarSevice: ToggleSidebarService) {
+    constructor(protected mediaObserver: ObservableMedia, protected toggleSidebarSevice: SflToggleSidebarService) {
     }
 
     ngOnInit() {

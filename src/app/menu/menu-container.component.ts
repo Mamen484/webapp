@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ToggleSidebarService } from '../core/services/toggle-sidebar.service';
 import {
     ActivatedRoute,
     ActivationEnd,
@@ -11,6 +10,7 @@ import {
     Router
 } from '@angular/router';
 import { merge } from 'rxjs';
+import { SflToggleSidebarService } from 'sfl-shared';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
 
@@ -32,7 +32,7 @@ export class MenuContainerComponent implements OnInit {
      */
     showBackButton?: any[];
 
-    constructor(protected toggleSidebarService: ToggleSidebarService,
+    constructor(protected toggleSidebarService: SflToggleSidebarService,
                 protected route: ActivatedRoute,
                 protected router: Router) {
         this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
