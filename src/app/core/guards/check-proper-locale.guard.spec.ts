@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { CheckProperLocaleGuard } from './check-proper-locale.guard';
 import { of } from 'rxjs';
-import { LocaleIdService } from '../services/locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
 import { WindowRefService } from '../services/window-ref.service';
 import { Location } from '@angular/common';
@@ -19,7 +19,7 @@ describe('CheckProperLocaleGuard', () => {
                 imports: [RouterTestingModule.withRoutes([])],
                 providers: [
                     CheckProperLocaleGuard,
-                    {provide: LocaleIdService, useValue: {localeId: 'it'}},
+                    {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
                     {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
                     {provide: Store, useValue: appStore},
                     Location,
@@ -44,7 +44,7 @@ describe('CheckProperLocaleGuard', () => {
                 imports: [RouterTestingModule.withRoutes([])],
                 providers: [
                     CheckProperLocaleGuard,
-                    {provide: LocaleIdService, useValue: {localeId: 'it'}},
+                    {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
                     {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
                     {provide: Location, useValue: locationSpy},
                     {provide: Store, useValue: appStore},

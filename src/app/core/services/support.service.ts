@@ -3,13 +3,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { SearchArticlesPage } from '../entities/search-articles-page';
 import { Observable } from 'rxjs';
-import { LocaleIdService } from './locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
 
 @Injectable()
 export class SupportService {
 
+    public helpCenterLanguage;
+
     constructor(protected httpClient: HttpClient,
-                protected localeidService: LocaleIdService) {
+                protected localeIdService: SflLocaleIdService) {
+        this.helpCenterLanguage = this.getHelpCenterLanguage(this.localeIdService.localeId);
     }
 
     searchArticles(searchQuery): Observable<SearchArticlesPage> {
@@ -17,8 +20,22 @@ export class SupportService {
             params: new HttpParams()
                 .set('text', searchQuery)
                 .set('in_support_center', 'true')
-                .set('locale', this.localeidService.getHelpCenterLanguage())
+                .set('locale', this.helpCenterLanguage)
         }) as Observable<SearchArticlesPage>;
+    }
+
+    protected getHelpCenterLanguage(localeId) {
+        switch (localeId) {
+            case 'it':
+            case 'es':
+                return localeId;
+
+            case'fr':
+                return 'fr_fr';
+
+            default:
+                return 'en';
+        }
     }
 
 }

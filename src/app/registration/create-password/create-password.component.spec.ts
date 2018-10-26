@@ -1,4 +1,4 @@
-import {throwError,  Observable, of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreatePasswordComponent } from './create-password.component';
@@ -6,7 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatePasswordService } from '../../core/services/create-password.service';
-import { LocaleIdService } from '../../core/services/locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { LocalStorageService } from '../../core/services/local-storage.service';
@@ -35,9 +35,14 @@ describe('CreatePasswordComponent', () => {
                 {provide: ShopifyAuthentifyService, useValue: shopifyService},
                 {provide: LocalStorageService, useValue: localStorage},
                 {provide: CreatePasswordService, useValue: createPasswordService},
-                {provide: LocaleIdService, useValue: {localeId: 'en'}},
+                {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},
-                {provide: LegacyLinkService, useValue: {getLegacyLink: () => {}}},
+                {
+                    provide: LegacyLinkService, useValue: {
+                        getLegacyLink: () => {
+                        }
+                    }
+                },
             ],
             declarations: [CreatePasswordComponent, BlankComponent]
         })
@@ -70,7 +75,7 @@ describe('CreatePasswordComponent', () => {
             expect(shopifyService.getStoreData).toHaveBeenCalled();
         });
 
-        it ('should NOT call password service if email or password are invalid', () => {
+        it('should NOT call password service if email or password are invalid', () => {
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
             createPasswordService.createPassword.and.returnValue(of({owner: {}}));
 
@@ -159,7 +164,7 @@ describe('CreatePasswordComponent', () => {
             expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account'])
         });
 
-        it ('should display an error if the createPassword request returns an error', () => {
+        it('should display an error if the createPassword request returns an error', () => {
             let router = TestBed.get(Router);
             spyOn(router, 'navigate');
             localStorage.getItem.and.returnValue(null);

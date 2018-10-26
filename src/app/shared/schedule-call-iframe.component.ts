@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LocaleIdService } from '../core/services/locale-id.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SupportService } from '../core/services/support.service';
 
 @Component({
     selector: 'sf-schedule-call-iframe',
@@ -13,7 +13,7 @@ export class ScheduleCallIframeComponent implements OnInit {
 
     calendlyUrl: SafeResourceUrl;
 
-    constructor(public localeIdService: LocaleIdService, public sanitizer: DomSanitizer) {
+    constructor(public supportService: SupportService, public sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
@@ -22,8 +22,7 @@ export class ScheduleCallIframeComponent implements OnInit {
     }
 
     protected getCalendlyUrl() {
-        let lang = this.localeIdService.getHelpCenterLanguage();
-        switch (lang) {
+        switch (this.supportService.helpCenterLanguage) {
             case 'fr_fr':
                 return 'https://calendly.com/shoppingfeedfr/feedangel-fr';
             case 'it':

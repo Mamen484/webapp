@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { StoreService } from './store.service';
 import { environment } from '../../../environments/environment';
-import { LocaleIdService } from './locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 import { allowNoExpectations } from '../entities/allow-no-expectaions';
 
@@ -13,7 +13,7 @@ describe('StoreService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 StoreService,
-                {provide: LocaleIdService, useValue: {localeId: 'en'}}
+                {provide: SflLocaleIdService, useValue: {localeId: 'en'}}
             ]
         });
     });

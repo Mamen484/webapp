@@ -12,6 +12,8 @@ import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { SflCoreModule } from 'sfl-shared';
+import { ChannelLanguage } from './core/entities/channel-language.enum';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -28,7 +30,7 @@ import { SflCoreModule } from 'sfl-shared';
         AppRoutingModule,
         LoginModule,
         LivechatWidgetModule,
-        SflCoreModule,
+        SflCoreModule.forRoot({baseHref: environment.BASE_HREF, languageOptions: <any>ChannelLanguage}),
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
     ],

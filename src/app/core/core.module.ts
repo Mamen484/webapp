@@ -9,7 +9,6 @@ import { StoreService } from './services/store.service';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { LocaleIdService } from './services/locale-id.service';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
 import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
@@ -74,7 +73,6 @@ import { ModuleImportGuard } from 'sfl-shared';
         ShopifyGuard,
         ShopSpecifiedGuard,
 
-        LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,

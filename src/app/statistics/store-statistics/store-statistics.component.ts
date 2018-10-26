@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Statistics } from '../../core/entities/statistics';
 import { ActivatedRoute } from '@angular/router';
 import { AggregatedUserInfo } from '../../core/entities/aggregated-user-info';
-import { LocaleIdService } from '../../core/services/locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
+import { ChannelLanguage } from '../../core/entities/channel-language.enum';
 
 @Component({
     selector: 'sf-store-statistics',
@@ -16,7 +17,7 @@ export class StoreStatisticsComponent implements OnInit {
 
     constructor(protected route: ActivatedRoute) {
         this.route.parent.parent.data.subscribe(({userInfo}) => {
-            this.userLanguage = LocaleIdService.detectLocale((<AggregatedUserInfo>userInfo).language);
+            this.userLanguage = SflLocaleIdService.detectLocale((<AggregatedUserInfo>userInfo).language, ChannelLanguage);
         });
     }
 

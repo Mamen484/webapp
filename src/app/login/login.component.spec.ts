@@ -3,7 +3,7 @@ import {throwError, of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { UserService } from '../core/services/user.service';
-import { LocaleIdService } from '../core/services/locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
@@ -34,7 +34,7 @@ describe('LoginComponent', () => {
             ],
             providers: [
                 {provide: UserService, useValue: ({login: loginSpy, fetchAggregatedInfo: fetchAggregatedinfoSpy})},
-                {provide: LocaleIdService, useValue: ({localeId: 'en'})},
+                {provide: SflLocaleIdService, useValue: ({localeId: 'en'})},
                 {provide: Router, useValue: {navigate: navigateSpy}},
                 {
                     provide: LegacyLinkService, useValue: {
