@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, interval } from 'rxjs';
+import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { LocalStorageService } from '../../core/services/local-storage.service';
+import { LOAD_CAPTERRA } from '../../../trackers/capterra';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms
 const PERCENTS = 100;
@@ -20,6 +21,7 @@ export class CreateAccountComponent implements OnInit {
     }
 
     public ngOnInit() {
+        LOAD_CAPTERRA();
         this.localStorage.removeItem('sf.registration');
         this.showProgress();
     }

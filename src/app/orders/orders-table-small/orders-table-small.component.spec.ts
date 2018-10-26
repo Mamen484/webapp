@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrdersTableSmallComponent } from './orders-table-small.component';
-import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ChangeDetectorRef, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrdersService } from '../../core/services/orders.service';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { MatTableModule } from '@angular/material';
 import { EMPTY } from 'rxjs';
-import { SfCurrencyPipe } from '../../shared/sf-currency.pipe';
+import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 
 describe('OrdersTableSmallComponent', () => {
     let component: OrdersTableSmallComponent;
@@ -51,3 +51,7 @@ describe('OrdersTableSmallComponent', () => {
         expect(component).toBeTruthy();
     });
 });
+
+@Pipe({name: 'sfCurrency'})
+class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}

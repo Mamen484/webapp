@@ -8,7 +8,7 @@ import { OrdersFilterPatch } from '../entities/orders/orders-filter-patch';
 @Injectable()
 export class OrdersFilterService {
 
-    protected filter = new BehaviorSubject(new OrdersFilter());
+    protected filter = new BehaviorSubject(new OrdersFilter({since: OrdersFilter.aMonthBefore()}));
 
     getFilter() {
         return this.filter.asObservable().pipe(map(filter => cloneDeep(filter)));

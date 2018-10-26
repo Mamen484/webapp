@@ -18,6 +18,12 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
+        <mat-form-field color="accent" *ngIf="tags && tags.length">
+            <mat-select [(ngModel)]="filter.tag">
+                <mat-option value="all" i18n>All tags</mat-option>
+                <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutGap="20px" *ngIf="dateOption === 'custom'">
         <mat-form-field color="accent">

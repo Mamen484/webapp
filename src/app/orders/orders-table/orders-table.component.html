@@ -101,6 +101,15 @@
                     <th mat-header-cell *matHeaderCellDef i18n> Updated at</th>
                     <td mat-cell *matCellDef="let row"> {{row.updatedAt | date:'short'}}</td>
                 </ng-container>
+                <ng-container matColumnDef="services">
+                    <th mat-header-cell *matHeaderCellDef i18n> Services</th>
+                    <td mat-cell *matCellDef="let row">
+                        <div *ngIf="row.services.paymentIsAfn" i18n>Amazon FBA</div>
+                        <div *ngIf="row.services.isAmazonPrime" i18n>Amazon Prime</div>
+                        <div *ngIf="row.services.paymentIsClogistique" i18n>Clogistique</div>
+                        <div *ngIf="row.services.shippedByManomano" i18n>Shipped by Manomano</div>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="productAmount">
                     <th mat-header-cell *matHeaderCellDef i18n> Product amount</th>
                     <td mat-cell *matCellDef="let row"> {{row.productAmount | sfCurrency:row.currency}}</td>
@@ -151,6 +160,10 @@
 <mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
     <div mat-menu-item>
         <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt" i18n>Updated at
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.services" i18n>Services
         </mat-checkbox>
     </div>
     <div mat-menu-item>

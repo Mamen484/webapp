@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 describe('ConfirmShippingDialogComponent', () => {
     let component: ConfirmShippingDialogComponent;
@@ -15,7 +15,8 @@ describe('ConfirmShippingDialogComponent', () => {
             declarations: [ConfirmShippingDialogComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                {provide: MatDialogRef, useValue: dialogRef}
+                {provide: MatDialogRef, useValue: dialogRef},
+                {provide: MAT_DIALOG_DATA, useValue: {ordersNumber: 1, orderReference: 'AAA'}},
             ]
         })
             .compileComponents();

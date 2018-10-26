@@ -1,4 +1,5 @@
 export enum LocalStorageKey {
     ordersPageSize = 'sf.orders.pageSize',
-    ordersDisplayedColumns = 'sf.orders.displayedColumns'
+    ordersDisplayedColumns = 'sf.orders.displayedColumns',
+    ordersSelection = 'sf.orders.selection',
 }

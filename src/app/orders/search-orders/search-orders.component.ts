@@ -42,7 +42,6 @@ export class SearchOrdersComponent implements OnInit {
 
     ngOnInit() {
         this.initializeTab();
-        this.ordersFilterService.patchFilter('since', OrdersFilter.aMonthBefore());
         this.searchControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')

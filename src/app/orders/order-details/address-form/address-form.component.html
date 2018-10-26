@@ -15,7 +15,7 @@
                    #lastName="ngModel" autocomplete="off" sfHasServerError
                    [validationError]="validationMessages?.lastName">
             <mat-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched) && lastName.errors?.required" i18n>
-                Please, specify the last name.
+                Last name required.
             </mat-error>
             <mat-error *ngIf="lastName.errors?.serverError">
                 {{lastName.errors?.serverError.value}}
@@ -28,7 +28,7 @@
             <input matInput [(ngModel)]="address.street" name="street" required (change)="unsetError('street')"
                    #street="ngModel" autocomplete="off" sfHasServerError [validationError]="validationMessages?.street">
             <mat-error *ngIf="street.invalid && (street.dirty || street.touched) && street.errors?.required" i18n>
-                Please, specify the address.
+                Address required.
             </mat-error>
             <mat-error *ngIf="street.errors?.serverError">
                 {{street.errors?.serverError.value}}
@@ -53,7 +53,7 @@
                    [validationError]="validationMessages?.postalCode">
             <mat-error i18n
                        *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched) && postalCode.errors?.required">
-                Please, specify the zip code.
+                Zip code required.
                 </mat-error>
                 <mat-error *ngIf="postalCode.errors?.serverError">
                     {{postalCode.errors?.serverError.value}}
@@ -64,7 +64,7 @@
             <input matInput [(ngModel)]="address.city" name="city" required #city="ngModel" autocomplete="off"
                    (change)="unsetError('city')" sfHasServerError [validationError]="validationMessages?.city">
             <mat-error *ngIf="city.invalid && (city.dirty || city.touched) && city.errors?.required" i18n>
-                Please, specify the city.
+                City required.
             </mat-error>
             <mat-error *ngIf="city.errors?.serverError">
                 {{city.errors?.serverError.value}}
