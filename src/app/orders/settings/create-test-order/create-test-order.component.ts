@@ -65,6 +65,7 @@ export class CreateTestOrderComponent implements OnInit {
     create() {
         if (!this.form.valid) {
             values(this.form.controls).forEach(control => control.markAsDirty());
+            this.channelControl.markAsDirty();
             this.snackBar.openFromComponent(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
             return;
         }
