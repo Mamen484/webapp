@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { OrdersService } from '../../../core/services/orders.service';
 import { filter, flatMap, map, startWith, take } from 'rxjs/operators';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSelect, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
 import { values } from 'lodash';
@@ -23,6 +23,7 @@ import { Store as UserStore } from '../../../core/entities/store';
 export class CreateTestOrderComponent implements OnInit {
 
     @ViewChild(NgForm) form: NgForm;
+    @ViewChild('paymentSelect') paymentSelect: MatSelect;
 
     order = new TestOrder();
     totalPrice: number;
@@ -117,6 +118,8 @@ export class CreateTestOrderComponent implements OnInit {
         this.paymentInputMode = values(this.channelMap).find(el => el === option.value.id)
             ? 'predefined'
             : 'custom';
+        // set internationalized default value of payment method dropdown
+        setTimeout(() => this.order.payment.method = this.paymentSelect.value);
     }
 
     setPaymentMethod(method: { value: string | 'custom' }) {

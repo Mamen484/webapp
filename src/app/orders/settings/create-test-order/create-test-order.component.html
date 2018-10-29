@@ -46,9 +46,8 @@
 
                         <mat-form-field appearance="outline" color="accent" *ngIf="paymentInputMode === 'predefined'">
                             <mat-label i18n>Payment</mat-label>
-                            <mat-select (selectionChange)="setPaymentMethod($event)"
-                                         value="Shipped by merchant"
-                                        i18n-value>
+                            <mat-select (selectionChange)="setPaymentMethod($event)" #paymentSelect
+                                         value="Shipped by merchant" i18n-value>
                                 <mat-option i18n value="Shipped by merchant" i18n-value>Shipped by merchant</mat-option>
                                 <mat-option i18n value="FBA" *ngIf="order.channelId === channelMap.amazon">
                                     FBA
