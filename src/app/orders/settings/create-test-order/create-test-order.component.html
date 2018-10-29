@@ -32,14 +32,22 @@
                                     <mat-option i18n>Loading...</mat-option>
                                 </ng-template>
                             </mat-autocomplete>
+                            <mat-error
+                                    *ngIf="channelControl.invalid && (channelControl.dirty || channelControl.touched)"
+                                    i18n>
+                                Channel required
+                            </mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" color="accent">
+                        <mat-form-field appearance="outline" color="accent" *ngIf="paymentInputMode === 'custom'">
                             <mat-label i18n>Payment</mat-label>
-                            <input matInput name="payment" [(ngModel)]="order.payment.method"
-                                   *ngIf="paymentInputMode === 'custom'" #paymentMethod>
+                            <input matInput name="payment" [(ngModel)]="order.payment.method">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" color="accent" *ngIf="paymentInputMode === 'predefined'">
+                            <mat-label i18n>Payment</mat-label>
                             <mat-select (selectionChange)="setPaymentMethod($event)"
-                                        *ngIf="paymentInputMode === 'predefined'" value="Shipped by merchant"
+                                         value="Shipped by merchant"
                                         i18n-value>
                                 <mat-option i18n value="Shipped by merchant" i18n-value>Shipped by merchant</mat-option>
                                 <mat-option i18n value="FBA" *ngIf="order.channelId === channelMap.amazon">
@@ -61,7 +69,9 @@
                                    (change)="changeCarrier()">
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" color="accent">
+                        <mat-form-field appearance="outline" color="accent" matTooltip="Specify Carrier first"
+                                        [matTooltipDisabled]="!!order.shipment.carrier" i18n-matTooltip
+                                        matTooltipClass="sf-specify-carrier-tooltip">
                             <mat-label i18n>Relay number</mat-label>
                             <input matInput name="trackingNumber" [(ngModel)]="order.shipment.trackingNumber"
                                    [disabled]="!order.shipment.carrier">
@@ -74,7 +84,7 @@
                         <table>
                             <tr>
                                 <th i18n required>SKU</th>
-                                <th i18n>Qty</th>
+                                <th i18n>Quantity</th>
                                 <th i18n required>Price</th>
                                 <th>
                                     <button mat-button class="add-item" (click)="addItem()" matTooltip="Add line"
@@ -91,7 +101,7 @@
                                         <mat-error
                                                 *ngIf="itemReference.invalid && (itemReference.dirty || itemReference.touched)"
                                                 i18n>
-                                            Please, specify SKU
+                                            SKU required
                                         </mat-error>
                                     </mat-form-field>
                                 </td>
@@ -111,7 +121,7 @@
                                                (invalidValueSet)="item.price = 1; updateTotalPrice()">
                                         <mat-error *ngIf="itemPrice.invalid && (itemPrice.dirty || itemPrice.touched)"
                                                    i18n>
-                                            Please, specify price
+                                            Price required
                                         </mat-error>
                                     </mat-form-field>
                                 </td>
@@ -125,8 +135,8 @@
                             <tr class="totals">
                                 <td>
                                     <div>
-                                        <div i18n>Product total</div>
-                                        <div i18n>Delivery cost</div>
+                                        <div i18n>Total Goods</div>
+                                        <div i18n>Total delivery</div>
                                         <div i18n class="mat-body-2">Total</div>
                                     </div>
                                 </td>
@@ -156,7 +166,10 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="flex-end center" class="buttons">
                 <button type="reset" mat-button color="accent" i18n (click)="reset()">Cancel</button>
-                <button mat-raised-button color="accent" i18n (click)="create()">Create</button>
+                <button mat-raised-button color="accent" i18n (click)="create()">
+                    <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="saveScheduled"></mat-spinner>
+                    <ng-container *ngIf="!saveScheduled">Create</ng-container>
+                </button>
             </div>
         </form>
     </div>

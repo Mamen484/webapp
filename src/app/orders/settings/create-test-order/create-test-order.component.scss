@@ -70,3 +70,14 @@ mat-card {
     margin-right: 10px;
   }
 }
+
+button {
+  mat-spinner {
+    margin: 8px auto;
+    ::ng-deep {
+      circle {
+        stroke: white;
+      }
+    }
+  }
+}

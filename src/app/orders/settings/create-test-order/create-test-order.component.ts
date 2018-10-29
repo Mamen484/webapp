@@ -35,6 +35,8 @@ export class CreateTestOrderComponent implements OnInit {
     filteredNewChannels: Channel[];
     paymentInputMode: 'custom' | 'predefined' = 'custom';
     channelMap = {amazon: 66, cdiscount: 111, monechelle: 259};
+    // to show progress spinner after 'save' clicked
+    saveScheduled = false;
 
     constructor(protected appStore: Store<AppState>,
                 protected ordersService: OrdersService,
@@ -66,6 +68,7 @@ export class CreateTestOrderComponent implements OnInit {
             this.snackBar.openFromComponent(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
             return;
         }
+        this.saveScheduled = true;
         this.ordersService.create(this.order).subscribe(() => this.router.navigate(['/orders']));
     }
 
