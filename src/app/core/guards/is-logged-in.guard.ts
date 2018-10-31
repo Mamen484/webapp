@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { UserService } from '../services/user.service';
 import { LegacyLinkService } from '../services/legacy-link.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 
@@ -16,10 +16,10 @@ import { AppState } from '../entities/app-state';
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {
 
-    constructor(protected windowRef: WindowRefService,
+    constructor(protected windowRef: SflWindowRefService,
                 protected userService: UserService,
                 protected legacyLinkService: LegacyLinkService,
-                protected localStorage: LocalStorageService,
+                protected localStorage: SflLocalStorageService,
                 protected appStore: Store<AppState>) {
 
     }

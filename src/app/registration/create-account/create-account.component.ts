@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { LocalStorageService } from '../../core/services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { LOAD_CAPTERRA } from '../../../trackers/capterra';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms
@@ -17,7 +17,7 @@ export class CreateAccountComponent implements OnInit {
     public registrationFinished = false;
     public updateFrequency = PROGRESS_UPDATE_FREQUENCY;
 
-    constructor(protected localStorage: LocalStorageService) {
+    constructor(protected localStorage: SflLocalStorageService) {
     }
 
     public ngOnInit() {

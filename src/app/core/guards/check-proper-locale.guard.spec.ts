@@ -3,7 +3,7 @@ import { CheckProperLocaleGuard } from './check-proper-locale.guard';
 import { of } from 'rxjs';
 import { SflLocaleIdService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import createSpyObj = jasmine.createSpyObj;
@@ -20,7 +20,7 @@ describe('CheckProperLocaleGuard', () => {
                 providers: [
                     CheckProperLocaleGuard,
                     {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
-                    {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
+                    {provide: SflWindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
                     {provide: Store, useValue: appStore},
                     Location,
                 ]
@@ -45,7 +45,7 @@ describe('CheckProperLocaleGuard', () => {
                 providers: [
                     CheckProperLocaleGuard,
                     {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
-                    {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
+                    {provide: SflWindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
                     {provide: Location, useValue: locationSpy},
                     {provide: Store, useValue: appStore},
                 ]
@@ -53,7 +53,7 @@ describe('CheckProperLocaleGuard', () => {
         });
 
         it('should redirect the user to the valid localization folder and return false',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+            inject([CheckProperLocaleGuard, SflWindowRefService], (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                 environment.production = 'true';
                 appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('');
@@ -64,7 +64,7 @@ describe('CheckProperLocaleGuard', () => {
             }));
 
         it('should add a slash before the whole path if it doesn\'t exist to prevent extra redirects on the server',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+            inject([CheckProperLocaleGuard, SflWindowRefService], (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                 environment.production = 'true';
                 appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('?store=307');
@@ -75,7 +75,7 @@ describe('CheckProperLocaleGuard', () => {
             }));
 
         it('should NOT add a slash before the whole path if it starts from the slash',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
+            inject([CheckProperLocaleGuard, SflWindowRefService], (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                 environment.production = 'true';
                 appStore.select.and.returnValue(of({language: 'en-US'}));
                 locationSpy.path.and.returnValue('/?store=307');

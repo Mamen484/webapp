@@ -9,10 +9,10 @@ import {
     ONLINE_STORAGE_KEY,
     TURNOVER_STORAGE_KEY
 } from './channel-storage.service';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 describe('ChannelStorageService', () => {
-    let localStorage: jasmine.SpyObj<LocalStorageService>;
+    let localStorage: jasmine.SpyObj<SflLocalStorageService>;
     let service: ChannelStorageService;
     beforeEach(() => {
 
@@ -20,7 +20,7 @@ describe('ChannelStorageService', () => {
 
         TestBed.configureTestingModule({
             providers: [
-                {provide: LocalStorageService, useValue: localStorage},
+                {provide: SflLocalStorageService, useValue: localStorage},
             ],
         });
 

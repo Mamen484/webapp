@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { take, flatMap } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
@@ -20,7 +20,7 @@ import { INITIALIZE_USER_INFO } from '../reducers/user-info-reducer';
 export class IsAuthorizedGuard implements CanActivate {
     constructor(protected router: Router,
                 protected userService: UserService,
-                protected localStorage: LocalStorageService,
+                protected localStorage: SflLocalStorageService,
                 protected appStore: Store<AppState>) {
     }
 

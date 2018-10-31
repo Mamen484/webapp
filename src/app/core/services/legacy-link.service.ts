@@ -4,7 +4,7 @@ import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { Store as AppStore } from '../entities/store';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 @Injectable()
 export class LegacyLinkService {
@@ -12,7 +12,7 @@ export class LegacyLinkService {
     currentStore: AppStore;
 
     constructor(protected appStore: Store<AppState>,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: SflLocalStorageService) {
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
     }
 

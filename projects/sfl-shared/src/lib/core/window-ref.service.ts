@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class WindowRefService {
+export class SflWindowRefService {
 
     get nativeWindow(): any {
         return window;

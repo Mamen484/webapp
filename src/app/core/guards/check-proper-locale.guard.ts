@@ -5,7 +5,7 @@ import { filter, map, take } from 'rxjs/operators';
 import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { SflLocaleIdService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { Location } from '@angular/common';
@@ -15,7 +15,7 @@ import { ChannelLanguage } from '../entities/channel-language.enum';
 export class CheckProperLocaleGuard implements CanActivate {
 
     constructor(protected localeIdService: SflLocaleIdService,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected appStore: Store<AppState>,
                 protected location: Location) {
     }

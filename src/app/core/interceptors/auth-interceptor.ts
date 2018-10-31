@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(protected localStorage: LocalStorageService) {
+    constructor(protected localStorage: SflLocalStorageService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

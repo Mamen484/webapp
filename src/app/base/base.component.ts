@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
@@ -21,7 +21,7 @@ import { Store as AppStore } from '../core/entities/store';
 export class BaseComponent {
 
     constructor(protected appStore: Store<AppState>,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected storeService: StoreService,
                 protected tagsService: TagsService) {
 

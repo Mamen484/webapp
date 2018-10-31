@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from '../../core/services/local-storage.service';
-import { WindowRefService } from '../../core/services/window-ref.service';
+import { SflLocalStorageService } from 'sfl-shared';
+import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -12,8 +12,8 @@ export class AdminMenuComponent {
 
     searchFocused = false;
 
-    constructor(protected windowRef: WindowRefService,
-                protected localStorage: LocalStorageService) {
+    constructor(protected windowRef: SflWindowRefService,
+                protected localStorage: SflLocalStorageService) {
     }
 
     logout() {

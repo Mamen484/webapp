@@ -1,5 +1,5 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { LoginByTokenGuard } from './login-by-token.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ describe('LoginByTokenGuard', () => {
             ],
             providers: [
                 LoginByTokenGuard,
-                {provide: LocalStorageService, useValue: {setItem: setitemSpy}}
+                {provide: SflLocalStorageService, useValue: {setItem: setitemSpy}}
             ],
             declarations: [BlankComponent]
         });

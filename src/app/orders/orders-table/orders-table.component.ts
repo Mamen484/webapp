@@ -26,7 +26,7 @@ import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-sna
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
-import { LocalStorageService } from '../../core/services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
@@ -83,7 +83,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected router: Router,
                 protected snackbar: MatSnackBar,
                 protected elementRef: ElementRef<HTMLElement>,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: SflLocalStorageService) {
     }
 
     @HostListener('window:resize', ['$event'])

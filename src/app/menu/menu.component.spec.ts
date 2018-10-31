@@ -3,8 +3,8 @@ import { MenuComponent } from './menu.component';
 import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { LocalStorageService } from '../core/services/local-storage.service';
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflLocalStorageService } from 'sfl-shared';
+import { SflWindowRefService } from 'sfl-shared';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
@@ -20,8 +20,8 @@ describe('MenuComponent', () => {
     let fixture: ComponentFixture<MenuComponent>;
 
     let appStore: jasmine.SpyObj<Store<AppState>>;
-    let localStorage: jasmine.SpyObj<LocalStorageService>;
-    let windowRef: WindowRefService;
+    let localStorage: jasmine.SpyObj<SflLocalStorageService>;
+    let windowRef: SflWindowRefService;
     let timelineService: jasmine.SpyObj<TimelineService>;
     let route: ActivatedRoute;
     let router: Router;
@@ -38,8 +38,8 @@ describe('MenuComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},
-                {provide: LocalStorageService, useValue: localStorage},
-                {provide: WindowRefService, useValue: windowRef},
+                {provide: SflLocalStorageService, useValue: localStorage},
+                {provide: SflWindowRefService, useValue: windowRef},
                 {provide: TimelineService, useValue: timelineService},
                 {provide: ActivatedRoute, useValue: route},
                 {provide: Router, useValue: router},

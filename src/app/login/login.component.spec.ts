@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -43,7 +43,7 @@ describe('LoginComponent', () => {
                 }
                 },
                 {
-                    provide: WindowRefService,
+                    provide: SflWindowRefService,
                     useValue: {
                         nativeWindow: {
                             location: {href: ''},

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -13,12 +13,12 @@ export class CanLoadAdminGuard implements CanLoad {
     constructor(protected router: Router,
                 protected appStore: Store<AppState>,
                 protected userService: UserService,
-                protected windowRefService: WindowRefService) {
+                protected SflWindowRefService: SflWindowRefService) {
     }
 
     canLoad(): Observable<boolean> {
 
-        this.windowRefService.nativeWindow.location.href = environment.APP_URL + '/admin';
+        this.SflWindowRefService.nativeWindow.location.href = environment.APP_URL + '/admin';
         return of(false);
 
         // return Observable.create(observer => {

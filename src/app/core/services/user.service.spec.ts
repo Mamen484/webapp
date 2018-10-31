@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { UserService } from './user.service';
 import { environment } from '../../../environments/environment';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 describe('UserService', () => {
     let setItemSpy: jasmine.Spy;
@@ -13,7 +13,7 @@ describe('UserService', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 UserService,
-                {provide: LocalStorageService, useValue: {setItem: setItemSpy}}
+                {provide: SflLocalStorageService, useValue: {setItem: setItemSpy}}
             ]
         });
     });

@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflLocalStorageService } from 'sfl-shared';
+import { SflWindowRefService } from 'sfl-shared';
 
 @Injectable()
 export class ShopifyGuard implements CanActivate {
 
     constructor(protected service: ShopifyAuthentifyService,
-                protected localStorage: LocalStorageService,
-                protected windowRef: WindowRefService) {
+                protected localStorage: SflLocalStorageService,
+                protected windowRef: SflWindowRefService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): boolean {

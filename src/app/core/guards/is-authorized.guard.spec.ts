@@ -1,8 +1,8 @@
 import { Observable, of, throwError } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflWindowRefService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { aggregatedUserInfoMock } from '../../../mocks/agregated-user-info-mock';
 import { Store } from '@ngrx/store';
@@ -29,10 +29,10 @@ describe('IsAuthorizedGuard', () => {
             providers: [
                 IsAuthorizedGuard,
                 {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
+                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
-                {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
+                {provide: SflWindowRefService, useValue: {nativeWindow: {location: {}}}},
             ]
         });
     });

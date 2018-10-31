@@ -9,7 +9,7 @@ import { CreatePasswordService } from '../../core/services/create-password.servi
 import { SflLocaleIdService } from 'sfl-shared';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
-import { LocalStorageService } from '../../core/services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { BlankComponent } from '../../shared/blank.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -33,7 +33,7 @@ describe('CreatePasswordComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: ShopifyAuthentifyService, useValue: shopifyService},
-                {provide: LocalStorageService, useValue: localStorage},
+                {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: CreatePasswordService, useValue: createPasswordService},
                 {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},

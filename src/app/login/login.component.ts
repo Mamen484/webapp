@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
 import { URLSearchParams } from '@angular/http';
 
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../environments/environment';
 import { UserService } from '../core/services/user.service';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
     constructor(protected userService: UserService,
                 protected router: Router,
-                protected windowRef: WindowRefService) {
+                protected windowRef: SflWindowRefService) {
 
     }
 

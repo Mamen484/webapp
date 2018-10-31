@@ -4,7 +4,7 @@ import { CanLoadAdminGuard } from './can-load-admin.guard';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
 
 describe('CanLoadAdminGuard', () => {
@@ -24,7 +24,7 @@ describe('CanLoadAdminGuard', () => {
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
                 {provide: UserService, useValue: userService},
-                {provide: WindowRefService, useValue: windowRef},
+                {provide: SflWindowRefService, useValue: windowRef},
             ]
         });
     });

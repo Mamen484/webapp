@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { WindowRefService } from './window-ref.service';
+import { SflWindowRefService } from './window-ref.service';
 
 /**
  * Wrapper over window localStorage, friendly to DI
  */
 
 @Injectable()
-export class LocalStorageService {
+export class SflLocalStorageService {
 
-    constructor(protected windowRef: WindowRefService) {
+    constructor(protected windowRef: SflWindowRefService) {
     }
 
     get length() {

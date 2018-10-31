@@ -10,7 +10,7 @@ import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-re
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { WindowRefService } from './services/window-ref.service';
+import { ModuleImportGuard } from 'sfl-shared';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
@@ -27,7 +27,6 @@ import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
-import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { ErrorInterceptor } from './interceptors/error-interceptor';
@@ -44,7 +43,6 @@ import { SupportLinkService } from './services/support-link.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
-import { ModuleImportGuard } from 'sfl-shared';
 
 @NgModule({
     imports: [
@@ -72,7 +70,6 @@ import { ModuleImportGuard } from 'sfl-shared';
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
-
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,
@@ -81,12 +78,10 @@ import { ModuleImportGuard } from 'sfl-shared';
         RegistrationCacheGuard,
         CreatePasswordService,
         SupportService,
-        WindowRefService,
         PasswordRecoveryService,
         UserService,
         StoreService,
         LegacyLinkService,
-        LocalStorageService,
         TimelineService,
         OrdersFilterService,
         OrdersService,
@@ -97,7 +92,7 @@ import { ModuleImportGuard } from 'sfl-shared';
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        ],
+    ],
     declarations: []
 })
 export class CoreModule {

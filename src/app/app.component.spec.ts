@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { WindowRefService } from './core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Location } from '@angular/common';
@@ -28,7 +28,7 @@ describe('AppComponent', () => {
             providers: [
                 {provide: Store, useValue: appStore},
                 {provide: Router, useValue: router},
-                {provide: WindowRefService, useValue: windowRef},
+                {provide: SflWindowRefService, useValue: windowRef},
                 {provide: Location, useValue: location},
             ],
             schemas: [NO_ERRORS_SCHEMA],

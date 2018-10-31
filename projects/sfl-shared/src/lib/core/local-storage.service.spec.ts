@@ -1,23 +1,23 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { LocalStorageService } from './local-storage.service';
-import { WindowRefService } from './window-ref.service';
+import { SflLocalStorageService } from './local-storage.service';
+import { SflWindowRefService } from './window-ref.service';
 
-describe('LocalStorageService', () => {
+describe('SflLocalStorageService', () => {
     let localStorage: jasmine.SpyObj<Storage>;
     let service;
     beforeEach(() => {
-        localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'removeItem', 'setItem', 'clear', 'key']);
+        localStorage = jasmine.createSpyObj('SflLocalStorageService', ['getItem', 'removeItem', 'setItem', 'clear', 'key']);
         TestBed.configureTestingModule({
             providers: [
-                LocalStorageService,
-                {provide: WindowRefService, useValue: {nativeWindow: {localStorage}}}
+                SflLocalStorageService,
+                {provide: SflWindowRefService, useValue: {nativeWindow: {localStorage}}}
             ]
         });
     });
 
     beforeEach(() => {
-        service = TestBed.get(LocalStorageService);
+        service = TestBed.get(SflLocalStorageService);
     });
 
     it('should be created', () => {
@@ -55,7 +55,7 @@ describe('LocalStorageService', () => {
     });
 
     it('length should get length from a window.localStorage',
-        inject([WindowRefService], (windowRef) => {
+        inject([SflWindowRefService], (windowRef) => {
             windowRef.nativeWindow.localStorage.length = 22;
             expect(service.length).toEqual(22);
         }));

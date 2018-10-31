@@ -7,7 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
 import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
 import { Store as UserStore } from './core/entities/store';
-import { WindowRefService } from './core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { LOAD_FULLSTORY } from '../trackers/fullstory';
 import { Location } from '@angular/common';
 
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
 
     constructor(protected appStore: Store<AppState>,
                 protected router: Router,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected location: Location,
                 protected renderer: Renderer2) {
     }

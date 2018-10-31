@@ -7,9 +7,9 @@ import { environment } from '../../environments/environment';
 import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 import { Store } from '../core/entities/store';
 import { SET_STORE } from '../core/reducers/current-store-reducer';
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared';
 import { StoreStatus } from '../core/entities/store-status.enum';
-import { LocalStorageService } from '../core/services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentType } from '../core/entities/payment-type.enum';
@@ -34,8 +34,8 @@ export class MenuComponent implements OnInit, OnDestroy {
 
 
     constructor(protected appStore: AppStore<AppState>,
-                protected windowRef: WindowRefService,
-                protected localStorage: LocalStorageService,
+                protected windowRef: SflWindowRefService,
+                protected localStorage: SflLocalStorageService,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
                 protected router: Router) {

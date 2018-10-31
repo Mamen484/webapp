@@ -4,6 +4,8 @@ import { SflToggleSidebarService } from './toggle-sidebar.service';
 import { ModuleImportGuard } from './entities/module-import-guard';
 import { SflLocaleIdService } from './locale-id.service';
 import { SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from './entities/sfl-dependencies';
+import { SflWindowRefService } from './window-ref.service';
+import { SflLocalStorageService } from './local-storage.service';
 
 @NgModule({
     imports: [
@@ -17,6 +19,8 @@ export class SflCoreModule {
             providers: [
                 SflToggleSidebarService,
                 SflLocaleIdService,
+                SflLocalStorageService,
+                SflWindowRefService,
                 {provide: SFL_BASE_HREF, useValue: baseHref},
                 {provide: SFL_LANGUAGE_OPTIONS, useValue: languageOptions},
             ]

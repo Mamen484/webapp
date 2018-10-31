@@ -4,7 +4,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { environment } from '../../../environments/environment';
 import { AuthInterceptor } from './auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 describe('AuthInterceptor', () => {
 
@@ -18,7 +18,7 @@ describe('AuthInterceptor', () => {
             imports: [HttpClientTestingModule],
             providers: [
                 {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy}}
+                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy}}
             ]
         });
     });

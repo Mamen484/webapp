@@ -3,7 +3,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { LegacyLinkService } from './legacy-link.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngrx/store';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 import { AppState } from '../entities/app-state';
 import { Subject } from 'rxjs/Rx';
 import { Store as CurrentStore } from '../entities/store';
@@ -21,7 +21,7 @@ describe('LegacyLinkService', () => {
         TestBed.configureTestingModule({
             providers: [
                 LegacyLinkService,
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy}},
+                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy}},
                 {provide: Store, useValue: store}
             ]
         });

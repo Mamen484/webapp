@@ -4,14 +4,14 @@ import { AggregatedUserInfo } from '../entities/aggregated-user-info';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared';
 
 @Injectable()
 export class UserService {
 
 
     constructor(protected httpClient: HttpClient,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: SflLocalStorageService) {
     }
 
     public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
