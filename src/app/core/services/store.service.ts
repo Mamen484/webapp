@@ -1,17 +1,13 @@
 import { map, publishReplay } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable, ConnectableObservable } from 'rxjs';
+import { ConnectableObservable, Observable } from 'rxjs';
 import { Statistics } from '../entities/statistics';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { StoreChannelResponse } from '../entities/store-channel-response';
+import { PagedResponse, Store, StoreChannel, StoreChannelResponse, StoreCharge } from 'sfl-shared/src/lib/core/entities';
 import { ChannelsResponse } from '../entities/channels-response';
-import { StoreChannel } from '../entities/store-channel';
-import { PagedResponse } from '../entities/paged-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
-import { StoreCharge } from '../entities/store-charge';
-import { Store } from '../entities/store';
-import { Tag } from '../entities/tag';
+
 
 @Injectable()
 export class StoreService {

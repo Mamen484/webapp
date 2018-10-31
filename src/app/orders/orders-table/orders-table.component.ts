@@ -12,7 +12,7 @@ import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource, Pag
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
-import { Store } from '../../core/entities/store';
+import { Store } from 'sfl-shared/src/lib/core/entities';
 import { toPairs, uniq } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { combineLatest, Subject, Subscription } from 'rxjs';

@@ -30,7 +30,12 @@ import { environment } from '../environments/environment';
         AppRoutingModule,
         LoginModule,
         LivechatWidgetModule,
-        SflCoreModule.forRoot({baseHref: environment.BASE_HREF, languageOptions: <any>ChannelLanguage}),
+        SflCoreModule.forRoot({
+            baseHref: environment.BASE_HREF,
+            languageOptions: ChannelLanguage,
+            sflApi: environment.API_URL,
+            sflApp: environment.APP_URL,
+        }),
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
     ],

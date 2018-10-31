@@ -1,5 +1,5 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { StoreValidationErrors } from '../entities/store-validation-errors';
+import { StoreValidationErrors } from 'sfl-shared/src/lib/core/entities';
 
 export function createUserErrorValidator(errorObject: StoreValidationErrors, path): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {

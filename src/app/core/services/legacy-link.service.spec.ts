@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { SflLocalStorageService } from 'sfl-shared';
 import { AppState } from '../entities/app-state';
 import { Subject } from 'rxjs/Rx';
-import { Store as CurrentStore } from '../entities/store';
+import { Store as CurrentStore } from 'sfl-shared/src/lib/core/entities';
 
 describe('LegacyLinkService', () => {
     let getItemSpy: jasmine.Spy;

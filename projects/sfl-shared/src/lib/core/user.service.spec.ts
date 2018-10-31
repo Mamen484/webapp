@@ -1,9 +1,9 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
-import { UserService } from './user.service';
-import { environment } from '../../../environments/environment';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflUserService } from './user.service';
+import { SflLocalStorageService } from './local-storage.service';
+import { SFL_API } from './entities/src/sfl-dependencies';
 
 describe('UserService', () => {
     let setItemSpy: jasmine.Spy;
@@ -12,30 +12,31 @@ describe('UserService', () => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
-                UserService,
-                {provide: SflLocalStorageService, useValue: {setItem: setItemSpy}}
+                SflUserService,
+                {provide: SflLocalStorageService, useValue: {setItem: setItemSpy}},
+                {provide: SFL_API, useValue: 'someLink'},
             ]
         });
     });
 
-    it('should be created', inject([UserService], (service: UserService) => {
+    it('should be created', inject([SflUserService], (service: SflUserService) => {
         expect(service).toBeTruthy();
     }));
 
     it('should request /me resource',
-        inject([UserService, HttpTestingController],
-            (service: UserService, httpMock: HttpTestingController) => {
+        inject([SflUserService, HttpTestingController],
+            (service: SflUserService, httpMock: HttpTestingController) => {
                 service.fetchAggregatedInfo().subscribe();
-                const req = httpMock.expectOne(environment.API_URL + '/me');
+                const req = httpMock.expectOne('someLink/me');
                 expect(req.request.method).toEqual('GET');
                 httpMock.verify();
             }));
 
     it('should request /auth resource',
-        inject([UserService, HttpTestingController],
-            (service: UserService, httpMock: HttpTestingController) => {
+        inject([SflUserService, HttpTestingController],
+            (service: SflUserService, httpMock: HttpTestingController) => {
                 service.login('username1', 'password1').subscribe();
-                const req = httpMock.expectOne(environment.API_URL + '/auth');
+                const req = httpMock.expectOne( 'someLink/auth');
                 expect(req.request.method).toEqual('POST');
                 expect(req.request.body.username).toEqual('username1');
                 expect(req.request.body.password).toEqual('password1');

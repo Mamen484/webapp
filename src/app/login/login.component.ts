@@ -5,8 +5,8 @@ import { URLSearchParams } from '@angular/http';
 
 import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../environments/environment';
-import { UserService } from '../core/services/user.service';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { SflUserService } from 'sfl-shared';
+import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
 
 @Component({
     selector: 'sf-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     contactEmail = environment.CONTACT_EMAIL;
     loadingNextPage = false;
 
-    constructor(protected userService: UserService,
+    constructor(protected userService: SflUserService,
                 protected router: Router,
                 protected windowRef: SflWindowRefService) {
 

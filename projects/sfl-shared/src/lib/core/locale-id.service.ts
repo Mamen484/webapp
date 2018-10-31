@@ -1,5 +1,5 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { SFL_LANGUAGE_OPTIONS } from './entities/sfl-dependencies';
+import { SFL_LANGUAGE_OPTIONS } from './entities/src/sfl-dependencies';
 
 export const LOCALES_MAP = {
     'us': 'en'

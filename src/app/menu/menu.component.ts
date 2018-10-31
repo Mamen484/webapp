@@ -1,18 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {timer as observableTimer } from 'rxjs';
+import { timer as observableTimer } from 'rxjs';
 import { Store as AppStore } from '@ngrx/store';
 
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
-import { Store } from '../core/entities/store';
-import { SET_STORE } from '../core/reducers/current-store-reducer';
-import { SflWindowRefService } from 'sfl-shared';
-import { StoreStatus } from '../core/entities/store-status.enum';
-import { SflLocalStorageService } from 'sfl-shared';
+import { AggregatedUserInfo, PaymentType, Store, StoreStatus } from 'sfl-shared/src/lib/core/entities';
+import { SflLocalStorageService, SflWindowRefService, SflUserService } from 'sfl-shared';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaymentType } from '../core/entities/payment-type.enum';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 
@@ -38,11 +33,12 @@ export class MenuComponent implements OnInit, OnDestroy {
                 protected localStorage: SflLocalStorageService,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
-                protected router: Router) {
+                protected router: Router,
+                protected userService: SflUserService) {
     }
 
     ngOnInit() {
-        this.appStore.select('userInfo').subscribe((userInfo: AggregatedUserInfo) => {
+        this.userService.fetchAggregatedInfo().subscribe((userInfo) => {
             this.userInfo = userInfo;
             this.isManager = Boolean(this.userInfo.roles.find(role => role === 'manager'));
             this.isAdmin = userInfo.isAdmin();

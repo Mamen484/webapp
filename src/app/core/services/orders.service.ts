@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ConnectableObservable, Observable } from 'rxjs';
-import { PagedResponse } from '../entities/paged-response';
+import { PagedResponse } from 'sfl-shared/src/lib/core/entities';
 import { Order } from '../entities/orders/order';
 import { OrdersFilter } from '../entities/orders/orders-filter';
 import { Address } from '../entities/orders/address';

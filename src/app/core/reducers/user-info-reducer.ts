@@ -1,4 +1,4 @@
-import { AggregatedUserInfo } from '../entities/aggregated-user-info';
+import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
 
 export const INITIALIZE_USER_INFO = 'INITIALIZE_USER_INFO';
 

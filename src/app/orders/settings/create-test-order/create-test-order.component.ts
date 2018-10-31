@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { AppState } from '../../../core/entities/app-state';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { OrdersService } from '../../../core/services/orders.service';
 import { filter, flatMap, map, startWith, take } from 'rxjs/operators';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
@@ -10,10 +10,9 @@ import { Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
 import { values } from 'lodash';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
-import { Channel } from '../../../core/entities/channel';
+import { Channel, Store as UserStore } from 'sfl-shared/src/lib/core/entities';
 import { combineLatest, Observable, zip } from 'rxjs';
 import { StoreService } from '../../../core/services/store.service';
-import { Store as UserStore } from '../../../core/entities/store';
 
 @Component({
     selector: 'sf-create-test-order',

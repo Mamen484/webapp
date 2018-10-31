@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { CanLoadAdminGuard } from './can-load-admin.guard';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { SflUserService } from 'sfl-shared';
 import { SflWindowRefService } from 'sfl-shared';
 import { environment } from '../../../environments/environment';
 
@@ -23,7 +23,7 @@ describe('CanLoadAdminGuard', () => {
                 CanLoadAdminGuard,
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
-                {provide: UserService, useValue: userService},
+                {provide: SflUserService, useValue: userService},
                 {provide: SflWindowRefService, useValue: windowRef},
             ]
         });

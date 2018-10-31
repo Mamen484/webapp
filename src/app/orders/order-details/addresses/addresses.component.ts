@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
 import { cloneDeep } from 'lodash';
-import { Store as UserStore } from '../../../core/entities/store';
+import { Store as UserStore } from 'sfl-shared/src/lib/core/entities';
 import { flatMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';

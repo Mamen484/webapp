@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { URLSearchParams } from '@angular/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { Store as AppStore } from '../entities/store';
+import { Store as AppStore } from 'sfl-shared/src/lib/core/entities';
 import { SflLocalStorageService } from 'sfl-shared';
 
 @Injectable()

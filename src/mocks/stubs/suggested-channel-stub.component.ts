@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Channel } from '../../app/core/entities/channel';
+import { Channel } from 'sfl-shared/src/lib/core/entities';
+
 
 @Component({
     selector: 'sf-suggested-channel',

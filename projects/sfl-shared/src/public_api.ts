@@ -11,6 +11,7 @@ export * from './lib/core/toggle-sidebar.service';
 export * from './lib/core/locale-id.service';
 export * from './lib/core/window-ref.service';
 export * from './lib/core/local-storage.service';
+export * from './lib/core/user.service';
 
-export * from './lib/core/entities/module-import-guard';
-export * from './lib/core/entities/sfl-dependencies';
+export * from './lib/core/entities/src/module-import-guard';
+export * from './lib/core/entities/src/sfl-dependencies';

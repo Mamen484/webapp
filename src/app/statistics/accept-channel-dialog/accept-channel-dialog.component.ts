@@ -4,7 +4,7 @@ import { StoreService } from '../../core/services/store.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
-import { StoreCharge } from '../../core/entities/store-charge';
+import { StoreCharge } from 'sfl-shared/src/lib/core/entities';
 
 @Component({
     selector: 'sf-accept-channel-dialog',

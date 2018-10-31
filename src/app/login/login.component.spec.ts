@@ -2,7 +2,7 @@
 import {throwError, of } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { UserService } from '../core/services/user.service';
+import { SflUserService } from 'sfl-shared';
 import { SflLocaleIdService } from 'sfl-shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { cloneDeep } from 'lodash';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { SflWindowRefService } from 'sfl-shared';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 
@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
                 NO_ERRORS_SCHEMA,
             ],
             providers: [
-                {provide: UserService, useValue: ({login: loginSpy, fetchAggregatedInfo: fetchAggregatedinfoSpy})},
+                {provide: SflUserService, useValue: ({login: loginSpy, fetchAggregatedInfo: fetchAggregatedinfoSpy})},
                 {provide: SflLocaleIdService, useValue: ({localeId: 'en'})},
                 {provide: Router, useValue: {navigate: navigateSpy}},
                 {
@@ -95,7 +95,7 @@ describe('LoginComponent', () => {
         expect(loginSpy).toHaveBeenCalledWith('123', 'asf');
     });
 
-    it('should write the error when the UserService returns an error', () => {
+    it('should write the error when the SflUserService returns an error', () => {
         loginSpy.and.returnValue(throwError({error: {detail: 'bubidu'}}));
         component.userNameControl.setValue('123');
         component.passwordControl.setValue('asf');

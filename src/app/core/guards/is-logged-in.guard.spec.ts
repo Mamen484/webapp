@@ -1,6 +1,6 @@
 import {throwError,  Observable, of } from 'rxjs';
 import { TestBed, inject } from '@angular/core/testing';
-import { UserService } from '../services/user.service';
+import { SflUserService } from 'sfl-shared';
 import { SflWindowRefService } from 'sfl-shared';
 import { LegacyLinkService } from '../services/legacy-link.service';
 import { SflLocalStorageService } from 'sfl-shared';
@@ -16,14 +16,14 @@ describe('IsLoggedInGuard', () => {
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
-        fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
+        fetchAggregatedInfoSpy = jasmine.createSpy('SflUserService.fetchAggregatedInfo');
         store = jasmine.createSpyObj('Store', ['select']);
         store.select.and.returnValue(of(null));
 
         TestBed.configureTestingModule({
             providers: [
                 IsLoggedInGuard,
-                {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
+                {provide: SflUserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
                 {provide: LegacyLinkService, useValue: {getLegacyLink: () => ''}},
                 {
                     provide: SflWindowRefService, useValue: {
@@ -45,7 +45,7 @@ describe('IsLoggedInGuard', () => {
             expect(guard.canActivate(<any>{})).toEqual(true);
         }));
 
-    it('should call UserService.fetchAggregatedInfo to check if the authorization is valid',
+    it('should call SflUserService.fetchAggregatedInfo to check if the authorization is valid',
         inject([IsLoggedInGuard], (guard: IsLoggedInGuard) => {
             getItemSpy.and.returnValue('some token');
             fetchAggregatedInfoSpy.and.returnValue(of({}));

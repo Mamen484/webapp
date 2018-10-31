@@ -36,9 +36,6 @@ export class AggregatedUserInfo {
     /**
      * If storeName specified, checks if there is an enabled store with name {storeName}.
      * Else finds the first store which status is not 'deleted'.
-     *
-     * @param {any} storeId
-     * @returns boolean
      */
     hasEnabledStore(storeId?: any) {
         if (storeId) {

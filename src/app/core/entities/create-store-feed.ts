@@ -1,4 +1,4 @@
-import { FeedSource } from './feed-source';
+import { FeedSource } from 'sfl-shared/src/lib/core/entities';
 
 export class CreateStoreFeed {
     url = '';

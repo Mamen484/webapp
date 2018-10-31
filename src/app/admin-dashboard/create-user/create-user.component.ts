@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Store } from '../../core/entities/store';
+import { Store } from 'sfl-shared/src/lib/core/entities';
 import { StoreService } from '../../core/services/store.service';
 import { MatDialog, MatSelectChange } from '@angular/material';
 import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
-import { StoreError } from '../../core/entities/store-error';
-import { StoreValidationErrors } from '../../core/entities/store-validation-errors';
+import { StoreError } from 'sfl-shared/src/lib/core/entities';
+import { StoreValidationErrors } from 'sfl-shared/src/lib/core/entities';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { createUserErrorValidator } from '../../core/validators/create-user-error.validator';
 import { values } from 'lodash';

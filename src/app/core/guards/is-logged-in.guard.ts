@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-import { SflWindowRefService } from 'sfl-shared';
-import { UserService } from '../services/user.service';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared';
 import { LegacyLinkService } from '../services/legacy-link.service';
-import { SflLocalStorageService } from 'sfl-shared';
-import { Store } from '@ngrx/store';
-import { AppState } from '../entities/app-state';
 
 /**
  * This guard is used to detect if the user logged in and if so to redirect to the homepage. For use on the login page.
@@ -17,10 +12,9 @@ import { AppState } from '../entities/app-state';
 export class IsLoggedInGuard implements CanActivate {
 
     constructor(protected windowRef: SflWindowRefService,
-                protected userService: UserService,
+                protected userService: SflUserService,
                 protected legacyLinkService: LegacyLinkService,
-                protected localStorage: SflLocalStorageService,
-                protected appStore: Store<AppState>) {
+                protected localStorage: SflLocalStorageService) {
 
     }
 
@@ -29,9 +23,7 @@ export class IsLoggedInGuard implements CanActivate {
         let auth = this.localStorage.getItem('Authorization');
         if (auth) {
             return Observable.create(observer => {
-                this.appStore.select('userInfo')
-                    .pipe(flatMap(userInfo => userInfo ? of(userInfo) : this.userService.fetchAggregatedInfo()))
-                    .subscribe(
+                this.userService.fetchAggregatedInfo().subscribe(
                     // token is valid, redirect to the homepage
                     () => {
                         this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink('/');

@@ -3,16 +3,16 @@ import { MenuComponent } from './menu.component';
 import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService, SflUserService } from 'sfl-shared';
 import { SflWindowRefService } from 'sfl-shared';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { MatMenuModule } from '@angular/material';
-import { PaymentType } from '../core/entities/payment-type.enum';
+import { PaymentType } from 'sfl-shared/src/lib/core/entities';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreStatus } from '../core/entities/store-status.enum';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { StoreStatus } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
 
 describe('MenuComponent', () => {
 
@@ -21,6 +21,7 @@ describe('MenuComponent', () => {
 
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
+    let userService: jasmine.SpyObj<SflUserService>;
     let windowRef: SflWindowRefService;
     let timelineService: jasmine.SpyObj<TimelineService>;
     let route: ActivatedRoute;
@@ -29,6 +30,7 @@ describe('MenuComponent', () => {
     beforeEach(() => {
         appStore = jasmine.createSpyObj(['select']);
         localStorage = jasmine.createSpyObj(['removeItem']);
+        userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         windowRef = {nativeWindow: <any>{}};
         timelineService = jasmine.createSpyObj(['emitUpdatedTimeline', 'getUpdatesNumber']);
         route = <any>{};
@@ -39,6 +41,7 @@ describe('MenuComponent', () => {
             providers: [
                 {provide: Store, useValue: appStore},
                 {provide: SflLocalStorageService, useValue: localStorage},
+                {provide: SflUserService, useValue: userService},
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: TimelineService, useValue: timelineService},
                 {provide: ActivatedRoute, useValue: route},
@@ -61,9 +64,10 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership` link when facturation permission exists', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create(
+        appStore.select.and.returnValue(of({permission: {facturation: '*'}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(
             {roles: ['user'], _embedded: {store: []}}
-        )), of({permission: {facturation: '*'}}));
+        )));
         fixture.detectChanges();
         openAccountMenu();
         expect(membershipElement()).toBeTruthy();
@@ -71,7 +75,8 @@ describe('MenuComponent', () => {
     });
 
     it('should NOT display `Membership` link when facturation permission does not exist', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({permission: {}}));
+        appStore.select.and.returnValue(of({permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(membershipElement()).toBeNull();
@@ -79,9 +84,8 @@ describe('MenuComponent', () => {
 
 
     it('should display `Membership link` when paymentType is credit_card', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
-            permission: {facturation: '*'}, paymentType: PaymentType.creditCard
-        }));
+        appStore.select.and.returnValue(of({permission: {facturation: '*'}, paymentType: PaymentType.creditCard}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(component.currentStore.paymentType).toEqual(PaymentType.creditCard);
@@ -90,9 +94,8 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is bank_transfer', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
-            permission: {facturation: '*'}, paymentType: PaymentType.bankTransfer
-        }));
+        appStore.select.and.returnValue(of({permission: {facturation: '*'}, paymentType: PaymentType.bankTransfer}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(component.currentStore.paymentType).toEqual(PaymentType.bankTransfer);
@@ -101,9 +104,8 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is sepa', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
-            permission: {facturation: '*'}, paymentType: PaymentType.sepa
-        }));
+        appStore.select.and.returnValue(of({permission: {facturation: '*'}, paymentType: PaymentType.sepa}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(component.currentStore.paymentType).toEqual(PaymentType.sepa);
@@ -112,9 +114,8 @@ describe('MenuComponent', () => {
     });
 
     it('should display `Membership link` when paymentType is `other`', () => {
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})), of({
-            permission: {facturation: '*'}, paymentType: PaymentType.other
-        }));
+        appStore.select.and.returnValue(of({permission: {facturation: '*'}, paymentType: PaymentType.other}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(component.currentStore.paymentType).toEqual(PaymentType.other);
@@ -128,9 +129,8 @@ describe('MenuComponent', () => {
             {id: 12, status: StoreStatus.deleted},
             {id: 13, status: StoreStatus.suspended},
         ];
-        appStore.select.and.returnValues(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store}})), of({
-            permission: {facturation: '*'}, paymentType: PaymentType.other, id: 11
-        }));
+        appStore.select.and.returnValues(of({permission: {facturation: '*'}, paymentType: PaymentType.other, id: 11}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store}})));
         fixture.detectChanges();
         openAccountMenu();
         expect(component.currentStore.id).toEqual(11);

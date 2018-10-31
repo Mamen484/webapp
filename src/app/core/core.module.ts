@@ -2,7 +2,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 
-import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
@@ -10,7 +9,7 @@ import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-re
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { ModuleImportGuard } from 'sfl-shared';
+import { ModuleImportGuard } from 'sfl-shared/src/lib/core/entities';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
@@ -79,7 +78,6 @@ import { ChannelStorageService } from './services/channel-storage.service';
         CreatePasswordService,
         SupportService,
         PasswordRecoveryService,
-        UserService,
         StoreService,
         LegacyLinkService,
         TimelineService,

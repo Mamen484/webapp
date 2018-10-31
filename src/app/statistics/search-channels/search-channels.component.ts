@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
 import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
-import { ChannelType } from '../../core/entities/channel-type.enum';
+import { ChannelType } from 'sfl-shared/src/lib/core/entities';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;

@@ -1,4 +1,4 @@
-import { Store } from '../entities/store';
+import { Store } from 'sfl-shared/src/lib/core/entities';
 import {cloneDeep} from 'lodash';
 
 export const SET_STORE = 'SET_STORE';

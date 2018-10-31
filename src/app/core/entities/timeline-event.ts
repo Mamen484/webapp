@@ -1,6 +1,6 @@
 import { TimelineEventAction } from './timeline-event-action.enum';
 import { TimelineEventName } from './timeline-event-name.enum';
-import { Channel } from './channel';
+import { Channel } from 'sfl-shared/src/lib/core/entities';
 import { TimelineErrorReason } from './timeline-error-reason';
 
 export interface TimelineEvent {
