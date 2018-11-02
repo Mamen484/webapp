@@ -32,15 +32,5 @@ describe('UserService', () => {
                 httpMock.verify();
             }));
 
-    it('should request /auth resource',
-        inject([SflUserService, HttpTestingController],
-            (service: SflUserService, httpMock: HttpTestingController) => {
-                service.login('username1', 'password1').subscribe();
-                const req = httpMock.expectOne( 'someLink/auth');
-                expect(req.request.method).toEqual('POST');
-                expect(req.request.body.username).toEqual('username1');
-                expect(req.request.body.password).toEqual('password1');
-                expect(req.request.body.grant_type).toEqual('password');
-                httpMock.verify();
-            }));
+
 });

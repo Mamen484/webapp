@@ -14,12 +14,14 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { SflCoreModule } from 'sfl-shared';
 import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
+import { SflAuthModule } from '../../projects/sfl-shared/src/lib/auth/auth.module';
 
 @NgModule({
     declarations: [
         AppComponent,
     ],
     imports: [
+        SflAuthModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,

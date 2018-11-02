@@ -15,3 +15,6 @@ export * from './lib/core/user.service';
 
 export * from './lib/core/entities/src/module-import-guard';
 export * from './lib/core/entities/src/sfl-dependencies';
+
+export * from './lib/auth/auth.module';
+export * from './lib/auth/auth.service';

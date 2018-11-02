@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { AggregatedUserInfo } from './entities/src/aggregated-user-info';
 import { ConnectableObservable, Observable } from 'rxjs';
-import { map, publishReplay, tap } from 'rxjs/operators';
+import { map, publishReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { SflLocalStorageService } from './local-storage.service';
 import { SFL_API } from './entities/src/sfl-dependencies';
@@ -25,16 +25,5 @@ export class SflUserService {
         }
         return this.userInfo$;
     }
-
-    public login(username, password) {
-        return this.httpClient.post(`${this.sflApi}/auth`, {
-            grant_type: 'password',
-            username,
-            password
-        }).pipe(tap(({token_type, access_token}: any) => {
-            this.localStorage.setItem('Authorization', `${token_type} ${access_token}`);
-        }));
-    }
-
 }
 
