@@ -1,4 +1,4 @@
-import { SflLocaleIdService } from './locale-id.service';
+import { LOCALES_MAP, SflLocaleIdService } from './locale-id.service';
 
 describe('LocaleIdService', () => {
 
@@ -32,4 +32,26 @@ describe('LocaleIdService', () => {
         expect(service.localeId).toEqual('pt');
     });
 
+});
+
+describe('SflLocaleIdService.detectLocale', () => {
+    it('should return localeId if it is in the language options', () => {
+        expect(SflLocaleIdService.detectLocale('locale', {tratata: 'any', locale: 'any'}))
+            .toBe('locale');
+    });
+
+    it('should return original localeId if it is NOT in the language options', () => {
+        expect(SflLocaleIdService.detectLocale('locale', {tratata: 'any', tratata2: 'any'}))
+            .toBe('locale');
+    });
+
+    it('should return localeId 2 first letters are in the language options', () => {
+        expect(SflLocaleIdService.detectLocale('en-GB', {en: 'any'}))
+            .toBe('en');
+    });
+
+    it('should match a locale from LOCALES_MAP', () => {
+        expect(SflLocaleIdService.detectLocale(Object.keys(LOCALES_MAP)[0], {en: 'any'}))
+            .toBe(Object.values(LOCALES_MAP)[0]);
+    });
 });

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
 import { ModuleImportGuard } from './entities/src/module-import-guard';
 import { SflLocaleIdService } from './locale-id.service';
-import { SFL_API, SFL_APP, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from './entities/src/sfl-dependencies';
+import { SFL_API, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from './entities/src/sfl-dependencies';
 import { SflWindowRefService } from './window-ref.service';
 import { SflLocalStorageService } from './local-storage.service';
 import { SflUserService } from './user.service';
@@ -14,7 +14,7 @@ import { SflUserService } from './user.service';
     ],
 })
 export class SflCoreModule {
-    static forRoot({baseHref, languageOptions, sflApi, sflApp}) {
+    static forRoot({baseHref, languageOptions, sflApi}) {
         return <ModuleWithProviders>{
             ngModule: SflCoreModule,
             providers: [
@@ -26,7 +26,6 @@ export class SflCoreModule {
                 {provide: SFL_BASE_HREF, useValue: baseHref},
                 {provide: SFL_LANGUAGE_OPTIONS, useValue: languageOptions},
                 {provide: SFL_API, useValue: sflApi},
-                {provide: SFL_APP, useValue: sflApp},
             ]
         }
     }

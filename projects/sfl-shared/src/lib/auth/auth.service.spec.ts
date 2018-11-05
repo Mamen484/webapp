@@ -40,6 +40,17 @@ describe('AuthService', () => {
         httpMock.verify();
     });
 
+    it('should write a token into a localstorage on successful auth', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
+
+        service.login('username1', 'password1').subscribe();
+        const req = httpMock.expectOne('someLink/auth');
+        req.flush({token_type: 'Bearer', access_token: 'some_token'});
+        expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some_token');
+
+    });
+
     it('should remove a token from a localstorage on logout() call', () => {
         const service: SflAuthService = TestBed.get(SflAuthService);
         service.logout();

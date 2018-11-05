@@ -9,7 +9,6 @@ import {
     NavigationStart,
     Router
 } from '@angular/router';
-import { merge } from 'rxjs';
 import { SflToggleSidebarService } from '../core/toggle-sidebar.service';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
@@ -37,13 +36,6 @@ export class MenuContainerComponent implements OnInit {
     }
 
     ngOnInit() {
-        // initialize 'back in history' button
-        merge(...this.getAllChildrenData())
-            .subscribe(({showBackButton}) => {
-                if (showBackButton) {
-                    this.showBackButton = showBackButton
-                }
-            });
         // add/remove 'back in history' button when change a route depending on backInHistory route data property
         this.router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
@@ -64,16 +56,6 @@ export class MenuContainerComponent implements OnInit {
 
     followBackButton() {
         this.router.navigate(this.showBackButton);
-    }
-
-    getAllChildrenData() {
-        let route = this.route;
-        let dataArray = [];
-        while (route) {
-            dataArray.push(route.data);
-            route = route.firstChild;
-        }
-        return dataArray;
     }
 
     /**

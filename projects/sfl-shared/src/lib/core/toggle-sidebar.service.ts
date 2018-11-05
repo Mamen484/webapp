@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class SflToggleSidebarService {
 
-    subject$ = new Subject();
+    protected subject$ = new Subject();
 
     constructor() {
     }
