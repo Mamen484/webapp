@@ -138,6 +138,133 @@
           }
         }
       }
+    },
+    "billing-admin": {
+      "root": "projects/billing-admin/",
+      "sourceRoot": "projects/billing-admin/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/billing-admin",
+            "index": "projects/billing-admin/src/index.html",
+            "main": "projects/billing-admin/src/main.ts",
+            "polyfills": "projects/billing-admin/src/polyfills.ts",
+            "tsConfig": "projects/billing-admin/tsconfig.app.json",
+            "assets": [
+              "projects/billing-admin/src/favicon.ico",
+              "projects/billing-admin/src/assets"
+            ],
+            "styles": [
+              "projects/billing-admin/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/billing-admin/src/environments/environment.ts",
+                  "with": "projects/billing-admin/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "billing-admin:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "billing-admin:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "billing-admin:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/billing-admin/src/test.ts",
+            "polyfills": "projects/billing-admin/src/polyfills.ts",
+            "tsConfig": "projects/billing-admin/tsconfig.spec.json",
+            "karmaConfig": "projects/billing-admin/karma.conf.js",
+            "styles": [
+              "projects/billing-admin/src/styles.css"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/billing-admin/src/favicon.ico",
+              "projects/billing-admin/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/billing-admin/tsconfig.app.json",
+              "projects/billing-admin/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "billing-admin-e2e": {
+      "root": "projects/billing-admin-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/billing-admin-e2e/protractor.conf.js",
+            "devServerTarget": "billing-admin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "billing-admin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/billing-admin-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "Shopping Feed UI",
