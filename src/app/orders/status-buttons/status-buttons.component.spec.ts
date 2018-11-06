@@ -5,6 +5,7 @@ import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
+import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 describe('StatusButtonsComponent', () => {
     let component: StatusButtonsComponent;
@@ -79,13 +80,65 @@ describe('StatusButtonsComponent', () => {
         expect(element()[1].textContent.trim()).toEqual('Ship');
     });
 
-    it('should display appropriate buttons for `shipped` tab', () => {
+    it('should Not display any buttons for `shipped` tab', () => {
         setComponentInputs(
             OrderStatus.shipped
         );
         expect(component.activeTab).toEqual(ActiveTab.shipped);
-        expect(element().length).toEqual(1);
-        expect(element()[0].textContent.trim()).toEqual('Cancel');
+        expect(element().length).toEqual(0);
+    });
+
+    describe('click on a status button', () => {
+
+        beforeEach(() => {
+            spyOn(component.actionApplied, 'emit');
+            fixture.detectChanges();
+        });
+
+        it('should emit a cancel event when click on a cancel button', () => {
+            component.activeTab = ActiveTab.toShip;
+            fixture.detectChanges();
+            const button = element()[0];
+            expect(button.textContent.trim()).toBe('Cancel');
+            button.click();
+            expect(component.actionApplied.emit).toHaveBeenCalledWith(OrderNotifyAction.cancel);
+        });
+
+        it('should emit a Ship event when click on a Ship button', () => {
+            component.activeTab = ActiveTab.toShip;
+            fixture.detectChanges();
+            const button = element()[1];
+            expect(button.textContent.trim()).toBe('Ship');
+            button.click();
+            expect(component.actionApplied.emit).toHaveBeenCalledWith(OrderNotifyAction.ship);
+        });
+
+        it('should emit a acknowledge event when click on a acknowledge button', () => {
+            component.activeTab = ActiveTab.toImport;
+            fixture.detectChanges();
+            const button = element()[0];
+            expect(button.textContent.trim()).toBe('Acknowledge');
+            button.click();
+            expect(component.actionApplied.emit).toHaveBeenCalledWith(OrderNotifyAction.acknowledge);
+        });
+
+        it('should emit a refuse event when click on a refuse button', () => {
+            component.activeTab = ActiveTab.toValidate;
+            fixture.detectChanges();
+            const button = element()[0];
+            expect(button.textContent.trim()).toBe('Refuse');
+            button.click();
+            expect(component.actionApplied.emit).toHaveBeenCalledWith(OrderNotifyAction.refuse);
+        });
+
+        it('should emit a accept event when click on a accept button', () => {
+            component.activeTab = ActiveTab.toValidate;
+            fixture.detectChanges();
+            const button = element()[1];
+            expect(button.textContent.trim()).toBe('Accept');
+            button.click();
+            expect(component.actionApplied.emit).toHaveBeenCalledWith(OrderNotifyAction.accept);
+        });
     });
 
 
