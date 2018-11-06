@@ -48,6 +48,11 @@ export class StatisticsComponent {
         )
             .subscribe(([statistics, channels]) => {
                 this.statistics = statistics;
+                if (!this.statistics._embedded) {
+                    this.statistics._embedded = {channel: []};
+                } else if (!Array.isArray(this.statistics._embedded.channel)) {
+                    this.statistics._embedded.channel = [];
+                }
                 this.initialize(channels);
                 this.processing = false;
 
