@@ -7,9 +7,8 @@ import { userInfoReducer } from './reducers/user-info-reducer';
 import { StoreService } from './services/store.service';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { ModuleImportGuard } from 'sfl-shared/src/lib/core/entities';
+import { ModuleImportGuard, SFL_APP_TOKEN } from 'sfl-shared/src/lib/core/entities';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
@@ -28,7 +27,6 @@ import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
-import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { currentRouteReducer } from './reducers/current-route-reducer';
 import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
@@ -42,6 +40,7 @@ import { SupportLinkService } from './services/support-link.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
+import { environment } from '../../environments/environment';
 
 @NgModule({
     imports: [
@@ -87,9 +86,8 @@ import { ChannelStorageService } from './services/channel-storage.service';
         TagsService,
 
         {provide: HttpClient, useClass: HttpClientService},
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+        {provide: SFL_APP_TOKEN, useValue: environment.APP_AUTHORIZATION}
     ],
     declarations: []
 })

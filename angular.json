@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Shopping Feed UI": {
+    "webapp": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -41,18 +41,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Shopping Feed UI:build"
+            "browserTarget": "webapp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Shopping Feed UI:build:prod"
+              "browserTarget": "webapp:build:prod"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Shopping Feed UI:build"
+            "browserTarget": "webapp:build"
           }
         },
         "test": {
@@ -83,7 +83,7 @@
         }
       }
     },
-    "Shopping Feed UI-e2e": {
+    "webapp-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -92,7 +92,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "Shopping Feed UI:serve"
+            "devServerTarget": "webapp:serve"
           }
         },
         "lint": {
@@ -139,27 +139,27 @@
         }
       }
     },
-    "billing-admin": {
-      "root": "projects/billing-admin/",
-      "sourceRoot": "projects/billing-admin/src",
+    "sf-admin": {
+      "root": "projects/sf-admin/",
+      "sourceRoot": "projects/sf-admin/src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "sfa",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/billing-admin",
-            "index": "projects/billing-admin/src/index.html",
-            "main": "projects/billing-admin/src/main.ts",
-            "polyfills": "projects/billing-admin/src/polyfills.ts",
-            "tsConfig": "projects/billing-admin/tsconfig.app.json",
+            "outputPath": "dist/sf-admin",
+            "index": "projects/sf-admin/src/index.html",
+            "main": "projects/sf-admin/src/main.ts",
+            "polyfills": "projects/sf-admin/src/polyfills.ts",
+            "tsConfig": "projects/sf-admin/tsconfig.app.json",
             "assets": [
-              "projects/billing-admin/src/favicon.ico",
-              "projects/billing-admin/src/assets"
+              "projects/sf-admin/src/favicon.ico",
+              "projects/sf-admin/src/assets"
             ],
             "styles": [
-              "projects/billing-admin/src/styles.css"
+              "projects/sf-admin/src/styles.scss"
             ],
             "scripts": []
           },
@@ -167,8 +167,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/billing-admin/src/environments/environment.ts",
-                  "with": "projects/billing-admin/src/environments/environment.prod.ts"
+                  "replace": "projects/sf-admin/src/environments/environment.ts",
+                  "with": "projects/sf-admin/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -193,34 +193,34 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "billing-admin:build"
+            "browserTarget": "sf-admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "billing-admin:build:production"
+              "browserTarget": "sf-admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "billing-admin:build"
+            "browserTarget": "sf-admin:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/billing-admin/src/test.ts",
-            "polyfills": "projects/billing-admin/src/polyfills.ts",
-            "tsConfig": "projects/billing-admin/tsconfig.spec.json",
-            "karmaConfig": "projects/billing-admin/karma.conf.js",
+            "main": "projects/sf-admin/src/test.ts",
+            "polyfills": "projects/sf-admin/src/polyfills.ts",
+            "tsConfig": "projects/sf-admin/tsconfig.spec.json",
+            "karmaConfig": "projects/sf-admin/karma.conf.js",
             "styles": [
-              "projects/billing-admin/src/styles.css"
+              "projects/sf-admin/src/styles.scss"
             ],
             "scripts": [],
             "assets": [
-              "projects/billing-admin/src/favicon.ico",
-              "projects/billing-admin/src/assets"
+              "projects/sf-admin/src/favicon.ico",
+              "projects/sf-admin/src/assets"
             ]
           }
         },
@@ -228,8 +228,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/billing-admin/tsconfig.app.json",
-              "projects/billing-admin/tsconfig.spec.json"
+              "projects/sf-admin/tsconfig.app.json",
+              "projects/sf-admin/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -238,27 +238,27 @@
         }
       }
     },
-    "billing-admin-e2e": {
-      "root": "projects/billing-admin-e2e/",
+    "sf-admin-e2e": {
+      "root": "projects/sf-admin-e2e/",
       "projectType": "application",
       "prefix": "",
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/billing-admin-e2e/protractor.conf.js",
-            "devServerTarget": "billing-admin:serve"
+            "protractorConfig": "projects/sf-admin-e2e/protractor.conf.js",
+            "devServerTarget": "sf-admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "billing-admin:serve:production"
+              "devServerTarget": "sf-admin:serve:production"
             }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "projects/billing-admin-e2e/tsconfig.e2e.json",
+            "tsConfig": "projects/sf-admin-e2e/tsconfig.e2e.json",
             "exclude": [
               "**/node_modules/**"
             ]
@@ -267,7 +267,7 @@
       }
     }
   },
-  "defaultProject": "Shopping Feed UI",
+  "defaultProject": "webapp",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "sf",

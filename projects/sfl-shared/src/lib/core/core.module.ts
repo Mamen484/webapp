@@ -1,12 +1,9 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SflToggleSidebarService } from './toggle-sidebar.service';
-import { ModuleImportGuard } from './entities/src/module-import-guard';
-import { SflLocaleIdService } from './locale-id.service';
-import { SFL_API, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from './entities/src/sfl-dependencies';
-import { SflWindowRefService } from './window-ref.service';
-import { SflLocalStorageService } from './local-storage.service';
-import { SflUserService } from './user.service';
+import { ModuleImportGuard, SFL_API, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_APP_TOKEN } from 'sfl-shared/src/lib/core/entities';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth-interceptor';
+import { ErrorInterceptor } from './error-interceptor';
 
 @NgModule({
     imports: [
@@ -14,18 +11,16 @@ import { SflUserService } from './user.service';
     ],
 })
 export class SflCoreModule {
-    static forRoot({baseHref, languageOptions, sflApi}) {
+    static forRoot({baseHref, languageOptions, sflApi, sflAppToken}) {
         return <ModuleWithProviders>{
             ngModule: SflCoreModule,
             providers: [
-                SflToggleSidebarService,
-                SflLocaleIdService,
-                SflLocalStorageService,
-                SflWindowRefService,
-                SflUserService,
+                {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+                {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
                 {provide: SFL_BASE_HREF, useValue: baseHref},
                 {provide: SFL_LANGUAGE_OPTIONS, useValue: languageOptions},
                 {provide: SFL_API, useValue: sflApi},
+                {provide: SFL_APP_TOKEN, useValue: sflAppToken},
             ]
         }
     }

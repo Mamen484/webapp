@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SflAuthService, SflUserService, SflWindowRefService } from 'sfl-shared';
+import { SflAuthService} from 'sfl-shared/src/lib/auth';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/src/lib/core/services';
 import { environment } from '../../environments/environment';
 import { HttpParams } from '@angular/common/http';
 

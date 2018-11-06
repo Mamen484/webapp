@@ -1,0 +1,5 @@
+<sfl-unauthenticated-menu [displayFlags]="true"></sfl-unauthenticated-menu>
+
+<sfl-login-form [loadingNextPage]="loadingNextPage" (loginSubmitted)="login($event)">
+    <div class="error" *ngIf="error">{{error}}</div>
+</sfl-login-form>

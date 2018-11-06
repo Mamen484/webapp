@@ -2,19 +2,9 @@
  * Public API Surface of sfl-shared
  */
 
-export * from './lib/sidebar/sidebar.module';
-
-export * from './lib/menu/menu.module';
-
 export * from './lib/core/core.module';
-export * from './lib/core/toggle-sidebar.service';
-export * from './lib/core/locale-id.service';
-export * from './lib/core/window-ref.service';
-export * from './lib/core/local-storage.service';
-export * from './lib/core/user.service';
-
-export * from './lib/core/entities/src/module-import-guard';
-export * from './lib/core/entities/src/sfl-dependencies';
-
-export * from './lib/auth/auth.module';
-export * from './lib/auth/auth.service';
+export * from './lib/core/services/src/public_api';
+export * from './lib/sidebar/src/public_api';
+export * from './lib/menu/src/public_api';
+export * from './lib/auth/src/public_api';
+export * from './lib/error-pages/src/public_api';
