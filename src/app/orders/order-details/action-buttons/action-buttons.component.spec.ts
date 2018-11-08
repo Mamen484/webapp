@@ -4,7 +4,7 @@ import { ActionButtonsComponent } from './action-buttons.component';
 import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
-import { EMPTY, of } from 'rxjs/index';
+import { EMPTY, of } from 'rxjs';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -46,7 +46,7 @@ describe('ActionButtonsComponent', () => {
     }));
 
     beforeEach(() => {
-        mockOrder = <any>{items: [{status: OrderStatus.waiting_shipment}], _embedded: {channel: {name: 'amazon'}}}
+        mockOrder = <any>{items: [{status: OrderStatus.waiting_shipment}], _embedded: {channel: {name: 'amazon'}}};
         fixture = TestBed.createComponent(ActionButtonsComponent);
         component = fixture.componentInstance;
         component.order = mockOrder;
@@ -76,13 +76,12 @@ describe('ActionButtonsComponent', () => {
         expect(elements().length).toEqual(2);
     });
 
-    it('should display correct buttons for `shipped` status', () => {
+    it('should NOT display any buttons for `shipped` status', () => {
         fixture.detectChanges();
         component.order.status = OrderStatus.shipped;
         component.acknowledgment = undefined;
         fixture.detectChanges();
-        expect(elements()[0].textContent.trim()).toEqual('Cancel');
-        expect(elements().length).toEqual(1);
+        expect(elements().length).toEqual(0);
     });
 
     it('should display correct buttons when the order is unacknowledged', () => {
@@ -215,7 +214,7 @@ describe('ActionButtonsComponent', () => {
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 1, orderReference: '22'}});
     });
 
-    it(`should send an cancel request when a user confirms cancelling an order`, () => {
+    it(`should send a cancel request when a user confirms cancelling an order`, () => {
         component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
         appStore.select.and.returnValue(of({id: 289}));
         ordersService.cancel.and.returnValue(EMPTY);
@@ -302,6 +301,104 @@ describe('ActionButtonsComponent', () => {
             expect(ordersService[action].calls.mostRecent().args[1][0].channelName).toEqual('nom');
         });
     });
+
+    describe('click on a status button (ship/cancel/unacknowledge)', () => {
+
+        beforeEach(() => {
+            component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+            appStore.select.and.returnValue(of({id: 289}));
+            fixture.detectChanges();
+            component.order.status = OrderStatus.waiting_shipment;
+            component.acknowledgment = OrderAcknowledgment.acknowledged;
+            fixture.detectChanges();
+        });
+        it('should send a ship request after carrier details confirmed', () => {
+            ordersService.ship.and.returnValue(EMPTY);
+            matDialog.open.and.returnValue({
+                afterClosed: () => of({
+                    carrier: 'ca',
+                    trackingNumber: 'cb',
+                    trackingLink: 'ce',
+                })
+            });
+
+            const button = elements()[0];
+            expect(button.textContent.trim()).toEqual('Ship');
+            button.click();
+            expect(ordersService.ship).toHaveBeenCalledWith(289, [{
+                reference: 'ref',
+                channelName: 'nom',
+                carrier: 'ca',
+                trackingNumber: 'cb',
+                trackingLink: 'ce',
+            }]);
+        });
+
+        it(`should send a cancel request when a user confirms cancelling an order `, () => {
+            ordersService.cancel.and.returnValue(EMPTY);
+            matDialog.open.and.returnValue({afterClosed: () => of(true)});
+            const button = elements()[1];
+            expect(button.textContent.trim()).toEqual('Cancel');
+            button.click();
+            expect(ordersService.cancel).toHaveBeenCalledWith(289, [{reference: 'ref', channelName: 'nom'}]);
+        });
+
+        it('should send an unacknowledge request when a user clicks on an unacknowledge button', () => {
+            ordersService.unacknowledge.and.returnValue(EMPTY);
+            const button = elements()[2];
+            expect(button.textContent.trim()).toEqual('Unacknowledge');
+            button.click();
+            expect(ordersService.unacknowledge).toHaveBeenCalledWith(289, [{reference: 'ref', channelName: 'nom'}])
+        })
+    });
+
+    describe('click on a status button (accept/refuse/acknowledge/cancel/unacknowledge)', () => {
+
+        beforeEach(() => {
+            component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
+            appStore.select.and.returnValue(of({id: 289}));
+            fixture.detectChanges();
+            component.order.status = OrderStatus.waiting_store_acceptance;
+            component.acknowledgment = OrderAcknowledgment.unacknowledged;
+            fixture.detectChanges();
+        });
+
+        it('should send an accept request when a user clicks on an accept button', () => {
+            ordersService.accept.and.returnValue(EMPTY);
+            const button = elements()[0];
+            expect(button.textContent.trim()).toEqual('Accept');
+            button.click();
+            expect(ordersService.accept).toHaveBeenCalledWith(289, [{reference: 'ref', channelName: 'nom'}])
+        });
+
+        it('should send an refuse request when a user clicks on an refuse button', () => {
+            ordersService.refuse.and.returnValue(EMPTY);
+            const button = elements()[1];
+            expect(button.textContent.trim()).toEqual('Refuse');
+            button.click();
+            expect(ordersService.refuse).toHaveBeenCalledWith(289, [{reference: 'ref', channelName: 'nom'}])
+        });
+
+        it('should send an acknowledge request when a user clicks on an acknowledge button', () => {
+            ordersService.acknowledge.and.returnValue(EMPTY);
+            const button = elements()[2];
+            expect(button.textContent.trim()).toEqual('Acknowledge');
+            button.click();
+            expect(ordersService.acknowledge).toHaveBeenCalledWith(289, [{reference: 'ref', channelName: 'nom'}])
+        });
+
+    });
+
+    it('should send open a refund dialog when a user clicks on refund button', () => {
+        component.order.status = OrderStatus.shipped;
+        component.order._embedded.channel.name = 'LaRedoute';
+        fixture.detectChanges();
+        const button = elements()[0];
+        expect(button.textContent.trim()).toEqual('Refund');
+        button.click();
+        expect(matDialog.open).toHaveBeenCalledWith(RefundDialogComponent, {data: mockOrder});
+    });
+
 
     function elements() {
         return fixture.debugElement.nativeElement.querySelectorAll('button') as HTMLButtonElement[];
