@@ -30,7 +30,7 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular-devkit/build-angular": "~0.10.4",
     "@angular-devkit/build-ng-packagr": "~0.8.0",
     "@angular/cli": "^7.0.2",
     "@angular/compiler-cli": "^7.0.0",
@@ -75,6 +75,7 @@
     "i18n": "ng xi18n",
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
+    "sf-admin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --port=4201",
     "docker-start": "npm ci && ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
     "compile-env": "ts-node compile-environment"
   },

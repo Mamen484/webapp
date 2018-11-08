@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     SFA_API: 'http://api.shopping-feed.lan/v1',
+    SFA_BILLING_API: 'http://billing.shopping-feed.lan/v1/billing',
     APP_TOKEN: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
 };
 
