@@ -1,9 +1,9 @@
 import {throwError,  Observable, of } from 'rxjs';
 import { TestBed, inject } from '@angular/core/testing';
-import { SflUserService } from 'sfl-shared';
-import { SflWindowRefService } from 'sfl-shared';
+import { SflUserService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { LegacyLinkService } from '../services/legacy-link.service';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { IsLoggedInGuard } from './is-logged-in.guard';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';

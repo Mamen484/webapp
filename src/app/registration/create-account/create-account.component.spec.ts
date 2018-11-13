@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CreateAccountComponent } from './create-account.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 describe('CreateAccount', () => {
     let component: CreateAccountComponent;

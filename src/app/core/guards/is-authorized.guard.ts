@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SflLocalStorageService, SflUserService } from 'sfl-shared';
+import { SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';

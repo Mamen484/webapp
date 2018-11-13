@@ -3,8 +3,7 @@ import { CanLoad, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { SflUserService } from 'sfl-shared';
-import { SflWindowRefService } from 'sfl-shared';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 
 @Injectable()

@@ -3,16 +3,16 @@ import { MenuComponent } from './menu.component';
 import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { SflLocalStorageService, SflUserService } from 'sfl-shared';
-import { SflWindowRefService } from 'sfl-shared';
+import { SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { MatMenuModule } from '@angular/material';
-import { PaymentType } from 'sfl-shared/src/lib/core/entities';
+import { PaymentType } from 'sfl-shared/entities';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreStatus } from 'sfl-shared/src/lib/core/entities';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
+import { StoreStatus } from 'sfl-shared/entities';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 
 describe('MenuComponent', () => {
 

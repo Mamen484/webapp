@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SflErrorPagesModule } from 'sfl-shared/src/lib/error-pages';
-import { SflSharedModule } from '../../../sfl-shared/src/lib/core/src/sfl-shared.module';
+import { SflErrorPagesModule } from 'sfl-shared/error-pages';
+import { SflSharedModule } from 'sfl-shared/core';
 import { environment } from '../environments/environment';
 import { LoginModule } from './login/login.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,8 +14,8 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { MappingFieldsComponent } from './mapping-fields/mapping-fields.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule, MatIconModule, MatListModule, MatMenuModule, MatTooltipModule } from '@angular/material';
-import { SflMenuModule } from 'sfl-shared/src/lib/menu';
-import { SflSidebarModule } from 'sfl-shared/src/lib/sidebar';
+import { SflMenuModule } from 'sfl-shared/menu';
+import { SflSidebarModule } from 'sfl-shared/sidebar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminBaseComponent } from './admin-base/admin-base.component';
 

@@ -2,8 +2,8 @@ import { EMPTY, of } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
 import { StoreService } from '../core/services/store.service';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
-import { SflUserService } from 'sfl-shared';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { SflUserService } from 'sfl-shared/services';
 
 describe('BaseComponent', () => {
 

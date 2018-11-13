@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SflWindowRefService } from 'sfl-shared';
+import { SflWindowRefService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-server-error',

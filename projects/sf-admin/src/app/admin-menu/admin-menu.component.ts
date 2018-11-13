@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SflAuthService } from 'sfl-shared/src/lib/auth';
+import { SflAuthService } from 'sfl-shared/auth';
 import { Router } from '@angular/router';
 
 @Component({

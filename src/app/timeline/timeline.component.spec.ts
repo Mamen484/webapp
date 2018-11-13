@@ -16,7 +16,7 @@ import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
 import { LegacyLinkDirective } from '../shared/legacy-link.directive';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 import { EventIconPipe } from './event-icon/event-icon.pipe';

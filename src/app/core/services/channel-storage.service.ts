@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 export const MIN_ONLINE = 4;
 export const MIN_TURNOVER = 850;

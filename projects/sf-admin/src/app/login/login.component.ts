@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SflAuthService } from 'sfl-shared/src/lib/auth';
-import { SflUserService } from 'sfl-shared/src/lib/services';
+import { SflAuthService } from 'sfl-shared/auth';
+import { SflUserService } from 'sfl-shared/services';
 import { Router } from '@angular/router';
 
 @Component({

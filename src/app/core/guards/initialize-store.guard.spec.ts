@@ -5,10 +5,10 @@ import { InitializeStoreGuard } from './initialize-store.guard';
 import { Store } from '@ngrx/store';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { StoreService } from '../services/store.service';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { AppState } from '../entities/app-state';
 import { Router } from '@angular/router';
-import { SflUserService } from 'sfl-shared';
+import { SflUserService } from 'sfl-shared/services';
 
 describe('InitializeStoreGuard', () => {
     let store: jasmine.SpyObj<Store<AppState>>;

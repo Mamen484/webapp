@@ -1,4 +1,4 @@
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { INITIALIZE_USER_INFO, userInfoReducer } from './user-info-reducer';
 
 describe('UserInfo Reducer', () => {

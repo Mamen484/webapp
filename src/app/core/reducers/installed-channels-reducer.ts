@@ -1,5 +1,5 @@
 import {cloneDeep} from 'lodash';
-import { StoreChannelDetails } from 'sfl-shared/src/lib/core/entities';
+import { StoreChannelDetails } from 'sfl-shared/entities';
 
 export const SET_CHANNELS = 'SET_CHANNELS';
 

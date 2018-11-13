@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Statistics } from '../../core/entities/statistics';
 import { ActivatedRoute } from '@angular/router';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
-import { SflLocaleIdService } from 'sfl-shared';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { SflLocaleIdService } from 'sfl-shared/services';
 import { ChannelLanguage } from '../../core/entities/channel-language.enum';
 
 @Component({

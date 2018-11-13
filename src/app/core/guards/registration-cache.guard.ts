@@ -3,9 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { filter, flatMap, tap, map, count } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
-import { SflWindowRefService } from 'sfl-shared';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 @Injectable()
 export class RegistrationCacheGuard implements CanActivate {

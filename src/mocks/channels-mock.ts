@@ -1,5 +1,5 @@
-import { StoreChannel } from 'sfl-shared/src/lib/core/entities';
-import { Channel } from 'sfl-shared/src/lib/core/entities';
+import { StoreChannel } from 'sfl-shared/entities';
+import { Channel } from 'sfl-shared/entities';
 
 const channelsMock = {
     '_links': {'self': {'href': '/v1/channel'}},

@@ -1,5 +1,5 @@
 import { CreateStoreFeed } from './create-store-feed';
-import { StoreOwner } from 'sfl-shared/src/lib/core/entities';
+import { StoreOwner } from 'sfl-shared/entities';
 
 export class CreateStoreModel {
     id?: number;

@@ -4,8 +4,8 @@ import { Store as AppStore } from '@ngrx/store';
 
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment';
-import { AggregatedUserInfo, PaymentType, Store, StoreStatus } from 'sfl-shared/src/lib/core/entities';
-import { SflLocalStorageService, SflWindowRefService, SflUserService } from 'sfl-shared';
+import { AggregatedUserInfo, PaymentType, Store, StoreStatus } from 'sfl-shared/entities';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 

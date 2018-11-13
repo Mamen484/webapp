@@ -1,6 +1,6 @@
-import { PagedResponse } from 'sfl-shared/src/lib/core/entities';
-import { Channel } from 'sfl-shared/src/lib/core/entities';
-import { StoreChannel } from 'sfl-shared/src/lib/core/entities';
+import { PagedResponse } from 'sfl-shared/entities';
+import { Channel } from 'sfl-shared/entities';
+import { StoreChannel } from 'sfl-shared/entities';
 
 export interface ChannelsResponse extends PagedResponse<{channel: (Channel | StoreChannel)[]}> {
 }

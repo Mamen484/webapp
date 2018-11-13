@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { SearchArticlesPage } from '../entities/search-articles-page';
 import { Observable } from 'rxjs';
-import { SflLocaleIdService } from 'sfl-shared';
+import { SflLocaleIdService } from 'sfl-shared/services';
 
 @Injectable()
 export class SupportService {

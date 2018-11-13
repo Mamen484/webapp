@@ -20,7 +20,7 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';

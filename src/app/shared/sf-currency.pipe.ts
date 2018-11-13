@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { Store as UserStore } from 'sfl-shared/src/lib/core/entities';
+import { Store as UserStore } from 'sfl-shared/entities';
 
 const countryLocalePairs = {
     us: 'en-US',

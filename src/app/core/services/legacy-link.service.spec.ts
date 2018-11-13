@@ -3,10 +3,10 @@ import { inject, TestBed } from '@angular/core/testing';
 import { LegacyLinkService } from './legacy-link.service';
 import { environment } from '../../../environments/environment';
 import { Store } from '@ngrx/store';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { AppState } from '../entities/app-state';
 import { Subject } from 'rxjs/Rx';
-import { Store as CurrentStore } from 'sfl-shared/src/lib/core/entities';
+import { Store as CurrentStore } from 'sfl-shared/entities';
 
 describe('LegacyLinkService', () => {
     let getItemSpy: jasmine.Spy;

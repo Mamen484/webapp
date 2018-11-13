@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
-import { SflUserService } from 'sfl-shared';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { SflUserService } from 'sfl-shared/services';
 
 @Injectable()
 export class AggregatedUserInfoResolveGuard implements Resolve<Observable<AggregatedUserInfo>> {

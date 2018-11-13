@@ -2,7 +2,7 @@ import { SfCurrencyPipe } from './sf-currency.pipe';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Subject } from 'rxjs/Rx';
-import { Store as UserStore } from 'sfl-shared/src/lib/core/entities';
+import { Store as UserStore } from 'sfl-shared/entities';
 
 describe('SfCurrencyPipe', () => {
 

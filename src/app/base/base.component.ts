@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
-import { SflWindowRefService } from 'sfl-shared';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { ChannelsRequestParams } from '../core/entities/channels-request-params';
 import { StoreService } from '../core/services/store.service';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
@@ -10,8 +10,7 @@ import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { combineLatest } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { TagsService } from '../core/services/tags.service';
-import { AggregatedUserInfo, Store as AppStore } from 'sfl-shared/src/lib/core/entities';
-import { SflUserService } from 'sfl-shared';
+import { AggregatedUserInfo, Store as AppStore } from 'sfl-shared/entities';
 
 @Component({
     selector: 'app-homepage',

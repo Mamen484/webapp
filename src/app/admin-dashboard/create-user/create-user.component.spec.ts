@@ -4,7 +4,7 @@ import { CreateUserComponent } from './create-user.component';
 import { StoreService } from '../../core/services/store.service';
 import { MatDialog } from '@angular/material';
 import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
-import { FeedSource } from 'sfl-shared/src/lib/core/entities';
+import { FeedSource } from 'sfl-shared/entities';
 import { FormArray, FormControl } from '@angular/forms';
 
 describe('CreateUserComponent', () => {

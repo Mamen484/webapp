@@ -1,4 +1,4 @@
-import { Channel, Link, Store } from 'sfl-shared/src/lib/core/entities';
+import { Channel, Link, Store } from 'sfl-shared/entities';
 import { OrderStatus } from './order-status.enum';
 import { Address } from './address';
 import { Payment } from './payment';

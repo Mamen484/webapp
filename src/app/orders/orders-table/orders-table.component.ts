@@ -12,7 +12,7 @@ import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource, Pag
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
-import { Store } from 'sfl-shared/src/lib/core/entities';
+import { Store } from 'sfl-shared/entities';
 import { toPairs, uniq } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { combineLatest, Subject, Subscription } from 'rxjs';
@@ -26,7 +26,7 @@ import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-sna
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';

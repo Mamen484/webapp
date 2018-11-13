@@ -6,8 +6,8 @@ import { SET_STORE } from '../reducers/current-store-reducer';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { StoreService } from '../services/store.service';
-import { Permission, Store } from 'sfl-shared/src/lib/core/entities';
-import { SflUserService } from 'sfl-shared';
+import { Permission, Store } from 'sfl-shared/entities';
+import { SflUserService } from 'sfl-shared/services';
 
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {

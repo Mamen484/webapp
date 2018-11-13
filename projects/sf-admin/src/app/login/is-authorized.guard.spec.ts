@@ -1,11 +1,9 @@
 import { Observable, of, throwError } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { SflUserService } from 'sfl-shared';
-import { SflWindowRefService } from 'sfl-shared';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { Store } from '@ngrx/store';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/entities';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { Router } from '@angular/router';
 
 describe('IsAuthorizedGuard', () => {

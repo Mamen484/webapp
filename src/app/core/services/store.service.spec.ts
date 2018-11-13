@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { StoreService } from './store.service';
 import { environment } from '../../../environments/environment';
-import { SflLocaleIdService } from 'sfl-shared';
+import { SflLocaleIdService } from 'sfl-shared/services';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 import { allowNoExpectations } from '../entities/allow-no-expectaions';
 

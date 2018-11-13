@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, zip } from 'rxjs';
 import { Tag } from '../entities/tag';
-import { PagedResponse } from 'sfl-shared/src/lib/core/entities';
+import { PagedResponse } from 'sfl-shared/entities';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

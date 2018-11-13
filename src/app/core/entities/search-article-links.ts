@@ -1,5 +1,5 @@
 import { Links } from './links';
-import { Link } from 'sfl-shared/src/lib/core/entities';
+import { Link } from 'sfl-shared/entities';
 
 export interface SearchArticleLinks extends Links {
     topic: Link;

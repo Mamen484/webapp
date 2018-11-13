@@ -2,7 +2,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { SupportService } from './support.service';
-import { SflLocaleIdService } from 'sfl-shared';
+import { SflLocaleIdService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { allowNoExpectations } from '../entities/allow-no-expectaions';
 

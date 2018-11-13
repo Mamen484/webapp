@@ -1,4 +1,4 @@
-import { ChannelType } from 'sfl-shared/src/lib/core/entities';
+import { ChannelType } from 'sfl-shared/entities';
 import { ChannelCategory } from './channel-category.enum';
 
 export class ChannelsRequestParams {

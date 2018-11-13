@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
 import { values } from 'lodash';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
-import { Channel, Store as UserStore } from 'sfl-shared/src/lib/core/entities';
+import { Channel, Store as UserStore } from 'sfl-shared/entities';
 import { combineLatest, Observable, zip } from 'rxjs';
 import { StoreService } from '../../../core/services/store.service';
 

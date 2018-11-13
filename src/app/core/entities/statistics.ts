@@ -1,5 +1,5 @@
-import { Link } from 'sfl-shared/src/lib/core/entities';
-import { ChannelStatistics } from 'sfl-shared/src/lib/core/entities';
+import { Link } from 'sfl-shared/entities';
+import { ChannelStatistics } from 'sfl-shared/entities';
 
 export interface Statistics {
     id: number;

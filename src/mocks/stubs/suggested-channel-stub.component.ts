@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Channel } from 'sfl-shared/src/lib/core/entities';
+import { Channel } from 'sfl-shared/entities';
 
 
 @Component({

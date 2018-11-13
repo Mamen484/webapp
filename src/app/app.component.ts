@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
-import { Store as UserStore } from 'sfl-shared/src/lib/core/entities';
-import { SflWindowRefService, SflUserService } from 'sfl-shared';
+import { Store as UserStore } from 'sfl-shared/entities';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { LOAD_FULLSTORY } from '../trackers/fullstory';
 import { Location } from '@angular/common';
 

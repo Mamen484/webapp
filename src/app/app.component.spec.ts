@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { SflWindowRefService, SflUserService } from 'sfl-shared';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { Location } from '@angular/common';
 
 describe('AppComponent', () => {

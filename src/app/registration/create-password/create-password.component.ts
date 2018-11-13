@@ -6,7 +6,7 @@ import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify
 import { FormControl, Validators } from '@angular/forms';
 import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { environment } from '../../../environments/environment';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 @Component({
     selector: 'app-create-password',

@@ -1,4 +1,4 @@
-import { ChannelStatistics } from 'sfl-shared/src/lib/core/entities';
+import { ChannelStatistics } from 'sfl-shared/entities';
 import { storeChannelMock } from './store-channel.mock';
 
 class ChannelMock implements ChannelStatistics {

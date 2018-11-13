@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { StoreChannel } from 'sfl-shared/src/lib/core/entities';
+import { StoreChannel } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-configured-channel',

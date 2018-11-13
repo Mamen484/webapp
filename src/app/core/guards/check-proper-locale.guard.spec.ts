@@ -1,7 +1,7 @@
 import { inject, TestBed } from '@angular/core/testing';
 import { CheckProperLocaleGuard } from './check-proper-locale.guard';
 import { of } from 'rxjs';
-import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared';
+import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { LOAD_CAPTERRA } from '../../../trackers/capterra';
 
 const PROGRESS_UPDATE_FREQUENCY = 100; // ms

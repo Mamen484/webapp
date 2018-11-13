@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { BillingStore } from './billing-store';
-import { PagedResponse } from 'sfl-shared/src/lib/entities';
+import { PagedResponse } from 'sfl-shared/entities';
 
 @Injectable({
     providedIn: 'root'

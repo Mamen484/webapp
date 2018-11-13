@@ -6,10 +6,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreatePasswordService } from '../../core/services/create-password.service';
-import { SflLocaleIdService } from 'sfl-shared';
+import { SflLocaleIdService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { BlankComponent } from '../../shared/blank.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 

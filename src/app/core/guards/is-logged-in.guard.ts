@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { LegacyLinkService } from '../services/legacy-link.service';
 
 /**

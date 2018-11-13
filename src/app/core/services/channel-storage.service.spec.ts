@@ -9,7 +9,7 @@ import {
     ONLINE_STORAGE_KEY,
     TURNOVER_STORAGE_KEY
 } from './channel-storage.service';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 describe('ChannelStorageService', () => {
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;

@@ -10,11 +10,11 @@ import { LoginModule } from './login/login.module';
 import { SnackbarsModule } from './snackbars/snackbars.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
-import { SflCoreModule } from 'sfl-shared';
+import { SflSharedModule } from 'sfl-shared/core';
 import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
-import { SflAuthModule } from 'sfl-shared';
-import { SflErrorPagesModule } from 'sfl-shared/src/lib/error-pages';
+import { SflAuthModule } from 'sfl-shared/auth';
+import { SflErrorPagesModule } from 'sfl-shared/error-pages';
 
 @NgModule({
     declarations: [
@@ -32,7 +32,7 @@ import { SflErrorPagesModule } from 'sfl-shared/src/lib/error-pages';
         AppRoutingModule,
         LoginModule,
         LivechatWidgetModule,
-        SflCoreModule.forRoot({
+        SflSharedModule.forRoot({
             baseHref: environment.BASE_HREF,
             languageOptions: ChannelLanguage,
             sflApi: environment.API_URL,

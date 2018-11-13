@@ -1,5 +1,5 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-import { SflLocalStorageService } from 'sfl-shared';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { LoginByTokenGuard } from './login-by-token.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';

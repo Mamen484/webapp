@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { ConnectableObservable, Observable } from 'rxjs';
 import { Statistics } from '../entities/statistics';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PagedResponse, Store, StoreChannel, StoreChannelResponse, StoreCharge } from 'sfl-shared/src/lib/core/entities';
+import { PagedResponse, Store, StoreChannel, StoreChannelResponse, StoreCharge } from 'sfl-shared/entities';
 import { ChannelsResponse } from '../entities/channels-response';
 import { ChannelsRequestParams } from '../entities/channels-request-params';
 

@@ -1,4 +1,4 @@
-import { PagedResponse } from 'sfl-shared/src/lib/core/entities';
+import { PagedResponse } from 'sfl-shared/entities';
 
 export interface Timeline<T> extends PagedResponse<{timeline: T[]}> {
 }

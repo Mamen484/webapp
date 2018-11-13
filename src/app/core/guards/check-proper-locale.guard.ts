@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared';
+import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { ChannelLanguage } from '../entities/channel-language.enum';
