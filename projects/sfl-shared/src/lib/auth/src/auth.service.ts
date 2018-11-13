@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { SflLocalStorageService } from 'sfl-shared/src/lib/core/services';
-import { SFL_API } from 'sfl-shared/src/lib/core/entities';
+import { SflLocalStorageService } from 'sfl-shared/src/lib/services';
+import { SFL_API } from 'sfl-shared/src/lib/entities';
 
 @Injectable({
     providedIn: 'root'

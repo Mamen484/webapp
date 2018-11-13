@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SflErrorPagesModule } from 'sfl-shared/src/lib/error-pages';
-import { SflCoreModule } from '../../../sfl-shared/src/lib/core/core.module';
+import { SflSharedModule } from '../../../sfl-shared/src/lib/core/src/sfl-shared.module';
 import { environment } from '../environments/environment';
 import { LoginModule } from './login/login.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,7 +42,7 @@ import { AdminBaseComponent } from './admin-base/admin-base.component';
         MatListModule,
         MatMenuModule,
         MatTooltipModule,
-        SflCoreModule.forRoot({
+        SflSharedModule.forRoot({
             baseHref: '',
             languageOptions: {en: 'English'},
             sflApi: environment.SFA_API,

@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from 'sfl-shared/src/lib/core/entities';
+import { SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from 'sfl-shared/src/lib/entities';
 import { toPairs } from 'lodash';
-import { SflLocaleIdService } from 'sfl-shared/src/lib/core/services';
+import { SflLocaleIdService } from 'sfl-shared/src/lib/services';
 
 
 @Component({

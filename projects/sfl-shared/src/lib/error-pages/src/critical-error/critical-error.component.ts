@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SflWindowRefService } from 'sfl-shared/src/lib/core/services';
+import { SflWindowRefService } from 'sfl-shared/src/lib/services';
 
 @Component({
     selector: 'sfl-critical-error',

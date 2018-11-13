@@ -5,7 +5,7 @@ import { SflWindowRefService } from 'sfl-shared';
 import { SflLocalStorageService } from 'sfl-shared';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { Store } from '@ngrx/store';
-import { AggregatedUserInfo } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo } from 'sfl-shared/src/lib/entities';
 import { Router } from '@angular/router';
 
 describe('IsAuthorizedGuard', () => {

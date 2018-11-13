@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModuleImportGuard, SFL_API, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_APP_TOKEN } from 'sfl-shared/src/lib/core/entities';
+import { ModuleImportGuard, SFL_API, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_APP_TOKEN } from 'sfl-shared/src/lib/entities';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
@@ -10,10 +10,10 @@ import { ErrorInterceptor } from './error-interceptor';
         CommonModule
     ],
 })
-export class SflCoreModule {
+export class SflSharedModule {
     static forRoot({baseHref, languageOptions, sflApi, sflAppToken}) {
         return <ModuleWithProviders>{
-            ngModule: SflCoreModule,
+            ngModule: SflSharedModule,
             providers: [
                 {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
                 {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
@@ -25,7 +25,7 @@ export class SflCoreModule {
         }
     }
 
-    constructor(@Optional() @SkipSelf() parentModule?: SflCoreModule) {
-        ModuleImportGuard.throwIfAlreadyLoaded(parentModule, 'SflCoreModule');
+    constructor(@Optional() @SkipSelf() parentModule?: SflSharedModule) {
+        ModuleImportGuard.throwIfAlreadyLoaded(parentModule, 'SflSharedModule');
     }
 }

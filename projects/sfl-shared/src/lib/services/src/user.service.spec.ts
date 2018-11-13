@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { SflUserService } from './user.service';
 import { SflLocalStorageService } from './local-storage.service';
-import { AggregatedUserInfo, SFL_API } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo, SFL_API } from 'sfl-shared/src/lib/entities';
 
 describe('UserService', () => {
     let setItemSpy: jasmine.Spy;

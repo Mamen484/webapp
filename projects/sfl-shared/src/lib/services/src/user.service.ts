@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { AggregatedUserInfo, SFL_API } from 'sfl-shared/src/lib/core/entities';
+import { AggregatedUserInfo, SFL_API } from 'sfl-shared/src/lib/entities';
 import { ConnectableObservable, Observable } from 'rxjs';
 import { map, publishReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';

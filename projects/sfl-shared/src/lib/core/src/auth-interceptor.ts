@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/src/lib/core/entities';
+import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/src/lib/entities';
 import { SflAuthService } from 'sfl-shared/src/lib/auth';
 
 @Injectable()

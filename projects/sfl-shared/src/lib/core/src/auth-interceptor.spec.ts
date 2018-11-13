@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthInterceptor } from './auth-interceptor';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/src/lib/core/entities';
+import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/src/lib/entities';
 import { SflAuthService } from 'sfl-shared/src/lib/auth';
 
 describe('AuthInterceptor', () => {

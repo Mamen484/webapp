@@ -4,7 +4,7 @@ import { SflAuthService } from './auth.service';
 import { SflLoginFormComponent } from './login-form/login-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressBarModule } from '@angular/material';
-import { ModuleImportGuard } from 'sfl-shared/src/lib/core/entities';
+import { ModuleImportGuard } from 'sfl-shared/src/lib/entities';
 
 @NgModule({
     imports: [
