@@ -5,13 +5,20 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { SflLegacyLinkDirective } from './legacy-link.directive';
+import { SflCountrySelectComponent } from './country-select/country-select.component';
+import { MatOptionModule, MatSelectModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MatOptionModule,
+        MatSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
     ],
-    declarations: [SflLegacyLinkDirective],
-    exports: [SflLegacyLinkDirective],
+    declarations: [SflLegacyLinkDirective, SflCountrySelectComponent],
+    exports: [SflLegacyLinkDirective, SflCountrySelectComponent],
 })
 export class SflSharedModule {
     static forRoot({baseHref, languageOptions, sflApi, sflAppToken, sflLegacyLink}) {

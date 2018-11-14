@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators';
 const MARK_AS_COPIED_TIMEOUT = 3000; // ms
 
 @Component({
-    selector: 'sf-user-created-dialog',
+    selector: 'sfa-user-created-dialog',
     templateUrl: './user-created-dialog.component.html',
     styleUrls: ['./user-created-dialog.component.scss']
 })

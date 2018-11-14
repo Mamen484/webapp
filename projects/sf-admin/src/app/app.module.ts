@@ -11,13 +11,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
 import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
-import { MappingFieldsComponent } from './mapping-fields/mapping-fields.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatFormFieldModule, MatIconModule, MatListModule, MatMenuModule, MatTooltipModule } from '@angular/material';
+import {
+    MatButtonModule,
+    MatCardModule, MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule, MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatOptionModule, MatProgressBarModule,
+    MatSelectModule,
+    MatTooltipModule
+} from '@angular/material';
 import { SflMenuModule } from 'sfl-shared/menu';
 import { SflSidebarModule } from 'sfl-shared/sidebar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminBaseComponent } from './admin-base/admin-base.component';
+import { SearchStoreComponent } from './admin-menu/search-store/search-store.component';
+import { CreateUserComponent } from './create-user/create-user.component';
+import { UserCreatedDialogComponent } from './create-user/user-created-dialog/user-created-dialog.component';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 @NgModule({
@@ -26,22 +39,33 @@ import { AdminBaseComponent } from './admin-base/admin-base.component';
         AdminBaseComponent,
         AdminMenuComponent,
         AdminSidebarComponent,
-        MappingFieldsComponent,
+        CreateUserComponent,
+        SearchStoreComponent,
+        UserCreatedDialogComponent,
     ],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        ClipboardModule,
         FlexLayoutModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         LoginModule,
+        MatButtonModule,
+        MatCardModule,
+        MatDialogModule,
         MatFormFieldModule,
         MatIconModule,
+        MatInputModule,
         MatListModule,
         MatMenuModule,
+        MatOptionModule,
+        MatProgressBarModule,
+        MatSelectModule,
         MatTooltipModule,
+
         SflSharedModule.forRoot({
             baseHref: '',
             languageOptions: {en: 'English'},

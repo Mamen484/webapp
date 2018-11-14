@@ -1,13 +1,13 @@
 import { Component, Input, Self, ViewChild, Optional, Inject, LOCALE_ID } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { SFL_BASE_HREF } from 'sfl-shared/entities';
 
 @Component({
-    selector: 'sf-country-select',
+    selector: 'sfl-country-select',
     templateUrl: './country-select.component.html',
     styleUrls: ['./country-select.component.scss'],
 })
-export class CountrySelectComponent implements ControlValueAccessor {
+export class SflCountrySelectComponent implements ControlValueAccessor {
 
     baseHref: string;
     @Input() required = false;
@@ -17,8 +17,8 @@ export class CountrySelectComponent implements ControlValueAccessor {
     onChange: (value: any) => void;
     onTouched: () => void;
 
-    constructor(@Optional() @Self() public controlDir: NgControl, @Inject(LOCALE_ID) protected localeId) {
-        this.baseHref = `${environment.BASE_HREF}/${localeId}`;
+    constructor(@Optional() @Self() public controlDir: NgControl, @Inject(LOCALE_ID) protected localeId, @Inject(SFL_BASE_HREF) protected sflBaseHref) {
+        this.baseHref = `${sflBaseHref}/${localeId}`;
         if (controlDir) {
             controlDir.valueAccessor = this;
         }

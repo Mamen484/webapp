@@ -1,16 +1,15 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, tap, filter } from 'rxjs/operators';
-import { StoreService } from 'sfl-shared/services';
-
-import { Router } from '@angular/router';
+import { debounceTime, filter, tap } from 'rxjs/operators';
+import { SflWindowRefService, StoreService } from 'sfl-shared/services';
+import { environment } from '../../../environments/environment';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
 
 
 @Component({
-    selector: 'sf-search-store',
+    selector: 'sfa-search-store',
     templateUrl: './search-store.component.html',
     styleUrls: ['./search-store.component.scss']
 })
@@ -56,7 +55,7 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
 
     constructor(protected elementRef: ElementRef,
                 protected storeService: StoreService,
-                protected router: Router) {
+                protected windowRef: SflWindowRefService) {
     }
 
     ngOnInit() {
@@ -94,7 +93,7 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     }
 
     selectStore(storeId) {
-        this.processing = true;
-        this.router.navigate(['/'], {queryParams: {store: storeId}});
+        this.processing = false;
+        this.windowRef.nativeWindow.open(`${environment.WEBAPP_URL}?store=${storeId}`);
     }
 }

@@ -1,11 +1,13 @@
 import { async, fakeAsync, ComponentFixture, inject, TestBed, tick } from '@angular/core/testing';
 import { SearchStoreComponent } from './search-store.component';
-import { ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreService } from 'sfl-shared/services';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BlankComponent } from '../../shared/blank.component';
 import { Observable, EMPTY } from 'rxjs';
 import { Location } from '@angular/common';
+
+@Component({template: '', styles: ['']})
+export class BlankComponent {}
 
 describe('SearchStoreComponent', () => {
     let elementRef: Object;

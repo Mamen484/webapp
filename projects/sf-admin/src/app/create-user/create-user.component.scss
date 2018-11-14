@@ -1,4 +1,4 @@
-@import '../../../sass/variables';
+@import '../../../../../src/sass/variables';
 
 .scrollable-container {
   align-items: flex-start;
@@ -35,7 +35,7 @@ mat-card-actions {
   text-align: right;
 }
 
-sf-country-select {
+sfl-country-select {
   width: 100%;
 }
 
