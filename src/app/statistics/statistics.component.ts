@@ -7,8 +7,6 @@ import { ChannelsRequestParams, ChannelsResponse, PagedResponse, Store, StoreCha
 import { Statistics } from 'sfl-shared/entities';
 import { StoreService } from 'sfl-shared/services';
 import { MatDialog } from '@angular/material';
-import { NoChannelsDialogComponent, SCHEDULE_A_CALL } from './no-channels-dialog/no-channels-dialog.component';
-import { ScheduleCallDialogComponent } from './schedule-call-dialog/schedule-call-dialog.component';
 import { cloneDeep } from 'lodash';
 
 const LOAD_CHANNELS_COUNT = 6;
@@ -44,13 +42,19 @@ export class StatisticsComponent {
         )
             .subscribe(([statistics, channels]) => {
                 this.statistics = statistics;
+                if (!this.statistics._embedded) {
+                    this.statistics._embedded = {channel: []};
+                } else if (!Array.isArray(this.statistics._embedded.channel)) {
+                    this.statistics._embedded.channel = [];
+                }
                 this.initialize(channels);
                 this.processing = false;
 
                 this.appStore.select('currentStore').pipe(take(1)).subscribe(currentStore => {
-                    if (currentStore.feed.source && currentStore.feed.source.toLowerCase() === 'shopify' && !channels._embedded.channel.filter(ch => ch.installed).length) {
+                    if (currentStore.feed.source
+                        && currentStore.feed.source.toLowerCase() === 'shopify'
+                        && !channels._embedded.channel.filter(ch => ch.installed).length) {
                         this.haveNoChannels = true;
-                        this.showNoChannelsDialog();
                     }
                 })
             });
@@ -148,15 +152,6 @@ export class StatisticsComponent {
             this.internationalMode = this.isForeignCountry(store.country);
         })
 
-    }
-
-    protected showNoChannelsDialog() {
-        this.dialog.open(NoChannelsDialogComponent).afterClosed().subscribe(action => {
-            switch (action) {
-                case SCHEDULE_A_CALL:
-                    this.dialog.open(ScheduleCallDialogComponent);
-            }
-        });
     }
 
     protected displayPageLoading() {
