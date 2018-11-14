@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/entities';
-import { SflAuthService } from 'sfl-shared/auth';
+import { SflAuthService } from 'sfl-shared/services';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

@@ -22,7 +22,6 @@ import { CreatePasswordService } from './services/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
-import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
@@ -41,6 +40,8 @@ import { FullCountriesListService } from './services/full-countries-list.service
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
 import { environment } from '../../environments/environment';
+import { SflLegacyLinkService } from 'sfl-shared/services';
+import { LegacyLinkService } from './services/legacy-link.service';
 
 @NgModule({
     imports: [
@@ -78,16 +79,14 @@ import { environment } from '../../environments/environment';
         SupportService,
         PasswordRecoveryService,
         StoreService,
-        LegacyLinkService,
         TimelineService,
         OrdersFilterService,
         OrdersService,
         SupportLinkService,
         TagsService,
-
+        {provide: SflLegacyLinkService, useClass: LegacyLinkService},
         {provide: HttpClient, useClass: HttpClientService},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
-        {provide: SFL_APP_TOKEN, useValue: environment.APP_AUTHORIZATION}
     ],
     declarations: []
 })

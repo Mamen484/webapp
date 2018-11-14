@@ -46,7 +46,8 @@ import { AdminBaseComponent } from './admin-base/admin-base.component';
             baseHref: '',
             languageOptions: {en: 'English'},
             sflApi: environment.SFA_API,
-            sflAppToken: environment.APP_TOKEN
+            sflAppToken: environment.APP_TOKEN,
+            sflLegacyLink: environment.SFA_LEGACY_LINK,
         }),
         SflMenuModule,
         SflSidebarModule,

@@ -11,17 +11,17 @@
     <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
     <mat-menu #accountMenu="matMenu" [overlapTrigger]="false" classList="account-menu">
         <a mat-menu-item routerLink="/admin" *ngIf="isAdmin" i18n>Admin</a>
-        <a mat-menu-item sfLegacyLink path="/marketplaces/globalparameters" i18n
+        <a mat-menu-item sflLegacyLink path="/marketplaces/globalparameters" i18n
            *ngIf="currentStore.permission.marketplaces">Settings</a>
-        <a mat-menu-item sfLegacyLink path="/tools/settings" i18n>Alert Management</a>
-        <a mat-menu-item sfLegacyLink path="/facturation" i18n
+        <a mat-menu-item sflLegacyLink path="/tools/settings" i18n>Alert Management</a>
+        <a mat-menu-item sflLegacyLink path="/facturation" i18n
            *ngIf="currentStore.permission.facturation && currentStore.paymentType !== paymentTypes.other">Membership</a>
-        <a mat-menu-item sfLegacyLink path="/tools/access" i18n *ngIf="!isManager">Access</a>
+        <a mat-menu-item sflLegacyLink path="/tools/access" i18n *ngIf="!isManager">Access</a>
         <hr>
         <ng-container  *ngIf="!isAdmin">
         <ng-container *ngFor="let store of userInfo._embedded.store">
             <a class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
-                    sfLegacyLink path="/" [storeId]="store.id">{{store.name}} {{store.id}}
+                    sflLegacyLink path="/" [storeId]="store.id">{{store.name}} {{store.id}}
             </a>
             <button class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
                     disabled title="This store is deleted" i18n-title>{{store.name}}

@@ -120,7 +120,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/sfl-shared/src/test.ts",
+            "main": "projects/sfl-shared/test.ts",
             "tsConfig": "projects/sfl-shared/tsconfig.spec.json",
             "karmaConfig": "projects/sfl-shared/karma.conf.js"
           }

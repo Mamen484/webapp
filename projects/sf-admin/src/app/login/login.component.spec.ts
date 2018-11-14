@@ -1,8 +1,7 @@
 import { of, throwError } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
-import { SflUserService } from 'sfl-shared/services';
-import { SflAuthService } from 'sfl-shared/auth';
+import { SflAuthService, SflUserService } from 'sfl-shared/services';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { cloneDeep } from 'lodash';
 import { AggregatedUserInfo } from 'sfl-shared/entities';

@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { SflAuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { SflLocalStorageService } from 'sfl-shared/services';
 import { SFL_API } from 'sfl-shared/entities';
+import { SflLocalStorageService } from './local-storage.service';
 
 describe('AuthService', () => {
 

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { SflLocalStorageService } from 'sfl-shared/services';
-import { SflWindowRefService } from 'sfl-shared/services';
+import { SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 
 @Component({

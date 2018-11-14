@@ -1,5 +1,5 @@
 <sf-channel-box>
-    <a class="channel-logo" sfChannelLogo sfLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
+    <a class="channel-logo" sfChannelLogo sflLegacyLink [path]="goToChannelLink(channel._embedded.channel)">
         <img mat-card-image [src]="channel._embedded.channel._links.image.href"
              [alt]="channel._embedded.channel.name"></a>
     <sf-channel-turnover>

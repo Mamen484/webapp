@@ -21,7 +21,7 @@ import { SflErrorPagesModule } from 'sfl-shared/error-pages';
         AppComponent,
     ],
     imports: [
-        SflAuthModule.forRoot(),
+        SflAuthModule,
         BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
@@ -36,7 +36,8 @@ import { SflErrorPagesModule } from 'sfl-shared/error-pages';
             baseHref: environment.BASE_HREF,
             languageOptions: ChannelLanguage,
             sflApi: environment.API_URL,
-            sflAppToken: environment.APP_AUTHORIZATION
+            sflAppToken: environment.APP_AUTHORIZATION,
+            sflLegacyLink: environment.APP_URL,
         }),
         // keep this module in the bottom as it contains a wildcard route
         SflErrorPagesModule,

@@ -1,17 +1,17 @@
-import { LegacyLinkDirective } from './legacy-link.directive';
+import { SflLegacyLinkDirective } from './legacy-link.directive';
 import { ElementRef } from '@angular/core';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { SflLegacyLinkService } from 'sfl-shared/services';
 
 describe('LegacyLinkDirective', () => {
     let elementRef: ElementRef;
-    let legacyLink: jasmine.SpyObj<LegacyLinkService>;
-    let directive: LegacyLinkDirective;
+    let legacyLink: jasmine.SpyObj<SflLegacyLinkService>;
+    let directive: SflLegacyLinkDirective;
 
 
     beforeEach(() => {
         elementRef = {nativeElement: {}};
         legacyLink = jasmine.createSpyObj(['getLegacyLink']);
-        directive = new LegacyLinkDirective(elementRef, legacyLink);
+        directive = new SflLegacyLinkDirective(elementRef, legacyLink);
     });
 
     it('should create an instance', () => {

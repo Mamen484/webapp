@@ -187,7 +187,6 @@ describe('AssignTagsDialogComponent', () => {
         component.unassignTag(tags[4]);
         component.unassignTag(tags[3]);
         component.save();
-        console.log(tagsService.assignTags.calls.mostRecent());
         expect(tagsService.assignTags).not.toHaveBeenCalled();
         expect(tagsService.unassignTags).toHaveBeenCalled();
     });

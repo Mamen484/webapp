@@ -15,7 +15,7 @@ import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
-import { LegacyLinkDirective } from './legacy-link.directive';
+import { SflLegacyLinkDirective } from '../../../projects/sfl-shared/core/src/legacy-link.directive';
 import { BlankComponent } from './blank.component';
 import { CountrySelectComponent } from './country-select/country-select.component';
 
@@ -109,7 +109,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
 
         // directives
         HasServerErrorDirective,
-        LegacyLinkDirective,
+        SflLegacyLinkDirective,
 
         // components
         CountrySelectComponent,
@@ -123,7 +123,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
         LargeNumberSuffixPipe,
         SfCurrencyPipe,
         SfNumberPipe,
-        LegacyLinkDirective,
+        SflLegacyLinkDirective,
         BlankComponent,
         CountrySelectComponent,
         ScheduleCallIframeComponent,

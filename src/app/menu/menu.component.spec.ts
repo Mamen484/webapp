@@ -158,7 +158,7 @@ describe('MenuComponent', () => {
     }
 
     @Directive({
-        selector: '[sfLegacyLink]'
+        selector: '[sflLegacyLink]'
     })
     class LegacyLinkDirective {
         @Input() path;

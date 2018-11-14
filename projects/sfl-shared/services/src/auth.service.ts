@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { SflLocalStorageService } from './local-storage.service';
 import { SFL_API } from 'sfl-shared/entities';
 
 @Injectable({
@@ -34,5 +34,10 @@ export class SflAuthService {
 
     public getAuthString() {
         return this.localStorage.getItem('Authorization');
+    }
+
+    public getAuthToken() {
+        const authString = this.getAuthString();
+        return authString ? authString.replace('Bearer ') : '';
     }
 }

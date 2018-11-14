@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EventLinkComponent } from './event-link.component';
-import { LegacyLinkStubDirective } from '../../../mocks/stubs/legacy-link-stub.directive';
-import { Pipe } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe } from '@angular/core';
 
 @Pipe({name: 'sfEventLink'})
-class EventLinkPipe {}
+class EventLinkPipe {
+}
 
 describe('EventLinkComponent', () => {
     let component: EventLinkComponent;
@@ -13,7 +13,8 @@ describe('EventLinkComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EventLinkComponent, LegacyLinkStubDirective, EventLinkPipe]
+            declarations: [EventLinkComponent, EventLinkPipe],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));

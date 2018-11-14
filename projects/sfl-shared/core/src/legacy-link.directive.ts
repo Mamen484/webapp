@@ -1,17 +1,20 @@
 import { Directive, ElementRef, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { SflLegacyLinkService } from 'sfl-shared/services';
 
+/**
+ * Create a link to the legacy Shopping Feed app
+ */
 @Directive({
-    selector: '[sfLegacyLink]'
+    selector: '[sflLegacyLink]'
 })
-export class LegacyLinkDirective implements OnChanges {
+export class SflLegacyLinkDirective implements OnChanges {
 
     @Input() storeId: number;
     @Input() path: string;
     @Input() addAuthorization = true;
 
     constructor(protected elementRef: ElementRef,
-                protected legacyLink: LegacyLinkService) {
+                protected legacyLink: SflLegacyLinkService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
