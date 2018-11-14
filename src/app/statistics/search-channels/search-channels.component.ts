@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { ChannelType } from 'sfl-shared/entities';
 
 const SEARCH_DEBOUNCE = 300;

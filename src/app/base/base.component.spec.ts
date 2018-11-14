@@ -1,7 +1,7 @@
 import { EMPTY, of } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
-import { StoreService } from '../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { SflUserService } from 'sfl-shared/services';
 

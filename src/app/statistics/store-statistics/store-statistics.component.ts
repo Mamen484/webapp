@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Statistics } from '../../core/entities/statistics';
+import { Statistics } from 'sfl-shared/entities';
 import { ActivatedRoute } from '@angular/router';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { SflLocaleIdService } from 'sfl-shared/services';

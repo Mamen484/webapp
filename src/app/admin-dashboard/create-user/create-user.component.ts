@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from 'sfl-shared/entities';
-import { StoreService } from '../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { MatDialog, MatSelectChange } from '@angular/material';
 import { UserCreatedDialogComponent } from '../user-created-dialog/user-created-dialog.component';
 import { StoreError } from 'sfl-shared/entities';

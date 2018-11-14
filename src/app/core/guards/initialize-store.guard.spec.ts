@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { InitializeStoreGuard } from './initialize-store.guard';
 import { Store } from '@ngrx/store';
 import { SET_STORE } from '../reducers/current-store-reducer';
-import { StoreService } from '../services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { AppState } from '../entities/app-state';
 import { Router } from '@angular/router';

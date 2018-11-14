@@ -1,5 +1,5 @@
-import { ChannelType } from 'sfl-shared/entities';
 import { ChannelCategory } from './channel-category.enum';
+import { ChannelType } from './channel-type.enum';
 
 export class ChannelsRequestParams {
     page = 1;

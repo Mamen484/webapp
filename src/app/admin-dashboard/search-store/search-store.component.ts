@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, tap, filter } from 'rxjs/operators';
-import { StoreService } from '../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 
 import { Router } from '@angular/router';
 

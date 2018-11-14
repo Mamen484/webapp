@@ -4,11 +4,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
-import { StoreService } from './services/store.service';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { ModuleImportGuard, SFL_APP_TOKEN } from 'sfl-shared/entities';
+import { ModuleImportGuard } from 'sfl-shared/entities';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
@@ -39,7 +38,6 @@ import { SupportLinkService } from './services/support-link.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
-import { environment } from '../../environments/environment';
 import { SflLegacyLinkService } from 'sfl-shared/services';
 import { LegacyLinkService } from './services/legacy-link.service';
 
@@ -78,7 +76,6 @@ import { LegacyLinkService } from './services/legacy-link.service';
         CreatePasswordService,
         SupportService,
         PasswordRecoveryService,
-        StoreService,
         TimelineService,
         OrdersFilterService,
         OrdersService,

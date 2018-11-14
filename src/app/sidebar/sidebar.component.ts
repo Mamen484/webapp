@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Channel, Store, StoreChannelDetails } from 'sfl-shared/entities';
-import { StoreService } from '../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { ObservableMedia } from '@angular/flex-layout';

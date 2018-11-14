@@ -1,20 +1,27 @@
 import { map, publishReplay } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Inject, Injectable } from '@angular/core';
 import { ConnectableObservable, Observable } from 'rxjs';
-import { Statistics } from '../entities/statistics';
+import { SFL_API, Statistics } from 'sfl-shared/entities';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PagedResponse, Store, StoreChannel, StoreChannelResponse, StoreCharge } from 'sfl-shared/entities';
-import { ChannelsResponse } from '../entities/channels-response';
-import { ChannelsRequestParams } from '../entities/channels-request-params';
+import {
+    ChannelsRequestParams,
+    ChannelsResponse,
+    PagedResponse,
+    Store,
+    StoreChannel,
+    StoreChannelResponse,
+    StoreCharge
+} from 'sfl-shared/entities';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class StoreService {
 
     charge$: ConnectableObservable<StoreCharge>;
 
-    constructor(protected httpClient: HttpClient) {
+    constructor(protected httpClient: HttpClient, @Inject(SFL_API) protected sflApi) {
     }
 
     public getStoreChannels(storeId,
@@ -32,7 +39,7 @@ export class StoreService {
             .set('embed', 'stats');
 
         if (foreignChannels) {
-            return <any>this.httpClient.get(`${environment.API_URL}/channel`, {params: httpParams}).pipe(
+            return <any>this.httpClient.get(`${this.sflApi}/channel`, {params: httpParams}).pipe(
                 map((data: ChannelsResponse) =>
                     // we need this to have the same data when the user selects a store country, and another country
                     Object.assign({}, data, {
@@ -45,19 +52,19 @@ export class StoreService {
                     })))
                 ;
         }
-        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/channel`, {params: httpParams}).pipe(
+        return this.httpClient.get(`${this.sflApi}/store/${storeId}/channel`, {params: httpParams}).pipe(
             map((data: StoreChannelResponse) =>
                 // we use 'channel' property to have the same structure for results in the store country and outside it
                 Object.assign({}, data, {_embedded: {channel: data._embedded.storeChannel}})));
     }
 
     public getStatistics(storeId): Observable<Statistics> {
-        return <Observable<Statistics>>this.httpClient.get(`${environment.API_URL}/stat/store/${storeId}`);
+        return <Observable<Statistics>>this.httpClient.get(`${this.sflApi}/stat/store/${storeId}`);
     }
 
     public getStoreCharge(storeId): Observable<StoreCharge> {
         if (!this.charge$) {
-            this.charge$ = this.httpClient.get(`${environment.API_URL}/store/${storeId}/charge`)
+            this.charge$ = this.httpClient.get(`${this.sflApi}/store/${storeId}/charge`)
                 .pipe(publishReplay()) as ConnectableObservable<StoreCharge>;
             this.charge$.connect();
         }
@@ -65,15 +72,15 @@ export class StoreService {
     }
 
     public fetchAvailableStores(filter: string) {
-        return <Observable<any>>this.httpClient.get(`${environment.API_URL}/store`, {params: new HttpParams().set('name', filter)});
+        return <Observable<any>>this.httpClient.get(`${this.sflApi}/store`, {params: new HttpParams().set('name', filter)});
     }
 
     public getStore(storeId): Observable<Store> {
-        return <Observable<Store>>this.httpClient.get(`${environment.API_URL}/store/${storeId}`);
+        return <Observable<Store>>this.httpClient.get(`${this.sflApi}/store/${storeId}`);
     }
 
     public createStore(store: Store) {
-        return this.httpClient.post(`${environment.API_URL}/store`, {store});
+        return this.httpClient.post(`${this.sflApi}/store`, {store});
     }
 }
 

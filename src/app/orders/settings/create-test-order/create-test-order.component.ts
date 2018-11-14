@@ -12,7 +12,7 @@ import { values } from 'lodash';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { Channel, Store as UserStore } from 'sfl-shared/entities';
 import { combineLatest, Observable, zip } from 'rxjs';
-import { StoreService } from '../../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-create-test-order',

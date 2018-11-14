@@ -11,7 +11,7 @@ import { EMPTY, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
-import { StoreService } from '../../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { Subject } from 'rxjs/Rx';
 
 describe('CreateTestOrderComponent', () => {

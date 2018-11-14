@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FilterChannelsDialogComponent', () => {

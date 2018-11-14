@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { ChannelType } from 'sfl-shared/entities';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
 
 @Component({

@@ -3,8 +3,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
-import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { StoreService } from '../core/services/store.service';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
+import { StoreService } from 'sfl-shared/services';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { combineLatest } from 'rxjs';

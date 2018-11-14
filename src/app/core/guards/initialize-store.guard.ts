@@ -5,7 +5,7 @@ import { catchError, flatMap, map } from 'rxjs/operators';
 import { SET_STORE } from '../reducers/current-store-reducer';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { StoreService } from '../services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { Permission, Store } from 'sfl-shared/entities';
 import { SflUserService } from 'sfl-shared/services';
 
