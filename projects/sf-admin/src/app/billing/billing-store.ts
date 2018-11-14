@@ -5,7 +5,10 @@ export class BillingStore {
     name?: string;
     platform?: BillingStorePlatform;
     commissionRate?: number;
-    firstDayOfInvoice?: string;
+    trialEndsAt?: string;
+    firstDateOfInvoice?: string;
     monthlySubscriptionAmount?: number;
     isActive?: boolean;
+    openedAt: string;
+    closedAt: string;
 }

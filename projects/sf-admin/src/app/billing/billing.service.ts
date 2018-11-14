@@ -27,6 +27,8 @@ export class BillingService {
     }
 
     update(store): Observable<any> {
-        return this.httpClient.patch(`${environment.SFA_BILLING_API}/store`, {store});
+        let id = store.id;
+        delete store.id;
+        return this.httpClient.patch(`${environment.SFA_BILLING_API}/store/${id}`, {store});
     }
 }

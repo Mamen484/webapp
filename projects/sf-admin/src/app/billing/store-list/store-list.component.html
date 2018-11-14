@@ -1,3 +1,10 @@
+<div fxLayout="row" class="page-header">
+    <div i18n fxFlex>Billing</div>
+    <button mat-raised-button color="accent" (click)="openCreateStoreDialog()">Add</button>
+</div>
+<div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
@@ -14,9 +21,27 @@
     </ng-container>
     <ng-container matColumnDef="trialEndDate">
         <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period </th>
-        <td mat-cell *matCellDef="let element"> {{element.firstDayOfInvoice | date:'shortDate'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="closedAt">
+        <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date </th>
+        <td mat-cell *matCellDef="let element"> {{element.closedAt | date:'shortDate'}}</td>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef i18n></th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon (click)="openEditStoreDialog(element)">edit</mat-icon>
+        </td>
+
+    </ng-container>
+    <ng-container matColumnDef="block">
+        <th mat-header-cell *matHeaderCellDef i18n></th>
+        <td mat-cell *matCellDef="let element">
+            <mat-icon (click)="blockStore(element)">block</mat-icon>
+        </td>
+
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" bgcolor="warn"></tr>
 </table>
