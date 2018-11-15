@@ -6,7 +6,7 @@ export class BillingStore {
     platform?: BillingStorePlatform;
     commissionRate?: number;
     trialEndsAt?: string;
-    firstDateOfInvoice?: string;
+    firstDayOfInvoice?: string;
     monthlySubscriptionAmount?: number;
     isActive?: boolean;
     openedAt: string;

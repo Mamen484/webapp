@@ -1,6 +1,6 @@
-## We use this configuration to get a kubernetes build of WebApp on a testing environment.
+## We use this configuration to get a kubernetes build of sf-admin on a testing environment.
 # Step 1: build an angular application
-FROM node:8.11 as node
+FROM node:10.13 as node
 
 RUN  apt-get update && \
  apt-get install -y zip
@@ -22,26 +22,18 @@ ARG LOCALES="en fr es pt de it"
 
 # variables from environments/environment.ts
 
-ARG DEFAULT_LANGUAGE
-ARG APP_URL
-ARG APP_AUTHORIZATION
-ARG API_URL_WITHOUT_VERSION
-ARG API_URL
-ARG BASE_HREF='/v3'
-ARG DEFAULT_AUTHORIZATION
-ARG SHOPIFY_APP_URL
-ARG SUPPORT_URL
-ARG SUPPORT_AUTHORIZATION
-ARG CONTACT_EMAIL
-ARG SUPPORT_EMAIL
-ARG DEFAULT_AUTOPILOT_EMAIL
-ARG DEFAULT_AUTOPILOT_STORENAME
-ARG RUN_AUTOPILOT
+ARG SFA_API
+ARG SFA_BILLING_API
+ARG APP_TOKEN
+ARG SFA_LEGACY_LINK
+ARG WEBAPP_URL
 
-RUN npm run compile-env
+RUN npm run compile-env projects/sf-admin/src/environments
 
-RUN chmod +x ./build-multiple-locales.sh
-RUN ./build-multiple-locales.sh
+RUN npx ng build sfl-shared
+
+RUN chmod +x ./build-admin.sh
+RUN ./build-admin.sh
 
 #Step 3: copy files of compiled webapp to the nginx served folder and serve files with nginx
 FROM nginx:1.13
