@@ -21,17 +21,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [SflLegacyLinkDirective, SflCountrySelectComponent],
 })
 export class SflSharedModule {
-    static forRoot({baseHref, languageOptions, sflApi, sflAppToken, sflLegacyLink}) {
-        return <ModuleWithProviders>{
+    static forRoot(dependency: {baseHref, languageOptions, sflApi, sflAppToken, sflLegacyLink}): ModuleWithProviders {
+        return {
             ngModule: SflSharedModule,
             providers: [
                 {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
                 {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-                {provide: SFL_BASE_HREF, useValue: baseHref},
-                {provide: SFL_LANGUAGE_OPTIONS, useValue: languageOptions},
-                {provide: SFL_API, useValue: sflApi},
-                {provide: SFL_APP_TOKEN, useValue: sflAppToken},
-                {provide: SFL_LEGACY_LINK, useValue: sflLegacyLink},
+                {provide: SFL_BASE_HREF, useValue: dependency.baseHref},
+                {provide: SFL_LANGUAGE_OPTIONS, useValue: dependency.languageOptions},
+                {provide: SFL_API, useValue: dependency.sflApi},
+                {provide: SFL_APP_TOKEN, useValue: dependency.sflAppToken},
+                {provide: SFL_LEGACY_LINK, useValue: dependency.sflLegacyLink},
             ]
         }
     }
