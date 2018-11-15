@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { AppState } from '../../../core/entities/app-state';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { OrdersService } from '../../../core/services/orders.service';
 import { filter, flatMap, map, startWith, take } from 'rxjs/operators';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
 import { values } from 'lodash';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
-import { Channel } from '../../../core/entities/channel';
+import { Channel, Store as UserStore } from 'sfl-shared/entities';
 import { combineLatest, Observable, zip } from 'rxjs';
-import { StoreService } from '../../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-create-test-order',
@@ -22,12 +22,14 @@ import { StoreService } from '../../../core/services/store.service';
 export class CreateTestOrderComponent implements OnInit {
 
     @ViewChild(NgForm) form: NgForm;
+    @ViewChild('paymentMethod') paymentMethod: ElementRef<HTMLInputElement>;
 
     order = new TestOrder();
     totalPrice: number;
     channelControl = new FormControl();
     filteredChannels: Channel[];
     filteredNewChannels: Channel[];
+    haveDefaultPayment = ['amazon', 'cdiscount', 'manomano'];
 
     constructor(protected appStore: Store<AppState>,
                 protected ordersService: OrdersService,
@@ -61,7 +63,7 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     updateTotalPrice() {
-        this.totalPrice = this.calculateItemsPrice() + Number(this.order.shipment.shippingAmount || 0);
+        this.totalPrice = this.calculateItemsPrice() + Number(this.order.payment.shippingAmount || 0);
     }
 
     filterAutocompleteOptions() {
@@ -79,7 +81,10 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     selectChannel({option}) {
-        this.order.channel = option.value.id;
+        this.order.channelId = option.value.id;
+        if (this.haveDefaultPayment.find(el => el === option.value.name.toLowerCase())) {
+            this.order.payment.method = this.paymentMethod.nativeElement.getAttribute('attr.defaultValue');
+        }
     }
 
     protected calculateItemsPrice() {
@@ -87,16 +92,14 @@ export class CreateTestOrderComponent implements OnInit {
     }
 
     protected getInstalledChannels() {
-        return this.appStore.pipe(
-            select('installedChannels'),
+        return this.appStore.select('installedChannels').pipe(
             filter(channels => Boolean(channels)),
             take(1));
     }
 
     protected fetchNewChannels(): Observable<Channel[]> {
-        return this.appStore.pipe(
-            select('currentStore'),
-            flatMap(store => this.storeService.getStoreChannels(store.id)),
+        return this.appStore.select('currentStore').pipe(
+            flatMap((store: UserStore) => this.storeService.getStoreChannels(store.id)),
             map(({_embedded}) => _embedded.channel.filter(({installed}) => !installed).map(({_embedded: {channel}}) => channel))
         );
     }

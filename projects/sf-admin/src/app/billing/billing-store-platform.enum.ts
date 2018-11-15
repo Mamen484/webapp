@@ -1,0 +1,15 @@
+export type BillingStorePlatform =
+    'magento'
+    | 'prestashop'
+    | 'txt'
+    | 'xml'
+    | 'webetsolutions'
+    | 'wizishop'
+    | 'csv'
+    | 'powerboutique'
+    | 'ws'
+    | 'google'
+    | 'thelia'
+    | 'sa'
+    | 'cmonsite'
+    | 'xmlv1';

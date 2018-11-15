@@ -38,13 +38,6 @@ const routes: Routes = [
             {path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
         ]
     },
-    {
-        path: 'admin',
-        loadChildren: 'app/admin-dashboard/admin-dashboard.module#AdminDashboardModule',
-        canLoad: [CanLoadAdminGuard]
-    },
-
-
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
     {path: 'login', component: LoginComponent, canActivate: [IsLoggedInGuard]},
     {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},

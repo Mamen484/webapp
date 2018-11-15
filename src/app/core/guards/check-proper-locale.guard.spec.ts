@@ -1,39 +1,37 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 import { CheckProperLocaleGuard } from './check-proper-locale.guard';
 import { of } from 'rxjs';
-import { LocaleIdService } from '../services/locale-id.service';
+import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { WindowRefService } from '../services/window-ref.service';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import createSpyObj = jasmine.createSpyObj;
-import { Store } from '@ngrx/store';
 
 describe('CheckProperLocaleGuard', () => {
-    let appStore = createSpyObj('Store', ['select']);
+    let userService: jasmine.SpyObj<SflUserService>;
 
 
     describe('the same locale in the /me response and the localization of the project', () => {
+        userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [RouterTestingModule.withRoutes([])],
                 providers: [
                     CheckProperLocaleGuard,
-                    {provide: LocaleIdService, useValue: {localeId: 'it'}},
-                    {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
-                    {provide: Store, useValue: appStore},
+                    {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
+                    {provide: SflWindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
+                    {provide: SflUserService, useValue: userService},
                     Location,
                 ]
             });
         });
 
-        it('should return true', inject([CheckProperLocaleGuard], (guard: CheckProperLocaleGuard) => {
-            appStore.select.and.returnValue(of({language: 'it'}));
+        it('should return true', async () => {
+            const guard = TestBed.get(CheckProperLocaleGuard);
+            userService.fetchAggregatedInfo.and.returnValue(of({language: 'it'}));
             environment.production = 'true';
-            guard.canActivate().subscribe(canActivate => {
-                expect(canActivate).toEqual(true);
-            })
-        }));
+            const canActivate = await guard.canActivate().toPromise();
+            expect(canActivate).toEqual(true);
+        });
     });
 
     describe('different locales in the /me response and the localization of the project', () => {
@@ -44,45 +42,45 @@ describe('CheckProperLocaleGuard', () => {
                 imports: [RouterTestingModule.withRoutes([])],
                 providers: [
                     CheckProperLocaleGuard,
-                    {provide: LocaleIdService, useValue: {localeId: 'it'}},
-                    {provide: WindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
+                    {provide: SflLocaleIdService, useValue: {localeId: 'it'}},
+                    {provide: SflWindowRefService, useValue: {nativeWindow: {location: {href: ''}}}},
                     {provide: Location, useValue: locationSpy},
-                    {provide: Store, useValue: appStore},
+                    {provide: SflUserService, useValue: userService},
                 ]
             });
         });
 
         it('should redirect the user to the valid localization folder and return false',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
-                environment.production = 'true';
-                appStore.select.and.returnValue(of({language: 'en-US'}));
-                locationSpy.path.and.returnValue('');
-                guard.canActivate().subscribe(canActivate => {
+            inject([CheckProperLocaleGuard, SflWindowRefService],
+                async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
+                    environment.production = 'true';
+                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    locationSpy.path.and.returnValue('');
+                    const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/');
                     expect(canActivate).toEqual(false);
-                })
-            }));
+                }));
 
         it('should add a slash before the whole path if it doesn\'t exist to prevent extra redirects on the server',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
-                environment.production = 'true';
-                appStore.select.and.returnValue(of({language: 'en-US'}));
-                locationSpy.path.and.returnValue('?store=307');
-                guard.canActivate().subscribe(canActivate => {
+            inject([CheckProperLocaleGuard, SflWindowRefService],
+                async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
+                    environment.production = 'true';
+                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    locationSpy.path.and.returnValue('?store=307');
+                    const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
                     expect(canActivate).toEqual(false);
-                })
-            }));
+                }));
 
         it('should NOT add a slash before the whole path if it starts from the slash',
-            inject([CheckProperLocaleGuard, WindowRefService], (guard: CheckProperLocaleGuard, windowRef: WindowRefService) => {
-                environment.production = 'true';
-                appStore.select.and.returnValue(of({language: 'en-US'}));
-                locationSpy.path.and.returnValue('/?store=307');
-                guard.canActivate().subscribe(canActivate => {
+            inject([CheckProperLocaleGuard, SflWindowRefService],
+                async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
+                    environment.production = 'true';
+                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    locationSpy.path.and.returnValue('/?store=307');
+                    const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
                     expect(canActivate).toEqual(false);
-                })
-            }));
+                }));
     });
 });

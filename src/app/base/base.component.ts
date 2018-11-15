@@ -2,16 +2,15 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
-import { WindowRefService } from '../core/services/window-ref.service';
-import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { StoreService } from '../core/services/store.service';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
+import { StoreService } from 'sfl-shared/services';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { combineLatest } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
 import { TagsService } from '../core/services/tags.service';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
-import { Store as AppStore } from '../core/entities/store';
+import { AggregatedUserInfo, Store as AppStore } from 'sfl-shared/entities';
 
 @Component({
     selector: 'app-homepage',
@@ -21,9 +20,10 @@ import { Store as AppStore } from '../core/entities/store';
 export class BaseComponent {
 
     constructor(protected appStore: Store<AppState>,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected storeService: StoreService,
-                protected tagsService: TagsService) {
+                protected tagsService: TagsService,
+                protected userService: SflUserService) {
 
         this.configureAutopilot();
 
@@ -44,7 +44,7 @@ export class BaseComponent {
 
 
     protected configureAutopilot() {
-        combineLatest(this.appStore.select('userInfo'), this.appStore.select('currentStore'))
+        combineLatest(this.userService.fetchAggregatedInfo(), this.appStore.select('currentStore'))
             .subscribe(([userInfo, currentStore]) => {
                 if (!userInfo
                     || userInfo.isAdmin()

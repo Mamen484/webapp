@@ -5,9 +5,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from './core/entities/app-state';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, take } from 'rxjs/operators';
-import { AggregatedUserInfo } from './core/entities/aggregated-user-info';
-import { Store as UserStore } from './core/entities/store';
-import { WindowRefService } from './core/services/window-ref.service';
+import { Store as UserStore } from 'sfl-shared/entities';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { LOAD_FULLSTORY } from '../trackers/fullstory';
 import { Location } from '@angular/common';
 
@@ -25,9 +24,10 @@ export class AppComponent implements OnInit {
 
     constructor(protected appStore: Store<AppState>,
                 protected router: Router,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected location: Location,
-                protected renderer: Renderer2) {
+                protected renderer: Renderer2,
+                protected userService: SflUserService) {
     }
 
     ngOnInit(): void {
@@ -40,8 +40,8 @@ export class AppComponent implements OnInit {
             }
         });
 
-        this.appStore.select('userInfo').pipe(filter(info => Boolean(info)))
-            .subscribe((userInfo: AggregatedUserInfo) => {
+        this.userService.fetchAggregatedInfo()
+            .subscribe((userInfo) => {
                 if (!userInfo.isAdmin()) {
                     this.enableAutopilot();
                     this.configureGoogleAnalytics(userInfo);
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
         }
     }
 
-    protected runCountrySpecificCode(userInfo: AggregatedUserInfo) {
+    protected runCountrySpecificCode(userInfo) {
         this.appStore.select('currentStore').pipe(
             filter(store => Boolean(store) && typeof store.country === 'string' && store.country.toLowerCase() === 'us'),
             take(1),

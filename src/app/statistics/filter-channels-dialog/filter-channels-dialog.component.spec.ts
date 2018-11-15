@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { LocaleIdService } from '../../core/services/locale-id.service';
+import { SflLocaleIdService } from 'sfl-shared/services';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { FilterChannelsDialogComponent } from './filter-channels-dialog.component';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('FilterChannelsDialogComponent', () => {
@@ -24,7 +24,7 @@ describe('FilterChannelsDialogComponent', () => {
             providers: [
                 {provide: MatDialogRef, useValue: matDialog},
                 {provide: MAT_DIALOG_DATA, useValue: params},
-                {provide: LocaleIdService, useValue: {localeId: 'en'}},
+                {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: Store, useValue: {select: () => of({country: 'en'})}}
             ]
         })

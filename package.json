@@ -30,7 +30,8 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.10.0",
+    "@angular-devkit/build-angular": "~0.10.4",
+    "@angular-devkit/build-ng-packagr": "~0.8.0",
     "@angular/cli": "^7.0.2",
     "@angular/compiler-cli": "^7.0.0",
     "@angular/language-service": "^7.0.0",
@@ -53,10 +54,13 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-phantomjs-shim": "^1.5.0",
     "karma-safari-launcher": "^1.0.0",
+    "ng-packagr": "^4.1.0",
     "phantomjs-prebuilt": "^2.1.16",
     "protractor": "^5.4.1",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
+    "tsickle": ">=0.29.0",
+    "tslib": "^1.9.0",
     "tslint": "^5.11.0",
     "typescript": "^3.1.3",
     "webdriver-manager": "^12.1.0"
@@ -71,6 +75,7 @@
     "i18n": "ng xi18n",
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
+    "sf-admin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --port=4201",
     "docker-start": "npm ci && ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
     "compile-env": "ts-node compile-environment"
   },

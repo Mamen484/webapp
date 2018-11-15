@@ -8,7 +8,7 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 
 describe('SearchChannelsComponent', () => {
     let component: SearchChannelsComponent;

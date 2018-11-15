@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ChannelsRequestParams } from '../../app/core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-search-channels',

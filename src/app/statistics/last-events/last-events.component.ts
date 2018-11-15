@@ -9,7 +9,7 @@ import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum
 import { TimelineEvent } from '../../core/entities/timeline-event';
 import { Order } from '../../core/entities/orders/order';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
-import { PagedResponse } from '../../core/entities/paged-response';
+import { PagedResponse } from 'sfl-shared/entities';
 
 const maxEvents = 5;
 

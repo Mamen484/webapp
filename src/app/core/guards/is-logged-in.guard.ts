@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { flatMap } from 'rxjs/operators';
-import { WindowRefService } from '../services/window-ref.service';
-import { UserService } from '../services/user.service';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { LegacyLinkService } from '../services/legacy-link.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { Store } from '@ngrx/store';
-import { AppState } from '../entities/app-state';
 
 /**
  * This guard is used to detect if the user logged in and if so to redirect to the homepage. For use on the login page.
@@ -16,11 +11,10 @@ import { AppState } from '../entities/app-state';
 @Injectable()
 export class IsLoggedInGuard implements CanActivate {
 
-    constructor(protected windowRef: WindowRefService,
-                protected userService: UserService,
+    constructor(protected windowRef: SflWindowRefService,
+                protected userService: SflUserService,
                 protected legacyLinkService: LegacyLinkService,
-                protected localStorage: LocalStorageService,
-                protected appStore: Store<AppState>) {
+                protected localStorage: SflLocalStorageService) {
 
     }
 
@@ -29,9 +23,7 @@ export class IsLoggedInGuard implements CanActivate {
         let auth = this.localStorage.getItem('Authorization');
         if (auth) {
             return Observable.create(observer => {
-                this.appStore.select('userInfo')
-                    .pipe(flatMap(userInfo => userInfo ? of(userInfo) : this.userService.fetchAggregatedInfo()))
-                    .subscribe(
+                this.userService.fetchAggregatedInfo().subscribe(
                     // token is valid, redirect to the homepage
                     () => {
                         this.windowRef.nativeWindow.location.href = this.legacyLinkService.getLegacyLink('/');

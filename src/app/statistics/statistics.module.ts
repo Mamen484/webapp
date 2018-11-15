@@ -14,6 +14,7 @@ import { LastEventsComponent } from './last-events/last-events.component';
 import { EventStatsRowComponent } from './event-stats-row/event-stats-row.component';
 import { OrderErrorRowComponent } from './order-error-row/order-error-row.component';
 import { ChannelBoxModule } from './channel-box/channel-box.module';
+import { SflSharedModule } from 'sfl-shared';
 
 @NgModule({
     imports: [
@@ -21,6 +22,7 @@ import { ChannelBoxModule } from './channel-box/channel-box.module';
         SharedModule,
         StatisticsRoutingModule,
         ChannelBoxModule,
+        SflSharedModule,
     ],
     exports: [StatisticsComponent],
     declarations: [StatisticsComponent,

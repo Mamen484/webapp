@@ -1,4 +1,4 @@
-## We use this configuration to get a kubernetes build on a testing environment.
+## We use this configuration to get a kubernetes build of WebApp on a testing environment.
 # Step 1: build an angular application
 FROM node:8.11 as node
 

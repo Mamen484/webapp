@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormControl, Validators } from '@angular/forms';
-import { URLSearchParams } from '@angular/http';
-
-import { WindowRefService } from '../core/services/window-ref.service';
+import { SflAuthService} from 'sfl-shared/services';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
-import { UserService } from '../core/services/user.service';
-import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'sf-login',
@@ -15,33 +11,27 @@ import { AggregatedUserInfo } from '../core/entities/aggregated-user-info';
 })
 export class LoginComponent implements OnInit {
 
-    userNameControl = new FormControl('', [Validators.required]);
-    passwordControl = new FormControl('', [Validators.required]);
-
     error = '';
     showDeletedStoreError = false;
     contactEmail = environment.CONTACT_EMAIL;
     loadingNextPage = false;
 
-    constructor(protected userService: UserService,
-                protected router: Router,
-                protected windowRef: WindowRefService) {
+    constructor(protected userService: SflUserService,
+                protected authService: SflAuthService,
+                protected windowRef: SflWindowRefService) {
 
     }
 
     ngOnInit() {
     }
 
-    login() {
+    login({username, password}) {
         this.error = '';
-        if (this.userNameControl.hasError('required') || this.passwordControl.hasError('required')) {
-            return;
-        }
         this.loadingNextPage = true;
-        this.userService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
+        this.authService.login(username, password).subscribe(
             data => {
                 this.userService.fetchAggregatedInfo()
-                    .subscribe((userData: AggregatedUserInfo) => {
+                    .subscribe(userData => {
                         let activeStore = userData.findFirstEnabledStore();
                         if (activeStore) {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
@@ -51,7 +41,7 @@ export class LoginComponent implements OnInit {
                             );
                             return;
                         }
-                        this.windowRef.nativeWindow.localStorage.removeItem('Authorization');
+                        this.authService.logout();
                         this.showDeletedStoreError = true;
                     })
             },
@@ -66,8 +56,9 @@ export class LoginComponent implements OnInit {
         )
         ;
     }
+
     protected buildUrl(token, storeId, isAdmin) {
-        let queryParams = new URLSearchParams();
+        let queryParams = new HttpParams();
         queryParams.set('token', token);
         queryParams.set('store', storeId);
         let additionalPath = isAdmin ? '/admin' : '';

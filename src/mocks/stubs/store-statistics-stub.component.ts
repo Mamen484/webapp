@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Statistics } from '../../app/core/entities/statistics';
+import { Statistics } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-store-statistics',

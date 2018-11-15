@@ -4,10 +4,10 @@ import { of } from 'rxjs';
 
 import { StatisticsComponent } from './statistics.component';
 import { statisticsMock } from '../../mocks/statistics-mock';
-import { ChannelsRequestParams } from '../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { MatDialog } from '@angular/material';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
-import { StoreService } from '../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { storeChannelMock } from '../../mocks/store-channel.mock';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 

@@ -1,0 +1,8 @@
+@import '../../../../../src/sass/variables';
+@import '../../../../../src/sass/mixins/form-page';
+
+@include form-page();
+
+.deleted-store-message {
+  max-width: 320px;
+}

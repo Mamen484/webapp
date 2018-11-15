@@ -201,9 +201,9 @@
 </mat-menu>
 
 <mat-menu #printMenu="matMenu">
-    <a mat-menu-item mat-menu-item i18n sfLegacyLink
+    <a mat-menu-item mat-menu-item i18n sflLegacyLink
        [path]="selection.selected | invoicesLink" [addAuthorization]="false">Invoices</a>
-    <a mat-menu-item *ngFor="let exp of exports" sfLegacyLink
+    <a mat-menu-item *ngFor="let exp of exports" sflLegacyLink
        [path]="selection.selected | ordersExportLink:exp.id" [addAuthorization]="false">{{exp.name}}
     </a>
 </mat-menu>

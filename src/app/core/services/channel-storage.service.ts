@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared/services';
 
 export const MIN_ONLINE = 4;
 export const MIN_TURNOVER = 850;
@@ -13,7 +13,7 @@ export const ONLINE_STORAGE_KEY = 'sfChannelOnlineCache';
 })
 export class ChannelStorageService {
 
-    constructor(protected localStorage: LocalStorageService) {
+    constructor(protected localStorage: SflLocalStorageService) {
     }
 
     getGeneratedTurnover(channelId) {

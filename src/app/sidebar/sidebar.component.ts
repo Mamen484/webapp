@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { Store } from '../core/entities/store';
-import { StoreChannelDetails } from '../core/entities/store-channel-details';
-import { StoreService } from '../core/services/store.service';
-import { WindowRefService } from '../core/services/window-ref.service';
-import { Channel } from '../core/entities/channel';
+import { Channel, Store, StoreChannelDetails } from 'sfl-shared/entities';
+import { StoreService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { ObservableMedia } from '@angular/flex-layout';
 
@@ -24,7 +22,7 @@ export class SidebarComponent {
 
     constructor(protected appStore: AppStore<AppState>,
                 protected storeService: StoreService,
-                protected windowRef: WindowRefService,
+                protected windowRef: SflWindowRefService,
                 protected supportLinkService: SupportLinkService,
                 protected media: ObservableMedia) {
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);

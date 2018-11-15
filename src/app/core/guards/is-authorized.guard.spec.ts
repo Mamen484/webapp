@@ -1,12 +1,12 @@
 import { Observable, of, throwError } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflUserService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { aggregatedUserInfoMock } from '../../../mocks/agregated-user-info-mock';
 import { Store } from '@ngrx/store';
-import { AggregatedUserInfo } from '../entities/aggregated-user-info';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { Router } from '@angular/router';
 
 describe('IsAuthorizedGuard', () => {
@@ -21,18 +21,18 @@ describe('IsAuthorizedGuard', () => {
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
         removeItemSpy = jasmine.createSpy('localStorage.removeItem');
-        fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
+        fetchAggregatedInfoSpy = jasmine.createSpy('SflUserService.fetchAggregatedInfo');
         store = jasmine.createSpyObj('store', ['select', 'dispatch']);
         router = jasmine.createSpyObj('Router', ['navigate']);
 
         TestBed.configureTestingModule({
             providers: [
                 IsAuthorizedGuard,
-                {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
+                {provide: SflUserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
+                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
-                {provide: WindowRefService, useValue: {nativeWindow: {location: {}}}},
+                {provide: SflWindowRefService, useValue: {nativeWindow: {location: {}}}},
             ]
         });
     });
@@ -47,7 +47,7 @@ describe('IsAuthorizedGuard', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/login'])
     });
 
-    it('should call UserService.fetchAggregatedInfo to check if the authorization is valid', async () => {
+    it('should call SflUserService.fetchAggregatedInfo to check if the authorization is valid', async () => {
         store.select.and.returnValue(of(null));
         getItemSpy.and.returnValue('some token');
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
@@ -89,33 +89,5 @@ describe('IsAuthorizedGuard', () => {
         const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
         expect(canActivate).toEqual(false);
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
-    });
-
-
-    it('should write the userData to the app store, if the user has an enabled store', async () => {
-        store.select.and.returnValue(
-            of(AggregatedUserInfo.create({
-                roles: ['user'],
-                _embedded: {store: [{name: 'some name', status: 'active'}]}
-
-            }))
-        );
-        getItemSpy.and.returnValue('some token');
-        await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
-        expect(store.select).toHaveBeenCalledWith('userInfo');
-        expect(store.dispatch.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
-    });
-
-    it('should write the userData to the app store, if the user has an "admin" role', async () => {
-        store.select.and.returnValue(of(null));
-        getItemSpy.and.returnValue('some token');
-        fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create({
-            roles: ['admin'],
-            _embedded: {store: []}
-
-        })));
-        await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
-        expect(store.select).toHaveBeenCalledWith('userInfo');
-        expect(store.dispatch.calls.mostRecent().args[0].type).toEqual('INITIALIZE_USER_INFO');
     });
 });

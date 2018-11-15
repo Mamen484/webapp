@@ -1,0 +1,12 @@
+<sfl-menu-container [enableMenuIcon]="false">
+  <mat-menu #langMenu="matMenu" class="sf-language-menu" [overlapTrigger]="false">
+    <a mat-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{baseHref}}/{{locale[0]}}/login">
+      <img src="{{baseHref}}/{{localeId}}/assets/images/flags/{{locale[0]}}.png" class="sf-flag">
+      <span>{{locale[1]}}</span>
+    </a>
+  </mat-menu>
+  <div class="menu-blank-space"></div>
+  <div class="sf-nav-selected-language" [matMenuTriggerFor]="langMenu" *ngIf="displayFlags">
+    <img src="{{baseHref}}/{{localeId}}/assets/images/flags/{{localeId}}.png" >
+  </div>
+</sfl-menu-container>

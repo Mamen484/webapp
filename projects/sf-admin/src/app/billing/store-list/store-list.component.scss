@@ -1,0 +1,20 @@
+table {
+  width: 100%;
+}
+
+.page-header {
+  margin-bottom: 20px;
+}
+
+mat-progress-bar {
+  position: absolute;
+  z-index: 10;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+}
+
+mat-icon {
+  cursor: pointer;
+}

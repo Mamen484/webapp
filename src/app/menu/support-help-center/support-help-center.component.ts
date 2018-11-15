@@ -1,10 +1,9 @@
-import { mergeMap, tap, filter, debounceTime } from 'rxjs/operators';
+import { debounceTime, filter, mergeMap, tap } from 'rxjs/operators';
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SearchArticlesEntry } from '../../core/entities/search-articles-entry';
 import { FormControl } from '@angular/forms';
 import { SupportService } from '../../core/services/support.service';
 import { environment } from '../../../environments/environment';
-import { LocaleIdService } from '../../core/services/locale-id.service';
 import { HelpCenterLanguage } from '../../core/entities/help-center-language';
 import { SupportLinkService } from '../../core/services/support-link.service';
 
@@ -39,12 +38,11 @@ export class SupportHelpCenterComponent implements OnInit, AfterViewInit {
 
     constructor(protected elementRef: ElementRef,
                 protected supportService: SupportService,
-                protected localeIdService: LocaleIdService,
                 protected supportLinkService: SupportLinkService) {
     }
 
     ngOnInit() {
-        this.helpCenterLanguage = this.localeIdService.getHelpCenterLanguage();
+        this.helpCenterLanguage = this.supportService.helpCenterLanguage;
         this.searchControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),

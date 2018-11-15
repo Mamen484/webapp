@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { WindowRefService } from '../../core/services/window-ref.service';
+import { SflWindowRefService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-server-error',
@@ -8,7 +8,7 @@ import { WindowRefService } from '../../core/services/window-ref.service';
 })
 export class ServerErrorComponent implements OnInit {
 
-    constructor(protected windowRef: WindowRefService) {
+    constructor(protected windowRef: SflWindowRefService) {
     }
 
     ngOnInit() {

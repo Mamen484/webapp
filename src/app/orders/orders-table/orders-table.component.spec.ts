@@ -20,7 +20,7 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
-import { LocalStorageService } from '../../core/services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
@@ -37,7 +37,7 @@ describe('OrdersTableComponent', () => {
 
     let component: OrdersTableComponent;
     let fixture: ComponentFixture<OrdersTableComponent>;
-    let localStorage: jasmine.SpyObj<LocalStorageService>;
+    let localStorage: jasmine.SpyObj<SflLocalStorageService>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj(['select', 'pipe']);
@@ -67,7 +67,7 @@ describe('OrdersTableComponent', () => {
                 {provide: OrdersFilterService, useValue: filterService},
                 {provide: Router, useValue: router},
                 {provide: MatSnackBar, useValue: snackbar},
-                {provide: LocalStorageService, useValue: localStorage},
+                {provide: SflLocalStorageService, useValue: localStorage},
 
             ],
             imports: [
