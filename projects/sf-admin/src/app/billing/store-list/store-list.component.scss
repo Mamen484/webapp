@@ -1,5 +1,11 @@
+@import '../../../../../../src/sass/variables';
+
 table {
   width: 100%;
+
+  tr.isBlocked {
+    background-color: mat-color($warn, 0.1);
+  }
 }
 
 .page-header {
@@ -17,4 +23,6 @@ mat-progress-bar {
 
 mat-icon {
   cursor: pointer;
+  color: $black-54-opacity;
+  margin-left: 20px;
 }

@@ -1,0 +1,11 @@
+<div matDialogTitle i18n>Block a store</div>
+
+<mat-dialog-content i18n>
+    Warning, this action will block billing for this store. Are you sure you want to block it?
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose color="accent">Cancel</button>
+    <button mat-button (click)="block()" color="accent">Block</button>
+
+</mat-dialog-actions>

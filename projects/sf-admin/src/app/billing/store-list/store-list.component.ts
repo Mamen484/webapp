@@ -3,6 +3,7 @@ import { BillingService } from '../billing.service';
 import { MatDialog } from '@angular/material';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
+import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
 
 
 @Component({
@@ -50,9 +51,14 @@ export class StoreListComponent implements OnInit {
     }
 
     blockStore(store) {
-        this.isLoadingResults = true;
-        const toBlock = {id: store.id, isActive: false};
-        this.billingService.update(toBlock).subscribe(() => this.ngOnInit());
+        this.matDialog.open(StoreBlockDialogComponent).afterClosed().subscribe(confirmed => {
+            if (!confirmed) {
+                return;
+            }
+            this.isLoadingResults = true;
+            const toBlock = {id: store.id, isActive: false};
+            this.billingService.update(toBlock).subscribe(() => this.ngOnInit());
+        });
     }
 
 }
