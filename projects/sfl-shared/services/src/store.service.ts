@@ -71,7 +71,7 @@ export class StoreService {
         return this.charge$;
     }
 
-    public fetchAvailableStores(filter: string) {
+    public fetchAvailableStores(filter = '') {
         return <Observable<any>>this.httpClient.get(`${this.sflApi}/store`, {params: new HttpParams().set('name', filter)});
     }
 

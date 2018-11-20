@@ -38,6 +38,6 @@ export class SflAuthService {
 
     public getAuthToken() {
         const authString = this.getAuthString();
-        return authString ? authString.replace('Bearer ') : '';
+        return authString ? authString.replace('Bearer ', '') : '';
     }
 }

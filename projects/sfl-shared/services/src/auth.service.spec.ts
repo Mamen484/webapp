@@ -9,7 +9,7 @@ describe('AuthService', () => {
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
 
     beforeEach(() => {
-        localStorage = jasmine.createSpyObj('SflLocalStorageService', ['setItem', 'removeItem']);
+        localStorage = jasmine.createSpyObj('SflLocalStorageService', ['setItem', 'removeItem', 'getItem']);
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
@@ -54,5 +54,35 @@ describe('AuthService', () => {
         const service: SflAuthService = TestBed.get(SflAuthService);
         service.logout();
         expect(localStorage.removeItem).toHaveBeenCalledWith('Authorization');
+    });
+
+    it('should return true from isLoggedIn(), when some value is stored in the local storage', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        localStorage.getItem.and.returnValue('some value');
+        expect(service.isLoggedIn()).toBe(true);
+    });
+
+    it('should return false from isLoggedIn(), when no value is in the local storage', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        localStorage.getItem.and.returnValue(undefined);
+        expect(service.isLoggedIn()).toBe(false);
+    });
+
+    it('should return a value from the local storage on getAuthString()', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        localStorage.getItem.and.returnValue('some string');
+        expect(service.getAuthString()).toBe('some string');
+    });
+
+    it('should return a token from the local storage on getAuthToken()', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        localStorage.getItem.and.returnValue('Bearer some_token');
+        expect(service.getAuthToken()).toBe('some_token');
+    });
+
+    it('should return an empty string on getAuthToken() when there is nothing in the local storage', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+        localStorage.getItem.and.returnValue(undefined);
+        expect(service.getAuthToken()).toBe('');
     });
 });

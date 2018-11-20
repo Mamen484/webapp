@@ -106,7 +106,7 @@
     },
     "sfl-shared": {
       "root": "projects/sfl-shared",
-      "sourceRoot": "projects/sfl-shared/src",
+      "sourceRoot": "projects/sfl-shared",
       "projectType": "library",
       "prefix": "sfl",
       "architect": {

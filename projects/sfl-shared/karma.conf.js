@@ -18,7 +18,13 @@ module.exports = function (config) {
         coverageIstanbulReporter: {
             dir: require('path').join(__dirname, '../../coverage'),
             reports: ['html', 'lcovonly'],
-            fixWebpackSourcePaths: true
+            fixWebpackSourcePaths: true,
+            thresholds: {
+                statements: 100,
+                lines: 100,
+                branches: 90,
+                functions: 100
+            }
         },
         reporters: ['progress', 'kjhtml'],
         port: 9876,
@@ -26,6 +32,12 @@ module.exports = function (config) {
         logLevel: config.LOG_INFO,
         autoWatch: true,
         browsers: ['Chrome'],
+        customLaunchers: {
+            ChromeHeadlessCI: {
+                base: 'ChromeHeadless',
+                flags: ['--no-sandbox']
+            }
+        },
         singleRun: false
     });
 };
