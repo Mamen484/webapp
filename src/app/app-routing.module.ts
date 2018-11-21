@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { BaseComponent } from './base/base.component';
 import { AggregatedUserInfoResolveGuard } from './core/guards/aggregated-user-info-resolve.guard';
@@ -14,7 +14,6 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
-import { CanLoadAdminGuard } from './core/guards/can-load-admin.guard';
 import { ChannelsRouteGuard } from './core/guards/channels-route.guard';
 import { OrdersRouteGuard } from './core/guards/orders-route.guard';
 
@@ -33,9 +32,9 @@ const routes: Routes = [
             InitializeStoreGuard,
         ],
         children: [
-            {path: '', loadChildren: 'app/statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
-            {path: 'timeline', loadChildren: 'app/timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
-            {path: 'orders', loadChildren: 'app/orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
+            {path: '', loadChildren: './statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
+            {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
+            {path: 'orders', loadChildren: './orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
@@ -43,7 +42,7 @@ const routes: Routes = [
     {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
-    {path: 'register', loadChildren: 'app/registration/registration.module#RegistrationModule'},
+    {path: 'register', loadChildren: './registration/registration.module#RegistrationModule'},
 ];
 
 @NgModule({

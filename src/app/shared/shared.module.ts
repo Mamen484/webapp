@@ -33,7 +33,6 @@ import { LargeNumberSuffixPipe } from './large-number-suffix.pipe';
 import { SfCurrencyPipe } from './sf-currency.pipe';
 import { SfNumberPipe } from './sf-number.pipe';
 import { RouterModule } from '@angular/router';
-import { SflLegacyLinkDirective } from '../../../projects/sfl-shared/core/src/legacy-link.directive';
 import { BlankComponent } from './blank.component';
 
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
@@ -46,6 +45,7 @@ import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
 import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
+import { SflSharedModule } from 'sfl-shared';
 
 @NgModule({
     imports: [
@@ -81,6 +81,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
         MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
+        SflSharedModule,
     ],
     exports: [
         // modules
@@ -114,6 +115,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
         MatTooltipModule,
         ReactiveFormsModule,
         RouterModule,
+        SflSharedModule,
 
         // pipes
         ArrayFromNumberPipe,
@@ -126,7 +128,6 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
 
         // directives
         HasServerErrorDirective,
-        SflLegacyLinkDirective,
 
         // components
         CountryAutocompleteComponent,
@@ -139,7 +140,6 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
         LargeNumberSuffixPipe,
         SfCurrencyPipe,
         SfNumberPipe,
-        SflLegacyLinkDirective,
         BlankComponent,
         ScheduleCallIframeComponent,
         RemoveUnderlinePipe,

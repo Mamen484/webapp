@@ -12,7 +12,6 @@ import { EventLinkComponent } from './event-link/event-link.component';
 import { UpdateRowComponent } from './update-row/update-row.component';
 import { Store } from '@ngrx/store';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
-import { SflLegacyLinkDirective } from '../../../projects/sfl-shared/core/src/legacy-link.directive';
 import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { SflAuthService, SflLegacyLinkService, SflLocalStorageService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
@@ -21,6 +20,7 @@ import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
 import { AppState } from '../core/entities/app-state';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { SflSharedModule } from 'sfl-shared/core';
 
 @Pipe({
     name: 'sfEventIcon'
@@ -146,11 +146,11 @@ describe('TimelineComponent', () => {
                     MatListModule,
                     MatIconModule,
                     MatProgressSpinnerModule,
+                    SflSharedModule,
                 ],
                 declarations: [
                     TimelineComponent,
                     EventLinkComponent,
-                    SflLegacyLinkDirective,
                     UpdateRowComponent,
                     TimelineFilteringAreaComponent,
                     EventIconPipe,

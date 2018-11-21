@@ -36,7 +36,6 @@ export class SflSharedModule {
         }
     }
 
-    constructor(@Optional() @SkipSelf() parentModule?: SflSharedModule) {
-        ModuleImportGuard.throwIfAlreadyLoaded(parentModule, 'SflSharedModule');
+    constructor() {
     }
 }
