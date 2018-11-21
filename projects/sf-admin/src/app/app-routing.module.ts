@@ -8,7 +8,7 @@ const routes: Routes = [
     {
         path: '', component: AdminBaseComponent, canActivate: [IsAuthorizedGuard], children: [
             {path: '', redirectTo: '/billing', pathMatch: 'full'},
-            {path: 'billing', loadChildren: 'sf-admin/src/app/billing/billing.module#BillingModule'},
+            {path: 'billing', loadChildren: './billing/billing.module#BillingModule'},
             {path: 'create-user', component: CreateUserComponent},
         ]
     },

@@ -61,4 +61,10 @@ export class StoreListComponent implements OnInit {
         });
     }
 
+    activateStore(store) {
+        this.isLoadingResults = true;
+        this.billingService.update({id: store.id, isActive: true})
+            .subscribe(() => this.ngOnInit());
+    }
+
 }

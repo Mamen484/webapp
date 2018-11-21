@@ -5,6 +5,10 @@ table {
 
   tr.isBlocked {
     background-color: mat-color($warn, 0.1);
+
+    mat-icon.block-store {
+      color: mat-color($warn, 900);
+    }
   }
 }
 
@@ -25,4 +29,8 @@ mat-icon {
   cursor: pointer;
   color: $black-54-opacity;
   margin-left: 20px;
+}
+
+.list-title {
+  margin-bottom: 0;
 }
