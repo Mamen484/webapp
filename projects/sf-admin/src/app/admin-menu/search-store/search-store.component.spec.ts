@@ -1,13 +1,14 @@
-import { async, fakeAsync, ComponentFixture, inject, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { SearchStoreComponent } from './search-store.component';
 import { Component, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreService } from 'sfl-shared/services';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, EMPTY } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({template: '', styles: ['']})
-export class BlankComponent {}
+export class BlankComponent {
+}
 
 describe('SearchStoreComponent', () => {
     let elementRef: Object;
@@ -52,7 +53,7 @@ describe('SearchStoreComponent', () => {
         expect(component.processing).toEqual(true);
     }));
 
-    it ('should start search when 2 symbols entered after debounce time', fakeAsync(() => {
+    it('should start search when 2 symbols entered after debounce time', fakeAsync(() => {
         component.searchControl.setValue('ab', {emitEvent: true});
         tick(100);
         expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();
@@ -60,13 +61,13 @@ describe('SearchStoreComponent', () => {
         expect(storeService.fetchAvailableStores).toHaveBeenCalledTimes(1);
     }));
 
-    it ('should NOT start search when no symbols entered', fakeAsync(() => {
+    it('should NOT start search when no symbols entered', fakeAsync(() => {
         component.searchControl.setValue('', {emitEvent: true});
         tick(300);
         expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();
     }));
 
-    it ('should NOT start search when only one symbol entered', fakeAsync(() => {
+    it('should NOT start search when only one symbol entered', fakeAsync(() => {
         component.searchControl.setValue('', {emitEvent: true});
         tick(300);
         expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();

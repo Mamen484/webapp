@@ -1,7 +1,8 @@
 <div class="toolbar-search-container">
   <mat-icon class="sf-search-icon">search</mat-icon>
-  <input placeholder="Search a store" i18n-placeholder #searchInput class="toolbar-search"
-         [formControl]="searchControl" (focus)="showSearchResult=true">
+    <input placeholder="Search a store" i18n-placeholder #searchInput class="toolbar-search"
+           [formControl]="searchControl" [searchControl]="searchControl" (focus)="showSearchResult=true" sfaSearchStore
+           (searchResults)="searchResults = $event" (processingSearch)="processing = $event">
   <mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
 </div>
 

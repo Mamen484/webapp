@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModuleImportGuard, SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK } from 'sfl-shared/entities';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [SflLegacyLinkDirective, SflCountrySelectComponent],
 })
 export class SflSharedModule {
-    static forRoot(dependency: {baseHref, languageOptions, sflApi, sflAppToken, sflLegacyLink}): ModuleWithProviders {
+    static forRoot(dependency: { baseHref, languageOptions, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders {
         return {
             ngModule: SflSharedModule,
             providers: [

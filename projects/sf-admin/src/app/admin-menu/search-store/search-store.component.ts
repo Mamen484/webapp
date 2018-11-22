@@ -1,17 +1,12 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, tap } from 'rxjs/operators';
-import { SflWindowRefService, StoreService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
-
 
 @Component({
     selector: 'sfa-search-store',
     templateUrl: './search-store.component.html',
-    styleUrls: ['./search-store.component.scss']
+    styleUrls: ['./search-store.component.scss'],
 })
 export class SearchStoreComponent implements OnInit, AfterViewInit {
 
@@ -42,7 +37,6 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     }
 
     processing = false;
-    searchSubscription;
 
     @HostListener('window:resize')
     setSearchResultsPosition() {
@@ -54,29 +48,10 @@ export class SearchStoreComponent implements OnInit, AfterViewInit {
     }
 
     constructor(protected elementRef: ElementRef,
-                protected storeService: StoreService,
                 protected windowRef: SflWindowRefService) {
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
-            tap(() => this.processing = true),
-            tap(searchQuery => this.handleNewSearch(searchQuery))
-        )
-            .subscribe();
-    }
-
-    handleNewSearch(searchQuery) {
-        if (this.searchSubscription) {
-            this.searchSubscription.unsubscribe();
-        }
-        this.searchSubscription = this.storeService.fetchAvailableStores(searchQuery)
-            .subscribe(response => {
-                this.searchResults = response._embedded.store;
-                this.processing = false;
-            });
     }
 
     ngAfterViewInit() {

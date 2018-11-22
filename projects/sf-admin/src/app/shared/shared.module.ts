@@ -19,6 +19,7 @@ import {
 } from '@angular/material';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SearchStoreDirective } from './search-store/search-store.directive';
 
 @NgModule({
     imports: [
@@ -58,8 +59,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         MatSelectModule,
         MatTableModule,
         MatTooltipModule,
+        SearchStoreDirective,
     ],
-    declarations: []
+    declarations: [SearchStoreDirective]
 })
 export class SfaSharedModule {
 }
