@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+    MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -26,6 +27,7 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
         CommonModule,
         ClipboardModule,
         FlexLayoutModule,
+        MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
         MatDialogModule,
@@ -44,6 +46,7 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
     exports: [
         ClipboardModule,
         FlexLayoutModule,
+        MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
         MatDialogModule,

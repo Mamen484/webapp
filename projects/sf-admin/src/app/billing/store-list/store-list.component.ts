@@ -28,15 +28,14 @@ export class StoreListComponent implements OnInit {
     }
 
     openCreateStoreDialog() {
-        const id = this.dataSource.length ? this.dataSource[this.dataSource.length - 1].id + 1 : 1;
-        this.matDialog.open(StoreDialogComponent,
-            {data: {id, type: 'magento'}}
-        ).afterClosed().subscribe(store => {
-            if (store) {
-                this.isLoadingResults = true;
-                this.billingService.create(store).subscribe(() => this.ngOnInit());
-            }
-        });
+        this.matDialog.open(StoreDialogComponent, {data: {}})
+            .afterClosed()
+            .subscribe(store => {
+                if (store) {
+                    this.isLoadingResults = true;
+                    this.billingService.create(store).subscribe(() => this.ngOnInit());
+                }
+            });
     }
 
     openEditStoreDialog(store) {

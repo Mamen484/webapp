@@ -5,7 +5,7 @@ import { BillingRoutingModule } from './billing-routing.module';
 import { StoreListComponent } from './store-list/store-list.component';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { SfaSharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
 
 @NgModule({
@@ -13,6 +13,7 @@ import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dial
         CommonModule,
         BillingRoutingModule,
         FormsModule,
+        ReactiveFormsModule,
         SfaSharedModule,
     ],
     providers: [],

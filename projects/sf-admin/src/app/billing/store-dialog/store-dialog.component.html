@@ -1,34 +1,53 @@
 <div matDialogTitle i18n>Store integration</div>
 
 <mat-dialog-content>
-    <form fxLayout="column">
+    <form fxLayout="column" #form="ngForm" (ngSubmit)="save(form.valid)">
         <mat-form-field appearance="outline" color="accent">
             <mat-label i18n>Name</mat-label>
-            <input matInput name="name" [(ngModel)]="store.name" required>
+            <input matInput name="name" [formControl]="searchControl" sfaSearchStore [searchControl]="searchControl"
+                   (searchResults)="storeSearchResults = $event" [matAutocomplete]="auto" (blur)="resetName()" required>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectStore($event)" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of storeSearchResults" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="searchControl.invalid && (searchControl.dirty || searchControl.touched)">
+                Name is mandatory.
+            </mat-error>
         </mat-form-field>
 
         <div fxLayout="row" fxLayoutGap="30px">
             <mat-form-field appearance="outline" color="accent" class="price-field">
                 <mat-label i18n>Price</mat-label>
-                <input matInput name="price" [(ngModel)]="store.monthlySubscriptionAmount" required>
+                <input matInput name="price" [(ngModel)]="store.monthlySubscriptionAmount" required #price="ngModel">
+                <mat-error *ngIf="price.invalid && (price.dirty || price.touched)" i18n>
+                    Price is mandatory.
+                </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" color="accent" fxFlex>
                 <mat-label i18n>Commission %</mat-label>
-                <input matInput name="commission" [(ngModel)]="store.commissionRate" required>
+                <input matInput name="commission" [(ngModel)]="store.commissionRate" required #commission="ngModel">
+                <mat-error *ngIf="commission.invalid && (commission.dirty || commission.touched)" i18n>
+                    Commission is mandatory.
+                </mat-error>
             </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" color="accent">
             <mat-label i18n>End date of the trial period</mat-label>
-            <input matInput [matDatepicker]="picker" [(ngModel)]="store.firstDayOfInvoice" name="firstDateOfInvoice">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="store.trialEndsAt" name="firstDateOfInvoice"
+                   #trialEndsAt="ngModel" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="trialEndsAt.invalid && (trialEndsAt.dirty || trialEndsAt.touched)" i18n>
+                The field is mandatory.
+            </mat-error>
         </mat-form-field>
+
+        <mat-dialog-actions>
+            <button mat-button color="accent" matDialogClose i18n>Cancel</button>
+            <button mat-button color="accent" i18n>Save</button>
+        </mat-dialog-actions>
     </form>
 </mat-dialog-content>
 
-<mat-dialog-actions>
-    <button mat-button color="accent" matDialogClose i18n>Cancel</button>
-    <button mat-button color="accent" i18n (click)="save()">Save</button>
-
-</mat-dialog-actions>
