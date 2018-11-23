@@ -5,43 +5,48 @@
 <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
     <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
 </div>
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+<div class="table-container mat-elevation-z1">
+    <table mat-table [dataSource]="dataSource">
 
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef i18n> Store name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-    </ng-container>
-    <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef i18n> Price </th>
-        <td mat-cell *matCellDef="let element"> {{element.monthlySubscriptionAmount}} </td>
-    </ng-container>
-    <ng-container matColumnDef="commission">
-        <th mat-header-cell *matHeaderCellDef i18n> Commission </th>
-        <td mat-cell *matCellDef="let element"> {{element.commissionRate}} </td>
-    </ng-container>
-    <ng-container matColumnDef="trialEndDate">
-        <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period </th>
-        <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="closedAt">
-        <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date </th>
-        <td mat-cell *matCellDef="let element"> {{element.closedAt | date:'shortDate'}}</td>
-    </ng-container>
-    <ng-container matColumnDef="edit">
-        <th mat-header-cell *matHeaderCellDef i18n></th>
-        <td mat-cell *matCellDef="let element">
-            <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit</mat-icon>
-        </td>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef i18n> Store name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef i18n> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.monthlySubscriptionAmount}} </td>
+        </ng-container>
+        <ng-container matColumnDef="commission">
+            <th mat-header-cell *matHeaderCellDef i18n> Commission </th>
+            <td mat-cell *matCellDef="let element"> {{element.commissionRate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="trialEndDate">
+            <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period </th>
+            <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="closedAt">
+            <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date </th>
+            <td mat-cell *matCellDef="let element"> {{element.closedAt | date:'shortDate'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef i18n></th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit</mat-icon>
+            </td>
 
-    </ng-container>
-    <ng-container matColumnDef="block">
-        <th mat-header-cell *matHeaderCellDef i18n></th>
-        <td mat-cell *matCellDef="let element">
-            <mat-icon (click)="element.isActive ? blockStore(element) : activateStore(element)" [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip class="block-store">block</mat-icon>
-        </td>
+        </ng-container>
+        <ng-container matColumnDef="block">
+            <th mat-header-cell *matHeaderCellDef i18n></th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="element.isActive ? blockStore(element) : activateStore(element)" [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip class="block-store">block</mat-icon>
+            </td>
 
-    </ng-container>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"></tr>
-</table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"></tr>
+    </table>
+</div>
+
+<mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)" class="mat-elevation-z1"></mat-paginator>

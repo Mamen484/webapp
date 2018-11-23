@@ -19,14 +19,14 @@
         <div fxLayout="row" fxLayoutGap="30px">
             <mat-form-field appearance="outline" color="accent" class="price-field">
                 <mat-label i18n>Price</mat-label>
-                <input matInput name="price" [(ngModel)]="store.monthlySubscriptionAmount" required #price="ngModel">
+                <input matInput name="price" [(ngModel)]="store.monthlySubscriptionAmount" required #price="ngModel" type="number">
                 <mat-error *ngIf="price.invalid && (price.dirty || price.touched)" i18n>
                     Price is mandatory.
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" color="accent" fxFlex>
                 <mat-label i18n>Commission %</mat-label>
-                <input matInput name="commission" [(ngModel)]="store.commissionRate" required #commission="ngModel">
+                <input matInput name="commission" [(ngModel)]="store.commissionRate" required #commission="ngModel" type="number">
                 <mat-error *ngIf="commission.invalid && (commission.dirty || commission.touched)" i18n>
                     Commission is mandatory.
                 </mat-error>

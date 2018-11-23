@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { BillingStore } from './billing-store';
@@ -13,8 +13,15 @@ export class BillingService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    fetchStoreCollection() {
-        return this.httpClient.get(`${environment.SFA_BILLING_API}/store`) as Observable<PagedResponse<{store: BillingStore[]}>>;
+    fetchStoreCollection(queryParam: { limit?: number, page?: number } = {}) {
+        let params = new HttpParams();
+        if (queryParam.limit) {
+            params = params.set('limit', queryParam.limit.toString());
+        }
+        if (queryParam.page) {
+            params = params.set('page', queryParam.page.toString());
+        }
+        return this.httpClient.get(`${environment.SFA_BILLING_API}/store`, {params}) as Observable<PagedResponse<{ store: BillingStore[] }>>;
     }
 
 

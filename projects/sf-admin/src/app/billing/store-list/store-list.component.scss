@@ -1,5 +1,13 @@
 @import '../../../../../../src/sass/variables';
 
+$paginator-height: 65px;
+$page-header-height: 56px;
+
+.table-container {
+  max-height: calc(100vh - #{$toolbar-height} - 2*#{$content-margin} - #{$paginator-height} - #{$page-header-height});
+  overflow: auto;
+}
+
 table {
   width: 100%;
 
@@ -10,6 +18,10 @@ table {
       color: mat-color($warn, 900);
     }
   }
+}
+
+mat-paginator {
+  position: relative;
 }
 
 .page-header {

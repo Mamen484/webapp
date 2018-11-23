@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BillingService } from '../billing.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, PageEvent } from '@angular/material';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
 import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
@@ -17,14 +17,16 @@ export class StoreListComponent implements OnInit {
     displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'edit', 'block'];
     isLoadingResults = true;
 
+    pageSizeOptions = [10, 15, 25, 50, 100];
+    pageSize = 15;
+    resultsLength = 0;
+    currentPage = 1;
+
     constructor(protected billingService: BillingService, protected matDialog: MatDialog) {
     }
 
     ngOnInit() {
-        this.billingService.fetchStoreCollection().subscribe(storeList => {
-            this.dataSource = storeList._embedded.store;
-            this.isLoadingResults = false;
-        });
+        this.fetchData();
     }
 
     openCreateStoreDialog() {
@@ -33,7 +35,7 @@ export class StoreListComponent implements OnInit {
             .subscribe(store => {
                 if (store) {
                     this.isLoadingResults = true;
-                    this.billingService.create(store).subscribe(() => this.ngOnInit());
+                    this.billingService.create(store).subscribe(() => this.fetchData());
                 }
             });
     }
@@ -44,9 +46,18 @@ export class StoreListComponent implements OnInit {
         ).afterClosed().subscribe(editedStore => {
             if (editedStore) {
                 this.isLoadingResults = true;
-                this.billingService.update(editedStore).subscribe(() => this.ngOnInit());
+                this.billingService.update(editedStore).subscribe(() => this.fetchData());
             }
         });
+    }
+
+    pageChanged(event: PageEvent) {
+        if (event.pageIndex === event.previousPageIndex) {
+            this.pageSize = event.pageSize;
+        }
+        this.isLoadingResults = true;
+        this.currentPage = event.pageIndex + 1;
+        this.fetchData()
     }
 
     blockStore(store) {
@@ -64,6 +75,14 @@ export class StoreListComponent implements OnInit {
         this.isLoadingResults = true;
         this.billingService.update({id: store.id, isActive: true})
             .subscribe(() => this.ngOnInit());
+    }
+
+    fetchData() {
+        this.billingService.fetchStoreCollection({limit: this.pageSize, page: this.currentPage}).subscribe(storeList => {
+            this.dataSource = storeList._embedded.store;
+            this.isLoadingResults = false;
+            this.resultsLength = storeList.total;
+        });
     }
 
 }
