@@ -18,7 +18,7 @@ RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zi
 RUN unzip -o all.zip
 
 ARG env=prod
-ARG LOCALES="en fr es pt de it"
+ARG LOCALES="en"
 
 # variables from environments/environment.ts
 
