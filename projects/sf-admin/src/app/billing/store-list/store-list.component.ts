@@ -40,7 +40,7 @@ export class StoreListComponent implements OnInit {
             });
     }
 
-    openEditStoreDialog(store) {
+    openEditStoreDialog(store: BillingStore) {
         this.matDialog.open(StoreDialogComponent,
             {data: store}
         ).afterClosed().subscribe(editedStore => {
@@ -54,9 +54,13 @@ export class StoreListComponent implements OnInit {
     pageChanged(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
             this.pageSize = event.pageSize;
+            // we need to reset the current page to 1, because if we change the pageSize to a bigger value,
+            // previously specified page might not exist
+            this.currentPage = 1;
+        } else {
+            this.currentPage = event.pageIndex + 1;
         }
         this.isLoadingResults = true;
-        this.currentPage = event.pageIndex + 1;
         this.fetchData()
     }
 

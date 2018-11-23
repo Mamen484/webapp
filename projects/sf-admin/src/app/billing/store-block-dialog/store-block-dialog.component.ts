@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -6,12 +6,9 @@ import { MatDialogRef } from '@angular/material';
     templateUrl: './store-block-dialog.component.html',
     styleUrls: ['./store-block-dialog.component.scss']
 })
-export class StoreBlockDialogComponent implements OnInit {
+export class StoreBlockDialogComponent {
 
     constructor(protected matDialogRef: MatDialogRef<StoreBlockDialogComponent, boolean | undefined>) {
-    }
-
-    ngOnInit() {
     }
 
     block() {

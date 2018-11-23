@@ -1,76 +1,48 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { SearchStoreComponent } from './search-store.component';
-import { Component, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreService } from 'sfl-shared/services';
-import { RouterTestingModule } from '@angular/router/testing';
-import { EMPTY } from 'rxjs';
-import { Location } from '@angular/common';
+import { Directive, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { SflWindowRefService } from 'sfl-shared/services';
+import { environment } from '../../../environments/environment';
 
-@Component({template: '', styles: ['']})
-export class BlankComponent {
+@Directive({selector: '[sfaSearchStore]'})
+export class SearchStoreMockDirective {
 }
 
 describe('SearchStoreComponent', () => {
     let elementRef: Object;
-    let storeService: jasmine.SpyObj<StoreService>;
+    let windowRef;
 
     let component: SearchStoreComponent;
     let fixture: ComponentFixture<SearchStoreComponent>;
 
     beforeEach(async(() => {
         elementRef = {};
-        storeService = jasmine.createSpyObj(['fetchAvailableStores']);
+        windowRef = {nativeWindow: jasmine.createSpyObj('Window', ['open'])};
         TestBed.configureTestingModule({
-            declarations: [SearchStoreComponent, BlankComponent],
+            declarations: [SearchStoreComponent, SearchStoreMockDirective],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: ElementRef, useValue: elementRef},
-                {provide: StoreService, useValue: storeService},
-                Location,
+                {provide: SflWindowRefService, useValue: windowRef},
             ],
-            imports: [RouterTestingModule.withRoutes([
-                {path: '', component: BlankComponent}])]
         });
     }));
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SearchStoreComponent);
         component = fixture.componentInstance;
-        storeService.fetchAvailableStores.and.returnValue(EMPTY);
         fixture.detectChanges();
     });
 
     it('should go to ?store={storeId} on selectStore call', fakeAsync(() => {
-        let location: Location = TestBed.get(Location);
         component.selectStore(295);
-        tick();
-        expect(location.path()).toEqual('?store=295');
+        expect(windowRef.nativeWindow.open).toHaveBeenCalledWith(`${environment.WEBAPP_URL}?store=295`);
     }));
 
     it('should set processing to true on selectStore call', fakeAsync(() => {
-        expect(component.processing).toEqual(false);
+        component.processing = true;
         component.selectStore(295);
-        expect(component.processing).toEqual(true);
-    }));
-
-    it('should start search when 2 symbols entered after debounce time', fakeAsync(() => {
-        component.searchControl.setValue('ab', {emitEvent: true});
-        tick(100);
-        expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();
-        tick(200);
-        expect(storeService.fetchAvailableStores).toHaveBeenCalledTimes(1);
-    }));
-
-    it('should NOT start search when no symbols entered', fakeAsync(() => {
-        component.searchControl.setValue('', {emitEvent: true});
-        tick(300);
-        expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();
-    }));
-
-    it('should NOT start search when only one symbol entered', fakeAsync(() => {
-        component.searchControl.setValue('', {emitEvent: true});
-        tick(300);
-        expect(storeService.fetchAvailableStores).not.toHaveBeenCalled();
+        expect(component.processing).toEqual(false);
     }));
 
 });
