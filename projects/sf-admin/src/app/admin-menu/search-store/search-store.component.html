@@ -1,21 +1,25 @@
-<div class="toolbar-search-container">
-  <mat-icon class="sf-search-icon">search</mat-icon>
-    <input placeholder="Search a store" i18n-placeholder #searchInput class="toolbar-search"
-           [formControl]="searchControl" [searchControl]="searchControl" (focus)="showSearchResult=true" sfaSearchStore
-           (searchResults)="searchResults = $event" (processingSearch)="processing = $event">
-  <mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
-</div>
+<mat-form-field appearance="outline">
+    <mat-icon matPrefix class="sf-search-icon">search</mat-icon>
+    <input matInput
+           placeholder="Search a store"
+           i18n-placeholder
+           class="toolbar-search"
+           [formControl]="searchControl"
+           [matAutocomplete]="auto"
+           [searchControl]="searchControl"
+           sfaSearchStore
+           (searchResults)="searchResults = $event"
+           (processingSearch)="processing = $event"
+           (focus)="showSearchResult=true">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectStore($event)" [displayWith]="displayFn">
+        <mat-option *ngFor="let option of searchResults" [value]="option">
+            <div class="title" (click)="selectStore(option.id)">{{option.name}}</div>
+        </mat-option>
+        <mat-option *ngIf="searchResults && !searchResults.length" class="no-results-container">
+            <div class="mat-subheading-2 no-results" i18n>No results</div>
+            <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
 
-<div class="search-results" [ngClass]="{'mat-elevation-z22': showSearchResult && searchResults}">
-  <div *ngIf="showSearchResult && searchResults && searchResults.length">
-    <div *ngFor="let entry of searchResults" class="search-entry">
-      <div class="title" (click)="selectStore(entry.id)">{{entry.name}}</div>
-    </div>
-  </div>
-  <div *ngIf="showSearchResult && searchResults && !searchResults.length" class="no-results-container">
-    <div class="mat-subheading-2 no-results" i18n>No results</div>
-    <a href="#" (click)="clearSearch()" class="mat-body-1 clear-results" i18n>Clear</a>
-  </div>
-</div>
-
-<div class="support-help-center-overlay" (click)="clearSearch()" *ngIf="showSearchResult"></div>
