@@ -17,6 +17,7 @@ import {
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSelectModule,
+    MatSnackBarModule,
     MatTableModule,
     MatTooltipModule
 } from '@angular/material';
@@ -46,6 +47,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatSelectModule,
+        MatSnackBarModule,
         MatTooltipModule,
     ],
     exports: [
@@ -67,6 +69,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatSelectModule,
+        MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
 

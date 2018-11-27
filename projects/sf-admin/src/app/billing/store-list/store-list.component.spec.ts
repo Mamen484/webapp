@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StoreListComponent } from './store-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialog, MatTableModule } from '@angular/material';
+import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
 import { BillingService } from '../billing.service';
 import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
@@ -13,10 +13,12 @@ describe('StoreListComponent', () => {
     let fixture: ComponentFixture<StoreListComponent>;
     let billingService: jasmine.SpyObj<BillingService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
+    let snackBar: jasmine.SpyObj<MatSnackBar>;
 
     beforeEach(async(() => {
         billingService = jasmine.createSpyObj('BillingService', ['fetchStoreCollection', 'create', 'update']);
         matDialog = jasmine.createSpyObj('MatDialog', ['open']);
+        snackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
         TestBed.configureTestingModule({
             declarations: [StoreListComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -24,6 +26,7 @@ describe('StoreListComponent', () => {
             providers: [
                 {provide: BillingService, useValue: billingService},
                 {provide: MatDialog, useValue: matDialog},
+                {provide: MatSnackBar, useValue: snackBar},
             ],
         })
             .compileComponents();
@@ -89,6 +92,14 @@ describe('StoreListComponent', () => {
         matDialog.open.and.returnValue({afterClosed: () => of({})});
         component.openEditStoreDialog(<any>{});
         expect(billingService.fetchStoreCollection).toHaveBeenCalled();
+    });
+
+    it('should show a snackbar with successful message when store saved', () => {
+        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        component.openEditStoreDialog(<any>{});
+        expect(snackBar.open).toHaveBeenCalled();
+        expect(snackBar.open.calls.mostRecent().args[0]).toContain('has been saved');
     });
 
     it('should open a StoreBlockDialogComponent on blockStore()', () => {

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BillingService } from '../billing.service';
-import { MatDialog, PageEvent } from '@angular/material';
+import { MatDialog, MatSnackBar, PageEvent } from '@angular/material';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
 import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
 import { Observable } from 'rxjs';
 
+const SUCCESS_MESSAGE_DURATION = 5000;
 
 @Component({
     selector: 'sfa-store-list',
@@ -23,7 +24,9 @@ export class StoreListComponent implements OnInit {
     resultsLength = 0;
     currentPage = 1;
 
-    constructor(protected billingService: BillingService, protected matDialog: MatDialog) {
+    constructor(protected billingService: BillingService,
+                protected matDialog: MatDialog,
+                protected snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -50,6 +53,9 @@ export class StoreListComponent implements OnInit {
         ).afterClosed().subscribe(saved => {
             if (saved) {
                 this.isLoadingResults = true;
+                this.snackBar.open('The store has been saved successfully', '', {
+                    duration: SUCCESS_MESSAGE_DURATION,
+                });
                 this.fetchData();
             }
         });
