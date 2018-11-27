@@ -9,8 +9,7 @@
            [searchControl]="searchControl"
            sfaSearchStore
            (searchResults)="searchResults = $event"
-           (processingSearch)="processing = $event"
-           (focus)="showSearchResult=true">
+           (processingSearch)="processing = $event">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectStore($event)" [displayWith]="displayFn">
         <mat-option *ngFor="let option of searchResults" [value]="option">
             <div class="title" (click)="selectStore(option.id)">{{option.name}}</div>
@@ -21,5 +20,5 @@
         </mat-option>
     </mat-autocomplete>
 </mat-form-field>
-<mat-progress-bar mode="indeterminate" color="primary" *ngIf="showSearchResult && processing"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" color="primary" *ngIf="processing"></mat-progress-bar>
 
