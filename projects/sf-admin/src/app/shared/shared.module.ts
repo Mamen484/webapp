@@ -12,8 +12,10 @@ import {
     MatListModule,
     MatMenuModule,
     MatNativeDateModule,
-    MatOptionModule, MatPaginatorModule,
+    MatOptionModule,
+    MatPaginatorModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatTableModule,
     MatTooltipModule
@@ -21,6 +23,7 @@ import {
 import { ClipboardModule } from 'ngx-clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 @NgModule({
     imports: [
@@ -41,6 +44,7 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
         MatOptionModule,
         MatPaginatorModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatSelectModule,
         MatTooltipModule,
     ],
@@ -61,12 +65,19 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
         MatOptionModule,
         MatPaginatorModule,
         MatProgressBarModule,
+        MatProgressSpinnerModule,
         MatSelectModule,
         MatTableModule,
         MatTooltipModule,
+
+        ErrorMessageComponent,
+
         SearchStoreDirective,
     ],
-    declarations: [SearchStoreDirective]
+    declarations: [
+        ErrorMessageComponent,
+        SearchStoreDirective,
+    ]
 })
 export class SfaSharedModule {
 }

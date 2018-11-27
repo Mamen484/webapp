@@ -35,6 +35,7 @@ mat-progress-bar {
 
 .progress-bar-wrapper {
   position: relative;
+  z-index: 150;
 }
 
 mat-icon {

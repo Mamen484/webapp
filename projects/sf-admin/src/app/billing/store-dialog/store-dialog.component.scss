@@ -8,12 +8,17 @@ mat-form-field {
   }
 }
 
-mat-dialog-actions {
-  display: block;
-  text-align: right;
-}
-
-
 mat-dialog-content {
   margin-bottom: 0;
+}
+
+button {
+  mat-spinner {
+    margin: 8px auto;
+  }
+}
+
+sfa-error-message {
+  margin-bottom: 25px;
+  display: block;
 }

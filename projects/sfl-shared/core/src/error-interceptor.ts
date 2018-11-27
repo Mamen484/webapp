@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http'
-import { EMPTY, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err instanceof HttpErrorResponse && err.status === 401 && !this.router.isActive('/login', false)) {
                 this.router.navigate(['/login']);
             }
-            return EMPTY;
+            return throwError(err);
         }));
 
     }

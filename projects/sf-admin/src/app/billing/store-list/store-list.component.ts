@@ -4,6 +4,7 @@ import { MatDialog, PageEvent } from '@angular/material';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
 import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -30,23 +31,26 @@ export class StoreListComponent implements OnInit {
     }
 
     openCreateStoreDialog() {
-        this.matDialog.open(StoreDialogComponent, {data: {}})
-            .afterClosed()
-            .subscribe(store => {
-                if (store) {
-                    this.isLoadingResults = true;
-                    this.billingService.create(store).subscribe(() => this.fetchData());
-                }
-            });
+        this.openStoreDialog(store => this.billingService.create(store));
     }
 
     openEditStoreDialog(store: BillingStore) {
+        this.openStoreDialog((editedStore) => this.billingService.update(editedStore), store, false);
+    }
+
+    openStoreDialog(onSave: (store: BillingStore) => Observable<any>, store: BillingStore = null, nameEditable = true) {
         this.matDialog.open(StoreDialogComponent,
-            {data: store}
-        ).afterClosed().subscribe(editedStore => {
-            if (editedStore) {
+            {
+                data: {
+                    store,
+                    onSave,
+                    nameEditable
+                }
+            }
+        ).afterClosed().subscribe(saved => {
+            if (saved) {
                 this.isLoadingResults = true;
-                this.billingService.update(editedStore).subscribe(() => this.fetchData());
+                this.fetchData();
             }
         });
     }
