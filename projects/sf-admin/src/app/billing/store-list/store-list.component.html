@@ -9,36 +9,42 @@
     <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef i18n> Store name </th>
+            <th mat-header-cell *matHeaderCellDef i18n> Store name</th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
         <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef i18n> Price </th>
+            <th mat-header-cell *matHeaderCellDef i18n> Price</th>
             <td mat-cell *matCellDef="let element"> {{element.monthlySubscriptionAmount}} </td>
         </ng-container>
         <ng-container matColumnDef="commission">
-            <th mat-header-cell *matHeaderCellDef i18n> Commission </th>
+            <th mat-header-cell *matHeaderCellDef i18n> Commission</th>
             <td mat-cell *matCellDef="let element"> {{element.commissionRate}} </td>
         </ng-container>
         <ng-container matColumnDef="trialEndDate">
-            <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period </th>
+            <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period</th>
             <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
         </ng-container>
         <ng-container matColumnDef="closedAt">
-            <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date </th>
-            <td mat-cell *matCellDef="let element"> {{element.closedAt | date:'shortDate'}}</td>
+            <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date</th>
+            <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="!element.isActive">{{element.closedAt | date:'shortDate'}}</ng-container>
+            </td>
         </ng-container>
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef i18n></th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit</mat-icon>
+                <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit
+                </mat-icon>
             </td>
 
         </ng-container>
         <ng-container matColumnDef="block">
             <th mat-header-cell *matHeaderCellDef i18n></th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon (click)="element.isActive ? blockStore(element) : activateStore(element)" [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip class="block-store">block</mat-icon>
+                <mat-icon (click)="element.isActive ? blockStore(element) : activateStore(element)"
+                          [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip
+                          class="block-store">block
+                </mat-icon>
             </td>
 
         </ng-container>
