@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ErrorMessageComponent } from './error-message.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ErrorMessageComponent', () => {
     let component: ErrorMessageComponent;
@@ -8,7 +9,8 @@ describe('ErrorMessageComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ErrorMessageComponent]
+            declarations: [ErrorMessageComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));

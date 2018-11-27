@@ -1,32 +1,29 @@
 import { Observable, of, throwError } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
-import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { SflAuthService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { IsAuthorizedGuard } from './is-authorized.guard';
 import { Store } from '@ngrx/store';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { Router } from '@angular/router';
 
 describe('IsAuthorizedGuard', () => {
-
-    let getItemSpy: jasmine.Spy;
-    let removeItemSpy: jasmine.Spy;
+    let sflAuthService: jasmine.SpyObj<SflAuthService>;
     let fetchAggregatedInfoSpy: jasmine.Spy;
     let store;
     let router: jasmine.SpyObj<Router>;
     let guard: IsAuthorizedGuard;
 
     beforeEach(() => {
-        getItemSpy = jasmine.createSpy('localStorage.getItem');
-        removeItemSpy = jasmine.createSpy('localStorage.removeItem');
         fetchAggregatedInfoSpy = jasmine.createSpy('SflUserService.fetchAggregatedInfo');
         store = jasmine.createSpyObj('store', ['select', 'dispatch']);
         router = jasmine.createSpyObj('Router', ['navigate']);
+        sflAuthService = jasmine.createSpyObj('SflAuthService', ['isLoggedIn', 'logout']);
 
         TestBed.configureTestingModule({
             providers: [
                 IsAuthorizedGuard,
                 {provide: SflUserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
-                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy, removeItem: removeItemSpy}},
+                {provide: SflAuthService, useValue: sflAuthService},
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
                 {provide: SflWindowRefService, useValue: {nativeWindow: {location: {}}}},
@@ -39,21 +36,21 @@ describe('IsAuthorizedGuard', () => {
     });
 
     it('should return false and redirect to the login page when if there is no authorization in the local storage', () => {
-        getItemSpy.and.returnValue(null);
+        sflAuthService.isLoggedIn.and.returnValue(false);
         expect(guard.canActivate(<any>{})).toEqual(false);
         expect(router.navigate).toHaveBeenCalledWith(['/login'])
     });
 
     it('should call SflUserService.fetchAggregatedInfo to check if the authorization is valid', async () => {
         store.select.and.returnValue(of(null));
-        getItemSpy.and.returnValue('some token');
+        sflAuthService.isLoggedIn.and.returnValue(true);
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
         expect(fetchAggregatedInfoSpy).toHaveBeenCalled();
     });
 
     it('should return false if there is invalid authorization in the local storage', async () => {
-        getItemSpy.and.returnValue('some token');
+        sflAuthService.isLoggedIn.and.returnValue(true);
         store.select.and.returnValue(of(null));
         fetchAggregatedInfoSpy.and.returnValue(throwError({status: 401}));
         const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
@@ -62,14 +59,14 @@ describe('IsAuthorizedGuard', () => {
 
     it('should return false if the authorization is valid but the user is not admin', async () => {
         store.select.and.returnValue(of(null));
-        getItemSpy.and.returnValue('some token');
+        sflAuthService.isLoggedIn.and.returnValue(true);
         fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
         const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
         expect(canActivate).toEqual(false);
     });
 
-    it('should redirect to the homepage if the authorization is invalid ', async () => {
-        getItemSpy.and.returnValue('some token');
+    it('should redirect to the login page if the server returned a client error', async () => {
+        sflAuthService.isLoggedIn.and.returnValue(true);
         store.select.and.returnValue(of(null));
         fetchAggregatedInfoSpy.and.returnValue(throwError({status: 401}));
         const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
@@ -77,9 +74,17 @@ describe('IsAuthorizedGuard', () => {
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
 
+    it('should redirect to the critical error page if the server returned a server error', async () => {
+        sflAuthService.isLoggedIn.and.returnValue(true);
+        store.select.and.returnValue(of(null));
+        fetchAggregatedInfoSpy.and.returnValue(throwError({status: 502}));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
+        expect(canActivate).toEqual(false);
+        expect(router.navigate).toHaveBeenCalledWith(['/critical-error'], {skipLocationChange: true});
+    });
 
-    it('should redirect to the homepage if the user is not admin and does not have enabled stores', async () => {
-        getItemSpy.and.returnValue('some token');
+    it('should redirect to the login if the user is not admin and does not have enabled stores', async () => {
+        sflAuthService.isLoggedIn.and.returnValue(true);
         store.select.and.returnValue(of(null));
         fetchAggregatedInfoSpy.and.returnValue(
             of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
@@ -87,6 +92,7 @@ describe('IsAuthorizedGuard', () => {
         expect(canActivate).toEqual(false);
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
+
 });
 
 export const aggregatedUserInfoMock = {

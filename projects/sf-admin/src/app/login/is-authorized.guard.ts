@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { Observable, of } from 'rxjs';
+import { SflAuthService, SflUserService } from 'sfl-shared/services';
 import { HttpErrorResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 
 /**
  * This guard is used to detect if the user is logged in.
@@ -17,46 +18,39 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class IsAuthorizedGuard implements CanActivate {
     constructor(protected router: Router,
                 protected userService: SflUserService,
-                protected localStorage: SflLocalStorageService) {
+                protected authService: SflAuthService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
         // check Authorization in a storage
-        let auth = this.localStorage.getItem('Authorization');
-        if (!auth) {
+        if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/login']);
             return false;
         }
-        return Observable.create(observer => {
-            this.userService.fetchAggregatedInfo().subscribe(
-                userInfo => {
-                    if (userInfo.isAdmin()) {
-                        observer.next(true);
-                        observer.complete();
-                    } else {
-                        this.isNotAuthorized(observer)
-                    }
-                },
-                // do not activate and redirect to /login when an error
+
+        return this.userService.fetchAggregatedInfo().pipe(
+            map(userInfo => {
+                if (userInfo.isAdmin()) {
+                    return true;
+                }
+                this.isNotAuthorized();
+                return false;
+            }),
+            catchError(// do not activate and redirect to /login when an error
                 (error: HttpErrorResponse) => {
                     if (error.status >= 400 && error.status < 500) { // client error
-                        this.isNotAuthorized(observer);
+                        this.isNotAuthorized();
                     } else if (error.status >= 500) { // server error
                         this.router.navigate(['/critical-error'], {skipLocationChange: true});
-                        observer.next(false);
-                        observer.complete();
                     }
+                    return of(false);
+                }))
 
-                }
-            );
-        });
     }
 
-    protected isNotAuthorized(observer) {
+    protected isNotAuthorized() {
         this.router.navigate(['/login']);
-        this.localStorage.removeItem('Authorization');
-        observer.next(false);
-        observer.complete();
+        this.authService.logout();
     }
 }
