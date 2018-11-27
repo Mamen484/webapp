@@ -32,6 +32,7 @@ import { SfaSharedModule } from './shared/shared.module';
         SearchStoreComponent,
         UserCreatedDialogComponent,
     ],
+    entryComponents: [UserCreatedDialogComponent],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
