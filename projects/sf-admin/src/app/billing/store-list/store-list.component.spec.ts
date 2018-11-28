@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { StoreListComponent } from './store-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -44,21 +44,21 @@ describe('StoreListComponent', () => {
     it('should fetch and show billing stores on init', () => {
         billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
         fixture.detectChanges();
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1});
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
         expect(component.dataSource).toEqual([]);
     });
 
     it('should change a page and refresh data on pageChanged()', () => {
         billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
         component.pageChanged(<any>{pageIndex: 1, previousPageIndex: 0});
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2});
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2, search: ''});
         expect(component.currentPage).toEqual(2);
     });
 
     it('should change a pageSize on pageChanged()', () => {
         billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
         component.pageChanged(<any>{pageIndex: 3, previousPageIndex: 3, pageSize: 25});
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 25, page: 1});
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 25, page: 1, search: ''});
         expect(component.pageSize).toEqual(25);
     });
 

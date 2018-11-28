@@ -5,8 +5,12 @@ import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
 import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
 import { Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { debounceTime, filter } from 'rxjs/operators';
 
 const SUCCESS_MESSAGE_DURATION = 5000;
+const SEARCH_DEBOUNCE = 300;
+const MIN_QUERY_LENGTH = 2;
 
 @Component({
     selector: 'sfa-store-list',
@@ -24,12 +28,24 @@ export class StoreListComponent implements OnInit {
     resultsLength = 0;
     currentPage = 1;
 
+    searchControl = new FormControl();
+    searchQuery = '';
+    dataSubscription;
+
     constructor(protected billingService: BillingService,
                 protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
+        this.searchControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => !searchQuery || searchQuery.length >= MIN_QUERY_LENGTH),
+        ).subscribe(searchQuery => {
+            this.searchQuery = searchQuery;
+            this.isLoadingResults = true;
+            this.fetchData();
+        });
         this.fetchData();
     }
 
@@ -92,7 +108,14 @@ export class StoreListComponent implements OnInit {
     }
 
     fetchData() {
-        this.billingService.fetchStoreCollection({limit: this.pageSize, page: this.currentPage}).subscribe(storeList => {
+        if (this.dataSubscription) {
+            this.dataSubscription.unsubscribe();
+        }
+        this.dataSubscription = this.billingService.fetchStoreCollection({
+            limit: this.pageSize,
+            page: this.currentPage,
+            search: this.searchQuery
+        }).subscribe(storeList => {
             this.dataSource = storeList._embedded.store;
             this.isLoadingResults = false;
             this.resultsLength = storeList.total;

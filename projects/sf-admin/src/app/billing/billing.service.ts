@@ -14,13 +14,16 @@ export class BillingService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    fetchStoreCollection(queryParam: { limit?: number, page?: number } = {}) {
+    fetchStoreCollection(queryParam: { limit?: number, page?: number, search?: string } = {}) {
         let params = new HttpParams();
         if (queryParam.limit) {
             params = params.set('limit', queryParam.limit.toString());
         }
         if (queryParam.page) {
             params = params.set('page', queryParam.page.toString());
+        }
+        if (typeof queryParam.search === 'string') {
+            params = params.set('name', queryParam.search);
         }
         return this.httpClient.get(`${environment.SFA_BILLING_API}/store`, {params}) as Observable<PagedResponse<{ store: BillingStore[] }>>;
     }
