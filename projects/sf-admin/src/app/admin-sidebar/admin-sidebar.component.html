@@ -5,10 +5,10 @@
             <mat-icon>add</mat-icon>
             <span fxHide fxShow.xs i18n>Create a user</span>
         </mat-list-item>
-        <mat-list-item [matMenuTriggerFor]="invoicing" matTooltip="Invoicing" matTooltipPosition="after" i18n-matTooltip
+        <mat-list-item [matMenuTriggerFor]="invoicing" matTooltip="Billing" matTooltipPosition="after" i18n-matTooltip
                        [matTooltipDisabled]="hideTooltips">
             <mat-icon>attach_money</mat-icon>
-            <span fxHide fxShow.xs i18n>Invoicing</span>
+            <span fxHide fxShow.xs i18n>Billing</span>
         </mat-list-item>
         <mat-list-item matTooltip="Partners" matTooltipPosition="after" i18n-matTooltip
                        [matTooltipDisabled]="hideTooltips">
@@ -31,6 +31,7 @@
 </sfl-sidebar-container>
 
 <mat-menu #invoicing="matMenu" class="sf-sidebar-menu">
+    <a mat-menu-item i18n routerLink="/billing">Billing</a>
     <a mat-menu-item i18n sflLegacyLink path="/admin/lost" target="_blank">Clients lost</a>
     <a mat-menu-item i18n sflLegacyLink path="/admin/churn" target="_blank">Churn</a>
     <a mat-menu-item i18n sflLegacyLink path="/admin/invoicing" target="_blank">Membership</a>
