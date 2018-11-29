@@ -21,6 +21,7 @@ export class CreateStoreModel {
                 login: name,
                 password: '',
                 token: data.token,
+                phone: data.phone,
             },
             feed: {
                 url: data.feed,
