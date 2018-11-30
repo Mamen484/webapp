@@ -46,6 +46,7 @@ import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pi
 import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
+import { LivechatWidgetModule } from '@livechat/angular-widget';
 
 @NgModule({
     imports: [
@@ -55,6 +56,7 @@ import { SflSharedModule } from 'sfl-shared';
         FormsModule,
         InfiniteScrollModule,
         LayoutModule,
+        LivechatWidgetModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -91,6 +93,7 @@ import { SflSharedModule } from 'sfl-shared';
         FormsModule,
         InfiniteScrollModule,
         LayoutModule,
+        LivechatWidgetModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

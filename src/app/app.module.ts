@@ -9,7 +9,6 @@ import { SharedModule } from './shared/shared.module';
 import { LoginModule } from './login/login.module';
 import { SnackbarsModule } from './snackbars/snackbars.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { SflSharedModule } from 'sfl-shared/core';
 import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
@@ -31,7 +30,6 @@ import { SflErrorPagesModule } from 'sfl-shared/error-pages';
         SnackbarsModule,
         AppRoutingModule,
         LoginModule,
-        LivechatWidgetModule,
         SflSharedModule.forRoot({
             baseHref: environment.BASE_HREF,
             languageOptions: ChannelLanguage,
