@@ -1,6 +1,8 @@
 <div class="form-container">
     <div>
-        <div class="form-title mat-display-1" i18n>Log in</div>
+        <div class="form-title mat-display-1" i18n>
+            <ng-content select="[sfl-login-title]"></ng-content>
+        </div>
         <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loadingNextPage"></mat-progress-bar>
         <mat-card>
             <mat-card-content>

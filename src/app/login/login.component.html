@@ -1,6 +1,7 @@
 <sfl-unauthenticated-menu [displayFlags]="true"></sfl-unauthenticated-menu>
 
 <sfl-login-form [loadingNextPage]="loadingNextPage" (loginSubmitted)="login($event)">
+    <div sfl-login-title i18n>Log in</div>
     <div class="error" *ngIf="error">{{error}}</div>
     <div class="error deleted-store-message" *ngIf="showDeletedStoreError"
          i18n="Interpolation replaced with support email@@storeIsDeletedMessage">
