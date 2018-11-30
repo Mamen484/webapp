@@ -1,5 +1,6 @@
 <sfl-unauthenticated-menu [displayFlags]="false" backgroundColor="#212121"></sfl-unauthenticated-menu>
 
 <sfl-login-form [loadingNextPage]="loadingNextPage" (loginSubmitted)="login($event)">
+    <div sfl-login-title i18n>Admin</div>
     <div class="error" *ngIf="error">{{error}}</div>
 </sfl-login-form>

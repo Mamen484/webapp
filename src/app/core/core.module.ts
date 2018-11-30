@@ -7,7 +7,6 @@ import { userInfoReducer } from './reducers/user-info-reducer';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { ModuleImportGuard } from 'sfl-shared/entities';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
