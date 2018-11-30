@@ -2,6 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from 'sfl-shared/entities';
 import { toPairs } from 'lodash';
 import { SflLocaleIdService } from 'sfl-shared/services';
+import { DEFAULT_MENU_BACKGROUND } from './menu-container.component';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { SflLocaleIdService } from 'sfl-shared/services';
 export class UnauthenticatedMenuComponent {
 
     @Input() displayFlags;
+    @Input() backgroundColor = DEFAULT_MENU_BACKGROUND;
 
     localeId;
     localizations = [];

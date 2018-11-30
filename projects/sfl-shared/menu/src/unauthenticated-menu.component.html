@@ -1,4 +1,4 @@
-<sfl-menu-container [enableMenuIcon]="false">
+<sfl-menu-container [enableMenuIcon]="false" [backgroundColor]="backgroundColor">
   <mat-menu #langMenu="matMenu" class="sf-language-menu" [overlapTrigger]="false">
     <a mat-menu-item class="sf-language-menu-item"  *ngFor="let locale of localizations" href="{{baseHref}}/{{locale[0]}}/login">
       <img src="{{baseHref}}/{{localeId}}/assets/images/flags/{{locale[0]}}.png" class="sf-flag">
