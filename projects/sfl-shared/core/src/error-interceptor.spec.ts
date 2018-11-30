@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ErrorInterceptor } from './error-interceptor';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 describe('ErrorInterceptor', () => {
@@ -29,7 +31,7 @@ describe('ErrorInterceptor', () => {
 
     it('should redirect to /login when the user is not authorized', () => {
         router.isActive.and.returnValue(false);
-        http.get('/auth').subscribe();
+        http.get('/auth').pipe(catchError(() => of({}))).subscribe();
 
         httpMock.expectOne('/auth')
             .flush({}, {status: 401, statusText: 'some error'});
@@ -39,7 +41,7 @@ describe('ErrorInterceptor', () => {
 
     it('should NOT redirect to /login when the user is already on login page', () => {
         router.isActive.and.returnValue(true);
-        http.get('/auth').subscribe();
+        http.get('/auth').pipe(catchError(() => of({}))).subscribe();
 
         httpMock.expectOne('/auth')
             .flush({}, {status: 401, statusText: 'some error'});
@@ -50,7 +52,7 @@ describe('ErrorInterceptor', () => {
 
     it('should NOT redirect to /login when the error is different from 401', () => {
         router.isActive.and.returnValue(false);
-        http.get('/auth').subscribe();
+        http.get('/auth').pipe(catchError(() => of({}))).subscribe();
 
         httpMock.expectOne('/auth')
             .flush({}, {status: 402, statusText: 'some error'});
