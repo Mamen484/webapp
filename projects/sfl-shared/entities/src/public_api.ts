@@ -7,7 +7,6 @@ export * from './channels-request-params';
 export * from './channels-response';
 export * from './feed-source';
 export * from './link';
-export * from './module-import-guard';
 export * from './paged-response';
 export * from './payment-type.enum';
 export * from './permission';
