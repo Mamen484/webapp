@@ -49,11 +49,6 @@ describe('FilterChannelsDialogComponent', () => {
         expect(component.filter.country).toEqual('en');
     });
 
-    it('cancel should call cancel on MdDialog without params', () => {
-        component.cancel();
-        expect(matDialog.close).toHaveBeenCalledWith();
-    });
-
     it('cancel should call accept on MdDialog passing a filter as a param', () => {
         component.accept();
         expect(matDialog.close).toHaveBeenCalledWith(component.filter);

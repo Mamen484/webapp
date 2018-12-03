@@ -24,10 +24,6 @@ export class FilterChannelsDialogComponent {
 
     }
 
-    cancel() {
-        this.dialogRef.close();
-    }
-
     accept() {
         this.dialogRef.close(this.filter);
     }
