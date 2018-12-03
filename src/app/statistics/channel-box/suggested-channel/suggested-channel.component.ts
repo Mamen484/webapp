@@ -8,6 +8,7 @@ import { RequestFailedDialogComponent } from '../../request-failed-dialog/reques
 import { StoreChannel } from '../../../core/entities/store-channel';
 import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept-channel-dialog.component';
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
+import { get } from 'lodash';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -71,7 +72,7 @@ export class SuggestedChannelComponent implements OnInit {
     protected findPotentialTurnover() {
         const turnover = this.channel.stats && this.channel.stats.turnoverAverage || 0;
         return turnover < MIN_TURNOVER
-            ? this.channelStorage.getGeneratedTurnover(this.channel.id)
+            ? this.channelStorage.getGeneratedTurnover(get(this.channel, ['_embedded', 'channel', 'id'], this.channel.id))
             : turnover;
     }
 
