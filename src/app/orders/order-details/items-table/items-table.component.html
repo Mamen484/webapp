@@ -71,7 +71,7 @@
         <ng-container matColumnDef="left-gap">
             <td mat-footer-cell *matFooterCellDef colspan="3">
                 <div *ngIf="mode === 'refund'" class="shipping-refund-checkbox">
-                    <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null"
+                    <mat-checkbox (change)="$event ? refundShipping = !refundShipping : null; selectionChanged.emit()"
                                   [checked]="refundShipping"></mat-checkbox>
                 </div>
             </td>

@@ -1,10 +1,13 @@
-<h1 matDialogTitle>Refund</h1>
+<h1 matDialogTitle i18n>Refund</h1>
 
 <mat-dialog-content>
-    <sf-items-table [order]="order" mode="refund"></sf-items-table>
+    <sf-items-table [order]="order" mode="refund" (selectionChanged)="detectRefundMode()"></sf-items-table>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button mat-button matDialogClose color="accent">Cancel</button>
-    <button mat-button color="accent" (click)="refund()">Refund</button>
+    <button mat-button matDialogClose color="accent" i18n>Cancel</button>
+    <button mat-button color="accent" (click)="refund()">
+        <ng-container i18n *ngIf="refundMode === 'full'">Refund full order</ng-container>
+        <ng-container i18n *ngIf="refundMode === 'selected'">Refund selected elements</ng-container>
+    </button>
 </mat-dialog-actions>

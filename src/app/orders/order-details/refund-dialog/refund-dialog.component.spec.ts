@@ -111,4 +111,36 @@ describe('RefundDialogComponent', () => {
         component.refund();
         expect(snackBar.open).toHaveBeenCalledWith('some error', '', new ErrorSnackbarConfig())
     });
+
+    it('should set refundMode to `full` when all items are selected', () => {
+        component.itemsTable = <any>{selection: {selected: ['', '', '']}, refundShipping: true};
+        component.order = <any>{items: ['', '', '']};
+        component.refundMode = 'selected';
+        component.detectRefundMode();
+        expect(component.refundMode).toBe('full');
+    });
+
+    it('should set refundMode to `full` when no items selected', () => {
+        component.itemsTable = <any>{selection: {selected: []}, refundShipping: false};
+        component.order = <any>{items: ['', '', '']};
+        component.refundMode = 'selected';
+        component.detectRefundMode();
+        expect(component.refundMode).toBe('full');
+    });
+
+    it('should set refundMode to `selected` when some items selected', () => {
+        component.itemsTable = <any>{selection: {selected: ['', '']}, refundShipping: false};
+        component.order = <any>{items: ['', '', '']};
+        component.refundMode = 'selected';
+        component.detectRefundMode();
+        expect(component.refundMode).toBe('selected');
+    });
+
+    it('should set refundMode to `selected` when only shopping selected', () => {
+        component.itemsTable = <any>{selection: {selected: []}, refundShipping: true};
+        component.order = <any>{items: ['', '', '']};
+        component.refundMode = 'selected';
+        component.detectRefundMode();
+        expect(component.refundMode).toBe('selected');
+    });
 });

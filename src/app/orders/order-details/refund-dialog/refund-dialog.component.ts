@@ -18,15 +18,25 @@ export class RefundDialogComponent implements OnInit {
 
     @ViewChild(ItemsTableComponent) itemsTable: ItemsTableComponent;
     order: Order;
+    refundMode: 'full' | 'selected' = 'full';
 
     constructor(@Inject(MAT_DIALOG_DATA) public data: Order,
                 protected ordersService: OrdersService,
                 protected matDialogRef: MatDialogRef<RefundDialogComponent>,
                 protected snackBar: MatSnackBar,
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.order = cloneDeep(this.data);
+    }
+
+    detectRefundMode() {
+        this.refundMode =
+            this.itemsTable.selection.selected.length === this.order.items.length && this.itemsTable.refundShipping
+            || !this.itemsTable.selection.selected.length && !this.itemsTable.refundShipping
+                ? 'full'
+                : 'selected';
     }
 
     refund() {

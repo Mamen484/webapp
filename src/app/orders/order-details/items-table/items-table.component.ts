@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
 import { OrderItem } from '../../../core/entities/orders/order-item';
@@ -22,6 +22,7 @@ export class ItemsTableComponent implements OnInit {
 
     @Input() order: Order;
     @Input() mode: 'normal' | 'refund' = 'normal';
+    @Output() selectionChanged = new EventEmitter();
     acknowledgment: OrderAcknowledgment;
     tableData: MatTableDataSource<OrderDetailsItem>;
     displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'price'];
@@ -40,6 +41,7 @@ export class ItemsTableComponent implements OnInit {
     ngOnInit() {
         this.initializeTableData();
         this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
+        this.selection.changed.subscribe(() => this.selectionChanged.emit());
     }
 
     updateItemReference(row: OrderDetailsItem) {
