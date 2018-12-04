@@ -46,7 +46,6 @@
        [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
-    <a mat-menu-item sflLegacyLink path="/tools/export" i18n>Custom data feeds</a>
 </mat-menu>
 <mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu">
     <a mat-menu-item sflLegacyLink path="/tools/rules" i18n>Rules</a>
@@ -56,6 +55,7 @@
     <a mat-menu-item sflLegacyLink path="/tools/relaunch" i18n>Intelligent assistant</a>
     <hr>
     <a mat-menu-item sflLegacyLink path="/tools/infos" i18n>Source feed</a>
+    <a mat-menu-item sflLegacyLink path="/tools/export" i18n>Custom Data Feeds</a>
     <a mat-menu-item sflLegacyLink path="/tools/filters" i18n>Filters</a>
     <a mat-menu-item sflLegacyLink path="/tools/newproducts" i18n>Recently added products</a>
     <a mat-menu-item sflLegacyLink path="/multiple" i18n>Select multichannels products</a>
