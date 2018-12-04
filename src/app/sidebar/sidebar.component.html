@@ -1,9 +1,15 @@
 <sfl-sidebar-container>
     <mat-list>
-        <mat-list-item class="mat-active" [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
+        <mat-list-item class="mat-active" matTooltip="HOMEPAGE" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
+            <a routerLink="/" class="homepage-link">
+                <mat-icon [class.active]="currentRoute === 'channels'">home</mat-icon>
+                <span fxHide fxShow.xs i18n>Homepage</span>
+            </a>
+        </mat-list-item>
+        <mat-list-item [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
                        matTooltipPosition="after"
                        i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()"  [matTooltipDisabled]="hideTooltips">
-            <mat-icon [class.active]="currentRoute === 'channels'">wb_cloudy</mat-icon>
+            <mat-icon>wb_cloudy</mat-icon>
             <span fxHide fxShow.xs i18n>Channels</span>
         </mat-list-item>
 
@@ -41,13 +47,13 @@
     </div>
 </sfl-sidebar-container>
 
-<mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu">
+<mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu" xPosition="after" yPosition="above">
     <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sflLegacyLink
        [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
 </mat-menu>
-<mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu">
+<mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu"  xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/tools/rules" i18n>Rules</a>
     <a mat-menu-item sflLegacyLink path="/tools/segmentations" i18n>Auto-Remove</a>
     <a mat-menu-item sflLegacyLink path="/marketplaces/autotag" i18n>Manage colors & sizes</a>
@@ -60,11 +66,11 @@
     <a mat-menu-item sflLegacyLink path="/tools/newproducts" i18n>Recently added products</a>
     <a mat-menu-item sflLegacyLink path="/multiple" i18n>Select multichannels products</a>
 </mat-menu>
-<mat-menu #ordersMenu="matMenu" class="sf-sidebar-menu">
+<mat-menu #ordersMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/marketplaces/orders" i18n>Orders</a>
     <a mat-menu-item sflLegacyLink path="/marketplaces/listexport" i18n>Order reporting</a>
 </mat-menu>
-<mat-menu #statisticsMenu="matMenu" class="sf-sidebar-menu">
+<mat-menu #statisticsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/statistics" i18n>Global statistics</a>
     <a mat-menu-item sflLegacyLink path="/statistics/marketplaces" i18n>Marketplace statistics</a>
     <a mat-menu-item sflLegacyLink path="/statistics/shopbots" i18n>Shopping engine statistics</a>
@@ -74,7 +80,7 @@
     <a mat-menu-item sflLegacyLink path="/statistics/compare" i18n>Compare channels</a>
     <a mat-menu-item sflLegacyLink path="/statistics/exportstatistics" i18n>Exports</a>
 </mat-menu>
-<mat-menu #appsMenu="matMenu" class="sf-sidebar-menu">
+<mat-menu #appsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/repricing" i18n>Repricing</a>
     <a mat-menu-item sflLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
 </mat-menu>

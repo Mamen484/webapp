@@ -14,8 +14,6 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
-import { ChannelsRouteGuard } from './core/guards/channels-route.guard';
-import { OrdersRouteGuard } from './core/guards/orders-route.guard';
 
 const routes: Routes = [
     {
@@ -32,9 +30,9 @@ const routes: Routes = [
             InitializeStoreGuard,
         ],
         children: [
-            {path: '', loadChildren: './statistics/statistics.module#StatisticsModule', canLoad: [ChannelsRouteGuard]},
-            {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule', canLoad: [ChannelsRouteGuard]},
-            {path: 'orders', loadChildren: './orders/orders.module#OrdersModule', canLoad: [OrdersRouteGuard]},
+            {path: '', loadChildren: './statistics/statistics.module#StatisticsModule'},
+            {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule'},
+            {path: 'orders', loadChildren: './orders/orders.module#OrdersModule'},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
