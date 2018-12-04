@@ -12,6 +12,7 @@ import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-m
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
 
 @Component({
     selector: 'sf-items-table',
@@ -31,6 +32,7 @@ export class ItemsTableComponent implements OnInit {
     refundShipping = false;
     selectedQuantity = {};
     statuses = OrderStatus;
+    allowEditQuantity = true;
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -42,6 +44,7 @@ export class ItemsTableComponent implements OnInit {
         this.initializeTableData();
         this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
         this.selection.changed.subscribe(() => this.selectionChanged.emit());
+        this.checkIfQuantityEditable();
     }
 
     updateItemReference(row: OrderDetailsItem) {
@@ -68,6 +71,10 @@ export class ItemsTableComponent implements OnInit {
                 status: item.status,
             }
         }));
+    }
+
+    protected checkIfQuantityEditable() {
+        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute;
     }
 
     protected determineSku(item: OrderItem) {
