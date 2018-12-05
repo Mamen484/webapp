@@ -26,7 +26,7 @@ export class StoreListComponent implements OnInit {
     pageSizeOptions = [10, 15, 25, 50, 100];
     pageSize = 15;
     resultsLength = 0;
-    currentPage = 1;
+    currentPage = 0;
 
     searchControl = new FormControl();
     searchQuery = '';
@@ -45,7 +45,7 @@ export class StoreListComponent implements OnInit {
             this.searchQuery = searchQuery;
             this.isLoadingResults = true;
             // search changes the number of results, so previously specified page may not exist, reset page
-            this.currentPage = 1;
+            this.currentPage = 0;
             this.fetchData();
         });
         this.fetchData();
@@ -84,9 +84,9 @@ export class StoreListComponent implements OnInit {
             this.pageSize = event.pageSize;
             // we need to reset the current page to 1, because if we change the pageSize to a bigger value,
             // previously specified page might not exist
-            this.currentPage = 1;
+            this.currentPage = 0;
         } else {
-            this.currentPage = event.pageIndex + 1;
+            this.currentPage = event.pageIndex;
         }
         this.isLoadingResults = true;
         this.fetchData()
@@ -115,7 +115,7 @@ export class StoreListComponent implements OnInit {
         }
         this.dataSubscription = this.billingService.fetchStoreCollection({
             limit: this.pageSize,
-            page: this.currentPage,
+            page: this.currentPage + 1,
             search: this.searchQuery
         }).subscribe(storeList => {
             this.dataSource = storeList._embedded.store;

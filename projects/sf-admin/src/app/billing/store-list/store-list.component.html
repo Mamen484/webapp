@@ -66,4 +66,4 @@
 </div>
 
 <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
-               (page)="pageChanged($event)" class="mat-elevation-z1"></mat-paginator>
+               (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
