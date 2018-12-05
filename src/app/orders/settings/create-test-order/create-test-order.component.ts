@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { AppState } from '../../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { OrdersService } from '../../../core/services/orders.service';
 import { filter, flatMap, map, startWith, take } from 'rxjs/operators';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSelect, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormControl, NgForm } from '@angular/forms';
 import { values } from 'lodash';
@@ -22,14 +22,21 @@ import { StoreService } from 'sfl-shared/services';
 export class CreateTestOrderComponent implements OnInit {
 
     @ViewChild(NgForm) form: NgForm;
-    @ViewChild('paymentMethod') paymentMethod: ElementRef<HTMLInputElement>;
+    @ViewChild('paymentSelect') paymentSelect: MatSelect;
 
     order = new TestOrder();
     totalPrice: number;
+    /**
+     * total products price without shipping
+     */
+    productsTotal: number;
     channelControl = new FormControl();
     filteredChannels: Channel[];
     filteredNewChannels: Channel[];
-    haveDefaultPayment = ['amazon', 'cdiscount', 'manomano'];
+    paymentInputMode: 'custom' | 'predefined' = 'custom';
+    channelMap = {amazon: 66, cdiscount: 111, monechelle: 259};
+    // to show progress spinner after 'save' clicked
+    saveScheduled = false;
 
     constructor(protected appStore: Store<AppState>,
                 protected ordersService: OrdersService,
@@ -42,28 +49,33 @@ export class CreateTestOrderComponent implements OnInit {
         this.addItem();
         this.updateTotalPrice();
         this.filterAutocompleteOptions();
-        this.initializeDefaultChannel();
     }
 
     addItem() {
-        this.order.items.push(<any>{});
+        this.order.items.push(<any>{quantity: 1});
     }
 
     removeItem(index) {
         this.order.items.splice(index, 1);
+        if (!this.order.items.length) {
+            this.addItem();
+        }
     }
 
     create() {
         if (!this.form.valid) {
             values(this.form.controls).forEach(control => control.markAsDirty());
+            this.channelControl.markAsDirty();
             this.snackBar.openFromComponent(ValidationErrorsSnackbarComponent, new ErrorSnackbarConfig());
             return;
         }
+        this.saveScheduled = true;
         this.ordersService.create(this.order).subscribe(() => this.router.navigate(['/orders']));
     }
 
     updateTotalPrice() {
-        this.totalPrice = this.calculateItemsPrice() + Number(this.order.payment.shippingAmount || 0);
+        this.productsTotal = this.calculateItemsPrice();
+        this.totalPrice = this.productsTotal + Number(this.order.payment.shippingAmount || 0);
     }
 
     filterAutocompleteOptions() {
@@ -76,19 +88,50 @@ export class CreateTestOrderComponent implements OnInit {
             });
     }
 
+    changeCarrier() {
+        if (!this.order.shipment.carrier) {
+            this.order.shipment.trackingNumber = undefined;
+        }
+    }
+
     channelDisplayFn(channel?: Channel) {
         return channel && channel.name;
     }
 
+    reset() {
+        // use setTimeout to prevent quantity field emptying
+        setTimeout(() => {
+            this.order = new TestOrder();
+            this.addItem();
+            this.updateTotalPrice();
+            this.paymentInputMode = 'custom';
+            this.channelControl.setValue('');
+            this.channelControl.markAsPristine();
+            this.channelControl.markAsUntouched();
+        });
+    }
+
     selectChannel({option}) {
         this.order.channelId = option.value.id;
-        if (this.haveDefaultPayment.find(el => el === option.value.name.toLowerCase())) {
-            this.order.payment.method = this.paymentMethod.nativeElement.getAttribute('attr.defaultValue');
+        this.order.payment.method = '';
+        this.paymentInputMode = values(this.channelMap).find(el => el === option.value.id)
+            ? 'predefined'
+            : 'custom';
+        // set internationalized default value of payment method dropdown
+        setTimeout(() => this.order.payment.method = this.paymentSelect.value);
+    }
+
+    setPaymentMethod(method: { value: string | 'custom' }) {
+        if (method.value === 'custom') {
+            this.paymentInputMode = 'custom';
+            this.order.payment.method = '';
+        } else {
+            this.order.payment.method = method.value;
         }
     }
 
     protected calculateItemsPrice() {
-        return this.order.items.reduce((acc, item) => +(item.price || 0) + acc, 0);
+        return this.order.items.reduce((acc, item) => +(item.quantity || 0) * +(item.price || 0) + acc, 0);
     }
 
     protected getInstalledChannels() {
@@ -107,10 +150,6 @@ export class CreateTestOrderComponent implements OnInit {
     protected filterChannels(value, channels: Channel[]) {
         const filterValue = typeof value === 'object' ? (<any>value).name.toLowerCase() : value.toLowerCase();
         return channels.filter(channel => channel.name.toLowerCase().includes(filterValue));
-    }
-
-    protected initializeDefaultChannel() {
-        this.getInstalledChannels().subscribe(channels => this.channelControl.setValue(channels[0]));
     }
 
 }

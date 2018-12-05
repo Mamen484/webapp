@@ -10,8 +10,15 @@ table {
       &:first-child {
         width: 100%;
       }
-      &:not(:last-child){
+      &:not(:last-child) {
         padding-right: 40px;
+      }
+
+      .add-item, .remove-item {
+        min-width: 50px;
+        mat-icon {
+          color: mat-color($accent);
+        }
       }
     }
 
@@ -26,21 +33,21 @@ table {
       }
 
       .add-item, .remove-item {
-        min-width: 50px;
         border: 1px solid $black-12-opacity;
         border-radius: 3px;
-        mat-icon {
-          color: mat-color($accent);
-        }
       }
     }
 
     &.totals {
       td > div {
         display: grid;
-        grid-template-rows: 40px 40px 40px;
+        grid-template-rows: 60px 60px 60px;
         grid-template-columns: 100%;
         align-items: center;
+      }
+
+      mat-form-field {
+        margin-top: 15px;
       }
     }
   }
@@ -58,4 +65,19 @@ mat-card {
 
 .buttons {
   margin-top: 25px;
+
+  button:not(:last-child) {
+    margin-right: 10px;
+  }
+}
+
+button {
+  mat-spinner {
+    margin: 8px auto;
+    ::ng-deep {
+      circle {
+        stroke: white;
+      }
+    }
+  }
 }

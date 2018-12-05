@@ -44,6 +44,7 @@ import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/
 import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
 import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe';
+import { MinNumberDirective } from './min-number/min-number.directive';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
@@ -131,6 +132,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
 
         // directives
         HasServerErrorDirective,
+        MinNumberDirective,
 
         // components
         CountryAutocompleteComponent,
@@ -152,6 +154,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
         ArrayFromNumberPipe,
+        MinNumberDirective,
         HasServerErrorDirective,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]

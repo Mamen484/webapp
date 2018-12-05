@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreateTestOrderComponent } from './create-test-order.component';
-import { ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
@@ -59,29 +59,22 @@ describe('CreateTestOrderComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should initialize a default channel on load', () => {
-        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
-        appStore.select.and.returnValues(EMPTY, EMPTY, of([{id: 22, name: 'default channel'}]));
-        fixture.detectChanges();
-        expect(component.channelControl.value).toEqual({id: 22, name: 'default channel'});
-    });
-
     it('should calculate a valid total price if price is specified', () => {
-        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{price: '22'}]};
+        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{quantity: 1, price: '22'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(22);
     });
 
     it('should calculate a valid total price if shippingAmount is specified', () => {
-        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{price: '0'}]};
+        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{quantity: 1, price: '0'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(31);
     });
 
     it('should calculate a valid total price if shippingAmount is undefined', () => {
-        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{price: '24'}]};
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{quantity: 1, price: '24'}]};
         appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(24);
@@ -133,6 +126,18 @@ describe('CreateTestOrderComponent', () => {
         ]);
     });
 
+    it('should reset the item if it is being removed and it is the only item', () => {
+        component.order = new TestOrder();
+        component.order.items = [
+            {reference: '1', price: 1},
+        ];
+        appStore.select.and.returnValue(EMPTY);
+        component.removeItem(0);
+        expect(component.order.items).toEqual([
+            <any>{quantity: 1},
+        ]);
+    });
+
     it('should show a warning if there are validation errors on save', () => {
         component.form = <any>{valid: false, controls: {}};
         component.create();
@@ -170,22 +175,24 @@ describe('CreateTestOrderComponent', () => {
         expect(component.order.channelId).toBe(22);
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'Amazon'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `amazon` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.amazon, name: 'Amazon'}}});
+        expect(component.paymentInputMode).toBe('predefined');
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'CDiscount'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `cdiscount` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.cdiscount, name: 'CDiscount'}}});
+        expect(component.paymentInputMode).toBe('predefined');
     });
 
-    it('should assign a default payment value if `amazon` channel selected', () => {
-        component.paymentMethod = <ElementRef>{nativeElement: {getAttribute: () => 'some default value'}};
-        component.selectChannel({option: {value: {id: 22, name: 'Manomano'}}});
-        expect(component.order.payment.method).toBe('some default value');
+    it('should assign a paymentMode into `predefined` if `monechelle` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.monechelle, name: 'Monechelle'}}});
+        expect(component.paymentInputMode).toBe('predefined');
+    });
+
+    it('should assign a paymentMode into `custom` if any other channel selected', () => {
+        component.selectChannel({option: {value: {id: 777, name: 'any channel'}}});
+        expect(component.paymentInputMode).toBe('custom');
     });
 
     it('should add an empty order item on init', () => {
