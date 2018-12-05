@@ -1,5 +1,7 @@
 @import '../../sass/variables';
 
+$timeline-list-item-padding: 10px;
+
 .timeline {
   color: $black-87-opacity;
   padding-top: $content-margin;
@@ -52,7 +54,8 @@ mat-card {
 
 .timeline {
   mat-list-item {
-    padding: 0 10px;
+    padding: 0 #{$timeline-list-item-padding};
+    width: calc(100% - 2*#{$timeline-list-item-padding});
     border-bottom: 1px solid $black-12-opacity;
     height: auto;
     min-height: 48px;
