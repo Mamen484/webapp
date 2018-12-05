@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs/operators';
 
-const SUCCESS_MESSAGE_DURATION = 5000;
+const SNACKBAR_MESSAGE_DURATION = 5000;
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
 
@@ -72,7 +72,7 @@ export class StoreListComponent implements OnInit {
             if (saved) {
                 this.isLoadingResults = true;
                 this.snackBar.open('The store has been saved successfully', '', {
-                    duration: SUCCESS_MESSAGE_DURATION,
+                    duration: SNACKBAR_MESSAGE_DURATION,
                 });
                 this.fetchData();
             }
@@ -89,7 +89,7 @@ export class StoreListComponent implements OnInit {
             this.currentPage = event.pageIndex;
         }
         this.isLoadingResults = true;
-        this.fetchData()
+        this.fetchData();
     }
 
     blockStore(store) {
@@ -99,14 +99,24 @@ export class StoreListComponent implements OnInit {
             }
             this.isLoadingResults = true;
             const toBlock = {id: store.id, isActive: false};
-            this.billingService.update(toBlock).subscribe(() => this.ngOnInit());
+            this.billingService.update(toBlock).subscribe(() => {
+                this.snackBar.open('The store has been blocked', '', {
+                    duration: SNACKBAR_MESSAGE_DURATION,
+                });
+                this.fetchData();
+            });
         });
     }
 
     activateStore(store) {
         this.isLoadingResults = true;
         this.billingService.update({id: store.id, isActive: true})
-            .subscribe(() => this.ngOnInit());
+            .subscribe(() => {
+                this.snackBar.open('The store has been unblocked', '', {
+                    duration: SNACKBAR_MESSAGE_DURATION,
+                });
+                this.fetchData();
+            });
     }
 
     fetchData() {

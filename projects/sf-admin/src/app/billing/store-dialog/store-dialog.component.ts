@@ -45,7 +45,7 @@ export class StoreDialogComponent {
             return;
         }
         this.serverError = undefined;
-        if (!this.form.valid) {
+        if (!this.form.valid || !this.searchControl.valid) {
             this.searchControl.markAsDirty();
             Object.values(this.form.controls)
                 .forEach((control: AbstractControl) => control.markAsDirty());

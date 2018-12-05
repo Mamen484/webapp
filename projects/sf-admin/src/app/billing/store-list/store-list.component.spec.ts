@@ -61,7 +61,7 @@ describe('StoreListComponent', () => {
         billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
         component.pageChanged(<any>{pageIndex: 1, previousPageIndex: 0});
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2, search: ''});
-        expect(component.currentPage).toEqual(2);
+        expect(component.currentPage).toEqual(1);
     });
 
     it('should change a pageSize on pageChanged()', () => {
