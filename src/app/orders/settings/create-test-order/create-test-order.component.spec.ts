@@ -53,6 +53,7 @@ describe('CreateTestOrderComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CreateTestOrderComponent);
         component = fixture.componentInstance;
+        component.paymentSelect = <any>{value: ''};
     });
 
     it('should create', () => {

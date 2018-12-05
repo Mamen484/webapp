@@ -11,6 +11,7 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-modification-dialog.component';
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 import { ArrayFromNumberPipe } from '../../../shared/array-from-number/array-from-number.pipe';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
 
 describe('ItemsTableComponent', () => {
     let component: ItemsTableComponent;
@@ -56,9 +57,32 @@ describe('ItemsTableComponent', () => {
             createdAt: new Date('2012-12-12').getTime(),
             items: [{reference: '1324'}],
             payment: {},
+            _embedded: {channel: {id: 0}},
         };
         fixture.detectChanges();
         expect(component.tableData.data[0].sku).toEqual('1324');
+    });
+
+    it('should make quantity editable when the channel is laRedoute', () => {
+        component.order = <any>{
+            createdAt: new Date('2012-12-12').getTime(),
+            items: [{reference: '1324'}],
+            payment: {},
+            _embedded: {channel: {id: ChannelMap.laredoute}},
+        };
+        fixture.detectChanges();
+        expect(component.allowEditQuantity).toEqual(true);
+    });
+
+    it('should make quantity UNeditable when the channel is cdiscount', () => {
+        component.order = <any>{
+            createdAt: new Date('2012-12-12').getTime(),
+            items: [{reference: '1324'}],
+            payment: {},
+            _embedded: {channel: {id: ChannelMap.cdiscount}},
+        };
+        fixture.detectChanges();
+        expect(component.allowEditQuantity).toEqual(false);
     });
 
     it('should take an item reference alias if exists', () => {
@@ -67,6 +91,7 @@ describe('ItemsTableComponent', () => {
             items: [{reference: 1324}],
             itemsReferencesAliases: {1324: 'some_alias'},
             payment: {},
+            _embedded: {channel: {id: 0}},
         };
         fixture.detectChanges();
         expect(component.tableData.data[0].sku).toEqual('some_alias');
@@ -121,7 +146,7 @@ describe('ItemsTableComponent', () => {
     });
 
     it('should initialize a selectedQuantity field if the mode is `refund`', () => {
-        component.order = <any>{items: [{reference: '135', quantity: 55}, {reference: '159', quantity: 89}]};
+        component.order = <any>{items: [{reference: '135', quantity: 55}, {reference: '159', quantity: 89}], _embedded: {channel: {id: 0}}};
         component.mode = 'refund';
         component.ngOnInit();
         expect(component.selectedQuantity).toEqual({135: 55, 159: 89});
