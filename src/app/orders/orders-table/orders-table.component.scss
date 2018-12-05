@@ -75,6 +75,10 @@ button:not([mat-menu-item]) {
 .table-scrollable {
   overflow-x: auto;
   overflow-y: hidden;
+
+  mat-progress-bar {
+    z-index: 200;
+  }
 }
 
 table {
