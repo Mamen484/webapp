@@ -104,16 +104,23 @@ export class BaseComponent implements OnInit {
             filter(store => Boolean(store) && typeof store.country === 'string' && store.country.toLowerCase() === 'us'),
             take(1),
         ).subscribe((store: UserStore) => {
-            this.configureLivechat(store);
+            this.configureLivechat(store, userInfo.email);
             this.enableFullstory(store, userInfo.email);
             this.enableAppcues(store, userInfo.email);
         });
     }
 
-    protected configureLivechat(store: UserStore) {
-        if (store && store.country && store.country.toLowerCase() === 'us') {
-            this.showLivechat = true;
-        }
+    protected configureLivechat(store: UserStore, userEmail: string) {
+        this.showLivechat = true;
+        // this code needs to run after liveChat is enabled, with the next change detection run
+        setTimeout(() => {
+            if (typeof this.windowRef.nativeWindow.__lc === 'object') {
+                this.windowRef.nativeWindow.__lc.visitor = {
+                    email: userEmail,
+                    name: store.name,
+                };
+            }
+        });
     }
 
     protected enableFullstory(store: UserStore, userEmail: string) {
