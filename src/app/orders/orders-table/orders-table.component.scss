@@ -12,6 +12,17 @@
   }
 }
 
+$subheader-height: 54px;
+$actions-height: 61px;
+$search-block-height: 105px;
+$filtering-tabs-height: 49px;
+$paginator-height: 65px;
+
+.table-container {
+  max-height: calc(100vh - #{$toolbar-height} - #{$subheader-height} - 5*#{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$filtering-tabs-height} - #{$paginator-height});
+  overflow: auto;
+}
+
 mat-card {
   padding: 0;
   width: 100%;
