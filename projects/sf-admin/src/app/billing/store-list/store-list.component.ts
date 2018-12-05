@@ -44,6 +44,8 @@ export class StoreListComponent implements OnInit {
         ).subscribe(searchQuery => {
             this.searchQuery = searchQuery;
             this.isLoadingResults = true;
+            // search changes the number of results, so previously specified page may not exist, reset page
+            this.currentPage = 1;
             this.fetchData();
         });
         this.fetchData();
