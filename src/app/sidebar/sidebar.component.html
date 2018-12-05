@@ -52,6 +52,7 @@
        [path]="getChannelLink(channel)">
         <img [src]="channel._links.image.href" [alt]="channel.name">
     </a>
+    <a mat-menu-item sflLegacyLink path="/tools/export" i18n>Custom data feeds</a>
 </mat-menu>
 <mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu"  xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/tools/rules" i18n>Rules</a>

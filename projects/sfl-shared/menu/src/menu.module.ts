@@ -4,6 +4,7 @@ import { MenuContainerComponent } from './menu-container.component';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { UnauthenticatedMenuComponent } from './unauthenticated-menu.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -14,6 +15,7 @@ import { UnauthenticatedMenuComponent } from './unauthenticated-menu.component';
         MatButtonModule,
         MatMenuModule,
         FlexLayoutModule,
+        RouterModule,
     ],
     declarations: [
         MenuContainerComponent,
