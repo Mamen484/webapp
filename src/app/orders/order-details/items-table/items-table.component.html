@@ -86,7 +86,7 @@
             <td mat-footer-cell *matFooterCellDef colspan="2">
                 <div i18n>Total goods</div>
                 <div i18n>Total delivery</div>
-                <div i18n>Total price</div>
+                <div i18n class="mat-body-2">Total price</div>
             </td>
         </ng-container>
 
@@ -94,7 +94,7 @@
             <td mat-footer-cell *matFooterCellDef class="total-values">
                 <div>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
                 <div>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                <div>{{order.payment.productAmount + order.payment.shippingAmount |
+                <div class="mat-body-2">{{order.payment.productAmount + order.payment.shippingAmount |
                     sfCurrency:order.payment.currency}}
                 </div>
             </td>
