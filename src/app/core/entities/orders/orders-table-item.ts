@@ -29,6 +29,7 @@ export class OrdersTableItem {
         paymentIsClogistique: boolean;
         shippedByManomano: boolean;
         isAmazonPrime: boolean;
+        isCdiscountPro: boolean;
     };
 
     static createFromOrder(order: Order): OrdersTableItem {
@@ -65,6 +66,7 @@ export class OrdersTableItem {
             paymentIsClogistique: false,
             shippedByManomano: false,
             isAmazonPrime: false,
+            isCdiscountPro: false,
         };
         const payment = get(order, ['payment', 'method'], '').toLowerCase();
         const additionalFields = order.additionalFields || {};
@@ -77,6 +79,8 @@ export class OrdersTableItem {
 
             case ChannelMap.cdiscount:
                 services.paymentIsClogistique = payment === 'clogistique';
+                services.isCdiscountPro =
+                    typeof additionalFields.CorporationCode === 'string' && additionalFields.CorporationCode.toLowerCase() === 'cdspro';
                 break;
 
             case ChannelMap.manomano:

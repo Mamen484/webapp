@@ -158,6 +158,7 @@ describe('OrdersTableComponent', () => {
         expect(data.services.paymentIsClogistique).toBe(false);
         expect(data.services.shippedByManomano).toBe(false);
         expect(data.services.isAmazonPrime).toBe(false);
+        expect(data.services.isCdiscountPro).toBe(false);
     });
 
     it('should have paymentIsClogistique service if the channel is Cdiscount and payment.method is Clogistique', () => {
@@ -173,6 +174,7 @@ describe('OrdersTableComponent', () => {
         expect(data.services.paymentIsClogistique).toBe(true);
         expect(data.services.shippedByManomano).toBe(false);
         expect(data.services.isAmazonPrime).toBe(false);
+        expect(data.services.isCdiscountPro).toBe(false);
     });
 
     it('should have shippedByManomano service if the channel is Manomano and there is additional field env = EPMM', () => {
@@ -188,6 +190,7 @@ describe('OrdersTableComponent', () => {
         expect(data.services.paymentIsClogistique).toBe(false);
         expect(data.services.shippedByManomano).toBe(true);
         expect(data.services.isAmazonPrime).toBe(false);
+        expect(data.services.isCdiscountPro).toBe(false);
     });
 
     it('should have isAmazonPrime service if the channel is Amazon and there is additional field is_prime = true', () => {
@@ -203,6 +206,23 @@ describe('OrdersTableComponent', () => {
         expect(data.services.paymentIsClogistique).toBe(false);
         expect(data.services.shippedByManomano).toBe(false);
         expect(data.services.isAmazonPrime).toBe(true);
+        expect(data.services.isCdiscountPro).toBe(false);
+    });
+
+    it('should have isCdiscountPro service if the channel is Cdiscount and there is additional field CorporationCode = CDSPRO', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        const order = mockOrder();
+        order._embedded.order[0]._embedded.channel.id = ChannelMap.cdiscount;
+        order._embedded.order[0].additionalFields = {CorporationCode: 'CDSPRO'};
+        ordersService.fetchOrdersList.and.returnValue(of(order));
+        fixture.detectChanges();
+        let data = component.dataSource.data[0];
+        expect(data.services.paymentIsAfn).toBe(false);
+        expect(data.services.paymentIsClogistique).toBe(false);
+        expect(data.services.shippedByManomano).toBe(false);
+        expect(data.services.isAmazonPrime).toBe(false);
+        expect(data.services.isCdiscountPro).toBe(true);
     });
 
     it('should have multiple services if available', () => {
@@ -376,7 +396,12 @@ describe('OrdersTableComponent', () => {
         component.selection.selected.length = 2;
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openCancelDialog();
-        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
+        expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {
+            data: {
+                ordersNumber: 2,
+                orderReference: undefined
+            }
+        });
     });
 
     it('should NOT open confirm cancellation dialog on click on `cancel` button when no orders selected', () => {
