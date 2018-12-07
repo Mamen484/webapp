@@ -8,6 +8,11 @@ import { StoreNotFoundComponent } from './store-not-found/store-not-found.compon
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrderNotFoundComponent } from './order-not-found/order-not-found.component';
 
+/**
+ * Contains error pages.
+ * To show an error page, you need to import this page and redirect a user to the route of appropriate page.
+ * Make sure to put the module to the very bottom of the imported modules list, as it contains a wildcard route for 404 page.
+ */
 @NgModule({
     imports: [
         CommonModule,

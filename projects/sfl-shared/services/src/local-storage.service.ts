@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { SflWindowRefService } from './window-ref.service';
 
 /**
- * Wrapper over window localStorage, friendly to DI
+ * Wrapper over window localStorage, friendly to DI.
+ * Use just instead of the native local storage.
  */
 
 @Injectable({

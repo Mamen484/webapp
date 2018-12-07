@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SflWindowRefService } from 'sfl-shared/services';
 
+/**
+ * Critical server error.
+ * To show it, import ErrorPagesModule, and redirect a user to /critical-error route.
+ */
 @Component({
     selector: 'sfl-critical-error',
     templateUrl: './critical-error.component.html',

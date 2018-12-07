@@ -6,6 +6,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { UnauthenticatedMenuComponent } from './unauthenticated-menu.component';
 import { RouterModule } from '@angular/router';
 
+/**
+ * Contains the top menu container, which can be used to easily create a top menu.
+ */
 @NgModule({
     imports: [
         CommonModule,

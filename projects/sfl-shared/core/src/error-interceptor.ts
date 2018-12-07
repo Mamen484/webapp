@@ -4,6 +4,10 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
+/**
+ * Redirects a user to the login page, when any call to API returns 401 error.
+ * Automatically injected to your app when you import SflShared.forRoot().
+ */
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 

@@ -2,21 +2,53 @@
 
 This project was generated with [@angular/cli](https://github.com/angular/angular-cli).
 
-## Development server
-Run `ng serve --base-href=/v3/en/` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+It contains Shopping Feed UI projects:
 
-## Running in a docker
+- webapp (client's application)
+- admin app
+- sfl-shared - library that contains shared between SF apps logic
+
+Note, that all apps requiresfl-shared, so you need to build it before apps.
+For the library documentation, please, see projects/sfl-shared/README.md.
+
+## Prerequisutes
+
+Before running/building any app you need to install packages and a shared Shopping Feed library
+
+`npm install`
+
+`ng build --sfl-shared`
+
+Also you need to have a backend you need to install API and Shopify Network:
+
+https://github.com/shoppingflux/docker-network-base  
+https://github.com/shoppingflux/api  
+https://github.com/shoppingflux/app-billing
+
+For the local setup make sure you have all the hosts in your /etc/hosts:
+```
+127.0.0.1   app.shopping-feed.lan
+127.0.0.1   admin.shopping-feed.lan
+
+And the ones needed for the backend.
+```
+## Running a development server in a docker
 To run a development server in a docker container:
-1. Build an image
-`docker build -f Dockerfile.dev -t webapp:dev .`
+`docker-compose up -d`
+The webapp will be accessible on address http://app.shopping-feed.lan/v3/en.
+The admin app will be accessible on address http://admin.shopping-feed.lan/en.
 
-2. Run a container:
-`docker run -p 4200:4200 -v "$(pwd)":/app -t webapp:dev`
 
+## Development server for a Shopping Feed webapp without a docker
+Run `npm start`. Navigate to `http://localhost:4200/v3/en`. The app will automatically reload if you change any of the source files.
+
+## Development server for a Shopping Feed Admin app without a docker
+Run `npm run sf-admin`. Navigate to `http://localhost:4201/en`.
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class`.
+Run `ng generate component component-name` to generate a new component.
+Consult angular cli docs for more commands `ng g -h`.
 
 ## Build
 
@@ -25,22 +57,17 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ##CI Build
 
 When we build the code on a CI environment, we may need to pass environment variables to the build script.
-Run `npm run compile-env`, passing environment variables before. It will create environment.prod.ts with all needed environment variables and run the production build.
-You can consult to src/environments/environment.ts to know what variables can be used.
-After that you need to run `ng build -prod`.
-
-You SHOULD NOT run `ng build` on a CI environment anymore, as well as on any other production build, because appropriate environment.prod.ts file will not be created in that case.
-
-Example:
+Run `npm run compile-env path/to/environment.ts`, passing environment variables before. It will create environment.prod.ts with all needed environment variables and run the production build.
+Please, see build-multiple-locales.sh to see all options of the build.
 
 `DEFAULT_AUTHORIZATION=some_url SHOPIFY_APP_URL=some_another_url npm run compile-env`
-`ng build -prod`
+`ng build webapp -prod`
 
 It will set DEFAULT_AUTHORIZATION and SHOPIFY_APP_URL as you specified in the command, all the other variables will be taken from environment.ts file.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `ng test {project = webapp | sf-admin | sfl-shared}` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
@@ -121,8 +148,6 @@ Here's the trick:
 - input: This field is the base directory of the asset, not the path to the asset
 - glob: a glob expression leading the file(s). To add a directory, you need to append `/**/*` to the path
 - output: The directory name of the asset in dist package. (can be `.`) for root.
-
-#### known bugs
 
 ##### glob
 

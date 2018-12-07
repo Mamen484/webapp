@@ -7,6 +7,20 @@ import { SflSearchService } from './search.service';
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
 
+/**
+ * Use this directive to listen for an input, query get and output the results.
+ * Don't forget to provide the SearchStore, getResults() of which will receive the search input text, and return the async results.
+ *
+ * @example
+ *
+ * <mat-form-field appearance="outline">
+ *     <input matInput [formControl]="searchControl" [matAutocomplete]="auto" [searchControl]="searchControl"
+ *        sflAsyncAutocompleteSearch (searchResults)="searchResults = $event" (processingSearch)="processing = $event">
+ *     <mat-autocomplete #auto="matAutocomplete">
+ *        <mat-option *ngFor="let result of searchResults" [value]="result">{{result}}</mat-option>
+ *     </mat-autocomplete>
+ * </mat-form-field>
+ */
 @Directive({
     selector: '[sflAsyncAutocompleteSearch]',
 })

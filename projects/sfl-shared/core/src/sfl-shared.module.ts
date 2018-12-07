@@ -9,6 +9,11 @@ import { SflCountrySelectComponent } from './country-select/country-select.compo
 import { MatOptionModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+/**
+ * The main module required by Shopping Feed apps.
+ * Contains some shared logic related to the communication with backend, security, etc.
+ * To be decomposed to modules by the logic of use.
+ */
 @NgModule({
     imports: [
         CommonModule,

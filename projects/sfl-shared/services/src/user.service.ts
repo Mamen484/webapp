@@ -5,6 +5,9 @@ import { map, publishReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { SflLocalStorageService } from './local-storage.service';
 
+/**
+ * A service to work with a user API.
+ */
 @Injectable({
     providedIn: 'root'
 })

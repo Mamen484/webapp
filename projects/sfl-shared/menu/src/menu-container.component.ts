@@ -13,6 +13,21 @@ import { SflToggleSidebarService } from 'sfl-shared/sidebar';
 
 export const DEFAULT_MENU_BACKGROUND = '#072343';
 
+/**
+ * A container for a menu creation.
+ *
+ * @example
+ *
+ * <sfl-menu-container>
+ *    <div class="mat-title" routerLink="/">Current store</div>
+ *    <div class="sf-fill-space" fxShow fxHide.gt-sm></div>
+ *    <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
+ *    <mat-menu #accountMenu="matMenu" [overlapTrigger]="false" classList="account-menu">
+ *        <a mat-menu-item routerLink="/admin" *ngIf="isAdmin">Admin</a>
+ *        <a mat-menu-item (click)="logout()">Logout</a>
+ *    </mat-menu>
+ * </sfl-menu-container>
+ */
 @Component({
     selector: 'sfl-menu-container',
     templateUrl: './menu-container.component.html',
@@ -24,7 +39,7 @@ export class MenuContainerComponent implements OnInit {
     loadingNextRoute = false;
 
     /**
-     * contains false if we don't need to show 'back to login' button,
+     * contains undefined if we don't need to show 'back to login' button,
      * otherwise contains a route to follow after click on 'back' button
      */
     showBackButton?: any[];

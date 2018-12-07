@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { SFL_API, SFL_APP_TOKEN } from 'sfl-shared/entities';
 import { SflAuthService } from 'sfl-shared/services';
 
+/**
+ * Adds appropriate  Accept and Authorization headers to calls to SF API.
+ * Automatically injected to your app when you import SflShared.forRoot().
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * A unit-test friendly wrapper over a Window object.
+ */
 @Injectable({
     providedIn: 'root'
 })

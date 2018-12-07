@@ -5,6 +5,10 @@ export const LOCALES_MAP = {
     'us': 'en'
 };
 
+/**
+ * A service that allows you to safely work with the localeId,
+ * and guarantees that the localeId leads to an appropriate version app.
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -12,6 +16,12 @@ export class SflLocaleIdService {
 
     public localeId;
 
+    /**
+     * Ensure to have localeId the value from languageOptions object
+     *
+     * @param originalLocaleId
+     * @param languageOptions
+     */
     static detectLocale(originalLocaleId, languageOptions) {
         originalLocaleId = originalLocaleId.toLowerCase();
         if (languageOptions.hasOwnProperty(originalLocaleId)) {

@@ -1,7 +1,15 @@
-import { Component, Input, Self, ViewChild, Optional, Inject, LOCALE_ID } from '@angular/core';
+import { Component, Inject, Input, LOCALE_ID, Optional, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { SFL_BASE_HREF } from 'sfl-shared/entities';
 
+/**
+ * A dropdown to choose a country, where one can sell goods using Shopping Feed.
+ * Implements ControlValueAccessor, so can be used as a normal input.
+ *
+ * @example
+ *
+ * <sfl-country-select [(ngModel)]="filter.country"></sfl-country-select>
+ */
 @Component({
     selector: 'sfl-country-select',
     templateUrl: './country-select.component.html',
@@ -9,11 +17,10 @@ import { SFL_BASE_HREF } from 'sfl-shared/entities';
 })
 export class SflCountrySelectComponent implements ControlValueAccessor {
 
-    baseHref: string;
     @Input() required = false;
-
     @ViewChild('select') select: HTMLSelectElement;
 
+    baseHref: string;
     onChange: (value: any) => void;
     onTouched: () => void;
 

@@ -3,6 +3,21 @@ import { ObservableMedia } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
 
+/**
+ * A sidebar container that allows to build a sidebar easily.
+ *
+ * @example
+ *
+ * <sfl-sidebar-container>
+ *     <mat-list>
+ *         <mat-list-item class="mat-active">
+ *             <a routerLink="/" class="homepage-link">
+ *                 <mat-icon>home</mat-icon> Homepage
+ *             </a>
+ *         </mat-list-item>
+ *    </mat-list>
+ * </sfl-sidebar-container>
+ */
 @Component({
     selector: 'sfl-sidebar-container',
     templateUrl: './sidebar-container.component.html',

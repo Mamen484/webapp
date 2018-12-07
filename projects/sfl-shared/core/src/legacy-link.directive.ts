@@ -9,8 +9,18 @@ import { SflLegacyLinkService } from 'sfl-shared/services';
 })
 export class SflLegacyLinkDirective implements OnChanges {
 
+    /**
+     * The store which needs to be opened in a legacy app.
+     */
     @Input() storeId: number;
+    /**
+     * The path on a legacy app.
+     */
     @Input() path: string;
+
+    /**
+     * To add an Authorization token set to true, otherwise false.
+     */
     @Input() addAuthorization = true;
 
     constructor(protected elementRef: ElementRef,

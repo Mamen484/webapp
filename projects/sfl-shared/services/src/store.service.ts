@@ -13,7 +13,9 @@ import {
     StoreCharge
 } from 'sfl-shared/entities';
 
-
+/**
+ * A service to work with a store API.
+ */
 @Injectable({
     providedIn: 'root'
 })

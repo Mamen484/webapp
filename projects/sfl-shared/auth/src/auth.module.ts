@@ -4,6 +4,9 @@ import { SflLoginFormComponent } from './login-form/login-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressBarModule } from '@angular/material';
 
+/**
+ * Visual authentication components
+ */
 @NgModule({
     imports: [
         CommonModule,
