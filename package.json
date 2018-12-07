@@ -59,6 +59,7 @@
     "ng-packagr": "^4.4.5",
     "phantomjs-prebuilt": "^2.1.16",
     "protractor": "^5.4.1",
+    "puppeteer": "^1.11.0",
     "reflect-metadata": "^0.1.12",
     "ts-node": "^7.0.1",
     "tsickle": "0.34.0",
@@ -78,8 +79,8 @@
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
     "sf-admin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --port=4201",
-    "docker-serve-webapp":  "ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
-    "docker-serve-webadmin":  "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --disable-host-check --public-host $ADMIN_HOST --port $ADMIN_PORT",
+    "docker-serve-webapp": "ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
+    "docker-serve-webadmin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --disable-host-check --public-host $ADMIN_HOST --port $ADMIN_PORT",
     "docker-start": "npm ci && ng build sfl-shared && concurrently 'npm run docker-serve-webapp' 'npm run docker-serve-webadmin'",
     "compile-env": "ts-node compile-environment"
   },
