@@ -19,10 +19,10 @@
                     <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center">
                         <div fxFlex>
                             <mat-chip-list>
-                                <mat-chip class="sf-tag">{{tag.name}}</mat-chip>
+                                <sf-tag-chip [tag]="tag"></sf-tag-chip>
                             </mat-chip-list>
                         </div>
-                        <button mat-icon-button (click)="updateTag(tag.id, tag.name)">
+                        <button mat-icon-button (click)="updateTag(tag.id, tag)">
                             <mat-icon>edit</mat-icon>
                         </button>
                         <button mat-icon-button (click)="removeTag(tag.id)">

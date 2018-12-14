@@ -7,7 +7,6 @@ import { OrdersFilterDialogComponent } from './orders-filter-dialog/orders-filte
 import { SearchOrdersComponent } from './search-orders/search-orders.component';
 import { OrdersTableComponent } from './orders-table/orders-table.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-import { LabelsDialogComponent } from './labels-dialog/labels-dialog.component';
 import { FilteringTabsComponent } from './filtering-tabs/filtering-tabs.component';
 import { OrdersListMobileComponent } from './orders-list/orders-list-mobile/orders-list-mobile.component';
 import { OrdersListDesktopComponent } from './orders-list/orders-list-desktop/orders-list-desktop.component';
@@ -48,7 +47,6 @@ import { SharedModule } from './shared/shared.module';
         SearchOrdersComponent,
         OrdersTableComponent,
         OrderDetailsComponent,
-        LabelsDialogComponent,
         FilteringTabsComponent,
         OrdersListMobileComponent,
         OrdersListDesktopComponent,
@@ -75,7 +73,6 @@ import { SharedModule } from './shared/shared.module';
     entryComponents: [
         AssignTagsDialogComponent,
         OrdersFilterDialogComponent,
-        LabelsDialogComponent,
         ConfirmShippingDialogComponent,
         CarrierDetailsDialogComponent,
         OrderStatusChangedSnackbarComponent,
