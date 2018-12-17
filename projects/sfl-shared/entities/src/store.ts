@@ -17,6 +17,7 @@ export class Store {
     country = '';
     createdAt: string;
     paymentType = PaymentType.other;
+    sales: {pathIsActive: boolean};
     _links: {
         self: {
             href: string

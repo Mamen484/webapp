@@ -25,7 +25,9 @@ export class SidebarComponent {
                 protected windowRef: SflWindowRefService,
                 protected supportLinkService: SupportLinkService,
                 protected media: ObservableMedia) {
-        this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
+        this.appStore.select('currentStore').subscribe((store: Store) => {
+            this.currentStore = store;
+        });
         this.appStore.select('installedChannels').subscribe(channels => this.channels = channels);
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
 
