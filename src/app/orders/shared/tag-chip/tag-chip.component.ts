@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Tag } from '../../../core/entities/tag';
 
 @Component({
@@ -6,14 +6,11 @@ import { Tag } from '../../../core/entities/tag';
     templateUrl: './tag-chip.component.html',
     styleUrls: ['./tag-chip.component.scss']
 })
-export class TagChipComponent implements OnInit {
+export class TagChipComponent {
 
     @Input() tag: Tag;
+    @Input() removable = false;
 
-    constructor() {
-    }
-
-    ngOnInit() {
-    }
+    @Output() removed = new EventEmitter();
 
 }
