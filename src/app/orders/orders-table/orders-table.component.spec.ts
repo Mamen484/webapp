@@ -12,7 +12,6 @@ import { Order } from '../../core/entities/orders/order';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-import { Router } from '@angular/router';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
@@ -20,11 +19,12 @@ import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orde
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
 import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ChannelMap } from '../../core/entities/channel-map.enum';
+import { environment } from '../../../environments/environment';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -32,8 +32,9 @@ describe('OrdersTableComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let cdr: jasmine.SpyObj<ChangeDetectorRef>;
     let filterService: jasmine.SpyObj<OrdersFilterService>;
-    let router: jasmine.SpyObj<Router>;
+    let window: { nativeWindow: { open: jasmine.Spy } };
     let snackbar: jasmine.SpyObj<MatSnackBar>;
+    let localeIdService: SflLocaleIdService;
 
     let component: OrdersTableComponent;
     let fixture: ComponentFixture<OrdersTableComponent>;
@@ -45,9 +46,10 @@ describe('OrdersTableComponent', () => {
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter', 'patchFilter']);
-        router = jasmine.createSpyObj(['navigate']);
+        window = {nativeWindow: {open: jasmine.createSpy('window.open')}};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
         localStorage = jasmine.createSpyObj(['getItem', 'setItem', 'removeItem']);
+        localeIdService = <any>{localeId: 'en'};
 
         TestBed.configureTestingModule({
             declarations: [
@@ -65,9 +67,10 @@ describe('OrdersTableComponent', () => {
                 {provide: MatDialog, useValue: matDialog},
                 {provide: ChangeDetectorRef, useValue: cdr},
                 {provide: OrdersFilterService, useValue: filterService},
-                {provide: Router, useValue: router},
+                {provide: SflWindowRefService, useValue: window},
                 {provide: MatSnackBar, useValue: snackbar},
                 {provide: SflLocalStorageService, useValue: localStorage},
+                {provide: SflLocaleIdService, useValue: localeIdService},
 
             ],
             imports: [
@@ -343,10 +346,10 @@ describe('OrdersTableComponent', () => {
         expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[21]');
     });
 
-    it('should remember selection before navigation to the order details', () => {
-        component.selection = <any>{selected: [{id: 23}, {id: 91}]};
+    it('should open order details in a new tab on goToOrder() call', () => {
+        component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         component.goToOrder('12');
-        expect(localStorage.setItem).toHaveBeenCalledWith(LocalStorageKey.ordersSelection, '[23,91]');
+        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge`);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
