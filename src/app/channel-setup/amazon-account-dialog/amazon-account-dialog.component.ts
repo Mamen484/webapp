@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
     templateUrl: './amazon-account-dialog.component.html',
     styleUrls: ['./amazon-account-dialog.component.scss']
 })
-export class AmazonAccountDialogComponent implements OnInit {
+export class AmazonAccountDialogComponent {
 
-    constructor() {
+    constructor(protected matDialogRef: MatDialogRef<AmazonAccountDialogComponent>) {
     }
 
-    ngOnInit() {
+    close() {
+        this.matDialogRef.close();
     }
 
 }

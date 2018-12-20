@@ -1,0 +1,19 @@
+@import '../../../sass/variables';
+
+$line-padding: 20px;
+mat-card {
+  padding: 0;
+
+  mat-list {
+    mat-list-item {
+      padding: $line-padding;
+      border-bottom: 1px solid $black-12-opacity;
+      width: auto;
+    }
+  }
+
+  mat-paginator {
+    padding: calc(#{$line-padding} - 8px);
+  }
+}
+

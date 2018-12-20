@@ -1,3 +1,10 @@
-<div>
-    categories-configuration works!
+<div class="scrollable-container">
+    <mat-card>
+        <mat-list dense>
+            <mat-list-item *ngFor="let category of categories">
+                {{category.name}}
+            </mat-list-item>
+        </mat-list>
+        <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage" (page)="pageChanged($event)"></mat-paginator>
+    </mat-card>
 </div>
