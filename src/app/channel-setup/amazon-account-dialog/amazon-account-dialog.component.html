@@ -1,0 +1,23 @@
+<mat-dialog-content>
+    <div class="dialog-header">
+        <sf-image source="assets/images/channels/amazon.png" width="200px"></sf-image>
+        <div class="mat-display-1" i18n>Welcome!</div>
+    </div>
+
+    <ng-container i18n>Before starting, it's imperative to have an</ng-container>&nbsp;<a href="#" i18n>Amazon Pro account</a>
+    <form fxLayout="column">
+        <mat-form-field>
+            <mat-label i18n>Merchant token</mat-label>
+            <input matInput autocomplete="off">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label i18n autocomplete="off">Seller ID</mat-label>
+            <input matInput>
+        </mat-form-field>
+    </form>
+    <ng-container>See my seller account</ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color="accent">Start</button>
+</mat-dialog-actions>
