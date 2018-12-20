@@ -13,7 +13,7 @@ import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from 'sfl-shared/entities';
-import { toPairs, uniq } from 'lodash';
+import { toPairs } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { combineLatest, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
