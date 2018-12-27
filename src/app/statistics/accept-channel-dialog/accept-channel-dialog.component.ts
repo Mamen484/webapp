@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { StoreService } from '../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
-import { StoreCharge } from '../../core/entities/store-charge';
+import { StoreCharge } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-accept-channel-dialog',

@@ -33,21 +33,21 @@ describe('TagsService', () => {
     });
 
     it('should POST /store/${storeId}/order/tag when call create()', () => {
-        service.create(31, {name: 'name1', color: 'color1'}).subscribe();
+        service.create(31, {name: 'name1', color: 'green'}).subscribe();
         const req = httpMock.expectOne(`${environment.API_URL}/store/31/order/tag`);
         httpMock.verify();
         expect(req.request.method).toEqual('POST');
         expect(req.request.body.tag.name).toEqual('name1');
-        expect(req.request.body.tag.color).toEqual('color1');
+        expect(req.request.body.tag.color).toEqual('green');
     });
 
     it('should PUT /store/${storeId}/order/tag when call update()', () => {
-        service.update(31, 21, {name: 'name2', color: 'color2'}).subscribe();
+        service.update(31, 21, {name: 'name2', color: 'red'}).subscribe();
         const req = httpMock.expectOne(`${environment.API_URL}/store/31/order/tag/21`);
         httpMock.verify();
         expect(req.request.method).toEqual('PUT');
         expect(req.request.body.tag.name).toEqual('name2');
-        expect(req.request.body.tag.color).toEqual('color2');
+        expect(req.request.body.tag.color).toEqual('red');
     });
 
     it('should DELETE /store/${storeId}/order/tag when call remove()', () => {
@@ -71,7 +71,6 @@ describe('TagsService', () => {
 
     it('should DELETE /store/${storeId}/order/tag/{$tagId}/link when call unassignTags', () => {
         service.unassignTags(14, <Tag[]>[{id: 2}, {id: 3}], [15, 16]).subscribe();
-        console.log(httpMock);
         let req = httpMock.expectOne(`${environment.API_URL}/store/14/order/tag/2/link?order=15,16`);
         expect(req.request.method).toEqual('DELETE');
 

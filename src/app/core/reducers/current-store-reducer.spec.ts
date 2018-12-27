@@ -1,4 +1,4 @@
-import { Store } from '../entities/store';
+import { Store } from 'sfl-shared/entities';
 import { currentStoreReducer, SET_STORE } from './current-store-reducer';
 
 describe('Current Store Reducer', () => {

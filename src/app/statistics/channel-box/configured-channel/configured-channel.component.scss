@@ -1,5 +1,10 @@
 @import '../../../../sass/variables';
 
+.channel-link {
+  text-decoration: none;
+  color: black;
+}
+
 .online-low {
   color: mat-color($warn);
 }

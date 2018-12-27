@@ -1,14 +1,15 @@
-import {NgModule} from '@angular/core';
-import {SidebarComponent} from './sidebar.component';
+import { NgModule } from '@angular/core';
+import { SidebarComponent } from './sidebar.component';
 import { SharedModule } from '../shared/shared.module';
-import { SidebarContainerComponent } from './sidebar-container.component';
+import { SflSidebarModule } from 'sfl-shared/sidebar';
 
 @NgModule({
     imports: [
-        SharedModule
+        SharedModule,
+        SflSidebarModule,
     ],
-    declarations: [SidebarComponent, SidebarContainerComponent],
-    exports: [SidebarComponent, SidebarContainerComponent]
+    declarations: [SidebarComponent],
+    exports: [SidebarComponent]
 })
 export class SidebarModule {
 }

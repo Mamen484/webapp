@@ -1,4 +1,4 @@
-@import 'variables';
+@import './variables';
 
 @include mat-core();
 @include angular-material-theme($theme);
@@ -156,8 +156,11 @@ mat-sidenav-container {
   }
 }
 
-mat-chip.mat-chip.sf-tag {
-  background-color: mat-color($accent, 0.3);
+mat-chip.mat-chip {
+  font-weight: normal;
+  &.sf-tag {
+    background-color: mat-color($accent, 0.3);
+  }
 }
 
 button[mat-stroked-button][color="accent"] {
@@ -167,4 +170,9 @@ button[mat-stroked-button][color="accent"] {
 
 .mat-tooltip {
   text-transform: uppercase;
+}
+
+.sf-specify-carrier-tooltip {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
 }

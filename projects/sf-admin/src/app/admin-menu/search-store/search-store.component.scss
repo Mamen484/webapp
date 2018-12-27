@@ -1,0 +1,65 @@
+@import '../../../../src/sass/variables';
+
+$toolbar-search-margin: 10px;
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+mat-progress-bar {
+  position: absolute;
+  bottom: 0;
+}
+
+mat-form-field {
+  flex: 1;
+  background: mat-color($primary, A100, 0.2);
+
+  ::placeholder {
+    color: mat-color($primary, A100);
+  }
+
+  .sf-search-icon {
+    color: mat-color($primary, A100);
+    font-size: 24px;
+  }
+
+  input {
+    margin-left: $toolbar-search-margin;
+  }
+
+  ::ng-deep {
+    .mat-form-field-wrapper {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
+    .mat-form-field-infix {
+      padding-top: 2px;
+    }
+
+    .mat-form-field-prefix {
+      top: 0.5em;
+    }
+  }
+}
+
+
+.no-results-container {
+  text-align: center;
+  padding: 45px;
+
+  .no-results {
+    margin: 0;
+    color: $black-54-opacity;
+  }
+
+  a, a:visited {
+    color: mat-color($accent);
+  }
+}

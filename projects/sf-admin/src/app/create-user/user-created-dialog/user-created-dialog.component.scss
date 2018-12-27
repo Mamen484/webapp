@@ -1,0 +1,19 @@
+@import '../../../../src/sass/variables';
+
+mat-dialog-content {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-right: 40px;
+}
+
+.title, .value {
+  color: $black-87-opacity;
+}
+mat-icon {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.green {
+  color: mat-color($green);
+}

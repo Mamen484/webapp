@@ -3,6 +3,8 @@
 
 @include order-actions-bar();
 
+$hover-row-bg: #EBEBEB;
+
 .actions {
   justify-content: flex-start;
   padding-left: 29px;
@@ -10,6 +12,17 @@
   &.accent {
     background-color: mat-color($accent, 0.1);
   }
+}
+
+$subheader-height: 54px;
+$actions-height: 61px;
+$search-block-height: 105px;
+$filtering-tabs-height: 49px;
+$paginator-height: 65px;
+
+.table-container {
+  max-height: calc(100vh - #{$toolbar-height} - #{$subheader-height} - 5 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$filtering-tabs-height} - #{$paginator-height});
+  overflow: auto;
 }
 
 mat-card {
@@ -64,6 +77,10 @@ button:not([mat-menu-item]) {
 .table-scrollable {
   overflow-x: auto;
   overflow-y: hidden;
+
+  mat-progress-bar {
+    z-index: 200;
+  }
 }
 
 table {
@@ -79,11 +96,35 @@ table {
     &.column-tags, &.column-hasErrors {
       padding: 0;
     }
+
     &.column-tags mat-chip-list, &.column-hasErrors mat-icon {
       margin-left: 5px;
       margin-right: 5px;
     }
 
+  }
+
+  [mat-row] {
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: $hover-row-bg;
+
+      .right-sticky-column {
+        position: sticky;
+        right: 0;
+        background-color: $hover-row-bg;
+        .invoice-link {
+          visibility: visible;
+
+          mat-icon {
+            color: $black-54-opacity;
+          }
+        }
+      }
+
+
+    }
   }
 }
 
@@ -97,4 +138,8 @@ mat-chip {
 
 .right-bordered {
   border-right: 1px solid $black-12-opacity;
+}
+
+.invoice-link {
+  visibility: hidden;
 }

@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { CanLoadAdminGuard } from './can-load-admin.guard';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflUserService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 
 describe('CanLoadAdminGuard', () => {
@@ -23,8 +23,8 @@ describe('CanLoadAdminGuard', () => {
                 CanLoadAdminGuard,
                 {provide: Store, useValue: store},
                 {provide: Router, useValue: router},
-                {provide: UserService, useValue: userService},
-                {provide: WindowRefService, useValue: windowRef},
+                {provide: SflUserService, useValue: userService},
+                {provide: SflWindowRefService, useValue: windowRef},
             ]
         });
     });

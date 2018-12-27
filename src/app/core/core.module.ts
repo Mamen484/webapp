@@ -2,17 +2,11 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 
-import { UserService } from './services/user.service';
 import { currentStoreReducer } from './reducers/current-store-reducer';
 import { userInfoReducer } from './reducers/user-info-reducer';
-import { StoreService } from './services/store.service';
-import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { AggregatedUserInfoResolveGuard } from './guards/aggregated-user-info-resolve.guard';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { LocaleIdService } from './services/locale-id.service';
 import { CheckProperLocaleGuard } from './guards/check-proper-locale.guard';
-import { WindowRefService } from './services/window-ref.service';
 import { InternationalAccountService } from './services/international-account.service';
 import { SupportService } from './services/support.service';
 import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor';
@@ -26,13 +20,10 @@ import { CreatePasswordService } from './services/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { LoginByTokenGuard } from './guards/login-by-token.guard';
-import { LegacyLinkService } from './services/legacy-link.service';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
-import { LocalStorageService } from './services/local-storage.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
-import { ErrorInterceptor } from './interceptors/error-interceptor';
 import { currentRouteReducer } from './reducers/current-route-reducer';
 import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
@@ -43,10 +34,11 @@ import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
-import { ToggleSidebarService } from './services/toggle-sidebar.service';
 import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
+import { SflLegacyLinkService } from 'sfl-shared/services';
+import { LegacyLinkService } from './services/legacy-link.service';
 
 @NgModule({
     imports: [
@@ -74,8 +66,6 @@ import { ChannelStorageService } from './services/channel-storage.service';
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
-
-        LocaleIdService,
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,
@@ -84,28 +74,22 @@ import { ChannelStorageService } from './services/channel-storage.service';
         RegistrationCacheGuard,
         CreatePasswordService,
         SupportService,
-        WindowRefService,
         PasswordRecoveryService,
-        UserService,
-        StoreService,
-        LegacyLinkService,
-        LocalStorageService,
         TimelineService,
         OrdersFilterService,
         OrdersService,
         SupportLinkService,
         TagsService,
-        ToggleSidebarService,
-
+        {provide: SflLegacyLinkService, useClass: LegacyLinkService},
         {provide: HttpClient, useClass: HttpClientService},
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: SupportAuthInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        ],
+    ],
     declarations: []
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+        if (parentModule) {
+            throw new Error(`CoreModule has already been loaded. Import Core modules in the AppModule only.`);
+        }
     }
 }

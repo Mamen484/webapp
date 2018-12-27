@@ -34,10 +34,10 @@ export class TagsManagementComponent implements OnInit {
     }
 
     createNewTag() {
-        this.matDialog.open(NewTagDialogComponent).afterClosed().subscribe((tagName: string) => {
-            if (tagName) {
+        this.matDialog.open(NewTagDialogComponent).afterClosed().subscribe((tag: Tag) => {
+            if (tag && tag.name) {
                 this.loading = true;
-                this.sendCreateTagRequest(tagName).subscribe(
+                this.sendCreateTagRequest(tag).subscribe(
                     () => this.updateTagsData(),
                     error => this.showServerError(error)
                 )
@@ -46,11 +46,11 @@ export class TagsManagementComponent implements OnInit {
         });
     }
 
-    updateTag(tagId, name) {
-        this.matDialog.open(NewTagDialogComponent, {data: {name}}).afterClosed().subscribe((tagName: string) => {
-            if (tagName) {
+    updateTag(tagId, {name, color}) {
+        this.matDialog.open(NewTagDialogComponent, {data: {name, color}}).afterClosed().subscribe((tag: Tag) => {
+            if (tag && tag.name) {
                 this.loading = true;
-                this.sendUpdateTagRequest(tagName, tagId).subscribe(
+                this.sendUpdateTagRequest(tag, tagId).subscribe(
                     () => this.updateTagsData(),
                     error => this.showServerError(error)
                 )
@@ -67,17 +67,17 @@ export class TagsManagementComponent implements OnInit {
         );
     }
 
-    protected sendCreateTagRequest(tagName) {
+    protected sendCreateTagRequest({name, color}) {
         return this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap(store => this.tagsService.create(store.id, {name: tagName, color: '#1976d2'})),
+            flatMap(store => this.tagsService.create(store.id, {name, color})),
         )
     }
 
-    protected sendUpdateTagRequest(tagName, tagId) {
+    protected sendUpdateTagRequest(tag: Tag, tagId) {
         return this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap(store => this.tagsService.update(store.id, tagId, {name: tagName, color: '#1976d2'})),
+            flatMap(store => this.tagsService.update(store.id, tagId, tag)),
         )
     }
 

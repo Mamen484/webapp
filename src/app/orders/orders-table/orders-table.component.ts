@@ -12,12 +12,11 @@ import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource, Pag
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
-import { Store } from '../../core/entities/store';
-import { toPairs, uniq } from 'lodash';
+import { Store } from 'sfl-shared/entities';
+import { toPairs } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { combineLatest, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
-import { Router } from '@angular/router';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
@@ -26,10 +25,11 @@ import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-sna
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
 import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
-import { LocalStorageService } from '../../core/services/local-storage.service';
+import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
+import { environment } from '../../../environments/environment';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 const DEFAULT_PAGE_SIZE = '10';
@@ -62,8 +62,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         trackingNumber: false,
         imported: false,
     };
-    requiredColumns = ['checkbox', 'tags', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
-    displayedColumns = this.requiredColumns;
+    requiredLeftColumns = ['checkbox', 'tags', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
+    requiredRightColumns = ['invoice-link'];
+    displayedColumns = this.requiredLeftColumns.concat(this.requiredRightColumns);
     dataSource: MatTableDataSource<OrdersTableItem> = new MatTableDataSource();
     isLoadingResults = false;
     subscription: Subscription;
@@ -80,10 +81,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected matDialog: MatDialog,
                 protected changeDetectorRef: ChangeDetectorRef,
                 protected ordersFilterService: OrdersFilterService,
-                protected router: Router,
+                protected windowRef: SflWindowRefService,
                 protected snackbar: MatSnackBar,
                 protected elementRef: ElementRef<HTMLElement>,
-                protected localStorage: LocalStorageService) {
+                protected localStorage: SflLocalStorageService,
+                protected localeIdService: SflLocaleIdService) {
     }
 
     @HostListener('window:resize', ['$event'])
@@ -99,14 +101,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     goToOrder(orderId: string) {
-        let queryParams = {};
-        if (this.ordersFilter && this.ordersFilter.error) {
-            (<any>queryParams).errorType = this.ordersFilter.error;
-        }
-        this.rememberSelection();
-        this.router.navigate(['orders', 'detail', orderId], {
-            queryParams,
-        });
+        let queryParams = this.ordersFilter && this.ordersFilter.error
+            ? '?errorType=' + this.ordersFilter.error
+            : '';
+        const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${queryParams}`;
+        this.windowRef.nativeWindow.open(link);
     }
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -171,8 +170,9 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     setDisplayedColumns() {
-        this.displayedColumns = this.requiredColumns
-            .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []));
+        this.displayedColumns = this.requiredLeftColumns
+            .concat(toPairs(this.optionalColumns).reduce((acc, [key, isDisplayed]) => isDisplayed ? acc.concat(key) : acc, []))
+            .concat(this.requiredRightColumns);
         this.localStorage.setItem(LocalStorageKey.ordersDisplayedColumns, this.displayedColumns.toString());
         this.updateStickyColumnsStyles();
 
@@ -302,8 +302,6 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }
 
         const savedColumns = this.localStorage.getItem(LocalStorageKey.ordersDisplayedColumns);
-        this.displayedColumns = uniq(this.requiredColumns.concat(savedColumns && savedColumns.split(',') || []));
-
         if (savedColumns && savedColumns.length) {
             savedColumns.split(',').forEach(column => {
                 if (typeof this.optionalColumns[column] !== 'undefined') {
@@ -311,6 +309,8 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 }
             });
         }
+
+        this.setDisplayedColumns();
     }
 
     protected updateStickyColumnsStyles() {

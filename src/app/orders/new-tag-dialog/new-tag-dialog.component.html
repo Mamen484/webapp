@@ -6,6 +6,16 @@
         <mat-label></mat-label>
         <input matInput [(ngModel)]="tagName" placeholder="Example: Printed" i18n-placeholder>
     </mat-form-field>
+    <div class="pick-tag-color">
+        <div class="tag-color-blue" (click)="color = 'blue'" [class.selected]="color === 'blue'"></div>
+        <div class="tag-color-green" (click)="color = 'green'" [class.selected]="color === 'green'"></div>
+        <div class="tag-color-red" (click)="color = 'red'" [class.selected]="color === 'red'"></div>
+        <div class="tag-color-orange" (click)="color = 'orange'" [class.selected]="color === 'orange'"></div>
+        <div class="tag-color-yellow" (click)="color = 'yellow'" [class.selected]="color === 'yellow'"></div>
+        <div class="tag-color-indigo" (click)="color = 'indigo'" [class.selected]="color === 'indigo'"></div>
+        <div class="tag-color-grey" (click)="color = 'grey'" [class.selected]="color === 'grey'"></div>
+        <div class="tag-color-brown" (click)="color = 'brown'" [class.selected]="color === 'brown'"></div>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>

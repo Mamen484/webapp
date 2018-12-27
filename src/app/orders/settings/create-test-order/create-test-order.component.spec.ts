@@ -11,7 +11,8 @@ import { EMPTY, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { TestOrder } from '../../../core/entities/orders/test-order';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
-import { StoreService } from '../../../core/services/store.service';
+import { StoreService } from 'sfl-shared/services';
+import { Subject } from 'rxjs/Rx';
 
 describe('CreateTestOrderComponent', () => {
     let component: CreateTestOrderComponent;
@@ -24,7 +25,7 @@ describe('CreateTestOrderComponent', () => {
     let storeService: jasmine.SpyObj<StoreService>;
 
     beforeEach(async(() => {
-        appStore = jasmine.createSpyObj(['pipe']);
+        appStore = jasmine.createSpyObj(['select']);
         ordersService = jasmine.createSpyObj(['create']);
         snackBar = jasmine.createSpyObj(['open', 'openFromComponent']);
         router = jasmine.createSpyObj(['navigate']);
@@ -52,6 +53,7 @@ describe('CreateTestOrderComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CreateTestOrderComponent);
         component = fixture.componentInstance;
+        component.paymentSelect = <any>{value: ''};
     });
 
     it('should create', () => {
@@ -59,50 +61,50 @@ describe('CreateTestOrderComponent', () => {
     });
 
     it('should calculate a valid total price if price is specified', () => {
-        component.order = <any>{shipment: {shippingAmount: '0'}, items: [{price: '22'}]};
-        appStore.pipe.and.returnValue(EMPTY);
+        component.order = <any>{payment: {shippingAmount: '0'}, shipment: {}, items: [{quantity: 1, price: '22'}]};
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(22);
     });
 
     it('should calculate a valid total price if shippingAmount is specified', () => {
-        component.order = <any>{shipment: {shippingAmount: '31'}, items: [{price: '0'}]};
-        appStore.pipe.and.returnValue(EMPTY);
+        component.order = <any>{payment: {shippingAmount: '31'}, shipment: {}, items: [{quantity: 1, price: '0'}]};
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(31);
     });
 
     it('should calculate a valid total price if shippingAmount is undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: undefined}, items: [{price: '24'}]};
-        appStore.pipe.and.returnValue(EMPTY);
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{quantity: 1, price: '24'}]};
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(24);
     });
 
     it('should calculate a valid total price if item price is undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: '51'}, items: [{price: undefined}]};
-        appStore.pipe.and.returnValue(EMPTY);
+        component.order = <any>{payment: {shippingAmount: '51'}, shipment: {}, items: [{price: undefined}]};
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(51);
     });
 
     it('should calculate a valid total price if both shippingAmount and item price are undefined', () => {
-        component.order = <any>{shipment: {shippingAmount: undefined}, items: [{price: undefined}]};
-        appStore.pipe.and.returnValue(EMPTY);
+        component.order = <any>{payment: {shippingAmount: undefined}, shipment: {}, items: [{price: undefined}]};
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.totalPrice).toEqual(0);
     });
 
     it('should create one order item on init', () => {
         component.order = new TestOrder();
-        appStore.pipe.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.order.items.length).toEqual(1);
     });
 
     it('should add one order item on addItem() call', () => {
         component.order = new TestOrder();
-        appStore.pipe.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
         expect(component.order.items.length).toEqual(0);
         component.addItem();
         expect(component.order.items.length).toEqual(1);
@@ -116,12 +118,24 @@ describe('CreateTestOrderComponent', () => {
             {reference: '3', price: 3},
             {reference: '4', price: 4},
         ];
-        appStore.pipe.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
         component.removeItem(2);
         expect(component.order.items).toEqual([
             {reference: '1', price: 1},
             {reference: '2', price: 2},
             {reference: '4', price: 4},
+        ]);
+    });
+
+    it('should reset the item if it is being removed and it is the only item', () => {
+        component.order = new TestOrder();
+        component.order.items = [
+            {reference: '1', price: 1},
+        ];
+        appStore.select.and.returnValue(EMPTY);
+        component.removeItem(0);
+        expect(component.order.items).toEqual([
+            <any>{quantity: 1},
         ]);
     });
 
@@ -158,7 +172,57 @@ describe('CreateTestOrderComponent', () => {
     });
 
     it('should write a channel on selectChannel() call', () => {
-        component.selectChannel({option: {value: {id: 22}}});
-        expect(component.order.channel).toBe(22);
+        component.selectChannel({option: {value: {id: 22, name: 'some channel'}}});
+        expect(component.order.channelId).toBe(22);
+    });
+
+    it('should assign a paymentMode into `predefined` if `amazon` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.amazon, name: 'Amazon'}}});
+        expect(component.paymentInputMode).toBe('predefined');
+    });
+
+    it('should assign a paymentMode into `predefined` if `cdiscount` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.cdiscount, name: 'CDiscount'}}});
+        expect(component.paymentInputMode).toBe('predefined');
+    });
+
+    it('should assign a paymentMode into `predefined` if `monechelle` channel selected', () => {
+        component.selectChannel({option: {value: {id: component.channelMap.monechelle, name: 'Monechelle'}}});
+        expect(component.paymentInputMode).toBe('predefined');
+    });
+
+    it('should assign a paymentMode into `custom` if any other channel selected', () => {
+        component.selectChannel({option: {value: {id: 777, name: 'any channel'}}});
+        expect(component.paymentInputMode).toBe('custom');
+    });
+
+    it('should add an empty order item on init', () => {
+        appStore.select.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(component.order.items.length).toEqual(1);
+    });
+
+    it('should filter autocomplete options', () => {
+        appStore.select.and.returnValues(
+            of([{name: 'Amazon'}, {name: 'eBay'}, {name: 'Zamno'}]),
+            of([{id: 22}]),
+            EMPTY,
+        );
+        storeService.getStoreChannels.and.returnValue(of(
+            {
+                _embedded: {
+                    channel: [
+                        {_embedded: {channel: {name: 'CDiscount'}}, installed: false},
+                        {_embedded: {channel: {name: 'Monamona'}}, installed: true},
+                        {_embedded: {channel: {name: 'Tunamo'}}, installed: false},
+                    ]
+                }
+            }
+        ));
+        component.channelControl = <any>{valueChanges: new Subject()};
+        component.ngOnInit();
+        (<Subject<string>>component.channelControl.valueChanges).next('am');
+        expect(component.filteredChannels).toEqual(<any>[{name: 'Amazon'}, {name: 'Zamno'}]);
+        expect(component.filteredNewChannels).toEqual(<any>[{name: 'Tunamo'}]);
     });
 });

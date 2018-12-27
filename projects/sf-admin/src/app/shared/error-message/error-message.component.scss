@@ -1,0 +1,15 @@
+@import '../../../../src/sass/variables';
+
+.error-container {
+  padding: 20px;
+  border: 1px solid mat-color($warn, 900);
+  background-color: mat-color($warn, 900, 0.1);
+  ::ng-deep {
+    color: mat-color($warn, 900, 0.87);
+    font-size: mat-font-size($config, body-1);
+  }
+
+  mat-icon {
+    margin-right: 15px;
+  }
+}

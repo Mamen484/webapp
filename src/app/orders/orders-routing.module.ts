@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderDetailsResolveGuard } from '../core/guards/order-details-resolve.guard';
-import { TagsManagementComponent } from './settings/tags-management/tags-management.component';
+import { OrdersRouteGuard } from '../core/guards/orders-route.guard';
 
 const routes: Routes = [
-    {path: '', component: OrdersListComponent},
     {
-        path: 'detail/:id',
-        component: OrderDetailsComponent,
-        resolve: {
-            order: OrderDetailsResolveGuard
-        },
-        data: {showBackButton: ['/orders']}
-    },
+        path: '',
+        canActivate: [OrdersRouteGuard],
+        children: [
+            {path: '', component: OrdersListComponent},
+            {
+                path: 'detail/:id',
+                component: OrderDetailsComponent,
+                resolve: {
+                    order: OrderDetailsResolveGuard
+                },
+                data: {showBackButton: ['/orders']}
+            },
+        ]
+    }
+
 ];
 
 @NgModule({

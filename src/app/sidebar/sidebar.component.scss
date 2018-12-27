@@ -1,10 +1,17 @@
 @import '../../sass/variables';
 
-mat-icon {
+.homepage-link {
   font-size: mat-font-size($config, headline);
+  height: mat-font-size($config, headline);
+  margin: auto;
+}
+
+mat-icon {
+
+  font-size: mat-font-size($config, headline);
+  margin: auto;
   color: $black-54-opacity;
   cursor: pointer;
-  margin: auto;
 
   &.active {
     color: mat-color($accent);
@@ -46,6 +53,8 @@ a.channel-logo:hover, a.channel-logo:focus {
 
 a.channel-logo {
   margin-bottom: 20px;
+  width: auto;
+
   img {
     vertical-align: middle;
     max-width: 100px;

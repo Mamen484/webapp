@@ -1,9 +1,9 @@
 import {throwError,  Observable, of } from 'rxjs';
 import { TestBed, inject } from '@angular/core/testing';
-import { UserService } from '../services/user.service';
-import { WindowRefService } from '../services/window-ref.service';
+import { SflUserService } from 'sfl-shared/services';
+import { SflWindowRefService } from 'sfl-shared/services';
 import { LegacyLinkService } from '../services/legacy-link.service';
-import { LocalStorageService } from '../services/local-storage.service';
+import { SflLocalStorageService } from 'sfl-shared/services';
 import { IsLoggedInGuard } from './is-logged-in.guard';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
@@ -16,23 +16,23 @@ describe('IsLoggedInGuard', () => {
 
     beforeEach(() => {
         getItemSpy = jasmine.createSpy('localStorage.getItem');
-        fetchAggregatedInfoSpy = jasmine.createSpy('UserService.fetchAggregatedInfo');
+        fetchAggregatedInfoSpy = jasmine.createSpy('SflUserService.fetchAggregatedInfo');
         store = jasmine.createSpyObj('Store', ['select']);
         store.select.and.returnValue(of(null));
 
         TestBed.configureTestingModule({
             providers: [
                 IsLoggedInGuard,
-                {provide: UserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
+                {provide: SflUserService, useValue: {fetchAggregatedInfo: fetchAggregatedInfoSpy}},
                 {provide: LegacyLinkService, useValue: {getLegacyLink: () => ''}},
                 {
-                    provide: WindowRefService, useValue: {
+                    provide: SflWindowRefService, useValue: {
                     nativeWindow: {
                         location: {}
                     }
                 }
                 },
-                {provide: LocalStorageService, useValue: {getItem: getItemSpy}},
+                {provide: SflLocalStorageService, useValue: {getItem: getItemSpy}},
                 {provide: Store, useValue: store}
             ]
         })
@@ -45,7 +45,7 @@ describe('IsLoggedInGuard', () => {
             expect(guard.canActivate(<any>{})).toEqual(true);
         }));
 
-    it('should call UserService.fetchAggregatedInfo to check if the authorization is valid',
+    it('should call SflUserService.fetchAggregatedInfo to check if the authorization is valid',
         inject([IsLoggedInGuard], (guard: IsLoggedInGuard) => {
             getItemSpy.and.returnValue('some token');
             fetchAggregatedInfoSpy.and.returnValue(of({}));
@@ -73,7 +73,7 @@ describe('IsLoggedInGuard', () => {
         }));
 
     it('should redirect to the homepage if the authorization is valid ',
-        inject([IsLoggedInGuard, WindowRefService], (guard: IsLoggedInGuard, windowRef: WindowRefService) => {
+        inject([IsLoggedInGuard, SflWindowRefService], (guard: IsLoggedInGuard, windowRef: SflWindowRefService) => {
             getItemSpy.and.returnValue('some token');
             fetchAggregatedInfoSpy.and.returnValue(of({}));
             (<Observable<boolean>>guard.canActivate(<any>{})).subscribe(canActivate => {

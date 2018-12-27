@@ -1,0 +1,11 @@
+{
+  "name": "sfl-shared",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "scripts": {
+    "library-docs": "compodoc -p ./tsconfig.lib.json -s -r 8092 --theme=material --toggleMenuItems=modules  --disableProtected --disablePrivate --disableInternal --open"
+  }
+}

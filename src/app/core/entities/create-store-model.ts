@@ -1,5 +1,5 @@
 import { CreateStoreFeed } from './create-store-feed';
-import { StoreOwner } from './store-owner';
+import { StoreOwner } from 'sfl-shared/entities';
 
 export class CreateStoreModel {
     id?: number;
@@ -21,6 +21,7 @@ export class CreateStoreModel {
                 login: name,
                 password: '',
                 token: data.token,
+                phone: data.phone,
             },
             feed: {
                 url: data.feed,

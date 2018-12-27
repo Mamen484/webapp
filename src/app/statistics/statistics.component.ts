@@ -3,13 +3,9 @@ import { flatMap, take, tap } from 'rxjs/operators';
 import { zip } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
 import { Store as AppStore } from '@ngrx/store';
-import { Store } from '../core/entities/store';
-import { Statistics } from '../core/entities/statistics';
-import { ChannelsResponse } from '../core/entities/channels-response';
-import { ChannelsRequestParams } from '../core/entities/channels-request-params';
-import { StoreChannel } from '../core/entities/store-channel';
-import { StoreService } from '../core/services/store.service';
-import { PagedResponse } from '../core/entities/paged-response';
+import { ChannelsRequestParams, ChannelsResponse, PagedResponse, Store, StoreChannel } from 'sfl-shared/entities';
+import { Statistics } from 'sfl-shared/entities';
+import { StoreService } from 'sfl-shared/services';
 import { MatDialog } from '@angular/material';
 import { cloneDeep } from 'lodash';
 

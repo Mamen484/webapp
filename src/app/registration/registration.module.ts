@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MenuModule } from '../menu/menu.module';
 import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationLegacyModule } from '../registration-legacy/registration-legacy.module';
+import { SflMenuModule } from 'sfl-shared/menu';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { RegistrationLegacyModule } from '../registration-legacy/registration-le
         RegistrationRoutingModule,
         MenuModule,
         RegistrationLegacyModule,
+        SflMenuModule,
     ],
     exports: [
         RouterModule,

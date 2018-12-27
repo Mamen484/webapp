@@ -1,4 +1,4 @@
-import { Link } from './link';
+import { Link } from 'sfl-shared/entities';
 
 export interface Rule {
     _links: {

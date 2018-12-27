@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
 import { OrderItem } from '../../../core/entities/orders/order-item';
@@ -12,6 +12,7 @@ import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-m
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
 
 @Component({
     selector: 'sf-items-table',
@@ -22,6 +23,7 @@ export class ItemsTableComponent implements OnInit {
 
     @Input() order: Order;
     @Input() mode: 'normal' | 'refund' = 'normal';
+    @Output() selectionChanged = new EventEmitter();
     acknowledgment: OrderAcknowledgment;
     tableData: MatTableDataSource<OrderDetailsItem>;
     displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'price'];
@@ -30,6 +32,7 @@ export class ItemsTableComponent implements OnInit {
     refundShipping = false;
     selectedQuantity = {};
     statuses = OrderStatus;
+    allowEditQuantity = true;
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -40,6 +43,8 @@ export class ItemsTableComponent implements OnInit {
     ngOnInit() {
         this.initializeTableData();
         this.tableData.data.map(item => this.selectedQuantity[item.reference] = item.quantity);
+        this.selection.changed.subscribe(() => this.selectionChanged.emit());
+        this.checkIfQuantityEditable();
     }
 
     updateItemReference(row: OrderDetailsItem) {
@@ -66,6 +71,10 @@ export class ItemsTableComponent implements OnInit {
                 status: item.status,
             }
         }));
+    }
+
+    protected checkIfQuantityEditable() {
+        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute;
     }
 
     protected determineSku(item: OrderItem) {

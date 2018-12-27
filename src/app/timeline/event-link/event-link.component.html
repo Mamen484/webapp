@@ -1,4 +1,4 @@
-<a sfLegacyLink [path]="event | sfEventLink" target="_blank" *ngIf="event.name === names.ruleSegmentation || event.name === names.ruleTransformation || event.name === names.orderLifecycle">
+<a sflLegacyLink [path]="event | sfEventLink" target="_blank" *ngIf="event.name === names.ruleSegmentation || event.name === names.ruleTransformation || event.name === names.orderLifecycle">
   <ng-container *ngIf="event.action === actions.ship" i18n>The order {{event.data.reference}}  can't be shipped.</ng-container>
   <ng-container *ngIf="event.action === actions.push" i18n>The order {{event.data.reference}} can't be imported to your store.</ng-container>
   <ng-container *ngIf="event.action === actions.update" i18n>The <ng-container *ngIf="event.name === names.ruleSegmentation">Auto-Remove</ng-container> rule "{{ruleName}}" has been updated.</ng-container>
@@ -6,7 +6,7 @@
   <ng-container *ngIf="event.action === actions.delete" i18n>The <ng-container *ngIf="event.name === names.ruleSegmentation">Auto-Remove</ng-container> rule "{{ruleName}}" has been deleted.</ng-container>
 </a>
 
-<a sfLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.error" target="_blank">
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.error" target="_blank">
   <ng-container *ngIf="event?.data?.reason === 'open'" i18n>We can't update your source feed because we can't open it.</ng-container>
   <ng-container *ngIf="event?.data?.reason === 'categories'" i18n>We can't update your source feed because too many categories changes.</ng-container>
   <ng-container *ngIf="event?.data?.reason === 'products' || event?.data?.reason === 'references'" i18n>We can't update your source feed because too many products changed.</ng-container>
@@ -14,13 +14,13 @@
   <ng-container *ngIf="event?.data?.reason === 'check'" i18n>Your source feed wasn't updated because nothing had changed since the last update.</ng-container>
   <ng-container *ngIf="unknownReason" i18n>Your source feed can't be updated because of an unrecognized error.</ng-container>
 </a>
-<a sfLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.error" i18n target="_blank">We can't export your feed to {{event._embedded.channel.name}}.</a>
-<a sfLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.cancel" i18n target="_blank">We canceled your export on {{event._embedded.channel.name}} because another export is already in progress.</a>
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.error" i18n target="_blank">We can't export your feed to {{event._embedded.channel.name}}.</a>
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.cancel" i18n target="_blank">We canceled your export on {{event._embedded.channel.name}} because another export is already in progress.</a>
 
-<a sfLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.finish" i18n target="_blank">
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.finish" i18n target="_blank">
   Your feed has been imported.
 </a>
-<a sfLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.finish" i18n target="_blank">
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.finish" i18n target="_blank">
   Your feed has been exported to {{ event._embedded.channel.name }}.
 </a>
 

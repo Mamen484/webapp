@@ -11,17 +11,16 @@ import { StreamEventType, TimelineService } from '../core/services/timeline.serv
 import { EventLinkComponent } from './event-link/event-link.component';
 import { UpdateRowComponent } from './update-row/update-row.component';
 import { Store } from '@ngrx/store';
-import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
-import { LegacyLinkDirective } from '../shared/legacy-link.directive';
-import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { LocalStorageService } from '../core/services/local-storage.service';
+import { SflAuthService, SflLegacyLinkService, SflLocalStorageService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
 import { AppState } from '../core/entities/app-state';
+import { LegacyLinkService } from '../core/services/legacy-link.service';
+import { SflSharedModule } from 'sfl-shared/core';
 
 @Pipe({
     name: 'sfEventIcon'
@@ -128,13 +127,14 @@ describe('TimelineComponent', () => {
     describe('integration tests', () => {
         let localStorage;
         let appStore: jasmine.SpyObj<Store<AppState>>;
-
+        let authService: jasmine.SpyObj<SflAuthService>;
         beforeEach(async(() => {
 
             timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
             localStorage = jasmine.createSpyObj('LocalStorage', ['getItem']);
             localStorage.getItem.and.returnValue('someToken');
             appStore = jasmine.createSpyObj(['select']);
+            authService = jasmine.createSpyObj('SflAuthService', ['getAuthToken', 'getAuthString']);
 
             TestBed.configureTestingModule({
                 imports: [
@@ -146,21 +146,22 @@ describe('TimelineComponent', () => {
                     MatListModule,
                     MatIconModule,
                     MatProgressSpinnerModule,
+                    SflSharedModule,
                 ],
                 declarations: [
                     TimelineComponent,
                     EventLinkComponent,
-                    LegacyLinkDirective,
                     UpdateRowComponent,
                     TimelineFilteringAreaComponent,
                     EventIconPipe,
                     EventLinkPipe,
                 ],
                 providers: [
+                    {provide: SflLegacyLinkService, useClass: LegacyLinkService},
                     {provide: TimelineService, useValue: timelineService},
-                    LegacyLinkService,
-                    {provide: LocalStorageService, useValue: localStorage},
+                    {provide: SflLocalStorageService, useValue: localStorage},
                     {provide: Store, useValue: appStore},
+                    {provide: SflAuthService, useValue: authService},
                 ]
             })
                 .compileComponents();
@@ -174,6 +175,7 @@ describe('TimelineComponent', () => {
             fixture = TestBed.createComponent(TimelineComponent);
             component = fixture.componentInstance;
             appStore.select.and.returnValue(of({id: 100}));
+            authService.getAuthToken.and.returnValue('someToken');
             fixture.detectChanges();
         });
 
@@ -188,7 +190,7 @@ describe('TimelineComponent', () => {
         });
 
         it('should convert API data to the correct list of events', async () => {
-            await fixture.whenStable()
+            await fixture.whenStable();
             let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
             expect(items.length).toEqual(17);
             validateEvent(items[0], 'build', 'The rule "some name" has been created.', '/tools/rules#sd3wwfd');
@@ -232,7 +234,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual(environment.APP_URL + url + '?token=someToken&store=100');
+            .toEqual(environment.APP_URL + url + '?store=100&token=someToken');
     }
 }
 

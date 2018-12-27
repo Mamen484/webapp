@@ -1,0 +1,7 @@
+@import '../../../../../src/sass/mixins/form-page';
+
+@include form-page();
+
+mat-progress-bar {
+  margin-top: -5px;
+}

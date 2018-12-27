@@ -1,6 +1,6 @@
 <div matDialogTitle i18n>Filters</div>
 <mat-dialog-content>
-    <sf-country-select [(ngModel)]="filter.country"></sf-country-select>
+    <sfl-country-select [(ngModel)]="filter.country"></sfl-country-select>
     <mat-form-field color="accent">
         <mat-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
             <mat-option value="" i18n>All Types</mat-option>
@@ -34,6 +34,6 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button color="accent" (click)="cancel()" i18n>Cancel</button>
+    <button mat-button color="accent" matDialogClose i18n>Cancel</button>
     <button mat-button color="accent" (click)="accept()" i18n class="accept">Filter</button>
 </mat-dialog-actions>

@@ -4,18 +4,27 @@ services:
     image: 813931216550.dkr.ecr.eu-west-1.amazonaws.com/webapp:dev
     networks:
     - sf_network
+    ports:
+      - "0.0.0.0:4295:80"
     volumes:
     - "$PWD:/var/www"
     environment:
       ENV: dev
       HOST: app.shopping-feed.lan
       PORT: 80
+      ADMIN_HOST: admin.shopping-feed.lan
+      ADMIN_PORT: 4295
     labels:
-      traefik.frontend.rule: "Host:app.shopping-feed.lan;PathPrefix:/v3"
-      traefik.frontend.entryPoints: "http"
-      traefik.backend: "webapp"
-      traefik.protocol: "http"
-      traefik.port: "80"
+      traefik.webapp.frontend.rule: "Host:app.shopping-feed.lan;PathPrefix:/v3"
+      traefik.webapp.frontend.entryPoints: "http"
+      traefik.webapp.backend: "webapp"
+      traefik.webapp.protocol: "http"
+      traefik.webapp.port: "80"
+      traefik.webadmin.frontend.rule: "Host:admin.shopping-feed.lan"
+      traefik.webadmin.frontend.entryPoints: "http"
+      traefik.webadmin.backend: "webadmin"
+      traefik.webadmin.protocol: "http"
+      traefik.webadmin.port: "4295"
       traefik.docker.network: "sf_network"
 networks:
   sf_network:

@@ -12,6 +12,7 @@ import { OrdersService } from '../../../core/services/orders.service';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
 import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -19,6 +20,8 @@ import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancell
     styleUrls: ['./action-buttons.component.scss']
 })
 export class ActionButtonsComponent implements OnInit {
+
+    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount];
 
     @Input() order: Order;
 
@@ -97,11 +100,11 @@ export class ActionButtonsComponent implements OnInit {
 
     protected checkIfRefundable() {
         this.supportsRefund =
-            this.order._embedded.channel.name.toLowerCase() === 'laredoute' && !this.allItemsRefuneded()
+            this.refundableChannels.includes(this.order._embedded.channel.id) && !this.allItemsRefunded()
             && (this.order.status === OrderStatus.shipped || this.order.status === OrderStatus.partially_refunded);
     }
 
-    protected allItemsRefuneded() {
+    protected allItemsRefunded() {
         for (let item of this.order.items) {
             if (item.status !== OrderStatus.refunded) {
                 return false;

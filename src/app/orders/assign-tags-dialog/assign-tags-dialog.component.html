@@ -13,10 +13,8 @@
         </mat-select>
     </mat-form-field>
     <mat-chip-list>
-        <mat-chip *ngFor="let tag of assignedTags" (removed)="unassignTag(tag)" [removable]="true" class="sf-tag">
-            {{tag.name}}
-            <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
+        <sf-tag-chip *ngFor="let tag of assignedTags" (removed)="unassignTag(tag)" [removable]="true" [tag]="tag">
+        </sf-tag-chip>
     </mat-chip-list>
 </mat-dialog-content>
 

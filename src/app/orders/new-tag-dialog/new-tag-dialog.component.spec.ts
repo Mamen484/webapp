@@ -24,7 +24,6 @@ describe('NewTagDialogComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(NewTagDialogComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {
@@ -33,7 +32,15 @@ describe('NewTagDialogComponent', () => {
 
     it('should close dialog passing a tagName into it', () => {
         component.tagName = 'some tag name';
+        component.color = 'indigo';
         component.save();
-        expect(matDialogRef.close).toHaveBeenCalledWith('some tag name');
+        expect(matDialogRef.close).toHaveBeenCalledWith({name: 'some tag name', color: 'indigo'});
+    });
+
+    it('should assign tagName and color on component init', () => {
+        component.data = {name: 'some name', color: 'orange'};
+        fixture.detectChanges();
+        expect(component.tagName).toBe('some name');
+        expect(component.color).toBe('orange');
     });
 });

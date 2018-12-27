@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule as GlobalSharedModule } from '../../shared/shared.module';
 import { OrdersSubnavComponent } from './orders-subnav/orders-subnav.component';
 import { ConfirmCancellationDialogComponent } from './confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { TagChipComponent } from './tag-chip/tag-chip.component';
 
 @NgModule({
     imports: [
@@ -11,12 +12,14 @@ import { ConfirmCancellationDialogComponent } from './confirm-cancellation-dialo
     ],
     declarations: [
         OrdersSubnavComponent,
-        ConfirmCancellationDialogComponent
+        ConfirmCancellationDialogComponent,
+        TagChipComponent,
     ],
     exports: [
         GlobalSharedModule,
         OrdersSubnavComponent,
-        ConfirmCancellationDialogComponent
+        ConfirmCancellationDialogComponent,
+        TagChipComponent,
     ],
     entryComponents: [
         ConfirmCancellationDialogComponent,

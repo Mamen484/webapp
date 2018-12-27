@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { toPairs } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import { ChannelType } from '../../core/entities/channel-type.enum';
+import { ChannelType } from 'sfl-shared/entities';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { ChannelsRequestParams } from '../../core/entities/channels-request-params';
+import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
 
 @Component({
@@ -22,10 +22,6 @@ export class FilterChannelsDialogComponent {
 
         this.initializeFilter();
 
-    }
-
-    cancel() {
-        this.dialogRef.close();
     }
 
     accept() {

@@ -1,0 +1,43 @@
+## We use this configuration to get a kubernetes build of sf-admin on a testing environment.
+# Step 1: build an angular application
+FROM node:10.13 as node
+
+RUN  apt-get update && \
+ apt-get install -y zip
+
+RUN npm i -g npm@latest
+WORKDIR /app
+
+COPY ./ /app/
+RUN npm ci
+
+# download translations
+ARG CROWDIN_API_KEY
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
+RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
+RUN unzip -o all.zip
+
+ARG env=prod
+ARG LOCALES="en"
+
+# variables from environments/environment.ts
+
+ARG SFA_API
+ARG SFA_BILLING_API
+ARG APP_TOKEN
+ARG SFA_LEGACY_LINK
+ARG WEBAPP_URL
+
+RUN npm run compile-env projects/sf-admin/src/environments
+
+RUN npx ng build sfl-shared
+
+RUN chmod +x ./build-admin.sh
+RUN ./build-admin.sh
+
+#Step 3: copy files of compiled webapp to the nginx served folder and serve files with nginx
+FROM nginx:1.13
+
+COPY --from=node /app/dist/ /usr/share/nginx/html
+
+COPY ./nginx-admin.conf /etc/nginx/conf.d/default.conf

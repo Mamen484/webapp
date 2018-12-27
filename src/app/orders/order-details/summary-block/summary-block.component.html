@@ -18,9 +18,7 @@
                 </div>
             </div>
             <mat-chip-list class="sf-tags-chips" *ngIf="order._embedded.tag && order._embedded.tag.length">
-                <mat-chip class="sf-tag" *ngFor="let tag of order._embedded.tag">
-                    {{tag.name}}
-                </mat-chip>
+                <sf-tag-chip *ngFor="let tag of order._embedded.tag" [tag]="tag"></sf-tag-chip>
             </mat-chip-list>
         </div>
     </mat-card-content>

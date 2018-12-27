@@ -6,7 +6,7 @@
 
     <div class="connect-button" sfConnectButton>
         <a mat-raised-button #link color="accent" *ngIf="!internationalMode && !firstChannel"
-           sfLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
+           sflLegacyLink [path]="getChannelLink(channel._embedded.channel)" i18n>CONNECT</a>
         <a mat-raised-button #link color="accent" *ngIf="!internationalMode && firstChannel"
            (click)="openAcceptChannelDialog(channel._embedded.channel)" i18n>CONNECT</a>
         <a mat-raised-button #link color="accent" *ngIf="internationalMode"

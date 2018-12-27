@@ -6,6 +6,10 @@ mat-dialog-content.mat-dialog-content {
 
   color: $black-54-opacity;
 
+  input {
+    color: $black-87-opacity;
+  }
+
   .error {
     color: mat-color($warn);
   }
