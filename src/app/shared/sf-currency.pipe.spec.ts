@@ -14,7 +14,7 @@ describe('SfCurrencyPipe', () => {
         store$ = new Subject();
         appStore = jasmine.createSpyObj(['pipe']);
         appStore.pipe.and.returnValue(store$);
-        pipe = new SfCurrencyPipe(appStore);
+        pipe = new SfCurrencyPipe(<any>appStore);
     });
 
     it('create an instance', () => {

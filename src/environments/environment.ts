@@ -9,7 +9,7 @@ export const environment = {
     API_URL: 'http://api.shopping-feed.lan/v1',
     BASE_HREF: '/v3',
     SHOPIFY_APP_URL: 'https://apps.shopify.com/shopping-feed-dev',
-    SUPPORT_URL: 'https://support.shopping-feed.com',
+    SUPPORT_URL: 'https://shoppingfeed.zendesk.com/hc',
     SUPPORT_AUTHORIZATION: 'Basic ZGV2ZWxvcGVyQHNob3BwaW5nLWZlZWQuY29tOiYqRUZtMn1NK1BxeD5cUXM=',
     CONTACT_EMAIL: 'contact@shopping-feed.com',
     SUPPORT_EMAIL: 'support@shopping-feed.com',
