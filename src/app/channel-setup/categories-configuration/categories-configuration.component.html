@@ -1,10 +1,32 @@
 <div class="scrollable-container">
-    <mat-card>
-        <mat-list dense>
-            <mat-list-item *ngFor="let category of categories">
-                {{category.name}}
-            </mat-list-item>
-        </mat-list>
-        <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage" (page)="pageChanged($event)"></mat-paginator>
-    </mat-card>
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
+        <mat-card fxFlex class="categories-list">
+            <mat-card-content>
+                <mat-list dense>
+                    <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.id"
+                    [class.selected]="chosenClientsCategoryId === category.id">
+                        {{category.name}}
+                    </mat-list-item>
+                </mat-list>
+                <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
+                               (page)="pageChanged($event)"></mat-paginator>
+
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div i18n>Type a keyword</div>
+                <form>
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n>Category matching</mat-label>
+                        <input matInput [formControl]="searchControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="chosenChannelCategory = $event.option.value">
+                            <mat-option *ngFor="let category of channelCategoryOptions"
+                                        [value]="category">{{category.name}}</mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </div>

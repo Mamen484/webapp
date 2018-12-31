@@ -13,7 +13,7 @@ export class ChannelService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    getChannelCategories(channelId: string, {name, page, limit}: {name?: string, page?: string, limit?: string}) {
+    getChannelCategories(channelId: number, {name, page, limit}: {name?: string, page?: string, limit?: string}) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);
@@ -26,7 +26,7 @@ export class ChannelService {
             params = params.set('limit', limit);
         }
         return this.httpClient.get(
-            `${environment.API_URL}/channel/${channelId}/category`,
+            `${environment.API_URL}/channel/${String(channelId)}/category`,
             {params}
         ) as Observable<PagedResponse<{ category: Category[] }>>;
     }
