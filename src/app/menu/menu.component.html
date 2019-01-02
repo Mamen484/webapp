@@ -1,7 +1,7 @@
 <sfl-menu-container>
     <div class="sf-nav-welcome-text mat-title" routerLink="/">{{currentStore.name}}</div>
 
-    <sf-support-help-center fxShow fxHide.lt-md></sf-support-help-center>
+    <div fxFlex></div>
     <div class="sf-fill-space" fxShow fxHide.gt-sm></div>
     <a (click)="navigateToTimeline()" class="sf-icon-link">
         <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"

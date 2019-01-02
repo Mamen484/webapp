@@ -13,16 +13,13 @@ export class SupportLinkService {
     defineSupportLink() {
         switch (this.localeId) {
             case 'fr':
-                this.supportLink = `${environment.SUPPORT_URL}/customer/fr_fr/portal/articles`;
-                break;
-
             case 'it':
             case 'es':
-                this.supportLink = `${environment.SUPPORT_URL}/customer/${this.localeId}/portal/articles`;
+                this.supportLink = `${environment.SUPPORT_URL}/${this.localeId}`;
                 break;
 
             default:
-                this.supportLink = environment.SUPPORT_URL;
+                this.supportLink = `${environment.SUPPORT_URL}/en-us`;
         }
 
     }
