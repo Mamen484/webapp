@@ -32,7 +32,7 @@ describe('OrdersTableComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let cdr: jasmine.SpyObj<ChangeDetectorRef>;
     let filterService: jasmine.SpyObj<OrdersFilterService>;
-    let window: { nativeWindow: { open: jasmine.Spy } };
+    let window: { nativeWindow: { open: jasmine.Spy, location: any } };
     let snackbar: jasmine.SpyObj<MatSnackBar>;
     let localeIdService: SflLocaleIdService;
 
@@ -46,7 +46,7 @@ describe('OrdersTableComponent', () => {
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter', 'patchFilter']);
-        window = {nativeWindow: {open: jasmine.createSpy('window.open')}};
+        window = {nativeWindow: {open: jasmine.createSpy('window.open'), location: {}}};
         snackbar = jasmine.createSpyObj(['openFromComponent']);
         localStorage = jasmine.createSpyObj(['getItem', 'setItem', 'removeItem']);
         localeIdService = <any>{localeId: 'en'};
@@ -348,8 +348,16 @@ describe('OrdersTableComponent', () => {
 
     it('should open order details in a new tab on goToOrder() call', () => {
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
+        fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com';
         component.goToOrder('12');
         expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge`);
+    });
+
+    it('should open order details specyfying a store id on goToOrder() call when the store id is in the params', () => {
+        component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
+        fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com?store=114';
+        component.goToOrder('12');
+        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?store=114&errorType=acknowledge`);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {

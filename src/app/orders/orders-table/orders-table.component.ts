@@ -101,10 +101,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     }
 
     goToOrder(orderId: string) {
-        let queryParams = this.ordersFilter && this.ordersFilter.error
-            ? '?errorType=' + this.ordersFilter.error
-            : '';
-        const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${queryParams}`;
+        let url = new URL((<Window>this.windowRef.nativeWindow).location.href);
+        if (this.ordersFilter && this.ordersFilter.error) {
+            url.searchParams.set('errorType', this.ordersFilter.error);
+        }
+        const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${url.search}`;
         this.windowRef.nativeWindow.open(link);
     }
 
