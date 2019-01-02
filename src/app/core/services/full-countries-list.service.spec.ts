@@ -14,25 +14,25 @@ describe('FullCountriesListService', () => {
 
     it('should be created', () => {
         httpClient.get.and.returnValue(EMPTY);
-        service = new FullCountriesListService('en', httpClient);
+        service = new FullCountriesListService('en', <any>httpClient);
         expect(service).toBeTruthy();
     });
 
     it('should fetch a proper file with countries for a specified locale', () => {
         httpClient.get.and.returnValue(EMPTY);
-        service = new FullCountriesListService('en', httpClient);
+        service = new FullCountriesListService('en', <any>httpClient);
         expect(httpClient.get).toHaveBeenCalledWith(`assets/countries/en.json`)
     });
 
     it('should fetch a proper file with countries for a specified locale', () => {
         httpClient.get.and.returnValue(EMPTY);
-        service = new FullCountriesListService('fr', httpClient);
+        service = new FullCountriesListService('fr', <any>httpClient);
         expect(httpClient.get).toHaveBeenCalledWith(`assets/countries/fr.json`)
     });
 
     it('should return fetched countries on getCountries() call', async () => {
         httpClient.get.and.returnValue(of('some countries array'));
-        service = new FullCountriesListService('fr', httpClient);
+        service = new FullCountriesListService('fr', <any>httpClient);
         let countries = await service.getCountries().pipe(take(1)).toPromise();
         expect(countries).toEqual(<any>'some countries array');
     });
