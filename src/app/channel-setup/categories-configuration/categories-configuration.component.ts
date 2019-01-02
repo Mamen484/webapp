@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, PageEvent } from '@angular/material';
-import { AmazonAccountDialogComponent } from '../amazon-account-dialog/amazon-account-dialog.component';
-import { WelcomeInstructionsComponent } from '../welcome-instructions/welcome-instructions.component';
 import { ChannelService } from '../../core/services/channel.service';
 import { ChannelMap } from '../../core/entities/channel-map.enum';
 import { Category } from '../../core/entities/category';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, switchMap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Store } from '@ngrx/store';
+import { Store as UserStore } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
+import { FeedCategory } from '../../core/entities/feed-category';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -30,7 +30,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     chosenClientsCategoryId: number;
     chosenChannelCategory: Category;
 
-    categories: Category[];
+    categories: FeedCategory[];
 
     subscription: Subscription;
 
@@ -45,8 +45,6 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     ngOnInit() {
-        // prevent 'Expression has changed after it was checked' message
-        setTimeout(() => this.showDialogs());
         this.updateData();
 
         this.searchControl.valueChanges.pipe(
@@ -62,25 +60,20 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.updateData();
     }
 
-    protected showDialogs() {
-        this.matDialog.open(AmazonAccountDialogComponent, {disableClose: true})
-            .afterClosed()
-            .subscribe(() => this.matDialog.open(WelcomeInstructionsComponent, {disableClose: true}));
-    }
-
     protected updateData() {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
 
 
-        this.subscription = this.channelService.getChannelCategories(ChannelMap.amazon, {
-            page: (this.currentPage + 1).toString(),
-            limit: this.itemsPerPage
-        }).subscribe(categories => {
-            this.categories = categories._embedded.category;
-            this.totalCategoriesNumber = categories.total;
-        });
+        this.subscription = this.appStore.select('currentStore')
+            .pipe(flatMap((store: UserStore) => this.feedService.fetchCategoryCollection(store.id, {
+                page: (this.currentPage + 1).toString(),
+                limit: this.itemsPerPage
+            }))).subscribe(categories => {
+                this.categories = categories._embedded.category;
+                this.totalCategoriesNumber = categories.total;
+            });
     }
 
 }

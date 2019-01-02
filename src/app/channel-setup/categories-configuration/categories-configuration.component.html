@@ -5,7 +5,10 @@
                 <mat-list dense>
                     <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.id"
                     [class.selected]="chosenClientsCategoryId === category.id">
-                        {{category.name}}
+                        <div fxLayout="row" class="user-category-row">
+                            <div fxFlex>{{category.name}}</div>
+                            <mat-chip-list><mat-chip color="warn"><mat-icon color="warn">cancel</mat-icon>Misconfigured</mat-chip></mat-chip-list>
+                        </div>
                     </mat-list-item>
                 </mat-list>
                 <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
