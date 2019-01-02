@@ -17,7 +17,7 @@ describe('CreateUserComponent', () => {
         beforeEach(() => {
             storeService = jasmine.createSpyObj('StoreService', ['createStore']);
             matDialog = jasmine.createSpyObj('MatDialog', ['open']);
-            component = new CreateUserComponent(storeService, matDialog);
+            component = new CreateUserComponent(<any>storeService, <any>matDialog);
         });
 
 
