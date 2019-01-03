@@ -40,9 +40,9 @@ describe('SflLocaleIdService.detectLocale', () => {
             .toBe('locale');
     });
 
-    it('should return original localeId if it is NOT in the language options', () => {
+    it('should return the default language if the original locale id is NOT in the language options', () => {
         expect(SflLocaleIdService.detectLocale('locale', {tratata: 'any', tratata2: 'any'}))
-            .toBe('locale');
+            .toBe('en');
     });
 
     it('should return localeId 2 first letters are in the language options', () => {

@@ -11,7 +11,7 @@ describe('LegacyLinkDirective', () => {
     beforeEach(() => {
         elementRef = {nativeElement: {}};
         legacyLink = jasmine.createSpyObj(['getLegacyLink']);
-        directive = new SflLegacyLinkDirective(elementRef, legacyLink);
+        directive = new SflLegacyLinkDirective(elementRef, <any>legacyLink);
     });
 
     it('should create an instance', () => {
