@@ -5,7 +5,7 @@ import { ChannelMap } from '../../core/entities/channel-map.enum';
 import { Category } from '../../core/entities/category';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, switchMap, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { Store as UserStore } from 'sfl-shared/entities';
@@ -24,7 +24,11 @@ export class CategoriesConfigurationComponent implements OnInit {
     itemsPerPage = '10';
     currentPage = 0;
     totalCategoriesNumber = 0;
-    searchControl = new FormControl();
+    searchChannelCategoryControl = new FormControl();
+    searchClientCategoryControl = new FormControl();
+
+    processingClientCategorySearch = false;
+
     channelCategoryOptions: Category[] = [];
 
     chosenClientsCategoryId: number;
@@ -47,12 +51,23 @@ export class CategoriesConfigurationComponent implements OnInit {
     ngOnInit() {
         this.updateData();
 
-        this.searchControl.valueChanges.pipe(
+        this.searchChannelCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
             switchMap(name => this.channelService.getChannelCategories(ChannelMap.amazon, {name})),
         )
             .subscribe(response => this.channelCategoryOptions = response._embedded.category);
+
+        this.searchClientCategoryControl.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
+            tap(() => this.currentPage = 0),
+        )
+            .subscribe(() => this.updateData());
+    }
+
+    openFilterDialog() {
+
     }
 
     pageChanged(event: PageEvent) {
@@ -61,6 +76,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     protected updateData() {
+        this.processingClientCategorySearch = true;
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
@@ -69,10 +85,12 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.subscription = this.appStore.select('currentStore')
             .pipe(flatMap((store: UserStore) => this.feedService.fetchCategoryCollection(store.id, {
                 page: (this.currentPage + 1).toString(),
-                limit: this.itemsPerPage
+                limit: this.itemsPerPage,
+                name: this.searchClientCategoryControl.value,
             }))).subscribe(categories => {
                 this.categories = categories._embedded.category;
                 this.totalCategoriesNumber = categories.total;
+                this.processingClientCategorySearch = false;
             });
     }
 

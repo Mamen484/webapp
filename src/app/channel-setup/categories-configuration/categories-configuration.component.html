@@ -1,29 +1,58 @@
 <div class="scrollable-container">
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
-        <mat-card fxFlex class="categories-list">
-            <mat-card-content>
-                <mat-list dense>
-                    <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.id"
-                    [class.selected]="chosenClientsCategoryId === category.id">
-                        <div fxLayout="row" class="user-category-row">
-                            <div fxFlex>{{category.name}}</div>
-                            <mat-chip-list><mat-chip color="warn"><mat-icon color="warn">cancel</mat-icon>Misconfigured</mat-chip></mat-chip-list>
+        <div fxLayout="column">
+            <label>
+                <mat-card class="client-category-search">
+                    <mat-card-content>
+                        <div class="search-container">
+                            <mat-icon>search</mat-icon>
+                            <input [formControl]="searchClientCategoryControl" class="mat-subheading-1" i18n-placeholder placeholder="Search">
+                            <button mat-stroked-button color="accent" (click)="openFilterDialog()">
+                                Filter
+                            </button>
                         </div>
-                    </mat-list-item>
-                </mat-list>
-                <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
-                               (page)="pageChanged($event)"></mat-paginator>
+                        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processingClientCategorySearch"></mat-progress-bar>
+                    </mat-card-content>
+                </mat-card>
+            </label>
+            <mat-card fxFlex class="categories-list">
+                <mat-card-content>
+                    <mat-list dense>
+                        <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.id"
+                                       [class.selected]="chosenClientsCategoryId === category.id"
+                                       [class.configured]="category.channelCategory"
+                                       [class.misconfigured]="!category.channelCategory">
+                            <div fxLayout="row" class="user-category-row">
+                                <div fxFlex>{{category.name}}</div>
+                                <mat-chip-list>
+                                    <mat-chip *ngIf="!category.channelCategory" color="warn">
+                                        <mat-icon color="warn">cancel</mat-icon>
+                                        <ng-container i18n>Misconfigured</ng-container>
+                                    </mat-chip>
+                                    <mat-chip *ngIf="category.channelCategory">
+                                        <mat-icon>check_circle</mat-icon>
+                                        <ng-container i18n>Configured</ng-container>
+                                    </mat-chip>
+                                </mat-chip-list>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                    <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
+                                   (page)="pageChanged($event)"></mat-paginator>
 
-            </mat-card-content>
-        </mat-card>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
         <mat-card>
             <mat-card-content>
                 <div i18n>Type a keyword</div>
                 <form>
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Category matching</mat-label>
-                        <input matInput [formControl]="searchControl" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="chosenChannelCategory = $event.option.value">
+                        <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                                          (optionSelected)="chosenChannelCategory = $event.option.value">
                             <mat-option *ngFor="let category of channelCategoryOptions"
                                         [value]="category">{{category.name}}</mat-option>
                         </mat-autocomplete>
