@@ -1,6 +1,6 @@
 <div class="scrollable-container">
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
-        <div fxLayout="column">
+        <div fxLayout="column" fxFlex>
             <label>
                 <mat-card class="client-category-search">
                     <mat-card-content>
@@ -15,7 +15,7 @@
                     </mat-card-content>
                 </mat-card>
             </label>
-            <mat-card fxFlex class="categories-list">
+            <mat-card class="categories-list">
                 <mat-card-content>
                     <mat-list dense>
                         <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.id"
@@ -44,9 +44,9 @@
             </mat-card>
         </div>
 
-        <mat-card>
+        <mat-card fxFlex="30%" class="channel-category-box">
             <mat-card-content>
-                <div i18n>Type a keyword</div>
+                <div i18n class="category-autocomplete-hint">Type a keyword</div>
                 <form>
                     <mat-form-field appearance="outline">
                         <mat-label i18n>Category matching</mat-label>
@@ -57,6 +57,10 @@
                                         [value]="category">{{category.name}}</mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center">
+                        <button mat-button i18n color="accent" (click)="resetMatching()">Reset</button>
+                        <button mat-raised-button i18n color="accent" (click)="saveMatching()">Save & Next</button>
+                    </div>
                 </form>
             </mat-card-content>
         </mat-card>

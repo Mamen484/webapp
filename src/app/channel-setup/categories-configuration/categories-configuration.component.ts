@@ -75,6 +75,15 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.updateData();
     }
 
+    resetMatching() {
+        this.searchChannelCategoryControl.reset();
+        this.chosenChannelCategory = undefined;
+    }
+
+    saveMatching() {
+        this.resetMatching();
+    }
+
     protected updateData() {
         this.processingClientCategorySearch = true;
         if (this.subscription) {
