@@ -1,5 +1,5 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { SFL_LANGUAGE_OPTIONS } from 'sfl-shared/entities';
+import { SFL_LANGUAGE_OPTIONS, SFL_DEFAULT_LANGUAGE } from 'sfl-shared/entities';
 
 export const LOCALES_MAP = {
     'us': 'en'
@@ -17,12 +17,14 @@ export class SflLocaleIdService {
     public localeId;
 
     /**
-     * Ensure to have localeId the value from languageOptions object
+     * Ensure that localeId equals to one of the keys of languageOptions constant.
+     * If no - return the default language instead.
      *
      * @param originalLocaleId
      * @param languageOptions
+     * @param defaultLanguage
      */
-    static detectLocale(originalLocaleId, languageOptions) {
+    static detectLocale(originalLocaleId, languageOptions, defaultLanguage = 'en') {
         originalLocaleId = originalLocaleId.toLowerCase();
         if (languageOptions.hasOwnProperty(originalLocaleId)) {
             return originalLocaleId;
@@ -33,11 +35,14 @@ export class SflLocaleIdService {
         if (languageOptions.hasOwnProperty(LOCALES_MAP[originalLocaleId.slice(0, 2)])) {
             return LOCALES_MAP[originalLocaleId.slice(0, 2)];
         }
-        return originalLocaleId;
+        return defaultLanguage;
     }
 
-    constructor(@Inject(LOCALE_ID) protected originalLocaleId, @Inject(SFL_LANGUAGE_OPTIONS) protected languageOptions) {
-        this.localeId = SflLocaleIdService.detectLocale(this.originalLocaleId, this.languageOptions);
+    constructor(@Inject(LOCALE_ID) protected originalLocaleId,
+                @Inject(SFL_LANGUAGE_OPTIONS) protected languageOptions,
+                @Inject(SFL_DEFAULT_LANGUAGE) protected defaultLanguage,
+    ) {
+        this.localeId = SflLocaleIdService.detectLocale(this.originalLocaleId, this.languageOptions, this.defaultLanguage);
     }
 
 
