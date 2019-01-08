@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { timer as observableTimer } from 'rxjs';
 import { Store as AppStore } from '@ngrx/store';
-
+import { timer } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment';
 import { AggregatedUserInfo, PaymentType, Store, StoreStatus } from 'sfl-shared/entities';
@@ -44,7 +43,7 @@ export class MenuComponent implements OnInit, OnDestroy {
             this.isAdmin = userInfo.isAdmin();
         });
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
-        this.newEventsSubscription = observableTimer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
+        this.newEventsSubscription = timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
     }
 
     logout() {

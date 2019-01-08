@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatFormFieldAppearance } from '@angular/material';
 
 /**
  * A form to perform a login to a Shopping Feed application
@@ -24,10 +25,11 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class SflLoginFormComponent {
 
-    /**
-     * Show a progress bar on a form if true
-     */
+    /** Show a progress bar on a form if true */
     @Input() loadingNextPage = false;
+
+    /** The form-field appearance style, inhereted from mat-form-field. */
+    @Input() appearance: MatFormFieldAppearance = 'standard';
 
     /**
      * Event emitted when not empty username and password submitted on a form
