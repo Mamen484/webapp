@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BillingService } from '../billing.service';
+import { BillingStoreService } from '../billing-store.service';
 import { MatDialog, MatSnackBar, PageEvent } from '@angular/material';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { BillingStore } from '../billing-store';
@@ -32,7 +32,7 @@ export class StoreListComponent implements OnInit {
     searchQuery = '';
     dataSubscription;
 
-    constructor(protected billingService: BillingService,
+    constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar) {
     }
@@ -52,11 +52,11 @@ export class StoreListComponent implements OnInit {
     }
 
     openCreateStoreDialog() {
-        this.openStoreDialog(store => this.billingService.create(store));
+        this.openStoreDialog(store => this.billingStoreService.create(store));
     }
 
     openEditStoreDialog(store: BillingStore) {
-        this.openStoreDialog((editedStore) => this.billingService.update(editedStore), store, false);
+        this.openStoreDialog((editedStore) => this.billingStoreService.update(editedStore), store, false);
     }
 
     openStoreDialog(onSave: (store: BillingStore) => Observable<any>, store: BillingStore = null, nameEditable = true) {
@@ -99,7 +99,7 @@ export class StoreListComponent implements OnInit {
             }
             this.isLoadingResults = true;
             const toBlock = {id: store.id, isActive: false};
-            this.billingService.update(toBlock).subscribe(() => {
+            this.billingStoreService.update(toBlock).subscribe(() => {
                 this.snackBar.open('The store has been blocked', '', {
                     duration: SNACKBAR_MESSAGE_DURATION,
                 });
@@ -110,7 +110,7 @@ export class StoreListComponent implements OnInit {
 
     activateStore(store) {
         this.isLoadingResults = true;
-        this.billingService.update({id: store.id, isActive: true})
+        this.billingStoreService.update({id: store.id, isActive: true})
             .subscribe(() => {
                 this.snackBar.open('The store has been unblocked', '', {
                     duration: SNACKBAR_MESSAGE_DURATION,
@@ -123,7 +123,7 @@ export class StoreListComponent implements OnInit {
         if (this.dataSubscription) {
             this.dataSubscription.unsubscribe();
         }
-        this.dataSubscription = this.billingService.fetchStoreCollection({
+        this.dataSubscription = this.billingStoreService.fetchStoreCollection({
             limit: this.pageSize,
             page: this.currentPage + 1,
             search: this.searchQuery

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BillingService } from './billing.service';
+import { BillingStoreService } from './billing-store.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { environment } from '../../environments/environment';
 
 describe('BillingService', () => {
 
-    let service: BillingService;
+    let service: BillingStoreService;
     let httpMock: HttpTestingController;
 
     beforeEach(() => {
@@ -14,7 +14,7 @@ describe('BillingService', () => {
             imports: [HttpClientTestingModule]
         });
 
-        service = TestBed.get(BillingService);
+        service = TestBed.get(BillingStoreService);
         httpMock = TestBed.get(HttpTestingController);
     });
 

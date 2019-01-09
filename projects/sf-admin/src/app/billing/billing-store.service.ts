@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class BillingService {
+export class BillingStoreService {
 
     constructor(protected httpClient: HttpClient) {
     }

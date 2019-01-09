@@ -3,7 +3,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { StoreListComponent } from './store-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
-import { BillingService } from '../billing.service';
+import { BillingStoreService } from '../billing-store.service';
 import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
 import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
@@ -11,7 +11,7 @@ import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dia
 describe('StoreListComponent', () => {
     let component: StoreListComponent;
     let fixture: ComponentFixture<StoreListComponent>;
-    let billingService: jasmine.SpyObj<BillingService>;
+    let billingService: jasmine.SpyObj<BillingStoreService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
     let snackBar: jasmine.SpyObj<MatSnackBar>;
 
@@ -24,7 +24,7 @@ describe('StoreListComponent', () => {
             schemas: [NO_ERRORS_SCHEMA],
             imports: [MatTableModule],
             providers: [
-                {provide: BillingService, useValue: billingService},
+                {provide: BillingStoreService, useValue: billingService},
                 {provide: MatDialog, useValue: matDialog},
                 {provide: MatSnackBar, useValue: snackBar},
             ],
