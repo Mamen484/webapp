@@ -7,6 +7,7 @@ import { SfaSharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDialogComponent } from './store-list/store-dialog/store-dialog.component';
 import { StoreBlockDialogComponent } from './store-list/store-block-dialog/store-block-dialog.component';
+import { GroupListComponent } from './group-list/group-list.component';
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import { StoreBlockDialogComponent } from './store-list/store-block-dialog/store
         SfaSharedModule,
     ],
     providers: [],
-    declarations: [StoreListComponent, StoreDialogComponent, StoreBlockDialogComponent],
+    declarations: [StoreListComponent, StoreDialogComponent, StoreBlockDialogComponent, GroupListComponent],
     entryComponents: [StoreDialogComponent, StoreBlockDialogComponent],
 })
 export class BillingModule {

@@ -1,0 +1,51 @@
+<sfa-subnav>
+    <mat-list-item><a class="mat-body-2" i18n routerLink="/billing">Stores</a></mat-list-item>
+    <mat-list-item class="active"><a class="mat-body-2" i18n routerLink="/billing/groups">Group</a></mat-list-item>
+</sfa-subnav>
+
+<div fxLayout="row" class="page-header">
+    <div i18n fxFlex class="mat-title list-title">Billing</div>
+    <button mat-raised-button color="accent" (click)="openCreateGroupDialog()">Add Group</button>
+</div>
+
+<label>
+    <mat-card class="mat-elevation-z1">
+        <mat-card-content>
+            <div class="search-container">
+                <mat-icon>search</mat-icon>
+                <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder
+                       placeholder="Search store" autocomplete="off">
+            </div>
+        </mat-card-content>
+    </mat-card>
+</label>
+<div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+</div>
+<div class="table-container mat-elevation-z1">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef i18n> Id</th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef i18n> Name</th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef i18n></th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit
+                </mat-icon>
+            </td>
+
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+
+<mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+               (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
