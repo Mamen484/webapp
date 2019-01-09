@@ -8,17 +8,17 @@
             <mat-card-content>
                 <form (ngSubmit)="login()">
 
-                    <mat-form-field color="accent">
-                        <input matInput i18n-placeholder placeholder="Username"
-                               [formControl]="userNameControl">
+                    <mat-form-field color="accent" [appearance]="appearance">
+                        <mat-label i18n>Username</mat-label>
+                        <input matInput [formControl]="userNameControl">
                         <mat-error *ngIf="userNameControl.hasError('required')" i18n>
                             Username is required
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="margin-top-20" color="accent">
-                        <input matInput i18n-placeholder placeholder="Password" type="password"
-                               [formControl]="passwordControl">
+                    <mat-form-field class="margin-top-20" color="accent" [appearance]="appearance">
+                        <mat-label i18n>Password</mat-label>
+                        <input matInput type="password" [formControl]="passwordControl">
                         <mat-error *ngIf="passwordControl.hasError('required')" i18n>
                             Password is required
                         </mat-error>
