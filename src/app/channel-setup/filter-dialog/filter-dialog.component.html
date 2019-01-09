@@ -1,0 +1,19 @@
+<div i18n matDialogTitle>Filters</div>
+
+<mat-dialog-content>
+    <form>
+        <mat-form-field appearance="outline" color="accent">
+            <mat-select [(ngModel)]="chosenMapping" name="chosenState">
+                <mat-option i18n [value]="categoryMapping.NotSpecified">All states</mat-option>
+                <mat-option i18n [value]="categoryMapping.Mapped">Configured</mat-option>
+                <mat-option i18n [value]="categoryMapping.Unmapped">Misconfigured</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button i18n color="accent" (click)="close()">Cancel</button>
+    <button mat-button i18n color="accent" (click)="filter()">Filter</button>
+
+</mat-dialog-actions>

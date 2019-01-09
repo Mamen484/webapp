@@ -6,16 +6,24 @@ import { AmazonAccountDialogComponent } from './amazon-account-dialog/amazon-acc
 import { CategoriesConfigurationComponent } from './categories-configuration/categories-configuration.component';
 import { SharedModule } from '../shared/shared.module';
 import { WelcomeInstructionsComponent } from './welcome-instructions/welcome-instructions.component';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 @NgModule({
-    declarations: [AmazonAccountDialogComponent, CategoriesConfigurationComponent, WelcomeInstructionsComponent],
+    declarations: [
+        AmazonAccountDialogComponent,
+        CategoriesConfigurationComponent,
+        FilterDialogComponent,
+        WelcomeInstructionsComponent,
+    ],
     imports: [
+        ChannelSetupRoutingModule,
         CommonModule,
         SharedModule,
-        ChannelSetupRoutingModule,
+
     ],
     entryComponents: [
         AmazonAccountDialogComponent,
+        FilterDialogComponent,
         WelcomeInstructionsComponent,
     ],
 })

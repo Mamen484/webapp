@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { Store as UserStore } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
 import { FeedCategory } from '../../core/entities/feed-category';
+import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -26,6 +27,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     totalCategoriesNumber = 0;
     searchChannelCategoryControl = new FormControl();
     searchClientCategoryControl = new FormControl();
+    categoryMappingFilter;
 
     processingClientCategorySearch = false;
 
@@ -67,7 +69,12 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     openFilterDialog() {
-
+        this.matDialog.open(FilterDialogComponent).afterClosed().subscribe(state => {
+            if (typeof state !== 'undefined') {
+                this.categoryMappingFilter = state;
+                this.updateData();
+            }
+        });
     }
 
     pageChanged(event: PageEvent) {
@@ -96,6 +103,7 @@ export class CategoriesConfigurationComponent implements OnInit {
                 page: (this.currentPage + 1).toString(),
                 limit: this.itemsPerPage,
                 name: this.searchClientCategoryControl.value,
+                mapping: this.categoryMappingFilter,
             }))).subscribe(categories => {
                 this.categories = categories._embedded.category;
                 this.totalCategoriesNumber = categories.total;

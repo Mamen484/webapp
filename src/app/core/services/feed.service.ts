@@ -13,7 +13,7 @@ export class FeedService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    fetchCategoryCollection(feedId, {name, page, limit}: {name?: string, page?: string, limit?: string}) {
+    fetchCategoryCollection(feedId, {name, page, limit, mapping}: { name?: string, page?: string, limit?: string, mapping?: string }) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);
@@ -25,6 +25,10 @@ export class FeedService {
         if (limit) {
             params = params.set('limit', limit);
         }
-        return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/category`, {params}) as Observable<PagedResponse<{category: FeedCategory[]}>>;
+
+        if (mapping) {
+            params = params.set('mapping', mapping);
+        }
+        return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/category`, {params}) as Observable<PagedResponse<{ category: FeedCategory[] }>>;
     }
 }
