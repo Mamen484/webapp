@@ -25,6 +25,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { SubnavComponent } from './subnav/subnav.component';
 
 @NgModule({
     imports: [
@@ -74,12 +75,14 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
         MatTooltipModule,
 
         ErrorMessageComponent,
+        SubnavComponent,
 
         SearchStoreDirective,
     ],
     declarations: [
         ErrorMessageComponent,
         SearchStoreDirective,
+        SubnavComponent,
     ]
 })
 export class SfaSharedModule {

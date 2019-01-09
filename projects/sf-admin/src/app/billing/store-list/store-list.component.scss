@@ -1,7 +1,7 @@
 @import '../../../../src/sass/variables';
 
 $paginator-height: 65px;
-$page-header-height: 56px;
+$page-header-height: 56px + $toolbar-height;
 $search-field-height: 89px;
 
 .table-container {
@@ -33,6 +33,7 @@ mat-paginator {
 
 .page-header {
   margin-bottom: 20px;
+  margin-top: $toolbar-height;
 }
 
 mat-progress-bar {
