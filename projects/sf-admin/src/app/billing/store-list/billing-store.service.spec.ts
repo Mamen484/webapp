@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { BillingStoreService } from './billing-store.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 describe('BillingService', () => {
 

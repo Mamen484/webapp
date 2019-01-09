@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { BillingRoutingModule } from './billing-routing.module';
 import { StoreListComponent } from './store-list/store-list.component';
-import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { SfaSharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
+import { StoreDialogComponent } from './store-list/store-dialog/store-dialog.component';
+import { StoreBlockDialogComponent } from './store-list/store-block-dialog/store-block-dialog.component';
 
 @NgModule({
     imports: [

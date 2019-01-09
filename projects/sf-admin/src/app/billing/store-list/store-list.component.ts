@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BillingStoreService } from '../billing-store.service';
 import { MatDialog, MatSnackBar, PageEvent } from '@angular/material';
-import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
-import { BillingStore } from '../billing-store';
-import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
+import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs/operators';
+import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
+import { BillingStoreService } from './billing-store.service';
+import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 const SEARCH_DEBOUNCE = 300;
