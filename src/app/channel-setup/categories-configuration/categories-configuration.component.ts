@@ -64,7 +64,7 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.searchChannelCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
-            switchMap(name => this.channelService.getChannelCategories(ChannelMap.amazon, {name})),
+            switchMap(name => this.channelService.getChannelCategories(this.channel.id, {name})),
         )
             .subscribe(response => this.channelCategoryOptions = response._embedded.category);
 
