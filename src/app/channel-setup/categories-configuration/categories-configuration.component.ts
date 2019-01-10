@@ -3,15 +3,17 @@ import { MatDialog, PageEvent } from '@angular/material';
 import { ChannelService } from '../../core/services/channel.service';
 import { ChannelMap } from '../../core/entities/channel-map.enum';
 import { Category } from '../../core/entities/category';
-import { Subscription } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, switchMap, take, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Store } from '@ngrx/store';
-import { Store as UserStore } from 'sfl-shared/entities';
+import { Channel, Store as UserStore } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
 import { FeedCategory } from '../../core/entities/feed-category';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { CategoryMapping } from '../category-mapping';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -21,6 +23,8 @@ const MIN_QUERY_LENGTH = 2;
     styleUrls: ['./categories-configuration.component.scss']
 })
 export class CategoriesConfigurationComponent implements OnInit {
+
+    channel: Channel;
 
     itemsPerPage = '10';
     currentPage = 0;
@@ -39,11 +43,13 @@ export class CategoriesConfigurationComponent implements OnInit {
     categories: FeedCategory[];
 
     subscription: Subscription;
+    percentage = 0;
 
     constructor(protected matDialog: MatDialog,
                 protected channelService: ChannelService,
                 protected feedService: FeedService,
-                protected appStore: Store<AppState>) {
+                protected appStore: Store<AppState>,
+                protected route: ActivatedRoute) {
     }
 
     displayFn(category: Category) {
@@ -51,7 +57,9 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.route.data.subscribe(({channel}) => this.channel = channel);
         this.updateData();
+        this.updatePercentage();
 
         this.searchChannelCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
@@ -89,6 +97,7 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     saveMatching() {
         this.resetMatching();
+        this.updatePercentage();
     }
 
     protected updateData() {
@@ -108,7 +117,22 @@ export class CategoriesConfigurationComponent implements OnInit {
                 this.categories = categories._embedded.category;
                 this.totalCategoriesNumber = categories.total;
                 this.processingClientCategorySearch = false;
+                if (this.categories.length > 0) {
+                    this.chosenClientsCategoryId = this.categories[0].id;
+                }
             });
+    }
+
+    protected updatePercentage() {
+        this.appStore.select('currentStore').pipe(take(1), flatMap(store =>
+            zip(
+                this.feedService.fetchCategoryCollection(store.id, {mapping: CategoryMapping.Mapped}),
+                this.feedService.fetchCategoryCollection(store.id, {mapping: CategoryMapping.Unmapped})
+            )))
+            .subscribe(([mapped, unmapped]) => {
+                const total = mapped.total + unmapped.total;
+                this.percentage = total ? mapped.total / total : 0;
+            })
     }
 
 }

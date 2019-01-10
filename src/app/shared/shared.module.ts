@@ -48,6 +48,7 @@ import { MinNumberDirective } from './min-number/min-number.directive';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
+import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 
 @NgModule({
     imports: [
@@ -123,6 +124,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
 
         // pipes
         ArrayFromNumberPipe,
+        ChannelLinkPipe,
         LargeNumberSuffixPipe,
         RemoveUnderlinePipe,
         SfCurrencyPipe,
@@ -156,6 +158,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
         ArrayFromNumberPipe,
         MinNumberDirective,
         HasServerErrorDirective,
+        ChannelLinkPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

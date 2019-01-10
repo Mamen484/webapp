@@ -1,4 +1,11 @@
 <div class="scrollable-container">
+    <div fxLayout="row" fxLayoutAlign="center center" class="launch-channel-box" fxLayoutGap="40px">
+        <div fxFlex>
+            <img [src]="channel._links.image.href" height="40px">
+        </div>
+        <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
+        <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n [disabled]="percentage === 0">Launch</a>
+    </div>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
         <div fxLayout="column" fxFlex>
             <label>
@@ -22,7 +29,7 @@
                                        [class.selected]="chosenClientsCategoryId === category.id"
                                        [class.configured]="category.channelCategory"
                                        [class.misconfigured]="!category.channelCategory">
-                            <div fxLayout="row" class="user-category-row">
+                            <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
                                 <div fxFlex>{{category.name}}</div>
                                 <mat-chip-list>
                                     <mat-chip *ngIf="!category.channelCategory" color="warn">
@@ -35,6 +42,9 @@
                                     </mat-chip>
                                 </mat-chip-list>
                             </div>
+                        </mat-list-item>
+                        <mat-list-item *ngIf="categories && categories.length === 0 && !processingClientCategorySearch" i18n>
+                            No category found.
                         </mat-list-item>
                     </mat-list>
                     <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
