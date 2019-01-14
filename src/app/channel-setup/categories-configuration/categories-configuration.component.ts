@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { MatDialog, PageEvent } from '@angular/material';
 import { ChannelService } from '../../core/services/channel.service';
 import { Category } from '../../core/entities/category';
@@ -6,14 +6,13 @@ import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
-import { Store } from '@ngrx/store';
 import { Channel } from 'sfl-shared/entities';
-import { AppState } from '../../core/entities/app-state';
 import { FeedCategory } from '../../core/entities/feed-category';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryMapping } from '../category-mapping';
 import { Feed } from '../../core/entities/feed';
+import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -49,12 +48,22 @@ export class CategoriesConfigurationComponent implements OnInit {
     constructor(protected matDialog: MatDialog,
                 protected channelService: ChannelService,
                 protected feedService: FeedService,
-                protected appStore: Store<AppState>,
                 protected route: ActivatedRoute) {
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    handleBeforeUnload() {
+        if (this.hasModifications()) {
+            return confirm('Unsaved data can be lost, continue?');
+        }
     }
 
     displayFn(category: Category) {
         return category ? category.name : undefined;
+    }
+
+    hasModifications() {
+        return this.chosenClientsCategoryId && this.chosenChannelCategory;
     }
 
     ngOnInit() {
@@ -92,6 +101,10 @@ export class CategoriesConfigurationComponent implements OnInit {
     saveMatching() {
         this.resetMatching();
         this.updatePercentage();
+    }
+
+    showCloseDialog() {
+        return this.matDialog.open(UnsavedDataDialogComponent);
     }
 
     protected listenChannelCategorySearch() {
