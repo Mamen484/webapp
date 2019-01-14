@@ -25,13 +25,13 @@ describe('CategoriesConfigurationComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let channelService: jasmine.SpyObj<ChannelService>;
     let feedService: jasmine.SpyObj<FeedService>;
-    let route: jasmine.SpyObj<{data: Subject<any>}>;
+    let route: jasmine.SpyObj<{data: Subject<any>, params: Subject<any>}>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         channelService = jasmine.createSpyObj('ChannelService', ['getChannelCategories']);
         feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection']);
-        route = {data: new Subject()};
+        route = {data: new Subject(), params: new Subject()};
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigurationComponent, LegacyLinkMockDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],

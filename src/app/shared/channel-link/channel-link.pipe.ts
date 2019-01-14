@@ -6,10 +6,14 @@ import { Channel } from 'sfl-shared/entities';
 })
 export class ChannelLinkPipe implements PipeTransform {
 
-    transform(channel: Channel): any {
+    static getChannelLink(channel: Channel) {
         return channel.type === 'marketplace'
             ? `/${channel.name}`
             : `/${channel.type}/manage/${channel.name}`;
+    }
+
+    transform(channel: Channel): any {
+        return ChannelLinkPipe.getChannelLink(channel);
     }
 
 }

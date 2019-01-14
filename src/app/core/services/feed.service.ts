@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { flatMap, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
+import { CategoryMapping } from '../../channel-setup/category-mapping';
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +18,7 @@ export class FeedService {
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
-    fetchCategoryCollection(feedId, {name, page, limit, mapping}: { name?: string, page?: string, limit?: string, mapping?: string }) {
+    fetchCategoryCollection(feedId, {name, page, limit, mapping}: { name?: string, page?: string, limit?: string, mapping?: CategoryMapping }) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);

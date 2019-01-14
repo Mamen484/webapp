@@ -7,12 +7,28 @@ import { ChannelTurnoverComponent } from '../channel-turnover/channel-turnover.c
 import { ChannelOnlineComponent } from '../channel-online/channel-online.component';
 import { StatsUnavailableComponent } from '../stats-unavailable/stats-unavailable.component';
 import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
+import { FeedService } from '../../../core/services/feed.service';
+import { LegacyLinkService } from '../../../core/services/legacy-link.service';
+import { Router } from '@angular/router';
+import { SflWindowRefService } from 'sfl-shared/services';
+import { of } from 'rxjs';
 
 describe('ConfiguredChannelComponent', () => {
     let component: ConfiguredChannelComponent;
     let fixture: ComponentFixture<ConfiguredChannelComponent>;
 
+    let feedService: jasmine.SpyObj<FeedService>;
+    let router: jasmine.SpyObj<Router>;
+    let legacyLinkService: jasmine.SpyObj<LegacyLinkService>;
+
+
     beforeEach(async(() => {
+
+        feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection', 'fetchCategoryCollection']);
+        router = jasmine.createSpyObj('Router', ['navigate']);
+        legacyLinkService = jasmine.createSpyObj('LegacyLinkService', ['getLegacyLink']);
+
+
         TestBed.configureTestingModule({
             declarations: [
                 ConfiguredChannelComponent,
@@ -23,7 +39,13 @@ describe('ConfiguredChannelComponent', () => {
                 ChannelOnlineComponent,
                 StatsUnavailableComponent,
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA],
+            providers: [
+                {provide: FeedService, useValue: feedService},
+                {provide: Router, useValue: router},
+                {provide: LegacyLinkService, useValue: legacyLinkService},
+                {provide: SflWindowRefService, useValue: {nativeWindow: {location: {}}}},
+            ],
         })
             .compileComponents();
     }));
@@ -154,12 +176,34 @@ describe('ConfiguredChannelComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    describe('goToChannelLink()', () => {
+        it('should open a legacy channel page if the feed has configured categories', () => {
+            feedService.fetchFeedCollection.and.returnValue(of({_embedded: {feed: [{id: 20}]}}));
+            feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: [{}]}}));
+            component.channel = <any>mockChannel();
+            legacyLinkService.getLegacyLink.and.returnValue('/some-link');
+            component.goToChannelLink();
+            expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/shopbot/manage/channel_name');
+            expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href).toBe('/some-link');
+        });
+
+        it('should open channel setup page if the feed has no configured categories', () => {
+            feedService.fetchFeedCollection.and.returnValue(of({_embedded: {feed: [{id: 20}]}}));
+            feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: []}}));
+            component.channel = <any>mockChannel();
+            component.channel._embedded.channel.id = 12;
+            component.goToChannelLink();
+            expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 12, 20]);
+        });
+    });
+
     function mockChannel() {
         return {
             _embedded: {
                 channel: {
                     _links: {image: {href: ''}},
-                    name: 'channel name'
+                    name: 'channel_name',
+                    type: 'shopbot'
                 }
             },
             statistics: {}

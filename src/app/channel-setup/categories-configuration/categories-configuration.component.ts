@@ -11,7 +11,6 @@ import { FeedCategory } from '../../core/entities/feed-category';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryMapping } from '../category-mapping';
-import { Feed } from '../../core/entities/feed';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 
 const SEARCH_DEBOUNCE = 300;
@@ -24,26 +23,31 @@ const MIN_QUERY_LENGTH = 2;
 export class CategoriesConfigurationComponent implements OnInit {
 
     channel: Channel;
-    feed: Feed;
 
+    /** pagination */
     itemsPerPage = '10';
     currentPage = 0;
     totalCategoriesNumber = 0;
-    searchChannelCategoryControl = new FormControl();
+
+    /** client category search */
     searchClientCategoryControl = new FormControl();
-    categoryMappingFilter;
-
     processingClientCategorySearch = false;
+    categories: FeedCategory[];
 
+    /** channel category autocomplete */
+    searchChannelCategoryControl = new FormControl();
     channelCategoryOptions: Category[] = [];
 
+    /** matched categories */
     chosenClientsCategoryId: number;
     chosenChannelCategory: Category;
 
-    categories: FeedCategory[];
-
-    subscription: Subscription;
+    /** percentage of matched categories */
     percentage = 0;
+
+    protected categoryMappingFilter;
+    protected feedId: number;
+    protected subscription: Subscription;
 
     constructor(protected matDialog: MatDialog,
                 protected channelService: ChannelService,
@@ -67,10 +71,9 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => this.feedId = params.feedId);
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
-            this.feed = data.feed;
-
             this.updateData();
             this.updatePercentage();
 
@@ -131,7 +134,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.subscription.unsubscribe();
         }
 
-        this.feedService.fetchCategoryCollection(this.feed.id, {
+        this.feedService.fetchCategoryCollection(this.feedId, {
             page: (this.currentPage + 1).toString(),
             limit: this.itemsPerPage,
             name: this.searchClientCategoryControl.value,
@@ -148,8 +151,8 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     protected updatePercentage() {
         zip(
-            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Mapped}),
-            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Unmapped})
+            this.feedService.fetchCategoryCollection(this.feedId, {mapping: CategoryMapping.Mapped}),
+            this.feedService.fetchCategoryCollection(this.feedId, {mapping: CategoryMapping.Unmapped})
         ).subscribe(([mapped, unmapped]) => {
             const total = mapped.total + unmapped.total;
             this.percentage = total ? mapped.total / total : 0;
