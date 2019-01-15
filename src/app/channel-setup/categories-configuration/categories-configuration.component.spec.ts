@@ -93,6 +93,19 @@ describe('CategoriesConfigurationComponent', () => {
         })
     });
 
+    it('should update data and set a page to 1 and update data when the `items per page` is changed on paginator', () => {
+        feedService.fetchCategoryCollection.and.returnValue(EMPTY);
+        component.feed = <any>{id: 15};
+        component.currentPage = 20;
+        component.pageChanged(<any>{pageSize: 100, pageIndex: 21, previousPageIndex: 21});
+        expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
+            page: '1',
+            limit: '100',
+            name: null,
+            mapping: undefined,
+        })
+    });
+
     it('should reset matching on resetMathing() call', () => {
         component.searchChannelCategoryControl.setValue('some text');
         component.chosenChannelCategory = <any>'some value';

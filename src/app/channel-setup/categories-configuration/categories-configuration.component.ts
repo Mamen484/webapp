@@ -30,6 +30,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     itemsPerPage = '10';
     currentPage = 0;
     totalCategoriesNumber = 0;
+    pageSizeOptions = [10, 25, 50, 100];
 
     /** client category search */
     searchClientCategoryControl = new FormControl();
@@ -93,7 +94,13 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     pageChanged(event: PageEvent) {
-        this.currentPage = event.pageIndex;
+        if (event.pageIndex === event.previousPageIndex) {
+            this.itemsPerPage = String(event.pageSize);
+            this.currentPage = 0;
+        } else {
+            this.currentPage = event.pageIndex;
+        }
+
         this.updateData();
     }
 
