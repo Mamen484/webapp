@@ -12,6 +12,7 @@ import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component'
 import { ActivatedRoute } from '@angular/router';
 import { CategoryMapping } from '../category-mapping';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
+import { Feed } from '../../core/entities/feed';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -23,6 +24,7 @@ const MIN_QUERY_LENGTH = 2;
 export class CategoriesConfigurationComponent implements OnInit {
 
     channel: Channel;
+    feed: Feed;
 
     /** pagination */
     itemsPerPage = '10';
@@ -46,7 +48,6 @@ export class CategoriesConfigurationComponent implements OnInit {
     percentage = 0;
 
     protected categoryMappingFilter;
-    protected feedId: number;
     protected subscription: Subscription;
 
     constructor(protected matDialog: MatDialog,
@@ -67,13 +68,13 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return this.chosenClientsCategoryId && this.chosenChannelCategory;
+        return Boolean(this.chosenClientsCategoryId && this.chosenChannelCategory);
     }
 
     ngOnInit() {
-        this.route.params.subscribe(params => this.feedId = params.feedId);
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
+            this.feed = data.feed;
             this.updateData();
             this.updatePercentage();
 
@@ -134,7 +135,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.subscription.unsubscribe();
         }
 
-        this.feedService.fetchCategoryCollection(this.feedId, {
+        this.feedService.fetchCategoryCollection(this.feed.id, {
             page: (this.currentPage + 1).toString(),
             limit: this.itemsPerPage,
             name: this.searchClientCategoryControl.value,
@@ -151,8 +152,8 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     protected updatePercentage() {
         zip(
-            this.feedService.fetchCategoryCollection(this.feedId, {mapping: CategoryMapping.Mapped}),
-            this.feedService.fetchCategoryCollection(this.feedId, {mapping: CategoryMapping.Unmapped})
+            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Mapped, limit: '1'}),
+            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Unmapped, limit: '1'})
         ).subscribe(([mapped, unmapped]) => {
             const total = mapped.total + unmapped.total;
             this.percentage = total ? mapped.total / total : 0;

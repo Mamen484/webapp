@@ -14,6 +14,7 @@ import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
 import { SflAuthModule } from 'sfl-shared/auth';
 import { SflErrorPagesModule } from 'sfl-shared/error-pages';
+import { ErrorPagesModule } from './error-pages/error-pages.module';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,7 @@ import { SflErrorPagesModule } from 'sfl-shared/error-pages';
             sflLegacyLink: environment.APP_URL,
         }),
         // keep this module in the bottom as it contains a wildcard route
-        SflErrorPagesModule,
+        ErrorPagesModule,
     ],
     bootstrap: [AppComponent]
 })

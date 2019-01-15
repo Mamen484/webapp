@@ -15,6 +15,8 @@ import { CategoryMapping } from '../../channel-setup/category-mapping';
 })
 export class FeedService {
 
+    feedCache = new Map<number, Observable<PagedResponse<{ feed: Feed[] }>>>();
+
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
@@ -37,16 +39,18 @@ export class FeedService {
         return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/category`, {params}) as Observable<PagedResponse<{ category: FeedCategory[] }>>;
     }
 
-    fetchFeedCollection(channelId: number) {
-        return this.appStore.select('currentStore').pipe(
-            take(1),
-            flatMap((store) =>
-                this.httpClient.get(`${environment.API_URL}/feed`, {
-                    params: new HttpParams()
-                        .set('catalogId', String(store.id))
-                        .set('channelId', String(channelId))
-                        .set('country', store.country)
-                })),
-        ) as Observable<PagedResponse<{feed: Feed[]}>>;
+    fetchFeedCollection(channelId: number, forceFetch = false) {
+        if (!this.feedCache.has(channelId) || forceFetch) {
+            this.feedCache.set(channelId, this.appStore.select('currentStore').pipe(
+                take(1),
+                flatMap((store) =>
+                    this.httpClient.get(`${environment.API_URL}/feed`, {
+                        params: new HttpParams()
+                            .set('catalogId', String(store.id))
+                            .set('channelId', String(channelId))
+                            .set('country', store.country)
+                    }))) as Observable<PagedResponse<{ feed: Feed[] }>>);
+        }
+        return this.feedCache.get(channelId);
     }
 }

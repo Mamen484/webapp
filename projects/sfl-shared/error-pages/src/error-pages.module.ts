@@ -7,6 +7,7 @@ import { CriticalErrorComponent } from './critical-error/critical-error.componen
 import { StoreNotFoundComponent } from './store-not-found/store-not-found.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { OrderNotFoundComponent } from './order-not-found/order-not-found.component';
+import { SflErrorPageComponent } from './error-page/error-page.component';
 
 /**
  * Contains error pages.
@@ -21,9 +22,13 @@ import { OrderNotFoundComponent } from './order-not-found/order-not-found.compon
     ],
     declarations: [
         CriticalErrorComponent,
+        SflErrorPageComponent,
         StoreNotFoundComponent,
         NotFoundComponent,
         OrderNotFoundComponent,
+    ],
+    exports: [
+        SflErrorPageComponent,
     ]
 })
 export class SflErrorPagesModule {

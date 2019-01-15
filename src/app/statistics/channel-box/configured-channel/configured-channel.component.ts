@@ -7,8 +7,9 @@ import { LegacyLinkService } from '../../../core/services/legacy-link.service';
 import { SflWindowRefService } from 'sfl-shared/services';
 import { ChannelLinkPipe } from '../../../shared/channel-link/channel-link.pipe';
 import { flatMap, map } from 'rxjs/operators';
-import { Feed } from '../../../core/entities/feed';
 import { Observable, of, zip } from 'rxjs';
+import { ChannelService } from '../../../core/services/channel.service';
+import { Feed } from '../../../core/entities/feed';
 
 @Component({
     selector: 'sf-configured-channel',
@@ -25,6 +26,7 @@ export class ConfiguredChannelComponent implements OnInit {
     channelsOnline: number;
 
     constructor(protected feedService: FeedService,
+                protected channelService: ChannelService,
                 protected router: Router,
                 protected legacyLinkService: LegacyLinkService,
                 protected windowRefService: SflWindowRefService) {
@@ -36,19 +38,22 @@ export class ConfiguredChannelComponent implements OnInit {
     }
 
     goToChannelLink() {
-        this.getFeed().pipe(flatMap(feed => zip(of(feed), this.hasConfiguredCategories(feed.id))))
-            .subscribe(([feed, hasConfiguredCategories]) => {
-                if (hasConfiguredCategories) {
+        zip(
+            this.feedService.fetchFeedCollection(this.channel._embedded.channel.id),
+            this.channelService.getChannelCategories(this.channel._embedded.channel.id, {limit: '1'})
+        ).pipe(
+            map(([feed, channel]) => ([feed._embedded.feed[0], channel._embedded.category.length > 0])),
+            flatMap(([feed, channelHasCategories]: [Feed, boolean]) =>
+                channelHasCategories ? this.hasConfiguredCategories(feed.id) : of(true)
+            ))
+            .subscribe(skipSetup => {
+                if (skipSetup) {
                     this.goToChannel(ChannelLinkPipe.getChannelLink(this.channel._embedded.channel));
                 } else {
-                    this.goToChannelSetup(feed.id);
+                    this.goToChannelSetup();
                 }
-            })
-    }
+            });
 
-    protected getFeed(): Observable<Feed> {
-        return this.feedService.fetchFeedCollection(this.channel._embedded.channel.id)
-            .pipe(map(response => response._embedded.feed[0]));
     }
 
     protected hasConfiguredCategories(feedId): Observable<boolean> {
@@ -60,8 +65,8 @@ export class ConfiguredChannelComponent implements OnInit {
         this.windowRefService.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(channelLink);
     }
 
-    protected goToChannelSetup(feedId) {
-        this.router.navigate(['/channel-setup', this.channel._embedded.channel.id, feedId]);
+    protected goToChannelSetup() {
+        this.router.navigate(['/channel-setup', this.channel._embedded.channel.id]);
     }
 
     protected initializeOnline() {
