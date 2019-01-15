@@ -18,7 +18,7 @@ mat-card.categories-list {
         .user-category-row {
           mat-chip-list {
             mat-chip {
-              background-color: mat-color($green, 0.1);
+              background-color: mat-color($green, 700, 0.2);
             }
           }
         }
@@ -32,7 +32,7 @@ mat-card.categories-list {
         .user-category-row {
           mat-chip-list {
             mat-chip {
-              background-color: mat-color($warn, 0.1);
+              background-color: mat-color($warn, 900, 0.2);
             }
           }
         }

@@ -58,7 +58,7 @@
             <mat-card-content>
                 <div i18n class="category-autocomplete-hint">Type a keyword</div>
                 <form>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="outline" color="accent">
                         <mat-label i18n>Category matching</mat-label>
                         <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
