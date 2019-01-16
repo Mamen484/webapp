@@ -34,16 +34,16 @@ describe('BillingGroupService', () => {
     });
 
     it('should POST /group on createStore()', () => {
-        service.create({someProp: 'someValue'}).subscribe();
+        service.create({name: 'someValue', id: 22, stores: [{id: 13}, {id: 220}]}).subscribe();
         let req = httpMock.expectOne(`${environment.SFA_BILLING_API}/group`);
         expect(req.request.method).toBe('POST');
-        expect(req.request.body).toEqual({group: {someProp: 'someValue'}});
+        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13}, {id: 220}]}});
     });
 
     it('should PUT /group/id on updateStore()', () => {
         service.update({name: 'someValue', id: 22, stores: [{id: 13}, {id: 220}]}).subscribe();
         let req = httpMock.expectOne(`${environment.SFA_BILLING_API}/group/22`);
         expect(req.request.method).toBe('PUT');
-        expect(req.request.body).toEqual({name: 'someValue', stores: [13, 220]});
+        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13}, {id: 220}]}});
     });
 });

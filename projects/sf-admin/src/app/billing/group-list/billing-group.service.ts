@@ -35,15 +35,23 @@ export class BillingGroupService {
     }
 
     create(group): Observable<any> {
-        return this.httpClient.post(`${environment.SFA_BILLING_API}/group`, {group})
+        return this.httpClient.post(`${environment.SFA_BILLING_API}/group`, {
+            group: {
+                name: group.name,
+                stores: group.stores.map(store => ({id: store.id})),
+            }
+        })
             .pipe(catchError(error => throwError(error.error.detail)));
     }
 
     update(group): Observable<any> {
         return this.httpClient.put(`${environment.SFA_BILLING_API}/group/${group.id}`, {
-            name: group.name,
-            stores: group.stores.map(store => store.id),
-        });
+            group: {
+                name: group.name,
+                stores: group.stores.map(store => ({id: store.id})),
+            }
+        })
+            .pipe(catchError(error => throwError(error.error.detail)));
     }
 
 }

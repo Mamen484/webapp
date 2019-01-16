@@ -23,7 +23,7 @@ export abstract class BillingTableOperations implements OnInit {
     dataSource: BillingStore[];
     dataSubscription;
     resultsLength = 0;
-    isLoadingResults = false;
+    isLoadingResults = true;
 
     protected abstract fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number, dataList: any[] }>;
 

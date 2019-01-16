@@ -14,7 +14,7 @@
             <div class="search-container">
                 <mat-icon>search</mat-icon>
                 <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder
-                       placeholder="Search store" autocomplete="off">
+                       placeholder="Search group" autocomplete="off">
             </div>
         </mat-card-content>
     </mat-card>
@@ -37,7 +37,7 @@
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef i18n></th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon (click)="openEditStoreDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit
+                <mat-icon (click)="openEditGroupDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit
                 </mat-icon>
             </td>
 
