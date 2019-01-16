@@ -1,55 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar, PageEvent } from '@angular/material';
+import { Component } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs/operators';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
 import { BillingStoreService } from './billing-store.service';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
+import { BillingTableOperations } from '../billing-table-operations/billing-table-operations';
+import { map } from 'rxjs/operators';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
+
 
 @Component({
     selector: 'sfa-store-list',
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent implements OnInit {
+export class StoreListComponent extends BillingTableOperations {
 
-    dataSource: BillingStore[];
     displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'edit', 'block'];
-    isLoadingResults = true;
-
-    pageSizeOptions = [10, 15, 25, 50, 100];
-    pageSize = 15;
-    resultsLength = 0;
-    currentPage = 0;
-
-    searchControl = new FormControl();
-    searchQuery = '';
-    dataSubscription;
 
     constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar) {
+        super();
     }
 
-    ngOnInit() {
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => !searchQuery || searchQuery.length >= MIN_QUERY_LENGTH),
-        ).subscribe(searchQuery => {
-            this.searchQuery = searchQuery;
-            this.isLoadingResults = true;
-            // search changes the number of results, so previously specified page may not exist, reset page
-            this.currentPage = 0;
-            this.fetchData();
-        });
-        this.fetchData();
-    }
 
     openCreateStoreDialog() {
         this.openStoreDialog(store => this.billingStoreService.create(store));
@@ -79,19 +55,6 @@ export class StoreListComponent implements OnInit {
         });
     }
 
-    pageChanged(event: PageEvent) {
-        if (event.pageIndex === event.previousPageIndex) {
-            this.pageSize = event.pageSize;
-            // we need to reset the current page to 1, because if we change the pageSize to a bigger value,
-            // previously specified page might not exist
-            this.currentPage = 0;
-        } else {
-            this.currentPage = event.pageIndex;
-        }
-        this.isLoadingResults = true;
-        this.fetchData();
-    }
-
     blockStore(store) {
         this.matDialog.open(StoreBlockDialogComponent).afterClosed().subscribe(confirmed => {
             if (!confirmed) {
@@ -119,19 +82,9 @@ export class StoreListComponent implements OnInit {
             });
     }
 
-    fetchData() {
-        if (this.dataSubscription) {
-            this.dataSubscription.unsubscribe();
-        }
-        this.dataSubscription = this.billingStoreService.fetchStoreCollection({
-            limit: this.pageSize,
-            page: this.currentPage + 1,
-            search: this.searchQuery
-        }).subscribe(storeList => {
-            this.dataSource = storeList._embedded.store;
-            this.isLoadingResults = false;
-            this.resultsLength = storeList.total;
-        });
+    protected fetchCollection(params: { limit: number; page: number; search: string }) {
+        return this.billingStoreService.fetchStoreCollection(params)
+            .pipe(map(response => ({total: response.total, dataList: response._embedded.store})));
     }
 
 }

@@ -35,7 +35,7 @@ export class BillingGroupService {
     }
 
     create(group): Observable<any> {
-        return this.httpClient.post(`${environment.SFA_BILLING_API}/group`, {store: group})
+        return this.httpClient.post(`${environment.SFA_BILLING_API}/group`, {group})
             .pipe(catchError(error => throwError(error.error.detail)));
     }
 

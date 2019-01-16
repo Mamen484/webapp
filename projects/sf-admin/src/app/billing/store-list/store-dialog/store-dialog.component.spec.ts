@@ -73,7 +73,7 @@ describe('StoreDialogComponent', () => {
 
     it('should reset processing and close the dialog when the save is successful', () => {
         const subject = new Subject();
-        component.searchControl = <any>{valid: true, invalid: false};
+        component.searchControl = <any>{valid: true, invalid: false, updateValueAndValidity: () => {}};
         component.onSave = () => subject;
         component.save();
         component.processing = true;
@@ -84,7 +84,7 @@ describe('StoreDialogComponent', () => {
 
     it('should reset processing and set the errorMessage when save fails', () => {
         const subject = new Subject();
-        component.searchControl = <any>{valid: true, invalid: false};
+        component.searchControl = <any>{valid: true, invalid: false, updateValueAndValidity: () => {}};
         component.onSave = () => subject;
         component.save();
         component.processing = true;
