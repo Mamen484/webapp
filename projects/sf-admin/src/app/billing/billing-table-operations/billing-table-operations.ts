@@ -2,13 +2,12 @@ import { PageEvent } from '@angular/material';
 import { debounceTime, filter } from 'rxjs/operators';
 import { OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BillingStore } from '../store-list/billing-store';
 import { Observable } from 'rxjs';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
 
-export abstract class BillingTableOperations implements OnInit {
+export abstract class BillingTableOperations<T> implements OnInit {
 
     /** paginator */
     pageSizeOptions = [10, 15, 25, 50, 100];
@@ -20,7 +19,7 @@ export abstract class BillingTableOperations implements OnInit {
     searchQuery = '';
 
     /** data processing */
-    dataSource: BillingStore[];
+    dataSource: T[];
     dataSubscription;
     resultsLength = 0;
     isLoadingResults = true;

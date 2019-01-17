@@ -14,9 +14,8 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './group-list.component.html',
     styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent extends BillingTableOperations {
+export class GroupListComponent extends BillingTableOperations<BillingGroup> {
 
-    dataSource: BillingGroup[];
     displayedColumns: string[] = ['id', 'name', 'edit'];
 
     constructor(protected billingGroupService: BillingGroupService,

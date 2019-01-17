@@ -16,9 +16,9 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent extends BillingTableOperations {
+export class StoreListComponent extends BillingTableOperations<BillingStore> {
 
-    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'edit', 'block'];
+    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'edit', 'block'];
 
     constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,

@@ -45,6 +45,9 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+        No groups found.
+    </div>
 </div>
 
 <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"

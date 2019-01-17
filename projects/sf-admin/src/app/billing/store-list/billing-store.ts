@@ -1,4 +1,5 @@
 import { FeedSource } from 'sfl-shared/entities';
+import { BillingGroup } from '../group-list/billing-group';
 
 export class BillingStore {
     id?: number;
@@ -10,4 +11,7 @@ export class BillingStore {
     isActive?: boolean;
     openedAt?: string;
     closedAt?: string;
+    _embedded: {
+        group: BillingGroup,
+    };
 }
