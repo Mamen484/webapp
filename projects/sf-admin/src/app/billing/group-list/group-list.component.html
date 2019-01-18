@@ -37,8 +37,9 @@
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef i18n></th>
             <td mat-cell *matCellDef="let element">
-                <mat-icon (click)="openEditGroupDialog(element)" matTooltip="Modify billing" i18n-matTooltip>edit
-                </mat-icon>
+                <button mat-icon-button (click)="openEditGroupDialog(element)" matTooltip="Edit group" i18n-matTooltip>
+                    <mat-icon>edit</mat-icon>
+                </button>
             </td>
 
         </ng-container>
