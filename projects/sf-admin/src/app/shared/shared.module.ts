@@ -25,6 +25,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 
 @NgModule({
     imports: [
@@ -49,6 +50,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
         MatSelectModule,
         MatSnackBarModule,
         MatTooltipModule,
+        SflSoloSearchModule,
     ],
     exports: [
         ClipboardModule,
@@ -72,6 +74,7 @@ import { ErrorMessageComponent } from './error-message/error-message.component';
         MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
+        SflSoloSearchModule,
 
         ErrorMessageComponent,
 

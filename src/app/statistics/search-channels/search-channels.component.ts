@@ -1,38 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
-import { ChannelsRequestParams } from 'sfl-shared/entities';
-import { ChannelType } from 'sfl-shared/entities';
-
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
+import { ChannelsRequestParams, ChannelType } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-search-channels',
     templateUrl: './search-channels.component.html',
     styleUrls: ['./search-channels.component.scss']
 })
-export class SearchChannelsComponent implements OnInit {
+export class SearchChannelsComponent {
 
     @Output() applyFilter = new EventEmitter();
     @Input() processing = false;
     @Input() filter: ChannelsRequestParams;
 
-    searchControl = new FormControl();
     types = ChannelType;
 
     constructor(protected dialog: MatDialog) {
-    }
-
-    ngOnInit() {
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === ''),
-            tap(searchQuery => this.filter.searchQuery = searchQuery),
-        )
-            .subscribe(searchQuery => this.applyFilter.emit(this.filter));
     }
 
     openDialog() {

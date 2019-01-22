@@ -1,0 +1,15 @@
+<label [class.focused]="focused">
+    <mat-card [class.mat-elevation-z4]="focused">
+        <mat-card-content>
+            <div class="search-container">
+                <mat-icon>search</mat-icon>
+                <input [formControl]="searchControl" class="mat-subheading-1" [value]="value"
+                       [placeholder]="placeholder" (focus)="focused = true" (blur)="focused = false">
+                <button mat-stroked-button color="accent" (click)="openFilters.emit()" *ngIf="filterButtonText">
+                    {{filterButtonText}}
+                </button>
+            </div>
+            <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
+        </mat-card-content>
+    </mat-card>
+</label>
