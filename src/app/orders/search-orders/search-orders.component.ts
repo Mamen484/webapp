@@ -22,8 +22,8 @@ export class SearchOrdersComponent implements OnInit {
     filter: OrdersFilter;
     selectedChannel;
 
-    constructor(protected dialog: MatDialog,
-                protected ordersFilterService: OrdersFilterService,
+    constructor(public ordersFilterService: OrdersFilterService,
+                protected dialog: MatDialog,
                 protected appStore: Store<AppState>,
                 protected route: ActivatedRoute) {
 
