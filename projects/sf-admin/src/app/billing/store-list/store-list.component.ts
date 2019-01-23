@@ -1,59 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { BillingService } from '../billing.service';
-import { MatDialog, MatSnackBar, PageEvent } from '@angular/material';
-import { StoreDialogComponent } from '../store-dialog/store-dialog.component';
-import { BillingStore } from '../billing-store';
-import { StoreBlockDialogComponent } from '../store-block-dialog/store-block-dialog.component';
+import { Component } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs/operators';
+import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
+import { BillingStoreService } from './billing-store.service';
+import { StoreDialogComponent } from './store-dialog/store-dialog.component';
+import { BillingTableOperations } from '../billing-table-operations/billing-table-operations';
+import { map } from 'rxjs/operators';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
+
 
 @Component({
     selector: 'sfa-store-list',
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent implements OnInit {
+export class StoreListComponent extends BillingTableOperations<BillingStore> {
 
-    dataSource: BillingStore[];
-    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'edit', 'block'];
-    isLoadingResults = true;
+    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'edit', 'block'];
 
-    pageSizeOptions = [10, 15, 25, 50, 100];
-    pageSize = 15;
-    resultsLength = 0;
-    currentPage = 0;
-
-    searchQuery = '';
-    dataSubscription;
-
-    constructor(protected billingService: BillingService,
+    constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar) {
-    }
-
-    ngOnInit() {
-        this.fetchData();
-    }
-
-    search(searchQuery) {
-        this.searchQuery = searchQuery;
-        this.isLoadingResults = true;
-        // search changes the number of results, so previously specified page may not exist, reset page
-        this.currentPage = 0;
-        this.fetchData();
+        super();
     }
 
     openCreateStoreDialog() {
-        this.openStoreDialog(store => this.billingService.create(store));
+        this.openStoreDialog(store => this.billingStoreService.create(store));
     }
 
     openEditStoreDialog(store: BillingStore) {
-        this.openStoreDialog((editedStore) => this.billingService.update(editedStore), store, false);
+        this.openStoreDialog((editedStore) => this.billingStoreService.update(editedStore), store, false);
     }
 
     openStoreDialog(onSave: (store: BillingStore) => Observable<any>, store: BillingStore = null, nameEditable = true) {
@@ -76,19 +54,6 @@ export class StoreListComponent implements OnInit {
         });
     }
 
-    pageChanged(event: PageEvent) {
-        if (event.pageIndex === event.previousPageIndex) {
-            this.pageSize = event.pageSize;
-            // we need to reset the current page to 1, because if we change the pageSize to a bigger value,
-            // previously specified page might not exist
-            this.currentPage = 0;
-        } else {
-            this.currentPage = event.pageIndex;
-        }
-        this.isLoadingResults = true;
-        this.fetchData();
-    }
-
     blockStore(store) {
         this.matDialog.open(StoreBlockDialogComponent).afterClosed().subscribe(confirmed => {
             if (!confirmed) {
@@ -96,7 +61,7 @@ export class StoreListComponent implements OnInit {
             }
             this.isLoadingResults = true;
             const toBlock = {id: store.id, isActive: false};
-            this.billingService.update(toBlock).subscribe(() => {
+            this.billingStoreService.update(toBlock).subscribe(() => {
                 this.snackBar.open('The store has been blocked', '', {
                     duration: SNACKBAR_MESSAGE_DURATION,
                 });
@@ -107,7 +72,7 @@ export class StoreListComponent implements OnInit {
 
     activateStore(store) {
         this.isLoadingResults = true;
-        this.billingService.update({id: store.id, isActive: true})
+        this.billingStoreService.update({id: store.id, isActive: true})
             .subscribe(() => {
                 this.snackBar.open('The store has been unblocked', '', {
                     duration: SNACKBAR_MESSAGE_DURATION,
@@ -116,19 +81,9 @@ export class StoreListComponent implements OnInit {
             });
     }
 
-    fetchData() {
-        if (this.dataSubscription) {
-            this.dataSubscription.unsubscribe();
-        }
-        this.dataSubscription = this.billingService.fetchStoreCollection({
-            limit: this.pageSize,
-            page: this.currentPage + 1,
-            search: this.searchQuery
-        }).subscribe(storeList => {
-            this.dataSource = storeList._embedded.store;
-            this.isLoadingResults = false;
-            this.resultsLength = storeList.total;
-        });
+    protected fetchCollection(params: { limit: number; page: number; search: string }) {
+        return this.billingStoreService.fetchStoreCollection(params)
+            .pipe(map(response => ({total: response.total, dataList: response._embedded.store})));
     }
 
 }

@@ -1,0 +1,24 @@
+@import '../variables';
+
+@mixin subnav($top, $left, $height) {
+  mat-list.sf-subnav {
+    background-color: #385370;
+
+    position: absolute;
+    z-index: 8;
+    top: $top;
+    left: $left;
+    height: $height;
+    width: calc(100vw - #{$left});
+
+    display: flex;
+    padding: 0;
+    align-items: flex-start;
+
+    @media #{$xs}{
+      left: 0;
+      width: 100vw;
+    }
+
+  }
+}

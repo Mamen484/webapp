@@ -3,22 +3,37 @@ import { CommonModule } from '@angular/common';
 
 import { BillingRoutingModule } from './billing-routing.module';
 import { StoreListComponent } from './store-list/store-list.component';
-import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { SfaSharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
+import { StoreDialogComponent } from './store-list/store-dialog/store-dialog.component';
+import { StoreBlockDialogComponent } from './store-list/store-block-dialog/store-block-dialog.component';
+import { GroupListComponent } from './group-list/group-list.component';
+import { GroupDialogComponent } from './group-list/group-dialog/group-dialog.component';
+import { SearchBillingStoreDirective } from './search-billing-store/search-billing-store.directive';
 
 @NgModule({
     imports: [
-        CommonModule,
         BillingRoutingModule,
+        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         SfaSharedModule,
     ],
     providers: [],
-    declarations: [StoreListComponent, StoreDialogComponent, StoreBlockDialogComponent],
-    entryComponents: [StoreDialogComponent, StoreBlockDialogComponent],
+    declarations: [
+        GroupDialogComponent,
+        GroupListComponent,
+        StoreBlockDialogComponent,
+        StoreDialogComponent,
+        StoreListComponent,
+
+        SearchBillingStoreDirective,
+    ],
+    entryComponents: [
+        GroupDialogComponent,
+        StoreBlockDialogComponent,
+        StoreDialogComponent,
+    ],
 })
 export class BillingModule {
 }

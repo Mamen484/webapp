@@ -25,6 +25,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { SubnavComponent } from './subnav/subnav.component';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 
 @NgModule({
@@ -77,12 +78,14 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         SflSoloSearchModule,
 
         ErrorMessageComponent,
+        SubnavComponent,
 
         SearchStoreDirective,
     ],
     declarations: [
         ErrorMessageComponent,
         SearchStoreDirective,
+        SubnavComponent,
     ]
 })
 export class SfaSharedModule {

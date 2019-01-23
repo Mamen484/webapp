@@ -45,6 +45,7 @@ export class StoreDialogComponent {
             return;
         }
         this.serverError = undefined;
+        this.searchControl.updateValueAndValidity();
         if (!this.form.valid || !this.searchControl.valid) {
             this.searchControl.markAsDirty();
             Object.values(this.form.controls)

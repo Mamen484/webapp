@@ -9,7 +9,7 @@ RUN npm i -g npm@latest
 WORKDIR /app
 
 COPY ./ /app/
-RUN npm ci
+RUN npm install
 
 # download translations
 ARG CROWDIN_API_KEY

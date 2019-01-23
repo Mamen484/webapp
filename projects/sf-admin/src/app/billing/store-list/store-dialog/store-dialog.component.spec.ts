@@ -48,7 +48,7 @@ describe('StoreDialogComponent', () => {
     });
 
     it('should reset the store and the search input when the search input value does not match the store name on blur', () => {
-        component.store = {id: 22, name: 'some name', platform: 'google'};
+        component.store = <any>{id: 22, name: 'some name', platform: 'google'};
         component.searchControl.setValue('amazon1');
         component.resetName();
         expect(component.store.id).not.toBeDefined();
@@ -73,7 +73,7 @@ describe('StoreDialogComponent', () => {
 
     it('should reset processing and close the dialog when the save is successful', () => {
         const subject = new Subject();
-        component.searchControl = <any>{valid: true, invalid: false};
+        component.searchControl = <any>{valid: true, invalid: false, updateValueAndValidity: () => {}};
         component.onSave = () => subject;
         component.save();
         component.processing = true;
@@ -84,7 +84,7 @@ describe('StoreDialogComponent', () => {
 
     it('should reset processing and set the errorMessage when save fails', () => {
         const subject = new Subject();
-        component.searchControl = <any>{valid: true, invalid: false};
+        component.searchControl = <any>{valid: true, invalid: false, updateValueAndValidity: () => {}};
         component.onSave = () => subject;
         component.save();
         component.processing = true;
