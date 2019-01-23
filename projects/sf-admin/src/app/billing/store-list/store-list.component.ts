@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
@@ -16,9 +16,12 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent extends BillingTableOperations<BillingStore> {
+export class StoreListComponent extends BillingTableOperations<BillingStore> implements OnInit {
 
     displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'edit', 'block'];
+
+    searchQuery = '';
+    dataSubscription;
 
     constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
@@ -26,6 +29,17 @@ export class StoreListComponent extends BillingTableOperations<BillingStore> {
         super();
     }
 
+    ngOnInit() {
+        this.fetchData();
+    }
+
+    search(searchQuery) {
+        this.searchQuery = searchQuery;
+        this.isLoadingResults = true;
+        // search changes the number of results, so previously specified page may not exist, reset page
+        this.currentPage = 0;
+        this.fetchData();
+    }
 
     openCreateStoreDialog() {
         this.openStoreDialog(store => this.billingStoreService.create(store));

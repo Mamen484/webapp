@@ -7,18 +7,8 @@
     <div i18n fxFlex class="mat-title list-title">Billing</div>
     <button mat-raised-button color="accent" (click)="openCreateStoreDialog()" i18n>Add Store</button>
 </div>
+<sfl-solo-search i18n-placeholder placeholder="Search store" (searchQueryChanged)="search($event)"></sfl-solo-search>
 
-<label>
-    <mat-card class="mat-elevation-z1">
-        <mat-card-content>
-            <div class="search-container">
-                <mat-icon>search</mat-icon>
-                <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder
-                       placeholder="Search store" autocomplete="off">
-            </div>
-        </mat-card-content>
-    </mat-card>
-</label>
 <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
     <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
 </div>

@@ -42,7 +42,7 @@
         </mat-list-item>
         <mat-list-item class="mat-active" matTooltip="SALES" matTooltipPosition="after" *ngIf="currentStore?.sales?.pathIsActive"
                        i18n-matTooltip [matTooltipDisabled]="hideTooltips">
-            <a routerLink="/index/sales" class="homepage-link">
+            <a sflLegacyLink path="/index/sales" class="homepage-link">
                 <mat-icon>local_offer</mat-icon>
                 <span fxHide fxShow.xs i18n>Sales</span>
             </a>

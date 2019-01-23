@@ -48,6 +48,29 @@ describe('StoreListComponent', () => {
         expect(component.dataSource).toEqual([]);
     });
 
+    it('should reset page when a search string is provided', fakeAsync(() => {
+        billingService.fetchStoreCollection.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        component.currentPage = 6;
+        component.search('some name');
+        tick(1000);
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: 'some name'});
+    }));
+
+    it('should change a page and refresh data on pageChanged()', () => {
+        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        component.pageChanged(<any>{pageIndex: 1, previousPageIndex: 0});
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2, search: ''});
+        expect(component.currentPage).toEqual(1);
+    });
+
+    it('should change a pageSize on pageChanged()', () => {
+        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        component.pageChanged(<any>{pageIndex: 3, previousPageIndex: 3, pageSize: 25});
+        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 25, page: 1, search: ''});
+        expect(component.pageSize).toEqual(25);
+    });
+
     it('should open a StoreDialogComponent on openCreateStoreDialog()', () => {
         matDialog.open.and.returnValue({afterClosed: () => EMPTY});
         component.openCreateStoreDialog();
