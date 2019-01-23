@@ -10,16 +10,14 @@ import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminMenuComponent } from './admin-menu/admin-menu.component';
-import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { SflMenuModule } from 'sfl-shared/menu';
-import { SflSidebarModule } from 'sfl-shared/sidebar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminBaseComponent } from './admin-base/admin-base.component';
-import { SearchStoreComponent } from './admin-menu/search-store/search-store.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { UserCreatedDialogComponent } from './create-user/user-created-dialog/user-created-dialog.component';
 import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.service';
 import { SfaSharedModule } from './shared/shared.module';
+import { MatSidenavModule } from '@angular/material';
 
 
 @NgModule({
@@ -27,9 +25,7 @@ import { SfaSharedModule } from './shared/shared.module';
         AppComponent,
         AdminBaseComponent,
         AdminMenuComponent,
-        AdminSidebarComponent,
         CreateUserComponent,
-        SearchStoreComponent,
         UserCreatedDialogComponent,
     ],
     entryComponents: [UserCreatedDialogComponent],
@@ -41,6 +37,7 @@ import { SfaSharedModule } from './shared/shared.module';
         ReactiveFormsModule,
         HttpClientModule,
         LoginModule,
+        MatSidenavModule,
         SflSharedModule.forRoot({
             baseHref: '',
             languageOptions: {en: 'English'},
@@ -49,7 +46,6 @@ import { SfaSharedModule } from './shared/shared.module';
             sflLegacyLink: environment.SFA_LEGACY_LINK,
         }),
         SflMenuModule,
-        SflSidebarModule,
         SfaSharedModule,
 
         // keep this module in the bottom as it contains a wildcard route

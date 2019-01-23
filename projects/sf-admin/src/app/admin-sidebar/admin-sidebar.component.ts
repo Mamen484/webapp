@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Component({
     selector: 'sfa-sidebar',
@@ -9,7 +9,8 @@ import { ObservableMedia } from '@angular/flex-layout';
 export class AdminSidebarComponent {
     hideTooltips = false;
 
-    constructor(protected media: ObservableMedia) {
-        this.media.subscribe(() => this.hideTooltips = this.media.isActive('xs'));
+    constructor(protected media: MediaObserver) {
+        this.media.media$.subscribe(() => this.hideTooltips = this.media.isActive('xs'));
+        (<any>window).sidebar = this;
     }
 }

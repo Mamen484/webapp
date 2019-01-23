@@ -1,5 +1,10 @@
-<sfl-sidebar-container>
+<sfl-sidebar-container bgColor="#01579b" borderColor="#dadada" menuHeight="0px">
     <mat-list>
+        <mat-list-item>
+            <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
+                <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
+            </a>
+        </mat-list-item>
         <mat-list-item matTooltip="Create a user" matTooltipPosition="after" i18n-matTooltip
                        routerLink="/create-user" [matTooltipDisabled]="hideTooltips">
             <mat-icon>add</mat-icon>
@@ -29,6 +34,21 @@
         </mat-list-item>
     </mat-list>
 </sfl-sidebar-container>
+
+<div class="sfl-expandable-sidenav">
+    <mat-list>
+        <mat-list-item>
+            Admin
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <sfa-search-store></sfa-search-store>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <ng-content></ng-content>
+    </mat-list>
+</div>
+
 
 <mat-menu #invoicing="matMenu" class="sf-sidebar-menu">
     <a mat-menu-item i18n routerLink="/billing">Billing</a>
