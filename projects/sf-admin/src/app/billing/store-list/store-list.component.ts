@@ -28,7 +28,6 @@ export class StoreListComponent implements OnInit {
     resultsLength = 0;
     currentPage = 0;
 
-    searchControl = new FormControl();
     searchQuery = '';
     dataSubscription;
 
@@ -38,16 +37,14 @@ export class StoreListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => !searchQuery || searchQuery.length >= MIN_QUERY_LENGTH),
-        ).subscribe(searchQuery => {
-            this.searchQuery = searchQuery;
-            this.isLoadingResults = true;
-            // search changes the number of results, so previously specified page may not exist, reset page
-            this.currentPage = 0;
-            this.fetchData();
-        });
+        this.fetchData();
+    }
+
+    search(searchQuery) {
+        this.searchQuery = searchQuery;
+        this.isLoadingResults = true;
+        // search changes the number of results, so previously specified page may not exist, reset page
+        this.currentPage = 0;
         this.fetchData();
     }
 

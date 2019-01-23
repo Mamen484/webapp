@@ -48,6 +48,7 @@ import { MinNumberDirective } from './min-number/min-number.directive';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
+import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 
 @NgModule({
     imports: [
@@ -85,6 +86,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
         ReactiveFormsModule,
         RouterModule,
         SflSharedModule,
+        SflSoloSearchModule,
     ],
     exports: [
         // modules
@@ -120,6 +122,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
         ReactiveFormsModule,
         RouterModule,
         SflSharedModule,
+        SflSoloSearchModule,
 
         // pipes
         ArrayFromNumberPipe,
@@ -138,8 +141,7 @@ import { LivechatWidgetModule } from '@livechat/angular-widget';
         CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
         ImageComponent,
-        ValidationErrorsSnackbarComponent
-
+        ValidationErrorsSnackbarComponent,
     ],
     declarations: [
         LargeNumberSuffixPipe,

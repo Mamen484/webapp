@@ -52,7 +52,7 @@ describe('StoreListComponent', () => {
         billingService.fetchStoreCollection.and.returnValue(EMPTY);
         fixture.detectChanges();
         component.currentPage = 6;
-        component.searchControl.setValue('some name');
+        component.search('some name');
         tick(1000);
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: 'some name'});
     }));
