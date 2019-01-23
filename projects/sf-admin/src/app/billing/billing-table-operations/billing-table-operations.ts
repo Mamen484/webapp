@@ -1,11 +1,7 @@
 import { PageEvent } from '@angular/material';
-import { debounceTime, filter } from 'rxjs/operators';
 import { OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
 
 export abstract class BillingTableOperations<T> implements OnInit {
 
@@ -24,7 +20,11 @@ export abstract class BillingTableOperations<T> implements OnInit {
     resultsLength = 0;
     isLoadingResults = true;
 
-    protected abstract fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number, dataList: any[] }>;
+    protected abstract fetchCollection(params: {
+        limit: number,
+        page: number,
+        search: string
+    }): Observable<{ total: number, dataList: any[] }>;
 
     pageChanged(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
@@ -40,16 +40,14 @@ export abstract class BillingTableOperations<T> implements OnInit {
     }
 
     ngOnInit() {
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => !searchQuery || searchQuery.length >= MIN_QUERY_LENGTH),
-        ).subscribe(searchQuery => {
-            this.searchQuery = searchQuery;
-            this.isLoadingResults = true;
-            // search changes the number of results, so previously specified page may not exist, reset page
-            this.currentPage = 0;
-            this.fetchData();
-        });
+        this.fetchData();
+    }
+
+    search(searchQuery) {
+        this.searchQuery = searchQuery;
+        this.isLoadingResults = true;
+        // search changes the number of results, so previously specified page may not exist, reset page
+        this.currentPage = 0;
         this.fetchData();
     }
 

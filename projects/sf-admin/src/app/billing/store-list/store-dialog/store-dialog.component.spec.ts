@@ -48,7 +48,7 @@ describe('StoreDialogComponent', () => {
     });
 
     it('should reset the store and the search input when the search input value does not match the store name on blur', () => {
-        component.store = {id: 22, name: 'some name', platform: 'google'};
+        component.store = <any>{id: 22, name: 'some name', platform: 'google'};
         component.searchControl.setValue('amazon1');
         component.resetName();
         expect(component.store.id).not.toBeDefined();

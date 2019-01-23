@@ -41,13 +41,13 @@ describe('GroupDialogComponent', () => {
     });
 
     it('should add a store on addStore() call', () => {
-        component.addStore({id: 22, name: 'some store'});
+        component.addStore(<any>{id: 22, name: 'some store'});
         expect(component.group.stores[0].id).toBe(22);
         expect(component.group.stores[0].name).toBe('some store');
     });
 
     it('should assign remove a store on remove() call', () => {
-        component.group.stores = [{id: 22, name: 'some store'},
+        component.group.stores = <any>[{id: 22, name: 'some store'},
             {id: 23, name: 'some store 2'},
             {id: 24, name: 'some store 3'}];
         component.remove(1);

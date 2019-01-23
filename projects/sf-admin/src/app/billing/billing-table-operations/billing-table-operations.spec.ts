@@ -2,7 +2,7 @@ import { BillingTableOperations } from './billing-table-operations';
 import { EMPTY, of } from 'rxjs';
 import { fakeAsync, tick } from '@angular/core/testing';
 
-class BillingTableOperationsChild extends BillingTableOperations {
+class BillingTableOperationsChild extends BillingTableOperations<any> {
     fetchCollection(params) {
         return undefined;
     }
@@ -27,7 +27,7 @@ describe('BillingTableOperations', () => {
         fetchCollection.and.returnValue(EMPTY);
         instance.ngOnInit();
         instance.currentPage = 6;
-        instance.searchControl.setValue('some name');
+        instance.search('some name');
         tick(1000);
         expect(fetchCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: 'some name'});
     }));

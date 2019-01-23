@@ -8,17 +8,8 @@
     <button mat-raised-button color="accent" (click)="openCreateGroupDialog()">Add Group</button>
 </div>
 
-<label>
-    <mat-card class="mat-elevation-z1">
-        <mat-card-content>
-            <div class="search-container">
-                <mat-icon>search</mat-icon>
-                <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder
-                       placeholder="Search group" autocomplete="off">
-            </div>
-        </mat-card-content>
-    </mat-card>
-</label>
+<sfl-solo-search i18n-placeholder placeholder="Search group" (searchQueryChanged)="search($event)"></sfl-solo-search>
+
 <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
     <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
 </div>
