@@ -5,6 +5,7 @@ import { SearchStoreComponent } from './search-store/search-store.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SfaSharedModule } from '../shared/shared.module';
 import { SflSidebarModule } from 'sfl-shared/sidebar';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { SflSidebarModule } from 'sfl-shared/sidebar';
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
+        RouterModule,
         SfaSharedModule,
         SflSidebarModule,
     ],
