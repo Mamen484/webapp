@@ -9,6 +9,11 @@
   &.has-top-margin {
     margin-top: 10px;
   }
+
+  &.active {
+    color: mat-color($accent);
+    font-weight: bold;
+  }
 }
 
 mat-icon {
@@ -74,7 +79,7 @@ mat-list-item {
   mat-list {
     mat-list-item {
       @include listItemStyles();
-      padding-top: 10px;
+      padding-top: 5px;
       padding-bottom: 10px;
     }
 
@@ -86,7 +91,7 @@ mat-list-item {
     }
 
     a {
-      color: mat-color($accent);
+      color: $black-54-opacity;
       text-decoration: none;
       font-size: mat-font-size($config, body-2);
     }
