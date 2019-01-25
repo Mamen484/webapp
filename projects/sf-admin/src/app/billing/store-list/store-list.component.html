@@ -1,10 +1,14 @@
-<sfa-subnav>
-    <mat-list-item class="active"><a routerLink="/billing" class="mat-body-2" i18n>Stores</a></mat-list-item>
-    <mat-list-item><a routerLink="/billing/groups" class="mat-body-2" i18n>Group</a></mat-list-item>
-</sfa-subnav>
+<sfa-sidebar>
+    <mat-list-item class="has-top-margin active">Store</mat-list-item>
+    <mat-list-item>
+        <a routerLink="/billing/groups">Group</a>
+    </mat-list-item>
+</sfa-sidebar>
+
+<div class="sf-content">
 
 <div fxLayout="row" class="page-header">
-    <div i18n fxFlex class="mat-title list-title">Billing</div>
+    <div i18n fxFlex class="mat-title list-title">Billing Stores</div>
     <button mat-raised-button color="accent" (click)="openCreateStoreDialog()" i18n>Add Store</button>
 </div>
 <sfl-solo-search i18n-placeholder placeholder="Search store" (searchQueryChanged)="search($event)"></sfl-solo-search>
@@ -60,15 +64,16 @@
                 </button>
             </td>
 
-        </ng-container>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"></tr>
-    </table>
-    <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
-        No stores found.
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"></tr>
+        </table>
+        <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+            No stores found.
+        </div>
     </div>
-</div>
 
-<mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
-               (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
+    <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
+</div>

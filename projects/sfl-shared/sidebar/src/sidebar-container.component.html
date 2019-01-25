@@ -1,6 +1,16 @@
 <mat-sidenav-container>
-    <mat-sidenav class="sidenav sidenav-main" #sidenav="matSidenav" [mode]="isMobile ? 'over' : 'side'"
-                 [opened]="opened">
+    <mat-sidenav class="sfl-sidenav sidenav sidenav-main"
+                 #sidenav="matSidenav"
+                 [mode]="isMobile ? 'over' : 'side'"
+                 [opened]="opened"
+                 [style.height]="'calc(100vh - ' + menuHeight + ')'"
+                 [style.minWidth]="width"
+                 [ngStyle.xs]="{top : menuHeight}"
+                 [ngStyle.gt-xs]="{width: width}"
+                 [style.backgroundColor]="bgColor"
+                 [style.borderRight]="'1px solid ' + borderColor">
+
         <ng-content></ng-content>
     </mat-sidenav>
+    <ng-content select="[sidenav-siblings]"></ng-content>
 </mat-sidenav-container>

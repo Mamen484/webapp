@@ -1,8 +1,24 @@
 @import '../../../src/sass/variables';
 
+@mixin listItemStyles() {
+  color: $black-54-opacity;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: mat-font-size($config, body-1);
+
+  &.has-top-margin {
+    margin-top: 10px;
+  }
+
+  &.active {
+    color: mat-color($accent);
+    font-weight: bold;
+  }
+}
+
 mat-icon {
   font-size: mat-font-size($config, headline);
-  color: $black-54-opacity;
+  color: white;
   cursor: pointer;
   margin: auto;
 
@@ -27,6 +43,10 @@ mat-icon {
 mat-list-item {
   outline: none;
   cursor: pointer;
+
+  .nav-link.home {
+    margin: auto;
+  }
 }
 
 .partners-link {
@@ -40,7 +60,40 @@ mat-list-item {
     color: inherit;
 
     mat-icon {
+      color: white;
+    }
+  }
+}
+
+.sfl-expandable-sidenav {
+  width: 200px;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  left: 75px;
+  transform: none;
+  z-index: 5;
+  box-shadow: none;
+  border-right: 1px solid #eeeeee;
+
+  mat-list {
+    mat-list-item {
+      @include listItemStyles();
+      padding-top: 5px;
+      padding-bottom: 10px;
+    }
+
+  }
+
+  ::ng-deep {
+    mat-list-item {
+     @include listItemStyles();
+    }
+
+    a {
       color: $black-54-opacity;
+      text-decoration: none;
+      font-size: mat-font-size($config, body-2);
     }
   }
 }
