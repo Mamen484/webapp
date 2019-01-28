@@ -1,10 +1,76 @@
+@import '../../../sass/variables';
+
 section {
   &:first-of-type {
     margin: 0;
   }
+
   margin-top: 25px;
 
   & > mat-card {
     margin-top: 10px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.no-results {
+  background-color: white;
+  padding: 5px 10px;
+}
+
+mat-card.actions {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 1px solid $black-12-opacity;
+}
+
+mat-progress-bar {
+  position: absolute;
+  z-index: 10;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  z-index: 150;
+}
+
+.label {
+  padding: 5px 10px;
+  border-radius: 16px;
+  width: fit-content;
+
+  mat-icon {
+    color: inherit;
+    margin-right: 10px;
+  }
+
+  &.blue {
+    padding: 7px 12px;
+    background-color: mat-color($accent, 0.3);
+    color: $black-87-opacity;
+
+  }
+
+  &.green {
+    background-color: mat-color($green, 0.3);
+    color: mat-color($green);
+  }
+
+  &.red {
+    background-color: mat-color($warn, 0.3);
+    color: mat-color($warn);
+  }
+
+  &.grey {
+    background-color: mat-color($grey, 0.3);
+    color: mat-color($grey);
+  }
+
+  &.navy {
+    background-color: rgba(63, 58, 177, 0.3);
+    color: rgb(63, 58, 177);
   }
 }

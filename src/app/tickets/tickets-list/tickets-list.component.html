@@ -32,4 +32,79 @@
         </mat-card>
 
     </section>
+
+    <section>
+        <div class="mat-caption">
+            <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+                <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+            </div>
+            <mat-card class="actions">
+                <mat-card-content fxLayout="row">
+                    <div fxFlex></div>
+                    <button mat-stroked-button color="accent" i18n>Filters</button>
+                </mat-card-content>
+            </mat-card>
+            <div class="table-container mat-elevation-z1">
+                <table mat-table [dataSource]="dataSource">
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef i18n> ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef i18n> Type</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container [ngSwitch]="element.type">
+                                <div *ngSwitchCase="ticketType.shipOrder" class="label blue" i18n>Ship</div>
+                                <div *ngSwitchCase="ticketType.acceptOrder" class="label blue" i18n>Accept</div>
+                                <div *ngSwitchCase="ticketType.refuseOrder" class="label blue" i18n>Refuse</div>
+                                <div *ngSwitchCase="ticketType.cancelOrder" class="label blue" i18n>Cancel</div>
+                                <div *ngSwitchCase="ticketType.refundorder" class="label blue" i18n>Refund</div>
+                                <div *ngSwitchCase="ticketType.acknowledgeOrder" class="label blue" i18n>Acknowledge</div>
+                                <div *ngSwitchCase="ticketType.unacknowledgeOrder" class="label blue" i18n>Unacknowledge</div>
+                            </ng-container>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="state">
+                        <th mat-header-cell *matHeaderCellDef i18n> Status</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-container [ngSwitch]="element.state">
+                                <div *ngSwitchCase="ticketState.succeed" class="label green">
+                                    <mat-icon>check_circle</mat-icon>
+                                    <ng-container i18n>Success</ng-container>
+                                </div>
+                                <div *ngSwitchCase="ticketState.failed" class="label red">
+                                    <mat-icon>close</mat-icon>
+                                    <ng-container i18n>Failed</ng-container>
+                                </div>
+                                <div *ngSwitchCase="ticketState.canceled" class="label grey">
+                                    <mat-icon>close</mat-icon>
+                                    <ng-container i18n>Canceled</ng-container>
+                                </div>
+                                <div *ngSwitchCase="ticketState.running" class="label navy">
+                                    <mat-icon>timelapse</mat-icon>
+                                    <ng-container i18n>Running</ng-container>
+                                </div>
+                                <div *ngSwitchCase="ticketState.scheduled" class="label navy">
+                                    <mat-icon>schedule</mat-icon>
+                                    <ng-container i18n>Scheduled</ng-container>
+                                </div>
+                            </ng-container></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"></tr>
+                </table>
+                <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+                    No tickets found.
+                </div>
+            </div>
+
+            <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                           (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
+
+        </div>
+    </section>
 </div>

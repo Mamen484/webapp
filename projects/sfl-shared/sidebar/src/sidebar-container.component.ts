@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
 
@@ -30,12 +30,12 @@ export class SflSidebarContainerComponent implements OnInit {
     opened = true;
     isMobile = false;
 
-    constructor(protected mediaObserver: ObservableMedia, protected toggleSidebarSevice: SflToggleSidebarService) {
+    constructor(protected mediaObserver: MediaObserver, protected toggleSidebarSevice: SflToggleSidebarService) {
     }
 
     ngOnInit() {
         this.toggleSidebarSevice.getSubscription().subscribe(() => this.sidenav.toggle());
-        this.mediaObserver.subscribe((value) => {
+        this.mediaObserver.media$.subscribe((value) => {
             this.opened = value.mqAlias !== 'xs';
             this.isMobile = value.mqAlias === 'xs';
         })
