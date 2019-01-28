@@ -1,0 +1,10 @@
+section {
+  &:first-of-type {
+    margin: 0;
+  }
+  margin-top: 25px;
+
+  & > mat-card {
+    margin-top: 10px;
+  }
+}

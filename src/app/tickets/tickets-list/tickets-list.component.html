@@ -1,0 +1,35 @@
+<div class="scrollable-container">
+    <div class="mat-title" i18n>API</div>
+
+    <section>
+        <div class="mat-caption" i18n>Your API information</div>
+        <mat-card>
+            <mat-card-content fxLayout="column" fxLayoutGap="10px">
+                <div>
+                    <div class="mat-body-2" i18n>Token</div>
+                    <div class="mat-body-1">{{token}}</div>
+                </div>
+                <div>
+                    <div class="mat-body-2" i18n>Store ID</div>
+                    <div class="mat-body-1">{{currentStore.id}}</div>
+                </div>
+                <div>
+                    <div class="mat-body-2" i18n>Store Name</div>
+                    <div class="mat-body-1">{{currentStore.name}}</div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </section>
+    <section>
+        <div class="mat-caption">Integration</div>
+        <mat-card>
+            <mat-card-content fxLayout="row" fxLayoutAlign="center center">
+                <div fxFlex>
+                    <sf-image source="assets/images/zapier-logo.png" width="110px"></sf-image>
+                </div>
+                <button mat-raised-button color="accent" (click)="goToToZapier()">Connect</button>
+            </mat-card-content>
+        </mat-card>
+
+    </section>
+</div>
