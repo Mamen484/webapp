@@ -13,7 +13,7 @@ export class ChannelService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    getChannelCategories(channelId: number, {name, page, limit}: { name?: string, page?: string, limit?: string }) {
+    getChannelCategories(channelId: number, {name, page, limit, country}: { name?: string, page?: string, limit?: string, country?: string }) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);
@@ -24,6 +24,10 @@ export class ChannelService {
 
         if (limit) {
             params = params.set('limit', limit);
+        }
+
+        if (country) {
+            params = params.set('country', country);
         }
         return this.httpClient.get(
             `${environment.API_URL}/channel/${String(channelId)}/category`,

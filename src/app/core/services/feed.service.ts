@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { PagedResponse } from 'sfl-shared/entities';
-import { Observable } from 'rxjs';
+import { ConnectableObservable, Observable } from 'rxjs';
 import { FeedCategory } from '../entities/feed-category';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { flatMap, take } from 'rxjs/operators';
+import { flatMap, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { CategoryMapping } from '../../channel-setup/category-mapping';
 
@@ -41,7 +41,7 @@ export class FeedService {
 
     fetchFeedCollection(channelId: number, forceFetch = false) {
         if (!this.feedCache.has(channelId) || forceFetch) {
-            this.feedCache.set(channelId, this.appStore.select('currentStore').pipe(
+            const observable = this.appStore.select('currentStore').pipe(
                 take(1),
                 flatMap((store) =>
                     this.httpClient.get(`${environment.API_URL}/feed`, {
@@ -49,8 +49,19 @@ export class FeedService {
                             .set('catalogId', String(store.id))
                             .set('channelId', String(channelId))
                             .set('country', store.country)
-                    }))) as Observable<PagedResponse<{ feed: Feed[] }>>);
+                    })),
+                publishReplay()
+            ) as ConnectableObservable<PagedResponse<{ feed: Feed[] }>>;
+            observable.connect();
+            this.feedCache.set(channelId,  observable);
         }
         return this.feedCache.get(channelId);
+    }
+
+    mapFeedCategory(feedId, catalogCategoryId: number, channelCategoryId: number) {
+        return this.httpClient.put(
+            `${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`,
+            {mapping: {channelCategoryId}}
+        );
     }
 }

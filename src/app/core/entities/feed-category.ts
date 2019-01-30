@@ -1,10 +1,10 @@
-import { FeedCategoryMap } from './feed-category-map';
-import { ChannelCategory } from 'sfl-shared/entities';
-
-export interface FeedCategory {
+interface Category {
     id: number;
     catalogId: number;
     name: string;
-    categoryMap: FeedCategoryMap;
-    channelCategory: ChannelCategory;
+}
+
+export interface FeedCategory {
+    catalogCategory: Category,
+    channelCategory: Category,
 }

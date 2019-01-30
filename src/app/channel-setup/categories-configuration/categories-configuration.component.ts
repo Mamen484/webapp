@@ -4,7 +4,7 @@ import { ChannelService } from '../../core/services/channel.service';
 import { Category } from '../../core/entities/category';
 import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, switchMap, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Channel } from 'sfl-shared/entities';
 import { FeedCategory } from '../../core/entities/feed-category';
@@ -13,6 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CategoryMapping } from '../category-mapping';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 import { Feed } from '../../core/entities/feed';
+import { AppState } from '../../core/entities/app-state';
+import { Store } from '@ngrx/store';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -54,7 +56,8 @@ export class CategoriesConfigurationComponent implements OnInit {
     constructor(protected matDialog: MatDialog,
                 protected channelService: ChannelService,
                 protected feedService: FeedService,
-                protected route: ActivatedRoute) {
+                protected route: ActivatedRoute,
+                protected appStore: Store<AppState>) {
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -110,8 +113,13 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     saveMatching() {
-        this.resetMatching();
-        this.updatePercentage();
+        this.feedService.mapFeedCategory(this.feed.id, this.chosenClientsCategoryId, this.chosenChannelCategory.id)
+            .subscribe(() => {
+                this.resetMatching();
+                this.updateData();
+                this.updatePercentage();
+            });
+
     }
 
     showCloseDialog() {
@@ -122,7 +130,10 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.searchChannelCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
-            switchMap(name => this.channelService.getChannelCategories(this.channel.id, {name})),
+            switchMap(name =>
+                this.appStore.select('currentStore').pipe(
+                    flatMap(store => this.channelService.getChannelCategories(this.channel.id, {name, country: store.country})))
+            ),
         )
             .subscribe(response => this.channelCategoryOptions = response._embedded.category);
     }
@@ -152,7 +163,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.totalCategoriesNumber = categories.total;
             this.processingClientCategorySearch = false;
             if (this.categories.length > 0) {
-                this.chosenClientsCategoryId = this.categories[0].id;
+                this.chosenClientsCategoryId = this.categories[0].catalogCategory.id;
             }
         });
     }

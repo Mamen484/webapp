@@ -9,6 +9,8 @@ import { EMPTY, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryMapping } from '../category-mapping';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -28,12 +30,14 @@ describe('CategoriesConfigurationComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
+    let store: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         channelService = jasmine.createSpyObj('ChannelService', ['getChannelCategories']);
         feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection', 'fetchCategoryCollection']);
         route = {data: new Subject()};
+        store = jasmine.createSpyObj('Store spy', ['select']);
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigurationComponent, LegacyLinkMockDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -43,6 +47,7 @@ describe('CategoriesConfigurationComponent', () => {
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
                 {provide: ActivatedRoute, useValue: route},
+                {provide: Store, useValue: store},
             ],
         })
             .compileComponents();
