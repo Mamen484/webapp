@@ -3,10 +3,10 @@
 export const environment = {
     production: 'false',
     DEFAULT_LANGUAGE: 'fr',
-    APP_URL: 'http://app.shopping-feed.lan',
+    APP_URL: '//app.shopping-feed.lan',
     APP_AUTHORIZATION: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
-    API_URL_WITHOUT_VERSION: 'http://api.shopping-feed.lan',
-    API_URL: 'http://api.shopping-feed.lan/v1',
+    API_URL_WITHOUT_VERSION: '//api.shopping-feed.lan',
+    API_URL: '//api.shopping-feed.lan/v1',
     BASE_HREF: '/v3',
     SHOPIFY_APP_URL: 'https://apps.shopify.com/shopping-feed-dev',
     SUPPORT_URL: 'https://shoppingfeed.zendesk.com/hc',
