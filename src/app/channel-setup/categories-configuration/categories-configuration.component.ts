@@ -73,7 +73,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return Boolean(this.chosenChannelCategory || this.searchChannelCategoryControl.value);
+        return Boolean(this.chosenClientsCategoryId || this.searchChannelCategoryControl.value);
     }
 
     ngOnInit() {
