@@ -18,6 +18,7 @@ import { Store } from '@ngrx/store';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
+const CONFLICT_ERROR_CODE = 409;
 
 @Component({
     templateUrl: './categories-configuration.component.html',
@@ -167,6 +168,11 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.processingClientCategorySearch = false;
             if (this.categories.length > 0) {
                 this.chosenClientsCategoryId = this.categories[0].catalogCategory.id;
+            }
+        }, error => {
+            if (error.status === CONFLICT_ERROR_CODE) {
+                this.currentPage = error.pages - 1;
+                this.updateData();
             }
         });
     }
