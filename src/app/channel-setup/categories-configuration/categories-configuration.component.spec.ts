@@ -130,11 +130,6 @@ describe('CategoriesConfigurationComponent', () => {
         expect(component.hasModifications()).toBe(true);
     });
 
-    it('should be marked as NOT having modifications if if only a client category chosen', () => {
-        component.chosenClientsCategoryId = 12;
-        expect(component.hasModifications()).toBe(false);
-    });
-
     it('should be marked as NOT having modifications if if only a channel category chosen', () => {
         component.chosenChannelCategory = <any>{};
         expect(component.hasModifications()).toBe(false);
