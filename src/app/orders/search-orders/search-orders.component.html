@@ -1,30 +1,22 @@
-<label>
-  <mat-card>
-    <mat-card-content>
-      <div class="search-container">
-        <mat-icon>search</mat-icon>
-        <input [formControl]="searchControl" class="mat-subheading-1" i18n-placeholder placeholder="Search orders">
-        <button mat-stroked-button (click)="openDialog()" color="accent">FILTER</button>
-      </div>
-      <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
-    </mat-card-content>
-  </mat-card>
-</label>
+<sfl-solo-search i18n-placeholder placeholder="Search orders" i18n-filterButtonText filterButtonText="Filter"
+                (openFilters)="openDialog()" [processing]="processing" [value]="searchControlValue"
+                (searchQueryChanged)="ordersFilterService.patchFilter('search', $event)"></sfl-solo-search>
+
 <mat-chip-list [selectable]="false">
-  <mat-chip *ngIf="selectedChannel">
-    <ng-container i18n>Channel: {{selectedChannel}}</ng-container>
-    <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
-  </mat-chip>
-  <mat-chip *ngIf="filter.since">
-    <ng-container i18n>Since: {{filter.since | date:'short'}}</ng-container>
-    <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
-  </mat-chip>
-  <mat-chip *ngIf="filter.until">
-    <ng-container i18n>Until: {{filter.until | date:'short'}}</ng-container>
-    <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
-  </mat-chip>
-  <mat-chip *ngIf="filter.tag && filter.tag !== 'all'">
-    <ng-container i18n>Tag: {{filter.tag}}</ng-container>
-    <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
-  </mat-chip>
+    <mat-chip *ngIf="selectedChannel">
+        <ng-container i18n>Channel: {{selectedChannel}}</ng-container>
+        <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="filter.since">
+        <ng-container i18n>Since: {{filter.since | date:'short'}}</ng-container>
+        <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="filter.until">
+        <ng-container i18n>Until: {{filter.until | date:'short'}}</ng-container>
+        <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="filter.tag && filter.tag !== 'all'">
+        <ng-container i18n>Tag: {{filter.tag}}</ng-container>
+        <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
+    </mat-chip>
 </mat-chip-list>

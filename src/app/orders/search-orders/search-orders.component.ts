@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
 import { MatDialog } from '@angular/material';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { debounceTime, filter } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { ActivatedRoute } from '@angular/router';
 import { OrdersFilterPatch } from '../../core/entities/orders/orders-filter-patch';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-
-const SEARCH_DEBOUNCE = 300;
-const MIN_QUERY_LENGTH = 2;
 
 @Component({
     selector: 'sf-search-orders',
@@ -22,13 +17,13 @@ const MIN_QUERY_LENGTH = 2;
 })
 export class SearchOrdersComponent implements OnInit {
 
-    searchControl = new FormControl();
+    searchControlValue = '';
     processing = false;
     filter: OrdersFilter;
     selectedChannel;
 
-    constructor(protected dialog: MatDialog,
-                protected ordersFilterService: OrdersFilterService,
+    constructor(public ordersFilterService: OrdersFilterService,
+                protected dialog: MatDialog,
                 protected appStore: Store<AppState>,
                 protected route: ActivatedRoute) {
 
@@ -36,17 +31,11 @@ export class SearchOrdersComponent implements OnInit {
             .subscribe(([f, channels]) => {
                 this.filter = f;
                 this.setSelectedChannel(f, channels);
-                this.searchControl.setValue(f.search, {emitEvent: false});
             });
     }
 
     ngOnInit() {
         this.initializeTab();
-        this.searchControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === '')
-        )
-            .subscribe(searchQuery => this.ordersFilterService.patchFilter('search', searchQuery));
     }
 
     openDialog() {

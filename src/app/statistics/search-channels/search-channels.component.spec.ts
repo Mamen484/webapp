@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ChannelsRequestParams } from 'sfl-shared/entities';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { startWith } from 'rxjs/operators';
 
 describe('SearchChannelsComponent', () => {
     let component: SearchChannelsComponent;
@@ -33,7 +35,8 @@ describe('SearchChannelsComponent', () => {
             ],
             providers: [
                 {provide: MatDialog, useValue: {open: () => ({afterClosed: afterClosedSpy})}}
-            ]
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));
@@ -49,14 +52,6 @@ describe('SearchChannelsComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should emit the value when the control changes', done => {
-        component.applyFilter.subscribe(value => {
-            expect(value instanceof ChannelsRequestParams).toEqual(true);
-            expect(value.searchQuery).toEqual('something');
-            done();
-        });
-        component.searchControl.setValue('something');
-    });
 
     it('should emit the filter params when the dialog window closes', done => {
         component.applyFilter.subscribe(value => {
@@ -111,34 +106,4 @@ describe('SearchChannelsComponent', () => {
         component.filter.segment = 'fashion';
         component.cancelFilter('type');
     });
-
-    it('should not emit the filter with one character (at least two characters)', done => {
-        component.applyFilter.subscribe(value => {
-            expect(value instanceof ChannelsRequestParams).toEqual(true);
-            // ignores 'a', receives only 'ab'
-            expect(value.searchQuery).toEqual('ab');
-            done();
-        });
-
-        component.searchControl.setValue('a');
-        component.searchControl.setValue('ab');
-    });
-
-    it('should reset the searchQuery filter when the user deletes all the characters from the search input', done => {
-
-        let expectedValue = 'ab';
-        component.searchControl.setValue('ab');
-        component.applyFilter.subscribe((value: ChannelsRequestParams) => {
-            expect(value.searchQuery).toEqual(expectedValue);
-
-            if (expectedValue === '') {
-                done();
-                return;
-            }
-            setTimeout(() => {
-                expectedValue = '';
-                component.searchControl.setValue('');
-            }, 0);
-        });
-    })
 });

@@ -49,6 +49,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
 import { SflSharedModule } from 'sfl-shared';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
+import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 
 @NgModule({
     imports: [
@@ -86,6 +87,7 @@ import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
         ReactiveFormsModule,
         RouterModule,
         SflSharedModule,
+        SflSoloSearchModule,
     ],
     exports: [
         // modules
@@ -121,6 +123,7 @@ import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
         ReactiveFormsModule,
         RouterModule,
         SflSharedModule,
+        SflSoloSearchModule,
 
         // pipes
         ArrayFromNumberPipe,
@@ -140,8 +143,7 @@ import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
         CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
         ImageComponent,
-        ValidationErrorsSnackbarComponent
-
+        ValidationErrorsSnackbarComponent,
     ],
     declarations: [
         LargeNumberSuffixPipe,

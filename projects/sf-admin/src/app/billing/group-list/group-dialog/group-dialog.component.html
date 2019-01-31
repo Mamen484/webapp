@@ -1,0 +1,42 @@
+<div matDialogTitle i18n>Billing Group</div>
+
+<mat-dialog-content>
+    <sfa-error-message *ngIf="serverError">{{serverError}}</sfa-error-message>
+    <form fxLayout="column">
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label i18n>Group name</mat-label>
+            <input matInput name="groupName" [(ngModel)]="group.name" required>
+            <mat-error>The group name is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" *ngFor="let store of group.stores; let i = index">
+            <mat-label i18n>Name</mat-label>
+            <input matInput name="store[{{store.id}}]" readonly [value]="store.name">
+            <button mat-icon-button matSuffix (click)="remove(i)" matTooltip="Remove store" i18n-matTooltip>
+                <mat-icon class="mat-18">remove</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent">
+            <mat-label i18n>New store</mat-label>
+            <input matInput [formControl]="searchControl" sfaSearchBillingStore [searchControl]="searchControl"
+                   (searchResults)="storeSearchResults = $event" [matAutocomplete]="auto" (blur)="searchControl.reset()"
+                   autocomplete="off">
+            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected)="addStore($event.option.value); searchControl.reset()">
+                <mat-option *ngFor="let option of storeSearchResults" [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose i18n color="accent">Cancel</button>
+    <button mat-button i18n color="accent" (click)="save()">
+        <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="processing" color="accent"></mat-spinner>
+        <ng-container *ngIf="!processing" i18n>Save</ng-container>
+    </button>
+
+</mat-dialog-actions>

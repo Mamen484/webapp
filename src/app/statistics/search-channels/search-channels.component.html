@@ -1,17 +1,7 @@
-<label>
-    <mat-card>
-        <mat-card-content>
-            <div class="search-container">
-                <mat-icon>search</mat-icon>
-                <input [formControl]="searchControl" class="mat-subheading-1" [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel">
-                <button mat-stroked-button color="accent" (click)="openDialog()">
-                    Filter
-                </button>
-            </div>
-            <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processing"></mat-progress-bar>
-        </mat-card-content>
-    </mat-card>
-</label>
+<sfl-solo-search [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel"
+                filterButtonText="Filter" i18n-filterButtonText (openFilters)="openDialog()"
+                (searchQueryChanged)="filter.searchQuery = $event; applyFilter.emit(filter)"
+                [processing]="processing"></sfl-solo-search>
 <mat-chip-list [selectable]="false">
     <mat-chip *ngIf="filter.country">
         <span *ngIf="filter.country === 'at'" i18n>Austria</span>
