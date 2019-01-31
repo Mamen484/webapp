@@ -113,6 +113,10 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     saveMatching() {
+        if (!this.chosenChannelCategory || !this.chosenClientsCategoryId) {
+            this.resetMatching();
+            return;
+        }
         this.feedService.mapFeedCategory(this.feed.id, this.chosenClientsCategoryId, this.chosenChannelCategory.id)
             .subscribe(() => {
                 this.resetMatching();
