@@ -73,7 +73,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return Boolean(this.chosenClientsCategoryId || this.searchChannelCategoryControl.value);
+        return Boolean( this.searchChannelCategoryControl.value);
     }
 
     ngOnInit() {
@@ -89,7 +89,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     openFilterDialog() {
-        this.matDialog.open(FilterDialogComponent).afterClosed().subscribe(state => {
+        this.matDialog.open(FilterDialogComponent, {data: this.categoryMappingFilter}).afterClosed().subscribe(state => {
             if (typeof state !== 'undefined') {
                 this.categoryMappingFilter = state;
                 this.updateData();

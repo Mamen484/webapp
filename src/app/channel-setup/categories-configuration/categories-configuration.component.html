@@ -26,21 +26,18 @@
                 <mat-card-content>
                     <mat-list dense>
                         <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.catalogCategory.id"
-                                       [class.selected]="chosenClientsCategoryId === category.catalogCategory.id"
-                                       [class.configured]="category.channelCategory"
-                                       [class.misconfigured]="!category.channelCategory">
+                                       [class.selected]="chosenClientsCategoryId === category.catalogCategory.id">
                             <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
                                 <div fxFlex>{{category.catalogCategory.name}}</div>
-                                <mat-chip-list>
-                                    <mat-chip *ngIf="!category.channelCategory" color="warn">
+                                    <div class="sf-label red mat-chip" *ngIf="!category.channelCategory">
                                         <mat-icon color="warn">cancel</mat-icon>
                                         <ng-container i18n>Misconfigured</ng-container>
-                                    </mat-chip>
-                                    <mat-chip *ngIf="category.channelCategory">
+                                    </div>
+
+                                    <div class="sf-label green mat-chip" *ngIf="category.channelCategory">
                                         <mat-icon>check_circle</mat-icon>
                                         <ng-container i18n>Configured</ng-container>
-                                    </mat-chip>
-                                </mat-chip-list>
+                                    </div>
                             </div>
                         </mat-list-item>
                         <mat-list-item *ngIf="categories && categories.length === 0 && !processingClientCategorySearch" i18n>
