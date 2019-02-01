@@ -4,9 +4,9 @@ import { environment } from '../../environments/environment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { flatMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { PagedResponse } from 'sfl-shared/entities';
 import { Ticket } from './entities/ticket';
+import { PagedResponse } from 'sfl-shared/entities';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +30,7 @@ export class TicketsService {
         return this.appStore.select('currentStore').pipe(
             flatMap(store => this.httpClient.get(environment.API_URL + `/store/${store.id}/ticket`, {params}))
         ) as Observable<PagedResponse<{ ticket: Ticket[] }>>;
+
     }
 
     fetchTicket(ticketId) {

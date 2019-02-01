@@ -37,10 +37,7 @@ mat-progress-bar {
   z-index: 150;
 }
 
-.label {
-  padding: 5px 10px;
-  border-radius: 16px;
-  width: fit-content;
+.sf-label {
 
   mat-icon {
     color: inherit;
@@ -48,20 +45,9 @@ mat-progress-bar {
   }
 
   &.blue {
-    padding: 7px 12px;
     background-color: mat-color($accent, 0.3);
     color: $black-87-opacity;
 
-  }
-
-  &.green {
-    background-color: mat-color($green, 0.3);
-    color: mat-color($green);
-  }
-
-  &.red {
-    background-color: mat-color($warn, 0.3);
-    color: mat-color($warn);
   }
 
   &.grey {
@@ -72,5 +58,15 @@ mat-progress-bar {
   &.navy {
     background-color: rgba(63, 58, 177, 0.3);
     color: rgb(63, 58, 177);
+  }
+
+  &.green {
+    background-color: mat-color($green, 0.3);
+    color: mat-color($green);
+  }
+
+  &.red {
+    background-color: mat-color($warn, 0.3);
+    color: mat-color($warn);
   }
 }
