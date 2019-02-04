@@ -11,6 +11,8 @@ import { Ticket } from '../entities/ticket';
 import { map } from 'rxjs/operators';
 import { TicketState } from '../entities/ticket-state.enum';
 import { TicketType } from '../entities/ticket-type.enum';
+import { MatDialog } from '@angular/material';
+import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -27,12 +29,16 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     ticketState = TicketState;
     ticketType = TicketType;
 
+    selectedType: TicketType;
+    selectedState: TicketState;
+
     isLoadingResults;
 
     constructor(protected appStore: Store<AppState>,
                 protected ticketsService: TicketsService,
                 protected userInfo: SflUserService,
-                protected windowRef: SflWindowRefService) {
+                protected windowRef: SflWindowRefService,
+                protected matDialog: MatDialog) {
         super();
     }
 
@@ -46,7 +52,20 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
         this.windowRef.nativeWindow.open(environment.ZAPIER_LINK)
     }
 
-    protected fetchCollection(params: { limit: number; page: number; search: string }): Observable<{ total: number; dataList: any[] }> {
+    openFilters() {
+        this.matDialog.open(FilterTicketsDialogComponent, {
+            data: {type: this.selectedType, state: this.selectedState},
+        }).afterClosed().subscribe(({type, state}) => {
+            this.isLoadingResults = true;
+            this.selectedType = type;
+            this.selectedState = state;
+            this.fetchData();
+        });
+    }
+
+    protected fetchCollection(params): Observable<{ total: number; dataList: any[] }> {
+        params.type = this.selectedType;
+        params.state = this.selectedState;
         return this.ticketsService.fetchTicketCollection(params)
             .pipe(map(response => ({total: response.total, dataList: response._embedded.ticket})));
     }

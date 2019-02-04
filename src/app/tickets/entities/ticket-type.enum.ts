@@ -5,5 +5,5 @@ export enum TicketType {
     shipOrder = 'order.notify.shipment',
     cancelOrder = 'order.notify.cancellation',
     acceptOrder = 'order.notify.acceptance',
-    refundorder = 'order.notify.refund',
+    refundOrder = 'order.notify.refund',
 }

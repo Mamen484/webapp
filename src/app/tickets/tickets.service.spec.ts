@@ -4,8 +4,10 @@ import { TicketsService } from './tickets.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { TicketType } from './entities/ticket-type.enum';
+import { TicketState } from './entities/ticket-state.enum';
 
 describe('TicketsService', () => {
     let service: TicketsService;
@@ -34,8 +36,16 @@ describe('TicketsService', () => {
     it('should fetch a valid endpoint on fetchTicketCollection() call', () => {
         appStore.select.and.returnValue(of({id: 43}));
         service.fetchTicketCollection().subscribe();
-        console.log(httpMock);
         const req = httpMock.expectOne(environment.API_URL + '/store/43/ticket');
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should pass params on fetchTicketCollection() call', () => {
+        appStore.select.and.returnValue(of({id: 43}));
+        service.fetchTicketCollection({type: TicketType.acceptOrder, state: TicketState.succeed}).subscribe();
+        const req = httpMock.expectOne(
+            environment.API_URL + `/store/43/ticket?type=${TicketType.acceptOrder}&state=${TicketState.succeed}`
+        );
         expect(req.request.method).toBe('GET');
     });
 

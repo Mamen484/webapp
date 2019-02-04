@@ -41,7 +41,7 @@
             <mat-card class="actions">
                 <mat-card-content fxLayout="row">
                     <div fxFlex></div>
-                    <button mat-stroked-button color="accent" i18n>Filters</button>
+                    <button mat-stroked-button color="accent" i18n (click)="openFilters()">Filters</button>
                 </mat-card-content>
             </mat-card>
             <div class="table-container mat-elevation-z1">
@@ -60,7 +60,7 @@
                                 <div *ngSwitchCase="ticketType.acceptOrder" class="sf-label mat-chip blue" i18n>Accept</div>
                                 <div *ngSwitchCase="ticketType.refuseOrder" class="sf-label mat-chip blue" i18n>Refuse</div>
                                 <div *ngSwitchCase="ticketType.cancelOrder" class="sf-label mat-chip blue" i18n>Cancel</div>
-                                <div *ngSwitchCase="ticketType.refundorder" class="sf-label mat-chip blue" i18n>Refund</div>
+                                <div *ngSwitchCase="ticketType.refundOrder" class="sf-label mat-chip blue" i18n>Refund</div>
                                 <div *ngSwitchCase="ticketType.acknowledgeOrder" class="sf-label mat-chip blue" i18n>Acknowledge</div>
                                 <div *ngSwitchCase="ticketType.unacknowledgeOrder" class="sf-label mat-chip blue" i18n>Unacknowledge</div>
                                 <div *ngSwitchDefault class="sf-label mat-chip blue">{{ element.type }}</div>
