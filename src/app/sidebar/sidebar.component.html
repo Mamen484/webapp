@@ -40,11 +40,17 @@
             <mat-icon>apps</mat-icon>
             <span fxHide fxShow.xs i18n>Apps</span>
         </mat-list-item>
-        <mat-list-item class="mat-active" matTooltip="SALES" matTooltipPosition="after" *ngIf="currentStore?.sales?.pathIsActive"
+        <mat-list-item matTooltip="SALES" matTooltipPosition="after" *ngIf="currentStore?.sales?.pathIsActive"
                        i18n-matTooltip [matTooltipDisabled]="hideTooltips">
             <a sflLegacyLink path="/index/sales" class="homepage-link">
                 <mat-icon>local_offer</mat-icon>
                 <span fxHide fxShow.xs i18n>Sales</span>
+            </a>
+        </mat-list-item>
+        <mat-list-item matTooltip="TICKETS" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
+            <a routerLink="/tickets" class="homepage-link">
+                <mat-icon [class.active]="currentRoute === 'tickets'">developer_board</mat-icon>
+                <span fxHide fxShow.xs i18n>Tickets</span>
             </a>
         </mat-list-item>
     </mat-list>
