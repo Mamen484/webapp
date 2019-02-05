@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StateLabelComponent } from './state-label.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('StateLabelComponent', () => {
     let component: StateLabelComponent;
@@ -8,7 +9,8 @@ describe('StateLabelComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [StateLabelComponent]
+            declarations: [StateLabelComponent],
+            schemas: [NO_ERRORS_SCHEMA],
         })
             .compileComponents();
     }));
