@@ -1,4 +1,13 @@
 @import '../../../../src/sass/variables';
 
+$config: mat-typography-config(
+        $font-family: '"Noto Sans", sans-serif',
+        $body-1: mat-typography-level(15px, 20px, 400),
+        $body-2: mat-typography-level(15px, 24px, 700),
+        $button: mat-typography-level(15px, 15px, 700),
+        $title: mat-typography-level(20px, 32px, 700),
+        $input: mat-typography-level(16px, 1.125, 400)
+);
+
 $toolbar-height: 0;
 $paginator-height: 65px;
