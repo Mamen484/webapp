@@ -1,4 +1,5 @@
-<div class="scrollable-container">
+<sfa-sidebar></sfa-sidebar>
+<div class="sf-content">
     <form (ngSubmit)="save()">
         <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
             <mat-card fxFlex="50%" [formGroup]="form">
@@ -52,7 +53,8 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
-                        <mat-select placeholder="Source" formControlName="source" i18n-placeholder required (selectionChange)="setShowMappings($event)">
+                        <mat-select placeholder="Source" formControlName="source" i18n-placeholder required
+                                    (selectionChange)="setShowMappings($event)">
                             <mat-option value="prestashop" selected>prestashop</mat-option>
                             <mat-option value="webetsolutions">webetsolutions</mat-option>
                             <mat-option value="bigcommerce">bigcommerce</mat-option>
@@ -92,7 +94,8 @@
                     </mat-form-field>
                 </mat-card-content>
             </mat-card>
-            <mat-card fxFlex="50%" [formGroup]="mappingsForm" class="mappings-form-card" [attr.data-show-mappings-card]="showMappings">
+            <mat-card fxFlex="50%" [formGroup]="mappingsForm" class="mappings-form-card"
+                      [attr.data-show-mappings-card]="showMappings">
                 <mat-card-content class="two-column" *ngIf="showMappings;else mappingWillBeHereMessage">
                     <div>
                         <label for="sf-cu-brand-mapping">brand</label>
@@ -149,7 +152,7 @@
                     </div>
                     <ng-container formArrayName="images">
                         <div *ngFor="let control of mappingsForm.controls['images'].controls; index as i">
-                            <label for="sf-cu-image_{{i}}-mapping">image_{{i+1}}</label>
+                            <label for="sf-cu-image_{{i}}-mapping">image_{{i + 1}}</label>
                             <mat-form-field floatPlaceholder="never">
                                 <input id="sf-cu-image_{{i}}-mapping" matInput placeholder="Describe"
                                        [formControl]="control" i18n-placeholder>

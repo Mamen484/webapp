@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSidenav } from '@angular/material';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
@@ -21,20 +21,33 @@ import { SflToggleSidebarService } from './toggle-sidebar.service';
 @Component({
     selector: 'sfl-sidebar-container',
     templateUrl: './sidebar-container.component.html',
-    styleUrls: ['./sidebar-container.component.scss']
+    styleUrls: ['./sidebar-container.component.scss'],
 })
 export class SflSidebarContainerComponent implements OnInit {
 
     @ViewChild('sidenav') sidenav: MatSidenav;
 
+    /** The sidebar will be placed below the menu */
+    @Input() menuHeight = '64px';
+
+    /** The sidebar width */
+    @Input() width = '75px';
+
+    /** Background color of the sidebar */
+    @Input() bgColor = 'white';
+
+    /** Right border color of the sidebar */
+    @Input() borderColor = '#eeeeee';
+
+
     opened = true;
     isMobile = false;
 
-    constructor(protected mediaObserver: MediaObserver, protected toggleSidebarSevice: SflToggleSidebarService) {
+    constructor(protected mediaObserver: MediaObserver, protected toggleSidebarService: SflToggleSidebarService) {
     }
 
     ngOnInit() {
-        this.toggleSidebarSevice.getSubscription().subscribe(() => this.sidenav.toggle());
+        this.toggleSidebarService.getSubscription().subscribe(() => this.sidenav.toggle());
         this.mediaObserver.media$.subscribe((value) => {
             this.opened = value.mqAlias !== 'xs';
             this.isMobile = value.mqAlias === 'xs';
