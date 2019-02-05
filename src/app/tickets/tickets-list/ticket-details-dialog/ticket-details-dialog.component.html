@@ -1,0 +1,40 @@
+<div matDialogTitle fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center" *ngIf="ticket">
+    <div i18n fxFlex>ID {{ticket.id}}</div>
+    <sf-ticket-state-label [state]="ticket?.state"></sf-ticket-state-label>
+</div>
+
+<mat-dialog-content>
+    <table mat-table [dataSource]="dataSource" *ngIf="ticket">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef i18n> ID</th>
+            <td mat-cell *matCellDef="let element"> {{element.reference}} </td>
+        </ng-container>
+        <ng-container matColumnDef="marketplace">
+            <th mat-header-cell *matHeaderCellDef i18n> Marketplace</th>
+            <td mat-cell *matCellDef="let element"> {{element.channelName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="trackingNumber">
+            <th mat-header-cell *matHeaderCellDef i18n> Tracking number</th>
+            <td mat-cell *matCellDef="let element"> {{element.trackingNumber}} </td>
+        </ng-container>
+        <ng-container matColumnDef="carrier">
+            <th mat-header-cell *matHeaderCellDef i18n> Carrier</th>
+            <td mat-cell *matCellDef="let element"> {{element.carrier}} </td>
+        </ng-container>
+        <ng-container matColumnDef="trackingLink">
+            <th mat-header-cell *matHeaderCellDef i18n> Tracking URL</th>
+            <td mat-cell *matCellDef="let element"> {{element.trackingLink}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+    <div fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner *ngIf="!ticket" color="accent"></mat-spinner>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button matDialogClose i18n color="accent">OK</button>
+</mat-dialog-actions>

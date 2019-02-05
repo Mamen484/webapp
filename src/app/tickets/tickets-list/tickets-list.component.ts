@@ -13,6 +13,7 @@ import { TicketState } from '../entities/ticket-state.enum';
 import { TicketType } from '../entities/ticket-type.enum';
 import { MatDialog } from '@angular/material';
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
+import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -55,12 +56,19 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     openFilters() {
         this.matDialog.open(FilterTicketsDialogComponent, {
             data: {type: this.selectedType, state: this.selectedState},
-        }).afterClosed().subscribe(({type, state}) => {
+        }).afterClosed().subscribe((data: { type: TicketType, state: TicketState }) => {
+            if (!data) {
+                return;
+            }
             this.isLoadingResults = true;
-            this.selectedType = type;
-            this.selectedState = state;
+            this.selectedType = data.type;
+            this.selectedState = data.state;
             this.fetchData();
         });
+    }
+
+    showTicketDetails(ticketId) {
+        this.matDialog.open(TicketDetailsDialogComponent, {data: ticketId});
     }
 
     protected fetchCollection(params): Observable<{ total: number; dataList: any[] }> {

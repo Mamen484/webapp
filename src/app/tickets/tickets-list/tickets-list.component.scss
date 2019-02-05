@@ -36,37 +36,3 @@ mat-progress-bar {
   position: relative;
   z-index: 150;
 }
-
-.sf-label {
-
-  mat-icon {
-    color: inherit;
-    margin-right: 10px;
-  }
-
-  &.blue {
-    background-color: mat-color($accent, 0.3);
-    color: $black-87-opacity;
-
-  }
-
-  &.grey {
-    background-color: mat-color($grey, 0.3);
-    color: mat-color($grey);
-  }
-
-  &.navy {
-    background-color: rgba(63, 58, 177, 0.3);
-    color: rgb(63, 58, 177);
-  }
-
-  &.green {
-    background-color: mat-color($green, 0.3);
-    color: mat-color($green);
-  }
-
-  &.red {
-    background-color: mat-color($warn, 0.3);
-    color: mat-color($warn);
-  }
-}

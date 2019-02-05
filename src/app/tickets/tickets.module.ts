@@ -5,15 +5,17 @@ import { TicketsRoutingModule } from './tickets-routing.module';
 import { TicketsListComponent } from './tickets-list/tickets-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { FilterTicketsDialogComponent } from './tickets-list/filter-tickets-dialog/filter-tickets-dialog.component';
+import { TicketDetailsDialogComponent } from './tickets-list/ticket-details-dialog/ticket-details-dialog.component';
+import { StateLabelComponent } from './tickets-list/state-label/state-label.component';
 
 @NgModule({
-    declarations: [TicketsListComponent, FilterTicketsDialogComponent],
+    declarations: [TicketsListComponent, FilterTicketsDialogComponent, TicketDetailsDialogComponent, StateLabelComponent],
     imports: [
         CommonModule,
         TicketsRoutingModule,
         SharedModule,
     ],
-    entryComponents: [FilterTicketsDialogComponent],
+    entryComponents: [FilterTicketsDialogComponent, TicketDetailsDialogComponent],
 })
 export class TicketsModule {
 }
