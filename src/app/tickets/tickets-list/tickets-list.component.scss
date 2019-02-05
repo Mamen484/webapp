@@ -1,5 +1,7 @@
 @import '../../../sass/variables';
 
+$hover-row-bg: #EBEBEB;
+
 section {
   &:first-of-type {
     margin: 0;
@@ -35,4 +37,12 @@ mat-progress-bar {
 .progress-bar-wrapper {
   position: relative;
   z-index: 150;
+}
+
+[mat-row] {
+  cursor: pointer;
+
+  &:hover, &:focus {
+    background-color: $hover-row-bg;
+  }
 }
