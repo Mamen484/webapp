@@ -21,7 +21,7 @@ $filtering-tabs-height: 49px;
 $paginator-height: 65px;
 
 .table-container {
-  max-height: calc(100vh - #{$toolbar-height} - #{$subheader-height} - 5 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$filtering-tabs-height} - #{$paginator-height});
+  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$paginator-height});
   overflow: auto;
 }
 
@@ -142,4 +142,19 @@ mat-chip {
 
 .invoice-link {
   visibility: hidden;
+}
+
+
+mat-chip-list.filter-chips {
+  margin: 5px;
+
+  mat-chip {
+    mat-icon {
+      cursor: pointer;
+      color: mat-color($grey);
+    }
+    mat-icon, span {
+      vertical-align: middle;
+    }
+  }
 }

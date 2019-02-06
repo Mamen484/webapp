@@ -78,7 +78,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"  (click)="showTicketDetails(row.id)"></tr>
                 </table>
-                <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+                <div *ngIf="!isLoadingResults && !dataSource.data.length" i18n class="no-results mat-body-1">
                     No tickets found.
                 </div>
             </div>

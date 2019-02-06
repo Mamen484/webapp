@@ -1,26 +1,17 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    HostListener,
-    OnDestroy,
-    OnInit,
-    ViewChild
-} from '@angular/core';
-import { MatDialog, MatPaginator, MatSnackBar, MatTable, MatTableDataSource, PageEvent } from '@angular/material';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSnackBar, MatTable, PageEvent } from '@angular/material';
 import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from 'sfl-shared/entities';
 import { toPairs } from 'lodash';
 import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { combineLatest, Subject, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { debounceTime, filter, flatMap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, map, take, tap } from 'rxjs/operators';
 import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
@@ -30,26 +21,22 @@ import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
 import { environment } from '../../../environments/environment';
+import { TableOperations } from 'sfl-shared/utils/table-operations';
+import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
-const DEFAULT_PAGE_SIZE = '10';
 
 
 @Component({
     selector: 'sf-orders-table',
     templateUrl: './orders-table.component.html',
     styleUrls: ['./orders-table.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OrdersTableComponent implements OnInit, OnDestroy {
+export class OrdersTableComponent extends TableOperations<OrdersTableItem> implements OnInit, OnDestroy {
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatTable) ordersTable: MatTable<OrdersTableItem>;
 
     selection = new SelectionModel<OrdersTableItem>(true, []);
-
-    resultsLength = 0;
-
     optionalColumns = {
         updatedAt: false,
         services: false,
@@ -65,16 +52,12 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
     requiredLeftColumns = ['checkbox', 'tags', 'hasErrors', 'marketplace', 'reference', 'status', 'total', 'date'];
     requiredRightColumns = ['invoice-link'];
     displayedColumns = this.requiredLeftColumns.concat(this.requiredRightColumns);
-    dataSource: MatTableDataSource<OrdersTableItem> = new MatTableDataSource();
-    isLoadingResults = false;
     subscription: Subscription;
-    fetchSubscription: Subscription;
     ordersFilter: OrdersFilter;
     exports: any[];
     showStickyBorder = false;
     resize$ = new Subject();
-    pageSizeOptions = [10, 25, 50, 100];
-    pageSize = DEFAULT_PAGE_SIZE;
+    selectedChannel;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -86,6 +69,7 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
                 protected elementRef: ElementRef<HTMLElement>,
                 protected localStorage: SflLocalStorageService,
                 protected localeIdService: SflLocaleIdService) {
+        super();
     }
 
     @HostListener('window:resize', ['$event'])
@@ -98,6 +82,11 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         const numSelected = this.selection.selected.length;
         const numRows = this.dataSource.data.length;
         return numSelected === numRows;
+    }
+
+    cancelFilter(filterName, filterValue) {
+        this.isLoadingResults = true;
+        this.ordersFilterService.patchFilter(filterName, filterValue);
     }
 
     goToOrder(orderId: string) {
@@ -121,13 +110,12 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
 
         this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
             .subscribe(([store, ordersFilter]) => {
-                this.pageSize = ordersFilter.limit;
-                this.fetchData(ordersFilter);
+                this.pageSize = +ordersFilter.limit;
+                this.ordersFilter = ordersFilter;
+                this.isLoadingResults = true;
+                this.setSelectedChannel();
+                this.fetchData();
             });
-
-        this.paginator.page.subscribe(({pageIndex}) => {
-            this.ordersFilterService.patchFilter('page', String(pageIndex + 1))
-        });
 
         this.appStore.select('currentStore')
             .pipe(flatMap((store: Store) => this.ordersService.fetchExports(store.id)))
@@ -158,16 +146,23 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(tagsChanged => {
             if (tagsChanged) {
                 this.rememberSelection();
-                this.fetchData(this.ordersFilter);
+                this.fetchData();
             }
         })
+    }
+
+    openDialog() {
+        this.matDialog.open(OrdersFilterDialogComponent);
     }
 
     pageChanged(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
             this.localStorage.setItem(LocalStorageKey.ordersPageSize, event.pageSize.toString());
             this.ordersFilterService.patchFilter('limit', event.pageSize);
+        } else {
+            this.ordersFilterService.patchFilter('page', String(event.pageIndex + 1))
         }
+
     }
 
     setDisplayedColumns() {
@@ -257,27 +252,24 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         });
     }
 
-    protected fetchData(ordersFilter: OrdersFilter) {
-        this.isLoadingResults = true;
-        this.ordersFilter = ordersFilter;
-        this.changeDetectorRef.detectChanges();
-        if (this.fetchSubscription && !this.fetchSubscription.closed) {
-            this.fetchSubscription.unsubscribe();
-        }
-        this.fetchSubscription = this.ordersService.fetchOrdersList(ordersFilter)
-            .subscribe(ordersPage => {
-                this.selection.clear();
-                this.isLoadingResults = false;
-
-                this.resultsLength = ordersPage.total;
-                this.paginator.pageIndex = +ordersFilter.page - 1;
-
-                this.dataSource.data = ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order));
-                this.restoreSelection();
-                this.updateStickyColumnsStyles();
-            });
-
+    protected fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number; dataList: any[] }> {
+        this.ordersFilter.page = String(params.page);
+        this.ordersFilter.search = params.search;
+        this.ordersFilter.limit = String(params.limit);
+        return this.ordersService.fetchOrdersList(this.ordersFilter).pipe(
+            map(ordersPage => ({
+                total: ordersPage.total,
+                dataList: ordersPage._embedded.order.map(order => OrdersTableItem.createFromOrder(order))
+            })),
+            tap(ordersPage => this.selection.clear()));
     }
+
+    protected afterApplyingData() {
+        super.afterApplyingData();
+        this.restoreSelection();
+        this.updateStickyColumnsStyles();
+    }
+
 
     protected rememberSelection() {
         if (!this.selection.selected.length) {
@@ -325,5 +317,15 @@ export class OrdersTableComponent implements OnInit, OnDestroy {
         const tableWidth = this.elementRef.nativeElement.querySelector('table.orders-table').getBoundingClientRect().width;
         const containerWidth = this.elementRef.nativeElement.querySelector('.table-scrollable').getBoundingClientRect().width;
         this.showStickyBorder = tableWidth > containerWidth;
+    }
+
+    protected setSelectedChannel() {
+        this.appStore.select('installedChannels').pipe(take(1)).subscribe(channels => {
+            try {
+                this.selectedChannel = this.ordersFilter.channel ? channels.find(ch => String(ch.id) === this.ordersFilter.channel).name : undefined;
+            } catch (e) {
+                this.selectedChannel = undefined;
+            }
+        });
     }
 }

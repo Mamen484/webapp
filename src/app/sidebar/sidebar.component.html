@@ -1,5 +1,10 @@
-<sfl-sidebar-container>
+<sfl-sidebar-container bgColor="#072343" menuHeight="0px">
     <mat-list>
+        <mat-list-item>
+        <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
+            <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
+        </a>
+        </mat-list-item>
         <mat-list-item class="mat-active" matTooltip="HOMEPAGE" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
             <a routerLink="/" class="homepage-link">
                 <mat-icon [class.active]="currentRoute === 'channels'">home</mat-icon>
@@ -98,3 +103,13 @@
     <a mat-menu-item sflLegacyLink path="/repricing" i18n>Repricing</a>
     <a mat-menu-item sflLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
 </mat-menu>
+
+<div class="sfl-expandable-sidenav">
+    <mat-list>
+        <mat-list-item>
+            {{ currentStore.name }}
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <ng-content></ng-content>
+    </mat-list>
+</div>

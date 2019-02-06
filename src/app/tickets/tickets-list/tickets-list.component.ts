@@ -24,7 +24,6 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
 
     currentStore: UserStore;
     token: string;
-    dataSource: Ticket[];
     displayedColumns = ['id', 'type', 'state'];
 
     ticketState = TicketState;

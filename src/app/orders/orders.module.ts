@@ -32,11 +32,13 @@ import { RefundDialogComponent } from './order-details/refund-dialog/refund-dial
 import { SelectItemsDialogComponent } from './order-details/select-items-dialog/select-items-dialog.component';
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
+import { SidebarModule } from '../sidebar/sidebar.module';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
+        SidebarModule,
         OrdersRoutingModule,
         SettingsModule,
     ],
