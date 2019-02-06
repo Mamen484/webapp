@@ -8,7 +8,7 @@ const DAY = 1000 * 60 * 60 * 24;
 export class OrdersFilter {
     until?;
     since: Date;
-    channel = 'all';
+    channel: number | string = 'all';
     tag = 'all';
     limit = '10';
     page = '1';
@@ -49,7 +49,7 @@ export class OrdersFilter {
             params = params.set('until', this.until.toJSON());
         }
         if (this.channel && this.channel !== 'all') {
-            params = params.set('channelId', this.channel);
+            params = params.set('channelId', String(this.channel));
         }
 
         if (this.search) {

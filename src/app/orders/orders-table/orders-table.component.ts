@@ -4,9 +4,8 @@ import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from 'sfl-shared/entities';
-import { toPairs } from 'lodash';
-import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { combineLatest, Observable, Subject, Subscription } from 'rxjs';
+import { clone, toPairs } from 'lodash';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -53,7 +52,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     requiredRightColumns = ['invoice-link'];
     displayedColumns = this.requiredLeftColumns.concat(this.requiredRightColumns);
     subscription: Subscription;
-    ordersFilter: OrdersFilter;
+    ordersFilter = new OrdersFilter({since: OrdersFilter.aMonthBefore()});
     exports: any[];
     showStickyBorder = false;
     resize$ = new Subject();
@@ -63,7 +62,6 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
                 protected ordersService: OrdersService,
                 protected matDialog: MatDialog,
                 protected changeDetectorRef: ChangeDetectorRef,
-                protected ordersFilterService: OrdersFilterService,
                 protected windowRef: SflWindowRefService,
                 protected snackbar: MatSnackBar,
                 protected elementRef: ElementRef<HTMLElement>,
@@ -86,7 +84,9 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
 
     cancelFilter(filterName, filterValue) {
         this.isLoadingResults = true;
-        this.ordersFilterService.patchFilter(filterName, filterValue);
+        this.ordersFilter[filterName] = filterValue;
+        this.setSelectedChannel();
+        this.fetchData();
     }
 
     goToOrder(orderId: string) {
@@ -108,15 +108,6 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     ngOnInit() {
         this.setDefaultsFromStorage();
 
-        this.subscription = combineLatest(this.appStore.select('currentStore'), this.ordersFilterService.getFilter())
-            .subscribe(([store, ordersFilter]) => {
-                this.pageSize = +ordersFilter.limit;
-                this.ordersFilter = ordersFilter;
-                this.isLoadingResults = true;
-                this.setSelectedChannel();
-                this.fetchData();
-            });
-
         this.appStore.select('currentStore')
             .pipe(flatMap((store: Store) => this.ordersService.fetchExports(store.id)))
             .subscribe(response => this.exports = response._embedded.export);
@@ -125,7 +116,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         this.resize$.pipe(
             debounceTime(UPDATE_TABLE_ON_RESIZE_INTERVAL)
         ).subscribe(() => this.updateStickyColumnsStyles());
-
+        super.ngOnInit();
     }
 
     ngOnDestroy() {
@@ -152,17 +143,30 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     }
 
     openDialog() {
-        this.matDialog.open(OrdersFilterDialogComponent);
+        this.matDialog.open(OrdersFilterDialogComponent, {data: clone(this.ordersFilter)})
+            .afterClosed()
+            .subscribe(ordersFilter => {
+                if (!ordersFilter) {
+                    return;
+                }
+                this.ordersFilter = ordersFilter;
+                this.isLoadingResults = true;
+                this.currentPage = 0;
+                this.setSelectedChannel();
+                this.changeDetectorRef.detectChanges();
+                this.fetchData();
+            });
     }
 
     pageChanged(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
             this.localStorage.setItem(LocalStorageKey.ordersPageSize, event.pageSize.toString());
-            this.ordersFilterService.patchFilter('limit', event.pageSize);
+            this.pageSize = event.pageSize;
         } else {
-            this.ordersFilterService.patchFilter('page', String(event.pageIndex + 1))
+            this.currentPage = event.pageIndex;
         }
-
+        this.changeDetectorRef.detectChanges();
+        this.fetchData();
     }
 
     setDisplayedColumns() {
@@ -291,7 +295,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     protected setDefaultsFromStorage() {
         const pageSize = this.localStorage.getItem(LocalStorageKey.ordersPageSize);
         if (pageSize) {
-            this.ordersFilterService.patchFilter('limit', pageSize);
+            this.pageSize = pageSize;
         }
 
         const savedColumns = this.localStorage.getItem(LocalStorageKey.ordersDisplayedColumns);
@@ -322,7 +326,9 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     protected setSelectedChannel() {
         this.appStore.select('installedChannels').pipe(take(1)).subscribe(channels => {
             try {
-                this.selectedChannel = this.ordersFilter.channel ? channels.find(ch => String(ch.id) === this.ordersFilter.channel).name : undefined;
+                this.selectedChannel = this.ordersFilter.channel
+                    ? channels.find(ch => ch.id === this.ordersFilter.channel).name
+                    : undefined;
             } catch (e) {
                 this.selectedChannel = undefined;
             }

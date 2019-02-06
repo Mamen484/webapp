@@ -84,7 +84,6 @@ describe('OrdersTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
-        component.paginator = <any>({page: EMPTY, pageIndex: 0});
         ordersService.fetchExports.and.returnValue(EMPTY);
     });
 
@@ -273,38 +272,52 @@ describe('OrdersTableComponent', () => {
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
     });
 
-    it('should redraw the table when filter data changes', () => {
-        let filter$ = new BehaviorSubject(new OrdersFilter());
+    it('should redraw the table when page changes', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(filter$.asObservable());
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        fixture.detectChanges();
+        component.pageChanged({pageIndex: 3, pageSize: 10, length: 0});
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
-
-        // emit a new filter value
-        let filter = new OrdersFilter();
-        filter.status = OrderStatus.shipped;
-        filter.tag = 'l';
-        filter$.next(filter);
-        expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
-        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(filter);
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].page).toBe('4');
     });
 
-    it('should clear selection when filter data changes', () => {
-        let filter$ = new BehaviorSubject(new OrdersFilter());
+    it('should redraw the table when any filter applied from a dialog', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(filter$.asObservable());
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        matDialog.open.and.returnValue({afterClosed: () => (of(new OrdersFilter({channel: 66})))});
+        component.openDialog();
+        expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].page).toBe('1');
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].channel).toBe(66);
+    });
+
+    it('should redraw the table when cancelFilter() called', () => {
+        appStore.select.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        matDialog.open.and.returnValue({afterClosed: () => (of(new OrdersFilter({channel: 66})))});
+        component.cancelFilter('channel', '63');
+        expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].channel).toBe('63');
+    });
+
+    it('should redraw the table when tags assigned', () => {
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(new OrdersFilter()));
+        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
+        fixture.detectChanges();
+        component.selection.select(component.dataSource.data[0]);
+        component.manageTags();
+        expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(2);
+    });
+
+    it('should clear selection when new data fetched', () => {
+        appStore.select.and.returnValue(of({}));
         const order = mockOrder();
         ordersService.fetchOrdersList.and.returnValue(of(order));
         fixture.detectChanges();
         component.selection.select(component.dataSource.data[0]);
         expect(component.selection.selected.length).toEqual(1);
-
-        // emit a new filter value
-        let filter = new OrdersFilter();
-        filter.status = OrderStatus.shipped;
-        filter.tag = 'l';
-        filter$.next(filter);
+        component.cancelFilter('limit', 10);
         expect(component.selection.selected.length).toEqual(0);
     });
 
