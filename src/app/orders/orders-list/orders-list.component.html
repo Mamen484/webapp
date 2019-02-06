@@ -1,4 +1,37 @@
-<sf-sidebar></sf-sidebar>
+<sf-sidebar>
+    <mat-list-item class="has-top-margin active auto-height">
+        <div matLine>Orders</div>
+        <mat-list matLine>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.allOrders" routerLink="/orders" i18n>All orders</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.toValidate"
+                   routerLink="/orders" [queryParams]="{view: ordersView.toValidate}" i18n>To validate</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.importErrors"
+                   routerLink="/orders" [queryParams]="{view: ordersView.importErrors}" i18n>Import errors</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.toShip"
+                   routerLink="/orders" [queryParams]="{view: ordersView.toShip}"
+                   i18n>To ship</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.shippingErrors"
+                   routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}" i18n>Shipping errors</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeView === ordersView.shipped"
+                   routerLink="/orders" [queryParams]="{view: ordersView.shipped}" i18n>Shipped</a>
+            </mat-list-item>
+        </mat-list>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/orders/tags-management">Settings</a>
+    </mat-list-item>
+</sf-sidebar>
 
 <div class="sf-content">
     <sf-orders-table></sf-orders-table>

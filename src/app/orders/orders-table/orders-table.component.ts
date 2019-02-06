@@ -22,6 +22,9 @@ import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-dat
 import { environment } from '../../../environments/environment';
 import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
+import { OrdersView } from '../../core/entities/orders/orders-view.enum';
+import { ActivatedRoute } from '@angular/router';
+import { ViewToPatchMap } from '../../core/entities/orders/view-to-patch-map';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 
@@ -66,7 +69,8 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
                 protected snackbar: MatSnackBar,
                 protected elementRef: ElementRef<HTMLElement>,
                 protected localStorage: SflLocalStorageService,
-                protected localeIdService: SflLocaleIdService) {
+                protected localeIdService: SflLocaleIdService,
+                protected route: ActivatedRoute) {
         super();
     }
 
@@ -116,7 +120,17 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         this.resize$.pipe(
             debounceTime(UPDATE_TABLE_ON_RESIZE_INTERVAL)
         ).subscribe(() => this.updateStickyColumnsStyles());
+
         super.ngOnInit();
+
+        this.route.queryParams.subscribe(({view}) => {
+            const currentView = view in OrdersView ? Number(view) : OrdersView.allOrders;
+            // filter orders according to the chosen view
+            Object.assign(this.ordersFilter, ViewToPatchMap[currentView]);
+            this.isLoadingResults = true;
+            this.currentPage = 0;
+            this.fetchData();
+        });
     }
 
     ngOnDestroy() {
@@ -153,7 +167,6 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
                 this.isLoadingResults = true;
                 this.currentPage = 0;
                 this.setSelectedChannel();
-                this.changeDetectorRef.detectChanges();
                 this.fetchData();
             });
     }
@@ -165,7 +178,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         } else {
             this.currentPage = event.pageIndex;
         }
-        this.changeDetectorRef.detectChanges();
+        this.isLoadingResults = true;
         this.fetchData();
     }
 

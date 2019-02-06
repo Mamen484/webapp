@@ -10,7 +10,7 @@
     margin-top: 10px;
   }
 
-  &.active {
+  &.active, a.active, &>div[matLine] {
     color: mat-color($accent);
     font-weight: bold;
   }
@@ -102,8 +102,16 @@ span.support-label {
   }
 
   ::ng-deep {
+    div[matLine] {
+      height: 30px;
+    }
     mat-list-item {
       @include listItemStyles();
+      mat-list {
+        mat-list-item {
+          height: 30px;
+        }
+      }
     }
 
     a {
