@@ -1,30 +1,33 @@
 import { cloneDeep } from 'lodash';
 import { OrdersTableComponent } from './orders-table.component';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
-import { OrdersService } from '../../core/services/orders.service';
 import { MatDialog, MatMenuModule, MatSnackBar, MatTableModule } from '@angular/material';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { OrdersFilterService } from '../../core/services/orders-filter.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
-import { Order } from '../../core/entities/orders/order';
-import { OrderStatus } from '../../core/entities/orders/order-status.enum';
-import { OrdersFilter } from '../../core/entities/orders/orders-filter';
-import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
-import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
-import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
-import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
-import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
-import { InvoicesLinkPipe } from '../../shared/invoices-link/invoices-link.pipe';
-import { OrdersExportLinkPipe } from '../../shared/orders-export-link/orders-export-link.pipe';
+import { EMPTY, of, Subject } from 'rxjs';
 import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
-import { BlankPipe } from '../order-details/items-table/items-table.component.spec';
-import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
-import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
-import { ChannelMap } from '../../core/entities/channel-map.enum';
-import { environment } from '../../../environments/environment';
+import { AppState } from '../../../core/entities/app-state';
+import { OrdersService } from '../../../core/services/orders.service';
+import { OrdersExportLinkPipe } from '../../../shared/orders-export-link/orders-export-link.pipe';
+import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { OrderErrorType } from '../../../core/entities/orders/order-error-type.enum';
+import { ConfirmShippingDialogComponent } from '../../confirm-shipping-dialog/confirm-shipping-dialog.component';
+import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
+import { OrdersFilterService } from '../../../core/services/orders-filter.service';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { OrdersFilter } from '../../../core/entities/orders/orders-filter';
+import { LocalStorageKey } from '../../../core/entities/local-storage-key.enum';
+import { environment } from '../../../../environments/environment';
+import { InvoicesLinkPipe } from '../../../shared/invoices-link/invoices-link.pipe';
+import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
+import { SelectOrdersDialogComponent } from '../../select-orders-dialog/select-orders-dialog.component';
+import { Order } from '../../../core/entities/orders/order';
+import { BlankPipe } from '../../order-details/items-table/items-table.component.spec';
+import { OrdersTableItem } from '../../../core/entities/orders/orders-table-item';
+import { ActivatedRoute } from '@angular/router';
+import { OrdersView } from '../../../core/entities/orders/orders-view.enum';
+import { ViewToPatchMap } from '../../../core/entities/orders/view-to-patch-map';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -35,14 +38,18 @@ describe('OrdersTableComponent', () => {
     let window: { nativeWindow: { open: jasmine.Spy, location: any } };
     let snackbar: jasmine.SpyObj<MatSnackBar>;
     let localeIdService: SflLocaleIdService;
+    let activatedRoute;
 
     let component: OrdersTableComponent;
     let fixture: ComponentFixture<OrdersTableComponent>;
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
 
     beforeEach(async(() => {
+        activatedRoute = {queryParams: new Subject()};
         appStore = jasmine.createSpyObj(['select', 'pipe']);
-        ordersService = jasmine.createSpyObj(['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']);
+        ordersService = jasmine.createSpyObj(
+            ['fetchOrdersList', 'acknowledge', 'ship', 'refuse', 'cancel', 'accept', 'unacknowledge', 'fetchExports']
+        );
         matDialog = jasmine.createSpyObj(['open']);
         cdr = jasmine.createSpyObj(['detectChanges', 'markForCheck']);
         filterService = jasmine.createSpyObj(['getFilter', 'patchFilter']);
@@ -71,6 +78,7 @@ describe('OrdersTableComponent', () => {
                 {provide: MatSnackBar, useValue: snackbar},
                 {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: SflLocaleIdService, useValue: localeIdService},
+                {provide: ActivatedRoute, useValue: activatedRoute},
 
             ],
             imports: [
@@ -105,6 +113,142 @@ describe('OrdersTableComponent', () => {
         expect(component.exports[0].name).toEqual('one');
         expect(component.exports[1].id).toEqual(2);
         expect(component.exports[1].name).toEqual('two');
+    });
+
+    it('should load all orders when OrdersView is not specified', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.allOrders]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load all orders when OrdersView is AllOrders', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.allOrders});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.allOrders]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load all orders when OrdersView is invalid', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: 1325231});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.allOrders]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load orders to validate when OrdersView is toValidate', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.toValidate});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.toValidate]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load orders to ship when OrdersView is toShip', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.toShip});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.toShip]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load orders to import when OrdersView is toImport', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.toImport});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.toImport]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load orders with import errors when OrdersView is importErrors', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.importErrors});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.importErrors]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
+    });
+
+    it('should load orders with shipping errors when OrdersView is shippingErrors', () => {
+        const initialFilter = Object.assign({}, component.ordersFilter);
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        activatedRoute.queryParams.next({view: OrdersView.shippingErrors});
+        const targetFilter = Object.assign(
+            new OrdersFilter(),
+            initialFilter,
+            {limit: String(component.pageSize)},
+            ViewToPatchMap[OrdersView.shippingErrors]
+        );
+        expect(ordersService.fetchOrdersList.calls.mostRecent().args[0]).toEqual(targetFilter);
     });
 
     it('should display a loading spinner while data is being loaded', () => {
@@ -370,7 +514,8 @@ describe('OrdersTableComponent', () => {
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com?store=114';
         component.goToOrder('12');
-        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?store=114&errorType=acknowledge`);
+        expect(window.nativeWindow.open)
+            .toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?store=114&errorType=acknowledge`);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {

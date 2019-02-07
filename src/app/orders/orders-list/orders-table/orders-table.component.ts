@@ -1,30 +1,33 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatSnackBar, MatTable, PageEvent } from '@angular/material';
-import { OrdersService } from '../../core/services/orders.service';
 import { Store as AppStore } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
 import { Store } from 'sfl-shared/entities';
 import { clone, toPairs } from 'lodash';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
-import { OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ConfirmShippingDialogComponent } from '../confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { debounceTime, filter, flatMap, map, take, tap } from 'rxjs/operators';
-import { OrderStatusChangedSnackbarComponent } from '../order-status-changed-snackbar/order-status-changed-snackbar.component';
-import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
-import { SelectOrdersDialogComponent } from '../select-orders-dialog/select-orders-dialog.component';
-import { AssignTagsDialogComponent } from '../assign-tags-dialog/assign-tags-dialog.component';
 import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
-import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
-import { ConfirmCancellationDialogComponent } from '../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
-import { ConfirmDialogData } from '../../core/entities/orders/confirm-dialog-data';
-import { environment } from '../../../environments/environment';
 import { TableOperations } from 'sfl-shared/utils/table-operations';
-import { OrdersFilterDialogComponent } from '../orders-filter-dialog/orders-filter-dialog.component';
-import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 import { ActivatedRoute } from '@angular/router';
-import { ViewToPatchMap } from '../../core/entities/orders/view-to-patch-map';
+
+import { OrdersTableItem } from '../../../core/entities/orders/orders-table-item';
+import { OrdersFilter } from '../../../core/entities/orders/orders-filter';
+import { AppState } from '../../../core/entities/app-state';
+import { OrdersService } from '../../../core/services/orders.service';
+import { OrdersView } from '../../../core/entities/orders/orders-view.enum';
+import { ViewToPatchMap } from '../../../core/entities/orders/view-to-patch-map';
+import { LocalStorageKey } from '../../../core/entities/local-storage-key.enum';
+import { OrdersFilterDialogComponent } from '../../orders-filter-dialog/orders-filter-dialog.component';
+import { SelectOrdersDialogComponent } from '../../select-orders-dialog/select-orders-dialog.component';
+import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
+import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
+import { ConfirmShippingDialogComponent } from '../../confirm-shipping-dialog/confirm-shipping-dialog.component';
+import { ConfirmDialogData } from '../../../core/entities/orders/confirm-dialog-data';
+import { environment } from '../../../../environments/environment';
+import { AssignTagsDialogComponent } from '../../assign-tags-dialog/assign-tags-dialog.component';
+import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
+
+
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 
