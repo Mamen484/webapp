@@ -4,8 +4,8 @@ import { TicketsService } from '../../tickets.service';
 import { Ticket, TicketPayload } from '../../entities/ticket';
 import { TicketType } from '../../entities/ticket-type.enum';
 
-const basicColumns = ['id', 'marketplace'];
-const shipmentColumns = ['id', 'marketplace', 'trackingNumber', 'carrier', 'trackingLink'];
+const basicColumns = ['id', 'marketplace', 'type'];
+const shipmentColumns = ['id', 'marketplace', 'type', 'trackingNumber', 'carrier', 'trackingLink'];
 
 @Component({
     selector: 'sf-ticket-details-dialog',

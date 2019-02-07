@@ -41,15 +41,15 @@ describe('TicketDetailsDialogComponent', () => {
         expect(ticketsService.fetchTicket).toHaveBeenCalledWith('some_ticket');
     });
 
-    it('should assign 5 columns to displayColumns when the ticket type is order.notify.shipment', () => {
+    it('should assign 6 columns to displayColumns when the ticket type is order.notify.shipment', () => {
         ticketsService.fetchTicket.and.returnValue(of({type: TicketType.shipOrder, payload: {}}));
         component.ngOnInit();
-        expect(component.displayedColumns.length).toBe(5);
+        expect(component.displayedColumns.length).toBe(6);
     });
 
-    it('should assign 2 columns to displayColumns when the ticket type is NOT order.notify.shipment', () => {
+    it('should assign 3 columns to displayColumns when the ticket type is NOT order.notify.shipment', () => {
         ticketsService.fetchTicket.and.returnValue(of({type: TicketType.acceptOrder, payload: {}}));
         component.ngOnInit();
-        expect(component.displayedColumns.length).toBe(2);
+        expect(component.displayedColumns.length).toBe(3);
     });
 });
