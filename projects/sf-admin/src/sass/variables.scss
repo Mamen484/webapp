@@ -1,7 +1,8 @@
 @import '../../../../src/sass/variables';
+@import '~system-font-css/_system-font';
 
 $config: mat-typography-config(
-        $font-family: '"Noto Sans", sans-serif',
+        $font-family: system-ui,
         $body-1: mat-typography-level(15px, 20px, 400),
         $body-2: mat-typography-level(15px, 24px, 700),
         $button: mat-typography-level(15px, 15px, 700),

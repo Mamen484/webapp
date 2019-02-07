@@ -26,6 +26,7 @@
     "ngx-infinite-scroll": "^7.0.1",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
+    "system-font-css": "^2.0.2",
     "ts-helpers": "^1.1.2",
     "zone.js": "^0.8.26"
   },
