@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Channel, Store, StoreChannelDetails } from 'sfl-shared/entities';
@@ -12,6 +12,8 @@ import { MediaObserver } from '@angular/flex-layout';
     styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+
+    @Input() showExtendedSidenav = false;
 
     currentStore: Store;
     currentRoute;

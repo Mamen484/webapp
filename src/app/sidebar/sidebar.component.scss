@@ -10,9 +10,13 @@
     margin-top: 10px;
   }
 
-  &.active, a.active, &>div[matLine] {
+  &.active, a.active, div[matLine] {
     color: mat-color($accent);
     font-weight: bold;
+  }
+
+  &.auto-height {
+    height: auto;
   }
 }
 

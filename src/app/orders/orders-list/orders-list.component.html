@@ -1,4 +1,4 @@
-<sf-sidebar>
+<sf-sidebar [showExtendedSidenav]="true">
     <mat-list-item class="has-top-margin active auto-height">
         <div matLine>Orders</div>
         <mat-list matLine>
@@ -33,6 +33,6 @@
     </mat-list-item>
 </sf-sidebar>
 
-<div class="sf-content">
+<div class="sf-content with-extended-sidenav">
     <sf-orders-table></sf-orders-table>
 </div>

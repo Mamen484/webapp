@@ -104,7 +104,7 @@
     <a mat-menu-item sflLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
 </mat-menu>
 
-<div class="sfl-expandable-sidenav">
+<div class="sfl-expandable-sidenav" *ngIf="showExtendedSidenav">
     <mat-list>
         <mat-list-item>
             {{ currentStore.name }}

@@ -1,18 +1,22 @@
-<nav class="settings-navigation">
-    <ul>
-        <li fxLayout="row" [class.nav-active]="activeLink === 'test-order'">
-            <a sflLegacyLink path="/marketplaces/createorder" i18n fxFlex class="mat-body-1">Test order</a>
-            <mat-icon>arrow_right</mat-icon>
-        </li>
-        <li fxLayout="row" [class.nav-active]="activeLink === 'reporting'">
-            <a sflLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
-            <mat-icon>arrow_right</mat-icon>
-        </li>
-        <li fxLayout="row" [class.nav-active]="activeLink === 'tags-management'">
-            <a routerLink="/orders/tags-management" i18n fxFlex [class.mat-body-2]="activeLink === 'tags-management'"
-                 [class.mat-body-1]="activeLink !== 'tags-management'">Tags management
-            </a>
-            <mat-icon>arrow_right</mat-icon>
-        </li>
-    </ul>
-</nav>
+<sf-sidebar [showExtendedSidenav]="true">
+    <mat-list-item class="has-top-margin">
+        <a routerLink="/orders">Orders</a>
+    </mat-list-item>
+    <mat-list-item class="active auto-height">
+        <div matLine>Settings</div>
+        <mat-list matLine>
+            <mat-list-item>
+                <a [class.active]="activeLink === 'test-order'"
+                   sflLegacyLink path="/marketplaces/createorder" i18n fxFlex class="mat-body-1">Test order</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeLink === 'reporting'"
+                   sflLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
+            </mat-list-item>
+            <mat-list-item>
+                <a [class.active]="activeLink === 'tags-management'"
+                   routerLink="/orders/tags-management">Tags management</a>
+            </mat-list-item>
+        </mat-list>
+    </mat-list-item>
+</sf-sidebar>
