@@ -129,4 +129,9 @@ $badge-font-level: caption;
     background-color: mat-color($warn, 0.2);
     color: $black-87-opacity;
   }
+
+  &.blue {
+    background-color: mat-color($mat-blue, 700, 0.3);
+    color: $black-87-opacity;
+  }
 }

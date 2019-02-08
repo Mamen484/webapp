@@ -7,9 +7,16 @@ import { SharedModule } from '../shared/shared.module';
 import { FilterTicketsDialogComponent } from './tickets-list/filter-tickets-dialog/filter-tickets-dialog.component';
 import { TicketDetailsDialogComponent } from './tickets-list/ticket-details-dialog/ticket-details-dialog.component';
 import { StateLabelComponent } from './tickets-list/state-label/state-label.component';
+import { TypeLabelComponent } from './tickets-list/type-label/type-label.component';
 
 @NgModule({
-    declarations: [TicketsListComponent, FilterTicketsDialogComponent, TicketDetailsDialogComponent, StateLabelComponent],
+    declarations: [
+        TicketsListComponent,
+        FilterTicketsDialogComponent,
+        TicketDetailsDialogComponent,
+        StateLabelComponent,
+        TypeLabelComponent,
+    ],
     imports: [
         CommonModule,
         TicketsRoutingModule,

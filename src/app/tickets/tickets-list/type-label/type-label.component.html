@@ -1,0 +1,14 @@
+<ng-container [ngSwitch]="ticketType">
+    <div *ngSwitchCase="ticketTypes.shipOrder" class="sf-label mat-chip blue" i18n>Ship</div>
+    <div *ngSwitchCase="ticketTypes.acceptOrder" class="sf-label mat-chip blue" i18n>Accept</div>
+    <div *ngSwitchCase="ticketTypes.refuseOrder" class="sf-label mat-chip blue" i18n>Refuse</div>
+    <div *ngSwitchCase="ticketTypes.cancelOrder" class="sf-label mat-chip blue" i18n>Cancel</div>
+    <div *ngSwitchCase="ticketTypes.refundOrder" class="sf-label mat-chip blue" i18n>Refund</div>
+    <div *ngSwitchCase="ticketTypes.acknowledgeOrder" class="sf-label mat-chip blue" i18n>
+        Acknowledge
+    </div>
+    <div *ngSwitchCase="ticketTypes.unacknowledgeOrder" class="sf-label mat-chip blue" i18n>
+        Unacknowledge
+    </div>
+    <div *ngSwitchDefault class="sf-label mat-chip blue">{{ ticketType }}</div>
+</ng-container>

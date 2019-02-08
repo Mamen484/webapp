@@ -1,5 +1,5 @@
-<div matDialogTitle fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center" *ngIf="ticket">
-    <div i18n fxFlex>ID {{ticket.id}}</div>
+<div matDialogTitle fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center center" *ngIf="ticket">
+    <div i18n fxFlex>Ticket {{ticket.id}}</div>
     <sf-ticket-state-label [state]="ticket?.state"></sf-ticket-state-label>
 </div>
 
@@ -12,6 +12,12 @@
         <ng-container matColumnDef="marketplace">
             <th mat-header-cell *matHeaderCellDef i18n> Marketplace</th>
             <td mat-cell *matCellDef="let element"> {{element.channelName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef i18n> Type</th>
+            <td mat-cell *matCellDef="let element">
+                <sf-ticket-type-label [ticketType]="ticket.type"></sf-ticket-type-label>
+            </td>
         </ng-container>
         <ng-container matColumnDef="trackingNumber">
             <th mat-header-cell *matHeaderCellDef i18n> Tracking number</th>
