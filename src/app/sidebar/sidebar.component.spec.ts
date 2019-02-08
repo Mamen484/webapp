@@ -1,23 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuComponent } from './menu.component';
 import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { SflLocalStorageService, SflUserService } from 'sfl-shared/services';
-import { SflWindowRefService } from 'sfl-shared/services';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
 import { MatMenuModule } from '@angular/material';
-import { PaymentType } from 'sfl-shared/entities';
+import { AggregatedUserInfo, PaymentType, StoreStatus } from 'sfl-shared/entities';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreStatus } from 'sfl-shared/entities';
-import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { SidebarComponent } from './sidebar.component';
+import { SupportLinkService } from '../core/services/support-link.service';
 
-describe('MenuComponent', () => {
+describe('SidebarComponent', () => {
 
-    let component: MenuComponent;
-    let fixture: ComponentFixture<MenuComponent>;
+    let component: SidebarComponent;
+    let fixture: ComponentFixture<SidebarComponent>;
 
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
@@ -36,7 +34,7 @@ describe('MenuComponent', () => {
         route = <any>{};
         router = <any>{routeReuseStrategy: {shouldDetach: jasmine.createSpy('shouldDetach'), navigate: jasmine.createSpy('navigate')}};
         TestBed.configureTestingModule({
-            declarations: [MenuComponent, LegacyLinkDirective],
+            declarations: [SidebarComponent, LegacyLinkDirective],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},
@@ -46,6 +44,7 @@ describe('MenuComponent', () => {
                 {provide: TimelineService, useValue: timelineService},
                 {provide: ActivatedRoute, useValue: route},
                 {provide: Router, useValue: router},
+                {provide: SupportLinkService, useValue: 'support-link/'}
             ],
             imports: [MatMenuModule, NoopAnimationsModule],
         })
@@ -54,8 +53,8 @@ describe('MenuComponent', () => {
 
     beforeEach(() => {
         timelineService.getUpdatesNumber.and.returnValue(EMPTY);
-
-        fixture = TestBed.createComponent(MenuComponent);
+        appStore.select.and.returnValue(EMPTY);
+        fixture = TestBed.createComponent(SidebarComponent);
         component = fixture.componentInstance;
     });
 

@@ -124,6 +124,10 @@ describe('TimelineComponent', () => {
     class TimelineFilteringAreaComponent {
     }
 
+    @Component({selector: 'sf-sidebar', template: ''})
+    class SidebarComponent {
+    }
+
     describe('integration tests', () => {
         let localStorage;
         let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -155,6 +159,7 @@ describe('TimelineComponent', () => {
                     TimelineFilteringAreaComponent,
                     EventIconPipe,
                     EventLinkPipe,
+                    SidebarComponent,
                 ],
                 providers: [
                     {provide: SflLegacyLinkService, useClass: LegacyLinkService},

@@ -2,9 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { AggregatedUserInfo, Channel, PaymentType, Store, StoreChannelDetails, StoreStatus } from 'sfl-shared/entities';
-import { SflLocalStorageService, SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
-import { MediaObserver } from '@angular/flex-layout';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
@@ -25,7 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     currentRoute;
     channels: StoreChannelDetails[];
     linkToSupportCenter;
-    hideTooltips = false;
+    hideTooltips = true;
 
     userInfo: AggregatedUserInfo;
     storeStatus = StoreStatus;
@@ -37,11 +36,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
     protected newEventsSubscription;
 
     constructor(protected appStore: AppStore<AppState>,
-                protected storeService: StoreService,
                 protected windowRef: SflWindowRefService,
                 protected localStorage: SflLocalStorageService,
                 protected supportLinkService: SupportLinkService,
-                protected media: MediaObserver,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
                 protected router: Router,
@@ -53,7 +50,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
 
         this.linkToSupportCenter = this.supportLinkService.supportLink;
-        this.media.media$.subscribe(() => this.hideTooltips = this.media.isActive('xs'));
     }
 
     ngOnInit() {
