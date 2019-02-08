@@ -33,12 +33,8 @@ mat-icon {
   color: #818fa3;
   cursor: pointer;
 
-  &.active {
+  &.active, &:hover {
     color: white;
-  }
-
-  &:hover {
-    color: #818fa3;
   }
 
   @media #{$xs} {

@@ -76,7 +76,7 @@
         <mat-list-item matTooltip="TIMELINE" matTooltipPosition="after" i18n-matTooltip
                                        [matTooltipDisabled]="hideTooltips">
         <a (click)="navigateToTimeline()" class="sf-icon-link homepage-link">
-            <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
+            <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}" [class.active]="currentRoute === 'timeline'"
                       [attr.data-badge]="newEvents">notifications_none
             </mat-icon>
         </a>
