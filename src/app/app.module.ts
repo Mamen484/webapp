@@ -14,6 +14,7 @@ import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
 import { SflAuthModule } from 'sfl-shared/auth';
 import { SflErrorPagesModule } from 'sfl-shared/error-pages';
+import { TicketsModule } from './tickets/tickets.module';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import { SflErrorPagesModule } from 'sfl-shared/error-pages';
             sflAppToken: environment.APP_AUTHORIZATION,
             sflLegacyLink: environment.APP_URL,
         }),
+        TicketsModule,
         // keep this module in the bottom as it contains a wildcard route
         SflErrorPagesModule,
     ],

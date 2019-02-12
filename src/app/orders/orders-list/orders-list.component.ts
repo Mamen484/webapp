@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Component({
     selector: 'sf-orders-list',
@@ -10,13 +10,13 @@ import { ObservableMedia } from '@angular/flex-layout';
 export class OrdersListComponent implements OnInit {
 
     isMobile: boolean;
-    constructor(protected media: ObservableMedia) {
+    constructor(protected media: MediaObserver) {
     }
 
     ngOnInit() {
 
         this.isMobile = this.media.isActive('xs');
-        this.media.subscribe(() => {
+        this.media.media$.subscribe(() => {
             this.isMobile = this.media.isActive('xs');
         });
     }
