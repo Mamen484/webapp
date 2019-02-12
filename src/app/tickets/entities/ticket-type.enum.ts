@@ -6,4 +6,7 @@ export enum TicketType {
     cancelOrder = 'order.notify.cancellation',
     acceptOrder = 'order.notify.acceptance',
     refundOrder = 'order.notify.refund',
+
+    /* To request only tickets with a type that contains this string */
+    default = 'order',
 }

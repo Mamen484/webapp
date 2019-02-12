@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { TicketsDataService } from './tickets-data.service';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -41,7 +42,8 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
                 protected userInfo: SflUserService,
                 protected windowRef: SflWindowRefService,
                 protected matDialog: MatDialog,
-                protected route: ActivatedRoute) {
+                protected route: ActivatedRoute,
+                protected ticketsDataService: TicketsDataService) {
         super();
     }
 
@@ -50,6 +52,11 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
             if (hasTickets) {
                 this.hasTickets = true;
                 super.ngOnInit();
+
+                this.ticketsDataService.watchUpdates().subscribe(() => {
+                    this.isLoadingResults = true;
+                    this.fetchData();
+                });
             }
         });
 
@@ -80,7 +87,7 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     }
 
     protected fetchCollection(params): Observable<{ total: number; dataList: any[] }> {
-        params.type = this.selectedType;
+        params.type = this.selectedType || TicketType.default;
         params.state = this.selectedState;
         return this.ticketsService.fetchTicketCollection(params)
             .pipe(map(response => ({total: response.total, dataList: response._embedded.ticket})));

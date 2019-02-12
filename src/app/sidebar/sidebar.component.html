@@ -48,7 +48,7 @@
             </a>
         </mat-list-item>
         <mat-list-item matTooltip="API" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
-            <a routerLink="/api" class="homepage-link">
+            <a routerLink="/api" (click)="updateTicketsData()" class="homepage-link">
                 <mat-icon [class.active]="currentRoute === 'api'">developer_board</mat-icon>
                 <span fxHide fxShow.xs i18n>API</span>
             </a>

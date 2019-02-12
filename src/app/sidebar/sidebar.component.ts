@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Channel, Store, StoreChannelDetails } from 'sfl-shared/entities';
-import { StoreService } from 'sfl-shared/services';
-import { SflWindowRefService } from 'sfl-shared/services';
+import { SflWindowRefService, StoreService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { MediaObserver } from '@angular/flex-layout';
+import { Router } from '@angular/router';
+import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 
 @Component({
     selector: 'sf-sidebar',
@@ -24,7 +25,9 @@ export class SidebarComponent {
                 protected storeService: StoreService,
                 protected windowRef: SflWindowRefService,
                 protected supportLinkService: SupportLinkService,
-                protected media: MediaObserver) {
+                protected media: MediaObserver,
+                protected router: Router,
+                protected ticketsDataService: TicketsDataService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -53,6 +56,12 @@ export class SidebarComponent {
     onMenuOpen() {
         let menuElement = <HTMLDivElement>this.windowRef.nativeWindow.document.querySelector('.sf-sidebar-menu');
         menuElement.style.maxHeight = this.windowRef.nativeWindow.innerHeight - menuElement.getBoundingClientRect().top + 'px'
+    }
+
+    updateTicketsData() {
+        if (this.router.isActive('/api', false)) {
+            this.ticketsDataService.requestUpdate();
+        }
     }
 
 }

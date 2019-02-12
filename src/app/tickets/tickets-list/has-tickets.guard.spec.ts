@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HasTicketsGuard } from './has-tickets.guard';
 import { TicketsService } from '../tickets.service';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 
 describe('HasTicketsGuard', () => {
     let ticketService: jasmine.SpyObj<TicketsService>;
@@ -27,5 +27,11 @@ describe('HasTicketsGuard', () => {
         ticketService.fetchTicketCollection.and.returnValue(of({total: 0}));
         const hasTickets = await guard.resolve().toPromise();
         expect(hasTickets).toBe(false);
+    });
+
+    it('should request fetchTicketCollection, specifying that only tickets, containing *order* should be requested', () => {
+        ticketService.fetchTicketCollection.and.returnValue(EMPTY);
+        guard.resolve().subscribe();
+        expect(ticketService.fetchTicketCollection).toHaveBeenCalledWith({limit: 1, type: 'order'});
     });
 });
