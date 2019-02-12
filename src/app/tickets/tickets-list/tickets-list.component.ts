@@ -14,6 +14,7 @@ import { TicketType } from '../entities/ticket-type.enum';
 import { MatDialog } from '@angular/material';
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -24,8 +25,8 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
 
     currentStore: UserStore;
     token: string;
-    dataSource: Ticket[];
     displayedColumns = ['id', 'type', 'state'];
+    hasTickets = false;
 
     ticketState = TicketState;
     ticketType = TicketType;
@@ -39,12 +40,19 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
                 protected ticketsService: TicketsService,
                 protected userInfo: SflUserService,
                 protected windowRef: SflWindowRefService,
-                protected matDialog: MatDialog) {
+                protected matDialog: MatDialog,
+                protected route: ActivatedRoute) {
         super();
     }
 
     ngOnInit() {
-        super.ngOnInit();
+        this.route.data.subscribe(({hasTickets}) => {
+            if (hasTickets) {
+                this.hasTickets = true;
+                super.ngOnInit();
+            }
+        });
+
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.userInfo.fetchAggregatedInfo().subscribe(userInfo => this.token = userInfo.token);
     }

@@ -33,8 +33,8 @@
 
     </section>
 
-    <section>
-        <div class="mat-body-1">Async operations</div>
+    <section *ngIf="hasTickets">
+        <div class="mat-body-1" i18n>Async operations</div>
         <mat-card class="actions">
             <mat-card-content fxLayout="row">
                 <div fxFlex></div>
