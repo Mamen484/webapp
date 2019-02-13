@@ -8,6 +8,7 @@ import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 
@@ -42,7 +43,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
                 protected router: Router,
-                protected userService: SflUserService) {
+                protected userService: SflUserService,
+                protected ticketsDataService: TicketsDataService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -80,6 +82,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     onMenuOpen() {
         let menuElement = <HTMLDivElement>this.windowRef.nativeWindow.document.querySelector('.sf-sidebar-menu');
         menuElement.style.maxHeight = this.windowRef.nativeWindow.innerHeight - menuElement.getBoundingClientRect().top + 'px'
+    }
+
+    updateTicketsData() {
+        if (this.router.isActive('/api', false)) {
+            this.ticketsDataService.requestUpdate();
+        }
     }
 
     navigateToTimeline() {

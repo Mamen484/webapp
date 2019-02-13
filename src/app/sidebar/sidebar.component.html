@@ -58,11 +58,10 @@
                 <span fxHide fxShow.xs i18n>Sales</span>
             </a>
         </mat-list-item>
-        <mat-list-item matTooltip="TICKETS" matTooltipPosition="after" i18n-matTooltip
-                       [matTooltipDisabled]="hideTooltips">
-            <a routerLink="/tickets" class="homepage-link">
-                <mat-icon [class.active]="currentRoute === 'tickets'">developer_board</mat-icon>
-                <span fxHide fxShow.xs i18n>Tickets</span>
+        <mat-list-item matTooltip="API" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
+            <a routerLink="/api" (click)="updateTicketsData()" class="homepage-link">
+                <mat-icon [class.active]="currentRoute === 'api'">developer_board</mat-icon>
+                <span fxHide fxShow.xs i18n>API</span>
             </a>
         </mat-list-item>
         <mat-list-item fxFlex></mat-list-item>

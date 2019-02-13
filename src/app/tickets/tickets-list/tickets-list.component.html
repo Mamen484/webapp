@@ -23,20 +23,20 @@
         </mat-card>
     </section>
     <section>
-        <div class="mat-body-1">Integrations</div>
+        <div class="mat-body-1" i18n>Integrations</div>
         <mat-card>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center">
                 <div fxFlex>
                     <sfl-image source="assets/images/zapier-logo.png" width="110px"></sfl-image>
                 </div>
-                <button mat-raised-button color="accent" (click)="goToToZapier()">Connect</button>
+                <button mat-raised-button color="accent" (click)="goToToZapier()" i18n>Connect</button>
             </mat-card-content>
         </mat-card>
 
     </section>
 
-    <section>
-        <div class="mat-body-1">Async operations</div>
+    <section *ngIf="hasTickets">
+        <div class="mat-body-1" i18n>Async operations</div>
         <mat-card class="actions">
             <mat-card-content fxLayout="row">
                 <div fxFlex></div>

@@ -11,7 +11,8 @@ import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tic
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TicketState } from '../entities/ticket-state.enum';
 import { TicketType } from '../entities/ticket-type.enum';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('TicketsListComponent', () => {
     let component: TicketsListComponent;
@@ -21,6 +22,7 @@ describe('TicketsListComponent', () => {
     let userInfo: jasmine.SpyObj<SflUserService>;
     let windowRef: jasmine.SpyObj<SflWindowRefService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
+    let route;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj('Store spy', ['select']);
@@ -28,6 +30,7 @@ describe('TicketsListComponent', () => {
         userInfo = jasmine.createSpyObj('SflUserService spy', ['fetchAggregatedInfo']);
         windowRef = {nativeWindow: jasmine.createSpyObj('Window spy', ['open'])};
         matDialog = jasmine.createSpyObj('MatDialog spy', ['select', 'open']);
+        route = {data: new Subject()};
         TestBed.configureTestingModule({
             declarations: [TicketsListComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -37,6 +40,7 @@ describe('TicketsListComponent', () => {
                 {provide: SflUserService, useValue: userInfo},
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: MatDialog, useValue: matDialog},
+                {provide: ActivatedRoute, useValue: route}
             ],
             imports: [MatTableModule],
         })
@@ -65,5 +69,38 @@ describe('TicketsListComponent', () => {
         expect(matDialog.open).toHaveBeenCalledWith(FilterTicketsDialogComponent, {
             data: {state: TicketState.succeed, type: TicketType.refundOrder},
         });
+    });
+
+    it('should fetch tickets with a default type by default', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
+        component.ngOnInit();
+        route.data.next({hasTickets: true});
+
+        expect(component.hasTickets).toBe(true);
+        expect(ticketsService.fetchTicketCollection.calls.mostRecent().args[0].type).toBe(TicketType.default);
+    });
+
+    it('should fetch tickets when hasTickets = true', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
+        component.ngOnInit();
+        route.data.next({hasTickets: true});
+
+        expect(component.hasTickets).toBe(true);
+        expect(ticketsService.fetchTicketCollection).toHaveBeenCalled();
+    });
+
+    it('should NOT fetch tickets when hasTickets = false', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
+        component.ngOnInit();
+        route.data.next({hasTickets: false});
+
+        expect(component.hasTickets).toBe(false);
+        expect(ticketsService.fetchTicketCollection).not.toHaveBeenCalled();
     });
 });

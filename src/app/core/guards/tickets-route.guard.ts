@@ -13,7 +13,7 @@ export class TicketsRouteGuard implements CanActivate {
     }
 
     canActivate(): true {
-        this.appStore.dispatch({type: SET_ROUTE, routeName: 'tickets'});
+        this.appStore.dispatch({type: SET_ROUTE, routeName: 'api'});
         return true;
     }
 }

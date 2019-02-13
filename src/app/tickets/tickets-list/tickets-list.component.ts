@@ -14,6 +14,8 @@ import { TicketType } from '../entities/ticket-type.enum';
 import { MatDialog } from '@angular/material';
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { TicketsDataService } from './tickets-data.service';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -25,6 +27,7 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     currentStore: UserStore;
     token: string;
     displayedColumns = ['id', 'type', 'state'];
+    hasTickets = false;
 
     ticketState = TicketState;
     ticketType = TicketType;
@@ -38,12 +41,25 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
                 protected ticketsService: TicketsService,
                 protected userInfo: SflUserService,
                 protected windowRef: SflWindowRefService,
-                protected matDialog: MatDialog) {
+                protected matDialog: MatDialog,
+                protected route: ActivatedRoute,
+                protected ticketsDataService: TicketsDataService) {
         super();
     }
 
     ngOnInit() {
-        super.ngOnInit();
+        this.route.data.subscribe(({hasTickets}) => {
+            if (hasTickets) {
+                this.hasTickets = true;
+                super.ngOnInit();
+
+                this.ticketsDataService.watchUpdates().subscribe(() => {
+                    this.isLoadingResults = true;
+                    this.fetchData();
+                });
+            }
+        });
+
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.userInfo.fetchAggregatedInfo().subscribe(userInfo => this.token = userInfo.token);
     }
@@ -71,7 +87,7 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     }
 
     protected fetchCollection(params): Observable<{ total: number; dataList: any[] }> {
-        params.type = this.selectedType;
+        params.type = this.selectedType || TicketType.default;
         params.state = this.selectedState;
         return this.ticketsService.fetchTicketCollection(params)
             .pipe(map(response => ({total: response.total, dataList: response._embedded.ticket})));
