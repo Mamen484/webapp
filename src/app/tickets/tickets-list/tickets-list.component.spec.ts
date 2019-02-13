@@ -71,6 +71,17 @@ describe('TicketsListComponent', () => {
         });
     });
 
+    it('should fetch tickets with a default type by default', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(EMPTY);
+        appStore.select.and.returnValue(EMPTY);
+        component.ngOnInit();
+        route.data.next({hasTickets: true});
+
+        expect(component.hasTickets).toBe(true);
+        expect(ticketsService.fetchTicketCollection.calls.mostRecent().args[0].type).toBe(TicketType.default);
+    });
+
     it('should fetch tickets when hasTickets = true', () => {
         ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
         userInfo.fetchAggregatedInfo.and.returnValue(EMPTY);
