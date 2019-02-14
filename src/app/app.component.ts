@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
@@ -11,6 +11,8 @@ const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+
+    loadingNextRoute = true;
 
     constructor(protected router: Router,
                 protected location: Location) {
@@ -25,6 +27,21 @@ export class AppComponent implements OnInit {
                 this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
             }
         });
+        this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
+    }
+
+    /**
+     * Show a progressbar in the top of the application when we're loading the next route
+     */
+    protected checkRouterEvent(routerEvent: Event) {
+        if (routerEvent instanceof NavigationStart) {
+            this.loadingNextRoute = true;
+        }
+        if (routerEvent instanceof NavigationEnd
+            || routerEvent instanceof NavigationCancel
+            || routerEvent instanceof NavigationError) {
+            this.loadingNextRoute = false;
+        }
     }
 
 }

@@ -3,14 +3,18 @@ import { OrdersListComponent } from './orders-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { EMPTY, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../core/entities/app-state';
 
 describe('OrdersListComponent', () => {
     let component: OrdersListComponent;
     let fixture: ComponentFixture<OrdersListComponent>;
     let media: jasmine.SpyObj<MediaObserver>;
+    let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
+        appStore = jasmine.createSpyObj('Store spy', ['select']);
         media = <any>{media$: jasmine.createSpyObj(['subscribe']), isActive: jasmine.createSpy('media.isActive spy')};
         TestBed.configureTestingModule({
             declarations: [OrdersListComponent],
@@ -18,6 +22,7 @@ describe('OrdersListComponent', () => {
             providers: [
                 {provide: MediaObserver, useValue: media},
                 {provide: ActivatedRoute, useValue: {queryParams: new Subject()}},
+                {provide: Store, useValue: appStore},
             ]
         });
     }));
@@ -25,10 +30,11 @@ describe('OrdersListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersListComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {
+        appStore.select.and.returnValue(EMPTY);
+        fixture.detectChanges();
         expect(component).toBeTruthy();
     });
 

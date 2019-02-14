@@ -20,7 +20,7 @@ describe('TableOperations', () => {
         fetchCollection.and.returnValue(of({total: 10, dataList: []}));
         instance.ngOnInit();
         expect(fetchCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
-        expect(instance.dataSource).toEqual([]);
+        expect(instance.dataSource.data).toEqual([]);
     });
 
     it('should reset page when a search string is provided', fakeAsync(() => {

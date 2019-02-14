@@ -19,8 +19,6 @@ const UPDATE_EVENTS_INTERVAL = 6e4;
 })
 export class SidebarComponent implements OnInit, OnDestroy {
 
-    @Input() showExtendedSidenav = false;
-
     currentStore: Store;
     currentRoute;
     channels: StoreChannelDetails[];

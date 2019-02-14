@@ -1,4 +1,4 @@
-<sf-sidebar [showExtendedSidenav]="true">
+<sfl-left-navigation [title]="storeName">
     <mat-list-item class="has-top-margin active auto-height">
         <div matLine>Orders</div>
         <mat-list matLine>
@@ -31,7 +31,7 @@
     <mat-list-item>
         <a routerLink="/orders/tags-management">Settings</a>
     </mat-list-item>
-</sf-sidebar>
+</sfl-left-navigation>
 
 <div class="sf-content with-extended-sidenav">
     <sf-orders-table></sf-orders-table>

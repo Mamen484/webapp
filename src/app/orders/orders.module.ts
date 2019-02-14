@@ -28,12 +28,13 @@ import { SelectItemsDialogComponent } from './order-details/select-items-dialog/
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
 import { SidebarModule } from '../sidebar/sidebar.module';
+import { SflSidebarModule } from 'sfl-shared/sidebar';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        SidebarModule,
+        SflSidebarModule,
         OrdersRoutingModule,
         SettingsModule,
     ],
