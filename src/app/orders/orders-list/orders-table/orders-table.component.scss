@@ -3,11 +3,13 @@
 
 @include order-actions-bar();
 
+$actions-left-padding: 29px;
+
 $hover-row-bg: #EBEBEB;
 
 .actions {
   justify-content: flex-start;
-  padding-left: 29px;
+  padding-left: $actions-left-padding;
 
   &.accent {
     background-color: mat-color($accent, 0.1);
@@ -92,6 +94,10 @@ table {
 
   th, td {
     padding: 0 15px;
+
+    &:first-child {
+      padding-left: $actions-left-padding;
+    }
 
     &.column-tags, &.column-hasErrors {
       padding: 0;

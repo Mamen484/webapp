@@ -1,30 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SettingsNavComponent } from './settings-nav.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { OrdersLeftNavComponent } from './orders-left-nav.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { EMPTY } from 'rxjs';
 
-describe('SettingsNavComponent', () => {
-    let component: SettingsNavComponent;
-    let fixture: ComponentFixture<SettingsNavComponent>;
+describe('OrdersLeftNavComponent', () => {
+    let component: OrdersLeftNavComponent;
+    let fixture: ComponentFixture<OrdersLeftNavComponent>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj('Store spy', ['select']);
         TestBed.configureTestingModule({
-            declarations: [SettingsNavComponent],
-            schemas: [NO_ERRORS_SCHEMA],
+            declarations: [OrdersLeftNavComponent],
             providers: [
                 {provide: Store, useValue: appStore},
-            ]
+            ],
         })
             .compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SettingsNavComponent);
+        fixture = TestBed.createComponent(OrdersLeftNavComponent);
         component = fixture.componentInstance;
     });
 

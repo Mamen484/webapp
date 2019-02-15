@@ -13,7 +13,7 @@ $font-size: 14px;
     margin-top: 10px;
   }
 
-  &.active, a.active, div[matLine] {
+  &.active, a.active, &.active div[matLine] {
     color: mat-color($mat-blue, 700);
     font-weight: bold;
   }

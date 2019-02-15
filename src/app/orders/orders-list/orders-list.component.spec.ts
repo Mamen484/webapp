@@ -11,10 +11,10 @@ describe('OrdersListComponent', () => {
     let component: OrdersListComponent;
     let fixture: ComponentFixture<OrdersListComponent>;
     let media: jasmine.SpyObj<MediaObserver>;
-    let appStore: jasmine.SpyObj<Store<AppState>>;
+
 
     beforeEach(async(() => {
-        appStore = jasmine.createSpyObj('Store spy', ['select']);
+
         media = <any>{media$: jasmine.createSpyObj(['subscribe']), isActive: jasmine.createSpy('media.isActive spy')};
         TestBed.configureTestingModule({
             declarations: [OrdersListComponent],
