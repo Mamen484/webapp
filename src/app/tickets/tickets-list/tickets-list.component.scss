@@ -1,0 +1,53 @@
+@import '../../../sass/variables';
+
+$hover-row-bg: #EBEBEB;
+
+section {
+  &:first-of-type {
+    margin: 0;
+  }
+
+  margin-top: 25px;
+
+  & > mat-card {
+    margin-top: 10px;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.no-results {
+  background-color: white;
+  padding: 5px 10px;
+}
+
+mat-card.actions {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: 1px solid $black-12-opacity;
+}
+
+mat-progress-bar {
+  position: absolute;
+  z-index: 10;
+}
+
+.progress-bar-wrapper {
+  position: relative;
+  z-index: 150;
+}
+
+[mat-row] {
+  cursor: pointer;
+
+  &:hover, &:focus {
+    background-color: $hover-row-bg;
+  }
+}
+
+sf-image {
+  margin: 14px 24px;
+  display: block;
+}

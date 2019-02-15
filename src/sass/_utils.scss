@@ -109,3 +109,31 @@ $badge-font-level: caption;
 .tag-color-brown {
   background-color: #BCAAA4 !important;
 }
+
+.sf-label.mat-chip {
+  display: inline-flex;
+  padding: 7px 12px;
+  border-radius: 16px;
+  align-items: center;
+  cursor: default;
+  min-height: 32px;
+  height: 1px;
+  margin: 4px;
+  box-sizing: border-box;
+  font-weight: normal;
+
+  &.green {
+    background-color: mat-color($green, 0.2);
+    color: $black-87-opacity;
+  }
+
+  &.red {
+    background-color: mat-color($warn, 0.2);
+    color: $black-87-opacity;
+  }
+
+  &.blue {
+    background-color: mat-color($mat-blue, 700, 0.3);
+    color: $black-87-opacity;
+  }
+}

@@ -1,0 +1,29 @@
+@import '../../../../sass/variables';
+
+.sf-label {
+
+  mat-icon {
+    color: inherit;
+    margin-right: 10px;
+  }
+
+  &.grey {
+    background-color: mat-color($mat-grey, 700,  0.3);
+    color: mat-color($grey);
+  }
+
+  &.navy {
+    background-color: rgba(63, 58, 177, 0.3);
+    color: rgb(63, 58, 177);
+  }
+
+  &.green {
+    background-color: mat-color($mat-green, 700, 0.3);
+    color: mat-color($mat-green, 700);
+  }
+
+  &.red {
+    background-color: mat-color($mat-red, 700, 0.3);
+    color: mat-color($mat-red, 700);
+  }
+}

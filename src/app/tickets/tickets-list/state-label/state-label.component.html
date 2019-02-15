@@ -1,0 +1,22 @@
+<ng-container [ngSwitch]="state">
+    <div *ngSwitchCase="ticketState.succeed" class="sf-label mat-chip green">
+        <mat-icon>check_circle</mat-icon>
+        <ng-container i18n>Success</ng-container>
+    </div>
+    <div *ngSwitchCase="ticketState.failed" class="sf-label mat-chip red">
+        <mat-icon>close</mat-icon>
+        <ng-container i18n>Failed</ng-container>
+    </div>
+    <div *ngSwitchCase="ticketState.canceled" class="sf-label mat-chip grey">
+        <mat-icon>close</mat-icon>
+        <ng-container i18n>Canceled</ng-container>
+    </div>
+    <div *ngSwitchCase="ticketState.running" class="sf-label mat-chip navy">
+        <mat-icon>timelapse</mat-icon>
+        <ng-container i18n>Running</ng-container>
+    </div>
+    <div *ngSwitchCase="ticketState.scheduled" class="sf-label mat-chip navy">
+        <mat-icon>schedule</mat-icon>
+        <ng-container i18n>Scheduled</ng-container>
+    </div>
+</ng-container>

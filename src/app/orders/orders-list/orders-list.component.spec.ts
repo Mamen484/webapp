@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrdersListComponent } from './orders-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 describe('OrdersListComponent', () => {
     let component: OrdersListComponent;
     let fixture: ComponentFixture<OrdersListComponent>;
-    let media: jasmine.SpyObj<ObservableMedia>;
+    let media: jasmine.SpyObj<MediaObserver>;
 
     beforeEach(async(() => {
-        media = jasmine.createSpyObj(['subscribe', 'isActive']);
+        media = <any>{media$: jasmine.createSpyObj(['subscribe']), isActive: jasmine.createSpy('media.isActive spy')};
         TestBed.configureTestingModule({
             declarations: [OrdersListComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                {provide: ObservableMedia, useValue: media}
+                {provide: MediaObserver, useValue: media}
             ]
         });
     }));

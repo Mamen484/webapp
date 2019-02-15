@@ -19,4 +19,5 @@ export const environment = {
     GTAG_ID: 'UA-78261662-1',
     LIVECHAT_LICENSE_ID: '9950095',
     FULLSTORY_ORG_ID: 'D6X8Q',
+    ZAPIER_LINK: 'https://zapier.com/developer/invite/100387/80c3075b8660cd0602a9eb253b89ad07',
 };
