@@ -101,4 +101,14 @@ describe('LoginComponent', () => {
         component.login({username: '123', password: '456'});
         expect(component.showDeletedStoreError).toEqual(false);
     });
+
+    it('should redirect to /admin when a user has an admin role', () => {
+        let userInfo = cloneDeep(aggregatedUserInfoMock);
+        userInfo.roles = ['admin'];
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
+        authService.login.and.returnValue(of({access_token: 'some_token'}));
+        component.login({username: '123', password: '456'});
+        expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href)
+            .toContain(`/admin?token=some_token&store=307`);
+    });
 });
