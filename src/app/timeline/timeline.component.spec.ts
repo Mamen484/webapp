@@ -234,7 +234,7 @@ function validateEvent(elem, iconName, text, url?) {
         .toEqual(text);
     if (url) {
         expect(elem.querySelector('sf-event-link > a').href)
-            .toEqual(environment.APP_URL + url + '?store=100&token=someToken');
+            .toContain(url + '?store=100&token=someToken');
     }
 }
 
