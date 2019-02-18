@@ -1,24 +1,24 @@
 <sfl-solo-search i18n-placeholder placeholder="Search orders" i18n-filterButtonText filterButtonText="Filter"
                  (openFilters)="openDialog()" (searchQueryChanged)="search($event)"></sfl-solo-search>
-<mat-chip-list [selectable]="false" class="filter-chips">
+<mat-chip-list [selectable]="false" class="filter-chips" *ngIf="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
     <mat-chip *ngIf="selectedChannel">
         <ng-container i18n>Channel: {{selectedChannel}}</ng-container>
         <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
     </mat-chip>
-    <mat-chip *ngIf="ordersFilter?.since">
+    <mat-chip *ngIf="ordersFilter.isActive(['since'])">
         <ng-container i18n>Since: {{ordersFilter?.since | date:'short'}}</ng-container>
         <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
     </mat-chip>
-    <mat-chip *ngIf="ordersFilter?.until">
+    <mat-chip *ngIf="ordersFilter.isActive(['until'])">
         <ng-container i18n>Until: {{ordersFilter?.until | date:'short'}}</ng-container>
         <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
     </mat-chip>
-    <mat-chip *ngIf="ordersFilter?.tag && ordersFilter?.tag !== 'all'">
+    <mat-chip *ngIf="ordersFilter.isActive(['tag'])">
         <ng-container i18n>Tag: {{ordersFilter?.tag}}</ng-container>
         <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
     </mat-chip>
 </mat-chip-list>
-<mat-card>
+<mat-card class="orders" [class.filters-applied]="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
     <mat-card-content>
         <div class="actions" [class.accent]="selection.selected.length" fxLayout="row">
             <div fxFlex>
@@ -186,14 +186,13 @@
                         (click)="goToOrder(row.id)">{{row.name}}
                     </tr>
                 </table>
-            </div>
-
-            <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
-                No orders matching your request.
+                <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
+                    No orders matching your request.
+                </div>
+                <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                               (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
             </div>
         </div>
-        <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
-                       (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
     </mat-card-content>
 </mat-card>
 

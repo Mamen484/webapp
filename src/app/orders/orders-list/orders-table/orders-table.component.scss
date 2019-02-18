@@ -16,15 +16,22 @@ $hover-row-bg: #EBEBEB;
   }
 }
 
-$subheader-height: 54px;
 $actions-height: 61px;
-$search-block-height: 105px;
-$filtering-tabs-height: 49px;
-$paginator-height: 65px;
+$search-block-height: 60px;
+$applied-filters-height: 52px;
+
 
 .table-container {
-  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$paginator-height});
+  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height});
   overflow: auto;
+}
+
+.filters-applied {
+  .table-container {
+    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height});
+  }
+
+
 }
 
 mat-card {
@@ -152,7 +159,8 @@ mat-chip {
 
 
 mat-chip-list.filter-chips {
-  margin: 5px;
+  margin-bottom: $content-margin;
+  display: block;
 
   mat-chip {
     mat-icon {
@@ -163,4 +171,9 @@ mat-chip-list.filter-chips {
       vertical-align: middle;
     }
   }
+}
+
+sfl-solo-search {
+  display: block;
+  margin-bottom: $content-margin;
 }

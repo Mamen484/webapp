@@ -40,6 +40,24 @@ export class OrdersFilter {
         }
     }
 
+    /**
+     * Check if any of specified filters have been applied
+     *
+     * @param propNames
+     */
+    isActive(propNames: string[]): boolean {
+        return propNames.some(propName => {
+            switch (propName) {
+                case 'channel':
+                case 'tag':
+                    return Boolean(this[propName] && this[propName] !== 'all');
+
+                default:
+                    return Boolean(this[propName]);
+            }
+        });
+    }
+
     toHttpParams() {
         let params = new HttpParams().set('limit', this.limit);
         if (this.since) {

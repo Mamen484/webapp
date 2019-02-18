@@ -651,6 +651,57 @@ describe('OrdersTableComponent', () => {
         expect(matDialog.open.calls.mostRecent().args[1].data).toEqual('export');
     });
 
+    it('should show filters and apply .filters-applied class when a channel selected', () => {
+        component.ordersFilter = new OrdersFilter();
+        component.selectedChannel = 22;
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-card.filters-applied')).toBeTruthy();
+    });
+
+    it('should show filters and apply .filters-applied class when a tag selected', () => {
+        component.ordersFilter = new OrdersFilter({tag: 'some tag'});
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-card.filters-applied')).toBeTruthy();
+    });
+
+    it('should show filters and apply .filters-applied class when a since selected', () => {
+        component.ordersFilter = new OrdersFilter({since: OrdersFilter.aMonthBefore()});
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-card.filters-applied')).toBeTruthy();
+    });
+
+    it('should show filters and apply .filters-applied class when an until selected', () => {
+        component.ordersFilter = new OrdersFilter({until: OrdersFilter.aMonthBefore()});
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-card.filters-applied')).toBeTruthy();
+    });
+
+    it('should NOT show filters and NOT apply .filters-applied class when no filters selected', () => {
+        component.ordersFilter = new OrdersFilter();
+        appStore.select.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of({}));
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).not.toBeTruthy();
+        expect(fixture.debugElement.nativeElement.querySelector('mat-card.filters-applied')).not.toBeTruthy();
+    });
+
 
     function mockOrder() {
         return {

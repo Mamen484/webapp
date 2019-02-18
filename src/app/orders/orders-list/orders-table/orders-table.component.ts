@@ -27,10 +27,7 @@ import { environment } from '../../../../environments/environment';
 import { AssignTagsDialogComponent } from '../../assign-tags-dialog/assign-tags-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 
-
-
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
-
 
 @Component({
     selector: 'sf-orders-table',
