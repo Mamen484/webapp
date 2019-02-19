@@ -1,4 +1,10 @@
 @import '../../../../src/sass/variables';
+@import '~system-font-css/_system-font';
+
+$config: mat-typography-config(
+        $font-family: system-ui,
+        $input: mat-typography-level(14px, 1.25, 400)
+);
 
 $toolbar-height: 0;
 $paginator-height: 65px;

@@ -4,19 +4,22 @@
     <section>
         <div class="mat-body-1" i18n>Your API credentials</div>
         <mat-card>
-            <mat-card-content fxLayout="column" fxLayoutAlign="flex-start flex-start" fxLayoutGap="10px">
-                <div>
-                    <div class="mat-body-2" i18n>Token</div>
-                    <div class="mat-body-1">{{token}}</div>
+            <mat-card-content fxLayout="row">
+                <div fxLayout="column" fxLayoutAlign="flex-start flex-start" fxLayoutGap="10px" fxFlex>
+                    <div>
+                        <div class="mat-body-2" i18n>Token</div>
+                        <div class="mat-body-1">{{token}}</div>
+                    </div>
+                    <div>
+                        <div class="mat-body-2" i18n>Store ID</div>
+                        <div class="mat-body-1">{{currentStore.id}}</div>
+                    </div>
+                    <div>
+                        <div class="mat-body-2" i18n>Store Name</div>
+                        <div class="mat-body-1">{{currentStore.name}}</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="mat-body-2" i18n>Store ID</div>
-                    <div class="mat-body-1">{{currentStore.id}}</div>
-                </div>
-                <div>
-                    <div class="mat-body-2" i18n>Store Name</div>
-                    <div class="mat-body-1">{{currentStore.name}}</div>
-                </div>
+                <a [href]="apiDocsLink" target="_blank" i18n class="docs-link">API Documentation</a>
             </mat-card-content>
         </mat-card>
     </section>

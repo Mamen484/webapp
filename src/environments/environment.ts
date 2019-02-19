@@ -7,6 +7,7 @@ export const environment = {
     APP_AUTHORIZATION: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
     API_URL_WITHOUT_VERSION: 'http://api.shopping-feed.lan',
     API_URL: 'http://api.shopping-feed.lan/v1',
+    API_DOCUMENTATION: 'https://developer.shopping-feed.com',
     BASE_HREF: '/v3',
     SHOPIFY_APP_URL: 'https://apps.shopify.com/shopping-feed-dev',
     SUPPORT_URL: 'https://shoppingfeed.zendesk.com/hc',

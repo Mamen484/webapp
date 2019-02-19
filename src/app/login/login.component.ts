@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
                             this.windowRef.nativeWindow.location.href = this.buildUrl(
                                 data.access_token,
                                 activeStore.id,
-                                userData.roles.indexOf('admin') !== -1 || userData.roles.indexOf('employee') !== -1
+                                userData.isAdmin()
                             );
                             return;
                         }
@@ -58,9 +58,9 @@ export class LoginComponent implements OnInit {
     }
 
     protected buildUrl(token, storeId, isAdmin) {
-        let queryParams = new HttpParams();
-        queryParams.set('token', token);
-        queryParams.set('store', storeId);
+        let queryParams = new HttpParams()
+            .set('token', token)
+            .set('store', storeId);
         let additionalPath = isAdmin ? '/admin' : '';
         return environment.APP_URL + additionalPath + '?' + queryParams.toString();
     }

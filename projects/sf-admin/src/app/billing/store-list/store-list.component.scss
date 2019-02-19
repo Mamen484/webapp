@@ -16,4 +16,11 @@ table {
       color: mat-color($warn, 900);
     }
   }
+
+  td {
+    &.block-cell, &.edit-cell{
+      width: 60px;
+    }
+
+  }
 }

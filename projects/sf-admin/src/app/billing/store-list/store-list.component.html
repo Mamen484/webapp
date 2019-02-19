@@ -47,7 +47,7 @@
         </ng-container>
         <ng-container matColumnDef="edit">
             <th mat-header-cell *matHeaderCellDef i18n></th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="edit-cell">
                 <button mat-icon-button (click)="openEditStoreDialog(element)" matTooltip="Modify billing"
                         i18n-matTooltip class="edit">
                     <mat-icon>edit</mat-icon>
@@ -57,7 +57,7 @@
         </ng-container>
         <ng-container matColumnDef="block">
             <th mat-header-cell *matHeaderCellDef i18n></th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="block-cell">
                 <button mat-icon-button (click)="element.isActive ? blockStore(element) : activateStore(element)"
                         [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip>
                     <mat-icon class="block-store">block</mat-icon>

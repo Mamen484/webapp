@@ -12,6 +12,10 @@ section {
   & > mat-card {
     margin-top: 10px;
   }
+
+  a.docs-link:visited {
+    color: mat-color($accent);
+  }
 }
 
 table {
