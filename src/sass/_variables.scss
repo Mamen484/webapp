@@ -10,8 +10,7 @@ $theme: mat-light-theme($primary, $accent, $warn);
 
 $black-54-opacity: rgba(black, 0.54);
 
-$toolbar-height: 64px;
-$tabs-height: 49px;
+$toolbar-height: 0px;
 $left-sidebar-width: 75px;
 
 $config: mat-typography-config(

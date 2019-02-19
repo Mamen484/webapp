@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     currentRoute;
     channels: StoreChannelDetails[];
     linkToSupportCenter;
-    hideTooltips = true;
+    hideTooltips = false;
 
     userInfo: AggregatedUserInfo;
     storeStatus = StoreStatus;
