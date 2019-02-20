@@ -1,0 +1,14 @@
+@import '../variables';
+
+$expandable-sidenav-width: 200px;
+
+.sf-content {
+  margin-left: $left-sidebar-width + $expandable-sidenav-width;
+  padding-top: $content-margin;
+  padding-right: $content-margin;
+  padding-left: $content-margin;
+
+  @media #{$xs} {
+    margin-left: $content-margin;
+  }
+}

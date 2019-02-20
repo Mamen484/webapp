@@ -10,6 +10,7 @@ import { StoreBlockDialogComponent } from './store-list/store-block-dialog/store
 import { GroupListComponent } from './group-list/group-list.component';
 import { GroupDialogComponent } from './group-list/group-dialog/group-dialog.component';
 import { SearchBillingStoreDirective } from './search-billing-store/search-billing-store.directive';
+import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { SearchBillingStoreDirective } from './search-billing-store/search-billi
         FormsModule,
         ReactiveFormsModule,
         SfaSharedModule,
+        AdminSidebarModule,
     ],
     providers: [],
     declarations: [

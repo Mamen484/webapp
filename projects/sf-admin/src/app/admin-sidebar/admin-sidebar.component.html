@@ -1,50 +1,23 @@
-<sfl-sidebar-container>
+<sfl-sidebar-container bgColor="#01579b" borderColor="#dadada" menuHeight="0px">
     <mat-list>
-        <mat-list-item matTooltip="Create a user" matTooltipPosition="after" i18n-matTooltip
-                       routerLink="/create-user" [matTooltipDisabled]="hideTooltips">
-            <mat-icon>add</mat-icon>
-            <span fxHide fxShow.xs i18n>Create a user</span>
-        </mat-list-item>
-        <mat-list-item [matMenuTriggerFor]="invoicing" matTooltip="Billing" matTooltipPosition="after" i18n-matTooltip
-                       [matTooltipDisabled]="hideTooltips">
-            <mat-icon>attach_money</mat-icon>
-            <span fxHide fxShow.xs i18n>Billing</span>
-        </mat-list-item>
-        <mat-list-item matTooltip="Partners" matTooltipPosition="after" i18n-matTooltip
-                       [matTooltipDisabled]="hideTooltips">
-            <a sflLegacyLink path="/admin/partners" class="partners-link">
-                <mat-icon>people</mat-icon>
-                <span fxHide fxShow.xs i18n>Partners</span>
+        <mat-list-item>
+            <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
+                <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
             </a>
         </mat-list-item>
-        <mat-list-item [matMenuTriggerFor]="tools" matTooltip="Tools" matTooltipPosition="after" i18n-matTooltip
-                       [matTooltipDisabled]="hideTooltips">
-            <mat-icon>build</mat-icon>
-            <span fxHide fxShow.xs i18n>Tools</span>
-        </mat-list-item>
-        <mat-list-item [matMenuTriggerFor]="api" matTooltip="API" matTooltipPosition="after" i18n-matTooltip
-                       [matTooltipDisabled]="hideTooltips">
-            <mat-icon>developer_board</mat-icon>
-            <span fxHide fxShow.xs i18n>API</span>
+        <mat-list-item matTooltip="Billing" matTooltipPosition="after" routerLink="/billing">
+            <mat-icon>attach_money</mat-icon>
+            <span fxHide fxShow.xs i18n>Billing</span>
         </mat-list-item>
     </mat-list>
 </sfl-sidebar-container>
 
-<mat-menu #invoicing="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item i18n routerLink="/billing">Billing</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/lost" target="_blank">Clients lost</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/churn" target="_blank">Churn</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/invoicing" target="_blank">Membership</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/turnover" target="_blank">Turnover</a>
-</mat-menu>
-
-<mat-menu #tools="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item i18n sflLegacyLink path="/admin/segmentationcatalog" target="_blank">Auto-Remove Library</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/encyclofeedia" target="_blank">Encyclofeedia</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/rulecatalog" target="_blank">Rule Library</a>
-</mat-menu>
-
-<mat-menu #api="matMenu" class="sf-sidebar-menu">
-    <a mat-menu-item i18n sflLegacyLink path="/admin/webservice" target="_blank">API Lookup</a>
-    <a mat-menu-item i18n sflLegacyLink path="/admin/relaunchMarketplaceOrders" target="_blank">Relaunch Orders</a>
-</mat-menu>
+<div class="sfl-expandable-sidenav">
+    <mat-list>
+        <mat-list-item>
+            Admin
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <ng-content></ng-content>
+    </mat-list>
+</div>

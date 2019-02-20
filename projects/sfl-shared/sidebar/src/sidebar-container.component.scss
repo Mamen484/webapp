@@ -4,21 +4,12 @@ mat-sidenav {
   position: sticky;
   bottom: 0;
   left: 0;
-  min-width: $left-sidebar-width;
-  background-color: mat-color($grey, A100);
   text-align: center;
   top: 0;
-  height: calc(100vh - #{$toolbar-height});
-  border-right: 1px solid mat-color($grey, 200);
 
   @media #{$xs} {
     position: fixed;
-    top: $toolbar-height;
     padding-top: 10px;
-  }
-
-  @media #{$gt-xs} {
-    width: $left-sidebar-width;
   }
 }
 

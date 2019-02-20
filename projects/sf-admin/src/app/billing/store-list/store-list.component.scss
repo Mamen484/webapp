@@ -1,18 +1,10 @@
 @import '../../../../src/sass/variables';
+@import '../../../../src/sass/mixins/scrollable-table.mixin';
 
-$paginator-height: 65px;
-$page-header-height: 56px + $toolbar-height;
+$page-header-height: 56px;
 $search-field-height: 89px;
 
-.table-container {
-  max-height: calc(100vh - #{$toolbar-height} - 2 * #{$content-margin} - #{$paginator-height} - #{$page-header-height} - #{$search-field-height});
-  overflow: auto;
-
-  mat-icon {
-    cursor: pointer;
-    color: $black-54-opacity;
-  }
-}
+@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}))
 
 table {
   width: 100%;
@@ -24,37 +16,11 @@ table {
       color: mat-color($warn, 900);
     }
   }
-}
 
-mat-paginator {
-  position: relative;
-}
+  td {
+    &.block-cell, &.edit-cell{
+      width: 60px;
+    }
 
-.page-header {
-  margin-bottom: 20px;
-  margin-top: $toolbar-height;
-}
-
-mat-progress-bar {
-  position: absolute;
-  z-index: 10;
-}
-
-.progress-bar-wrapper {
-  position: relative;
-  z-index: 150;
-}
-
-.list-title {
-  margin-bottom: 0;
-}
-
-sfl-solo-search {
-  display: block;
-  margin-bottom: 20px;
-}
-
-.no-results {
-  background-color: white;
-  padding: 5px 10px;
+  }
 }

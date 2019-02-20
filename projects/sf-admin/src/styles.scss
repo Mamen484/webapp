@@ -1,2 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~system-font-css/_system-font';
 @import '../../../src/styles';
+@import 'sass/material-theme';
+
+@import './sass/mixins/content';
+
+body {
+  font-family: system-ui;
+}

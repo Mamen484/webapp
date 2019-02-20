@@ -1,9 +1,6 @@
 @import './variables';
 
-@include mat-core();
-@include angular-material-theme($theme);
-
-@include angular-material-typography($config);
+/* Material overrides */
 
 body {
   font-family: 'Noto Sans', sans-serif;

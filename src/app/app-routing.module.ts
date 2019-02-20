@@ -34,6 +34,7 @@ const routes: Routes = [
             {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule'},
             {path: 'orders', loadChildren: './orders/orders.module#OrdersModule'},
             {path: 'channel-setup', loadChildren: './channel-setup/channel-setup.module#ChannelSetupModule'},
+            {path: 'api', loadChildren: './tickets/tickets.module#TicketsModule'},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
