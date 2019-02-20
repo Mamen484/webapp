@@ -59,7 +59,7 @@ export class FeedService {
     }
 
     mapFeedCategory(feedId, catalogCategoryId: number, channelCategoryId: number) {
-        return this.httpClient.put(
+        return this.httpClient.patch(
             `${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`,
             {mapping: {channelCategoryId}}
         );

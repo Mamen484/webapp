@@ -25,7 +25,7 @@
             <mat-card class="categories-list">
                 <mat-card-content>
                     <mat-list dense>
-                        <mat-list-item *ngFor="let category of categories" (click)="chosenClientsCategoryId = category.catalogCategory.id"
+                        <mat-list-item *ngFor="let category of categories" (click)="chooseClientCategory(category)"
                                        [class.selected]="chosenClientsCategoryId === category.catalogCategory.id">
                             <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
                                 <div fxFlex>{{category.catalogCategory.name}}</div>
@@ -57,7 +57,8 @@
                 <form>
                     <mat-form-field appearance="outline" color="accent">
                         <mat-label i18n>Category matching</mat-label>
-                        <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto">
+                        <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
+                        [value]="searchChannelCategoryValue">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                                           (optionSelected)="chosenChannelCategory = $event.option.value">
                             <mat-option *ngFor="let category of channelCategoryOptions"

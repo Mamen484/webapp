@@ -42,6 +42,7 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     /** channel category autocomplete */
     searchChannelCategoryControl = new FormControl();
+    searchChannelCategoryValue = '';
     channelCategoryOptions: Category[] = [];
 
     /** matched categories */
@@ -68,12 +69,17 @@ export class CategoriesConfigurationComponent implements OnInit {
         }
     }
 
+    chooseClientCategory(category: FeedCategory) {
+        this.chosenClientsCategoryId = category.catalogCategory.id;
+        this.searchChannelCategoryValue = category.channelCategory ? category.channelCategory.name : '';
+    }
+
     displayFn(category: Category) {
         return category ? category.name : undefined;
     }
 
     hasModifications() {
-        return Boolean( this.searchChannelCategoryControl.value);
+        return Boolean(this.searchChannelCategoryControl.value);
     }
 
     ngOnInit() {
@@ -167,7 +173,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.totalCategoriesNumber = categories.total;
             this.processingClientCategorySearch = false;
             if (this.categories.length > 0) {
-                this.chosenClientsCategoryId = this.categories[0].catalogCategory.id;
+                this.chooseClientCategory(this.categories[0]);
             }
         }, error => {
             if (error.status === CONFLICT_ERROR_CODE) {

@@ -124,9 +124,8 @@ describe('CategoriesConfigurationComponent', () => {
         expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
     });
 
-    it('should be marked as having modifications if both client and channel categories chosen', () => {
-        component.chosenChannelCategory = <any>{};
-        component.chosenClientsCategoryId = 12;
+    it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
+        component.searchChannelCategoryControl.setValue('some value');
         expect(component.hasModifications()).toBe(true);
     });
 
