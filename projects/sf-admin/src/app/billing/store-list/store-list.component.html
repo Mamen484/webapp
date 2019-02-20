@@ -1,68 +1,71 @@
 <sfa-sidebar>
-    <mat-list-item class="has-top-margin active">Store</mat-list-item>
+    <mat-list-item class="active">
+        <div class="mat-body-2" i18n>Store</div>
+    </mat-list-item>
     <mat-list-item>
-        <a routerLink="/billing/groups">Group</a>
+        <a routerLink="/billing/groups" class="mat-body-1" i18n>Group</a>
     </mat-list-item>
 </sfa-sidebar>
 
 <div class="sf-content">
 
-<div fxLayout="row" class="page-header">
-    <div i18n fxFlex class="mat-title list-title">Billing Stores</div>
-    <button mat-raised-button color="accent" (click)="openCreateStoreDialog()" i18n>Add Store</button>
-</div>
-<sfl-solo-search i18n-placeholder placeholder="Search store" (searchQueryChanged)="search($event)"></sfl-solo-search>
+    <div fxLayout="row" class="page-header">
+        <div i18n fxFlex class="mat-title list-title">Billing Stores</div>
+        <button mat-raised-button color="accent" (click)="openCreateStoreDialog()" i18n>Add Store</button>
+    </div>
+    <sfl-solo-search i18n-placeholder placeholder="Search store"
+                     (searchQueryChanged)="search($event)"></sfl-solo-search>
 
-<div *ngIf="isLoadingResults" class="progress-bar-wrapper">
-    <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-</div>
-<div class="table-container mat-elevation-z1">
-    <table mat-table [dataSource]="dataSource">
+    <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </div>
+    <div class="table-container mat-elevation-z1">
+        <table mat-table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef i18n> Store name</th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef i18n> Price</th>
-            <td mat-cell *matCellDef="let element"> {{element.monthlySubscriptionAmount}} </td>
-        </ng-container>
-        <ng-container matColumnDef="commission">
-            <th mat-header-cell *matHeaderCellDef i18n> Commission</th>
-            <td mat-cell *matCellDef="let element"> {{element.commissionRate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="trialEndDate">
-            <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period</th>
-            <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
-        </ng-container>
-        <ng-container matColumnDef="closedAt">
-            <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date</th>
-            <td mat-cell *matCellDef="let element">
-                <ng-container *ngIf="!element.isActive">{{element.closedAt | date:'shortDate'}}</ng-container>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="groupName">
-            <th mat-header-cell *matHeaderCellDef i18n> Group</th>
-            <td mat-cell *matCellDef="let element"> {{element?._embedded?.group?.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="edit">
-            <th mat-header-cell *matHeaderCellDef i18n></th>
-            <td mat-cell *matCellDef="let element" class="edit-cell">
-                <button mat-icon-button (click)="openEditStoreDialog(element)" matTooltip="Modify billing"
-                        i18n-matTooltip class="edit">
-                    <mat-icon>edit</mat-icon>
-                </button>
-            </td>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef i18n> Store name</th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef i18n> Price</th>
+                <td mat-cell *matCellDef="let element"> {{element.monthlySubscriptionAmount}} </td>
+            </ng-container>
+            <ng-container matColumnDef="commission">
+                <th mat-header-cell *matHeaderCellDef i18n> Commission</th>
+                <td mat-cell *matCellDef="let element"> {{element.commissionRate}} </td>
+            </ng-container>
+            <ng-container matColumnDef="trialEndDate">
+                <th mat-header-cell *matHeaderCellDef i18n> End date of the trial period</th>
+                <td mat-cell *matCellDef="let element"> {{element.trialEndsAt | date:'shortDate'}}</td>
+            </ng-container>
+            <ng-container matColumnDef="closedAt">
+                <th mat-header-cell *matHeaderCellDef i18n> Billing suspension date</th>
+                <td mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="!element.isActive">{{element.closedAt | date:'shortDate'}}</ng-container>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="groupName">
+                <th mat-header-cell *matHeaderCellDef i18n> Group</th>
+                <td mat-cell *matCellDef="let element"> {{element?._embedded?.group?.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef i18n></th>
+                <td mat-cell *matCellDef="let element" class="edit-cell">
+                    <button mat-icon-button (click)="openEditStoreDialog(element)" matTooltip="Modify billing"
+                            i18n-matTooltip class="edit">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
 
-        </ng-container>
-        <ng-container matColumnDef="block">
-            <th mat-header-cell *matHeaderCellDef i18n></th>
-            <td mat-cell *matCellDef="let element" class="block-cell">
-                <button mat-icon-button (click)="element.isActive ? blockStore(element) : activateStore(element)"
-                        [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip>
-                    <mat-icon class="block-store">block</mat-icon>
-                </button>
-            </td>
+            </ng-container>
+            <ng-container matColumnDef="block">
+                <th mat-header-cell *matHeaderCellDef i18n></th>
+                <td mat-cell *matCellDef="let element" class="block-cell">
+                    <button mat-icon-button (click)="element.isActive ? blockStore(element) : activateStore(element)"
+                            [matTooltip]="element.isActive ? 'Suspend billing' : 'Activate billing'" i18n-matTooltip>
+                        <mat-icon class="block-store">block</mat-icon>
+                    </button>
+                </td>
 
             </ng-container>
 
