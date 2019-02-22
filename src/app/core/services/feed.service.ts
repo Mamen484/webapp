@@ -36,7 +36,9 @@ export class FeedService {
         if (mapping) {
             params = params.set('mapping', mapping);
         }
-        return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/category`, {params}) as Observable<PagedResponse<{ category: FeedCategory[] }>>;
+        return this.httpClient.get(
+            `${environment.API_URL}/feed/${feedId}/category`, {params}
+        ) as Observable<PagedResponse<{ category: FeedCategory[] }>>;
     }
 
     fetchFeedCollection(channelId: number, forceFetch = false) {
@@ -53,7 +55,7 @@ export class FeedService {
                 publishReplay()
             ) as ConnectableObservable<PagedResponse<{ feed: Feed[] }>>;
             observable.connect();
-            this.feedCache.set(channelId,  observable);
+            this.feedCache.set(channelId, observable);
         }
         return this.feedCache.get(channelId);
     }
@@ -62,6 +64,15 @@ export class FeedService {
         return this.httpClient.patch(
             `${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`,
             {mapping: {channelCategoryId}}
+        );
+    }
+
+    create(channelId) {
+        return this.appStore.select('currentStore').pipe(
+            take(1),
+            flatMap((store) => this.httpClient.post(`${environment.API_URL}/feed`, {
+                feed: {catalogId: store.id, channelId, country: store.country},
+            }))
         );
     }
 }
