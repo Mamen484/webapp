@@ -83,6 +83,9 @@ describe('ChannelLinkService', () => {
         service.navigateToChannel(mockChannel());
         expect(feedService.create).toHaveBeenCalled();
         expect(feedService.fetchFeedCollection).toHaveBeenCalledTimes(2);
+
+        expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/shopbot/manage/channel_name');
+        expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
 
     function mockChannel() {
