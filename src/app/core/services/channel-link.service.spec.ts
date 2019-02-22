@@ -44,7 +44,7 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open a legacy channel page if the channel has at least one category and the feed has configured categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({_embedded: {feed: [{id: 20}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
         feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: [{}]}}));
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
 
@@ -56,7 +56,7 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open channel setup page if the channel has at least one category but the feed has no configured categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({_embedded: {feed: [{id: 20}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
         feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: []}}));
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
         const channel = <any>mockChannel();
@@ -66,7 +66,7 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open a legacy channel page if the channel has no categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({_embedded: {feed: [{id: 20}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: []}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         service.navigateToChannel(mockChannel());
@@ -75,8 +75,8 @@ describe('ChannelLinkService', () => {
         expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
 
-    it('should perform a create feed request and refetch feed when fetching feed returned an error', () => {
-        feedService.fetchFeedCollection.and.returnValues(throwError({}), of({_embedded: {feed: [{id: 20}]}}));
+    it('should perform a create feed request and refetch feed when no feed found', () => {
+        feedService.fetchFeedCollection.and.returnValues(of({total: 0}), of({total: 1, _embedded: {feed: [{id: 20}]}}));
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: []}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         feedService.create.and.returnValue(of({}));

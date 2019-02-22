@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, zip } from 'rxjs';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { ChannelLinkPipe } from '../../shared/channel-link/channel-link.pipe';
 import { FeedService } from './feed.service';
@@ -26,8 +26,13 @@ export class ChannelLinkService {
     navigateToChannel(channel: Channel) {
         zip(
             this.feedService.fetchFeedCollection(channel.id).pipe(
-                catchError(() => this.feedService.create(channel.id)
-                    .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel.id))))
+                flatMap(feedCollection => {
+                    if (!feedCollection.total) {
+                        return this.feedService.create(channel.id)
+                            .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel.id)))
+                    }
+                    return of(feedCollection);
+                })
             ),
             this.channelService.getChannelCategories(channel.id, {limit: '1'})
         ).pipe(
