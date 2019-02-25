@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
 import { StreamEventType, TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { Timeline } from '../core/entities/timeline';
 import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
+import { PageLoadingService } from '../core/services/page-loading.service';
 
 @Component({
     selector: 'sf-timeline',
@@ -11,7 +12,7 @@ import { TimelineEventAction } from '../core/entities/timeline-event-action.enum
     styleUrls: ['./timeline.component.scss'],
     preserveWhitespaces: false,
 })
-export class TimelineComponent {
+export class TimelineComponent implements OnInit {
 
     events;
     updates: TimelineEvent[];
@@ -23,19 +24,26 @@ export class TimelineComponent {
     loadingTimeline = true;
     showUpdates = true;
 
-    constructor(protected timelineService: TimelineService) {
-
+    constructor(protected timelineService: TimelineService,
+                protected pageLoadingService: PageLoadingService) {
         this.timelineService.emitUpdatedTimeline();
         this.timelineService.getTimelineStream().subscribe(({type, data}) => {
             if (type === StreamEventType.finished) {
-                this.loadingTimeline = false;
+                this.pageLoadingService.finishLoading();
                 let {updates, events} = data;
                 this.initializeEvents(events);
                 this.initializeUpdates(updates);
                 return;
             }
-            this.loadingTimeline = true;
+            this.pageLoadingService.startLoading();
         });
+
+
+    }
+
+    ngOnInit() {
+        this.pageLoadingService.startLoading();
+        this.pageLoadingService.getState().subscribe(isLoading => this.loadingTimeline = isLoading);
     }
 
     onScroll() {
@@ -56,11 +64,11 @@ export class TimelineComponent {
     }
 
     applyFilter({filter, isActive}) {
-        this.loadingTimeline = true;
+        this.pageLoadingService.startLoading();
         this.timelineService.getEvents(filter)
             .subscribe(timeline => {
                 this.initializeEvents(timeline);
-                this.loadingTimeline = false;
+                this.pageLoadingService.finishLoading();
             });
         // display updates block only if no filters applied
         this.showUpdates = !isActive;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { PageLoadingService } from './core/services/page-loading.service';
 
 const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
 
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
     loadingNextRoute = true;
 
     constructor(protected router: Router,
-                protected location: Location) {
+                protected location: Location,
+                protected pageLoadingService: PageLoadingService) {
     }
 
     ngOnInit(): void {
@@ -28,6 +30,8 @@ export class AppComponent implements OnInit {
             }
         });
         this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
+
+        this.pageLoadingService.getState().subscribe(isBeingLoaded => this.loadingNextRoute = isBeingLoaded);
     }
 
     /**
@@ -35,12 +39,12 @@ export class AppComponent implements OnInit {
      */
     protected checkRouterEvent(routerEvent: Event) {
         if (routerEvent instanceof NavigationStart) {
-            this.loadingNextRoute = true;
+            this.pageLoadingService.startLoading();
         }
         if (routerEvent instanceof NavigationEnd
             || routerEvent instanceof NavigationCancel
             || routerEvent instanceof NavigationError) {
-            this.loadingNextRoute = false;
+            this.pageLoadingService.finishLoading();
         }
     }
 

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExpandableComponent } from './expandable.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ExpandableComponent', () => {
     let component: ExpandableComponent;
@@ -8,7 +9,8 @@ describe('ExpandableComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ExpandableComponent]
+            declarations: [ExpandableComponent],
+            imports: [NoopAnimationsModule],
         })
             .compileComponents();
     }));
