@@ -37,7 +37,7 @@
         <mat-divider></mat-divider>
         <mat-list-item class="has-top-margin auto-height">
             <sf-expandable [expanded]="activeMenu === 'settings'">
-                <div sfExpandableTrigger class="mat-body-2 " i18n>Settings</div>
+                <div sfExpandableTrigger class="mat-body-2" i18n>Settings <mat-icon class="expand-menu-icon">expand_more</mat-icon></div>
                 <mat-list sfExpandableBody dense>
                     <mat-list-item>
                         <a [class.active]="activeLink === 'test-order'"
