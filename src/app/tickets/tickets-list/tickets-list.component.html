@@ -69,7 +69,7 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"
                     (click)="showTicketDetails(row.id)"></tr>
             </table>
