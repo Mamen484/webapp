@@ -1,0 +1,6 @@
+<div (click)="toggle()" class="expandable-trigger">
+    <ng-content select="[sfExpandableTrigger]"></ng-content>
+</div>
+<div [@bodyExpansion]="getExpandedState()" [class.name]="expandedChange">
+    <ng-content select="[sfExpandableBody]"></ng-content>
+</div>

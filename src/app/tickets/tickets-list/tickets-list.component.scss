@@ -51,7 +51,11 @@ mat-progress-bar {
   }
 }
 
-sf-image {
+sfl-image {
   margin: 14px 24px;
   display: block;
+}
+
+.table-container, mat-paginator {
+  position: relative;
 }

@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { OrdersFilter } from '../../core/entities/orders/orders-filter';
-import { MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
-import { StoreChannelDetails } from 'sfl-shared/entities';
+import { ChannelType, StoreChannelDetails } from 'sfl-shared/entities';
 import { Tag } from '../../core/entities/tag';
-import { OrdersFilterService } from '../../core/services/orders-filter.service';
-import { take } from 'rxjs/operators';
-import { ChannelType } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-orders-filter-dialog',
@@ -16,17 +13,14 @@ import { ChannelType } from 'sfl-shared/entities';
 })
 export class OrdersFilterDialogComponent implements OnInit {
 
-    filter = new OrdersFilter();
     channels: StoreChannelDetails[];
     dateOption = 'anytime';
     tags: Tag[];
 
-    constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent>,
+    constructor(protected dialogRef: MatDialogRef<OrdersFilterDialogComponent, OrdersFilter>,
                 protected appStore: Store<AppState>,
-                protected ordersFilterService: OrdersFilterService) {
-        this.ordersFilterService.getFilter().pipe(take(1)).subscribe(filter => {
-            this.filter = Object.assign(new OrdersFilter(), filter)
-        });
+                @Inject(MAT_DIALOG_DATA) public filter: OrdersFilter) {
+
     }
 
     ngOnInit() {
@@ -45,8 +39,7 @@ export class OrdersFilterDialogComponent implements OnInit {
     }
 
     applyFilter() {
-        this.ordersFilterService.setFilter(this.filter);
-        this.dialogRef.close();
+        this.dialogRef.close(this.filter);
     }
 
     close() {

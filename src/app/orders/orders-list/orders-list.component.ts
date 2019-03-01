@@ -1,23 +1,26 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
+import { Component, OnInit } from '@angular/core';
+import { OrdersView } from '../../core/entities/orders/orders-view.enum';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'sf-orders-list',
     templateUrl: './orders-list.component.html',
     styleUrls: ['./orders-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OrdersListComponent implements OnInit {
 
-    isMobile: boolean;
-    constructor(protected media: MediaObserver) {
+    ordersView = OrdersView;
+    activeView: OrdersView;
+
+    constructor(protected route: ActivatedRoute) {
     }
 
     ngOnInit() {
-
-        this.isMobile = this.media.isActive('xs');
-        this.media.media$.subscribe(() => {
-            this.isMobile = this.media.isActive('xs');
+        this.route.queryParams.subscribe(params => {
+            this.activeView = params.view in this.ordersView ? Number(params.view) : OrdersView.allOrders;
         });
     }
+
+
 }
+

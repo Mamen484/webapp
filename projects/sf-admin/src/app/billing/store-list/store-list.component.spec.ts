@@ -45,7 +45,7 @@ describe('StoreListComponent', () => {
         billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
         fixture.detectChanges();
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
-        expect(component.dataSource).toEqual([]);
+        expect(component.dataSource.data).toEqual([]);
     });
 
     it('should reset page when a search string is provided', fakeAsync(() => {

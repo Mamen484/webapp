@@ -10,6 +10,7 @@ import { TimelineEvent } from '../../core/entities/timeline-event';
 import { Order } from '../../core/entities/orders/order';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 import { PagedResponse } from 'sfl-shared/entities';
+import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 
 const maxEvents = 5;
 
@@ -31,6 +32,7 @@ export class LastEventsComponent implements OnInit {
     totalShipmentErrors: number;
 
     isDisplayed = false;
+    orderView = OrdersView;
 
     constructor(protected ordersService: OrdersService,
                 protected timelineService: TimelineService) {

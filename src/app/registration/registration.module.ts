@@ -3,7 +3,6 @@ import { CreatePasswordComponent } from './create-password/create-password.compo
 import { RouterModule } from '@angular/router';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SharedModule } from '../shared/shared.module';
-import { MenuModule } from '../menu/menu.module';
 import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationLegacyModule } from '../registration-legacy/registration-legacy.module';
 import { SflMenuModule } from 'sfl-shared/menu';
@@ -12,7 +11,6 @@ import { SflMenuModule } from 'sfl-shared/menu';
     imports: [
         SharedModule,
         RegistrationRoutingModule,
-        MenuModule,
         RegistrationLegacyModule,
         SflMenuModule,
     ],

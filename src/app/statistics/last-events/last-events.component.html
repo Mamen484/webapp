@@ -23,7 +23,7 @@
                 <sf-order-error-row [channelName]="order._embedded.channel.name"
                                     [reference]="order.reference"></sf-order-error-row>
             </div>
-            <div class="view-link"><a routerLink="/orders" [queryParams]="{error: 'acknowledge'}" i18n>View all</a></div>
+            <div class="view-link"><a routerLink="/orders" [queryParams]="{view: orderView.importErrors}" i18n>View all</a></div>
             <mat-divider></mat-divider>
         </section>
         <section *ngIf="shipmentErrors.length" class="section-with-chip">
@@ -32,7 +32,7 @@
                 <sf-order-error-row [channelName]="order._embedded.channel.name"
                                     [reference]="order.reference"></sf-order-error-row>
             </div>
-            <div class="view-link"><a routerLink="/orders" [queryParams]="{error: 'ship'}" i18n>View all</a></div>
+            <div class="view-link"><a routerLink="/orders" [queryParams]="{view: orderView.shippingErrors}" i18n>View all</a></div>
         </section>
     </mat-card-content>
 </mat-card>

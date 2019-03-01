@@ -8,7 +8,7 @@ const DAY = 1000 * 60 * 60 * 24;
 export class OrdersFilter {
     until?;
     since: Date;
-    channel = 'all';
+    channel: number | string = 'all';
     tag = 'all';
     limit = '10';
     page = '1';
@@ -40,6 +40,24 @@ export class OrdersFilter {
         }
     }
 
+    /**
+     * Check if any of specified filters have been applied
+     *
+     * @param propNames
+     */
+    isActive(propNames: string[]): boolean {
+        return propNames.some(propName => {
+            switch (propName) {
+                case 'channel':
+                case 'tag':
+                    return Boolean(this[propName] && this[propName] !== 'all');
+
+                default:
+                    return Boolean(this[propName]);
+            }
+        });
+    }
+
     toHttpParams() {
         let params = new HttpParams().set('limit', this.limit);
         if (this.since) {
@@ -49,7 +67,7 @@ export class OrdersFilter {
             params = params.set('until', this.until.toJSON());
         }
         if (this.channel && this.channel !== 'all') {
-            params = params.set('channelId', this.channel);
+            params = params.set('channelId', String(this.channel));
         }
 
         if (this.search) {

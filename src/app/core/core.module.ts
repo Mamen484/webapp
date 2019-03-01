@@ -39,6 +39,7 @@ import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
 import { SflLegacyLinkService } from 'sfl-shared/services';
 import { LegacyLinkService } from './services/legacy-link.service';
+import { TimelineRouteGuard } from './guards/timeline-route.guard';
 
 @NgModule({
     imports: [
@@ -66,6 +67,8 @@ import { LegacyLinkService } from './services/legacy-link.service';
         OrdersRouteGuard,
         ShopifyGuard,
         ShopSpecifiedGuard,
+        TimelineRouteGuard,
+
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,

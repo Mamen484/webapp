@@ -1,0 +1,48 @@
+@import '~@angular/material/theming';
+
+$black-54-opacity: rgba(0, 0, 0, 0.54);
+
+@mixin listItemStyles() {
+  color: $black-54-opacity;
+
+  &.active, a.active, &.active div[matLine] {
+    color: mat-color($mat-blue, 700);
+    font-weight: bold;
+  }
+
+  &.auto-height {
+    height: auto;
+  }
+}
+
+
+.sfl-expandable-sidenav {
+  width: 200px;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  left: 75px;
+  transform: none;
+  z-index: 5;
+  box-shadow: none;
+  border-right: 1px solid #eeeeee;
+
+  mat-list {
+    mat-list-item {
+      @include listItemStyles();
+    }
+
+  }
+
+  ::ng-deep {
+
+    mat-list-item {
+      @include listItemStyles();
+    }
+
+    a {
+      color: $black-54-opacity;
+      text-decoration: none;
+    }
+  }
+}

@@ -3,9 +3,9 @@ import { MatMenuModule, MatSidenavModule } from '@angular/material';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { SflSidebarContainerComponent } from './sidebar-container.component';
 import { Subject } from 'rxjs';
-import { ObservableMedia } from '@angular/flex-layout';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
+import { MediaObserver } from '@angular/flex-layout';
 
 describe('SflSidebarContainerComponent', () => {
 
@@ -19,7 +19,7 @@ describe('SflSidebarContainerComponent', () => {
             declarations: [SflSidebarContainerComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                {provide: ObservableMedia, useValue: media$},
+                {provide: MediaObserver, useValue: {media$}},
             ],
         });
 

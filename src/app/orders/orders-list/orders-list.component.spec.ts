@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrdersListComponent } from './orders-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
+import { ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
 
 describe('OrdersListComponent', () => {
     let component: OrdersListComponent;
     let fixture: ComponentFixture<OrdersListComponent>;
-    let media: jasmine.SpyObj<MediaObserver>;
+
 
     beforeEach(async(() => {
-        media = <any>{media$: jasmine.createSpyObj(['subscribe']), isActive: jasmine.createSpy('media.isActive spy')};
         TestBed.configureTestingModule({
             declarations: [OrdersListComponent],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
-                {provide: MediaObserver, useValue: media}
+                {provide: ActivatedRoute, useValue: {queryParams: new Subject()}},
             ]
         });
     }));
@@ -22,10 +22,10 @@ describe('OrdersListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersListComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {
+        fixture.detectChanges();
         expect(component).toBeTruthy();
     });
 

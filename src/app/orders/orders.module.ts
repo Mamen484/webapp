@@ -4,13 +4,8 @@ import { CommonModule } from '@angular/common';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { OrdersFilterDialogComponent } from './orders-filter-dialog/orders-filter-dialog.component';
-import { SearchOrdersComponent } from './search-orders/search-orders.component';
-import { OrdersTableComponent } from './orders-table/orders-table.component';
+import { OrdersTableComponent } from './orders-list/orders-table/orders-table.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-import { FilteringTabsComponent } from './filtering-tabs/filtering-tabs.component';
-import { OrdersListMobileComponent } from './orders-list/orders-list-mobile/orders-list-mobile.component';
-import { OrdersListDesktopComponent } from './orders-list/orders-list-desktop/orders-list-desktop.component';
-import { OrdersTableSmallComponent } from './orders-table-small/orders-table-small.component';
 import { ConfirmShippingDialogComponent } from './confirm-shipping-dialog/confirm-shipping-dialog.component';
 import { CarrierDetailsDialogComponent } from './carrier-details-dialog/carrier-details-dialog.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
@@ -32,11 +27,13 @@ import { RefundDialogComponent } from './order-details/refund-dialog/refund-dial
 import { SelectItemsDialogComponent } from './order-details/select-items-dialog/select-items-dialog.component';
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
+import { SflSidebarModule } from 'sfl-shared/sidebar';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
+        SflSidebarModule,
         OrdersRoutingModule,
         SettingsModule,
     ],
@@ -44,13 +41,8 @@ import { SharedModule } from './shared/shared.module';
         AssignTagsDialogComponent,
         OrdersListComponent,
         OrdersFilterDialogComponent,
-        SearchOrdersComponent,
         OrdersTableComponent,
         OrderDetailsComponent,
-        FilteringTabsComponent,
-        OrdersListMobileComponent,
-        OrdersListDesktopComponent,
-        OrdersTableSmallComponent,
         ConfirmShippingDialogComponent,
         CarrierDetailsDialogComponent,
         OrderStatusComponent,
