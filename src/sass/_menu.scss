@@ -9,6 +9,11 @@
   left: $left-sidebar-width;
 }
 
+.sf-sidebar-bottom-menu {
+  position: relative;
+  left: $left-sidebar-width - $icon-padding - $mat-list-item-padding;
+}
+
 
 // this override prevents reducing toolbar height for small screens, we don't support small screens
 @media screen and ($mat-xsmall) {
