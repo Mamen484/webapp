@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Channel } from 'sfl-shared/entities';
+import { Channel, StoreChannel } from 'sfl-shared/entities';
 import { MatDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../../request-failed-dialog/request-failed-dialog.component';
-import { StoreChannel } from 'sfl-shared/entities';
 import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept-channel-dialog.component';
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 import { get } from 'lodash';
+import { ChannelLinkService } from '../../../core/services/channel-link.service';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -27,13 +27,17 @@ export class SuggestedChannelComponent implements OnInit {
 
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService,
-                protected channelStorage: ChannelStorageService) {
+                protected channelStorage: ChannelStorageService,
+                protected channelLinkService: ChannelLinkService) {
     }
 
     ngOnInit() {
         this.initializeStats();
         this.potentialTurnover = this.findPotentialTurnover();
+    }
 
+    goToChannel() {
+        this.channelLinkService.navigateToChannel(this.channel._embedded.channel);
     }
 
     showInternationalChannelDialog() {
