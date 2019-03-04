@@ -5,7 +5,7 @@ import { MatDialog, MatMenuModule, MatSnackBar, MatTableModule } from '@angular/
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EMPTY, of, Subject } from 'rxjs';
-import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
 import { OrdersExportLinkPipe } from '../../../shared/orders-export-link/orders-export-link.pipe';
@@ -28,6 +28,7 @@ import { OrdersTableItem } from '../../../core/entities/orders/orders-table-item
 import { ActivatedRoute } from '@angular/router';
 import { OrdersView } from '../../../core/entities/orders/orders-view.enum';
 import { ViewToPatchMap } from '../../../core/entities/orders/view-to-patch-map';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 
 describe('OrdersTableComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -38,6 +39,7 @@ describe('OrdersTableComponent', () => {
     let window: { nativeWindow: { open: jasmine.Spy, location: any } };
     let snackbar: jasmine.SpyObj<MatSnackBar>;
     let localeIdService: SflLocaleIdService;
+    let userService: jasmine.SpyObj<SflUserService>;
     let activatedRoute;
 
     let component: OrdersTableComponent;
@@ -57,6 +59,7 @@ describe('OrdersTableComponent', () => {
         snackbar = jasmine.createSpyObj(['openFromComponent']);
         localStorage = jasmine.createSpyObj(['getItem', 'setItem', 'removeItem']);
         localeIdService = <any>{localeId: 'en'};
+        userService = jasmine.createSpyObj('SflUserService spy', ['fetchAggregatedInfo']);
 
         TestBed.configureTestingModule({
             declarations: [
@@ -79,6 +82,7 @@ describe('OrdersTableComponent', () => {
                 {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: SflLocaleIdService, useValue: localeIdService},
                 {provide: ActivatedRoute, useValue: activatedRoute},
+                {provide: SflUserService, useValue: userService},
 
             ],
             imports: [
@@ -504,13 +508,26 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should open order details in a new tab on goToOrder() call', () => {
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user']})));
+        appStore.select.and.returnValue(of({}));
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com';
         component.goToOrder('12');
         expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge`);
     });
 
+    it('should add a store id for an admin on goToOrder() call', () => {
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin']})));
+        appStore.select.and.returnValue(of({id: 41}));
+        component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
+        fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com';
+        component.goToOrder('12');
+        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge&store=41`);
+    });
+
     it('should open order details specyfying a store id on goToOrder() call when the store id is in the params', () => {
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user']})));
+        appStore.select.and.returnValue(of({}));
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com?store=114';
         component.goToOrder('12');

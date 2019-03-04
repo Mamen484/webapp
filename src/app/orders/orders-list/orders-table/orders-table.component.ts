@@ -3,10 +3,10 @@ import { MatDialog, MatSnackBar, MatTable, PageEvent } from '@angular/material';
 import { Store as AppStore } from '@ngrx/store';
 import { Store } from 'sfl-shared/entities';
 import { clone, toPairs } from 'lodash';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, zip } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, filter, flatMap, map, take, tap } from 'rxjs/operators';
-import { SflLocaleIdService, SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { ActivatedRoute } from '@angular/router';
 
@@ -70,7 +70,8 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
                 protected elementRef: ElementRef<HTMLElement>,
                 protected localStorage: SflLocalStorageService,
                 protected localeIdService: SflLocaleIdService,
-                protected route: ActivatedRoute) {
+                protected route: ActivatedRoute,
+                protected userService: SflUserService) {
         super();
     }
 
@@ -94,12 +95,20 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     }
 
     goToOrder(orderId: string) {
-        let url = new URL((<Window>this.windowRef.nativeWindow).location.href);
-        if (this.ordersFilter && this.ordersFilter.error) {
-            url.searchParams.set('errorType', this.ordersFilter.error);
-        }
-        const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${url.search}`;
-        this.windowRef.nativeWindow.open(link);
+        zip(this.userService.fetchAggregatedInfo(),
+            this.appStore.select('currentStore').pipe(take(1)),
+        ).subscribe(([userInfo, store]) => {
+            let url = new URL((<Window>this.windowRef.nativeWindow).location.href);
+            if (this.ordersFilter && this.ordersFilter.error) {
+                url.searchParams.set('errorType', this.ordersFilter.error);
+            }
+            if (userInfo.isAdmin()) {
+                url.searchParams.set('store', String(store.id));
+            }
+            const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${url.search}`;
+            this.windowRef.nativeWindow.open(link);
+        });
+
     }
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
