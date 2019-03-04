@@ -10,6 +10,7 @@ import { SflLocaleIdService, SflWindowRefService } from 'sfl-shared/services';
 import { Router } from '@angular/router';
 import { Channel } from 'sfl-shared/entities';
 import { LegacyLinkService } from './legacy-link.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -34,6 +35,14 @@ export class ChannelLinkService {
         });
     }
 
+    getChannelLink(channel) {
+        return this.decideToSkipSetup(channel).pipe(map(skipSetup => {
+            return skipSetup
+                ? ChannelLinkPipe.getChannelLink(channel)
+                : `${this.getWebappLink()}/channel-setup/${channel.id}`;
+        }));
+    }
+
     protected decideToSkipSetup(channel) {
         return zip(
             this.getFeedCollection(channel),
@@ -56,6 +65,10 @@ export class ChannelLinkService {
         }
         return this.feedService.create(channel.id)
             .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel.id)))
+    }
+
+    protected getWebappLink() {
+        return `${environment.APP_URL}/${environment.BASE_HREF}/${this.localeIdService.localeId}`;
     }
 
     protected goToChannel(channelLink) {

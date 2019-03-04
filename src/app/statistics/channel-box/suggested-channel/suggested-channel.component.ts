@@ -9,6 +9,9 @@ import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 import { get } from 'lodash';
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { SflWindowRefService } from 'sfl-shared/services';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -28,7 +31,8 @@ export class SuggestedChannelComponent implements OnInit {
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService,
                 protected channelStorage: ChannelStorageService,
-                protected channelLinkService: ChannelLinkService) {
+                protected channelLinkService: ChannelLinkService,
+                protected windowRefService: SflWindowRefService) {
     }
 
     ngOnInit() {
@@ -37,6 +41,11 @@ export class SuggestedChannelComponent implements OnInit {
     }
 
     goToChannel() {
+        if (this.channel._embedded.channel.id === ChannelMap.cdiscount) {
+            this.windowRefService.nativeWindow.location.href =
+                environment.CDISCOUNT_TRACKING_LINK + this.channelLinkService.getChannelLink(this.channel._embedded.channel);
+            return;
+        }
         this.channelLinkService.navigateToChannel(this.channel._embedded.channel);
     }
 

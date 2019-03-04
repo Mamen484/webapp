@@ -1,0 +1,48 @@
+@startuml
+partition statistics.component.ts(homepage) {
+(*) --> A user clicks on a channel card
+--> if "channel is installed"
+}
+    partition channel-link.service.ts {
+    --> [Yes] if "channel has categories"
+        --> [No] if "channel type is marketplace"
+                --> [Yes] "Navigate to https://app.shopping-feed.com/{channelName}" as goToMarketplace
+                --> (*)
+                else
+                --> [No] "Navigate to https://app.shopping-feed.com/{channelType}/manage/{channelName}" as goToChannel
+                --> (*)
+                endif
+              else
+              --> [Yes] if "the feed has configured categories"
+                        --> [Yes] if "channel type is marketplace"
+                                --> [Yes] goToMarketplace
+                                --> (*)
+                                else
+                                --> [No] goToChannel
+                                --> (*)
+                                endif
+                        else
+                        --> [No] Go to /channel-setup/{channelId}
+                        --> (*)
+                        endif
+              endif
+    }
+    else
+    partition suggested-channel.component.ts {
+    --> [No] if "channel has a different country, then a store"
+            --> [Yes] "Show a dialog that the request has been sent"
+            --> (*)
+            else
+            --> [No] Create a feed for this channel
+            --> if "The channel id is 111 (CDiscount)"
+                --> [Yes] Navigate to http://track.cdiscount-affiliation.com/servlet/effi.redir?id_compteur=22032794&url=https://app.shopping-feed.com/v3/{lang}/channel-setup/111
+                -->(*)
+                else
+                --> [No] Navigate to https://app.shopping-feed.com/v3/{lang}/channel-setup/{channelId}}
+                -->(*)
+                endif
+    }
+    endif
+
+
+@enduml
