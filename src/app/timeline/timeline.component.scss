@@ -4,9 +4,8 @@ $timeline-list-item-padding: 10px;
 
 .timeline {
   color: $black-87-opacity;
-  padding-top: $content-margin;
   display: block;
-  height: calc(100vh - #{$toolbar-height} - #{$content-margin});
+  height: 100vh;
   overflow: scroll;
 }
 
@@ -19,10 +18,6 @@ $timeline-list-item-padding: 10px;
   }
 }
 
-.header-row {
-  margin-right: 40px;
-}
-
 .event {
   mat-list-item {
     &:hover {
@@ -30,10 +25,6 @@ $timeline-list-item-padding: 10px;
       background-color: mat-color($grey, 200);
     }
   }
-}
-
-.event, .update {
-  width: calc(100% - 40px); //40px - list-item paddings + margin between card and sidebar
 }
 
 mat-card {

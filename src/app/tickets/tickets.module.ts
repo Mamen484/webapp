@@ -8,6 +8,7 @@ import { FilterTicketsDialogComponent } from './tickets-list/filter-tickets-dial
 import { TicketDetailsDialogComponent } from './tickets-list/ticket-details-dialog/ticket-details-dialog.component';
 import { StateLabelComponent } from './tickets-list/state-label/state-label.component';
 import { TypeLabelComponent } from './tickets-list/type-label/type-label.component';
+import { SidebarModule } from '../sidebar/sidebar.module';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { TypeLabelComponent } from './tickets-list/type-label/type-label.compone
         CommonModule,
         TicketsRoutingModule,
         SharedModule,
+        SidebarModule,
     ],
     entryComponents: [FilterTicketsDialogComponent, TicketDetailsDialogComponent],
 })

@@ -1,11 +1,12 @@
 <div class="form-container">
     <div>
-        <div class="form-title mat-display-1">
-            <ng-content select="[sfl-login-title]"></ng-content>
-        </div>
+        <sfl-image source="assets/images/sf-full-logo.png" width="260px"></sfl-image>
         <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loadingNextPage"></mat-progress-bar>
         <mat-card>
             <mat-card-content>
+                <div class="form-title mat-display-1">
+                    <ng-content select="[sfl-login-title]"></ng-content>
+                </div>
                 <form (ngSubmit)="login()">
 
                     <mat-form-field color="accent" [appearance]="appearance">

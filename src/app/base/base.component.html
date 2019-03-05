@@ -1,10 +1,4 @@
-<app-menu></app-menu>
+<sf-sidebar></sf-sidebar>
+<router-outlet></router-outlet>
 
-<div>
-    <sf-sidebar></sf-sidebar>
-</div>
-
-<div class="content">
-    <router-outlet></router-outlet>
-</div>
 <livechat-widget [licenseId]="livechatId" *ngIf="showLivechat"></livechat-widget>

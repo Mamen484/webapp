@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { BillingGroupService } from './billing-group.service';
 import { BillingGroup } from './billing-group';
-import { BillingTableOperations } from '../billing-table-operations/billing-table-operations';
 import { map } from 'rxjs/operators';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Group, GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { Observable } from 'rxjs';
 import { get } from 'lodash';
+import { TableOperations } from 'sfl-shared/utils/table-operations';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 
@@ -14,7 +14,7 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './group-list.component.html',
     styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent extends BillingTableOperations<BillingGroup> {
+export class GroupListComponent extends TableOperations<BillingGroup> {
 
     displayedColumns: string[] = ['id', 'name', 'edit'];
 

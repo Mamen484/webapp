@@ -1,20 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { Channel, Store, StoreChannelDetails } from 'sfl-shared/entities';
-import { SflWindowRefService } from 'sfl-shared/services';
+import { AggregatedUserInfo, Channel, PaymentType, Store, StoreChannelDetails, StoreStatus } from 'sfl-shared/entities';
+import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
-import { MediaObserver } from '@angular/flex-layout';
-import { Router } from '@angular/router';
-import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
+import { TimelineService } from '../core/services/timeline.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { timer } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { ChannelLinkService } from '../core/services/channel-link.service';
+import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
+
+const UPDATE_EVENTS_INTERVAL = 6e4;
 
 @Component({
     selector: 'sf-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit, OnDestroy {
 
     currentStore: Store;
     currentRoute;
@@ -22,13 +26,25 @@ export class SidebarComponent {
     linkToSupportCenter;
     hideTooltips = false;
 
+    userInfo: AggregatedUserInfo;
+    storeStatus = StoreStatus;
+    newEvents = 0;
+    isManager = false;
+    paymentTypes = PaymentType;
+    isAdmin = false;
+
+    protected newEventsSubscription;
+
     constructor(protected appStore: AppStore<AppState>,
                 protected windowRef: SflWindowRefService,
+                protected localStorage: SflLocalStorageService,
                 protected supportLinkService: SupportLinkService,
-                protected media: MediaObserver,
+                protected timelineService: TimelineService,
+                protected route: ActivatedRoute,
                 protected router: Router,
-                protected ticketsDataService: TicketsDataService,
-                protected channelLinkService: ChannelLinkService) {
+                protected userService: SflUserService,
+                protected channelLinkService: ChannelLinkService,
+                protected ticketsDataService: TicketsDataService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -36,7 +52,16 @@ export class SidebarComponent {
         this.appStore.select('currentRoute').subscribe(currentRoute => this.currentRoute = currentRoute);
 
         this.linkToSupportCenter = this.supportLinkService.supportLink;
-        this.media.media$.subscribe(() => this.hideTooltips = this.media.isActive('xs'));
+    }
+
+    ngOnInit() {
+        this.userService.fetchAggregatedInfo().subscribe((userInfo) => {
+            this.userInfo = userInfo;
+            this.isManager = Boolean(this.userInfo.roles.find(role => role === 'manager'));
+            this.isAdmin = userInfo.isAdmin();
+        });
+        this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
+        this.newEventsSubscription = timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
     }
 
     hasChannelsPermissions() {
@@ -60,6 +85,33 @@ export class SidebarComponent {
     updateTicketsData() {
         if (this.router.isActive('/api', false)) {
             this.ticketsDataService.requestUpdate();
+        }
+    }
+
+    navigateToTimeline() {
+        this.router.routeReuseStrategy.shouldDetach(this.route.snapshot);
+        this.router.navigate(['/timeline']).then(data => {
+            if (!data) {
+                // user tries to load timeline route, that is active now, so we need to reload the timeline data
+                this.timelineService.emitUpdatedTimeline();
+            }
+        });
+
+    }
+
+    logout() {
+        this.localStorage.removeItem('Authorization');
+        this.windowRef.nativeWindow.location.href = `${environment.APP_URL}/index/logout`;
+    }
+
+    protected updateEventsNumber() {
+        this.timelineService.getUpdatesNumber()
+            .subscribe(events => this.newEvents = events);
+    }
+
+    ngOnDestroy() {
+        if (this.newEventsSubscription) {
+            this.newEventsSubscription.unsubscribe();
         }
     }
 

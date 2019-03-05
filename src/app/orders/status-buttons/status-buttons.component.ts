@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
-import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
+import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 import { DetermineActiveTab } from '../../core/entities/determine-active-tab';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 
@@ -18,8 +18,8 @@ export class StatusButtonsComponent implements OnInit {
     @Input() errorType: OrderErrorType;
     @Output() actionApplied = new EventEmitter<OrderNotifyAction>();
 
-    activeTab: ActiveTab;
-    tabs = ActiveTab;
+    activeTab: OrdersView;
+    tabs = OrdersView;
     actions = OrderNotifyAction;
 
     constructor() {

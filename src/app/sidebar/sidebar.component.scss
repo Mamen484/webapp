@@ -10,15 +10,11 @@ mat-icon {
 
   font-size: mat-font-size($config, headline);
   margin: auto;
-  color: $black-54-opacity;
+  color: #818fa3;
   cursor: pointer;
 
-  &.active {
-    color: mat-color($accent);
-  }
-
-  &:hover {
-    color: mat-color($accent);
+  &.active, &:hover {
+    color: white;
   }
 
   @media #{$xs} {
@@ -29,21 +25,6 @@ mat-icon {
       text-transform: capitalize;
       margin-right: 10px;
     }
-  }
-}
-
-.sf-sidebar-bottom-help {
-  position: absolute;
-  width: 100%;
-  bottom: 20px;
-
-  @media #{$xs}{
-    padding: 0 16px;
-    text-align: left;
-  }
-
-  a {
-    outline: none;
   }
 }
 
@@ -63,4 +44,13 @@ a.channel-logo {
 
 span.support-label {
   vertical-align: super;
+}
+
+mat-list.sf-nav-list {
+  height: 100%;
+  padding-bottom: 10px;
+}
+
+.nav-link.home {
+  margin: auto;
 }

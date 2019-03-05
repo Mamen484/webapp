@@ -1,0 +1,179 @@
+@import '../../../../sass/variables';
+@import '../../../../sass/mixins/order-actions-bar.scss';
+
+@include order-actions-bar();
+
+$actions-left-padding: 29px;
+
+$hover-row-bg: #EBEBEB;
+
+.actions {
+  justify-content: flex-start;
+  padding-left: $actions-left-padding;
+
+  &.accent {
+    background-color: mat-color($accent, 0.1);
+  }
+}
+
+$actions-height: 61px;
+$search-block-height: 60px;
+$applied-filters-height: 52px;
+
+
+.table-container {
+  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height});
+  overflow: auto;
+}
+
+.filters-applied {
+  .table-container {
+    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height});
+  }
+
+
+}
+
+mat-card {
+  padding: 0;
+  width: 100%;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-tab-group {
+  text-transform: uppercase;
+}
+
+.loading-container {
+  position: absolute;
+  top: 117px;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selected-orders {
+  color: mat-color($accent);
+}
+
+.marketplace-logo {
+  vertical-align: middle;
+}
+
+.no-orders-message {
+  margin-left: 15px;
+  margin-top: 30px;
+  text-align: center;
+}
+
+mat-progress-bar {
+  position: absolute;
+  z-index: 10;
+}
+
+button:not([mat-menu-item]) {
+  margin-left: 10px;
+}
+
+.table-scrollable {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  mat-progress-bar {
+    z-index: 200;
+  }
+}
+
+table {
+  min-width: 100%;
+
+  td {
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 0 15px;
+
+    &:first-child {
+      padding-left: $actions-left-padding;
+    }
+
+    &.column-tags, &.column-hasErrors {
+      padding: 0;
+    }
+
+    &.column-tags mat-chip-list, &.column-hasErrors mat-icon {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+  }
+
+  [mat-row] {
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: $hover-row-bg;
+
+      .right-sticky-column {
+        position: sticky;
+        right: 0;
+        background-color: $hover-row-bg;
+        .invoice-link {
+          visibility: visible;
+
+          mat-icon {
+            color: $black-54-opacity;
+          }
+        }
+      }
+
+
+    }
+  }
+}
+
+mat-icon[color="warn"] {
+  color: mat-color($warn, 900);
+}
+
+mat-chip {
+  white-space: nowrap;
+}
+
+.right-bordered {
+  border-right: 1px solid $black-12-opacity;
+}
+
+.invoice-link {
+  visibility: hidden;
+}
+
+
+mat-chip-list.filter-chips {
+  margin-bottom: $content-margin;
+  display: block;
+
+  mat-chip {
+    mat-icon {
+      cursor: pointer;
+      color: mat-color($grey);
+    }
+    mat-icon, span {
+      vertical-align: middle;
+    }
+  }
+}
+
+sfl-solo-search {
+  display: block;
+  margin-bottom: $content-margin;
+}

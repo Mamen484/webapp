@@ -1,39 +1,39 @@
-<div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
-    <sf-settings-nav fxFlex="25%" activeLink="tags-management"></sf-settings-nav>
-    <div fxFlex class="tags-container">
-        <mat-card>
-            <mat-card-content>
-                <mat-list dense>
+<sf-orders-left-nav activeLink="tags-management" activeMenu="settings"></sf-orders-left-nav>
+
+<div class="sf-content with-extended-sidenav scrollable-container tags-container">
+    <mat-card>
+        <mat-card-content>
+            <mat-list dense>
+                <mat-list-item>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div i18n fxFlex>Organize tags for all your orders.</div>
+                        <div>
+                            <button mat-button i18n color="accent" (click)="createNewTag()">New tag</button>
+                        </div>
+                    </div>
+                </mat-list-item>
+                <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
+                <ng-container *ngFor="let tag of tags">
+                    <mat-divider></mat-divider>
                     <mat-list-item>
-                        <div fxLayout="row" fxLayoutAlign="start center">
-                            <div i18n fxFlex>Organize tags for all your orders.</div>
-                            <div>
-                                <button mat-button i18n color="accent" (click)="createNewTag()">New tag</button>
+                        <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center">
+                            <div fxFlex>
+                                <mat-chip-list>
+                                    <sf-tag-chip [tag]="tag"></sf-tag-chip>
+                                </mat-chip-list>
                             </div>
+                            <button mat-icon-button (click)="updateTag(tag.id, tag)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="removeTag(tag.id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </div>
                     </mat-list-item>
-                    <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
-                    <ng-container *ngFor="let tag of tags">
-                        <mat-divider></mat-divider>
-                        <mat-list-item>
-                            <div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center">
-                                <div fxFlex>
-                                    <mat-chip-list>
-                                        <sf-tag-chip [tag]="tag"></sf-tag-chip>
-                                    </mat-chip-list>
-                                </div>
-                                <button mat-icon-button (click)="updateTag(tag.id, tag)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button mat-icon-button (click)="removeTag(tag.id)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </mat-list-item>
-                    </ng-container>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
+                </ng-container>
+            </mat-list>
 
-    </div>
+        </mat-card-content>
+    </mat-card>
+
 </div>

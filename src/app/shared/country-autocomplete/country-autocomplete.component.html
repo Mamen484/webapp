@@ -3,7 +3,7 @@
     <input autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete">
     <mat-autocomplete #countryAutocomplete="matAutocomplete" class="sf-countries-autocomplete" (optionSelected)="optionSelected($event)">
         <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name">
-            <sf-image source="assets/images/flags-mini/{{country.flag}}" class="sf-flag-filter" verticalAlign="baseline"></sf-image>
+            <sfl-image source="assets/images/flags-mini/{{country.flag}}" class="sf-flag-filter" verticalAlign="baseline"></sfl-image>
             <ng-container>{{country.name}}</ng-container>
         </mat-option>
     </mat-autocomplete>

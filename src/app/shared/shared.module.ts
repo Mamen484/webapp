@@ -39,7 +39,6 @@ import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 import { RemoveUnderlinePipe } from './remove-underline.pipe';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
-import { ImageComponent } from './image/image.component';
 import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
 import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
@@ -50,6 +49,7 @@ import { SflSharedModule } from 'sfl-shared';
 import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
+import { SflImageModule } from 'sfl-shared/utils/image';
 
 @NgModule({
     imports: [
@@ -57,6 +57,7 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         CommonModule,
         FlexLayoutModule,
         FormsModule,
+        SflImageModule,
         InfiniteScrollModule,
         LayoutModule,
         LivechatWidgetModule,
@@ -95,6 +96,7 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         CommonModule,
         FlexLayoutModule,
         FormsModule,
+        SflImageModule,
         InfiniteScrollModule,
         LayoutModule,
         LivechatWidgetModule,
@@ -142,7 +144,6 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         // components
         CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
-        ImageComponent,
         ValidationErrorsSnackbarComponent,
     ],
     declarations: [
@@ -153,7 +154,6 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         ScheduleCallIframeComponent,
         RemoveUnderlinePipe,
         CountryAutocompleteComponent,
-        ImageComponent,
         ValidationErrorsSnackbarComponent,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,

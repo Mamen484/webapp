@@ -1,4 +1,4 @@
-<div class="timeline" infiniteScroll [infiniteScrollDistance]="2"
+<div class="sf-content timeline" infiniteScroll [infiniteScrollDistance]="2"
      [infiniteScrollDisabled]="infiniteScrollDisabled"
      [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
     <div fxLayout="row" class="header-row" fxShow fxHide.xs>
@@ -57,8 +57,5 @@
 
             </mat-card>
         </div>
-    </div>
-    <div class="spinner-parent">
-        <mat-spinner *ngIf="!infiniteScrollDisabled"></mat-spinner>
     </div>
 </div>

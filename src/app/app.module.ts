@@ -22,7 +22,6 @@ import { TicketsModule } from './tickets/tickets.module';
     ],
     imports: [
         SflAuthModule,
-        BrowserModule,
         BrowserAnimationsModule,
         FormsModule,
         CoreModule,

@@ -1,4 +1,4 @@
-<div class="scrollable-container">
+<div class="sf-content scrollable-container">
     <div class="mat-title" i18n>API</div>
 
     <section>
@@ -28,7 +28,7 @@
         <mat-card>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center">
                 <div fxFlex>
-                    <sf-image source="assets/images/zapier-logo.png" width="110px"></sf-image>
+                    <sfl-image source="assets/images/zapier-logo.png" width="110px"></sfl-image>
                 </div>
                 <button mat-raised-button color="accent" (click)="goToToZapier()" i18n>Connect</button>
             </mat-card-content>
@@ -69,11 +69,11 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"
                     (click)="showTicketDetails(row.id)"></tr>
             </table>
-            <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+            <div *ngIf="!isLoadingResults && !dataSource.data.length" i18n class="no-results mat-body-1">
                 No tickets found.
             </div>
         </div>

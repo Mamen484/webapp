@@ -1,13 +1,13 @@
 import { TimelineComponent } from './timeline.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ChannelsRouteGuard } from '../core/guards/channels-route.guard';
+import { TimelineRouteGuard } from '../core/guards/timeline-route.guard';
 
 const routes = [
     {
         path: '',
         component: TimelineComponent,
-        canActivate: [ChannelsRouteGuard],
+        canActivate: [TimelineRouteGuard],
     }
 ];
 
@@ -15,4 +15,5 @@ const routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class TimelineRoutingModule{}
+export class TimelineRoutingModule {
+}
