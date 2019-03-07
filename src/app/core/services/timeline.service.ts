@@ -9,6 +9,7 @@ import { TimelineEventAction } from '../entities/timeline-event-action.enum';
 import { TimelineEventName } from '../entities/timeline-event-name.enum';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
+import { PagedResponse } from 'sfl-shared/entities';
 
 const UPDATES_PERIOD = 1000 * 60 * 60 * 24; // 24 hours
 const MAX_UPDATES = 200;
@@ -24,7 +25,7 @@ export class TimelineService {
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
-    getEvents(dateFilter: TimelineFilter = new TimelineFilter(), limit = MAX_EVENTS): any {
+    getEvents(dateFilter: TimelineFilter = new TimelineFilter(), limit = MAX_EVENTS) {
         let params = new HttpParams()
             .set('limit', String(limit))
             .set('name', dateFilter.name.join(','))
@@ -36,11 +37,11 @@ export class TimelineService {
             flatMap(store =>
                 this.httpClient.get(environment.API_URL_WITHOUT_VERSION + `/v1/store/${store.id}/timeline`, {params})
             )
-        );
+        ) as Observable<PagedResponse<{ timeline: TimelineEvent[]; }>>;
     }
 
-    getEventsByLink(url): any {
-        return this.httpClient.get(environment.API_URL_WITHOUT_VERSION + url);
+    getEventsByLink(url) {
+        return this.httpClient.get(environment.API_URL_WITHOUT_VERSION + url)  as Observable<PagedResponse<{ timeline: TimelineEvent[]; }>>;
     }
 
     getEventUpdates() {
