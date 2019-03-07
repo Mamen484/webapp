@@ -77,9 +77,10 @@
     "e2e": "protractor",
     "start": "ng serve --base-href=/v3/en/ --host=0.0.0.0",
     "sf-admin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --port=4201",
+    "build-lib": "ng build sfl-shared",
     "docker-serve-webapp": "ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
     "docker-serve-webadmin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --disable-host-check --public-host $ADMIN_HOST --port $ADMIN_PORT",
-    "docker-start": "npm ci && ng build sfl-shared && concurrently 'npm run docker-serve-webapp' 'npm run docker-serve-webadmin'",
+    "docker-start": "npm ci && npm run build-lib && concurrently 'npm run docker-serve-webapp' 'npm run docker-serve-webadmin'",
     "compile-env": "ts-node compile-environment"
   },
   "private": true
