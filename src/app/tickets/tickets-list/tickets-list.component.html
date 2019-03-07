@@ -1,22 +1,25 @@
-<div class="scrollable-container">
+<div class="sf-content scrollable-container">
     <div class="mat-title" i18n>API</div>
 
     <section>
         <div class="mat-body-1" i18n>Your API credentials</div>
         <mat-card>
-            <mat-card-content fxLayout="column" fxLayoutAlign="flex-start flex-start" fxLayoutGap="10px">
-                <div>
-                    <div class="mat-body-2" i18n>Token</div>
-                    <div class="mat-body-1">{{token}}</div>
+            <mat-card-content fxLayout="row">
+                <div fxLayout="column" fxLayoutAlign="flex-start flex-start" fxLayoutGap="10px" fxFlex>
+                    <div>
+                        <div class="mat-body-2" i18n>Token</div>
+                        <div class="mat-body-1">{{token}}</div>
+                    </div>
+                    <div>
+                        <div class="mat-body-2" i18n>Store ID</div>
+                        <div class="mat-body-1">{{currentStore.id}}</div>
+                    </div>
+                    <div>
+                        <div class="mat-body-2" i18n>Store Name</div>
+                        <div class="mat-body-1">{{currentStore.name}}</div>
+                    </div>
                 </div>
-                <div>
-                    <div class="mat-body-2" i18n>Store ID</div>
-                    <div class="mat-body-1">{{currentStore.id}}</div>
-                </div>
-                <div>
-                    <div class="mat-body-2" i18n>Store Name</div>
-                    <div class="mat-body-1">{{currentStore.name}}</div>
-                </div>
+                <a [href]="apiDocsLink" target="_blank" i18n class="docs-link">API Documentation</a>
             </mat-card-content>
         </mat-card>
     </section>
@@ -25,7 +28,7 @@
         <mat-card>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center">
                 <div fxFlex>
-                    <sf-image source="assets/images/zapier-logo.png" width="110px"></sf-image>
+                    <sfl-image source="assets/images/zapier-logo.png" width="110px"></sfl-image>
                 </div>
                 <button mat-raised-button color="accent" (click)="goToToZapier()" i18n>Connect</button>
             </mat-card-content>
@@ -66,11 +69,11 @@
                     </td>
                 </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.isBlocked]="!row.isActive"
                     (click)="showTicketDetails(row.id)"></tr>
             </table>
-            <div *ngIf="!isLoadingResults && !dataSource.length" i18n class="no-results mat-body-1">
+            <div *ngIf="!isLoadingResults && !dataSource.data.length" i18n class="no-results mat-body-1">
                 No tickets found.
             </div>
         </div>

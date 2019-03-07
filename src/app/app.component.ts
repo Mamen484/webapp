@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { PageLoadingService } from './core/services/page-loading.service';
 
 const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
 
@@ -12,8 +13,11 @@ const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
 })
 export class AppComponent implements OnInit {
 
+    loadingNextRoute = true;
+
     constructor(protected router: Router,
-                protected location: Location) {
+                protected location: Location,
+                protected pageLoadingService: PageLoadingService) {
     }
 
     ngOnInit(): void {
@@ -25,6 +29,23 @@ export class AppComponent implements OnInit {
                 this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
             }
         });
+        this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
+
+        this.pageLoadingService.getState().subscribe(isBeingLoaded => this.loadingNextRoute = isBeingLoaded);
+    }
+
+    /**
+     * Show a progressbar in the top of the application when we're loading the next route
+     */
+    protected checkRouterEvent(routerEvent: Event) {
+        if (routerEvent instanceof NavigationStart) {
+            this.pageLoadingService.startLoading();
+        }
+        if (routerEvent instanceof NavigationEnd
+            || routerEvent instanceof NavigationCancel
+            || routerEvent instanceof NavigationError) {
+            this.pageLoadingService.finishLoading();
+        }
     }
 
 }

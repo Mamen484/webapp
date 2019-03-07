@@ -1,0 +1,250 @@
+<sfl-solo-search i18n-placeholder placeholder="Search orders" i18n-filterButtonText filterButtonText="Filter"
+                 (openFilters)="openDialog()" (searchQueryChanged)="search($event)"></sfl-solo-search>
+<mat-chip-list [selectable]="false" class="filter-chips" *ngIf="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
+    <mat-chip *ngIf="selectedChannel">
+        <ng-container i18n>Channel: {{selectedChannel}}</ng-container>
+        <mat-icon (click)="cancelFilter('channel', 'all')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="ordersFilter.isActive(['since'])">
+        <ng-container i18n>Since: {{ordersFilter?.since | date:'short'}}</ng-container>
+        <mat-icon (click)="cancelFilter('since', '')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="ordersFilter.isActive(['until'])">
+        <ng-container i18n>Until: {{ordersFilter?.until | date:'short'}}</ng-container>
+        <mat-icon (click)="cancelFilter('until', '')">cancel</mat-icon>
+    </mat-chip>
+    <mat-chip *ngIf="ordersFilter.isActive(['tag'])">
+        <ng-container i18n>Tag: {{ordersFilter?.tag}}</ng-container>
+        <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
+    </mat-chip>
+</mat-chip-list>
+<mat-card class="orders" [class.filters-applied]="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
+    <mat-card-content>
+        <div class="actions" [class.accent]="selection.selected.length" fxLayout="row">
+            <div fxFlex>
+                <div class="selected-orders" *ngIf="selection.selected.length" i18n>
+                    {{selection.selected.length}} {selection.selected.length, plural, =1 {order } other {orders }}
+                    <!-- can differ for non-english versions -->
+                    {selection.selected.length, plural, =1 {selected} other {selected}}
+                    <ng-container *ngIf="false">This is for showing translation with interpolations only</ng-container>
+                </div>
+            </div>
+            <div *ngIf="!isLoadingResults && dataSource.data.length">
+                <sf-status-buttons [status]="ordersFilter.status"
+                                   [acknowledgment]="ordersFilter.acknowledgment"
+                                   [errorType]="ordersFilter.error"
+                                   (actionApplied)="applyStatusAction($event)">
+                </sf-status-buttons>
+            </div>
+            <button mat-icon-button (click)="manageTags()" matTooltip="Tags" i18n-matTooltip matTooltipPosition="above">
+                <mat-icon>label</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="printMenu" *ngIf="selection.selected.length"
+                    class="print-button" matTooltip="Export" i18n-matTooltip matTooltipPosition="above">
+                <mat-icon>local_printshop</mat-icon>
+            </button>
+            <button mat-icon-button (click)="showSelectOrdersDialog()" *ngIf="!selection.selected.length"
+                    class="print-button" matTooltip="Export" i18n-matTooltip matTooltipPosition="above">
+                <mat-icon>local_printshop</mat-icon>
+            </button>
+            <button mat-icon-button [matMenuTriggerFor]="columnsMenu" matTooltip="Add Columns" i18n-matTooltip
+                    matTooltipPosition="above">
+                <mat-icon>view_column</mat-icon>
+            </button>
+        </div>
+        <div [class.table-container]="isLoadingResults" class="table-scrollable">
+            <div *ngIf="isLoadingResults">
+                <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+            </div>
+
+            <div class="table-container">
+                <table mat-table [dataSource]="dataSource" class="orders-table">
+
+                    <ng-container matColumnDef="checkbox" sticky>
+                        <th mat-header-cell *matHeaderCellDef>
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                          (change)="$event ? masterToggle() : null"
+                                          [checked]="selection.hasValue() && isAllSelected()"
+                                          [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row" (click)="$event.stopPropagation(); selection.toggle(row)">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                          (change)="$event ? selection.toggle(row) : null"
+                                          [checked]="selection.isSelected(row)" #checkbox></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="tags" sticky>
+                        <th mat-header-cell *matHeaderCellDef class="column-tags"></th>
+                        <td mat-cell *matCellDef="let row" class="column-tags">
+                            <mat-chip-list class="sf-tags-chips" *ngIf="row.tags.length">
+                                <sf-tag-chip *ngFor="let tag of row.tags" [tag]="tag"></sf-tag-chip>
+                            </mat-chip-list>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hasErrors" sticky>
+                        <th mat-header-cell *matHeaderCellDef class="column-hasErrors"></th>
+                        <td mat-cell *matCellDef="let row" class="column-hasErrors">
+                            <mat-icon *ngIf="row.hasErrors" color="warn">error</mat-icon>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marketplace" sticky>
+                        <th mat-header-cell *matHeaderCellDef i18n> Marketplace</th>
+                        <td mat-cell *matCellDef="let row">
+                            <img [src]="row.channelImage" class="marketplace-logo" width="65">
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="reference" sticky>
+                        <th mat-header-cell *matHeaderCellDef
+                            [class.right-bordered]="!isLoadingResults && showStickyBorder" i18n> Id
+                        </th>
+                        <td mat-cell *matCellDef="let row"
+                            [class.right-bordered]="!isLoadingResults && showStickyBorder"> {{row.reference}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef i18n> Status</th>
+                        <td mat-cell *matCellDef="let row">
+                            <sf-order-status [status]="row.status"></sf-order-status>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef i18n> Total</th>
+                        <td mat-cell *matCellDef="let row"> {{row.total | sfCurrency:row.currency}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef i18n> Date</th>
+                        <td mat-cell *matCellDef="let row"> {{row.date | date:'short'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="updatedAt">
+                        <th mat-header-cell *matHeaderCellDef i18n> Updated at</th>
+                        <td mat-cell *matCellDef="let row"> {{row.updatedAt | date:'short'}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="services">
+                        <th mat-header-cell *matHeaderCellDef i18n> Services</th>
+                        <td mat-cell *matCellDef="let row">
+                            <div *ngIf="row.services.paymentIsAfn" i18n>Amazon FBA</div>
+                            <div *ngIf="row.services.isAmazonPrime" i18n>Amazon Prime</div>
+                            <div *ngIf="row.services.paymentIsClogistique" i18n>Clogistique</div>
+                            <div *ngIf="row.services.isCdiscountPro" i18n>Cdiscount PRO</div>
+                            <div *ngIf="row.services.shippedByManomano" i18n>Shipped by Manomano</div>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="productAmount">
+                        <th mat-header-cell *matHeaderCellDef i18n> Product amount</th>
+                        <td mat-cell *matCellDef="let row"> {{row.productAmount | sfCurrency:row.currency}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="shippingAmount">
+                        <th mat-header-cell *matHeaderCellDef i18n> Shipping amount</th>
+                        <td mat-cell *matCellDef="let row"> {{row.shippingAmount | sfCurrency:row.currency}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="paymentMethod">
+                        <th mat-header-cell *matHeaderCellDef i18n> Payment Method</th>
+                        <td mat-cell *matCellDef="let row"> {{row.paymentMethod}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="deliveryName">
+                        <th mat-header-cell *matHeaderCellDef i18n> Delivery Name</th>
+                        <td mat-cell *matCellDef="let row"> {{row.deliveryName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="invoicingName">
+                        <th mat-header-cell *matHeaderCellDef i18n> Billing Name</th>
+                        <td mat-cell *matCellDef="let row"> {{row.invoicingName}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="storeId">
+                        <th mat-header-cell *matHeaderCellDef i18n> Store Reference</th>
+                        <td mat-cell *matCellDef="let row"> {{row.storeId}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="trackingNumber">
+                        <th mat-header-cell *matHeaderCellDef i18n> Tracking Number</th>
+                        <td mat-cell *matCellDef="let row"> {{row.trackingNumber}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="imported">
+                        <th mat-header-cell *matHeaderCellDef i18n> Acknowledged</th>
+                        <td mat-cell *matCellDef="let row">
+                            <span *ngIf="row.imported" i18n>Yes</span>
+                            <span *ngIf="!row.imported" i18n>No</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="invoice-link">
+                        <th mat-header-cell *matHeaderCellDef></th>
+                        <td mat-cell *matCellDef="let row" class="right-sticky-column">
+                            <div class="invoice-link">
+                                <a mat-icon-button sflLegacyLink path="/marketplaces/invoice/{{row.id}}" target="_blank"
+                                   (click)="$event.stopPropagation()">
+                                    <mat-icon>picture_as_pdf</mat-icon>
+                                </a>
+                            </div>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        (click)="goToOrder(row.id)">{{row.name}}
+                    </tr>
+                </table>
+                <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
+                    No orders matching your request.
+                </div>
+                <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                               (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-menu #columnsMenu="matMenu" (closed)="setDisplayedColumns()">
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.updatedAt" i18n>Updated at
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.services" i18n>Services
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.productAmount" i18n>Product amount
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.shippingAmount" i18n>Shipping
+            amount
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.paymentMethod" i18n>Payment method
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.deliveryName" i18n>Delivery name
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.invoicingName" i18n>Billing name
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.storeId" i18n>StoreReference
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.trackingNumber" i18n>Tracking
+            number
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.imported" i18n>Acknowledged
+        </mat-checkbox>
+    </div>
+</mat-menu>
+
+<mat-menu #printMenu="matMenu">
+    <a mat-menu-item mat-menu-item i18n sflLegacyLink
+       [path]="selection.selected | invoicesLink" [addAuthorization]="false">Invoices</a>
+    <a mat-menu-item *ngFor="let exp of exports" sflLegacyLink
+       [path]="selection.selected | ordersExportLink:exp.id" [addAuthorization]="false">{{exp.name}}
+    </a>
+</mat-menu>

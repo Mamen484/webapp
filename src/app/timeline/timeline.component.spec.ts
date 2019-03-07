@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -21,6 +21,7 @@ import { EventLinkPipe } from './event-link/event-link.pipe';
 import { AppState } from '../core/entities/app-state';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { SflSharedModule } from 'sfl-shared/core';
+import { PageLoadingService } from '../core/services/page-loading.service';
 
 @Pipe({
     name: 'sfEventIcon'
@@ -124,10 +125,15 @@ describe('TimelineComponent', () => {
     class TimelineFilteringAreaComponent {
     }
 
+    @Component({selector: 'sf-sidebar', template: ''})
+    class SidebarComponent {
+    }
+
     describe('integration tests', () => {
         let localStorage;
         let appStore: jasmine.SpyObj<Store<AppState>>;
         let authService: jasmine.SpyObj<SflAuthService>;
+        let pageLoadingService: jasmine.SpyObj<PageLoadingService>;
         beforeEach(async(() => {
 
             timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
@@ -135,6 +141,8 @@ describe('TimelineComponent', () => {
             localStorage.getItem.and.returnValue('someToken');
             appStore = jasmine.createSpyObj(['select']);
             authService = jasmine.createSpyObj('SflAuthService', ['getAuthToken', 'getAuthString']);
+            pageLoadingService = jasmine.createSpyObj('PageLoadingService spy', ['startLoading', 'finishLoading', 'getState']);
+            pageLoadingService.getState.and.returnValue(of(false));
 
             TestBed.configureTestingModule({
                 imports: [
@@ -155,6 +163,7 @@ describe('TimelineComponent', () => {
                     TimelineFilteringAreaComponent,
                     EventIconPipe,
                     EventLinkPipe,
+                    SidebarComponent,
                 ],
                 providers: [
                     {provide: SflLegacyLinkService, useClass: LegacyLinkService},
@@ -162,6 +171,7 @@ describe('TimelineComponent', () => {
                     {provide: SflLocalStorageService, useValue: localStorage},
                     {provide: Store, useValue: appStore},
                     {provide: SflAuthService, useValue: authService},
+                    {provide: PageLoadingService, useValue: pageLoadingService},
                 ]
             })
                 .compileComponents();
@@ -179,7 +189,7 @@ describe('TimelineComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should convert API data to the correct list of udpates', async () => {
+        it('should convert API data to the correct list of udpates',  async () => {
             await fixture.whenStable();
             let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
             expect(items.length).toEqual(4);
@@ -189,7 +199,7 @@ describe('TimelineComponent', () => {
             validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
         });
 
-        it('should convert API data to the correct list of events', async () => {
+        it('should convert API data to the correct list of events',  async () => {
             await fixture.whenStable();
             let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
             expect(items.length).toEqual(17);

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusButtonsComponent } from './status-buttons.component';
 import { OrderStatus } from '../../core/entities/orders/order-status.enum';
 import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
-import { ActiveTab } from '../../core/entities/orders/active-tab.enum';
+import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 import { OrderAcknowledgment } from '../../core/entities/orders/order-acknowledgment.enum';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
@@ -31,7 +31,7 @@ describe('StatusButtonsComponent', () => {
         setComponentInputs(
             OrderStatus.waiting_store_acceptance
         );
-        expect(component.activeTab).toEqual(ActiveTab.toValidate);
+        expect(component.activeTab).toEqual(OrdersView.toValidate);
         expect(element().length).toEqual(2);
         expect(element()[0].textContent.trim()).toEqual('Refuse');
         expect(element()[1].textContent.trim()).toEqual('Accept');
@@ -42,7 +42,7 @@ describe('StatusButtonsComponent', () => {
             OrderStatus.waiting_shipment,
             OrderAcknowledgment.unacknowledged
         );
-        expect(component.activeTab).toEqual(ActiveTab.toImport);
+        expect(component.activeTab).toEqual(OrdersView.toImport);
         expect(element().length).toEqual(1);
         expect(element()[0].textContent.trim()).toEqual('Acknowledge');
     });
@@ -53,7 +53,7 @@ describe('StatusButtonsComponent', () => {
             undefined,
             OrderErrorType.acknowledge
         );
-        expect(component.activeTab).toEqual(ActiveTab.importErrors);
+        expect(component.activeTab).toEqual(OrdersView.importErrors);
         expect(element().length).toEqual(1);
         expect(element()[0].textContent.trim()).toEqual('Acknowledge');
     });
@@ -62,7 +62,7 @@ describe('StatusButtonsComponent', () => {
         setComponentInputs(
             OrderStatus.waiting_shipment
         );
-        expect(component.activeTab).toEqual(ActiveTab.toShip);
+        expect(component.activeTab).toEqual(OrdersView.toShip);
         expect(element().length).toEqual(2);
         expect(element()[0].textContent.trim()).toEqual('Cancel');
         expect(element()[1].textContent.trim()).toEqual('Ship');
@@ -74,7 +74,7 @@ describe('StatusButtonsComponent', () => {
             undefined,
             OrderErrorType.ship
         );
-        expect(component.activeTab).toEqual(ActiveTab.shippingErrors);
+        expect(component.activeTab).toEqual(OrdersView.shippingErrors);
         expect(element().length).toEqual(2);
         expect(element()[0].textContent.trim()).toEqual('Cancel');
         expect(element()[1].textContent.trim()).toEqual('Ship');
@@ -84,7 +84,7 @@ describe('StatusButtonsComponent', () => {
         setComponentInputs(
             OrderStatus.shipped
         );
-        expect(component.activeTab).toEqual(ActiveTab.shipped);
+        expect(component.activeTab).toEqual(OrdersView.shipped);
         expect(element().length).toEqual(0);
     });
 
@@ -96,7 +96,7 @@ describe('StatusButtonsComponent', () => {
         });
 
         it('should emit a cancel event when click on a cancel button', () => {
-            component.activeTab = ActiveTab.toShip;
+            component.activeTab = OrdersView.toShip;
             fixture.detectChanges();
             const button = element()[0];
             expect(button.textContent.trim()).toBe('Cancel');
@@ -105,7 +105,7 @@ describe('StatusButtonsComponent', () => {
         });
 
         it('should emit a Ship event when click on a Ship button', () => {
-            component.activeTab = ActiveTab.toShip;
+            component.activeTab = OrdersView.toShip;
             fixture.detectChanges();
             const button = element()[1];
             expect(button.textContent.trim()).toBe('Ship');
@@ -114,7 +114,7 @@ describe('StatusButtonsComponent', () => {
         });
 
         it('should emit a acknowledge event when click on a acknowledge button', () => {
-            component.activeTab = ActiveTab.toImport;
+            component.activeTab = OrdersView.toImport;
             fixture.detectChanges();
             const button = element()[0];
             expect(button.textContent.trim()).toBe('Acknowledge');
@@ -123,7 +123,7 @@ describe('StatusButtonsComponent', () => {
         });
 
         it('should emit a refuse event when click on a refuse button', () => {
-            component.activeTab = ActiveTab.toValidate;
+            component.activeTab = OrdersView.toValidate;
             fixture.detectChanges();
             const button = element()[0];
             expect(button.textContent.trim()).toBe('Refuse');
@@ -132,7 +132,7 @@ describe('StatusButtonsComponent', () => {
         });
 
         it('should emit a accept event when click on a accept button', () => {
-            component.activeTab = ActiveTab.toValidate;
+            component.activeTab = OrdersView.toValidate;
             fixture.detectChanges();
             const button = element()[1];
             expect(button.textContent.trim()).toBe('Accept');

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SflSidebarContainerComponent } from './sidebar-container.component';
-import { MatSidenavModule } from '@angular/material';
+import { MatListModule, MatSidenavModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SflLeftNavigationComponent } from './left-navigation/sfl-left-navigation.component';
 
 /**
  * A module to easily build the left sidebar.
@@ -13,9 +14,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         CommonModule,
         MatSidenavModule,
         FlexLayoutModule,
+        MatListModule,
     ],
-    declarations: [SflSidebarContainerComponent],
-    exports: [SflSidebarContainerComponent],
+    declarations: [SflSidebarContainerComponent, SflLeftNavigationComponent],
+    exports: [SflSidebarContainerComponent, SflLeftNavigationComponent],
 })
 export class SflSidebarModule {
 }

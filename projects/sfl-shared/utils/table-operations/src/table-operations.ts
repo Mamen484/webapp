@@ -1,4 +1,4 @@
-import { PageEvent } from '@angular/material';
+import { MatTableDataSource, PageEvent } from '@angular/material';
 import { OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ export abstract class TableOperations<T> implements OnInit {
     searchQuery = '';
 
     /** data processing */
-    dataSource: T[];
+    dataSource = new MatTableDataSource<T>();
     dataSubscription;
     resultsLength = 0;
     isLoadingResults = true;
@@ -60,9 +60,13 @@ export abstract class TableOperations<T> implements OnInit {
             page: this.currentPage + 1,
             search: this.searchQuery
         }).subscribe(({total, dataList}) => {
-            this.dataSource = dataList;
-            this.isLoadingResults = false;
+            this.dataSource.data = dataList;
             this.resultsLength = total;
+            this.afterApplyingData();
         });
+    }
+
+    protected afterApplyingData() {
+        this.isLoadingResults = false;
     }
 }

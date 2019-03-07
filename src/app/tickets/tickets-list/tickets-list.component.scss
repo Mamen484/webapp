@@ -12,6 +12,10 @@ section {
   & > mat-card {
     margin-top: 10px;
   }
+
+  a.docs-link:visited {
+    color: mat-color($accent);
+  }
 }
 
 table {
@@ -47,7 +51,11 @@ mat-progress-bar {
   }
 }
 
-sf-image {
+sfl-image {
   margin: 14px 24px;
   display: block;
+}
+
+.table-container, mat-paginator {
+  position: relative;
 }

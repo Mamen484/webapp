@@ -4,7 +4,7 @@
 $page-header-height: 56px;
 $search-field-height: 89px;
 
-@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}))
+@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}));
 
 table {
   width: 100%;
@@ -15,5 +15,12 @@ table {
     mat-icon.block-store {
       color: mat-color($warn, 900);
     }
+  }
+
+  td {
+    &.block-cell, &.edit-cell{
+      width: 60px;
+    }
+
   }
 }

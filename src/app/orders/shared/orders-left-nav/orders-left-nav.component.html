@@ -1,0 +1,58 @@
+<sfl-left-navigation>
+    <mat-list dense>
+        <mat-list-item i18n>
+            <div class="nav-title">Orders</div>
+        </mat-list-item>
+
+        <mat-divider></mat-divider>
+
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.allOrders" routerLink="/orders" i18n class="mat-body-2 ">All
+                orders</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.toValidate"
+               routerLink="/orders" [queryParams]="{view: ordersView.toValidate}" i18n class="mat-body-2">To
+                validate</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.importErrors" routerLink="/orders"
+               [queryParams]="{view: ordersView.importErrors}" i18n class="mat-body-2">Import errors</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.toShip"
+               routerLink="/orders" [queryParams]="{view: ordersView.toShip}"
+               i18n class="mat-body-2">To ship</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.shippingErrors"
+               routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}"
+               i18n class="mat-body-2">Shipping errors</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a [class.active]="activeView === ordersView.shipped"
+               routerLink="/orders" [queryParams]="{view: ordersView.shipped}"
+               i18n class="mat-body-2 ">Shipped</a>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item class="has-top-margin auto-height">
+            <sf-expandable [expanded]="activeMenu === 'settings'">
+                <div sfExpandableTrigger class="mat-body-2" i18n>Settings <mat-icon class="expand-menu-icon">expand_more</mat-icon></div>
+                <mat-list sfExpandableBody dense>
+                    <mat-list-item>
+                        <a [class.active]="activeLink === 'test-order'"
+                           sflLegacyLink path="/marketplaces/createorder" i18n fxFlex class="mat-body-1">Test order</a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a [class.active]="activeLink === 'reporting'"
+                           sflLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <a [class.active]="activeLink === 'tags-management'"
+                           routerLink="/orders/tags-management" class="mat-body-1">Tags management</a>
+                    </mat-list-item>
+                </mat-list>
+            </sf-expandable>
+        </mat-list-item>
+    </mat-list>
+</sfl-left-navigation>

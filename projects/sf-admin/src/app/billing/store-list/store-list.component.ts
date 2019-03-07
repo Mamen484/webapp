@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
 import { BillingStoreService } from './billing-store.service';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
-import { BillingTableOperations } from '../billing-table-operations/billing-table-operations';
 import { map } from 'rxjs/operators';
+import { TableOperations } from 'sfl-shared/utils/table-operations';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 
@@ -16,7 +16,7 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent extends BillingTableOperations<BillingStore> {
+export class StoreListComponent extends TableOperations<BillingStore> {
 
     displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'edit', 'block'];
 

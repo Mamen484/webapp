@@ -1,6 +1,12 @@
-<sfl-sidebar-container>
-    <mat-list>
-        <mat-list-item class="mat-active" matTooltip="HOMEPAGE" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
+<sfl-sidebar-container bgColor="#072343" menuHeight="0px">
+    <mat-list fxLayout="column" class="sf-nav-list">
+        <mat-list-item>
+            <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
+                <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
+            </a>
+        </mat-list-item>
+        <mat-list-item class="mat-active" matTooltip="HOMEPAGE" matTooltipPosition="after" i18n-matTooltip
+                       [matTooltipDisabled]="hideTooltips">
             <a routerLink="/" class="homepage-link">
                 <mat-icon [class.active]="currentRoute === 'channels'">home</mat-icon>
                 <span fxHide fxShow.xs i18n>Homepage</span>
@@ -8,7 +14,8 @@
         </mat-list-item>
         <mat-list-item [matMenuTriggerFor]="channelsMenu" matTooltip="CHANNELS"
                        matTooltipPosition="after"
-                       i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()"  [matTooltipDisabled]="hideTooltips">
+                       i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()"
+                       [matTooltipDisabled]="hideTooltips">
             <mat-icon>wb_cloudy</mat-icon>
             <span fxHide fxShow.xs i18n>Channels</span>
         </mat-list-item>
@@ -16,27 +23,31 @@
 
         <mat-list-item [matMenuTriggerFor]="ordersMenu" matTooltip="ORDERS" i18n-matTooltip matTooltipPosition="after"
                        *ngIf="currentStore.permission.marketplaces" [matTooltipDisabled]="hideTooltips">
-            <mat-icon [class.sf-badge]="currentStore._embedded.order.newCount" [class.active]="currentRoute === 'orders'"
+            <mat-icon [class.sf-badge]="currentStore._embedded.order.newCount"
+                      [class.active]="currentRoute === 'orders'"
                       [attr.data-badge]="currentStore._embedded.order.newCount">shopping_basket
             </mat-icon>
             <span fxHide fxShow.xs i18n>Orders</span>
         </mat-list-item>
 
         <mat-list-item [matMenuTriggerFor]="statisticsMenu" matTooltip="STATISTICS" (onMenuOpen)="onMenuOpen()"
-                       i18n-matTooltip matTooltipPosition="after" *ngIf="currentStore.permission.statistics" [matTooltipDisabled]="hideTooltips">
+                       i18n-matTooltip matTooltipPosition="after" *ngIf="currentStore.permission.statistics"
+                       [matTooltipDisabled]="hideTooltips">
             <mat-icon>trending_up</mat-icon>
             <span fxHide fxShow.xs i18n>Statistics</span>
         </mat-list-item>
 
 
         <mat-list-item [matMenuTriggerFor]="utilsMenu" matTooltip="TOOLS" i18n-matTooltip matTooltipPosition="after"
-                       i18n-matTooltip *ngIf="currentStore.permission.tools" (onMenuOpen)="onMenuOpen()" [matTooltipDisabled]="hideTooltips">
+                       i18n-matTooltip *ngIf="currentStore.permission.tools" (onMenuOpen)="onMenuOpen()"
+                       [matTooltipDisabled]="hideTooltips">
             <mat-icon>build</mat-icon>
             <span fxHide fxShow.xs i18n>Tools</span>
         </mat-list-item>
 
         <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS" i18n-matTooltip
-                       matTooltipPosition="after" *ngIf="currentStore.permission.tools" [matTooltipDisabled]="hideTooltips">
+                       matTooltipPosition="after" *ngIf="currentStore.permission.tools"
+                       [matTooltipDisabled]="hideTooltips">
             <mat-icon>apps</mat-icon>
             <span fxHide fxShow.xs i18n>Apps</span>
         </mat-list-item>
@@ -53,11 +64,30 @@
                 <span fxHide fxShow.xs i18n>API</span>
             </a>
         </mat-list-item>
+        <mat-list-item fxFlex></mat-list-item>
+        <mat-list-item matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip
+                       [matTooltipDisabled]="hideTooltips">
+            <a [href]="linkToSupportCenter" target="_blank" class="homepage-link">
+                <mat-icon>help</mat-icon>
+            </a>
+            <span fxHide fxShow.xs i18n>Support</span>
+        </mat-list-item>
+        <mat-list-item matTooltip="TIMELINE" matTooltipPosition="after" i18n-matTooltip
+                                       [matTooltipDisabled]="hideTooltips">
+        <a (click)="navigateToTimeline()" class="sf-icon-link homepage-link">
+            <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}" [class.active]="currentRoute === 'timeline'"
+                      [attr.data-badge]="newEvents">notifications_none
+            </mat-icon>
+        </a>
+        <span fxHide fxShow.xs i18n>Timeline</span>
+    </mat-list-item>
+        <mat-list-item [matTooltip]="currentStore.name" matTooltipPosition="after"
+                       [matTooltipDisabled]="hideTooltips">
+            <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
+            <span fxHide fxShow.xs i18n>Account</span>
+        </mat-list-item>
     </mat-list>
-    <div class="sf-sidebar-bottom-help" matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip [matTooltipDisabled]="hideTooltips">
-        <a [href]="linkToSupportCenter" target="_blank"><mat-icon>help</mat-icon></a>
-        <span fxHide fxShow.xs i18n class="support-label">Support</span>
-    </div>
+
 </sfl-sidebar-container>
 
 <mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu" xPosition="after" yPosition="above">
@@ -67,7 +97,7 @@
     </a>
     <a mat-menu-item sflLegacyLink path="/tools/export" i18n>Custom data feeds</a>
 </mat-menu>
-<mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu"  xPosition="after" yPosition="above">
+<mat-menu #utilsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/tools/rules" i18n>Rules</a>
     <a mat-menu-item sflLegacyLink path="/tools/segmentations" i18n>Auto-Remove</a>
     <a mat-menu-item sflLegacyLink path="/marketplaces/autotag" i18n>Manage colors & sizes</a>
@@ -81,7 +111,7 @@
     <a mat-menu-item sflLegacyLink path="/multiple" i18n>Select multichannels products</a>
 </mat-menu>
 <mat-menu #ordersMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
-    <a mat-menu-item sflLegacyLink path="/marketplaces/orders" i18n>Orders</a>
+    <a mat-menu-item routerLink="/orders" i18n>Orders</a>
     <a mat-menu-item sflLegacyLink path="/marketplaces/listexport" i18n>Order reporting</a>
 </mat-menu>
 <mat-menu #statisticsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
@@ -97,4 +127,28 @@
 <mat-menu #appsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
     <a mat-menu-item sflLegacyLink path="/repricing" i18n>Repricing</a>
     <a mat-menu-item sflLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
+</mat-menu>
+
+<mat-menu #accountMenu="matMenu" class="sf-sidebar-menu" classList="account-menu" xPosition="after" yPosition="below">
+    <a mat-menu-item sflLegacyLink path="/admin" *ngIf="isAdmin" i18n>Admin</a>
+    <a mat-menu-item sflLegacyLink path="/marketplaces/globalparameters" i18n
+       *ngIf="currentStore.permission.marketplaces">Settings</a>
+    <a mat-menu-item sflLegacyLink path="/tools/settings" i18n>Alert Management</a>
+    <a mat-menu-item sflLegacyLink path="/facturation" i18n
+       *ngIf="currentStore.permission.facturation && currentStore.paymentType !== paymentTypes.other">Membership</a>
+    <a mat-menu-item sflLegacyLink path="/tools/access" i18n *ngIf="!isManager">Access</a>
+    <hr>
+    <ng-container  *ngIf="!isAdmin">
+        <ng-container *ngFor="let store of userInfo._embedded.store">
+            <a class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
+               sflLegacyLink path="/" [storeId]="store.id">{{store.name}} {{store.id}}
+            </a>
+            <button class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
+                    disabled title="This store is deleted" i18n-title>{{store.name}}
+            </button>
+        </ng-container>
+    </ng-container>
+    <hr *ngIf="userInfo._embedded.store.length > 1">
+    <a mat-menu-item i18n (click)="logout()">Logout</a>
+
 </mat-menu>

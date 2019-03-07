@@ -37,6 +37,8 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
 
     isLoadingResults;
 
+    apiDocsLink = environment.API_DOCUMENTATION;
+
     constructor(protected appStore: Store<AppState>,
                 protected ticketsService: TicketsService,
                 protected userInfo: SflUserService,

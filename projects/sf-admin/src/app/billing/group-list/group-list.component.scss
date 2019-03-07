@@ -4,12 +4,10 @@
 $page-header-height: 56px;
 $search-field-height: 89px;
 
-@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}))
+@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}));
 
-::ng-deep {
-  .mat-column-edit {
-    width: 80px;
-  }
+td:last-child {
+  width: 60px;
 }
 
 .no-results {

@@ -45,7 +45,7 @@ describe('GroupListComponent', () => {
         billingGroupService.fetchGroupCollection.and.returnValue(of({_embedded: {group: []}}));
         fixture.detectChanges();
         expect(billingGroupService.fetchGroupCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
-        expect(component.dataSource).toEqual([]);
+        expect(component.dataSource.data).toEqual([]);
     });
 
 
