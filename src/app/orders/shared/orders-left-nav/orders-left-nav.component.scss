@@ -16,3 +16,11 @@ mat-icon.expand-menu-icon {
   position: absolute;
   right: 20px;
 }
+
+mat-list-item {
+  outline: none;
+  cursor: pointer;
+  &.auto-height {
+    cursor: auto;
+  }
+}
