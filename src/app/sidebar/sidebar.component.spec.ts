@@ -1,3 +1,4 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -11,6 +12,8 @@ import { AggregatedUserInfo, PaymentType, StoreStatus } from 'sfl-shared/entitie
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar.component';
 import { SupportLinkService } from '../core/services/support-link.service';
+import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
+import { ChannelLinkService } from '../core/services/channel-link.service';
 
 describe('SidebarComponent', () => {
 
@@ -24,6 +27,8 @@ describe('SidebarComponent', () => {
     let timelineService: jasmine.SpyObj<TimelineService>;
     let route: ActivatedRoute;
     let router: Router;
+    let ticketsDataService: jasmine.SpyObj<TicketsDataService>;
+    let channelLinkService: jasmine.SpyObj<ChannelLinkService>;
 
     beforeEach(() => {
         appStore = jasmine.createSpyObj(['select']);
@@ -33,6 +38,8 @@ describe('SidebarComponent', () => {
         timelineService = jasmine.createSpyObj(['emitUpdatedTimeline', 'getUpdatesNumber']);
         route = <any>{};
         router = <any>{routeReuseStrategy: {shouldDetach: jasmine.createSpy('shouldDetach'), navigate: jasmine.createSpy('navigate')}};
+        ticketsDataService = jasmine.createSpyObj('TicketsDataService spy', ['requestUpdate']);
+        channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel']);
         TestBed.configureTestingModule({
             declarations: [SidebarComponent, LegacyLinkDirective],
             schemas: [NO_ERRORS_SCHEMA],
@@ -44,7 +51,9 @@ describe('SidebarComponent', () => {
                 {provide: TimelineService, useValue: timelineService},
                 {provide: ActivatedRoute, useValue: route},
                 {provide: Router, useValue: router},
-                {provide: SupportLinkService, useValue: 'support-link/'}
+                {provide: SupportLinkService, useValue: 'support-link/'},
+                {provide: TicketsDataService, useValue: ticketsDataService},
+                {provide: ChannelLinkService, useValue: channelLinkService},
             ],
             imports: [MatMenuModule, NoopAnimationsModule],
         })

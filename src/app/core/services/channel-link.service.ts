@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, zip } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { flatMap, map } from 'rxjs/operators';
-import { Feed } from '../entities/feed';
 import { ChannelLinkPipe } from '../../shared/channel-link/channel-link.pipe';
 import { FeedService } from './feed.service';
 import { ChannelService } from './channel.service';
@@ -44,13 +43,10 @@ export class ChannelLinkService {
     }
 
     protected decideToSkipSetup(channel) {
-        return zip(
-            this.getFeedCollection(channel),
-            this.channelService.getChannelCategories(channel.id, {limit: '1'})
-        ).pipe(
-            map(([feed, categoriesPage]) => ([feed._embedded.feed[0], categoriesPage._embedded.category.length > 0])),
-            flatMap(([feed, channelHasCategories]: [Feed, boolean]) =>
-                channelHasCategories ? this.hasConfiguredCategories(feed.id) : of(true)
+        return this.channelService.getChannelCategories(channel.id, {limit: '1'}).pipe(
+            flatMap(categoriesPage => categoriesPage._embedded.category.length > 0
+                ? this.getFeedCollection(channel).pipe(flatMap(feed => this.hasConfiguredCategories(feed._embedded.feed[0].id)))
+                : of(true)
             ));
     }
 

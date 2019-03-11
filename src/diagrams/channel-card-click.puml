@@ -1,10 +1,6 @@
 @startuml
-partition statistics.component.ts(homepage) {
 (*) --> A user clicks on a channel card
---> if "channel is installed"
-}
-    partition channel-link.service.ts {
-    --> [Yes] if "channel has categories"
+--> if "channel has categories"
         --> [No] if "channel type is marketplace"
                 --> [Yes] "Navigate to https://app.shopping-feed.com/{channelName}" as goToMarketplace
                 --> (*)
@@ -12,23 +8,23 @@ partition statistics.component.ts(homepage) {
                 --> [No] "Navigate to https://app.shopping-feed.com/{channelType}/manage/{channelName}" as goToChannel
                 --> (*)
                 endif
-              else
-              --> [Yes] if "the feed has configured categories"
-                        --> [Yes] if "channel type is marketplace"
-                                --> [Yes] goToMarketplace
-                                --> (*)
-                                else
-                                --> [No] goToChannel
-                                --> (*)
-                                endif
-                        else
-                        --> [No] Go to /channel-setup/{channelId}
-                        --> (*)
-                        endif
-              endif
-    }
     else
-    partition suggested-channel.component.ts {
+    --> [No] if "channel is installed"
+
+    --> [Yes] if "the feed has configured categories"
+            --> [Yes] if "channel type is marketplace"
+                    --> [Yes] goToMarketplace
+                    --> (*)
+                    else
+                    --> [No] goToChannel
+                    --> (*)
+                    endif
+            else
+            --> [No] Go to /channel-setup/{channelId}
+            --> (*)
+            endif
+
+    else
     --> [No] if "channel has a different country, then a store"
             --> [Yes] "Show a dialog that the request has been sent"
             --> (*)
@@ -41,8 +37,6 @@ partition statistics.component.ts(homepage) {
                 --> [No] Navigate to https://app.shopping-feed.com/v3/{lang}/channel-setup/{channelId}}
                 -->(*)
                 endif
-    }
     endif
-
-
+endif
 @enduml

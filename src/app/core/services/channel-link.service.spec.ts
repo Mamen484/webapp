@@ -5,8 +5,8 @@ import { FeedService } from './feed.service';
 import { ChannelService } from './channel.service';
 import { Router } from '@angular/router';
 import { LegacyLinkService } from './legacy-link.service';
-import { SflWindowRefService } from 'sfl-shared/services';
-import { of, throwError } from 'rxjs';
+import { SflLocaleIdService, SflWindowRefService } from 'sfl-shared/services';
+import { of } from 'rxjs';
 import { Channel } from 'sfl-shared/entities';
 
 describe('ChannelLinkService', () => {
@@ -15,6 +15,7 @@ describe('ChannelLinkService', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let router: jasmine.SpyObj<Router>;
     let legacyLinkService: jasmine.SpyObj<LegacyLinkService>;
+    let localeIdService: SflLocaleIdService;
 
     let service: ChannelLinkService;
     let windowRef: SflWindowRefService;
@@ -24,13 +25,14 @@ describe('ChannelLinkService', () => {
         channelService = jasmine.createSpyObj('ChannelService', ['getChannelCategories']);
         router = jasmine.createSpyObj('Router', ['navigate']);
         legacyLinkService = jasmine.createSpyObj('LegacyLinkService', ['getLegacyLink']);
-
+        localeIdService = <any>{localeId: 'en'};
         TestBed.configureTestingModule({
             providers: [
                 {provide: FeedService, useValue: feedService},
                 {provide: ChannelService, useValue: channelService},
                 {provide: Router, useValue: router},
                 {provide: LegacyLinkService, useValue: legacyLinkService},
+                {provide: SflLocaleIdService, useValue: localeIdService},
                 {provide: SflWindowRefService, useValue: {nativeWindow: {location: {}}}},
             ],
         });
@@ -43,13 +45,15 @@ describe('ChannelLinkService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should open a legacy channel page if the channel has at least one category and the feed has configured categories', () => {
+    it('should open a legacy channel page if the channel is installed, has at least one category and the feed has configured categories', () => {
         feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
         feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: [{}]}}));
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
 
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
-        service.navigateToChannel(mockChannel());
+        const channel = mockChannel();
+        channel.installed = true;
+        service.navigateToChannel(channel);
         expect(feedService.fetchCategoryCollection).toHaveBeenCalled();
         expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/shopbot/manage/channel_name');
         expect(windowRef.nativeWindow.location.href).toBe('/some-link');
@@ -61,6 +65,7 @@ describe('ChannelLinkService', () => {
         channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
         const channel = <any>mockChannel();
         channel.id = 12;
+        channel.installed = true;
         service.navigateToChannel(channel);
         expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 12]);
     });
@@ -75,24 +80,25 @@ describe('ChannelLinkService', () => {
         expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
 
-    it('should perform a create feed request and refetch feed when no feed found', () => {
-        feedService.fetchFeedCollection.and.returnValues(of({total: 0}), of({total: 1, _embedded: {feed: [{id: 20}]}}));
-        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: []}}));
+    it('should create a feed when a channel is not installed and navigate to setup', () => {
+        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
+        feedService.fetchCategoryCollection.and.returnValue(of({total: 0, _embedded: {category: []}}));
+        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [<any>{}]}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         feedService.create.and.returnValue(of({}));
-        service.navigateToChannel(mockChannel());
+        const channel = mockChannel();
+        channel.id = 51;
+        service.navigateToChannel(channel);
         expect(feedService.create).toHaveBeenCalled();
-        expect(feedService.fetchFeedCollection).toHaveBeenCalledTimes(2);
-
-        expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/shopbot/manage/channel_name');
-        expect(windowRef.nativeWindow.location.href).toBe('/some-link');
+        expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 51]);
     });
 
     function mockChannel() {
         return {
             _links: {image: {href: ''}},
             name: 'channel_name',
-            type: 'shopbot'
+            type: 'shopbot',
+            installed: false,
         } as Channel;
     }
 });

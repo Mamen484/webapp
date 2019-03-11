@@ -10,6 +10,8 @@ import { LegacyLinkStubDirective } from '../../../../mocks/stubs/legacy-link-stu
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
 import { ChannelStorageService } from '../../../core/services/channel-storage.service';
+import { ChannelLinkService } from '../../../core/services/channel-link.service';
+import { SflWindowRefService } from 'sfl-shared/services';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
@@ -18,6 +20,8 @@ describe('SuggestedChannelComponent', () => {
     let requestSpy;
     let openSpy;
     let channelStorage: jasmine.SpyObj<ChannelStorageService>;
+    let channelLinkService: jasmine.SpyObj<ChannelLinkService>;
+    let windowRef: SflWindowRefService;
 
     beforeEach(async(() => {
         afterClosedSpy = jasmine.createSpy('afterClosed');
@@ -25,6 +29,8 @@ describe('SuggestedChannelComponent', () => {
         openSpy = jasmine.createSpy('dialog.open');
         openSpy.and.returnValue({afterClosed: afterClosedSpy});
         channelStorage = jasmine.createSpyObj(['getGeneratedTurnover', 'getGeneratedOnline']);
+        channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel', 'getChannelLink']);
+        windowRef = {nativeWindow: <any>{}};
 
         TestBed.configureTestingModule({
             imports: [MatCardModule, MatButtonModule, InfiniteScrollModule],
@@ -37,6 +43,8 @@ describe('SuggestedChannelComponent', () => {
                     useValue: {sendInternationalAccountRequest: requestSpy}
                 },
                 {provide: ChannelStorageService, useValue: channelStorage},
+                {provide: ChannelLinkService, useValue: channelLinkService},
+                {provide: SflWindowRefService, useValue: windowRef},
             ]
         })
             .compileComponents();
