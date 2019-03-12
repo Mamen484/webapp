@@ -2,15 +2,16 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { environment } from '../../environments/environment'
-import { SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
 import { AggregatedUserInfo, ChannelsRequestParams, Store as UserStore } from 'sfl-shared/entities';
 import { SET_CHANNELS } from '../core/reducers/installed-channels-reducer';
 import { SET_TAGS } from '../core/reducers/tags-reducer';
 import { filter, flatMap, map, take } from 'rxjs/operators';
 import { TagsService } from '../core/services/tags.service';
-import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { LOAD_AUTOPILOT } from '../../trackers/autopilot';
 import { LOAD_FULLSTORY } from '../../trackers/fullstory';
+import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 
 @Component({
     selector: 'app-homepage',
@@ -28,7 +29,9 @@ export class BaseComponent implements OnInit {
                 protected tagsService: TagsService,
                 protected userService: SflUserService,
                 protected renderer: Renderer2,
-                protected router: Router) {
+                protected router: Router,
+                protected zendeskService: ngxZendeskWebwidgetService,
+                protected localeIdService: SflLocaleIdService) {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
@@ -46,6 +49,7 @@ export class BaseComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.configureZendesk();
         this.userService.fetchAggregatedInfo()
             .subscribe((userInfo) => {
                 if (!userInfo.isAdmin()) {
@@ -149,5 +153,33 @@ export class BaseComponent implements OnInit {
         };
 
         this.renderer.appendChild(document.body, script);
+    }
+
+    protected configureZendesk() {
+        this.appStore.select('currentStore').pipe(take(1)).subscribe(store => {
+            if (store.permission.chat) {
+                this.zendeskService.setLocale(this.localeIdService.localeId);
+                this.zendeskService.setSettings({
+                    webWidget: {
+                        chat: {
+                            title: {
+                                '*': environment.zeChatTitle,
+                            },
+                            concierge: {
+                                name: environment.zeConciergeName,
+                                title: {
+                                    '*': environment.zeConciergeTitle,
+                                    'fr': environment.zeConciergeTitleFr,
+                                }
+                            },
+                        },
+                        contactForm: {
+                            suppress: true
+                        }
+                    }
+                });
+                this.zendeskService.show();
+            }
+        });
     }
 }

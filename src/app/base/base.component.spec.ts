@@ -1,7 +1,7 @@
 import { EMPTY, of, Subject } from 'rxjs';
 import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
-import { SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TagsService } from '../core/services/tags.service';
+import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 
 describe('BaseComponent', () => {
 
@@ -21,6 +22,7 @@ describe('BaseComponent', () => {
     let location: jasmine.SpyObj<Location>;
     let userService: jasmine.SpyObj<SflUserService>;
     let tagsService: jasmine.SpyObj<TagsService>;
+    let zendeskService: jasmine.SpyObj<ngxZendeskWebwidgetService>;
 
     let component: BaseComponent;
     let fixture: ComponentFixture<BaseComponent>;
@@ -31,6 +33,7 @@ describe('BaseComponent', () => {
 
         storeService = jasmine.createSpyObj('StoreService', ['getStoreChannels']);
         tagsService = jasmine.createSpyObj('TagsService', ['fetchAll']);
+        zendeskService = jasmine.createSpyObj('ngxZendeskWebwidgetService spy', ['setLocale', 'setSettings', 'show']);
 
         router.events = new Subject();
         windowRef.nativeWindow = {
@@ -52,6 +55,8 @@ describe('BaseComponent', () => {
                 {provide: StoreService, useValue: storeService},
                 {provide: Router, useValue: router},
                 {provide: TagsService, useValue: tagsService},
+                {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
+                {provide: ngxZendeskWebwidgetService, useValue: zendeskService},
             ]
         });
 
@@ -63,7 +68,7 @@ describe('BaseComponent', () => {
     it('should run `autopilot associate()` with store\'s name and user\'s email when stores name equals user\'s login', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({login: 'login1', email: 'email1', roles: ['user']})));
         store.select.and.returnValue(
-            of({name: 'login1'})
+            of({name: 'login1', permission: {}})
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.Autopilot.run).toHaveBeenCalledWith('associate', {
@@ -76,7 +81,7 @@ describe('BaseComponent', () => {
     it('should run `autopilot associate()` with default name and email when the user\'s login differs from the store\'s name', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({login: 'login1', email: 'email1', roles: ['user']})));
         store.select.and.returnValue(
-            of({name: 'login2'})
+            of({name: 'login2', permission: {}})
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.Autopilot.run).toHaveBeenCalledWith('associate', {
@@ -93,7 +98,7 @@ describe('BaseComponent', () => {
             roles: ['admin']
         })));
         store.select.and.returnValue(
-            of({name: 'login2'})
+            of({name: 'login2', permission: {}})
         );
         fixture.detectChanges();
         expect(windowRef.nativeWindow.Autopilot.run).not.toHaveBeenCalled();
@@ -116,21 +121,21 @@ describe('BaseComponent', () => {
     });
 
     it('should NOT show livechat if a user is an admin and country is US', () => {
-        store.select.and.returnValue(of({country: 'US'}));
+        store.select.and.returnValue(of({country: 'US', permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1'})));
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(false);
     });
 
     it('should NOT show livechat if a user is an NOT admin and country is NOT US', () => {
-        store.select.and.returnValue(of({country: 'FR'}));
+        store.select.and.returnValue(of({country: 'FR', permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})));
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(false);
     });
 
     it('should show livechat if a user is an NOT admin and country is US', () => {
-        store.select.and.returnValue(of({country: 'US'}));
+        store.select.and.returnValue(of({country: 'US', permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})));
         fixture.detectChanges();
         expect(component.showLivechat).toEqual(true);
@@ -140,7 +145,13 @@ describe('BaseComponent', () => {
         ' and the country is US', () => {
 
         jasmine.clock().mockDate(new Date('2025-12-20'));
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}));
+        store.select.and.returnValue(of({
+            id: 'some_id',
+            country: 'US',
+            createdAt: '2025-12-15T12:26:21+00:00',
+            name: 'some_name',
+            permission: {}
+        }));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -156,7 +167,13 @@ describe('BaseComponent', () => {
     it('should NOT run fullstory code if the user has role admin', () => {
 
         jasmine.clock().mockDate(new Date('2025-12-20'));
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}));
+        store.select.and.returnValue(of({
+            id: 'some_id',
+            country: 'US',
+            createdAt: '2025-12-15T12:26:21+00:00',
+            name: 'some_name',
+            permission: {}
+        }));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['admin'],
             token: 'token_1',
@@ -169,7 +186,13 @@ describe('BaseComponent', () => {
     it('should NOT run fullstory code if the user has role employee', () => {
 
         jasmine.clock().mockDate(new Date('2025-12-20'));
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}));
+        store.select.and.returnValue(of({
+            id: 'some_id',
+            country: 'US',
+            createdAt: '2025-12-15T12:26:21+00:00',
+            name: 'some_name',
+            permission: {}
+        }));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['employee'],
             token: 'token_1',
@@ -181,7 +204,13 @@ describe('BaseComponent', () => {
 
     it('should NOT run fullstory code if the store is created more then then 7 days before', () => {
         jasmine.clock().mockDate(new Date('2025-12-20'));
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', createdAt: '2025-12-10T12:26:21+00:00', name: 'some_name'}));
+        store.select.and.returnValue(of({
+            id: 'some_id',
+            country: 'US',
+            createdAt: '2025-12-10T12:26:21+00:00',
+            name: 'some_name',
+            permission: {}
+        }));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -194,7 +223,13 @@ describe('BaseComponent', () => {
     it('should NOT run fullstory code if the store country is not US', () => {
 
         jasmine.clock().mockDate(new Date('2025-12-20'));
-        store.select.and.returnValue(of({id: 'some_id', country: 'FR', createdAt: '2025-12-15T12:26:21+00:00', name: 'some_name'}));
+        store.select.and.returnValue(of({
+            id: 'some_id',
+            country: 'FR',
+            createdAt: '2025-12-15T12:26:21+00:00',
+            name: 'some_name',
+            permission: {}
+        }));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -205,7 +240,7 @@ describe('BaseComponent', () => {
     });
 
     it('should run Appcues code if the user is not admin and the country is US and the source is shopify', () => {
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}}));
+        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', permission: {}, feed: {source: 'Shopify'}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -218,7 +253,7 @@ describe('BaseComponent', () => {
     });
 
     it('should NOT run Appcues code if the user is admin and the country is US and the source is shopify', () => {
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}}));
+        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['admin'],
             token: 'token_1',
@@ -231,7 +266,7 @@ describe('BaseComponent', () => {
     });
 
     it('should NOT run Appcues code if the user is not admin and the country is NOT US and the source is shopify', () => {
-        store.select.and.returnValue(of({id: 'some_id', country: 'FR', name: 'some_name', feed: {source: 'Shopify'}}));
+        store.select.and.returnValue(of({id: 'some_id', country: 'FR', name: 'some_name', feed: {source: 'Shopify'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -244,7 +279,7 @@ describe('BaseComponent', () => {
     });
 
     it('should NOT run Appcues code if the user is not admin and the country is US and the source is NOT shopify', () => {
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'prestashop'}}));
+        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'prestashop'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
@@ -254,5 +289,31 @@ describe('BaseComponent', () => {
         spyOn(renderer, 'appendChild');
         fixture.detectChanges();
         expect(renderer.appendChild).not.toHaveBeenCalled();
+    });
+
+    it('should show zendesk chat if a store has a chat permission', () => {
+        store.select.and.returnValue(of({id: 'some_id', permission: {chat: '*'}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
+            roles: ['user'],
+            token: 'token_1',
+            email: 'some_email'
+        })));
+        fixture.detectChanges();
+        expect(zendeskService.setLocale).toHaveBeenCalledWith('en');
+        expect(zendeskService.setSettings).toHaveBeenCalled();
+        expect(zendeskService.show).toHaveBeenCalled();
+    });
+
+    it('should NOT show zendesk chat if a store does NOT have a chat permission', () => {
+        store.select.and.returnValue(of({id: 'some_id', permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
+            roles: ['user'],
+            token: 'token_1',
+            email: 'some_email'
+        })));
+        fixture.detectChanges();
+        expect(zendeskService.setLocale).not.toHaveBeenCalled();
+        expect(zendeskService.setSettings).not.toHaveBeenCalled();
+        expect(zendeskService.show).not.toHaveBeenCalled();
     });
 });

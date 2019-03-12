@@ -24,6 +24,7 @@
     "lodash": "^4.17.11",
     "ngx-clipboard": "^11.1.9",
     "ngx-infinite-scroll": "^7.0.1",
+    "ngx-zendesk-webwidget": "^0.1.4",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.3.3",
     "system-font-css": "^2.0.2",
