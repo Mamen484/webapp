@@ -19,7 +19,6 @@ import { RegistrationCacheGuard } from './guards/registration-cache.guard';
 import { CreatePasswordService } from './services/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
-import { LoginByTokenGuard } from './guards/login-by-token.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
 import { TimelineService } from './services/timeline.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
@@ -62,7 +61,6 @@ import { TimelineRouteGuard } from './guards/timeline-route.guard';
         IsAuthorizedGuard,
         IsLoggedInGuard,
         LogoutGuard,
-        LoginByTokenGuard,
         OrderDetailsResolveGuard,
         OrdersRouteGuard,
         ShopifyGuard,
