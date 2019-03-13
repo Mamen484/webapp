@@ -1,5 +1,4 @@
 @import '~@angular/material/theming';
-@import '~system-font-css/_system-font';
 
 $primary: mat-palette($mat-blue-grey, 700);
 $accent: mat-palette($mat-blue, 700);
@@ -14,8 +13,11 @@ $black-54-opacity: rgba(black, 0.54);
 $toolbar-height: 0px;
 $left-sidebar-width: 75px;
 
+// try to use a native css system-ui font, if it is not supported, use it's polyfill
+$font-family: system-ui, system-font;
+
 $config: mat-typography-config(
-        $font-family: system-ui,
+        $font-family: $font-family,
         $input: mat-typography-level(14px, 1.25, 400)
 );
 
