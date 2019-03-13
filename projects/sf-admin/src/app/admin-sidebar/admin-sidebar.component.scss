@@ -57,3 +57,9 @@ mat-divider {
 mat-list-item {
   margin-top: 10px;
 }
+
+.nav-title {
+  font-size: mat-font-size($config, title);
+  font-weight: mat-font-weight($config, title);
+  color: black;
+}
