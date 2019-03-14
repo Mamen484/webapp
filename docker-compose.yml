@@ -16,16 +16,13 @@ services:
       ADMIN_PORT: 4295
     labels:
       traefik.webapp.frontend.rule: "Host:app.shopping-feed.lan;PathPrefix:/v3"
-      traefik.webapp.frontend.entryPoints: "http"
       traefik.webapp.backend: "webapp"
-      traefik.webapp.protocol: "http"
       traefik.webapp.port: "80"
       traefik.webadmin.frontend.rule: "Host:admin.shopping-feed.lan"
-      traefik.webadmin.frontend.entryPoints: "http"
       traefik.webadmin.backend: "webadmin"
-      traefik.webadmin.protocol: "http"
       traefik.webadmin.port: "4295"
       traefik.docker.network: "sf_network"
+      traefik.enable: "true"
 networks:
   sf_network:
     external: true

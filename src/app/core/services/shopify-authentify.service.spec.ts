@@ -3,6 +3,7 @@ import { ShopifyAuthentifyService } from './shopify-authentify.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { CreateStoreModel } from '../entities/create-store-model';
+import { environment } from '../../../environments/environment';
 
 describe('ShopifyAuthentifyServuce', () => {
     let httpClient;
@@ -21,7 +22,7 @@ describe('ShopifyAuthentifyServuce', () => {
         inject([ShopifyAuthentifyService, HttpClient],
             (service: ShopifyAuthentifyService) => {
                 service.getAuthorizationUrl('someShop.myshopify.com').subscribe();
-                expect(httpClient.get).toHaveBeenCalledWith('http://api.shopping-feed.lan/v1/shopify/auth/someShop')
+                expect(httpClient.get).toHaveBeenCalledWith(environment.API_URL + '/shopify/auth/someShop')
             }));
 
     it('getAuthorizationUrl should return an auth url',
@@ -37,7 +38,7 @@ describe('ShopifyAuthentifyServuce', () => {
     it('getStoreData should call a proper resource', inject([ShopifyAuthentifyService, HttpClient],
         (service: ShopifyAuthentifyService) => {
             service.getStoreData('someshop.myshopify.com', {code: 'c11', timestamp: 'ts11', hmac: 'hm11'}).subscribe();
-            expect(httpClient.get.calls.mostRecent().args[0]).toEqual('http://api.shopping-feed.lan/v1/shopify/store/someshop');
+            expect(httpClient.get.calls.mostRecent().args[0]).toEqual(environment.API_URL + '/shopify/store/someshop');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('code')).toEqual('c11');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('timestamp')).toEqual('ts11');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('hmac')).toEqual('hm11');
@@ -66,7 +67,7 @@ describe('ShopifyAuthentifyServuce', () => {
         store.owner.token = 'token token';
         store.storeId = 343;
         service.updateStore(store);
-        expect(httpClient.patch.calls.mostRecent().args[0]).toEqual('http://api.shopping-feed.lan/v1/store/343');
+        expect(httpClient.patch.calls.mostRecent().args[0]).toEqual(environment.API_URL + '/store/343');
         expect(httpClient.patch.calls.mostRecent().args[1][0].op).toEqual('replace');
         expect(httpClient.patch.calls.mostRecent().args[1][0].path).toEqual('/owner/token');
         expect(httpClient.patch.calls.mostRecent().args[1][0].value).toEqual('token token');

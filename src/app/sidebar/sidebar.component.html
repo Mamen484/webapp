@@ -128,7 +128,7 @@
     <a mat-menu-item sflLegacyLink path="/tools/eanfinder" i18n>UPC/EAN/Barcodes Finder</a>
 </mat-menu>
 
-<mat-menu #accountMenu="matMenu" class="sf-sidebar-menu" classList="account-menu" xPosition="after" yPosition="below">
+<mat-menu #accountMenu="matMenu" class="sf-sidebar-bottom-menu account-menu" [overlapTrigger]="true">
     <a mat-menu-item sflLegacyLink path="/admin" *ngIf="isAdmin" i18n>Admin</a>
     <a mat-menu-item sflLegacyLink path="/marketplaces/globalparameters" i18n
        *ngIf="currentStore.permission.marketplaces">Settings</a>

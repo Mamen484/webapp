@@ -7,7 +7,8 @@ export interface PagedResponse<T> {
     page?: number;
     count?: number;
     _links: {
-        self: Link
+        self: Link,
+        next: Link,
     },
     _embedded: T;
 }
