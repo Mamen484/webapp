@@ -12,6 +12,8 @@ import { BlankPipe } from '../../../orders/order-details/items-table/items-table
 import { ChannelStorageService } from '../../../core/services/channel-storage.service';
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
 import { SflWindowRefService } from 'sfl-shared/services';
+import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { environment } from '../../../../environments/environment';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
@@ -30,7 +32,7 @@ describe('SuggestedChannelComponent', () => {
         openSpy.and.returnValue({afterClosed: afterClosedSpy});
         channelStorage = jasmine.createSpyObj(['getGeneratedTurnover', 'getGeneratedOnline']);
         channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel', 'getChannelLink']);
-        windowRef = {nativeWindow: <any>{}};
+        windowRef = {nativeWindow: <any>{location: {}}};
 
         TestBed.configureTestingModule({
             imports: [MatCardModule, MatButtonModule, InfiniteScrollModule],
@@ -58,6 +60,23 @@ describe('SuggestedChannelComponent', () => {
 
     it('should be created', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should navigate a user to a special cdiscount link when a channel is cdiscount', () => {
+        const channelLink = 'some_channel_link';
+        channelLinkService.getChannelLink.and.returnValue(channelLink);
+        component.channel = <any>{_embedded: {channel: {id: ChannelMap.cdiscount}}};
+        component.goToChannel();
+        expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href)
+            .toBe(environment.CDISCOUNT_TRACKING_LINK + channelLink);
+    });
+
+    it('should call channelLinkService.navigateToChannel() when channel is different from cdiscount', () => {
+        const channelLink = 'some_channel_link';
+        channelLinkService.getChannelLink.and.returnValue(channelLink);
+        component.channel = <any>{_embedded: {channel: {id: ChannelMap.laredoute}}};
+        component.goToChannel();
+        expect(channelLinkService.navigateToChannel).toHaveBeenCalledWith(<any>{id: ChannelMap.laredoute});
     });
 
     it('should not send international account request when user did not agree for that', () => {

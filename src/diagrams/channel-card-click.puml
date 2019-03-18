@@ -9,7 +9,7 @@
                 --> (*)
                 endif
     else
-    --> [No] if "channel is installed"
+    --> [Yes] if "channel is installed"
 
     --> [Yes] if "the feed has configured categories"
             --> [Yes] if "channel type is marketplace"

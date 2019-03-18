@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Channel, StoreChannel } from 'sfl-shared/entities';
+import { StoreChannel } from 'sfl-shared/entities';
 import { MatDialog } from '@angular/material';
 import { ConnectIntlChannelDialogComponent } from '../../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../../intl-request-success-dialog/intl-request-success-dialog.component';
 import { RequestFailedDialogComponent } from '../../request-failed-dialog/request-failed-dialog.component';
-import { AcceptChannelDialogComponent } from '../../accept-channel-dialog/accept-channel-dialog.component';
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 import { get } from 'lodash';
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
@@ -59,21 +58,6 @@ export class SuggestedChannelComponent implements OnInit {
                 () => this.dialog.open(IntlRequestSuccessDialogComponent),
                 () => this.dialog.open(RequestFailedDialogComponent)
             );
-        });
-    }
-
-    getChannelLink(channel: Channel) {
-        return channel.type === 'marketplace'
-            ? `/${channel.name}`
-            : `/${channel.type}/manage/${channel.name}`;
-    }
-
-    openAcceptChannelDialog() {
-        this.dialog.open(AcceptChannelDialogComponent, {
-            data: {
-                logo: this.channel._embedded.channel._links.image.href,
-                link: this.getChannelLink(this.channel._embedded.channel),
-            }
         });
     }
 
