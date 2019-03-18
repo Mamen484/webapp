@@ -509,11 +509,11 @@ describe('OrdersTableComponent', () => {
 
     it('should open order details in a new tab on goToOrder() call', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user']})));
-        appStore.select.and.returnValue(of({}));
+        appStore.select.and.returnValue(of({id: 67}));
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com';
         component.goToOrder('12');
-        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge`);
+        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge&store=67`);
     });
 
     it('should add a store id for an admin on goToOrder() call', () => {
@@ -525,14 +525,23 @@ describe('OrdersTableComponent', () => {
         expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge&store=41`);
     });
 
-    it('should open order details specyfying a store id on goToOrder() call when the store id is in the params', () => {
+    it('should add a store id for a user on goToOrder() call', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user']})));
-        appStore.select.and.returnValue(of({}));
+        appStore.select.and.returnValue(of({id: 41}));
+        component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
+        fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com';
+        component.goToOrder('12');
+        expect(window.nativeWindow.open).toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?errorType=acknowledge&store=41`);
+    });
+
+    it('should open order details specifying a store id  from the app storage on goToOrder() call when the store id is in the params', () => {
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user']})));
+        appStore.select.and.returnValue(of({id: 83}));
         component.ordersFilter = new OrdersFilter({error: OrderErrorType.acknowledge});
         fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href = 'https://app.shopping-feed.com?store=114';
         component.goToOrder('12');
         expect(window.nativeWindow.open)
-            .toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?store=114&errorType=acknowledge`);
+            .toHaveBeenCalledWith(`${environment.BASE_HREF}/en/orders/detail/12?store=83&errorType=acknowledge`);
     });
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
