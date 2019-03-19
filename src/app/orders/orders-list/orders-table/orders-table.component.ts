@@ -102,9 +102,12 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
             if (this.ordersFilter && this.ordersFilter.error) {
                 url.searchParams.set('errorType', this.ordersFilter.error);
             }
-            if (userInfo.isAdmin()) {
-                url.searchParams.set('store', String(store.id));
-            }
+
+            /* always specify a store explicitly to use a correct one
+             * when a user switched between stores or an admin views a user's store
+             */
+            url.searchParams.set('store', String(store.id));
+
             const link = `${environment.BASE_HREF}/${this.localeIdService.localeId}/orders/detail/${orderId}${url.search}`;
             this.windowRef.nativeWindow.open(link);
         });
