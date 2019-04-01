@@ -120,27 +120,6 @@ describe('BaseComponent', () => {
         expect(windowRef.nativeWindow.gtag).not.toHaveBeenCalled();
     });
 
-    it('should NOT show livechat if a user is an admin and country is US', () => {
-        store.select.and.returnValue(of({country: 'US', permission: {}}));
-        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin'], token: 'token_1'})));
-        fixture.detectChanges();
-        expect(component.showLivechat).toEqual(false);
-    });
-
-    it('should NOT show livechat if a user is an NOT admin and country is NOT US', () => {
-        store.select.and.returnValue(of({country: 'FR', permission: {}}));
-        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})));
-        fixture.detectChanges();
-        expect(component.showLivechat).toEqual(false);
-    });
-
-    it('should show livechat if a user is an NOT admin and country is US', () => {
-        store.select.and.returnValue(of({country: 'US', permission: {}}));
-        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], token: 'token_1'})));
-        fixture.detectChanges();
-        expect(component.showLivechat).toEqual(true);
-    });
-
     it('should run fullstory code if the user is not admin, the store is created less then 7 days before' +
         ' and the country is US', () => {
 

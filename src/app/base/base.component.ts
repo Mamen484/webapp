@@ -20,9 +20,6 @@ import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 })
 export class BaseComponent implements OnInit {
 
-    showLivechat = false;
-    livechatId = environment.LIVECHAT_LICENSE_ID;
-
     constructor(protected appStore: Store<AppState>,
                 protected windowRef: SflWindowRefService,
                 protected storeService: StoreService,
@@ -108,22 +105,8 @@ export class BaseComponent implements OnInit {
             filter(store => Boolean(store) && typeof store.country === 'string' && store.country.toLowerCase() === 'us'),
             take(1),
         ).subscribe((store: UserStore) => {
-            this.configureLivechat(store, userInfo.email);
             this.enableFullstory(store, userInfo.email);
             this.enableAppcues(store, userInfo.email);
-        });
-    }
-
-    protected configureLivechat(store: UserStore, userEmail: string) {
-        this.showLivechat = true;
-        // this code needs to run after liveChat is enabled, with the next change detection run
-        setTimeout(() => {
-            if (typeof this.windowRef.nativeWindow.__lc === 'object') {
-                this.windowRef.nativeWindow.__lc.visitor = {
-                    email: userEmail,
-                    name: store.name,
-                };
-            }
         });
     }
 
