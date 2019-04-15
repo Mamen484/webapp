@@ -11,8 +11,9 @@ import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tic
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TicketState } from '../entities/ticket-state.enum';
 import { TicketType } from '../entities/ticket-type.enum';
-import { EMPTY, Subject } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 
 describe('TicketsListComponent', () => {
     let component: TicketsListComponent;
@@ -102,5 +103,25 @@ describe('TicketsListComponent', () => {
 
         expect(component.hasTickets).toBe(false);
         expect(ticketsService.fetchTicketCollection).not.toHaveBeenCalled();
+    });
+
+    it('should show a token if a user is NOT admin', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], token: 'tratata'})));
+        appStore.select.and.returnValue(of({id: 22}));
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.nativeElement.textContent).toContain('tratata');
+        expect(fixture.debugElement.nativeElement.textContent).not.toContain('Token is not available for admin users.');
+    });
+
+    it('should NOT show a token if a user is admin', () => {
+        ticketsService.fetchTicketCollection.and.returnValue(EMPTY);
+        userInfo.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin'], token: 'tratata'})));
+        appStore.select.and.returnValue(of({id: 22}));
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.nativeElement.textContent).toContain('Token is not available for admin users.');
+        expect(fixture.debugElement.nativeElement.textContent).not.toContain('tratata');
     });
 });
