@@ -7,3 +7,19 @@
 mat-dialog-actions {
   float: right;
 }
+
+mat-form-field {
+  ::ng-deep {
+    .mat-form-field-infix {
+      width: 250px;
+    }
+  }
+
+  &.date-input {
+    ::ng-deep {
+      .mat-form-field-infix {
+        width: 75px;
+      }
+    }
+  }
+}
