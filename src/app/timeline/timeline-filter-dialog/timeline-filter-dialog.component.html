@@ -1,7 +1,7 @@
 <div mat-dialog-title i18n>Filters</div>
-<mat-dialog-content>
-  <form fxLayout="column">
-    <div fxLayout="row" fxLayoutGap="20px">
+<mat-dialog-content fxLayout="row" fxLayoutGap="20px">
+  <form fxLayout="row">
+    <div fxLayout="column">
       <mat-form-field color="accent" appearance="outline">
         <mat-select [(ngModel)]="dateFilter" name="date" placeholder="Date" i18n-placeholder>
           <mat-option i18n [value]="dateFilterOptions.today">Today</mat-option>
@@ -11,16 +11,19 @@
           <mat-option i18n [value]="dateFilterOptions.custom">Custom</mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom">
-        <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="dateSince" name="dateSince" placeholder="Min date">
-        <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
-        <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom">
-        <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="dateUntil" name="dateUntil" placeholder="Max date">
-        <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
-        <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
-      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="10px">
+        <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom" class="date-input">
+          <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="dateSince" name="dateSince" placeholder="Min date">
+          <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
+          <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom" class="date-input">
+          <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="dateUntil" name="dateUntil" placeholder="Max date">
+          <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
+          <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
+        </mat-form-field>
+      </div>
+
     </div>
   </form>
     <mat-form-field color="accent" appearance="outline">
