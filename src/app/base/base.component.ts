@@ -136,6 +136,14 @@ export class BaseComponent implements OnInit {
         };
 
         this.renderer.appendChild(document.body, script);
+
+        // enable appcues to track spa route changes
+        this.router.events
+            .subscribe((event) => {
+                if (event instanceof NavigationEnd && this.windowRef.nativeWindow.Appcues) {
+                    this.windowRef.nativeWindow.Appcues.page();
+                }
+            });
     }
 
     protected configureZendesk() {
