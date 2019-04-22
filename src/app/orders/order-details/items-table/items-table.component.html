@@ -64,9 +64,18 @@
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="tax-amount">
+            <th mat-header-cell *matHeaderCellDef>
+                <ng-container i18n>Tax</ng-container>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                {{row.taxAmount | sfCurrency:order.payment.currency}}
+            </td>
+        </ng-container>
+
         <ng-container matColumnDef="price">
             <th mat-header-cell *matHeaderCellDef>
-                <ng-container i18n>Price</ng-container>
+                <ng-container i18n>Price (Tax included)</ng-container>
             </th>
             <td mat-cell *matCellDef="let row">
                 {{row.price | sfCurrency:order.payment.currency}}
@@ -84,17 +93,19 @@
 
         <ng-container matColumnDef="total-captions">
             <td mat-footer-cell *matFooterCellDef colspan="2">
-                <div i18n>Total goods</div>
-                <div i18n>Total delivery</div>
-                <div i18n class="mat-body-2">Total price</div>
+                <div i18n>Subtotal (Tax included)</div>
+                <div i18n>Tax</div>
+                <div i18n>Shipping (Tax included)</div>
+                <div i18n class="mat-body-2">Total (Tax included)</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="total-values">
             <td mat-footer-cell *matFooterCellDef class="total-values">
                 <div>{{order.payment.productAmount | sfCurrency:order.payment.currency}}</div>
+                <div>{{taxTotalAmount | sfCurrency:order.payment.currency}}</div>
                 <div>{{order.payment.shippingAmount | sfCurrency:order.payment.currency}}</div>
-                <div class="mat-body-2">{{order.payment.productAmount + order.payment.shippingAmount |
+                <div class="mat-body-2">{{order.payment.totalAmount |
                     sfCurrency:order.payment.currency}}
                 </div>
             </td>
