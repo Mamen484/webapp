@@ -34,7 +34,7 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should send a password recovery request when all fields are valid', () => {
-        passwordRecoveryService.resetPassword.and.returnValue(of(true));
+        passwordRecoveryService.resetPassword.and.returnValue(of('true'));
 
         component.nameControl.setValue('Nikola');
         component.passwordControl.setValue('1');
@@ -73,7 +73,7 @@ describe('ResetPasswordComponent', () => {
     });
 
     it('should show a success message when a password recovery request is successful', () => {
-        passwordRecoveryService.resetPassword.and.returnValue(of(true));
+        passwordRecoveryService.resetPassword.and.returnValue(of('true'));
 
         component.nameControl.setValue('Nikola');
         component.passwordControl.setValue('1');

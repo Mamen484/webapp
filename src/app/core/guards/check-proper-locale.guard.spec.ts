@@ -5,6 +5,7 @@ import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-sha
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AggregatedUserInfo } from 'sfl-shared/entities';
 
 describe('CheckProperLocaleGuard', () => {
     let userService: jasmine.SpyObj<SflUserService>;
@@ -27,7 +28,7 @@ describe('CheckProperLocaleGuard', () => {
 
         it('should return true', async () => {
             const guard = TestBed.get(CheckProperLocaleGuard);
-            userService.fetchAggregatedInfo.and.returnValue(of({language: 'it'}));
+            userService.fetchAggregatedInfo.and.returnValue(of(<AggregatedUserInfo>{language: 'it'}));
             environment.production = 'true';
             const canActivate = await guard.canActivate().toPromise();
             expect(canActivate).toEqual(true);
@@ -54,7 +55,7 @@ describe('CheckProperLocaleGuard', () => {
             inject([CheckProperLocaleGuard, SflWindowRefService],
                 async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                     environment.production = 'true';
-                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    userService.fetchAggregatedInfo.and.returnValue(of(<AggregatedUserInfo>{language: 'en-US'}));
                     locationSpy.path.and.returnValue('');
                     const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/');
@@ -65,7 +66,7 @@ describe('CheckProperLocaleGuard', () => {
             inject([CheckProperLocaleGuard, SflWindowRefService],
                 async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                     environment.production = 'true';
-                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    userService.fetchAggregatedInfo.and.returnValue(of(<AggregatedUserInfo>{language: 'en-US'}));
                     locationSpy.path.and.returnValue('?store=307');
                     const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');
@@ -76,7 +77,7 @@ describe('CheckProperLocaleGuard', () => {
             inject([CheckProperLocaleGuard, SflWindowRefService],
                 async (guard: CheckProperLocaleGuard, windowRef: SflWindowRefService) => {
                     environment.production = 'true';
-                    userService.fetchAggregatedInfo.and.returnValue(of({language: 'en-US'}));
+                    userService.fetchAggregatedInfo.and.returnValue(of(<AggregatedUserInfo>{language: 'en-US'}));
                     locationSpy.path.and.returnValue('/?store=307');
                     const canActivate = await guard.canActivate().toPromise();
                     expect(windowRef.nativeWindow.location.href).toEqual('/v3/en/?store=307');

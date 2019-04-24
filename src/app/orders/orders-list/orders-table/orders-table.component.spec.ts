@@ -96,14 +96,14 @@ describe('OrdersTableComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(OrdersTableComponent);
         component = fixture.componentInstance;
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
     });
 
     it('should assign exports on init', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
-        ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(of({
+        filterService.getFilter.and.returnValue(of(<any>{}));
+        ordersService.fetchOrdersList.and.returnValue(<any>EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>of({
             _embedded: {
                 'export': [
                     {id: 1, name: 'one'},
@@ -122,9 +122,9 @@ describe('OrdersTableComponent', () => {
     it('should load all orders when OrdersView is not specified', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({});
         const targetFilter = Object.assign(
@@ -139,9 +139,9 @@ describe('OrdersTableComponent', () => {
     it('should load all orders when OrdersView is AllOrders', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.allOrders});
         const targetFilter = Object.assign(
@@ -156,9 +156,9 @@ describe('OrdersTableComponent', () => {
     it('should load all orders when OrdersView is invalid', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: 1325231});
         const targetFilter = Object.assign(
@@ -173,9 +173,9 @@ describe('OrdersTableComponent', () => {
     it('should load orders to validate when OrdersView is toValidate', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.toValidate});
         const targetFilter = Object.assign(
@@ -190,9 +190,9 @@ describe('OrdersTableComponent', () => {
     it('should load orders to ship when OrdersView is toShip', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.toShip});
         const targetFilter = Object.assign(
@@ -207,9 +207,9 @@ describe('OrdersTableComponent', () => {
     it('should load orders to import when OrdersView is toImport', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.toImport});
         const targetFilter = Object.assign(
@@ -224,9 +224,9 @@ describe('OrdersTableComponent', () => {
     it('should load orders with import errors when OrdersView is importErrors', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.importErrors});
         const targetFilter = Object.assign(
@@ -241,9 +241,9 @@ describe('OrdersTableComponent', () => {
     it('should load orders with shipping errors when OrdersView is shippingErrors', () => {
         const initialFilter = Object.assign({}, component.ordersFilter);
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        ordersService.fetchExports.and.returnValue(EMPTY);
+        ordersService.fetchExports.and.returnValue(<any>EMPTY);
         fixture.detectChanges();
         activatedRoute.queryParams.next({view: OrdersView.shippingErrors});
         const targetFilter = Object.assign(
@@ -257,7 +257,7 @@ describe('OrdersTableComponent', () => {
 
     it('should display a loading spinner while data is being loaded', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(component.isLoadingResults).toEqual(true);
@@ -265,16 +265,16 @@ describe('OrdersTableComponent', () => {
 
     it('should hide a loading spinner while data is loaded', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
-        ordersService.fetchOrdersList.and.returnValue(of({_embedded: {order: []}}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>{_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isLoadingResults).toBe(false);
     });
 
     it('should format order data properly', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
-        ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
+        filterService.getFilter.and.returnValue(of(<any>{}));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>mockOrder()));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.hasErrors).toBe(false);
@@ -297,11 +297,11 @@ describe('OrdersTableComponent', () => {
 
     it('should have paymentIsAfn service if the channel is amazon and payment.method is AFN', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
         order._embedded.order[0].payment.method = 'AFN';
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(true);
@@ -313,11 +313,11 @@ describe('OrdersTableComponent', () => {
 
     it('should have paymentIsClogistique service if the channel is Cdiscount and payment.method is Clogistique', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.cdiscount;
         order._embedded.order[0].payment.method = 'Clogistique';
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(false);
@@ -329,11 +329,11 @@ describe('OrdersTableComponent', () => {
 
     it('should have shippedByManomano service if the channel is Manomano and there is additional field env = EPMM', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.manomano;
         order._embedded.order[0].additionalFields = {env: 'EPMM'};
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(false);
@@ -345,11 +345,11 @@ describe('OrdersTableComponent', () => {
 
     it('should have isAmazonPrime service if the channel is Amazon and there is additional field is_prime = true', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
         order._embedded.order[0].additionalFields = {is_prime: true};
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(false);
@@ -361,11 +361,11 @@ describe('OrdersTableComponent', () => {
 
     it('should have isCdiscountPro service if the channel is Cdiscount and there is additional field CorporationCode = CDSPRO', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.cdiscount;
         order._embedded.order[0].additionalFields = {CorporationCode: 'CDSPRO'};
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(false);
@@ -377,13 +377,13 @@ describe('OrdersTableComponent', () => {
 
     it('should have multiple services if available', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         const order = mockOrder();
         order._embedded.order[0]._embedded.channel.id = ChannelMap.amazon;
         order._embedded.order[0].additionalFields = {is_prime: true};
         order._embedded.order[0].payment.method = 'AFN';
 
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         let data = component.dataSource.data[0];
         expect(data.services.paymentIsAfn).toBe(true);
@@ -394,27 +394,27 @@ describe('OrdersTableComponent', () => {
 
     it('should set `imported` property to `true` when the storeReference is defined', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         let order = mockOrder();
         order._embedded.order[0].storeReference = '121';
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].imported).toEqual(true);
     });
 
     it('should set `imported` property to `false` when the acknowledgedAt is NOT defined', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         let order = mockOrder();
         order._embedded.order[0].acknowledgedAt = undefined;
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].imported).toEqual(false);
     });
 
     it('should perform only 1 fetchOrdersList call on initialization', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
@@ -431,7 +431,7 @@ describe('OrdersTableComponent', () => {
     it('should redraw the table when any filter applied from a dialog', () => {
         appStore.select.and.returnValue(of({}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({afterClosed: () => (of(new OrdersFilter({channel: 66})))});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(new OrdersFilter({channel: 66})))});
         component.openDialog();
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
         expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].page).toBe('1');
@@ -441,7 +441,7 @@ describe('OrdersTableComponent', () => {
     it('should redraw the table when cancelFilter() called', () => {
         appStore.select.and.returnValue(of({}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({afterClosed: () => (of(new OrdersFilter({channel: 66})))});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(new OrdersFilter({channel: 66})))});
         component.cancelFilter('channel', '63');
         expect(ordersService.fetchOrdersList).toHaveBeenCalledTimes(1);
         expect(ordersService.fetchOrdersList.calls.mostRecent().args[0].channel).toBe('63');
@@ -450,8 +450,8 @@ describe('OrdersTableComponent', () => {
     it('should redraw the table when tags assigned', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of(new OrdersFilter()));
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
-        ordersService.fetchOrdersList.and.returnValue(of(mockOrder()));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
+        ordersService.fetchOrdersList.and.returnValue(of(<any>mockOrder()));
         fixture.detectChanges();
         component.selection.select(component.dataSource.data[0]);
         component.manageTags();
@@ -461,7 +461,7 @@ describe('OrdersTableComponent', () => {
     it('should clear selection when new data fetched', () => {
         appStore.select.and.returnValue(of({}));
         const order = mockOrder();
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         component.selection.select(component.dataSource.data[0]);
         expect(component.selection.selected.length).toEqual(1);
@@ -472,7 +472,7 @@ describe('OrdersTableComponent', () => {
     it('should keep selection when tags assigned', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of(new OrdersFilter()));
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         localStorage.getItem.and.callFake(key => key === LocalStorageKey.ordersSelection ? '[2,4]' : undefined);
         const order = mockOrder();
         order._embedded.order.push(
@@ -484,7 +484,7 @@ describe('OrdersTableComponent', () => {
         order._embedded.order[1].id = 2;
         order._embedded.order[2].id = 3;
         order._embedded.order[3].id = 4;
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         component.selection.select(component.dataSource.data[1]);
         component.selection.select(component.dataSource.data[3]);
@@ -498,9 +498,9 @@ describe('OrdersTableComponent', () => {
     it('should store selection into a local storage when tags assigned', () => {
         appStore.select.and.returnValue(of({}));
         filterService.getFilter.and.returnValue(of(new OrdersFilter()));
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         const order = mockOrder();
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         component.selection.select(component.dataSource.data[0]);
         component.manageTags();
@@ -546,20 +546,20 @@ describe('OrdersTableComponent', () => {
 
     it('should set `hasErrors` to FALSE if errors array is empty', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         let order = mockOrder();
         order._embedded.order[0].errors = [];
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].hasErrors).toEqual(false);
     });
 
     it('should set `hasErrors` to TRUE if errors array is NOT empty', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         let order = mockOrder();
         order._embedded.order[0].errors = [{type: OrderErrorType.ship, message: 'some message', occuredAt: 'date'}];
-        ordersService.fetchOrdersList.and.returnValue(of(order));
+        ordersService.fetchOrdersList.and.returnValue(of(<any>order));
         fixture.detectChanges();
         expect(component.dataSource.data[0].hasErrors).toEqual(true);
     });
@@ -583,13 +583,13 @@ describe('OrdersTableComponent', () => {
 
 
     it('should ship selected orders on click the `cancel` button', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         checkChangeStatusRequestSent('cancel');
     });
 
     it('should open confirm cancellation dialog on click on `cancel` button', () => {
         component.selection.selected.length = 2;
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openCancelDialog();
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {
             data: {
@@ -612,7 +612,7 @@ describe('OrdersTableComponent', () => {
 
     it('should open snackbar if cancellation is confirmed', () => {
         component.selection.selected.length = 2;
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.cancel.and.returnValue(of({reference: 'some reference', channelName: 'some name'}))
         component.openCancelDialog();
@@ -621,20 +621,20 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should NOT open snackbar if cancellation is cancelled', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(false)});
         component.openCancelDialog();
         expect(snackbar.openFromComponent).not.toHaveBeenCalled();
     });
 
 
     it('should ship selected orders on click the `ship` button', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         checkChangeStatusRequestSent('ship');
     });
 
     it('should open shipping confirmation dialog on click on `ship` button', () => {
         component.selection.selected.length = 2;
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openShippingDialog();
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmShippingDialogComponent, {data: {ordersNumber: 2, orderReference: undefined}});
     });
@@ -652,7 +652,7 @@ describe('OrdersTableComponent', () => {
 
     it('should open snackbar if shipping is confirmed', () => {
         component.selection.selected.length = 2;
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         appStore.select.and.returnValue(of({id: 22}));
         ordersService.ship.and.returnValue(of({reference: 'some reference', channelName: 'some name'}))
         component.openShippingDialog();
@@ -661,14 +661,14 @@ describe('OrdersTableComponent', () => {
     });
 
     it('should NOT open snackbar if shipping is cancelled', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(false)});
         component.openShippingDialog();
         expect(snackbar.openFromComponent).not.toHaveBeenCalled();
     });
 
     it('should show a SelectOrders dialog when click on print icon and no orders selected', () => {
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         fixture.debugElement.nativeElement.querySelector('.print-button').click();
@@ -681,7 +681,7 @@ describe('OrdersTableComponent', () => {
         component.ordersFilter = new OrdersFilter();
         component.selectedChannel = 22;
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
@@ -691,7 +691,7 @@ describe('OrdersTableComponent', () => {
     it('should show filters and apply .filters-applied class when a tag selected', () => {
         component.ordersFilter = new OrdersFilter({tag: 'some tag'});
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
@@ -701,7 +701,7 @@ describe('OrdersTableComponent', () => {
     it('should show filters and apply .filters-applied class when a since selected', () => {
         component.ordersFilter = new OrdersFilter({since: OrdersFilter.aMonthBefore()});
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
@@ -711,7 +711,7 @@ describe('OrdersTableComponent', () => {
     it('should show filters and apply .filters-applied class when an until selected', () => {
         component.ordersFilter = new OrdersFilter({until: OrdersFilter.aMonthBefore()});
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).toBeTruthy();
@@ -721,7 +721,7 @@ describe('OrdersTableComponent', () => {
     it('should NOT show filters and NOT apply .filters-applied class when no filters selected', () => {
         component.ordersFilter = new OrdersFilter();
         appStore.select.and.returnValue(of({}));
-        filterService.getFilter.and.returnValue(of({}));
+        filterService.getFilter.and.returnValue(of(<any>{}));
         ordersService.fetchOrdersList.and.returnValue(EMPTY);
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelector('mat-chip-list.filter-chips')).not.toBeTruthy();

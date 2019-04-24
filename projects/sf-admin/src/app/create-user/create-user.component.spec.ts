@@ -71,9 +71,9 @@ describe('CreateUserComponent', () => {
             component.save();
             expect(matDialog.open.calls.count()).toEqual(1);
             expect(matDialog.open.calls.first().args[0]).toEqual(UserCreatedDialogComponent);
-            expect(matDialog.open.calls.first().args[1].data.login).toEqual('login1');
-            expect(matDialog.open.calls.first().args[1].data.password).toEqual('password1');
-            expect(matDialog.open.calls.first().args[1].data.token).toEqual('token1');
+            expect((<any>matDialog.open.calls.first().args[1]).data.login).toEqual('login1');
+            expect((<any>matDialog.open.calls.first().args[1].data).password).toEqual('password1');
+            expect((<any>matDialog.open.calls.first().args[1].data).token).toEqual('token1');
         });
 
         it('should write an error detail when a server error returned', () => {

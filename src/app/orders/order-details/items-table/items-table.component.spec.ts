@@ -98,13 +98,13 @@ describe('ItemsTableComponent', () => {
     });
 
     it('should open SkuModificationDialogComponent when call updateItemReference', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.updateItemReference(<any>{sku: 234});
         expect(matDialog.open).toHaveBeenCalledWith(SkuModificationDialogComponent, {data: {sku: 234}});
     });
 
     it('should call a updateItemsReferences endpoint when sku modification dialog returns a value', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of('some_sku')});
         ordersService.updateItemsReferences.and.returnValue(EMPTY);
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12, itemsReferencesAliases: {100: 'anything', 200: 'anything else', 251: 'one more anything'}};
@@ -113,7 +113,7 @@ describe('ItemsTableComponent', () => {
     });
 
     it('should change displayed sku on successful sku modification', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of('some_sku')});
         ordersService.updateItemsReferences.and.returnValue(of({}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
@@ -123,7 +123,7 @@ describe('ItemsTableComponent', () => {
     });
 
     it('should open SkuSavedSnackbarComponent on successful sku modification', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of('some_sku')});
         ordersService.updateItemsReferences.and.returnValue(of({}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
@@ -134,7 +134,7 @@ describe('ItemsTableComponent', () => {
     });
 
     it('should show an error snackbar when save sku fails', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of('some_sku')});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of('some_sku')});
         ordersService.updateItemsReferences.and.returnValue(throwError({message: 'err'}));
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};

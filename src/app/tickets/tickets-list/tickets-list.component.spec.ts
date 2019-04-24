@@ -63,7 +63,7 @@ describe('TicketsListComponent', () => {
     });
 
     it('should open a filtering tickets dialog on openFilters() call', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.selectedState = TicketState.succeed;
         component.selectedType = TicketType.refundOrder;
         component.openFilters();

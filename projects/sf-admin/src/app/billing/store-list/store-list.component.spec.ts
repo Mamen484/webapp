@@ -42,7 +42,7 @@ describe('StoreListComponent', () => {
     });
 
     it('should fetch and show billing stores on init', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
         fixture.detectChanges();
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
         expect(component.dataSource.data).toEqual([]);
@@ -58,97 +58,97 @@ describe('StoreListComponent', () => {
     }));
 
     it('should change a page and refresh data on pageChanged()', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
         component.pageChanged(<any>{pageIndex: 1, previousPageIndex: 0});
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2, search: ''});
         expect(component.currentPage).toEqual(1);
     });
 
     it('should change a pageSize on pageChanged()', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
         component.pageChanged(<any>{pageIndex: 3, previousPageIndex: 3, pageSize: 25});
         expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 25, page: 1, search: ''});
         expect(component.pageSize).toEqual(25);
     });
 
     it('should open a StoreDialogComponent on openCreateStoreDialog()', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openCreateStoreDialog();
         const openDialogArgs = matDialog.open.calls.mostRecent().args;
         expect(openDialogArgs[0]).toBe(StoreDialogComponent);
-        expect(openDialogArgs[1].data.nameEditable).toBe(true);
-        expect(openDialogArgs[1].data.store).toBeNull();
+        expect((<any>openDialogArgs[1].data).nameEditable).toBe(true);
+        expect((<any>openDialogArgs[1]).data.store).toBeNull();
     });
 
     it('should refresh stores list when create store is successful', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openCreateStoreDialog();
         expect(billingService.fetchStoreCollection).toHaveBeenCalled();
     });
 
     it('should open a StoreDialogComponent on openEditStoreDialog()', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openEditStoreDialog(<any>{someprop: 'somevalue'});
         const openDialogArgs = matDialog.open.calls.mostRecent().args;
         expect(openDialogArgs[0]).toBe(StoreDialogComponent);
-        expect(openDialogArgs[1].data.nameEditable).toBe(false);
-        expect(openDialogArgs[1].data.store).toEqual({someprop: 'somevalue'});
+        expect((<any>openDialogArgs[1].data).nameEditable).toBe(false);
+        expect((<any>openDialogArgs[1].data).store).toEqual({someprop: 'somevalue'});
     });
 
     it('should refresh stores list when update store is successful', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openEditStoreDialog(<any>{});
         expect(billingService.fetchStoreCollection).toHaveBeenCalled();
     });
 
     it('should show a snackbar with successful message when store saved', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openEditStoreDialog(<any>{});
         expect(snackBar.open).toHaveBeenCalled();
         expect(snackBar.open.calls.mostRecent().args[0]).toContain('has been saved');
     });
 
     it('should open a StoreBlockDialogComponent on blockStore()', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.blockStore({});
         expect(matDialog.open).toHaveBeenCalledWith(StoreBlockDialogComponent);
     });
 
     it('should send an update store request when true comes from a store block dialog', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(true)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         billingService.update.and.returnValue(EMPTY);
         component.blockStore(<any>{id: 23});
         expect(billingService.update).toHaveBeenCalledWith({id: 23, isActive: false});
     });
 
     it('should NOT send an update store request when false comes from a store block dialog', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(false)});
         billingService.update.and.returnValue(EMPTY);
         component.blockStore(<any>{id: 23});
         expect(billingService.update).not.toHaveBeenCalled();
     });
 
     it('should refresh stores list when update store is successful', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         billingService.update.and.returnValue(of({}));
         component.blockStore(<any>{});
         expect(billingService.fetchStoreCollection).toHaveBeenCalled();
     });
 
     it('should send an update store request on activateStore() call', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(false)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(false)});
         billingService.update.and.returnValue(EMPTY);
         component.activateStore(<any>{id: 23});
         expect(billingService.update).toHaveBeenCalledWith({id: 23, isActive: true});
     });
 
     it('should refresh stores list when update store is successful', () => {
-        billingService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         billingService.update.and.returnValue(of({}));
         component.activateStore(<any>{});
         expect(billingService.fetchStoreCollection).toHaveBeenCalled();

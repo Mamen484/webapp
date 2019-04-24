@@ -25,7 +25,7 @@ describe('SearchBillingStoreService', () => {
     });
 
     it('should call fetchAvailableStores() on getResults()', async () => {
-        storeService.fetchStoreCollection.and.returnValue(of({_embedded: {store: []}}));
+        storeService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
         const service: SearchBillingStoreService = TestBed.get(SearchBillingStoreService);
         expect(await service.getResults().toPromise()).toEqual([]);
         expect(storeService.fetchStoreCollection).toHaveBeenCalled();
