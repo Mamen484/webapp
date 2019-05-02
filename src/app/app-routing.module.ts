@@ -14,6 +14,7 @@ import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
+import { AddStoreParamGuard } from './core/guards/add-store-param.guard';
 
 const routes: Routes = [
     {
@@ -29,6 +30,7 @@ const routes: Routes = [
             CheckProperLocaleGuard,
             InitializeStoreGuard,
         ],
+        canActivateChild: [AddStoreParamGuard],
         children: [
             {path: '', loadChildren: './statistics/statistics.module#StatisticsModule'},
             {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule'},
