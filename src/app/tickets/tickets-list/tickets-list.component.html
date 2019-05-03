@@ -8,7 +8,8 @@
                 <div fxLayout="column" fxLayoutAlign="flex-start flex-start" fxLayoutGap="10px" fxFlex>
                     <div>
                         <div class="mat-body-2" i18n>Token</div>
-                        <div class="mat-body-1">{{token}}</div>
+                        <div class="mat-body-1" *ngIf="!isAdmin">{{token}}</div>
+                        <div class="mat-body-1" *ngIf="isAdmin" i18n>Token is not available for admin users.</div>
                     </div>
                     <div>
                         <div class="mat-body-2" i18n>Store ID</div>

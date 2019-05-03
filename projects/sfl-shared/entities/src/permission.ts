@@ -2,6 +2,7 @@ export class Permission {
     ads: string;
     affiliation: string;
     buyline: string;
+    chat: string;
     facturation: string;
     marketplaces: string;
     multiple: string;

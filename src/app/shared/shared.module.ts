@@ -46,7 +46,6 @@ import { ArrayFromNumberPipe } from './array-from-number/array-from-number.pipe'
 import { MinNumberDirective } from './min-number/min-number.directive';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
-import { LivechatWidgetModule } from '@livechat/angular-widget';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
@@ -60,7 +59,6 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         SflImageModule,
         InfiniteScrollModule,
         LayoutModule,
-        LivechatWidgetModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,
@@ -99,7 +97,6 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         SflImageModule,
         InfiniteScrollModule,
         LayoutModule,
-        LivechatWidgetModule,
         MatAutocompleteModule,
         MatButtonModule,
         MatCardModule,

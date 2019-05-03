@@ -28,6 +28,7 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
     token: string;
     displayedColumns = ['id', 'type', 'state'];
     hasTickets = false;
+    isAdmin = false;
 
     ticketState = TicketState;
     ticketType = TicketType;
@@ -63,7 +64,14 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
         });
 
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
-        this.userInfo.fetchAggregatedInfo().subscribe(userInfo => this.token = userInfo.token);
+        this.userInfo.fetchAggregatedInfo().subscribe(userInfo => {
+            this.isAdmin = userInfo.isAdmin();
+            if (!this.isAdmin) {
+                // show a token if only when a user is not admin,
+                // fetchAggregatedInfoto prevent copy/pasting admin's token
+                this.token = userInfo.token;
+            }
+        });
     }
 
     goToToZapier() {

@@ -6,6 +6,7 @@ import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-i
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
         SharedModule,
         SidebarModule,
         RouterModule,
+        ngxZendeskWebwidgetModule,
     ],
     declarations: [
         BaseComponent,

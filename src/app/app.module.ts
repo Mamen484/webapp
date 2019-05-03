@@ -15,6 +15,8 @@ import { environment } from '../environments/environment';
 import { SflAuthModule } from 'sfl-shared/auth';
 import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { TicketsModule } from './tickets/tickets.module';
+import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
+import { ZendeskConfig } from './core/widgets/zendesk.config';
 
 @NgModule({
     declarations: [
@@ -38,6 +40,7 @@ import { TicketsModule } from './tickets/tickets.module';
             sflLegacyLink: environment.APP_URL,
         }),
         TicketsModule,
+        ngxZendeskWebwidgetModule.forRoot(ZendeskConfig),
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
     ],
