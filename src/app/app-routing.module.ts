@@ -9,12 +9,12 @@ import { SendRecoveryEmailComponent } from './login/send-recovery-email/send-rec
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
 import { LogoutGuard } from './core/guards/logout.guard';
-import { LoginByTokenGuard } from './core/guards/login-by-token.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
 import { ShopifyGuard } from './core/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 import { AddStoreParamGuard } from './core/guards/add-store-param.guard';
+import { SflLoginByTokenGuard } from 'sfl-shared/auth';
 
 const routes: Routes = [
     {
@@ -25,7 +25,7 @@ const routes: Routes = [
         },
         canActivate: [
             // see src/diagrams/authentication to understand what those guards do
-            LoginByTokenGuard,
+            SflLoginByTokenGuard,
             IsAuthorizedGuard,
             CheckProperLocaleGuard,
             InitializeStoreGuard,

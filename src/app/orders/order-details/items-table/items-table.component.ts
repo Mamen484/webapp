@@ -26,13 +26,15 @@ export class ItemsTableComponent implements OnInit {
     @Output() selectionChanged = new EventEmitter();
     acknowledgment: OrderAcknowledgment;
     tableData: MatTableDataSource<OrderDetailsItem>;
-    displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'price'];
+    displayedColumns = ['refund-specific', 'sku', 'image', 'name', 'quantity', 'tax-amount', 'price'];
     footerColumns = ['left-gap', 'total-captions', 'total-values'];
     selection = new SelectionModel<OrderDetailsItem>(true, []);
     refundShipping = false;
     selectedQuantity = {};
     statuses = OrderStatus;
     allowEditQuantity = true;
+
+    taxTotalAmount: number;
 
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
@@ -69,8 +71,11 @@ export class ItemsTableComponent implements OnInit {
                 image: item.image,
                 reference: item.reference,
                 status: item.status,
+                taxAmount: item.taxAmount || 0,
             }
         }));
+
+        this.taxTotalAmount = this.order.items.reduce((sum: number, item: OrderItem) => sum + item.taxAmount, 0);
     }
 
     protected checkIfQuantityEditable() {
