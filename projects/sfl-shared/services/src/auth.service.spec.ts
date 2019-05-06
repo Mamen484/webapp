@@ -3,19 +3,24 @@ import { SflAuthService } from './auth.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { SFL_API } from 'sfl-shared/entities';
 import { SflLocalStorageService } from './local-storage.service';
+import { Location } from '@angular/common';
 
 describe('AuthService', () => {
 
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
+    let location: jasmine.SpyObj<Location>;
 
     beforeEach(() => {
         localStorage = jasmine.createSpyObj('SflLocalStorageService', ['setItem', 'removeItem', 'getItem']);
+        location = jasmine.createSpyObj('Location spy', ['path', 'replaceState']);
+        location.path.and.returnValue('');
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
                 SflAuthService,
                 {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: SFL_API, useValue: 'someLink'},
+                {provide: Location, useValue: location},
             ]
         });
     });

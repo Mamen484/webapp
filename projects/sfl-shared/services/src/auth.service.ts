@@ -3,6 +3,9 @@ import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { SflLocalStorageService } from './local-storage.service';
 import { SFL_API } from 'sfl-shared/entities';
+import { Location } from '@angular/common';
+
+export const tokenInUrl = /token=[a-zA-Z0-9]*&?/;
 
 /**
  * A service that enables you to handle the authentication.
@@ -14,7 +17,8 @@ export class SflAuthService {
 
     constructor(protected httpClient: HttpClient,
                 protected localStorage: SflLocalStorageService,
-                @Inject(SFL_API) protected sflApi) {
+                @Inject(SFL_API) protected sflApi,
+                protected location: Location) {
     }
 
     /**
@@ -60,5 +64,19 @@ export class SflAuthService {
     public getAuthToken() {
         const authString = this.getAuthString();
         return authString ? authString.replace('Bearer ', '') : '';
+    }
+
+    /**
+     * Remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar.
+     * Call it only after navigation ends to prevent removing the token before route guards finish their work.
+     * Otherwise the logging in by a token can be broke.
+     */
+    removeTokenFromUrl() {
+        if (this.location.path().match(tokenInUrl)) {
+            // remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar
+            // we perform it only after navigation ends to prevent removing the token before route guards finish their work
+            // otherwise the logging in by a token can be broke
+            this.location.replaceState(this.location.path().replace(tokenInUrl, ''));
+        }
     }
 }
