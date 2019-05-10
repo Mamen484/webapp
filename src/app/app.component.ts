@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { Location } from '@angular/common';
 import { PageLoadingService } from './core/services/page-loading.service';
-
-const TOKEN_IN_URL = /token=[a-zA-Z0-9]*&?/;
+import { SflAuthService } from 'sfl-shared/services';
 
 @Component({
     selector: 'app-root',
@@ -16,18 +14,13 @@ export class AppComponent implements OnInit {
     loadingNextRoute = true;
 
     constructor(protected router: Router,
-                protected location: Location,
-                protected pageLoadingService: PageLoadingService) {
+                protected pageLoadingService: PageLoadingService,
+                protected authService: SflAuthService) {
     }
 
     ngOnInit(): void {
         this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(event => {
-            if (this.location.path().match(TOKEN_IN_URL)) {
-                // remove a token from an url to prevent unneeded sharing the token by coping an url from a browser address bar
-                // we perform it only after navigation ends to prevent removing the token before route guards finish their work
-                // otherwise the logging in by a token can be broke
-                this.location.replaceState(this.location.path().replace(TOKEN_IN_URL, ''));
-            }
+            this.authService.removeTokenFromUrl();
         });
         this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
 

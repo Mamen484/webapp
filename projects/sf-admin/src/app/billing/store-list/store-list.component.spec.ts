@@ -7,6 +7,7 @@ import { BillingStoreService } from './billing-store.service';
 import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('StoreListComponent', () => {
     let component: StoreListComponent;
@@ -14,6 +15,7 @@ describe('StoreListComponent', () => {
     let billingService: jasmine.SpyObj<BillingStoreService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
     let snackBar: jasmine.SpyObj<MatSnackBar>;
+
 
     beforeEach(async(() => {
         billingService = jasmine.createSpyObj('BillingService', ['fetchStoreCollection', 'create', 'update']);
@@ -27,6 +29,7 @@ describe('StoreListComponent', () => {
                 {provide: BillingStoreService, useValue: billingService},
                 {provide: MatDialog, useValue: matDialog},
                 {provide: MatSnackBar, useValue: snackBar},
+                {provide: ActivatedRoute, useValue: {queryParams: EMPTY}},
             ],
         })
             .compileComponents();

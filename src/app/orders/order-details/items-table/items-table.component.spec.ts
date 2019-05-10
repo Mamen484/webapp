@@ -151,6 +151,12 @@ describe('ItemsTableComponent', () => {
         component.ngOnInit();
         expect(component.selectedQuantity).toEqual({135: 55, 159: 89});
     });
+
+    it('should count taxTotalAmount', () => {
+        component.order = <any>{items: [{reference: '135', quantity: 55, taxAmount: 10.12}, {reference: '159', quantity: 89, taxAmount: 12.42}], _embedded: {channel: {id: 0}}};
+        component.ngOnInit();
+        expect(component.taxTotalAmount).toEqual(22.54);
+    });
 });
 
 export class BlankPipe implements PipeTransform {

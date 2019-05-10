@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
@@ -7,6 +7,7 @@ import { BillingStoreService } from './billing-store.service';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { map } from 'rxjs/operators';
 import { TableOperations } from 'sfl-shared/utils/table-operations';
+import { ActivatedRoute } from '@angular/router';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 
@@ -16,14 +17,24 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
     templateUrl: './store-list.component.html',
     styleUrls: ['./store-list.component.scss']
 })
-export class StoreListComponent extends TableOperations<BillingStore> {
+export class StoreListComponent extends TableOperations<BillingStore> implements OnInit {
 
     displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'invoicing', 'edit', 'block'];
 
     constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
-                protected snackBar: MatSnackBar) {
+                protected snackBar: MatSnackBar,
+                protected route: ActivatedRoute) {
         super();
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this.route.queryParams.subscribe(params => {
+            if (params.store) {
+                this.searchQuery = params.store;
+            }
+        });
     }
 
     openCreateStoreDialog() {
