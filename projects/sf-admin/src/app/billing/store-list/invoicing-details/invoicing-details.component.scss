@@ -1,0 +1,41 @@
+@import '../../../../../src/sass/variables';
+
+a.prev-page-link {
+  text-decoration: none;
+  color: $black-54-opacity;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  mat-icon {
+    margin-right: 10px;
+  }
+}
+
+.invoicing-details-title {
+  margin-bottom: 20px;
+}
+
+.invoicing-details-table {
+  padding: 0;
+
+  mat-list {
+    padding: 0;
+
+    div.invoicing-details-row {
+      display: flex;
+      width: 100%;
+
+      & > div {
+        flex: 1;
+      }
+    }
+  }
+}
+
+mat-card.invoices-table {
+  padding: 0;
+
+  table {
+    width: 100%;
+  }
+}

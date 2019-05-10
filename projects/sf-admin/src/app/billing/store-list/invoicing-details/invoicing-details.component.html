@@ -1,0 +1,83 @@
+<sfa-sidebar>
+    <mat-list-item class="active">
+        <div class="mat-body-2" i18n>Store</div>
+    </mat-list-item>
+    <mat-list-item>
+        <a routerLink="/billing/groups" class="mat-body-1" i18n>Group</a>
+    </mat-list-item>
+</sfa-sidebar>
+
+<div class="sf-content mat-typography">
+    <a routerLink="/billing" class="prev-page-link">
+        <mat-icon>keyboard_backspace</mat-icon>
+        <ng-container i18n>Store board</ng-container>
+    </a>
+    <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="2 1 0">
+            <div i18n class="invoicing-details-title">Your member fees</div>
+            <mat-card class="invoicing-details-table">
+                <mat-card-content>
+                    <mat-list class="mat-typography">
+                        <mat-list-item>
+                            <div class="invoicing-details-row">
+                                <div class="mat-body-2">Store</div>
+                                <div class="mat-body-1">{{store.name}}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="invoicing-details-row">
+                                <div class="mat-body-2">Price</div>
+                                <div class="mat-body-1">{{store.monthlySubscriptionAmount}}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="invoicing-details-row">
+                                <div class="mat-body-2">Commission</div>
+                                <div class="mat-body-1">{{store.commissionRate}}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="invoicing-details-row">
+                                <div class="mat-body-2">End of Trial</div>
+                                <div class="mat-body-1">{{store.trialEndsAt | date:'shortDate'}}</div>
+                            </div>
+                        </mat-list-item>
+                        <mat-divider></mat-divider>
+                        <mat-list-item>
+                            <div class="invoicing-details-row">
+                                <div class="mat-body-2">Group</div>
+                                <div class="mat-body-1">{{store?._embedded?.group?.name}}</div>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="3 1 0">
+            <div i18n class="invoicing-details-title">Your invoices</div>
+            <mat-card class="invoices-table">
+                <mat-card-content>
+                    <div i18n *ngIf="!invoices.length">No invoices found</div>
+                    <table mat-table *ngIf="invoices.length" [dataSource]="invoices">
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef i18n>Date</th>
+                            <td mat-cell *matCellDef="let row">{{row.month}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef i18n>Amount</th>
+                            <td mat-cell *matCellDef="let row">{{row.commissionAmount + row.subscriptionAmount}}
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+</div>
