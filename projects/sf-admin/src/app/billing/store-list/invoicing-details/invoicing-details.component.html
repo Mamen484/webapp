@@ -60,7 +60,7 @@
             <div i18n class="invoicing-details-title">Your invoices</div>
             <mat-card class="invoices-table">
                 <mat-card-content>
-                    <div i18n *ngIf="!invoices.length">No invoices found</div>
+                    <div i18n *ngIf="!invoices.length" class="no-invoices-message">No invoices found</div>
                     <table mat-table *ngIf="invoices.length" [dataSource]="invoices">
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef i18n>Date</th>
