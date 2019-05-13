@@ -18,6 +18,7 @@ html, body, app-root {
     background-color: mat-color($grey, 50);
   }
   overflow: hidden;
+  font-family: $font-family;
 }
 
 hr {
