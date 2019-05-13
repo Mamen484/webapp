@@ -96,6 +96,11 @@ describe('OrdersFilterDialogComponent', () => {
             expect(component.filter.since.getTime()).toEqual(1494814961000); // 2017-05-15 2:22:41
         });
 
+        it('should assign a `since` property to the beginning of a current month when `currentMonth` is passed to changeDate', () => {
+            component.changeDate('currentMonth');
+            expect(component.filter.since.getTime()).toEqual(1496264400000); // 2017-06-01 0:00:00
+        });
+
         it('should remove an `until` property on changeDate call with `today` passing in', () => {
             component.filter.until = new Date();
             expect(component.filter.until.getTime()).toEqual(1497406961000);
@@ -115,6 +120,30 @@ describe('OrdersFilterDialogComponent', () => {
             expect(component.filter.until.getTime()).toEqual(1497406961000);
             component.changeDate('month');
             expect(component.filter.until).not.toBeDefined();
+        });
+
+        it('should remove an `until` property on changeDate call with `currentMonth` passing in', () => {
+            component.filter.until = new Date();
+            expect(component.filter.until.getTime()).toEqual(1497406961000);
+            component.changeDate('currentMonth');
+            expect(component.filter.until).not.toBeDefined();
+        });
+
+        it('should assign a `since` and `until` properties when `yesterday` is passed to changeDate', () => {
+            component.changeDate('yesterday');
+            expect(component.filter.since.getFullYear()).toEqual(2017);
+            expect(component.filter.since.getMonth()).toEqual(5);
+            expect(component.filter.since.getDate()).toEqual(13);
+            expect(component.filter.since.getHours()).toEqual(0);
+            expect(component.filter.since.getMinutes()).toEqual(0);
+            expect(component.filter.since.getSeconds()).toEqual(0);
+
+            expect(component.filter.until.getFullYear()).toEqual(2017);
+            expect(component.filter.until.getMonth()).toEqual(5);
+            expect(component.filter.until.getDate()).toEqual(13);
+            expect(component.filter.until.getHours()).toEqual(23);
+            expect(component.filter.until.getMinutes()).toEqual(59);
+            expect(component.filter.until.getSeconds()).toEqual(59);
         });
 
         it('should remove `since` and `until` properties on changeDate call with `anytime` passing in', () => {

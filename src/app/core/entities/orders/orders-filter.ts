@@ -3,7 +3,7 @@ import { OrderStatus } from './order-status.enum';
 import { OrderErrorType } from './order-error-type.enum';
 import { OrderAcknowledgment } from './order-acknowledgment.enum';
 
-const DAY = 1000 * 60 * 60 * 24;
+export const DAY = 1000 * 60 * 60 * 24;
 
 export class OrdersFilter {
     until?;
@@ -22,9 +22,18 @@ export class OrdersFilter {
         return new Date(date);
     }
 
+    static subtractFromTheDate(date: Date, milliseconds: number) {
+        return new Date(date.getTime() - milliseconds);
+    }
+
     static aWeekBefore() {
         let date = new Date().getTime() - 7 * DAY;
         return new Date(date);
+    }
+
+    static currentMonth() {
+        const currentDate = new Date();
+        return new Date(currentDate.getFullYear(), currentDate.getMonth());
     }
 
     static aMonthBefore() {
