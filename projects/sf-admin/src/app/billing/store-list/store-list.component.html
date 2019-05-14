@@ -1,9 +1,9 @@
 <sfa-sidebar>
     <mat-list-item class="active">
-        <div class="mat-body-2" i18n>Store</div>
+        <a class="mat-body-2 active" i18n>Store</a>
     </mat-list-item>
     <mat-list-item>
-        <a routerLink="/billing/groups" class="mat-body-1" i18n>Group</a>
+        <a routerLink="/billing/groups" class="mat-body-2" i18n>Group</a>
     </mat-list-item>
 </sfa-sidebar>
 
@@ -14,7 +14,7 @@
         <button mat-raised-button color="accent" (click)="openCreateStoreDialog()" i18n>Add Store</button>
     </div>
     <sfl-solo-search i18n-placeholder placeholder="Search store"
-                     (searchQueryChanged)="search($event)"></sfl-solo-search>
+                     (searchQueryChanged)="search($event)" [value]="searchQuery"></sfl-solo-search>
 
     <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
         <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
@@ -48,6 +48,15 @@
                 <th mat-header-cell *matHeaderCellDef i18n> Group</th>
                 <td mat-cell *matCellDef="let element"> {{element?._embedded?.group?.name}} </td>
             </ng-container>
+            <ng-container matColumnDef="invoicing">
+                <th mat-header-cell *matHeaderCellDef i18n></th>
+                <td mat-cell *matCellDef="let element" class="invoicing-cell">
+                        <a mat-icon-button routerLink="/billing/store/{{element.id}}/details" matTooltip="Invoicing Details"
+                            i18n-matTooltip class="edit">
+                        <mat-icon>description</mat-icon>
+                    </a>
+                </td>
+            </ng-container>
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef i18n></th>
                 <td mat-cell *matCellDef="let element" class="edit-cell">
@@ -56,7 +65,6 @@
                         <mat-icon>edit</mat-icon>
                     </button>
                 </td>
-
             </ng-container>
             <ng-container matColumnDef="block">
                 <th mat-header-cell *matHeaderCellDef i18n></th>

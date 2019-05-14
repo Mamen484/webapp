@@ -1,7 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans:300,300i,400,400i,500,500i,700,700i');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
+@import 'sass/system-font';
 @import 'sass/material-theme';
 @import 'sass/materialdesign';
 @import 'sass/menu';
@@ -19,6 +18,7 @@ html, body, app-root {
     background-color: mat-color($grey, 50);
   }
   overflow: hidden;
+  font-family: $font-family;
 }
 
 hr {

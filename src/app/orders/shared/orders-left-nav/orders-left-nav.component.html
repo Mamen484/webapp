@@ -6,23 +6,22 @@
 
         <mat-divider></mat-divider>
 
-        <mat-list-item routerLink="/orders">
-            <a [class.active]="activeView === ordersView.allOrders" i18n class="mat-body-2 ">All
-                orders</a>
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.allOrders}" queryParamsHandling="merge">
+            <a [class.active]="activeView === ordersView.allOrders" i18n class="mat-body-2 ">All orders</a>
         </mat-list-item>
-        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.toValidate}">
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.toValidate}" queryParamsHandling="merge">
             <a [class.active]="activeView === ordersView.toValidate" i18n class="mat-body-2">To validate</a>
         </mat-list-item>
-        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.importErrors}">
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.importErrors}" queryParamsHandling="merge">
             <a [class.active]="activeView === ordersView.importErrors"  i18n class="mat-body-2">Import errors</a>
         </mat-list-item>
-        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.toShip}">
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.toShip}" queryParamsHandling="merge">
             <a [class.active]="activeView === ordersView.toShip" i18n class="mat-body-2">To ship</a>
         </mat-list-item>
-        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}">
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}" queryParamsHandling="merge">
             <a [class.active]="activeView === ordersView.shippingErrors" i18n class="mat-body-2">Shipping errors</a>
         </mat-list-item>
-        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.shipped}">
+        <mat-list-item routerLink="/orders" [queryParams]="{view: ordersView.shipped}" queryParamsHandling="merge">
             <a [class.active]="activeView === ordersView.shipped" i18n class="mat-body-2 ">Shipped</a>
         </mat-list-item>
         <mat-divider></mat-divider>

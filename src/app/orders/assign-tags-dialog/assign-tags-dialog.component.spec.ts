@@ -100,7 +100,7 @@ describe('AssignTagsDialogComponent', () => {
 
     it('should close dialog, passing true into it, when some tags were added/removed', () => {
         appStore.select.and.returnValue(of({id: 22}));
-        tagsService.assignTags.and.returnValue(of({}));
+        tagsService.assignTags.and.returnValue(of([{}]));
         component.data = <any>{orders: []};
         component.assignTag(<any>{id: 22});
         component.save();

@@ -11,6 +11,7 @@ import { GroupListComponent } from './group-list/group-list.component';
 import { GroupDialogComponent } from './group-list/group-dialog/group-dialog.component';
 import { SearchBillingStoreDirective } from './search-billing-store/search-billing-store.directive';
 import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
+import { InvoicingDetailsComponent } from './store-list/invoicing-details/invoicing-details.component';
 
 @NgModule({
     imports: [
@@ -30,6 +31,8 @@ import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
         StoreListComponent,
 
         SearchBillingStoreDirective,
+
+        InvoicingDetailsComponent,
     ],
     entryComponents: [
         GroupDialogComponent,

@@ -8,6 +8,7 @@ export interface OrderDetailsItem {
     name: string;
     quantity: number;
     date: string;
+    taxAmount: number;
     price: number;
     image: string;
     status: OrderStatus;

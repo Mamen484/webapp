@@ -42,7 +42,7 @@ describe('GroupListComponent', () => {
     });
 
     it('should fetch and show billing groups on init', () => {
-        billingGroupService.fetchGroupCollection.and.returnValue(of({_embedded: {group: []}}));
+        billingGroupService.fetchGroupCollection.and.returnValue(of(<any>{_embedded: {group: []}}));
         fixture.detectChanges();
         expect(billingGroupService.fetchGroupCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
         expect(component.dataSource.data).toEqual([]);
@@ -50,38 +50,38 @@ describe('GroupListComponent', () => {
 
 
     it('should open a GroupDialogComponent on openCreateGroupDialog()', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openCreateGroupDialog();
         const openDialogArgs = matDialog.open.calls.mostRecent().args;
         expect(openDialogArgs[0]).toBe(GroupDialogComponent);
-        expect(openDialogArgs[1].data.group).toEqual({name: '', stores: []})
+        expect((<any>openDialogArgs[1].data).group).toEqual({name: '', stores: []})
     });
 
     it('should refresh groups list when create group is successful', () => {
-        billingGroupService.fetchGroupCollection.and.returnValue(of({_embedded: {group: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingGroupService.fetchGroupCollection.and.returnValue(of(<any>{_embedded: {group: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openCreateGroupDialog();
         expect(billingGroupService.fetchGroupCollection).toHaveBeenCalled();
     });
 
     it('should open a GroupDialogComponent on openEditGroupDialog()', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.openEditGroupDialog(<any>{id: 19, name: 'some group', _embedded: {stores: []}});
         const openDialogArgs = matDialog.open.calls.mostRecent().args;
         expect(openDialogArgs[0]).toBe(GroupDialogComponent);
-        expect(openDialogArgs[1].data.group).toEqual({id: 19, name: 'some group', stores: []});
+        expect((<any>openDialogArgs[1].data).group).toEqual({id: 19, name: 'some group', stores: []});
     });
 
     it('should refresh groups list when update group is successful', () => {
-        billingGroupService.fetchGroupCollection.and.returnValue(of({_embedded: {group: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingGroupService.fetchGroupCollection.and.returnValue(of(<any>{_embedded: {group: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openEditGroupDialog(<any>{});
         expect(billingGroupService.fetchGroupCollection).toHaveBeenCalled();
     });
 
     it('should show a snackbar with successful message when group saved', () => {
-        billingGroupService.fetchGroupCollection.and.returnValue(of({_embedded: {group: []}}));
-        matDialog.open.and.returnValue({afterClosed: () => of({})});
+        billingGroupService.fetchGroupCollection.and.returnValue(of(<any>{_embedded: {group: []}}));
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({})});
         component.openEditGroupDialog(<any>{});
         expect(snackBar.open).toHaveBeenCalled();
         expect(snackBar.open.calls.mostRecent().args[0]).toContain('has been saved');

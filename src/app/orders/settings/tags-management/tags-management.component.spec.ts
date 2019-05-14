@@ -55,22 +55,22 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should open a new tag dialog when createNewTag() is called', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.createNewTag();
         expect(matDialog.open).toHaveBeenCalledTimes(1);
         expect(matDialog.open).toHaveBeenCalledWith(NewTagDialogComponent);
     });
 
     it('should open a new tag dialog when updateTag() is called', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.updateTag(2, {name: 'label', color: 'brown'});
         expect(matDialog.open.calls.mostRecent().args[0]).toEqual(NewTagDialogComponent);
-        expect(matDialog.open.calls.mostRecent().args[1].data.name).toEqual('label');
-        expect(matDialog.open.calls.mostRecent().args[1].data.color).toEqual('brown');
+        expect((<any>matDialog.open.calls.mostRecent().args[1].data).name).toEqual('label');
+        expect((<any>matDialog.open.calls.mostRecent().args[1].data).color).toEqual('brown');
     });
 
     it('should not make a server request when no data returned from dialog', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of(undefined)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(undefined)});
         component.createNewTag();
         component.updateTag(2, {name: 'label', color: 'brown'});
         expect(appStore.select).not.toHaveBeenCalled();
@@ -78,7 +78,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should call a create request when the tagName is returned from dialog', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'important', color: 'red'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'important', color: 'red'})});
         appStore.select.and.returnValue(of({id: 29}));
         component.createNewTag();
         expect(tagsService.create).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should call an update request when the tagName is returned from dialog', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'important', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'important', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         component.updateTag(14, {name: 'wfqwefq', color: 'green'});
         expect(tagsService.update).toHaveBeenCalledTimes(1);
@@ -107,7 +107,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should call a fetchAll request to update the tags list when the tag create is successful', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'important', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'important', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.create.and.returnValue(of({}));
         tagsService.fetchAll.and.returnValue(EMPTY);
@@ -117,7 +117,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should call a fetchAll request to update the tags list when the tag update is successful', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.update.and.returnValue(of({}));
         tagsService.fetchAll.and.returnValue(EMPTY);
@@ -127,7 +127,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should call a fetchAll request to update the tags list when the tag remove is successful', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.remove.and.returnValue(of({}));
         tagsService.fetchAll.and.returnValue(EMPTY);
@@ -137,16 +137,16 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should dispatch updated tags info when the new tags fetched', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValues(of({id: 29}), of({id: 29}));
         tagsService.create.and.returnValue(of({}));
-        tagsService.fetchAll.and.returnValue(of({_embedded: {tag: ['some', 'data']}}));
+        tagsService.fetchAll.and.returnValue(of(<any>{_embedded: {tag: ['some', 'data']}}));
         component.createNewTag();
         expect(appStore.dispatch).toHaveBeenCalledTimes(1);
     });
 
     it('should show a snack bar if an error returned on tag creation', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.create.and.returnValue(throwError({message: 'err'}));
         component.createNewTag();
@@ -155,7 +155,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should show a snack bar if an error returned on tag update', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.update.and.returnValue(throwError({message: 'err'}));
         component.updateTag(10, {name: 'label', color: 'brown'});
@@ -164,7 +164,7 @@ describe('TagsManagementComponent', () => {
     });
 
     it('should show a snack bar if an error returned on tag remove', () => {
-        matDialog.open.and.returnValue({afterClosed: () => of({name: 'label', color: 'brown'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({name: 'label', color: 'brown'})});
         appStore.select.and.returnValue(of({id: 29}));
         tagsService.remove.and.returnValue(throwError({message: 'err'}));
         component.removeTag(10);

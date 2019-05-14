@@ -23,6 +23,6 @@ describe('LegacyLinkDirective', () => {
         directive.storeId = 22;
         directive.ngOnChanges({});
         expect(legacyLink.getLegacyLink.calls.mostRecent().args[0]).toEqual('/');
-        expect(legacyLink.getLegacyLink.calls.mostRecent().args[1].store).toEqual(22);
+        expect((<any>legacyLink.getLegacyLink.calls.mostRecent().args[1]).store).toEqual(22);
     });
 });

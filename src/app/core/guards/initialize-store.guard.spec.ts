@@ -35,20 +35,20 @@ describe('InitializeStoreGuard', () => {
 
     it('should fetch the store from the server and write it to the app store if the user has an "admin" role and the store param is specified', async () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['admin']})));
-        storeService.getStore.and.returnValue(of({name: 'some amazing store'}));
+        storeService.getStore.and.returnValue(of(<any>{name: 'some amazing store'}));
         const canActivate = await guard.canActivate(<any>{queryParams: {store: 'some store'}}).toPromise();
         expect(canActivate).toBe(true);
-        expect(store.dispatch.calls.mostRecent().args[0].type).toBe('SET_STORE');
-        expect(store.dispatch.calls.mostRecent().args[0].store.name).toBe('some amazing store');
+        expect((<any>store.dispatch.calls.mostRecent().args[0]).type).toBe(SET_STORE);
+        expect((<any>store.dispatch.calls.mostRecent().args[0]).store.name).toBe('some amazing store');
     });
 
     it('should fetch the store from the server and write it to the app store if the user has an "employee" role and the store param is specified', async () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['employee']})));
-        storeService.getStore.and.returnValue(of({name: 'some amazing store'}));
+        storeService.getStore.and.returnValue(of(<any>{name: 'some amazing store'}));
         const canActivate = await guard.canActivate(<any>{queryParams: {store: 'some store'}}).toPromise();
         expect(canActivate).toBe(true);
-        expect(store.dispatch.calls.mostRecent().args[0].type).toBe('SET_STORE');
-        expect(store.dispatch.calls.mostRecent().args[0].store.name).toBe('some amazing store');
+        expect((<any>store.dispatch.calls.mostRecent().args[0]).type).toBe(SET_STORE);
+        expect((<any>store.dispatch.calls.mostRecent().args[0]).store.name).toBe('some amazing store');
     });
 
 
