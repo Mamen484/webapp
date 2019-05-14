@@ -32,8 +32,8 @@ export class OrdersFilter {
     }
 
     static currentMonth() {
-        const currentDate = new Date();
-        return new Date(currentDate.getFullYear(), currentDate.getMonth());
+        const date = new Date();
+        return new Date(date.getFullYear(), date.getMonth());
     }
 
     static aMonthBefore() {
