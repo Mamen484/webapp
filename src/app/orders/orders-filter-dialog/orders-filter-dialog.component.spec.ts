@@ -98,7 +98,13 @@ describe('OrdersFilterDialogComponent', () => {
 
         it('should assign a `since` property to the beginning of a current month when `currentMonth` is passed to changeDate', () => {
             component.changeDate('currentMonth');
-            expect(component.filter.since.getTime()).toEqual(1496264400000); // 2017-06-01 0:00:00
+            expect(component.filter.since.getFullYear()).toEqual(2017);
+            expect(component.filter.since.getMonth()).toEqual(5);
+            expect(component.filter.since.getDate()).toEqual(1);
+            expect(component.filter.since.getHours()).toEqual(0);
+            expect(component.filter.since.getMinutes()).toEqual(0);
+            expect(component.filter.since.getSeconds()).toEqual(0);
+            expect(component.filter.since.getMilliseconds()).toEqual(0);
         });
 
         it('should remove an `until` property on changeDate call with `today` passing in', () => {
