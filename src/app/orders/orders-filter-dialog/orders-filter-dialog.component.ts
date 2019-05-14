@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { OrdersFilter } from '../../core/entities/orders/orders-filter';
+import { DAY, OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
@@ -53,6 +53,11 @@ export class OrdersFilterDialogComponent implements OnInit {
                 delete this.filter.until;
                 break;
 
+            case 'yesterday':
+                this.filter.since = OrdersFilter.subtractFromTheDate(OrdersFilter.aDayBefore(), DAY);
+                this.filter.until = OrdersFilter.subtractFromTheDate(OrdersFilter.aDayBefore(), 1);
+                break;
+
             case 'week':
                 this.filter.since = OrdersFilter.aWeekBefore();
                 delete this.filter.until;
@@ -60,6 +65,11 @@ export class OrdersFilterDialogComponent implements OnInit {
 
             case 'month':
                 this.filter.since = OrdersFilter.aMonthBefore();
+                delete this.filter.until;
+                break;
+
+            case 'currentMonth':
+                this.filter.since = OrdersFilter.currentMonth();
                 delete this.filter.until;
                 break;
 
