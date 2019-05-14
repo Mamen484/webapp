@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { BillingStore } from './billing-store';
 import { PagedResponse } from 'sfl-shared/entities';
 import { catchError } from 'rxjs/operators';
+import { Invoice } from './invoicing-details/invoice';
 
 @Injectable({
     providedIn: 'root'
@@ -42,5 +43,11 @@ export class BillingStoreService {
         let id = store.id;
         delete store.id;
         return this.httpClient.patch(`${environment.SFA_BILLING_API}/store/${id}`, {store});
+    }
+
+    fetchInvoicesCollection(storeId: number) {
+        return this.httpClient.get(`${environment.SFA_BILLING_API}/invoice`, {
+            params: new HttpParams().set('storeId', storeId.toString()),
+        }) as Observable<PagedResponse<{invoice: Invoice[]}>>;
     }
 }

@@ -263,7 +263,7 @@ describe('ActionButtonsComponent', () => {
     });
 
     it('should open a confirm cancellation dialog when click on `cancel` button', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.order.reference = '22';
         component.cancelOrder();
         expect(matDialog.open).toHaveBeenCalledWith(ConfirmCancellationDialogComponent, {data: {ordersNumber: 1, orderReference: '22'}});
@@ -273,7 +273,7 @@ describe('ActionButtonsComponent', () => {
         component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
         appStore.select.and.returnValue(of({id: 289}));
         ordersService.cancel.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({
+        matDialog.open.and.returnValue(<any>{
             afterClosed: () => of(true)
         });
         component.cancelOrder();
@@ -286,7 +286,7 @@ describe('ActionButtonsComponent', () => {
         component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
         appStore.select.and.returnValue(of({id: 289}));
         ordersService.cancel.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({
+        matDialog.open.and.returnValue(<any>{
             afterClosed: () => of(undefined)
         });
         component.cancelOrder();
@@ -294,7 +294,7 @@ describe('ActionButtonsComponent', () => {
     });
 
     it('should open a carrier details dialog when click on `ship` button', () => {
-        matDialog.open.and.returnValue({afterClosed: () => EMPTY});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.shipOrder();
         expect(matDialog.open).toHaveBeenCalledWith(CarrierDetailsDialogComponent);
     });
@@ -303,8 +303,8 @@ describe('ActionButtonsComponent', () => {
         component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
         appStore.select.and.returnValue(of({id: 289}));
         ordersService.ship.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({
-            afterClosed: () => of({
+        matDialog.open.and.returnValue(<any>{
+            afterClosed: () => of(<any>{
                 carrier: 'ca',
                 trackingNumber: 'cb',
                 trackingLink: 'ce',
@@ -323,7 +323,7 @@ describe('ActionButtonsComponent', () => {
         component.order = <any>{reference: 'ref', _embedded: {channel: {name: 'nom'}}};
         appStore.select.and.returnValue(of({id: 289}));
         ordersService.ship.and.returnValue(of({}));
-        matDialog.open.and.returnValue({afterClosed: () => of({carrier: 'ca', trackingNumber: 'cb', trackingLink: 'ce'})});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of({carrier: 'ca', trackingNumber: 'cb', trackingLink: 'ce'})});
         component.shipOrder();
         expect(snackbar.openFromComponent.calls.mostRecent().args[0]).toEqual(OrderStatusChangedSnackbarComponent);
         expect(snackbar.openFromComponent.calls.mostRecent().args[1].data.ordersNumber).toEqual(1);
@@ -369,7 +369,7 @@ describe('ActionButtonsComponent', () => {
         });
         it('should send a ship request after carrier details confirmed', () => {
             ordersService.ship.and.returnValue(EMPTY);
-            matDialog.open.and.returnValue({
+            matDialog.open.and.returnValue(<any>{
                 afterClosed: () => of({
                     carrier: 'ca',
                     trackingNumber: 'cb',
@@ -391,7 +391,7 @@ describe('ActionButtonsComponent', () => {
 
         it(`should send a cancel request when a user confirms cancelling an order `, () => {
             ordersService.cancel.and.returnValue(EMPTY);
-            matDialog.open.and.returnValue({afterClosed: () => of(true)});
+            matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
             const button = elements()[1];
             expect(button.textContent.trim()).toEqual('Cancel');
             button.click();

@@ -51,7 +51,7 @@ describe('TimelineComponent', () => {
         beforeEach(async(() => {
 
             timelineService = jasmine.createSpyObj(['getEvents', 'getEventsByLink', 'getTimelineStream', 'emitUpdatedTimeline']);
-            timelineService.getEventsByLink.and.returnValue(of(events2));
+            timelineService.getEventsByLink.and.returnValue(of(<any>events2));
             timelineService.getTimelineStream.and.returnValue(of({
                 type: StreamEventType.finished,
                 data: {events, updates}

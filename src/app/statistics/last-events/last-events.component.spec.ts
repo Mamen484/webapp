@@ -45,46 +45,63 @@ describe('LastEventsComponent', () => {
     });
 
     it('should set `isDisplayed to false when no data got from server', () => {
-        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
-        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        timelineService.getEvents.and.returnValues(
+            of(<any>{_embedded: {timeline: []}}),
+            of(<any>{_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(
+            of(<any>{_embedded: {order: []}}),
+            of(<any>{_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isDisplayed).toBe(false);
     });
 
     it('should set `isDisplayed` to true when at least one import received from server', () => {
-        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: [{name: TimelineEventName.import}]}}), of({_embedded: {timeline: []}}));
-        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        timelineService.getEvents.and.returnValues(
+            of(<any>{_embedded: {timeline: [{name: TimelineEventName.import}]}}),
+            of(<any>{_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(
+            of(<any>{_embedded: {order: []}}),
+            of(<any>{_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isDisplayed).toBe(true);
     });
 
     it('should set `isDisplayed` to true when at least one export received from server', () => {
-        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}),
-            of({_embedded: {timeline: [{name: TimelineEventName.import, _embedded: {channel: {name: 'any name'}}}]}}));
-        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}), of({_embedded: {order: []}}));
+        timelineService.getEvents.and.returnValues(
+            of(<any>{_embedded: {timeline: []}}),
+            of(<any>{_embedded: {timeline: [{name: TimelineEventName.import, _embedded: {channel: {name: 'any name'}}}]}}));
+        ordersService.fetchOrdersList.and.returnValues(
+            of(<any>{_embedded: {order: []}}),
+            of(<any>{_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isDisplayed).toBe(true);
     });
 
     it('should set `isDisplayed` to true when at least one order with acknowledgment error received from server', () => {
-        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
-        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}),
-            of({_embedded: {order: []}}));
+        timelineService.getEvents.and.returnValues(
+            of(<any>{_embedded: {timeline: []}}),
+            of(<any>{_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(
+            of(<any>{_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}),
+            of(<any>{_embedded: {order: []}}));
         fixture.detectChanges();
         expect(component.isDisplayed).toBe(true);
     });
 
     it('should set `isDisplayed` to true when at least one order with shipping error received from server', () => {
-        timelineService.getEvents.and.returnValues(of({_embedded: {timeline: []}}), of({_embedded: {timeline: []}}));
-        ordersService.fetchOrdersList.and.returnValues(of({_embedded: {order: []}}),
-            of({_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}));
+        timelineService.getEvents.and.returnValues(
+            of(<any>{_embedded: {timeline: []}}),
+            of(<any>{_embedded: {timeline: []}}));
+        ordersService.fetchOrdersList.and.returnValues(
+            of(<any>{_embedded: {order: []}}),
+            of(<any>{_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}));
         fixture.detectChanges();
         expect(component.isDisplayed).toBe(true);
     });
 
     it('should initialize proper data', () => {
-        timelineService.getEvents.and.returnValues(of(lastImportsResponse), of(lastExportsResponse));
-        ordersService.fetchOrdersList.and.returnValues(of(acknowledgmentErrorsResponse), of(shipmentErrorsResponse));
+        timelineService.getEvents.and.returnValues(of(<any>lastImportsResponse), of(<any>lastExportsResponse));
+        ordersService.fetchOrdersList.and.returnValues(of(<any>acknowledgmentErrorsResponse), of(<any>shipmentErrorsResponse));
         fixture.detectChanges();
         validateImport(component.lastImports[0], TimelineEventAction.finish, '2018-04-27T17:27:44+00:00');
         validateImport(component.lastImports[1], TimelineEventAction.error, '2017-12-07T11:26:12+00:00');

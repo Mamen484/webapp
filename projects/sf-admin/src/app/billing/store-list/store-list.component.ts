@@ -19,7 +19,7 @@ const SNACKBAR_MESSAGE_DURATION = 5000;
 })
 export class StoreListComponent extends TableOperations<BillingStore> implements OnInit {
 
-    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'edit', 'block'];
+    displayedColumns: string[] = ['name', 'price', 'commission', 'trialEndDate', 'closedAt', 'groupName', 'invoicing', 'edit', 'block'];
 
     constructor(protected billingStoreService: BillingStoreService,
                 protected matDialog: MatDialog,
