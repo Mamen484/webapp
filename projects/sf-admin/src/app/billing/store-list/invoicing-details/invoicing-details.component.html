@@ -35,14 +35,14 @@
                         <mat-list-item>
                             <div class="invoicing-details-row">
                                 <div class="mat-body-2">Commission</div>
-                                <div class="mat-body-1">{{store.commissionRate}}</div>
+                                <div class="mat-body-1">{{store.commissionRate}}%</div>
                             </div>
                         </mat-list-item>
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="invoicing-details-row">
                                 <div class="mat-body-2">End of Trial</div>
-                                <div class="mat-body-1">{{store.trialEndsAt | date:'shortDate'}}</div>
+                                <div class="mat-body-1">{{store.trialEndsAt | date:'mediumDate'}}</div>
                             </div>
                         </mat-list-item>
                         <mat-divider></mat-divider>
@@ -67,8 +67,18 @@
                             <td mat-cell *matCellDef="let row">{{row.month}}
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef i18n>Amount</th>
+                        <ng-container matColumnDef="flatFee">
+                            <th mat-header-cell *matHeaderCellDef i18n>Flat Fee</th>
+                            <td mat-cell *matCellDef="let row">{{row.subscriptionAmount}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="commission">
+                            <th mat-header-cell *matHeaderCellDef i18n>Commission Amount</th>
+                            <td mat-cell *matCellDef="let row">{{row.commissionAmount}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="totalAmount">
+                            <th mat-header-cell *matHeaderCellDef i18n>Total Amount</th>
                             <td mat-cell *matCellDef="let row">{{row.commissionAmount + row.subscriptionAmount}}
                             </td>
                         </ng-container>

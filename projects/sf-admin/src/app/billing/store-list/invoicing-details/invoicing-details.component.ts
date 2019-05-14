@@ -13,7 +13,7 @@ export class InvoicingDetailsComponent implements OnInit {
     store: BillingStore;
     invoices: Invoice[] = [];
 
-    displayedColumns = ['date', 'amount'];
+    displayedColumns = ['date', 'flatFee', 'commission', 'totalAmount'];
 
     constructor(protected route: ActivatedRoute) {
     }
