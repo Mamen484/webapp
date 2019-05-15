@@ -9,6 +9,7 @@ import { AppState } from '../entities/app-state';
 import { flatMap, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { CategoryMapping } from '../../channel-setup/category-mapping';
+import { Autotag } from '../../channel-setup/autotag';
 
 @Injectable({
     providedIn: 'root'
@@ -74,5 +75,11 @@ export class FeedService {
                 feed: {catalogId: store.id, channelId, country: store.country},
             }))
         );
+    }
+
+    fetchAutotagByCategory(feedId, channelCategoryId) {
+        return this.httpClient.get(
+            `${environment.API_URL}/feed/${feedId}/autotag/category`, {params: {channelCategoryId}}
+        ) as Observable<PagedResponse<{autotag: Autotag[]}>>;
     }
 }

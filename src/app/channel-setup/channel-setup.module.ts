@@ -6,12 +6,14 @@ import { CategoriesConfigurationComponent } from './categories-configuration/cat
 import { SharedModule } from '../shared/shared.module';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { UnsavedDataDialogComponent } from './categories-configuration/unsaved-data-dialog/unsaved-data-dialog.component';
+import { FeedCategoriesListComponent } from './categories-configuration/feed-categories-list/feed-categories-list.component';
 
 @NgModule({
     declarations: [
         CategoriesConfigurationComponent,
         FilterDialogComponent,
         UnsavedDataDialogComponent,
+        FeedCategoriesListComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,
