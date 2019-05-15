@@ -1,10 +1,11 @@
-<div class="scrollable-container">
+<div class="scrollable-container sf-content">
     <div fxLayout="row" fxLayoutAlign="center center" class="launch-channel-box" fxLayoutGap="40px">
         <div fxFlex>
             <img [src]="channel?._links.image.href" height="40px">
         </div>
         <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
-        <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n [disabled]="percentage === 0">Launch</a>
+        <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n
+           [disabled]="percentage === 0">Launch</a>
     </div>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
         <div fxLayout="column" fxFlex>
@@ -13,42 +14,21 @@
                     <mat-card-content>
                         <div class="search-container">
                             <mat-icon>search</mat-icon>
-                            <input [formControl]="searchClientCategoryControl" class="mat-subheading-1" i18n-placeholder placeholder="Search">
+                            <input [formControl]="searchClientCategoryControl" class="mat-subheading-1" i18n-placeholder
+                                   placeholder="Search">
                             <button mat-stroked-button color="accent" (click)="openFilterDialog()">
                                 Filter
                             </button>
                         </div>
-                        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="processingClientCategorySearch"></mat-progress-bar>
+                        <mat-progress-bar mode="indeterminate" color="accent"
+                                          *ngIf="processingClientCategorySearch"></mat-progress-bar>
                     </mat-card-content>
                 </mat-card>
             </label>
-            <mat-card class="categories-list">
-                <mat-card-content>
-                    <mat-list dense>
-                        <mat-list-item *ngFor="let category of categories" (click)="chooseClientCategory(category)"
-                                       [class.selected]="chosenClientsCategoryId === category.catalogCategory.id">
-                            <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
-                                <div fxFlex>{{category.catalogCategory.name}}</div>
-                                    <div class="sf-label red mat-chip" *ngIf="!category.channelCategory">
-                                        <mat-icon color="warn">cancel</mat-icon>
-                                        <ng-container i18n>Misconfigured</ng-container>
-                                    </div>
-
-                                    <div class="sf-label green mat-chip" *ngIf="category.channelCategory">
-                                        <mat-icon>check_circle</mat-icon>
-                                        <ng-container i18n>Configured</ng-container>
-                                    </div>
-                            </div>
-                        </mat-list-item>
-                        <mat-list-item *ngIf="categories && categories.length === 0 && !processingClientCategorySearch" i18n>
-                            No category found.
-                        </mat-list-item>
-                    </mat-list>
-                    <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
-                                   (page)="pageChanged($event)" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
-
-                </mat-card-content>
-            </mat-card>
+            <sf-feed-categories-list [categories]="!processingClientCategorySearch && categories"
+                                     (pageChanged)="updateData()"
+                                     (clientCategorySelected)="setSelectedCategory($event)">
+            </sf-feed-categories-list>
         </div>
 
         <mat-card fxFlex="30%" class="channel-category-box">
@@ -58,7 +38,7 @@
                     <mat-form-field appearance="outline" color="accent">
                         <mat-label i18n>Category matching</mat-label>
                         <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
-                        [value]="searchChannelCategoryValue">
+                               [value]="searchChannelCategoryValue">
                         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
                                           (optionSelected)="chosenChannelCategory = $event.option.value">
                             <mat-option *ngFor="let category of channelCategoryOptions"

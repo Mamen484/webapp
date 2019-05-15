@@ -1,41 +1,5 @@
 @import '../../../sass/variables';
 
-$line-padding: 20px;
-mat-card.categories-list {
-  padding: 0;
-
-  mat-list {
-    mat-list-item {
-      padding: $line-padding;
-      border-bottom: 1px solid $black-12-opacity;
-      width: auto;
-
-      &.selected {
-        background-color: mat-color($accent, 0.1);
-      }
-
-      div.green {
-        mat-icon {
-          color: mat-color($green);
-        }
-      }
-
-
-      .user-category-row {
-        width: 100%;
-
-        mat-icon {
-          margin-right: 10px;
-        }
-      }
-    }
-  }
-
-  mat-paginator {
-    padding: calc(#{$line-padding} - 8px);
-  }
-}
-
 mat-card.client-category-search {
   margin: 0 0 20px 0;
   padding: 0;

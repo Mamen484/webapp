@@ -64,7 +64,7 @@ describe('SuggestedChannelComponent', () => {
 
     it('should navigate a user to a special cdiscount link when a channel is cdiscount', () => {
         const channelLink = 'some_channel_link';
-        channelLinkService.getChannelLink.and.returnValue(channelLink);
+        channelLinkService.getChannelLink.and.returnValue(<any>channelLink);
         component.channel = <any>{_embedded: {channel: {id: ChannelMap.cdiscount}}};
         component.goToChannel();
         expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href)
@@ -73,7 +73,7 @@ describe('SuggestedChannelComponent', () => {
 
     it('should call channelLinkService.navigateToChannel() when channel is different from cdiscount', () => {
         const channelLink = 'some_channel_link';
-        channelLinkService.getChannelLink.and.returnValue(channelLink);
+        channelLinkService.getChannelLink.and.returnValue(<any>channelLink);
         component.channel = <any>{_embedded: {channel: {id: ChannelMap.laredoute}}};
         component.goToChannel();
         expect(channelLinkService.navigateToChannel).toHaveBeenCalledWith(<any>{id: ChannelMap.laredoute});

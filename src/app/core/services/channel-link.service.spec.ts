@@ -46,9 +46,9 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open a legacy channel page if the channel is installed, has at least one category and the feed has configured categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
-        feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: [{}]}}));
-        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
+        feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
 
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         const channel = mockChannel();
@@ -60,9 +60,9 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open channel setup page if the channel has at least one category but the feed has no configured categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
-        feedService.fetchCategoryCollection.and.returnValue(of({_embedded: {category: []}}));
-        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [{}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
+        feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: []}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
         const channel = <any>mockChannel();
         channel.id = 12;
         channel.installed = true;
@@ -71,8 +71,8 @@ describe('ChannelLinkService', () => {
     });
 
     it('should open a legacy channel page if the channel has no categories', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
-        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: []}}));
+        feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: []}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         service.navigateToChannel(mockChannel());
         expect(feedService.fetchCategoryCollection).not.toHaveBeenCalled();
@@ -81,9 +81,9 @@ describe('ChannelLinkService', () => {
     });
 
     it('should create a feed when a channel is not installed and navigate to setup', () => {
-        feedService.fetchFeedCollection.and.returnValue(of({total: 1, _embedded: {feed: [{id: 20}]}}));
-        feedService.fetchCategoryCollection.and.returnValue(of({total: 0, _embedded: {category: []}}));
-        channelService.getChannelCategories.and.returnValue(of({_embedded: {category: [<any>{}]}}));
+        feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
+        feedService.fetchCategoryCollection.and.returnValue(of(<any>{total: 0, _embedded: {category: []}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [<any>{}]}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         feedService.create.and.returnValue(of({}));
         const channel = mockChannel();

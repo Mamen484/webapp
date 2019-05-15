@@ -11,6 +11,7 @@ import { CategoryMapping } from '../category-mapping';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
+import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -31,6 +32,7 @@ describe('CategoriesConfigurationComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
     let store: jasmine.SpyObj<Store<AppState>>;
+    let feedCategoriesList: FeedCategoriesListComponent;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
@@ -56,6 +58,10 @@ describe('CategoriesConfigurationComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CategoriesConfigurationComponent);
         component = fixture.componentInstance;
+        component.feedCategoriesList = <any>{
+            currentPage: 0,
+            itemsPerPage: '10',
+        }
         fixture.detectChanges();
     });
 
@@ -66,8 +72,8 @@ describe('CategoriesConfigurationComponent', () => {
     it('should set a correct percentage of mapped categories', () => {
         feedService.fetchCategoryCollection.and.callFake((feedId, filters) => {
             return filters.mapping === CategoryMapping.Mapped
-                ? of({_embedded: {}, total: 1})
-                : of({_embedded: {category: []}, total: 9})
+                ? of(<any>{_embedded: {}, total: 1})
+                : of(<any>{_embedded: {category: []}, total: 9})
         });
         route.data.next({data: {channel: {}, feed: {}}});
         expect(component.percentage).toBe(0.1);
@@ -75,12 +81,12 @@ describe('CategoriesConfigurationComponent', () => {
 
     it('should update data when a user filters categories by mapping', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue({afterClosed: () => of(CategoryMapping.Mapped)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(CategoryMapping.Mapped)});
         component.feed = <any>{id: 15};
         component.openFilterDialog();
         expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
             page: '1',
-            limit: component.itemsPerPage,
+            limit: component.feedCategoriesList.itemsPerPage,
             name: null,
             mapping: CategoryMapping.Mapped,
         })
@@ -89,23 +95,11 @@ describe('CategoriesConfigurationComponent', () => {
     it('should update data and set a page when a page is changed on paginator', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
         component.feed = <any>{id: 15};
-        component.pageChanged(<any>{pageIndex: 2});
+        component.feedCategoriesList.currentPage = 2;
+        component.updateData();
         expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
             page: '3',
-            limit: component.itemsPerPage,
-            name: null,
-            mapping: undefined,
-        })
-    });
-
-    it('should update data and set a page to 1 and update data when the `items per page` is changed on paginator', () => {
-        feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        component.feed = <any>{id: 15};
-        component.currentPage = 20;
-        component.pageChanged(<any>{pageSize: 100, pageIndex: 21, previousPageIndex: 21});
-        expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
-            page: '1',
-            limit: '100',
+            limit: component.feedCategoriesList.itemsPerPage,
             name: null,
             mapping: undefined,
         })

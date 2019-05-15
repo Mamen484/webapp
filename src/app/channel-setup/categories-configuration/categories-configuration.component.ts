@@ -1,5 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { MatDialog, PageEvent } from '@angular/material';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ChannelService } from '../../core/services/channel.service';
 import { Category } from '../../core/entities/category';
 import { Subscription, zip } from 'rxjs';
@@ -15,6 +15,7 @@ import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-d
 import { Feed } from '../../core/entities/feed';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
+import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -26,14 +27,10 @@ const CONFLICT_ERROR_CODE = 409;
 })
 export class CategoriesConfigurationComponent implements OnInit {
 
+    @ViewChild(FeedCategoriesListComponent) feedCategoriesList: FeedCategoriesListComponent;
+
     channel: Channel;
     feed: Feed;
-
-    /** pagination */
-    itemsPerPage = '10';
-    currentPage = 0;
-    totalCategoriesNumber = 0;
-    pageSizeOptions = [10, 25, 50, 100];
 
     /** client category search */
     searchClientCategoryControl = new FormControl();
@@ -69,11 +66,6 @@ export class CategoriesConfigurationComponent implements OnInit {
         }
     }
 
-    chooseClientCategory(category: FeedCategory) {
-        this.chosenClientsCategoryId = category.catalogCategory.id;
-        this.searchChannelCategoryValue = category.channelCategory ? category.channelCategory.name : '';
-    }
-
     displayFn(category: Category) {
         return category ? category.name : undefined;
     }
@@ -103,17 +95,6 @@ export class CategoriesConfigurationComponent implements OnInit {
         });
     }
 
-    pageChanged(event: PageEvent) {
-        if (event.pageIndex === event.previousPageIndex) {
-            this.itemsPerPage = String(event.pageSize);
-            this.currentPage = 0;
-        } else {
-            this.currentPage = event.pageIndex;
-        }
-
-        this.updateData();
-    }
-
     resetMatching() {
         this.searchChannelCategoryControl.reset();
         this.chosenChannelCategory = undefined;
@@ -136,6 +117,37 @@ export class CategoriesConfigurationComponent implements OnInit {
         return this.matDialog.open(UnsavedDataDialogComponent);
     }
 
+    updateData() {
+        this.processingClientCategorySearch = true;
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+
+        this.feedService.fetchCategoryCollection(this.feed.id, {
+            page: (this.feedCategoriesList.currentPage + 1).toString(),
+            limit: this.feedCategoriesList.itemsPerPage,
+            name: this.searchClientCategoryControl.value,
+            mapping: this.categoryMappingFilter,
+        }).subscribe(categories => {
+            this.categories = categories._embedded.category;
+            this.feedCategoriesList.totalCategoriesNumber = categories.total;
+            this.processingClientCategorySearch = false;
+            if (this.categories.length > 0) {
+                this.feedCategoriesList.chooseClientCategory(this.categories[0]);
+            }
+        }, error => {
+            if (error.status === CONFLICT_ERROR_CODE) {
+                this.feedCategoriesList.setPage(error.pages - 1);
+                this.updateData();
+            }
+        });
+    }
+
+    setSelectedCategory(event) {
+        this.searchChannelCategoryValue = event.channelCategoryName;
+        this.chosenClientsCategoryId = event.feedCategoryId;
+    }
+
     protected listenChannelCategorySearch() {
         this.searchChannelCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
@@ -152,35 +164,9 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.searchClientCategoryControl.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery.length === 0),
-            tap(() => this.currentPage = 0),
+            tap(() => this.feedCategoriesList.setPage(0)),
         )
             .subscribe(() => this.updateData());
-    }
-
-    protected updateData() {
-        this.processingClientCategorySearch = true;
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
-
-        this.feedService.fetchCategoryCollection(this.feed.id, {
-            page: (this.currentPage + 1).toString(),
-            limit: this.itemsPerPage,
-            name: this.searchClientCategoryControl.value,
-            mapping: this.categoryMappingFilter,
-        }).subscribe(categories => {
-            this.categories = categories._embedded.category;
-            this.totalCategoriesNumber = categories.total;
-            this.processingClientCategorySearch = false;
-            if (this.categories.length > 0) {
-                this.chooseClientCategory(this.categories[0]);
-            }
-        }, error => {
-            if (error.status === CONFLICT_ERROR_CODE) {
-                this.currentPage = error.pages - 1;
-                this.updateData();
-            }
-        });
     }
 
     protected updatePercentage() {
