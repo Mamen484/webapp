@@ -1,5 +1,5 @@
 <sfl-sidebar-container bgColor="#01579b" borderColor="#dadada" menuHeight="0px">
-    <mat-list>
+    <mat-list fxLayout="column" class="main-sidenav">
         <mat-list-item>
             <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
                 <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
@@ -8,6 +8,11 @@
         <mat-list-item matTooltip="Billing" matTooltipPosition="after" routerLink="/billing">
             <mat-icon>attach_money</mat-icon>
             <span fxHide fxShow.xs i18n>Billing</span>
+        </mat-list-item>
+        <mat-list-item fxFlex></mat-list-item>
+        <mat-list-item matTooltip="Admin" matTooltipPosition="after">
+            <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
+            <span fxHide fxShow.xs i18n>Account</span>
         </mat-list-item>
     </mat-list>
 </sfl-sidebar-container>
@@ -21,3 +26,8 @@
         <ng-content></ng-content>
     </mat-list>
 </sfl-left-navigation>
+
+
+<mat-menu #accountMenu="matMenu" class="sf-sidebar-bottom-menu account-menu" [overlapTrigger]="true">
+    <a mat-menu-item i18n (click)="logout()">Logout</a>
+</mat-menu>

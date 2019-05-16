@@ -63,3 +63,7 @@ mat-list-item {
   font-weight: mat-font-weight($config, title);
   color: black;
 }
+
+mat-list.main-sidenav {
+  height: 100%;
+}
