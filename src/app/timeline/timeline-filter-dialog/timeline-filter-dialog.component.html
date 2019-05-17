@@ -3,7 +3,8 @@
   <form fxLayout="row">
     <div fxLayout="column">
       <mat-form-field color="accent" appearance="outline">
-        <mat-select [(ngModel)]="dateFilter" name="date" placeholder="Date" i18n-placeholder>
+        <mat-label i18n>Date</mat-label>
+        <mat-select [(ngModel)]="dateFilter" name="date" >
           <mat-option i18n [value]="dateFilterOptions.today">Today</mat-option>
           <mat-option i18n [value]="dateFilterOptions.yesterday">Yesterday</mat-option>
           <mat-option i18n [value]="dateFilterOptions.lastWeek">Last Week</mat-option>
@@ -13,12 +14,14 @@
       </mat-form-field>
       <div fxLayout="row" fxLayoutGap="10px">
         <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom" class="date-input">
-          <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="dateSince" name="dateSince" placeholder="Min date">
+          <mat-label i18n>Min Date</mat-label>
+          <input matInput [matDatepicker]="minDate" [(ngModel)]="dateSince" name="dateSince">
           <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
           <mat-datepicker #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
         </mat-form-field>
         <mat-form-field color="accent" appearance="outline" *ngIf="dateFilter === dateFilterOptions.custom" class="date-input">
-          <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="dateUntil" name="dateUntil" placeholder="Max date">
+          <mat-label i18n>Max Date</mat-label>
+          <input matInput [matDatepicker]="maxDate" [(ngModel)]="dateUntil" name="dateUntil">
           <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
           <mat-datepicker #maxDate  (selectedChanged)="setUntil($event)"></mat-datepicker>
         </mat-form-field>
@@ -27,7 +30,8 @@
     </div>
   </form>
     <mat-form-field color="accent" appearance="outline">
-      <mat-select [(ngModel)]="typeFilter" name="type" placeholder="Type" i18n-placeholder>
+      <mat-label i18n>Type</mat-label>
+      <mat-select [(ngModel)]="typeFilter" name="type">
         <mat-option i18n [value]="typeFilterOptions.all">All Types</mat-option>
         <mat-option i18n [value]="typeFilterOptions.import">Import</mat-option>
         <mat-option i18n [value]="typeFilterOptions.export">Export</mat-option>

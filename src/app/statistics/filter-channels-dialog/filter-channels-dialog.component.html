@@ -2,6 +2,7 @@
 <mat-dialog-content>
     <sfl-country-select [(ngModel)]="filter.country"></sfl-country-select>
     <mat-form-field color="accent" appearance="outline">
+        <mat-label i18n>Type</mat-label>
         <mat-select placeholder="Type" i18n-placeholder [(ngModel)]="filter.type">
             <mat-option value="" i18n>All Types</mat-option>
             <mat-option value="ads" i18n>Product Listing Ads</mat-option>
@@ -14,7 +15,8 @@
         </mat-select>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline">
-        <mat-select placeholder="Category" i18n-placeholder [(ngModel)]="filter.segment">
+        <mat-label i18n>Category</mat-label>
+        <mat-select  [(ngModel)]="filter.segment">
             <mat-option value="" i18n>All Categories</mat-option>
             <mat-option value="professional" i18n>Professional Purchasing</mat-option>
             <mat-option value="motors" i18n>Auto / Moto</mat-option>
