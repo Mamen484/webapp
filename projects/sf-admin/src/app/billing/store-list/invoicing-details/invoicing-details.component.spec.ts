@@ -29,7 +29,6 @@ describe('InvoicingDetailsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(InvoicingDetailsComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {
