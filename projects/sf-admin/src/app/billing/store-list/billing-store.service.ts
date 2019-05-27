@@ -6,6 +6,7 @@ import { BillingStore } from './billing-store';
 import { PagedResponse } from 'sfl-shared/entities';
 import { catchError } from 'rxjs/operators';
 import { Invoice } from './invoicing-details/invoice';
+import { InvoiceOrder } from './invoicing-details/invoice-order';
 
 @Injectable({
     providedIn: 'root'
@@ -45,9 +46,22 @@ export class BillingStoreService {
         return this.httpClient.patch(`${environment.SFA_BILLING_API}/store/${id}`, {store});
     }
 
-    fetchInvoicesCollection(storeId: number) {
-        return this.httpClient.get(`${environment.SFA_BILLING_API}/invoice`, {
-            params: new HttpParams().set('storeId', storeId.toString()),
-        }) as Observable<PagedResponse<{invoice: Invoice[]}>>;
+    fetchInvoicesCollection(storeId: number, queryParam: { limit?: number, page?: number, search?: string } = {}) {
+        let params = new HttpParams().set('storeId', storeId.toString());
+        if (queryParam.limit) {
+            params = params.set('limit', queryParam.limit.toString());
+        }
+        if (queryParam.page) {
+            params = params.set('page', queryParam.page.toString());
+        }
+        if (typeof queryParam.search === 'string') {
+            params = params.set('name', queryParam.search);
+        }
+
+        return this.httpClient.get(`${environment.SFA_BILLING_API}/invoice`, {params}) as Observable<PagedResponse<{ invoice: Invoice[] }>>;
+    }
+
+    fetchInvoiceOrders(invoiceId: number) {
+        return this.httpClient.get(`${environment.SFA_BILLING_API}/invoice/${invoiceId}/order`) as Observable<PagedResponse<{ order: InvoiceOrder[] }>>;
     }
 }

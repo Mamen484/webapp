@@ -4,7 +4,6 @@ import { StoreListComponent } from './store-list/store-list.component';
 import { GroupListComponent } from './group-list/group-list.component';
 import { InvoicingDetailsComponent } from './store-list/invoicing-details/invoicing-details.component';
 import { StoreResolverGuard } from './store-resolver.guard';
-import { InvoicesResolverGuard } from './invoices-resolver.guard';
 
 const routes: Routes = [
     {path: '', component: StoreListComponent},
@@ -12,7 +11,6 @@ const routes: Routes = [
     {
         path: 'store/:storeId/details', component: InvoicingDetailsComponent, resolve: {
             billingStore: StoreResolverGuard,
-            invoices: InvoicesResolverGuard,
         }
     },
 ];
