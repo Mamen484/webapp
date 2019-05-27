@@ -2,14 +2,17 @@
 <div mat-dialog-content>
     <form fxLayout="column">
         <mat-form-field appearance="outline">
-            <input matInput placeholder="Carrier" i18n-placeholder name="carrier" [(ngModel)]="info.carrier">
+            <mat-label i18n>Carrier</mat-label>
+            <input matInput name="carrier" [(ngModel)]="info.carrier">
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <input matInput placeholder="TrackingNumber" i18n-placeholder name="trackingNumber"
+            <mat-label i18n>Tracking Number</mat-label>
+            <input matInput name="trackingNumber"
                    [(ngModel)]="info.trackingNumber">
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <input matInput placeholder="TrackingLink" i18n-placeholder name="trackingLink"
+            <mat-label i18n>Tracking Link</mat-label>
+            <input matInput name="trackingLink"
                    [(ngModel)]="info.trackingLink">
         </mat-form-field>
     </form>
