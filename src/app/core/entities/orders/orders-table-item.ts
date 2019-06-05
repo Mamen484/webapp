@@ -14,6 +14,7 @@ export class OrdersTableItem {
     total: number;
     currency: string;
     date: number;
+    carrier: string;
     updatedAt: number;
     productAmount: number;
     shippingAmount: number;
@@ -53,6 +54,7 @@ export class OrdersTableItem {
         item.invoicingName = order.billingAddress.firstName + ' ' + order.billingAddress.lastName;
         item.storeId = order.storeReference;
         item.trackingNumber = order.shipment.trackingNumber;
+        item.carrier = order.shipment.carrier;
         item.imported = Boolean(order.acknowledgedAt);
         item.tags = order._embedded.tag && order._embedded.tag.length ? order._embedded.tag : [];
         item.services = OrdersTableItem.getEnabledServices(order);

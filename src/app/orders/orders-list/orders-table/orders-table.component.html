@@ -151,6 +151,10 @@
                         <th mat-header-cell *matHeaderCellDef i18n> Delivery Name</th>
                         <td mat-cell *matCellDef="let row"> {{row.deliveryName}}</td>
                     </ng-container>
+                    <ng-container matColumnDef="carrier">
+                        <th mat-header-cell *matHeaderCellDef i18n> Carrier</th>
+                        <td mat-cell *matCellDef="let row"> {{row.carrier}}</td>
+                    </ng-container>
                     <ng-container matColumnDef="invoicingName">
                         <th mat-header-cell *matHeaderCellDef i18n> Billing Name</th>
                         <td mat-cell *matCellDef="let row"> {{row.invoicingName}}</td>
@@ -220,6 +224,10 @@
     </div>
     <div mat-menu-item>
         <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.deliveryName" i18n>Delivery name
+        </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+        <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="optionalColumns.carrier" i18n>Carrier
         </mat-checkbox>
     </div>
     <div mat-menu-item>

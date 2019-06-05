@@ -46,6 +46,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         shippingAmount: false,
         paymentMethod: false,
         deliveryName: false,
+        carrier: false,
         invoicingName: false,
         storeId: false,
         trackingNumber: false,
