@@ -88,6 +88,6 @@ describe('FeedService', () => {
 
         let req = httpMock.expectOne(`${environment.API_URL}/feed/11/mapping/category/12`);
         expect(req.request.method).toBe('PUT');
-        expect(req.request.body.mapping.channelCategoryId).toBe(13);
+        expect(req.request.body.mapping.catalogCategoryId).toBe(13);
     });
 });

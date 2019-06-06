@@ -26,30 +26,29 @@
                 </mat-card>
             </label>
             <sf-feed-categories-list [categories]="!processingClientCategorySearch && categories"
-                                     (pageChanged)="updateData()"
-                                     (clientCategorySelected)="setSelectedCategory($event)">
+                                     (pageChanged)="refreshCategoriesList()">
             </sf-feed-categories-list>
         </div>
 
-        <mat-card fxFlex="30%" class="channel-category-box">
+        <mat-card fxFlex="30%">
             <mat-card-content>
-                <div i18n class="category-autocomplete-hint">Type a keyword</div>
-                <form>
-                    <mat-form-field appearance="outline" color="accent">
-                        <mat-label i18n>Category matching</mat-label>
-                        <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
-                               [value]="searchChannelCategoryValue">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                          (optionSelected)="chosenChannelCategory = $event.option.value">
-                            <mat-option *ngFor="let category of channelCategoryOptions"
-                                        [value]="category">{{category.name}}</mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                    <div class="actions" fxLayout="row" fxLayoutAlign="end center">
-                        <button mat-button i18n color="accent" (click)="resetMatching()">Reset</button>
-                        <button mat-raised-button i18n color="accent" (click)="saveMatching()">Save & Next</button>
-                    </div>
-                </form>
+                <mat-vertical-stepper>
+                    <mat-step label="Type a keyword" i18n-label color="accent">
+                        <sf-category-mapping
+                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
+                                [searchChannelCategoryValue]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.name"
+                                [feedId]="feed.id"
+                                [channelId]="channel.id"
+                                (categoryMappingChanged)="refreshPageData()"></sf-category-mapping>
+                    </mat-step>
+                    <mat-step label="Fill in the autotags" i18n-label *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory">
+                            <sf-autotag-mapping [feedId]="feed.id"
+                                                [catalogCategoryId]="feedCategoriesList.chosenClientsCategory.id"></sf-autotag-mapping>
+                    </mat-step>
+                </mat-vertical-stepper>
+
+
+
             </mat-card-content>
         </mat-card>
     </div>

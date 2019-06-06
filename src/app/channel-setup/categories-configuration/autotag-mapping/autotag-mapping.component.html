@@ -1,0 +1,8 @@
+<mat-form-field appearance="outline" *ngFor="let autotag of autotagList">
+    <mat-label>{{autotag._embedded.attribute.name}}</mat-label>
+    <input matInput [(ngModel)]="autotag.value">
+</mat-form-field>
+<div class="actions" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button i18n color="accent" (click)="resetMatching()">Reset</button>
+    <button mat-raised-button i18n matStepperNext color="accent" (click)="saveMatching()">Save & Next</button>
+</div>

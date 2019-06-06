@@ -77,9 +77,16 @@ export class FeedService {
         );
     }
 
-    fetchAutotagByCategory(feedId, channelCategoryId) {
+    fetchAutotagByCategory(feedId, catalogCategoryId) {
         return this.httpClient.get(
-            `${environment.API_URL}/feed/${feedId}/autotag/category`, {params: {channelCategoryId}}
-        ) as Observable<PagedResponse<{autotag: Autotag[]}>>;
+            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`
+        ) as Observable<PagedResponse<{ autotag: Autotag[] }>>;
+    }
+
+    matchAutotagByCategory(feedId, catalogCategoryId, channelAttributeId, value) {
+        return this.httpClient.put(
+            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}/attribute/${channelAttributeId}`,
+            {autotag: {value}}
+        );
     }
 }

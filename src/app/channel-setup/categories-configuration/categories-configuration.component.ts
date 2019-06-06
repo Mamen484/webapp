@@ -1,10 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ChannelService } from '../../core/services/channel.service';
 import { Category } from '../../core/entities/category';
 import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Channel } from 'sfl-shared/entities';
 import { FeedCategory } from '../../core/entities/feed-category';
@@ -16,6 +15,7 @@ import { Feed } from '../../core/entities/feed';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
+import { CategoryMappingComponent } from './category-mapping/category-mapping.component';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -28,6 +28,7 @@ const CONFLICT_ERROR_CODE = 409;
 export class CategoriesConfigurationComponent implements OnInit {
 
     @ViewChild(FeedCategoriesListComponent) feedCategoriesList: FeedCategoriesListComponent;
+    @ViewChild(CategoryMappingComponent) categoryMapping: CategoryMappingComponent;
 
     channel: Channel;
     feed: Feed;
@@ -37,15 +38,6 @@ export class CategoriesConfigurationComponent implements OnInit {
     processingClientCategorySearch = false;
     categories: FeedCategory[];
 
-    /** channel category autocomplete */
-    searchChannelCategoryControl = new FormControl();
-    searchChannelCategoryValue = '';
-    channelCategoryOptions: Category[] = [];
-
-    /** matched categories */
-    chosenClientsCategoryId: number;
-    chosenChannelCategory: Category;
-
     /** percentage of matched categories */
     percentage = 0;
 
@@ -53,7 +45,6 @@ export class CategoriesConfigurationComponent implements OnInit {
     protected subscription: Subscription;
 
     constructor(protected matDialog: MatDialog,
-                protected channelService: ChannelService,
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected appStore: Store<AppState>) {
@@ -71,17 +62,15 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return Boolean(this.searchChannelCategoryControl.value);
+        return Boolean(this.categoryMapping.searchChannelCategoryControl.value);
     }
 
     ngOnInit() {
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
             this.feed = data.feed;
-            this.updateData();
-            this.updatePercentage();
+            this.refreshPageData();
 
-            this.listenChannelCategorySearch();
             this.listenClientCategorySearch();
         });
     }
@@ -90,34 +79,22 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.matDialog.open(FilterDialogComponent, {data: this.categoryMappingFilter}).afterClosed().subscribe(state => {
             if (typeof state !== 'undefined') {
                 this.categoryMappingFilter = state;
-                this.updateData();
+                this.refreshCategoriesList();
             }
         });
     }
 
-    resetMatching() {
-        this.searchChannelCategoryControl.reset();
-        this.chosenChannelCategory = undefined;
-    }
-
-    saveMatching() {
-        if (!this.chosenChannelCategory || !this.chosenClientsCategoryId) {
-            return;
-        }
-        this.feedService.mapFeedCategory(this.feed.id, this.chosenClientsCategoryId, this.chosenChannelCategory.id)
-            .subscribe(() => {
-                this.resetMatching();
-                this.updateData();
-                this.updatePercentage();
-            });
-
-    }
 
     showCloseDialog() {
         return this.matDialog.open(UnsavedDataDialogComponent);
     }
 
-    updateData() {
+    refreshPageData() {
+        this.refreshCategoriesList();
+        this.refreshPercentage();
+    }
+
+    refreshCategoriesList() {
         this.processingClientCategorySearch = true;
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -138,26 +115,9 @@ export class CategoriesConfigurationComponent implements OnInit {
         }, error => {
             if (error.status === CONFLICT_ERROR_CODE) {
                 this.feedCategoriesList.setPage(error.pages - 1);
-                this.updateData();
+                this.refreshCategoriesList();
             }
         });
-    }
-
-    setSelectedCategory(event) {
-        this.searchChannelCategoryValue = event.channelCategoryName;
-        this.chosenClientsCategoryId = event.feedCategoryId;
-    }
-
-    protected listenChannelCategorySearch() {
-        this.searchChannelCategoryControl.valueChanges.pipe(
-            debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
-            switchMap(name =>
-                this.appStore.select('currentStore').pipe(
-                    flatMap(store => this.channelService.getChannelCategories(this.channel.id, {name, country: store.country})))
-            ),
-        )
-            .subscribe(response => this.channelCategoryOptions = response._embedded.category);
     }
 
     protected listenClientCategorySearch() {
@@ -166,10 +126,10 @@ export class CategoriesConfigurationComponent implements OnInit {
             filter(searchQuery => searchQuery.length >= MIN_QUERY_LENGTH || searchQuery.length === 0),
             tap(() => this.feedCategoriesList.setPage(0)),
         )
-            .subscribe(() => this.updateData());
+            .subscribe(() => this.refreshCategoriesList());
     }
 
-    protected updatePercentage() {
+    protected refreshPercentage() {
         zip(
             this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Mapped, limit: '1'}),
             this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Unmapped, limit: '1'})

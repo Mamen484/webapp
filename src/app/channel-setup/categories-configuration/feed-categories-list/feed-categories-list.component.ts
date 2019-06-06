@@ -11,10 +11,9 @@ export class FeedCategoriesListComponent implements OnInit {
 
     @Input() categories: FeedCategory[];
     @Output() pageChanged = new EventEmitter();
-    @Output() clientCategorySelected = new EventEmitter<{ channelCategoryName: string, feedCategoryId: number }>();
 
     /** matched categories */
-    chosenClientsCategoryId: number;
+    chosenClientsCategory: FeedCategory;
 
     /** pagination */
     itemsPerPage = '10';
@@ -29,11 +28,7 @@ export class FeedCategoriesListComponent implements OnInit {
     }
 
     chooseClientCategory(category: FeedCategory) {
-        this.chosenClientsCategoryId = category.catalogCategory.id;
-        this.clientCategorySelected.emit({
-            channelCategoryName: category.channelCategory ? category.channelCategory.name : '',
-            feedCategoryId: category.catalogCategory.id,
-        });
+        this.chosenClientsCategory = category;
     }
 
     changePage(event: PageEvent) {

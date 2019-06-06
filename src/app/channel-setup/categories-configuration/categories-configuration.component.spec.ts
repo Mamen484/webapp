@@ -96,7 +96,7 @@ describe('CategoriesConfigurationComponent', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
         component.feed = <any>{id: 15};
         component.feedCategoriesList.currentPage = 2;
-        component.updateData();
+        component.refreshCategoriesList();
         expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
             page: '3',
             limit: component.feedCategoriesList.itemsPerPage,

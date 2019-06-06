@@ -7,6 +7,9 @@ import { SharedModule } from '../shared/shared.module';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { UnsavedDataDialogComponent } from './categories-configuration/unsaved-data-dialog/unsaved-data-dialog.component';
 import { FeedCategoriesListComponent } from './categories-configuration/feed-categories-list/feed-categories-list.component';
+import { AutotagMappingComponent } from './categories-configuration/autotag-mapping/autotag-mapping.component';
+import { MatStepperModule } from '@angular/material';
+import { CategoryMappingComponent } from './categories-configuration/category-mapping/category-mapping.component';
 
 @NgModule({
     declarations: [
@@ -14,12 +17,14 @@ import { FeedCategoriesListComponent } from './categories-configuration/feed-cat
         FilterDialogComponent,
         UnsavedDataDialogComponent,
         FeedCategoriesListComponent,
+        AutotagMappingComponent,
+        CategoryMappingComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,
         CommonModule,
         SharedModule,
-
+        MatStepperModule,
     ],
     entryComponents: [
         FilterDialogComponent,

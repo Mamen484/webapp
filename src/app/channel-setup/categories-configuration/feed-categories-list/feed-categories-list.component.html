@@ -2,7 +2,7 @@
     <mat-card-content>
         <mat-list dense>
             <mat-list-item *ngFor="let category of (categories || [])" (click)="chooseClientCategory(category)"
-                           [class.selected]="chosenClientsCategoryId === category.catalogCategory.id">
+                           [class.selected]="chosenClientsCategory.id === category.catalogCategory.id">
                 <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
                     <div fxFlex>{{category.catalogCategory.name}}</div>
                     <div class="sf-label red mat-chip" *ngIf="!category.channelCategory">
