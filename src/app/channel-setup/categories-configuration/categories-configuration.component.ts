@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Category } from '../../core/entities/category';
 import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, tap } from 'rxjs/operators';
@@ -55,10 +54,6 @@ export class CategoriesConfigurationComponent implements OnInit {
         if (this.hasModifications()) {
             return confirm('Unsaved data can be lost, continue?');
         }
-    }
-
-    displayFn(category: Category) {
-        return category ? category.name : undefined;
     }
 
     hasModifications() {

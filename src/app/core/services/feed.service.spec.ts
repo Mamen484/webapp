@@ -88,6 +88,37 @@ describe('FeedService', () => {
 
         let req = httpMock.expectOne(`${environment.API_URL}/feed/11/mapping/category/12`);
         expect(req.request.method).toBe('PUT');
-        expect(req.request.body.mapping.catalogCategoryId).toBe(13);
+        expect(req.request.body.mapping.channelCategoryId).toBe(13);
     });
+
+    it('should call a proper endpoint on fetchMappingCollection call', () => {
+        appStore.select.and.returnValue(of({id: 58}));
+        service.fetchMappingCollection().subscribe();
+
+        let req = httpMock.expectOne(`${environment.API_URL}/catalog/58/mapping`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should call a cached mapping collection when requested a second time', () => {
+        appStore.select.and.returnValue(of({id: 58}));
+        service.fetchMappingCollection().subscribe();
+        service.fetchMappingCollection().subscribe();
+
+        let reqs = httpMock.match(`${environment.API_URL}/catalog/58/mapping`);
+        expect(reqs.length).toBe(1);
+
+    });
+
+    it('should make different calls for mapping collections with different catalogId', () => {
+        appStore.select.and.returnValue(of({id: 56}));
+        let call1 = service.fetchMappingCollection().subscribe();
+        appStore.select.and.returnValue(of({id: 57}));
+        let call2 = service.fetchMappingCollection().subscribe();
+        expect(call1).not.toBe(call2);
+
+        httpMock.expectOne(`${environment.API_URL}/catalog/56/mapping`);
+        httpMock.expectOne(`${environment.API_URL}/catalog/57/mapping`);
+    });
+
+
 });

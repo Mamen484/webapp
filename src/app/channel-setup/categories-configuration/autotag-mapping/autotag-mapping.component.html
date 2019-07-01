@@ -1,7 +1,8 @@
-<mat-form-field appearance="outline" *ngFor="let autotag of autotagList">
-    <mat-label>{{autotag._embedded.attribute.name}}</mat-label>
-    <input matInput [(ngModel)]="autotag.value">
-</mat-form-field>
+<ng-container  *ngFor="let autotag of autotagList">
+    <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId" [autotag]="autotag"></sf-autotag-input>
+    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"></sf-autotag-dropdown>
+</ng-container>
+
 <div class="actions" fxLayout="row" fxLayoutAlign="end center">
     <button mat-button i18n color="accent" (click)="resetMatching()">Reset</button>
     <button mat-raised-button i18n matStepperNext color="accent" (click)="saveMatching()">Save & Next</button>

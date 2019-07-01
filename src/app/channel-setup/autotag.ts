@@ -4,6 +4,6 @@ export interface Autotag {
     id: number;
     feedId: number;
     channelAttributeId: number; // = ChannelAttribute.id
-    value?: number;
+    value?: string;
     _embedded: {attribute: ChannelAttribute};
 }

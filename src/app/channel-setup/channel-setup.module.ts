@@ -10,6 +10,8 @@ import { FeedCategoriesListComponent } from './categories-configuration/feed-cat
 import { AutotagMappingComponent } from './categories-configuration/autotag-mapping/autotag-mapping.component';
 import { MatStepperModule } from '@angular/material';
 import { CategoryMappingComponent } from './categories-configuration/category-mapping/category-mapping.component';
+import { AutotagInputComponent } from './categories-configuration/autotag-mapping/autotag-input/autotag-input.component';
+import { AutotagDropdownComponent } from './categories-configuration/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
 
 @NgModule({
     declarations: [
@@ -19,6 +21,8 @@ import { CategoryMappingComponent } from './categories-configuration/category-ma
         FeedCategoriesListComponent,
         AutotagMappingComponent,
         CategoryMappingComponent,
+        AutotagInputComponent,
+        AutotagDropdownComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,

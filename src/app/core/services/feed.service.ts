@@ -10,6 +10,7 @@ import { flatMap, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { CategoryMapping } from '../../channel-setup/category-mapping';
 import { Autotag } from '../../channel-setup/autotag';
+import { MappingCollection } from '../../channel-setup/mapping-collection';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ import { Autotag } from '../../channel-setup/autotag';
 export class FeedService {
 
     feedCache = new Map<number, Observable<PagedResponse<{ feed: Feed[] }>>>();
+    protected mappingCache = new Map<number, Observable<MappingCollection>>();
 
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
@@ -88,5 +90,21 @@ export class FeedService {
             `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}/attribute/${channelAttributeId}`,
             {autotag: {value}}
         );
+    }
+
+    fetchMappingCollection() {
+        return this.appStore.select('currentStore').pipe(
+            take(1),
+            flatMap(store => {
+                    const catalogId = store.id;
+                    if (!this.mappingCache.has(catalogId)) {
+                        const observable = this.httpClient.get(`${environment.API_URL}/catalog/${catalogId}/mapping`)
+                            .pipe(publishReplay()) as ConnectableObservable<MappingCollection>;
+                        observable.connect();
+                        this.mappingCache.set(catalogId, observable);
+                    }
+                    return this.mappingCache.get(catalogId);
+                }
+            ));
     }
 }

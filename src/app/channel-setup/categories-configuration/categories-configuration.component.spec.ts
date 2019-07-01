@@ -105,26 +105,26 @@ describe('CategoriesConfigurationComponent', () => {
         })
     });
 
-    it('should reset matching on resetMathing() call', () => {
-        component.searchChannelCategoryControl.setValue('some text');
-        component.chosenChannelCategory = <any>'some value';
-        component.resetMatching();
-        expect(component.searchChannelCategoryControl.value).toBe(null);
-        expect(component.chosenChannelCategory).not.toBeDefined();
-    });
+    // it('should reset matching on resetMathing() call', () => {
+    //     component.searchChannelCategoryControl.setValue('some text');
+    //     component.chosenChannelCategory = <any>'some value';
+    //     component.resetMatching();
+    //     expect(component.searchChannelCategoryControl.value).toBe(null);
+    //     expect(component.chosenChannelCategory).not.toBeDefined();
+    // });
 
     it('should open an unsaved data dialog on showCloseDialog() call', () => {
         component.showCloseDialog();
         expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
     });
+    //
+    // it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
+    //     component.searchChannelCategoryControl.setValue('some value');
+    //     expect(component.hasModifications()).toBe(true);
+    // });
 
-    it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
-        component.searchChannelCategoryControl.setValue('some value');
-        expect(component.hasModifications()).toBe(true);
-    });
-
-    it('should be marked as NOT having modifications if if only a channel category chosen', () => {
-        component.chosenChannelCategory = <any>{};
-        expect(component.hasModifications()).toBe(false);
-    });
+    // it('should be marked as NOT having modifications if if only a channel category chosen', () => {
+    //     component.chosenChannelCategory = <any>{};
+    //     expect(component.hasModifications()).toBe(false);
+    // });
 });

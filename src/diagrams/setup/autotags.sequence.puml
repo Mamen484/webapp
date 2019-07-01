@@ -1,0 +1,38 @@
+@startuml
+actor User
+entity Webapp
+entity "SF API" as api
+
+User -> Webapp : has created a feed category mapping
+Webapp -> api : GET FetchAutotagByCategorCollection
+api --> Webapp : autotag channel attributes
+Webapp --> User : display "Fill autotags area" \n with mandatory channel attributes
+
+alt The channel allows any value for autotags
+User -> Webapp : types a string //str// in an input
+Webapp -> api : GET FetchMappingCollection
+Webapp <-- api : _embedded.mapping[].catalogField
+Webapp -> Webapp : filter results according to a user's input
+Webapp -> Webapp : add curly brackets to filtered results
+User <-- Webapp : display an autocomplete suggestion \nwith filtered results in curly brackets \n+ user's input string in square brackets: \n{str1} \n{str2} \n[str]
+
+else The channel allows only authorized autotag values
+
+User -> Webapp : opens a dropdown \nwith authorized attribute values
+Webapp -> api : GET FetchAutotagByCategorCollection
+api --> Webapp : an embedded **constraint** array
+Webapp --> User : fills a dropdown \nwith **_embedded.constraint[].label** \nas options
+end
+
+
+User -> Webapp : clicks Save & next
+alt  some inputs are blank
+    User <-- Webapp : show validation error "This field is required" \nfor every blank field
+else all inputs have values
+    Webapp -> Webapp : remove curly brackets \nand preserve square brackets \nfor not constrainted inputes
+    Webapp -> api : PUT MatchAutotagByCategory
+    Webapp <-- api: 200 OK
+    User <-- Webapp : load next category to be configured
+end
+
+@enduml

@@ -33,6 +33,10 @@ export class CategoryMappingComponent implements OnInit {
                 protected appStore: Store<AppState>) {
     }
 
+    displayFn(category: Category) {
+        return category ? category.name : undefined;
+    }
+
     ngOnInit() {
         this.listenChannelCategorySearch();
     }
