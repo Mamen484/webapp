@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Channel, PagedResponse } from 'sfl-shared/entities';
 import { Category } from '../entities/category';
 import { Observable } from 'rxjs';
+import { ChannelConstraint } from '../entities/channel-constraint';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,12 @@ export class ChannelService {
 
     getChannel(channelId) {
         return this.httpClient.get(`${environment.API_URL}/channel/${channelId}`) as Observable<Channel>;
+    }
+
+    fetchChannelConstraintCollection(taxonomyId: number, groupId: number) {
+        return this.httpClient.get(
+            `${environment.API_URL}/channel/taxonomy/${taxonomyId}/constraint`,
+            {params: new HttpParams().set('groupId', groupId.toString())}
+        ) as Observable<PagedResponse<{ constraint: ChannelConstraint[] }>>;
     }
 }

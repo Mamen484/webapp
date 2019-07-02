@@ -12,6 +12,8 @@ import { CategoryMapping } from '../../channel-setup/category-mapping';
 import { Autotag } from '../../channel-setup/autotag';
 import { MappingCollection } from '../../channel-setup/mapping-collection';
 
+const MAX_API_LIMIT = '200';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -81,7 +83,8 @@ export class FeedService {
 
     fetchAutotagByCategory(feedId, catalogCategoryId) {
         return this.httpClient.get(
-            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`
+            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`,
+            {params: new HttpParams().set('limit', MAX_API_LIMIT)}
         ) as Observable<PagedResponse<{ autotag: Autotag[] }>>;
     }
 

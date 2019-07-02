@@ -1,6 +1,6 @@
 <ng-container  *ngFor="let autotag of autotagList">
     <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId" [autotag]="autotag"></sf-autotag-input>
-    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"></sf-autotag-dropdown>
+    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId" [autotag]="autotag"></sf-autotag-dropdown>
 </ng-container>
 
 <div class="actions" fxLayout="row" fxLayoutAlign="end center">
