@@ -11,7 +11,6 @@ import { CategoryMapping } from '../category-mapping';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
-import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -32,7 +31,6 @@ describe('CategoriesConfigurationComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
     let store: jasmine.SpyObj<Store<AppState>>;
-    let feedCategoriesList: FeedCategoriesListComponent;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
@@ -61,7 +59,10 @@ describe('CategoriesConfigurationComponent', () => {
         component.feedCategoriesList = <any>{
             currentPage: 0,
             itemsPerPage: '10',
-        }
+        };
+        component.feed = <any>{id: 12};
+        component.channel = <any>{};
+        component.categoryMapping = <any>{searchChannelCategoryControl: <any>{}};
         fixture.detectChanges();
     });
 
@@ -105,26 +106,18 @@ describe('CategoriesConfigurationComponent', () => {
         })
     });
 
-    // it('should reset matching on resetMathing() call', () => {
-    //     component.searchChannelCategoryControl.setValue('some text');
-    //     component.chosenChannelCategory = <any>'some value';
-    //     component.resetMatching();
-    //     expect(component.searchChannelCategoryControl.value).toBe(null);
-    //     expect(component.chosenChannelCategory).not.toBeDefined();
-    // });
-
     it('should open an unsaved data dialog on showCloseDialog() call', () => {
         component.showCloseDialog();
         expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
     });
-    //
-    // it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
-    //     component.searchChannelCategoryControl.setValue('some value');
-    //     expect(component.hasModifications()).toBe(true);
-    // });
 
-    // it('should be marked as NOT having modifications if if only a channel category chosen', () => {
-    //     component.chosenChannelCategory = <any>{};
-    //     expect(component.hasModifications()).toBe(false);
-    // });
+    it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
+        component.categoryMapping = <any>{searchChannelCategoryControl: {value: 'some value'}};
+        expect(component.hasModifications()).toBe(true);
+    });
+
+    it('should be marked as NOT having modifications if if only a channel category chosen', () => {
+        component.categoryMapping = <any>{searchChannelCategoryControl: <any>{}};
+        expect(component.hasModifications()).toBe(false);
+    });
 });

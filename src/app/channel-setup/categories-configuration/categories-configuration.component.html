@@ -1,7 +1,7 @@
 <div class="scrollable-container sf-content">
     <div fxLayout="row" fxLayoutAlign="center center" class="launch-channel-box" fxLayoutGap="40px">
         <div fxFlex>
-            <img [src]="channel?._links.image.href" height="40px">
+            <img [src]="channel?._links?.image?.href" height="40px">
         </div>
         <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
         <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n
@@ -43,7 +43,7 @@
                     </mat-step>
                     <mat-step label="Fill in the autotags" i18n-label *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory">
                             <sf-autotag-mapping [feedId]="feed.id"
-                                                [catalogCategoryId]="feedCategoriesList.chosenClientsCategory.id"></sf-autotag-mapping>
+                                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"></sf-autotag-mapping>
                     </mat-step>
                 </mat-vertical-stepper>
 
