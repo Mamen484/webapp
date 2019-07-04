@@ -63,7 +63,7 @@
     "tslib": "^1.10.0",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5",
-    "webdriver-manager": "^13.0.0",
+    "webdriver-manager": "^13.0.0"
   },
   "name": "web-app",
   "license": "MIT",
