@@ -1,12 +1,13 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK, SFL_DEFAULT_LANGUAGE } from 'sfl-shared/entities';
+import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK } from 'sfl-shared/entities';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { SflLegacyLinkDirective } from './legacy-link.directive';
 import { SflCountrySelectComponent } from './country-select/country-select.component';
-import { MatOptionModule, MatSelectModule } from '@angular/material';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /**

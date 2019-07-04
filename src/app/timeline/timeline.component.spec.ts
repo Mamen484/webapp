@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -14,7 +14,6 @@ import { Store } from '@ngrx/store';
 import { eventsWithErrors } from '../../mocks/events-with-errors.mock';
 import { Component, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { SflAuthService, SflLegacyLinkService, SflLocalStorageService } from 'sfl-shared/services';
-import { environment } from '../../environments/environment';
 import { dataDistinct } from '../../mocks/updates-for-timeline-service.mock';
 import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
@@ -189,7 +188,7 @@ describe('TimelineComponent', () => {
             fixture.detectChanges();
         });
 
-        it('should convert API data to the correct list of udpates',  async () => {
+        it('should convert API data to the correct list of udpates', async () => {
             await fixture.whenStable();
             let items = fixture.debugElement.nativeElement.querySelectorAll('sf-update-row');
             expect(items.length).toEqual(4);
@@ -199,7 +198,7 @@ describe('TimelineComponent', () => {
             validateUpdate(items[3], 'vertical_align_top', 'Fnac', 'Error');
         });
 
-        it('should convert API data to the correct list of events',  async () => {
+        it('should convert API data to the correct list of events', async () => {
             await fixture.whenStable();
             let items = fixture.debugElement.nativeElement.querySelectorAll('.event mat-list-item');
             expect(items.length).toEqual(17);

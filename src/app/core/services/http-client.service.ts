@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http';
-import { Observable ,  Observer } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { Observable, Observer } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServerErrorComponent } from '../../snackbars/server-error/server-error.component';
 
 const RETRY_INTERVAL = 3000;

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DAY, OrdersFilter } from '../../core/entities/orders/orders-filter';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { ChannelType, StoreChannelDetails } from 'sfl-shared/entities';

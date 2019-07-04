@@ -6,7 +6,7 @@ import { flatMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
 import { Observable } from 'rxjs';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';

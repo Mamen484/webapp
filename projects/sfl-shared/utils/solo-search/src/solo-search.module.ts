@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { SoloSearchComponent } from './solo-search.component';
-import { MatButtonModule, MatCardModule, MatIconModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

@@ -1,5 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatSnackBar, MatTable, PageEvent } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTable } from '@angular/material/table';
 import { Store as AppStore } from '@ngrx/store';
 import { Store } from 'sfl-shared/entities';
 import { clone, toPairs } from 'lodash';
@@ -36,7 +39,7 @@ const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 })
 export class OrdersTableComponent extends TableOperations<OrdersTableItem> implements OnInit, OnDestroy {
 
-    @ViewChild(MatTable) ordersTable: MatTable<OrdersTableItem>;
+    @ViewChild(MatTable, {static: true}) ordersTable: MatTable<OrdersTableItem>;
 
     selection = new SelectionModel<OrdersTableItem>(true, []);
     optionalColumns = {

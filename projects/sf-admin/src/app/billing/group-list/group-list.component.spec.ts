@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GroupListComponent } from './group-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BillingGroupService } from './billing-group.service';
-import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { EMPTY, of } from 'rxjs';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
 

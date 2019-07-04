@@ -15,7 +15,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { UserCreatedDialogComponent } from './create-user/user-created-dialog/user-created-dialog.component';
 import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.service';
 import { SfaSharedModule } from './shared/shared.module';
-import { MatSidenavModule } from '@angular/material';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
 
 
