@@ -21,7 +21,7 @@ import { ChannelMap } from '../../../core/entities/channel-map.enum';
 })
 export class ActionButtonsComponent implements OnInit {
 
-    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount];
+    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions];
 
     @Input() order: Order;
 
