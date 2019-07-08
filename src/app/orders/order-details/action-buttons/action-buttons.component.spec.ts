@@ -167,6 +167,18 @@ describe('ActionButtonsComponent', () => {
             expect(elements().length).toEqual(1);
         });
 
+    it('should NOT display a refund button if the channel is googleshoppingactions, status is partially_refunded, but all items have the refunded status',
+        () => {
+            component.order.status = OrderStatus.partially_refunded;
+            component.order.items = <any>[{status: OrderStatus.refunded}, {status: OrderStatus.refunded}];
+            component.order._embedded.channel.name = 'googleshoppingactions';
+            component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
+            fixture.detectChanges();
+            expect(component.supportsRefund).toEqual(false);
+            expect(elements()[0].textContent.trim()).not.toEqual('Refund');
+            expect(elements().length).toEqual(1);
+        });
+
     it('should display a refund button if the channel is laredoute and status is partially_refunded', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'LaRedoute';
@@ -181,6 +193,16 @@ describe('ActionButtonsComponent', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'CDiscount';
         component.order._embedded.channel.id = ChannelMap.cdiscount;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
+
+    it('should display a refund button if the channel is googleshoppingactions and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'googleshoppingactions';
+        component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(true);
         expect(elements()[0].textContent.trim()).toEqual('Refund');
@@ -203,6 +225,14 @@ describe('ActionButtonsComponent', () => {
         expect(component.supportsRefund).toEqual(true);
     });
 
+    it('should set supportsRefund property to true if the channel is googleshoppingactions and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'googleshoppingactions';
+        component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+    });
+
     it('should set supportsRefund property to true if the channel is laredoute and status is shipped', () => {
         component.order.status = OrderStatus.shipped;
         component.order._embedded.channel.name = 'LaRedoute';
@@ -219,6 +249,14 @@ describe('ActionButtonsComponent', () => {
         expect(component.supportsRefund).toEqual(true);
     });
 
+    it('should set supportsRefund property to true if the channel is cdiscount and status is shipped', () => {
+        component.order.status = OrderStatus.shipped;
+        component.order._embedded.channel.name = 'googleshoppingactions';
+        component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+    });
+
     it('should set supportsRefund property to false if the channel is NOT laredoute and status is shipped', () => {
         component.order.status = OrderStatus.shipped;
         component.order._embedded.channel.name = 'any';
@@ -230,6 +268,14 @@ describe('ActionButtonsComponent', () => {
         component.order.status = OrderStatus.cancelled;
         component.order._embedded.channel.name = 'LaRedoute';
         component.order._embedded.channel.id = ChannelMap.laredoute;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(false);
+    });
+
+    it('should set supportsRefund property to false if the channel is laredoute and status is NOT shipped and is NOT partially_refunded', () => {
+        component.order.status = OrderStatus.cancelled;
+        component.order._embedded.channel.name = 'googleshoppingactions';
+        component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(false);
     });
