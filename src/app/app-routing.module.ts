@@ -32,10 +32,10 @@ const routes: Routes = [
         ],
         canActivateChild: [AddStoreParamGuard],
         children: [
-            {path: '', loadChildren: './statistics/statistics.module#StatisticsModule'},
-            {path: 'timeline', loadChildren: './timeline/timeline.module#TimelineModule'},
-            {path: 'orders', loadChildren: './orders/orders.module#OrdersModule'},
-            {path: 'api', loadChildren: './tickets/tickets.module#TicketsModule'},
+            {path: '', loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule)},
+            {path: 'timeline', loadChildren: () => import('./timeline/timeline.module').then(m => m.TimelineModule)},
+            {path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
+            {path: 'api', loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsModule)},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
@@ -43,7 +43,7 @@ const routes: Routes = [
     {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
-    {path: 'register', loadChildren: './registration/registration.module#RegistrationModule'},
+    {path: 'register', loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule)},
 ];
 
 @NgModule({

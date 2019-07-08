@@ -4,7 +4,7 @@ import { InvoicingDetailsComponent } from './invoicing-details.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule } from '@angular/material/table';
 import { BillingStoreService } from '../billing-store.service';
 
 describe('InvoicingDetailsComponent', () => {

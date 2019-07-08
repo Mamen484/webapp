@@ -8,7 +8,7 @@ const routes: Routes = [
     {
         path: '', canActivate: [SflLoginByTokenGuard, IsAuthorizedGuard], children: [
             {path: '', redirectTo: 'billing', pathMatch: 'full'},
-            {path: 'billing', loadChildren: './billing/billing.module#BillingModule'},
+            {path: 'billing', loadChildren: () => import('./billing/billing.module').then(m => m.BillingModule)},
             {path: 'create-user', component: CreateUserComponent},
         ]
     },

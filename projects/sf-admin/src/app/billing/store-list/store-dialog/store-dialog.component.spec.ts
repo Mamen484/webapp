@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreDialogComponent } from './store-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatAutocompleteModule, MatDialogRef } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EMPTY, of, Subject } from 'rxjs';
 import { BillingStore } from '../billing-store';
 

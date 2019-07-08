@@ -6,7 +6,7 @@
         <sf-timeline-filtering-area (filterChanged)="applyFilter($event)"></sf-timeline-filtering-area>
     </div>
     <div *ngIf="!loadingTimeline">
-        <div *ngIf="showUpdates" class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title" i18n>Latest updates</div>
+        <div *ngIf="showUpdates" class="heading-date" class.gt-xs="mat-body-1" class.xs="mat-title" i18n>Latest updates</div>
         <mat-card *ngIf="showUpdates" class="update">
             <mat-list>
                 <mat-list-item class="updates-in-progress">
@@ -33,7 +33,7 @@
         </mat-card>
 
         <div *ngFor="let eventsGroup of events">
-            <div class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title">{{eventsGroup[0] | date:'fullDate'}}</div>
+            <div class="heading-date" class.gt-xs="mat-body-1" class.xs="mat-title">{{eventsGroup[0] | date:'fullDate'}}</div>
             <mat-card class="event">
                 <mat-list>
                     <mat-list-item *ngFor="let event of eventsGroup[1]">
@@ -49,7 +49,7 @@
         </div>
 
         <div *ngIf="!events.length">
-            <div class="heading-date" ngClass.gt-xs="mat-body-1" ngClass.xs="mat-title" i18n>Today</div>
+            <div class="heading-date" class.gt-xs="mat-body-1" class.xs="mat-title" i18n>Today</div>
             <mat-card class="event">
                 <mat-card-content>
                     <div class="no-events mat-body-1" i18n>No events</div>

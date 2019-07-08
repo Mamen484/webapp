@@ -38,7 +38,7 @@ export class BillingGroupService {
         return this.httpClient.post(`${environment.SFA_BILLING_API}/group`, {
             group: {
                 name: group.name,
-                stores: group.stores.map(store => ({id: store.id})),
+                stores: group.stores.map((store, index) => ({id: store.id, primary: index === 0})),
             }
         })
             .pipe(catchError(error => throwError(error.error.detail)));

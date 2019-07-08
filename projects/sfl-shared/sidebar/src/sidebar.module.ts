@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SflSidebarContainerComponent } from './sidebar-container.component';
-import { MatListModule, MatSidenavModule } from '@angular/material';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SflLeftNavigationComponent } from './left-navigation/sfl-left-navigation.component';
 

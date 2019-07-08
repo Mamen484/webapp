@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Store, StoreError, StoreValidationErrors } from 'sfl-shared/entities';
 import { StoreService } from 'sfl-shared/services';
-import { MatDialog, MatSelectChange } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSelectChange } from '@angular/material/select';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { values } from 'lodash';
 import { createUserErrorValidator } from './create-user-error.validator';

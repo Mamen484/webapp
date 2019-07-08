@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatMenuModule, MatSidenavModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { SflSidebarContainerComponent } from './sidebar-container.component';
 import { Subject } from 'rxjs';

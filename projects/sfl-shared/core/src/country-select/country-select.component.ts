@@ -18,7 +18,7 @@ import { SFL_BASE_HREF } from 'sfl-shared/entities';
 export class SflCountrySelectComponent implements ControlValueAccessor {
 
     @Input() required = false;
-    @ViewChild('select') select: HTMLSelectElement;
+    @ViewChild('select', {static: true}) select: HTMLSelectElement;
 
     baseHref: string;
     onChange: (value: any) => void;

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ItemsTableComponent } from '../items-table/items-table.component';
 import { OrdersService } from '../../../core/services/orders.service';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
@@ -16,7 +17,7 @@ import { cloneDeep } from 'lodash';
 })
 export class RefundDialogComponent implements OnInit {
 
-    @ViewChild(ItemsTableComponent) itemsTable: ItemsTableComponent;
+    @ViewChild(ItemsTableComponent, {static: true}) itemsTable: ItemsTableComponent;
     order: Order;
     refundMode: 'full' | 'selected' = 'full';
 

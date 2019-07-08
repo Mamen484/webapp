@@ -1,8 +1,8 @@
-import {throwError, of, EMPTY } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { ComponentFixture } from '@angular/core/testing';
 import { CreateUserComponent } from './create-user.component';
 import { StoreService } from 'sfl-shared/services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { UserCreatedDialogComponent } from './user-created-dialog/user-created-dialog.component';
 import { FeedSource } from 'sfl-shared/entities';
 import { FormArray, FormControl } from '@angular/forms';

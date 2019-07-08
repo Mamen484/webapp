@@ -2,7 +2,9 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { StoreListComponent } from './store-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialog, MatSnackBar, MatTableModule } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { BillingStoreService } from './billing-store.service';
 import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';

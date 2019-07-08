@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
 
 /**
@@ -25,7 +25,7 @@ import { SflToggleSidebarService } from './toggle-sidebar.service';
 })
 export class SflSidebarContainerComponent implements OnInit {
 
-    @ViewChild('sidenav') sidenav: MatSidenav;
+    @ViewChild('sidenav', {static: true}) sidenav: MatSidenav;
 
     /** The sidebar will be placed below the menu */
     @Input() menuHeight = '64px';
