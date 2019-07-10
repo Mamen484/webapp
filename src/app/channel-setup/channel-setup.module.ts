@@ -8,7 +8,6 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { UnsavedDataDialogComponent } from './categories-configuration/unsaved-data-dialog/unsaved-data-dialog.component';
 import { FeedCategoriesListComponent } from './categories-configuration/feed-categories-list/feed-categories-list.component';
 import { AutotagMappingComponent } from './categories-configuration/autotag-mapping/autotag-mapping.component';
-import { MatStepperModule } from '@angular/material';
 import { CategoryMappingComponent } from './categories-configuration/category-mapping/category-mapping.component';
 import { AutotagInputComponent } from './categories-configuration/autotag-mapping/autotag-input/autotag-input.component';
 import { AutotagDropdownComponent } from './categories-configuration/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
@@ -28,7 +27,6 @@ import { AutotagDropdownComponent } from './categories-configuration/autotag-map
         ChannelSetupRoutingModule,
         CommonModule,
         SharedModule,
-        MatStepperModule,
     ],
     entryComponents: [
         FilterDialogComponent,

@@ -1,14 +1,18 @@
-<mat-form-field appearance="outline" color="accent">
-    <mat-label i18n>Category matching</mat-label>
-    <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
-           [value]="searchChannelCategoryValue">
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                      (optionSelected)="chosenChannelCategory = $event.option.value">
-        <mat-option *ngFor="let category of channelCategoryOptions"
-                    [value]="category">{{category.name}}</mat-option>
-    </mat-autocomplete>
-</mat-form-field>
-<div class="actions" fxLayout="row" fxLayoutAlign="end center">
-    <button mat-button i18n color="accent" (click)="resetMatching()">Reset</button>
-    <button mat-raised-button i18n matStepperNext color="accent" (click)="saveMatching()">Save & Next</button>
-</div>
+<mat-card>
+    <mat-card-content fxLayout="column" fxLayoutGap="20px">
+        <div i18n>Assign a category</div>
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" color="accent" fxFlex>
+                <mat-label i18n>Category matching</mat-label>
+                <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
+                       [value]="searchChannelCategoryValue">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                                  (optionSelected)="chosenChannelCategory = $event.option.value">
+                    <mat-option *ngFor="let category of channelCategoryOptions"
+                                [value]="category">{{category.name}}</mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <button class="save-matching" mat-raised-button i18n color="accent" (click)="saveMatching()">Save</button>
+        </div>
+    </mat-card-content>
+</mat-card>

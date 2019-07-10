@@ -29,27 +29,18 @@
                                      (pageChanged)="refreshCategoriesList()">
             </sf-feed-categories-list>
         </div>
+        <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px">
+            <sf-category-mapping
+                    [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
+                    [searchChannelCategoryValue]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.name"
+                    [feedId]="feed.id"
+                    [channelId]="channel.id"
+                    (categoryMappingChanged)="refreshPageData()"></sf-category-mapping>
+            <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
+                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"></sf-autotag-mapping>
 
-        <mat-card fxFlex="30%">
-            <mat-card-content>
-                <mat-vertical-stepper>
-                    <mat-step label="Type a keyword" i18n-label color="accent">
-                        <sf-category-mapping
-                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
-                                [searchChannelCategoryValue]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.name"
-                                [feedId]="feed.id"
-                                [channelId]="channel.id"
-                                (categoryMappingChanged)="refreshPageData()"></sf-category-mapping>
-                    </mat-step>
-                    <mat-step label="Fill in the autotags" i18n-label *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory">
-                            <sf-autotag-mapping [feedId]="feed.id"
-                                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"></sf-autotag-mapping>
-                    </mat-step>
-                </mat-vertical-stepper>
+        </div>
 
 
-
-            </mat-card-content>
-        </mat-card>
     </div>
 </div>
