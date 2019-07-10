@@ -74,7 +74,7 @@ describe('CategoriesConfigurationComponent', () => {
         feedService.fetchCategoryCollection.and.callFake((feedId, filters) => {
             return filters.mapping === CategoryMapping.Mapped
                 ? of(<any>{_embedded: {}, total: 1})
-                : of(<any>{_embedded: {category: []}, total: 9})
+                : of(<any>{_embedded: {category: []}, total: 10})
         });
         route.data.next({data: {channel: {}, feed: {}}});
         expect(component.percentage).toBe(0.1);

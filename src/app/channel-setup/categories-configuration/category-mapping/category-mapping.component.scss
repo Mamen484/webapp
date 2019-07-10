@@ -5,3 +5,11 @@ mat-form-field {
 button.save-matching {
   margin-top: 12px;
 }
+
+// provide a correct position for a progress bar
+mat-card {
+  padding: 0;
+  mat-card-content {
+    padding: 16px;
+  }
+}

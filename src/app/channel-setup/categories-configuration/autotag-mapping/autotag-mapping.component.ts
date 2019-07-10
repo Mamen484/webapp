@@ -14,6 +14,7 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
     @Input() catalogCategoryId: number;
 
     @Output() autotagUpdated = new EventEmitter();
+    @Output() autotagsLoaded = new EventEmitter();
 
     autotagList: Autotag[];
 
@@ -31,6 +32,7 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
     fetchAutotags() {
         this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId).subscribe(response => {
             this.autotagList = response._embedded.autotag.filter(autotag => autotag._embedded.attribute.isRequired);
+            this.autotagsLoaded.emit();
         });
     }
 

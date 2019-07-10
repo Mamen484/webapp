@@ -27,6 +27,8 @@ export class CategoryMappingComponent implements OnInit {
     chosenChannelCategory: Category;
     channelCategoryOptions: Category[] = [];
 
+    loading = false;
+
 
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
@@ -39,6 +41,9 @@ export class CategoryMappingComponent implements OnInit {
 
     ngOnInit() {
         this.listenChannelCategorySearch();
+        if (this.searchChannelCategoryValue) {
+            this.loading = true;
+        }
     }
 
     resetMatching() {
@@ -50,10 +55,10 @@ export class CategoryMappingComponent implements OnInit {
         if (!this.chosenChannelCategory) {
             return;
         }
+        this.loading = true;
         this.feedService.mapFeedCategory(this.feedId, this.catalogCategoryId, this.chosenChannelCategory.id)
             .subscribe(() => {
-                this.resetMatching();
-                this.categoryMappingChanged.emit();
+                this.categoryMappingChanged.emit(<Category>this.chosenChannelCategory);
             });
 
     }

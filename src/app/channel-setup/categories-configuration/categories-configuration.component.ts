@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Subscription, zip } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
@@ -47,6 +47,11 @@ export class CategoriesConfigurationComponent implements OnInit {
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected appStore: Store<AppState>) {
+    }
+
+    categoryMappingChanged(channelCategory) {
+        const index = this.categories.findIndex(cat => cat.id === this.feedCategoriesList.chosenClientsCategory.id);
+        this.categories[index].channelCategory = channelCategory;
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -125,13 +130,11 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     protected refreshPercentage() {
-        zip(
-            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Mapped, limit: '1'}),
-            this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Unmapped, limit: '1'})
-        ).subscribe(([mapped, unmapped]) => {
-            const total = mapped.total + unmapped.total;
-            this.percentage = total ? mapped.total / total : 0;
-        })
+        this.feedService.fetchCategoryCollection(this.feed.id, {mapping: CategoryMapping.Mapped, limit: '1'})
+            .subscribe((mapped) => {
+                const total = this.feedCategoriesList.totalCategoriesNumber;
+                this.percentage = total ? mapped.total / total : 0;
+            })
     }
 
 }

@@ -3,7 +3,6 @@
         <div fxFlex>
             <img [src]="channel?._links?.image?.href" height="40px">
         </div>
-        <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
         <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n
            [disabled]="percentage === 0">Launch</a>
     </div>
@@ -31,13 +30,16 @@
         </div>
         <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px">
             <sf-category-mapping
+                    *ngIf="feedCategoriesList?.categories?.length"
                     [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
                     [searchChannelCategoryValue]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.name"
                     [feedId]="feed.id"
                     [channelId]="channel.id"
-                    (categoryMappingChanged)="refreshPageData()"></sf-category-mapping>
+                    (categoryMappingChanged)="categoryMappingChanged($event)"></sf-category-mapping>
             <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
-                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"></sf-autotag-mapping>
+                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
+                                (autotagUpdated)="refreshPageData()"
+            (autotagsLoaded)="categoryMapping.loading = false"></sf-autotag-mapping>
 
         </div>
 

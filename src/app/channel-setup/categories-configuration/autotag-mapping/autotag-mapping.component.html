@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="autotagList?.length">
     <mat-card-content fxLayout="column" fxColumnGap="20px">
         <div i18n>Assign a category</div>
         <ng-container  *ngFor="let autotag of autotagList">
