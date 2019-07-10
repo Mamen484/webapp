@@ -2,7 +2,8 @@
 <mat-dialog-content fxLayout="row" fxLayoutGap="30px">
     <div fxLayout="column">
         <mat-form-field color="accent" appearance="outline">
-            <mat-select placeholder="Date" i18n-placeholder [(ngModel)]="dateOption"
+            <mat-label i18n>Date</mat-label>
+            <mat-select [(ngModel)]="dateOption"
                         (selectionChange)="changeDate($event.value)">
                 <mat-option value="anytime" i18n>Anytime</mat-option>
                 <mat-option value="today" i18n>Today</mat-option>
@@ -15,14 +16,14 @@
         </mat-form-field>
         <div fxLayout="row" fxLayoutGap="10px" *ngIf="dateOption === 'custom'">
             <mat-form-field color="accent" appearance="outline" class="date-input">
-                <input matInput [matDatepicker]="minDate" i18n-placeholder [(ngModel)]="filter.since"
-                       placeholder="Min date">
+                <mat-label i18n>Min Date</mat-label>
+                <input matInput [matDatepicker]="minDate" [(ngModel)]="filter.since">
                 <mat-datepicker-toggle matSuffix [for]="minDate"></mat-datepicker-toggle>
                 <mat-datepicker panelClass="sf-accent" #minDate (selectedChanged)="setSince($event)"></mat-datepicker>
             </mat-form-field>
             <mat-form-field color="accent" appearance="outline" class="date-input">
-                <input matInput [matDatepicker]="maxDate" i18n-placeholder [(ngModel)]="filter.until"
-                       placeholder="Max date">
+                <mat-label i18n>Max Date</mat-label>
+                <input matInput [matDatepicker]="maxDate" [(ngModel)]="filter.until">
                 <mat-datepicker-toggle matSuffix [for]="maxDate"></mat-datepicker-toggle>
                 <mat-datepicker panelClass="sf-accent" #maxDate (selectedChanged)="setUntil($event)"></mat-datepicker>
             </mat-form-field>
@@ -30,6 +31,7 @@
     </div>
 
     <mat-form-field color="accent" appearance="outline">
+        <mat-label i18n>Channel</mat-label>
         <mat-select [(ngModel)]="filter.channel">
             <mat-option value="all" i18n>All channels</mat-option>
             <mat-option *ngFor="let channel of channels" [value]="channel.id">
@@ -38,6 +40,7 @@
         </mat-select>
     </mat-form-field>
     <mat-form-field color="accent" appearance="outline" *ngIf="tags && tags.length">
+        <mat-label i18n>Tag</mat-label>
         <mat-select [(ngModel)]="filter.tag">
             <mat-option value="all" i18n>All tags</mat-option>
             <mat-option *ngFor="let tag of tags" [value]="tag.name">{{tag.name}}</mat-option>

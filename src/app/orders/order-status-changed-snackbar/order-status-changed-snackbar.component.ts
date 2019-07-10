@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 @Component({

@@ -7,7 +7,7 @@
     </mat-list-item>
 </sfa-sidebar>
 
-<div class="sf-content mat-typography">
+<div class="sf-content scrollable-container mat-typography">
     <a routerLink="/billing" class="prev-page-link">
         <mat-icon>keyboard_backspace</mat-icon>
         <ng-container i18n>Store board</ng-container>
@@ -35,14 +35,14 @@
                         <mat-list-item>
                             <div class="invoicing-details-row">
                                 <div class="mat-body-2">Commission</div>
-                                <div class="mat-body-1">{{store.commissionRate}}</div>
+                                <div class="mat-body-1">{{store.commissionRate}}%</div>
                             </div>
                         </mat-list-item>
                         <mat-divider></mat-divider>
                         <mat-list-item>
                             <div class="invoicing-details-row">
                                 <div class="mat-body-2">End of Trial</div>
-                                <div class="mat-body-1">{{store.trialEndsAt | date:'shortDate'}}</div>
+                                <div class="mat-body-1">{{store.trialEndsAt | date:'mediumDate'}}</div>
                             </div>
                         </mat-list-item>
                         <mat-divider></mat-divider>
@@ -60,21 +60,42 @@
             <div i18n class="invoicing-details-title">Your invoices</div>
             <mat-card class="invoices-table">
                 <mat-card-content>
-                    <div i18n *ngIf="!invoices.length" class="no-invoices-message">No invoices found</div>
-                    <table mat-table *ngIf="invoices.length" [dataSource]="invoices">
+                    <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+                        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+                    </div>
+                    <div i18n *ngIf="!dataSource.data.length && !isLoadingResults" class="no-invoices-message">No invoices found</div>
+                    <table mat-table *ngIf="dataSource.data.length" [dataSource]="dataSource">
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef i18n>Date</th>
                             <td mat-cell *matCellDef="let row">{{row.month}}
                             </td>
                         </ng-container>
-                        <ng-container matColumnDef="amount">
-                            <th mat-header-cell *matHeaderCellDef i18n>Amount</th>
+                        <ng-container matColumnDef="flatFee">
+                            <th mat-header-cell *matHeaderCellDef i18n>Flat Fee</th>
+                            <td mat-cell *matCellDef="let row">{{row.subscriptionAmount}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="commission">
+                            <th mat-header-cell *matHeaderCellDef i18n>Commission Amount</th>
+                            <td mat-cell *matCellDef="let row">{{row.commissionAmount}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="totalAmount">
+                            <th mat-header-cell *matHeaderCellDef i18n>Total Amount</th>
                             <td mat-cell *matCellDef="let row">{{row.commissionAmount + row.subscriptionAmount}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="csv">
+                            <th mat-header-cell *matHeaderCellDef i18n></th>
+                            <td mat-cell *matCellDef="let row">
+                                <a href="#" (click)="getCsv(row, $event)">Details</a>
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;">{{row.name}}</tr>
                     </table>
+                    <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                                   (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
                 </mat-card-content>
             </mat-card>
         </div>

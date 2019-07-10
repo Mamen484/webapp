@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { BillingStore } from './billing-store';
 import { Observable } from 'rxjs';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';

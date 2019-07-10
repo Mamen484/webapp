@@ -3,7 +3,7 @@ import { UnauthenticatedMenuComponent } from './unauthenticated-menu.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { SflLocaleIdService } from 'sfl-shared/services';
 import { SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS } from 'sfl-shared/entities';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('UnauthenticatedMenuComponent', () => {
 

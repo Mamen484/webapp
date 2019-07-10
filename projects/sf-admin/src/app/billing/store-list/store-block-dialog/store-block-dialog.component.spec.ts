@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StoreBlockDialogComponent } from './store-block-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('StoreBlockDialogComponent', () => {
     let component: StoreBlockDialogComponent;

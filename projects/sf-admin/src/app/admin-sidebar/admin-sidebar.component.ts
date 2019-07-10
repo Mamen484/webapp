@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SflLocalStorageService } from 'sfl-shared/services';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'sfa-sidebar',
@@ -6,6 +8,12 @@ import { Component } from '@angular/core';
     styleUrls: ['./admin-sidebar.component.scss']
 })
 export class AdminSidebarComponent {
-    constructor() {
+    constructor(protected router: Router,
+                protected localStorage: SflLocalStorageService) {
+    }
+
+    logout() {
+        this.localStorage.removeItem('Authorization');
+        this.router.navigate(['/login']);
     }
 }

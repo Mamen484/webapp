@@ -1,6 +1,7 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { BillingStore } from '../billing-store';
-import { MAT_DIALOG_DATA, MatDialogRef, MatOption } from '@angular/material';
+import { MatOption } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { clone } from 'lodash';
 import { AbstractControl, FormControl, NgForm } from '@angular/forms';
 import { Store } from 'sfl-shared/entities';
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class StoreDialogComponent {
 
-    @ViewChild(NgForm) form: NgForm;
+    @ViewChild(NgForm, {static: true}) form: NgForm;
 
     store = new BillingStore();
     onSave: (store: BillingStore) => Observable<any>;

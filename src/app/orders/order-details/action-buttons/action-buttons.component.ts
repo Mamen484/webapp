@@ -5,7 +5,8 @@ import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowl
 import { Order } from '../../../core/entities/orders/order';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
 import { filter, flatMap } from 'rxjs/operators';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
@@ -21,7 +22,7 @@ import { ChannelMap } from '../../../core/entities/channel-map.enum';
 })
 export class ActionButtonsComponent implements OnInit {
 
-    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount];
+    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions];
 
     @Input() order: Order;
 

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { BillingStore } from '../../store-list/billing-store';
 
@@ -17,7 +17,7 @@ export interface Group {
 })
 export class GroupDialogComponent implements OnInit {
 
-    @ViewChild(NgForm) form: NgForm;
+    @ViewChild(NgForm, {static: true}) form: NgForm;
 
     searchControl = new FormControl();
     storeSearchResults;

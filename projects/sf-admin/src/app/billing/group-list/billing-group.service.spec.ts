@@ -10,7 +10,7 @@ describe('BillingGroupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule]
+            imports: [HttpClientTestingModule],
         });
 
         service = TestBed.get(BillingGroupService);
@@ -33,17 +33,17 @@ describe('BillingGroupService', () => {
         expect(req.request.method).toBe('GET');
     });
 
-    it('should POST /group on createStore()', () => {
+    it('should POST /group on create()', () => {
         service.create({name: 'someValue', id: 22, stores: [{id: 13}, {id: 220}]}).subscribe();
         let req = httpMock.expectOne(`${environment.SFA_BILLING_API}/group`);
         expect(req.request.method).toBe('POST');
-        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13}, {id: 220}]}});
+        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13, primary: true}, {id: 220, primary: false}]}});
     });
 
-    it('should PUT /group/id on updateStore()', () => {
+    it('should PUT /group/id on update()', () => {
         service.update({name: 'someValue', id: 22, stores: [{id: 13}, {id: 220}]}).subscribe();
         let req = httpMock.expectOne(`${environment.SFA_BILLING_API}/group/22`);
         expect(req.request.method).toBe('PUT');
-        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13}, {id: 220}]}});
+        expect(req.request.body).toEqual({group: {name: 'someValue', stores: [{id: 13, primary: true}, {id: 220, primary: false}]}});
     });
 });

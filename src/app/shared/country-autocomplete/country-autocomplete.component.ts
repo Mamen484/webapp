@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angula
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { filter, map, startWith, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { MatFormFieldAppearance, MatOption } from '@angular/material';
+import { MatOption } from '@angular/material/core';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { FullCountriesListService } from '../../core/services/full-countries-list.service';
 import { Country } from '../../core/entities/country';
 

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Address } from '../../../core/entities/orders/address';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServerValidationError } from '../../../core/entities/server-validation-error';
 import { NgForm } from '@angular/forms';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
@@ -13,7 +13,7 @@ import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-confi
 })
 export class AddressFormComponent implements OnInit {
 
-    @ViewChild(NgForm) form: NgForm;
+    @ViewChild(NgForm, {static: true}) form: NgForm;
 
     @Input() address: Address;
 

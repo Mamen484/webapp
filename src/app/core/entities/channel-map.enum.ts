@@ -3,4 +3,5 @@ export enum ChannelMap {
     cdiscount = 111,
     manomano = 259,
     laredoute = 152,
+    googleshoppingactions = 40,
 }

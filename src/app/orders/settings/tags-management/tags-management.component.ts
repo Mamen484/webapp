@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NewTagDialogComponent } from '../../new-tag-dialog/new-tag-dialog.component';
 import { TagsService } from '../../../core/services/tags.service';
 import { Store } from '@ngrx/store';

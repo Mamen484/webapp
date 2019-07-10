@@ -1,5 +1,5 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { UserCreatedDialogComponent } from './user-created-dialog.component';

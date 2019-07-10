@@ -3,7 +3,7 @@ import { SearchStoreComponent } from './search-store.component';
 import { Directive, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Directive({selector: '[sfaSearchStore]'})
 export class SearchStoreMockDirective {
