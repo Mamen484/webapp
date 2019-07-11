@@ -11,6 +11,7 @@ import { AutotagMappingComponent } from './categories-configuration/autotag-mapp
 import { CategoryMappingComponent } from './categories-configuration/category-mapping/category-mapping.component';
 import { AutotagInputComponent } from './categories-configuration/autotag-mapping/autotag-input/autotag-input.component';
 import { AutotagDropdownComponent } from './categories-configuration/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
+import { SettingsSavedSnackbarComponent } from './categories-configuration/settings-saved-snackbar/settings-saved-snackbar.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { AutotagDropdownComponent } from './categories-configuration/autotag-map
         CategoryMappingComponent,
         AutotagInputComponent,
         AutotagDropdownComponent,
+        SettingsSavedSnackbarComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,
@@ -31,6 +33,7 @@ import { AutotagDropdownComponent } from './categories-configuration/autotag-map
     entryComponents: [
         FilterDialogComponent,
         UnsavedDataDialogComponent,
+        SettingsSavedSnackbarComponent,
     ],
 })
 export class ChannelSetupModule {

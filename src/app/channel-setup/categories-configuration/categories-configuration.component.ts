@@ -26,7 +26,7 @@ const CONFLICT_ERROR_CODE = 409;
 })
 export class CategoriesConfigurationComponent implements OnInit {
 
-    @ViewChild(FeedCategoriesListComponent, {static: false}) feedCategoriesList: FeedCategoriesListComponent;
+    @ViewChild(FeedCategoriesListComponent, {static: true}) feedCategoriesList: FeedCategoriesListComponent;
     @ViewChild(CategoryMappingComponent, {static: false}) categoryMapping: CategoryMappingComponent;
 
     channel: Channel;

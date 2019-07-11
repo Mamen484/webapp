@@ -2,12 +2,13 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { CategoryMappingComponent } from './category-mapping.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule, MatSnackBar } from '@angular/material';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 describe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
@@ -16,13 +17,14 @@ describe('CategoryMappingComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let feedService: jasmine.SpyObj<FeedService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
+    let matSnackBar: jasmine.SpyObj<MatSnackBar>;
 
     beforeEach(async(() => {
 
         channelService = jasmine.createSpyObj('ChannelService spy', ['getChannelCategories']);
         feedService = jasmine.createSpyObj('FeedService spy', ['mapFeedCategory']);
         appStore = jasmine.createSpyObj('App Store spy', ['select']);
-
+        matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -31,6 +33,7 @@ describe('CategoryMappingComponent', () => {
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
                 {provide: Store, useValue: appStore},
+                {provide: MatSnackBar, useValue: matSnackBar},
             ],
         })
             .compileComponents();
@@ -46,7 +49,7 @@ describe('CategoryMappingComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should reset matching on resetMathing() call', () => {
+    it('should reset matching on resetMatching() call', () => {
         component.searchChannelCategoryControl.setValue('some text');
         component.chosenChannelCategory = <any>'some value';
         component.resetMatching();
@@ -62,4 +65,27 @@ describe('CategoryMappingComponent', () => {
         tick(300);
         expect(component.channelCategoryOptions).toEqual(<any>[83, 70, 72, 50]);
     }));
+
+    it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        const mappingChanged$ = component.categoryMappingChanged.pipe(take(1)).toPromise();
+        feedService.mapFeedCategory.and.returnValue(of({}));
+        component.saveMatching();
+        const returned = await mappingChanged$;
+        expect(returned).toEqual({id: 22});
+    });
+
+    it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        feedService.mapFeedCategory.and.returnValue(of({}));
+        component.saveMatching();
+        expect(matSnackBar.openFromComponent).toHaveBeenCalled();
+    });
+
+    it('should show a loading bar when a category mapping save clicked', async () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        feedService.mapFeedCategory.and.returnValue(EMPTY);
+        component.saveMatching();
+        expect(component.loading).toBe(true);
+    });
 });

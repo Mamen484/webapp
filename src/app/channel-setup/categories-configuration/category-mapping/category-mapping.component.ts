@@ -6,6 +6,9 @@ import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
+import { MatSnackBar } from '@angular/material';
+import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -32,7 +35,8 @@ export class CategoryMappingComponent implements OnInit {
 
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
-                protected appStore: Store<AppState>) {
+                protected appStore: Store<AppState>,
+                protected snackbar: MatSnackBar) {
     }
 
     displayFn(category: Category) {
@@ -59,6 +63,7 @@ export class CategoryMappingComponent implements OnInit {
         this.feedService.mapFeedCategory(this.feedId, this.catalogCategoryId, this.chosenChannelCategory.id)
             .subscribe(() => {
                 this.categoryMappingChanged.emit(<Category>this.chosenChannelCategory);
+                this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
             });
 
     }
