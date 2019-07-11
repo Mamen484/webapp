@@ -35,7 +35,7 @@ const routes: Routes = [
             {path: '', loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule)},
             {path: 'timeline', loadChildren: () => import('./timeline/timeline.module').then(m => m.TimelineModule)},
             {path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
-            {path: 'channel-setup', loadChildren: () => import('./channel-setup/channel-setup.module'}).then(m => m.ChannelSetupModule)},,
+            {path: 'channel-setup', loadChildren: () => import('./channel-setup/channel-setup.module').then(m => m.ChannelSetupModule)},
             {path: 'api', loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsModule)},
         ]
     },
