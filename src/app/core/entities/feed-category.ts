@@ -1,11 +1,13 @@
-interface Category {
+import { Category } from './category';
+
+export interface CatalogCategory {
     id: number;
     catalogId: number;
     name: string;
 }
 
 export interface FeedCategory {
-    catalogCategory: Category,
+    catalogCategory: CatalogCategory,
     channelCategory: Category,
     feedId: number;
     id: number;

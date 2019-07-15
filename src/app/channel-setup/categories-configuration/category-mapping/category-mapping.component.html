@@ -4,10 +4,10 @@
         <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
             <mat-form-field appearance="outline" color="accent" fxFlex>
                 <mat-label i18n>Category matching</mat-label>
-                <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
-                       [value]="searchChannelCategoryValue">
+                <input matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto">
+                <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')">Please select category from list</mat-error>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                  (optionSelected)="chosenChannelCategory = $event.option.value">
+                                  (optionSelected)="chosenChannelCategory = $event.option.value; searchChannelCategoryControl.updateValueAndValidity()">
                     <mat-option *ngFor="let category of channelCategoryOptions"
                                 [value]="category">{{category.name}}</mat-option>
                 </mat-autocomplete>

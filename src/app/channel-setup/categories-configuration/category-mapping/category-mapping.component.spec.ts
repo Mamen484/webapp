@@ -42,19 +42,12 @@ describe('CategoryMappingComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(CategoryMappingComponent);
         component = fixture.componentInstance;
+        component.feedCategory = <any>{feedId: 21, catalogCategory: {id: 14}};
         fixture.detectChanges();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should reset matching on resetMatching() call', () => {
-        component.searchChannelCategoryControl.setValue('some text');
-        component.chosenChannelCategory = <any>'some value';
-        component.resetMatching();
-        expect(component.searchChannelCategoryControl.value).toBe(null);
-        expect(component.chosenChannelCategory).not.toBeDefined();
     });
 
     it('should get category suggestions when user types a category name', fakeAsync(() => {
@@ -87,5 +80,33 @@ describe('CategoryMappingComponent', () => {
         feedService.mapFeedCategory.and.returnValue(EMPTY);
         component.saveMatching();
         expect(component.loading).toBe(true);
+    });
+
+    it('should mark the category control as valid when no category selected and the input does not contain any value', () => {
+        component.chosenChannelCategory = null;
+        component.searchChannelCategoryControl.setValue('');
+        fixture.detectChanges();
+        expect(component.searchChannelCategoryControl.valid).toBe(true);
+    });
+
+    it('should mark the category control as INvalid when no category selected but the input contains a value', () => {
+        component.chosenChannelCategory = null;
+        component.searchChannelCategoryControl.setValue({name: '432'});
+        fixture.detectChanges();
+        expect(component.searchChannelCategoryControl.valid).toBe(false);
+    });
+
+    it('should mark the category control as valid when a category is selected from a list and the input value equals it\'s name', () => {
+        component.chosenChannelCategory = <any>{name: '432'};
+        component.searchChannelCategoryControl.setValue({name: '432'});
+        fixture.detectChanges();
+        expect(component.searchChannelCategoryControl.valid).toBe(true);
+    });
+
+    it('should mark the category control as INvalid when a category is selected from a list and the input value DOES NOT equal it`s name', () => {
+        component.chosenChannelCategory = <any>{name: '432'};
+        component.searchChannelCategoryControl.setValue({name: '515'});
+        fixture.detectChanges();
+        expect(component.searchChannelCategoryControl.valid).toBe(false);
     });
 });

@@ -25,6 +25,9 @@ export class AutotagInputComponent implements OnInit {
     }
 
     createSuggestions() {
+        if (!this.mappingCollection) {
+            return;
+        }
         this.suggestions = this.mappingCollection._embedded.mapping
             .filter(m => m.catalogField.toLowerCase().includes(this.value.toLowerCase()))
             .map(m => `{${m.catalogField}}`);
@@ -32,7 +35,6 @@ export class AutotagInputComponent implements OnInit {
     }
 
     setAutotagValue(value: string) {
-        console.log(value);
         this.autotag.value = value[0] === '{' ? value.substring(1, value.length - 1) : value;
     }
 

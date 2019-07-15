@@ -26,6 +26,7 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        this.autotagList = [];
         this.fetchAutotags();
     }
 
@@ -34,10 +35,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
             this.autotagList = response._embedded.autotag.filter(autotag => autotag._embedded.attribute.isRequired);
             this.autotagsLoaded.emit();
         });
-    }
-
-    resetMatching() {
-
     }
 
     saveMatching() {

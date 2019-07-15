@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -46,12 +46,14 @@ export class CategoriesConfigurationComponent implements OnInit {
     constructor(protected matDialog: MatDialog,
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
-                protected appStore: Store<AppState>) {
+                protected appStore: Store<AppState>,
+                protected changeDetectorRef: ChangeDetectorRef) {
     }
 
     categoryMappingChanged(channelCategory) {
         const index = this.categories.findIndex(cat => cat.id === this.feedCategoriesList.chosenClientsCategory.id);
         this.categories[index].channelCategory = channelCategory;
+        this.changeDetectorRef.detectChanges();
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -73,6 +75,10 @@ export class CategoriesConfigurationComponent implements OnInit {
 
             this.listenClientCategorySearch();
         });
+    }
+
+    onAutotagsLoaded() {
+        this.categoryMapping.loading = false
     }
 
     openFilterDialog() {

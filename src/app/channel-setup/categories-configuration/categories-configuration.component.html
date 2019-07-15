@@ -28,18 +28,15 @@
                                      (pageChanged)="refreshCategoriesList()">
             </sf-feed-categories-list>
         </div>
-        <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px">
+        <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px" *ngIf="feedCategoriesList?.categories?.length">
             <sf-category-mapping
-                    *ngIf="feedCategoriesList?.categories?.length"
-                    [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
-                    [searchChannelCategoryValue]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.name"
-                    [feedId]="feed.id"
                     [channelId]="channel.id"
+                    [feedCategory]="feedCategoriesList?.chosenClientsCategory"
                     (categoryMappingChanged)="categoryMappingChanged($event)"></sf-category-mapping>
             <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
                                 [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
                                 (autotagUpdated)="refreshPageData()"
-            (autotagsLoaded)="categoryMapping.loading = false"></sf-autotag-mapping>
+                                (autotagsLoaded)="onAutotagsLoaded()"></sf-autotag-mapping>
 
         </div>
 
