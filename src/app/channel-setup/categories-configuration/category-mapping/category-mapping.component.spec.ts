@@ -68,7 +68,7 @@ describe('CategoryMappingComponent', () => {
         expect(returned).toEqual({id: 22});
     });
 
-    it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
+    it('should show a snackbar when a category is saved successfully', async () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(of({}));
         component.saveMatching();
@@ -80,6 +80,20 @@ describe('CategoryMappingComponent', () => {
         feedService.mapFeedCategory.and.returnValue(EMPTY);
         component.saveMatching();
         expect(component.loading).toBe(true);
+    });
+
+    it('should send a channel category id to modify a category mapping when a mapping created', () => {
+        component.chosenChannelCategory = <any>{id: 44};
+        feedService.mapFeedCategory.and.returnValue(EMPTY);
+        component.saveMatching();
+        expect(feedService.mapFeedCategory).toHaveBeenCalledWith(21, 14, 44);
+    });
+
+    it('should send NULL to remove a category mapping when a mapping input value removed', () => {
+        component.chosenChannelCategory = null;
+        feedService.mapFeedCategory.and.returnValue(EMPTY);
+        component.saveMatching();
+        expect(feedService.mapFeedCategory).toHaveBeenCalledWith(21, 14, null);
     });
 
     it('should mark the category control as valid when no category selected and the input does not contain any value', () => {

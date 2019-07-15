@@ -65,16 +65,33 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     }
 
     saveMatching() {
-        if (!this.chosenChannelCategory) {
+        if (this.searchChannelCategoryControl.invalid) {
             return;
         }
         this.loading = true;
-        this.feedService.mapFeedCategory(this.feedCategory.feedId, this.feedCategory.catalogCategory.id, this.chosenChannelCategory.id)
+        this.feedService.mapFeedCategory(
+            this.feedCategory.feedId,
+            this.feedCategory.catalogCategory.id,
+            this.chosenChannelCategory
+                // modify mapping
+                ? this.chosenChannelCategory.id
+                // remove mapping
+                : null
+        )
             .subscribe(() => {
                 this.categoryMappingChanged.emit(<Category>this.chosenChannelCategory);
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
             });
 
+    }
+
+    /**
+     * Remove the chosenChannelCategory value when the input cleared
+     */
+    watchDeletion() {
+        if (this.searchChannelCategoryControl.value === '') {
+            this.chosenChannelCategory = null;
+        }
     }
 
     protected listenChannelCategorySearch() {
