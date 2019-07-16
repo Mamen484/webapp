@@ -12,6 +12,7 @@ import { CategoryMappingComponent } from './categories-configuration/category-ma
 import { AutotagInputComponent } from './categories-configuration/autotag-mapping/autotag-input/autotag-input.component';
 import { AutotagDropdownComponent } from './categories-configuration/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
 import { SettingsSavedSnackbarComponent } from './categories-configuration/settings-saved-snackbar/settings-saved-snackbar.component';
+import { AutotagsRequiredSnackbarComponent } from './categories-configuration/autotag-mapping/autotags-required-snackbar/autotags-required-snackbar.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { SettingsSavedSnackbarComponent } from './categories-configuration/setti
         AutotagInputComponent,
         AutotagDropdownComponent,
         SettingsSavedSnackbarComponent,
+        AutotagsRequiredSnackbarComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,
@@ -34,6 +36,7 @@ import { SettingsSavedSnackbarComponent } from './categories-configuration/setti
         FilterDialogComponent,
         UnsavedDataDialogComponent,
         SettingsSavedSnackbarComponent,
+        AutotagsRequiredSnackbarComponent,
     ],
 })
 export class ChannelSetupModule {

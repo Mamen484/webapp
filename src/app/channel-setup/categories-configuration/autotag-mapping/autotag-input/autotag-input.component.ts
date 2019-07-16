@@ -1,21 +1,47 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Autotag } from '../../../autotag';
 import { FeedService } from '../../../../core/services/feed.service';
 import { MappingCollection } from '../../../mapping-collection';
+import {
+    AbstractControl,
+    ControlValueAccessor,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    NgControl,
+    NgModel,
+    ValidationErrors,
+    Validator
+} from '@angular/forms';
 
 @Component({
     selector: 'sf-autotag-input',
     templateUrl: './autotag-input.component.html',
-    styleUrls: ['./autotag-input.component.scss']
+    styleUrls: ['./autotag-input.component.scss'],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => AutotagInputComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => AutotagInputComponent),
+            multi: true,
+        },
+    ],
 })
-export class AutotagInputComponent implements OnInit {
+export class AutotagInputComponent implements OnInit, ControlValueAccessor, Validator {
+
+    @ViewChild(NgModel, {static: false}) ngModel: NgControl;
 
     @Input() autotag: Autotag;
     value = '';
     mappingCollection: MappingCollection;
     suggestions: string[];
 
-    constructor(protected feedService: FeedService) {
+    onChange: (value: string) => any;
+
+    constructor(protected feedService: FeedService, protected changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -37,5 +63,20 @@ export class AutotagInputComponent implements OnInit {
     setAutotagValue(value: string) {
         this.autotag.value = value[0] === '{' ? value.substring(1, value.length - 1) : value;
     }
+
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+
+    registerOnTouched(fn: any): void {
+    }
+
+    writeValue(): void {
+    }
+
+    validate(control: AbstractControl): ValidationErrors | null {
+        return this.ngModel.errors;
+    }
+
 
 }

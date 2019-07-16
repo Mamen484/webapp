@@ -35,7 +35,6 @@
                     (categoryMappingChanged)="categoryMappingChanged($event)"></sf-category-mapping>
             <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
                                 [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
-                                (autotagUpdated)="refreshPageData()"
                                 (autotagsLoaded)="onAutotagsLoaded()"></sf-autotag-mapping>
 
         </div>

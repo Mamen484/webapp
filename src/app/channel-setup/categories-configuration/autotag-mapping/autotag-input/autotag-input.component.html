@@ -1,7 +1,8 @@
 <mat-form-field appearance="outline">
     <mat-label>{{autotag._embedded.attribute.name}}</mat-label>
-    <input matInput [(ngModel)]="value" (keyup)="createSuggestions()" [matAutocomplete]="auto">
+    <input matInput [(ngModel)]="value" (keyup)="createSuggestions()" [matAutocomplete]="auto" required>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setAutotagValue($event.option.value)">
         <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion">{{suggestion}}</mat-option>
     </mat-autocomplete>
+    <mat-error i18n>This field is required</mat-error>
 </mat-form-field>
