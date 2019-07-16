@@ -10,7 +10,7 @@ import { AppState } from '../../../core/entities/app-state';
 import { EMPTY, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 
-describe('CategoryMappingComponent', () => {
+fdescribe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
     let fixture: ComponentFixture<CategoryMappingComponent>;
 
@@ -122,5 +122,49 @@ describe('CategoryMappingComponent', () => {
         component.searchChannelCategoryControl.setValue({name: '515'});
         fixture.detectChanges();
         expect(component.searchChannelCategoryControl.valid).toBe(false);
+    });
+
+    it('should load all pages of channel categories response when categories list csv downloaded', () => {
+        channelService.getChannelCategories.and.returnValue(<any>of({pages: 5, _embedded: {category: []}}));
+        component.getCategoriesList().subscribe();
+        expect(channelService.getChannelCategories).toHaveBeenCalledTimes(5);
+        expect(channelService.getChannelCategories.calls.allArgs().map(arg => arg[1].page)).toEqual(['1', '2', '3', '4', '5']);
+    });
+
+    it('should load one page of channel categories response when categories list csv downloaded and the response contains only one page', () => {
+        channelService.getChannelCategories.and.returnValue(<any>of({pages: 1, _embedded: {category: []}}));
+        component.getCategoriesList().subscribe();
+        expect(channelService.getChannelCategories).toHaveBeenCalledTimes(1);
+        expect(channelService.getChannelCategories.calls.allArgs().map(arg => arg[1].page)).toEqual(['1']);
+    });
+
+    it('should create a proper list of categories for csv when multiple pages exist', async () => {
+        channelService.getChannelCategories.and.returnValues(
+            <any>of({pages: 3, _embedded: {category: [{name: '1'}, {name: '2'}]}}),
+            <any>of({pages: 3, _embedded: {category: [{name: '3'}, {name: '4'}]}}),
+            <any>of({pages: 3, _embedded: {category: [{name: '5'}, {name: '6'}]}}),
+        );
+        const categories = await component.getCategoriesList().toPromise();
+        expect(categories).toEqual([
+            {name: '1'},
+            {name: '2'},
+            {name: '3'},
+            {name: '4'},
+            {name: '5'},
+            {name: '6'},
+        ]);
+
+    });
+
+    it('should create a proper list of categories for csv when one page exist', async () => {
+        channelService.getChannelCategories.and.returnValue(
+            <any>of({pages: 1, _embedded: {category: [{name: '1'}, {name: '2'}]}}),
+        );
+        const categories = await component.getCategoriesList().toPromise();
+        expect(categories).toEqual([
+            {name: '1'},
+            {name: '2'},
+        ]);
+
     });
 });

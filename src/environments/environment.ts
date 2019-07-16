@@ -21,6 +21,7 @@ export const environment = {
     FULLSTORY_ORG_ID: 'D6X8Q',
     ZAPIER_LINK: 'https://zapier.com/developer/invite/100387/80c3075b8660cd0602a9eb253b89ad07',
     CDISCOUNT_TRACKING_LINK: 'http://track.cdiscount-affiliation.com/servlet/effi.redir?id_compteur=22032794&url=',
+    maxApiLimit: '200',
     // Zendesk widget
     zeAccountLink: 'shoppingfeed.zendesk.com',
     zeChatTitle: 'Chat Shopping Feed',

@@ -1,9 +1,13 @@
 <mat-card>
     <mat-card-content fxLayout="column" fxLayoutGap="20px">
-        <div i18n>Assign a category</div>
+        <div fxLayout="row">
+            <div i18n fxFlex>Assign a category</div>
+            <a href="#" (click)="downloadCategoryList($event)" i18n *ngIf="!processingDownload">Download category list</a>
+            <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="processingDownload" color="accent"></mat-spinner>
+        </div>
         <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
             <mat-form-field appearance="outline" color="accent" fxFlex>
-                <mat-label i18n>Category matching</mat-label>
+               <mat-label i18n>Category matching</mat-label>
                 <input matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()" [matAutocomplete]="auto">
                 <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')">Please select category from list</mat-error>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
