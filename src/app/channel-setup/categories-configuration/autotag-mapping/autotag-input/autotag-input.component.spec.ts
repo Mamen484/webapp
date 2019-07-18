@@ -31,7 +31,7 @@ describe('AutotagInputComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should prepare a correct least of suggestions', () => {
+    it('should prepare a correct list of suggestions', () => {
         feedService.fetchMappingCollection.and.returnValue(of({
             count: 5, _embedded: {
                 mapping: [
@@ -69,5 +69,19 @@ describe('AutotagInputComponent', () => {
         component.autotag = <any>{};
         component.setAutotagValue('[someName]');
         expect(component.autotag.value).toBe('[someName]');
+    });
+
+    it('should add curly brackets to the value on init', () => {
+        feedService.fetchMappingCollection.and.returnValue(EMPTY);
+        component.autotag = <any>{value: '123', _embedded: {attribute: {}}};
+        fixture.detectChanges();
+        expect(component.value).toBe('{123}');
+    });
+
+    it('should NOT add curly brackets to the value on init if the value is square brackets', () => {
+        feedService.fetchMappingCollection.and.returnValue(EMPTY);
+        component.autotag = <any>{value: '[123]', _embedded: {attribute: {}}};
+        fixture.detectChanges();
+        expect(component.value).toBe('[123]');
     });
 });
