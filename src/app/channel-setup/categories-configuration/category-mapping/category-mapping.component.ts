@@ -87,6 +87,10 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             .subscribe(() => {
                 this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
+                // we don't wait for autotags loading, so we can hide the progress bar immediately
+                if (!this.chosenChannelCategory) {
+                    this.loading = false;
+                }
             });
 
     }
