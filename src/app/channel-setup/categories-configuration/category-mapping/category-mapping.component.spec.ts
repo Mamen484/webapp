@@ -8,9 +8,9 @@ import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { EMPTY, of } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { CategoryMappingService } from './category-mapping.service';
 
-fdescribe('CategoryMappingComponent', () => {
+describe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
     let fixture: ComponentFixture<CategoryMappingComponent>;
 
@@ -18,6 +18,7 @@ fdescribe('CategoryMappingComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
+    let categoryMappingService: jasmine.SpyObj<CategoryMappingService>;
 
     beforeEach(async(() => {
 
@@ -25,6 +26,9 @@ fdescribe('CategoryMappingComponent', () => {
         feedService = jasmine.createSpyObj('FeedService spy', ['mapFeedCategory']);
         appStore = jasmine.createSpyObj('App Store spy', ['select']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
+        categoryMappingService = jasmine.createSpyObj('CategoryMappingService spy', ['notifyMappingChange']);
+
+
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -34,6 +38,7 @@ fdescribe('CategoryMappingComponent', () => {
                 {provide: FeedService, useValue: feedService},
                 {provide: Store, useValue: appStore},
                 {provide: MatSnackBar, useValue: matSnackBar},
+                {provide: CategoryMappingService, useValue: categoryMappingService},
             ],
         })
             .compileComponents();
@@ -61,11 +66,9 @@ fdescribe('CategoryMappingComponent', () => {
 
     it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
         component.chosenChannelCategory = <any>{id: 22};
-        const mappingChanged$ = component.categoryMappingChanged.pipe(take(1)).toPromise();
         feedService.mapFeedCategory.and.returnValue(of({}));
         component.saveMatching();
-        const returned = await mappingChanged$;
-        expect(returned).toEqual({id: 22});
+        expect(categoryMappingService.notifyMappingChange).toHaveBeenCalledWith({id: 22});
     });
 
     it('should show a snackbar when a category is saved successfully', async () => {

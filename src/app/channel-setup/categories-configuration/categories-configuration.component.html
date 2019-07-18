@@ -31,8 +31,7 @@
         <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px" *ngIf="feedCategoriesList?.categories?.length">
             <sf-category-mapping
                     [channelId]="channel.id"
-                    [feedCategory]="feedCategoriesList?.chosenClientsCategory"
-                    (categoryMappingChanged)="categoryMappingChanged($event)"></sf-category-mapping>
+                    [feedCategory]="feedCategoriesList?.chosenClientsCategory"></sf-category-mapping>
             <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
                                 [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
                                 (autotagsLoaded)="onAutotagsLoaded()"></sf-autotag-mapping>

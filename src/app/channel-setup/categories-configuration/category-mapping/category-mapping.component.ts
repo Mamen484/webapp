@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime, filter, flatMap, map, switchMap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
@@ -9,11 +9,12 @@ import { AppState } from '../../../core/entities/app-state';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
-import { Subscription, zip } from 'rxjs';
+import { of, Subscription, zip } from 'rxjs';
 import { FeedCategory } from '../../../core/entities/feed-category';
 import { environment } from '../../../../environments/environment';
 import { ngxCsv } from 'ngx-csv';
 import { times } from 'lodash';
+import { CategoryMappingService } from './category-mapping.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -28,7 +29,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     @Input() channelId: number;
     @Input() feedCategory: FeedCategory;
 
-    @Output() categoryMappingChanged = new EventEmitter();
     chosenChannelCategory: Category;
     searchChannelCategoryControl = new FormControl('', [
         (control: AbstractControl) =>
@@ -48,7 +48,8 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
                 protected appStore: Store<AppState>,
-                protected snackbar: MatSnackBar) {
+                protected snackbar: MatSnackBar,
+                protected categoryMappingService: CategoryMappingService) {
     }
 
     ngOnChanges() {
@@ -84,7 +85,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
                 : null
         )
             .subscribe(() => {
-                this.categoryMappingChanged.emit(<Category>this.chosenChannelCategory);
+                this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
             });
 
@@ -122,7 +123,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
                         )
                     ))
                 }
-                return this.formatCategoriesArrayForCsv(response._embedded.category);
+                return of(this.formatCategoriesArrayForCsv(response._embedded.category));
             }));
     }
 

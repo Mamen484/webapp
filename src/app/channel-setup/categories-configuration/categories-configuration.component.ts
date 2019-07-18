@@ -15,6 +15,7 @@ import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
 import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
 import { CategoryMappingComponent } from './category-mapping/category-mapping.component';
+import { CategoryMappingService } from './category-mapping/category-mapping.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -47,14 +48,10 @@ export class CategoriesConfigurationComponent implements OnInit {
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected appStore: Store<AppState>,
-                protected changeDetectorRef: ChangeDetectorRef) {
+                protected changeDetectorRef: ChangeDetectorRef,
+                protected categoryMappingService: CategoryMappingService) {
     }
 
-    categoryMappingChanged(channelCategory) {
-        const index = this.categories.findIndex(cat => cat.id === this.feedCategoriesList.chosenClientsCategory.id);
-        this.categories[index].channelCategory = channelCategory;
-        this.changeDetectorRef.detectChanges();
-    }
 
     @HostListener('window:beforeunload', ['$event'])
     handleBeforeUnload() {
@@ -74,6 +71,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.refreshPageData();
 
             this.listenClientCategorySearch();
+            this.listenCategoryMappingChanged();
         });
     }
 
@@ -123,6 +121,14 @@ export class CategoriesConfigurationComponent implements OnInit {
                 this.feedCategoriesList.setPage(error.pages - 1);
                 this.refreshCategoriesList();
             }
+        });
+    }
+
+    protected listenCategoryMappingChanged() {
+        this.categoryMappingService.getState().subscribe(channelCategory => {
+            const index = this.categories.findIndex(cat => cat.id === this.feedCategoriesList.chosenClientsCategory.id);
+            this.categories[index].channelCategory = channelCategory;
+            this.changeDetectorRef.detectChanges();
         });
     }
 

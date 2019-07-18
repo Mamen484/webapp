@@ -8,6 +8,7 @@ import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-c
 import { NgForm } from '@angular/forms';
 import { AutotagsRequiredSnackbarComponent } from './autotags-required-snackbar/autotags-required-snackbar.component';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
+import { CategoryMappingService } from '../category-mapping/category-mapping.service';
 
 @Component({
     selector: 'sf-autotag-mapping',
@@ -26,11 +27,14 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
 
     autotagList: Autotag[];
 
-    constructor(protected feedService: FeedService, protected snackbar: MatSnackBar) {
+    constructor(protected feedService: FeedService,
+                protected snackbar: MatSnackBar,
+                protected categoryMappingService: CategoryMappingService) {
     }
 
     ngOnInit() {
         this.fetchAutotags();
+        this.categoryMappingService.getState().subscribe(() => this.ngOnChanges({}));
     }
 
     ngOnChanges(changes: SimpleChanges): void {

@@ -6,10 +6,10 @@ button.save-matching {
   margin-top: 12px;
 }
 
-// provide a correct position for a progress bar
+.category-mapping {
+  padding: 16px;
+}
+
 mat-card {
   padding: 0;
-  mat-card-content {
-    padding: 16px;
-  }
 }
