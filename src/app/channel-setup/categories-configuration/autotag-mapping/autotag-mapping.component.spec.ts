@@ -8,8 +8,6 @@ import { EMPTY, of, Subject } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PagedResponse } from 'sfl-shared/entities';
-import { AutotagsRequiredSnackbarComponent } from './autotags-required-snackbar/autotags-required-snackbar.component';
-import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 
@@ -127,14 +125,6 @@ describe('AutotagMappingComponent', () => {
         component.ngOnChanges({});
         expect(component.autotagList.length).toBe(0);
         expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(2);
-    });
-
-    it('should show a message that autotags are required when user clicks save the form is invalid', () => {
-        component.autotagList = <Autotag[]>[{_embedded: {attribute: {constraintGroupId: null}}}];
-        feedService.matchAutotagByCategory.and.returnValue(EMPTY);
-        component.form = <any>{controls: {}, invalid: true};
-        component.saveMatching();
-        expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(AutotagsRequiredSnackbarComponent, new ErrorSnackbarConfig());
     });
 
 });

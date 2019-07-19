@@ -78,5 +78,11 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
         return this.ngModel.errors;
     }
 
+    watchDeletion() {
+        if (!this.value) {
+            this.autotag.value = '';
+        }
+    }
+
 
 }

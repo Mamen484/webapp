@@ -6,8 +6,6 @@ import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { NgForm } from '@angular/forms';
-import { AutotagsRequiredSnackbarComponent } from './autotags-required-snackbar/autotags-required-snackbar.component';
-import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { CategoryMappingService } from '../category-mapping/category-mapping.service';
 
 @Component({
@@ -48,10 +46,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
             if (this.form.controls.hasOwnProperty(i)) {
                 this.form.controls[i].updateValueAndValidity();
             }
-        }
-        if (this.form.invalid) {
-            this.snackbar.openFromComponent(AutotagsRequiredSnackbarComponent, new ErrorSnackbarConfig());
-            return;
         }
         zip(...this.autotagList.map(autotag => this.feedService.matchAutotagByCategory(
             this.feedId,

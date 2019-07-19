@@ -1,6 +1,7 @@
 <mat-form-field appearance="outline" color="accent">
     <mat-label>{{autotag._embedded.attribute.name}}</mat-label>
     <mat-select [(ngModel)]="autotag.value" required>
+        <mat-option value=""></mat-option>
         <mat-option *ngFor="let option of options" [value]="option">
             {{ '{' + option + '}' }}
         </mat-option>
