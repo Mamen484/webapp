@@ -31,6 +31,22 @@ export class FeedCategoriesListComponent implements OnInit {
         this.chosenClientsCategory = category;
     }
 
+    chooseNextClientCategory() {
+        const index = this.categories.indexOf(this.chosenClientsCategory);
+        if (index < this.categories.length - 1) {
+            this.chooseClientCategory(this.categories[index + 1]);
+            return;
+        }
+        if (this.currentPage < (this.totalCategoriesNumber / Number(this.itemsPerPage) - 1)) {
+            this.changePage({
+                pageIndex: this.currentPage + 1,
+                previousPageIndex: this.currentPage,
+                pageSize: Number(this.itemsPerPage),
+                length: this.totalCategoriesNumber
+            });
+        }
+    }
+
     changePage(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
             this.itemsPerPage = String(event.pageSize);

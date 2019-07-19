@@ -104,7 +104,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.subscription.unsubscribe();
         }
 
-        this.feedService.fetchCategoryCollection(this.feed.id, {
+        this.subscription = this.feedService.fetchCategoryCollection(this.feed.id, {
             page: (this.feedCategoriesList.currentPage + 1).toString(),
             limit: this.feedCategoriesList.itemsPerPage,
             name: this.searchClientCategoryControl.value,
