@@ -50,18 +50,11 @@ describe('AutotagInputComponent', () => {
         expect(component.suggestions).toEqual(['{someString}', '{String1234}', '{123str}', '[str]']);
     });
 
-    it('should remove curly brackets from autotag value on setAutotagValue()', () => {
-        feedService.fetchMappingCollection.and.returnValue(EMPTY);
-        component.autotag = <any>{};
-        component.setAutotagValue('{someName}');
-        expect(component.autotag.value).toBe('someName');
-    });
-
     it('should save autotag value on setAutotagValue()', () => {
         feedService.fetchMappingCollection.and.returnValue(EMPTY);
         component.autotag = <any>{};
         component.setAutotagValue('{someName}');
-        expect(component.autotag.value).toBe('someName');
+        expect(component.autotag.value).toBe('{someName}');
     });
 
     it('should NOT remove square brackets from autotag value on setAutotagValue()', () => {
@@ -69,19 +62,5 @@ describe('AutotagInputComponent', () => {
         component.autotag = <any>{};
         component.setAutotagValue('[someName]');
         expect(component.autotag.value).toBe('[someName]');
-    });
-
-    it('should add curly brackets to the value on init', () => {
-        feedService.fetchMappingCollection.and.returnValue(EMPTY);
-        component.autotag = <any>{value: '123', _embedded: {attribute: {}}};
-        fixture.detectChanges();
-        expect(component.value).toBe('{123}');
-    });
-
-    it('should NOT add curly brackets to the value on init if the value is square brackets', () => {
-        feedService.fetchMappingCollection.and.returnValue(EMPTY);
-        component.autotag = <any>{value: '[123]', _embedded: {attribute: {}}};
-        fixture.detectChanges();
-        expect(component.value).toBe('[123]');
     });
 });

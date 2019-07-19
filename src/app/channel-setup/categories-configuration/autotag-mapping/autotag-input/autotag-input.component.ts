@@ -12,7 +12,6 @@ import {
     ValidationErrors,
     Validator
 } from '@angular/forms';
-import { endsWith, startsWith } from 'lodash';
 
 @Component({
     selector: 'sf-autotag-input',
@@ -46,7 +45,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     }
 
     ngOnInit() {
-        this.initializeAutotagValue();
+        this.value = this.autotag.value;
         this.feedService.fetchMappingCollection()
             .subscribe(mappingCollection => this.mappingCollection = mappingCollection);
     }
@@ -61,15 +60,8 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
         this.suggestions.push(`[${this.value}]`);
     }
 
-    initializeAutotagValue() {
-        const value = this.autotag.value;
-        this.value = startsWith(value, '[') && endsWith(value, ']')
-            ? value
-            : `{${value}}`
-    }
-
     setAutotagValue(value: string) {
-        this.autotag.value = value[0] === '{' ? value.substring(1, value.length - 1) : value;
+        this.autotag.value = value;
     }
 
     registerOnChange(fn: any): void {
