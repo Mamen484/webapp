@@ -95,7 +95,6 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     refreshPageData() {
         this.refreshCategoriesList();
-        this.refreshPercentage();
     }
 
     refreshCategoriesList() {
@@ -116,6 +115,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             if (this.categories.length > 0) {
                 this.feedCategoriesList.chooseClientCategory(this.categories[0]);
             }
+            this.refreshPercentage();
         }, error => {
             if (error.status === CONFLICT_ERROR_CODE) {
                 this.feedCategoriesList.setPage(error.pages - 1);
@@ -128,6 +128,7 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.categoryMappingService.getState().subscribe(channelCategory => {
             const index = this.categories.findIndex(cat => cat.id === this.feedCategoriesList.chosenClientsCategory.id);
             this.categories[index].channelCategory = channelCategory;
+            this.refreshPercentage();
             this.changeDetectorRef.detectChanges();
         });
     }
