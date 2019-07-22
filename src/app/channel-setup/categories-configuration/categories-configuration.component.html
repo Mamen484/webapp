@@ -34,6 +34,7 @@
                     [feedCategory]="feedCategoriesList?.chosenClientsCategory"></sf-category-mapping>
             <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
                                 [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
+                                [channelCategoryId]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.id"
                                 (autotagsLoaded)="onAutotagsLoaded()"></sf-autotag-mapping>
             <button mat-stroked-button color="accent" i18n (click)="feedCategoriesList.chooseNextClientCategory()"
                     class="next-category-button">Next

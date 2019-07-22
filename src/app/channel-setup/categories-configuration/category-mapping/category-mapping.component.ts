@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment';
 import { ngxCsv } from 'ngx-csv';
 import { times } from 'lodash';
 import { CategoryMappingService } from './category-mapping.service';
+import { MappingCacheService } from '../mapping-cache.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -44,12 +45,19 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     loading = false;
 
     processingDownload = false;
+    hasCachedMapping = false;
 
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
                 protected appStore: Store<AppState>,
                 protected snackbar: MatSnackBar,
-                protected categoryMappingService: CategoryMappingService) {
+                protected categoryMappingService: CategoryMappingService,
+                protected mappingCache: MappingCacheService) {
+    }
+
+    chooseCategory(category: Category) {
+        this.chosenChannelCategory = category;
+        this.searchChannelCategoryControl.updateValueAndValidity();
     }
 
     ngOnChanges() {
@@ -86,7 +94,11 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         )
             .subscribe(() => {
                 this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
+                this.mappingCache.addCategoryMapping(this.chosenChannelCategory);
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
+                if (this.chosenChannelCategory) {
+                    this.hasCachedMapping = true;
+                }
                 // we don't wait for autotags loading, so we can hide the progress bar immediately
                 if (!this.chosenChannelCategory) {
                     this.loading = false;
@@ -130,6 +142,11 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
                 return of(this.formatCategoriesArrayForCsv(response._embedded.category));
             }));
     }
+
+    usePreviousMapping() {
+        this.chooseCategory(this.mappingCache.getCategoryMapping());
+    }
+
 
     protected listenChannelCategorySearch() {
         this.searchChannelCategoryControl.valueChanges.pipe(

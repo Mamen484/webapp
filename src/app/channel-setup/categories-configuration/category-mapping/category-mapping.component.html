@@ -5,6 +5,7 @@
                 <div i18n fxFlex>Assign a category</div>
                 <a href="#" (click)="downloadCategoryList($event)" i18n *ngIf="!processingDownload">Download category list</a>
                 <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="processingDownload" color="accent"></mat-spinner>
+                <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use previous</button>
             </div>
             <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
                 <mat-form-field appearance="outline" color="accent" fxFlex>
@@ -12,7 +13,7 @@
                     <input matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()" [matAutocomplete]="auto">
                     <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')">Please select category from list</mat-error>
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                      (optionSelected)="chosenChannelCategory = $event.option.value; searchChannelCategoryControl.updateValueAndValidity()">
+                                      (optionSelected)="chooseCategory($event.option.value)">
                         <mat-option *ngFor="let category of channelCategoryOptions"
                                     [value]="category">{{category.name}}</mat-option>
                     </mat-autocomplete>

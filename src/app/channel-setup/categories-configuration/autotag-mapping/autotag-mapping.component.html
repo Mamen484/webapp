@@ -1,6 +1,10 @@
 <mat-card *ngIf="autotagList?.length">
     <mat-card-content fxLayout="column" fxLayoutGap="20px">
-        <div i18n>Fill in the autotags</div>
+        <div fxLayout="row">
+            <div i18n fxFlex>Fill in the autotags</div>
+            <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use previous</button>
+        </div>
+
         <form #form="ngForm">
             <ng-container *ngFor="let autotag of autotagList; index as i">
                 <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"

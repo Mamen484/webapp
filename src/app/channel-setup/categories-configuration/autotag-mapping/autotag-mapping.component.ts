@@ -7,6 +7,7 @@ import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/setti
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { NgForm } from '@angular/forms';
 import { CategoryMappingService } from '../category-mapping/category-mapping.service';
+import { MappingCacheService } from '../mapping-cache.service';
 
 @Component({
     selector: 'sf-autotag-mapping',
@@ -19,15 +20,18 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
 
     @Input() feedId: number;
     @Input() catalogCategoryId: number;
+    @Input() channelCategoryId: number;
 
     @Output() autotagUpdated = new EventEmitter();
     @Output() autotagsLoaded = new EventEmitter();
 
     autotagList: Autotag[];
+    hasCachedMapping = false;
 
     constructor(protected feedService: FeedService,
                 protected snackbar: MatSnackBar,
-                protected categoryMappingService: CategoryMappingService) {
+                protected categoryMappingService: CategoryMappingService,
+                protected mappingCacheService: MappingCacheService) {
     }
 
     ngOnInit() {
@@ -38,6 +42,7 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void {
         this.autotagList = [];
         this.fetchAutotags();
+        this.hasCachedMapping = this.mappingCacheService.hasAutotagMapping(this.channelCategoryId);
     }
 
     saveMatching() {
@@ -54,9 +59,15 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
             autotag.value
         )))
             .subscribe(() => {
+                this.mappingCacheService.addAutotagMapping(this.channelCategoryId, this.catalogCategoryId, this.feedId);
                 this.autotagUpdated.emit();
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
             });
+    }
+
+    usePreviousMapping() {
+        this.mappingCacheService.getAutotagMapping(this.channelCategoryId)
+            .subscribe(autotag => this.autotagList = autotag);
     }
 
     protected fetchAutotags() {

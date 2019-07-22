@@ -7,8 +7,9 @@ import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, throwError } from 'rxjs';
 import { CategoryMappingService } from './category-mapping.service';
+import { MappingCacheService } from '../mapping-cache.service';
 
 describe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
@@ -19,6 +20,7 @@ describe('CategoryMappingComponent', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
     let categoryMappingService: jasmine.SpyObj<CategoryMappingService>;
+    let mappingCacheService: jasmine.SpyObj<MappingCacheService>;
 
     beforeEach(async(() => {
 
@@ -27,7 +29,7 @@ describe('CategoryMappingComponent', () => {
         appStore = jasmine.createSpyObj('App Store spy', ['select']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         categoryMappingService = jasmine.createSpyObj('CategoryMappingService spy', ['notifyMappingChange']);
-
+        mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getCategoryMapping', 'addCategoryMapping']);
 
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent],
@@ -39,6 +41,7 @@ describe('CategoryMappingComponent', () => {
                 {provide: Store, useValue: appStore},
                 {provide: MatSnackBar, useValue: matSnackBar},
                 {provide: CategoryMappingService, useValue: categoryMappingService},
+                {provide: MappingCacheService, useValue: mappingCacheService},
             ],
         })
             .compileComponents();
@@ -169,5 +172,34 @@ describe('CategoryMappingComponent', () => {
             {name: '2'},
         ]);
 
+    });
+
+    it('should show a previous mapping button when at least one category is configured', () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        feedService.mapFeedCategory.and.returnValue(of({}));
+        expect(component.hasCachedMapping).toBe(false);
+        component.saveMatching();
+        expect(component.hasCachedMapping).toBe(true);
+    });
+
+    it('should NOT show a previous mapping button when at least one category was NOT configured', () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        feedService.mapFeedCategory.and.returnValue(throwError({}));
+        expect(component.hasCachedMapping).toBe(false);
+        component.saveMatching();
+        expect(component.hasCachedMapping).toBe(false);
+    });
+
+    it('should display the previously mapped category when USE PREVIOUS button pressed', () => {
+        mappingCacheService.getCategoryMapping.and.returnValue({name: 'SomeChannel', id: 123, channelId: 124});
+        component.usePreviousMapping();
+        expect(component.chosenChannelCategory).toEqual({name: 'SomeChannel', id: 123, channelId: 124});
+    });
+
+    it('should cache mapped category', () => {
+        component.chosenChannelCategory = <any>{id: 22};
+        feedService.mapFeedCategory.and.returnValue(of({}));
+        component.saveMatching();
+        expect(mappingCacheService.addCategoryMapping).toHaveBeenCalledWith({id: 22});
     });
 });

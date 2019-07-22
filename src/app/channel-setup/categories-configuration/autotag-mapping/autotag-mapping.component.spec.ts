@@ -10,6 +10,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
 import { PagedResponse } from 'sfl-shared/entities';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
+import { MappingCacheService } from '../mapping-cache.service';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -17,17 +18,20 @@ describe('AutotagMappingComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
     let autotags$: Subject<PagedResponse<{ autotag: Autotag[] }>>;
+    let mappingCacheService: jasmine.SpyObj<MappingCacheService>;
 
     beforeEach(async(() => {
         feedService = jasmine.createSpyObj('FeedService spy', ['fetchAutotagByCategory', 'matchAutotagByCategory']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         autotags$ = new Subject();
+        mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getAutotagMapping', 'hasAutotagMapping', 'addAutotagMapping']);
 
         TestBed.configureTestingModule({
             declarations: [AutotagMappingComponent, AutotagInputMockComponent, AutotagDropdownMockComponent],
             providers: [
                 {provide: FeedService, useValue: feedService},
                 {provide: MatSnackBar, useValue: matSnackBar},
+                {provide: MappingCacheService, useValue: mappingCacheService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [FormsModule],
@@ -100,13 +104,17 @@ describe('AutotagMappingComponent', () => {
     });
 
     it('should display only required attributes', () => {
-        autotags$.next(<any>{_embedded: {autotag: [
-            {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
-            {_embedded: {attribute: {constraintGroupId: 1, isRequired: false}}},
-            {_embedded: {attribute: {constraintGroupId: null, isRequired: false}}},
-            {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
-            {_embedded: {attribute: {constraintGroupId: 3, isRequired: false}}},
-        ]}});
+        autotags$.next(<any>{
+            _embedded: {
+                autotag: [
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 1, isRequired: false}}},
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: false}}},
+                    {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: false}}},
+                ]
+            }
+        });
 
         expect(component.autotagList.length).toBe(2);
     });
@@ -125,6 +133,38 @@ describe('AutotagMappingComponent', () => {
         component.ngOnChanges({});
         expect(component.autotagList.length).toBe(0);
         expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(2);
+    });
+
+    it('should set hasCachedMapping to true when the autotag mapping cache saved', () => {
+        mappingCacheService.hasAutotagMapping.and.returnValue(true);
+        component.ngOnChanges({});
+        expect(component.hasCachedMapping).toBe(true);
+    });
+
+    it('should set hasCachedMapping to false when the autotag mapping cache NOT saved', () => {
+        mappingCacheService.hasAutotagMapping.and.returnValue(false);
+        component.ngOnChanges({});
+        expect(component.hasCachedMapping).toBe(false);
+    });
+
+    it('should save autotag cache when autotags saved', () => {
+        component.autotagList = <Autotag[]>[{_embedded: {attribute: {constraintGroupId: null}}}];
+        feedService.matchAutotagByCategory.and.returnValue(of({}));
+        component.form = <any>{controls: {}, invalid: false};
+        component.channelCategoryId = 45;
+        component.catalogCategoryId = 90;
+        component.feedId = 118;
+        component.saveMatching();
+        expect(mappingCacheService.addAutotagMapping).toHaveBeenCalledWith(45, 90, 118);
+    });
+
+    it('should reset autotag values when USE previous button clicked', () => {
+        mappingCacheService.getAutotagMapping.and.returnValue(of(<any>[
+            {id: 15}, {id: 22}, {id: 31},
+        ]));
+        component.usePreviousMapping();
+        expect(component.autotagList).toEqual(<any>[{id: 15}, {id: 22}, {id: 31}]);
+
     });
 
 });

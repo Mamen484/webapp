@@ -11,6 +11,7 @@ import { Feed } from '../entities/feed';
 import { CategoryMapping } from '../../channel-setup/category-mapping';
 import { Autotag } from '../../channel-setup/autotag';
 import { MappingCollection } from '../../channel-setup/mapping-collection';
+import { FeedCategoryMapping } from '../../channel-setup/feed-category-mapping';
 
 const MAX_API_LIMIT = '200';
 
@@ -109,5 +110,9 @@ export class FeedService {
                     return this.mappingCache.get(catalogId);
                 }
             ));
+    }
+
+    fetchCategoryMapping(feedId, catalogCategoryId) {
+        return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`) as Observable<FeedCategoryMapping>;
     }
 }
