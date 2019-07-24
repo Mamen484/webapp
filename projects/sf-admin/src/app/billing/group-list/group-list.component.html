@@ -1,4 +1,4 @@
-<sfa-sidebar>
+<sfa-sidebar [showSubnavigation]="true">
     <mat-list-item>
         <a routerLink="/billing" class="mat-body-2" i18n>Store</a>
     </mat-list-item>
@@ -7,7 +7,7 @@
     </mat-list-item>
 </sfa-sidebar>
 
-<div class="sf-content">
+<div class="sf-content with-extended-sidenav">
 
     <div fxLayout="row" class="page-header">
         <div i18n fxFlex class="mat-title list-title">Billing Groups</div>

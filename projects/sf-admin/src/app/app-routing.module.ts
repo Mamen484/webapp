@@ -9,6 +9,10 @@ const routes: Routes = [
         path: '', canActivate: [SflLoginByTokenGuard, IsAuthorizedGuard], children: [
             {path: '', redirectTo: 'billing', pathMatch: 'full'},
             {path: 'billing', loadChildren: () => import('./billing/billing.module').then(m => m.BillingModule)},
+            {
+                path: 'channel-integration',
+                loadChildren: () => import('./channel-integration/channel-integration.module').then(m => m.ChannelIntegrationModule)
+            },
             {path: 'create-user', component: CreateUserComponent},
         ]
     },

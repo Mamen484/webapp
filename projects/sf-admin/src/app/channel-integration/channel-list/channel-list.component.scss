@@ -1,0 +1,21 @@
+@import '../../../../src/sass/variables';
+@import '../../../../src/sass/mixins/scrollable-table.mixin';
+
+$page-header-height: 56px;
+$search-field-height: 89px;
+
+@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}));
+
+td:last-child {
+  width: 60px;
+}
+
+.no-results {
+  background-color: white;
+  padding: 5px 10px;
+}
+
+sfl-solo-search {
+  display: block;
+  margin-bottom: 20px;
+}

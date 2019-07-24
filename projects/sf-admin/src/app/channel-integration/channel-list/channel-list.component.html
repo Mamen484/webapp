@@ -1,0 +1,47 @@
+<sfa-sidebar></sfa-sidebar>
+
+<div class="sf-content">
+    <div fxLayout="row" class="page-header">
+        <div i18n fxFlex class="mat-title list-title">Channel Operators</div>
+        <button mat-raised-button color="accent">Create account</button>
+    </div>
+
+    <sfl-solo-search i18n-placeholder placeholder="Search channel"></sfl-solo-search>
+    <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
+        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+    </div>
+
+
+
+
+    <div class="table-container mat-elevation-z1">
+        <table mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="channelName">
+                <th mat-header-cell *matHeaderCellDef i18n> Channel</th>
+                <td mat-cell *matCellDef="let element"> {{element._embedded.channel.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="accountName">
+                <th mat-header-cell *matHeaderCellDef i18n> Account</th>
+                <td mat-cell *matCellDef="let element"> {{element._embedded.account.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="lastChanged">
+                <th mat-header-cell *matHeaderCellDef i18n> Last changed</th>
+                <td mat-cell *matCellDef="let element"> {{element._embedded.channel.lastModifiedAt | date:'shortDate'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef i18n> </th>
+                <td mat-cell *matCellDef="let element"> <mat-slide-toggle color="accent" [checked]="element._embedded.channel.active"></mat-slide-toggle> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="!isLoadingResults && !dataSource.data.length" i18n class="no-results mat-body-1">
+            No channels found.
+        </div>
+    </div>
+
+    <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageChanged($event)" [pageIndex]="currentPage" class="mat-elevation-z1"></mat-paginator>
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SflLocalStorageService } from 'sfl-shared/services';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
     styleUrls: ['./admin-sidebar.component.scss']
 })
 export class AdminSidebarComponent {
+    @Input() showSubnavigation = false;
     constructor(protected router: Router,
                 protected localStorage: SflLocalStorageService) {
     }
