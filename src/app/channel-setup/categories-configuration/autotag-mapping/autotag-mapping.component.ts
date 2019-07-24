@@ -67,14 +67,18 @@ export class AutotagMappingComponent implements OnInit, OnChanges {
 
     usePreviousMapping() {
         this.mappingCacheService.getAutotagMapping(this.channelCategoryId)
-            .subscribe(autotag => this.autotagList = autotag);
+            .subscribe(autotag => this.autotagList = this.filterMandatory(autotag));
     }
 
     protected fetchAutotags() {
         this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId).subscribe(response => {
-            this.autotagList = response._embedded.autotag.filter(autotag => autotag._embedded.attribute.isRequired);
+            this.autotagList = this.filterMandatory(response._embedded.autotag);
             this.autotagsLoaded.emit();
         });
+    }
+
+    protected filterMandatory(autotag: Autotag[]) {
+        return autotag.filter(({_embedded}) => _embedded.attribute.isRequired);
     }
 
 }

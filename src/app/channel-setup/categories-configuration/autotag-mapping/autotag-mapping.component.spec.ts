@@ -11,6 +11,7 @@ import { PagedResponse } from 'sfl-shared/entities';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { MappingCacheService } from '../mapping-cache.service';
+import { autotagsMock } from './autotags-mock';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -160,11 +161,44 @@ describe('AutotagMappingComponent', () => {
 
     it('should reset autotag values when USE previous button clicked', () => {
         mappingCacheService.getAutotagMapping.and.returnValue(of(<any>[
-            {id: 15}, {id: 22}, {id: 31},
+            {id: 15, _embedded: {attribute: {isRequired: true}}},
+            {id: 22, _embedded: {attribute: {isRequired: true}}},
+            {id: 31, _embedded: {attribute: {isRequired: true}}},
         ]));
         component.usePreviousMapping();
-        expect(component.autotagList).toEqual(<any>[{id: 15}, {id: 22}, {id: 31}]);
+        expect(component.autotagList.map(autotag => ({id: autotag.id})))
+            .toEqual(<any>[{id: 15}, {id: 22}, {id: 31}]);
 
+    });
+
+    it('should pass values from previous mapping to a server', () => {
+        component.form = <any>{controls: {}, invalid: false};
+        feedService.matchAutotagByCategory.and.returnValue(EMPTY);
+        mappingCacheService.getAutotagMapping.and.returnValue(of(<any>[
+            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
+            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
+            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
+        ]));
+        component.usePreviousMapping();
+        component.saveMatching();
+        expect(feedService.matchAutotagByCategory).toHaveBeenCalledTimes(3);
+        expect(feedService.matchAutotagByCategory.calls.argsFor(0)[3]).toBe('some value 1');
+        expect(feedService.matchAutotagByCategory.calls.argsFor(1)[3]).toBe('some value 2');
+        expect(feedService.matchAutotagByCategory.calls.argsFor(2)[3]).toBe('some value 3');
+
+    });
+
+    it('should assign equal values to autotagList on OnChanges() and on usePreviousMapping()', () => {
+        feedService.fetchAutotagByCategory.and.returnValue(of(autotagsMock));
+        mappingCacheService.getAutotagMapping.and.returnValue(of(autotagsMock._embedded.autotag));
+        component.ngOnChanges({});
+        expect(component.autotagList.length).toBe(8);
+        const onChangesList = JSON.stringify(component.autotagList);
+        component.autotagList = [];
+        component.usePreviousMapping();
+        const previousMappingList = JSON.stringify(component.autotagList);
+
+        expect(onChangesList).toBe(previousMappingList);
     });
 
 });

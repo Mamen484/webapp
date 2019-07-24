@@ -184,7 +184,7 @@ describe('CategoryMappingComponent', () => {
 
     it('should NOT show a previous mapping button when at least one category was NOT configured', () => {
         component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(throwError({}));
+        feedService.mapFeedCategory.and.returnValue(EMPTY);
         expect(component.hasCachedMapping).toBe(false);
         component.saveMatching();
         expect(component.hasCachedMapping).toBe(false);

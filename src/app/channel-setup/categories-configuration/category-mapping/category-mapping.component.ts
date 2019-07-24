@@ -57,7 +57,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
 
     chooseCategory(category: Category) {
         this.chosenChannelCategory = category;
-        this.searchChannelCategoryControl.updateValueAndValidity();
+        this.searchChannelCategoryControl.reset(category);
     }
 
     ngOnChanges() {
