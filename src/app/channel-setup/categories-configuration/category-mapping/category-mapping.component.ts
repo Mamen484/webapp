@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, map, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, switchMap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
@@ -9,11 +9,8 @@ import { AppState } from '../../../core/entities/app-state';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
-import { of, Subscription, zip } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FeedCategory } from '../../../core/entities/feed-category';
-import { environment } from '../../../../environments/environment';
-import { ngxCsv } from 'ngx-csv';
-import { times } from 'lodash';
 import { CategoryMappingService } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
 
@@ -43,8 +40,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     channelCategoryOptions: Category[] = [];
     searchSubscription: Subscription;
     loading = false;
-
-    processingDownload = false;
     hasCachedMapping = false;
 
     constructor(protected channelService: ChannelService,
@@ -116,33 +111,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         }
     }
 
-    downloadCategoryList(event) {
-        event.preventDefault();
-        this.processingDownload = true;
-        this.getCategoriesList().subscribe(categoriesList => {
-            const csv = new ngxCsv(categoriesList, this.channelId + '-category-mapping', {
-                fieldSeparator: ';',
-                decimalseparator: ',',
-            });
-            this.processingDownload = false;
-        })
-    }
-
-    getCategoriesList() {
-        return this.fetchCategoriesForPage(1)
-            .pipe(flatMap(response => {
-                if (response.pages > 1) {
-                    return zip(...times(response.pages - 1).map(num => this.fetchCategoriesForPage(num + 2))
-                    ).pipe(map(([...responses]) => responses.reduce(
-                        (acc, currentResponse) => acc.concat(this.formatCategoriesArrayForCsv(currentResponse._embedded.category)),
-                        this.formatCategoriesArrayForCsv(response._embedded.category)
-                        )
-                    ))
-                }
-                return of(this.formatCategoriesArrayForCsv(response._embedded.category));
-            }));
-    }
-
     usePreviousMapping() {
         this.chooseCategory(this.mappingCache.getCategoryMapping());
     }
@@ -161,17 +129,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             ),
         )
             .subscribe(response => this.channelCategoryOptions = response._embedded.category);
-    }
-
-    protected formatCategoriesArrayForCsv(category: Category[]) {
-        return category.map(({name}) => ({name}));
-    }
-
-    protected fetchCategoriesForPage(page: number) {
-        return this.channelService.getChannelCategories(this.channelId, {
-            limit: environment.maxApiLimit,
-            page: String(page)
-        })
     }
 
 }
