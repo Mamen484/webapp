@@ -40,8 +40,8 @@ describe('FeedCategoriesListComponent', () => {
     it('should select the next category when chooseNextClientCategory() called', () => {
         component.categories = <any>[{id: 1}, {id: 2}];
         component.chooseClientCategory(component.categories[0]);
-        component.chooseNextClientCategory();
-        expect(component.chosenClientsCategory.id).toBe(2);
+        component.chooseNextCatalogCategory();
+        expect(component.chosenCatalogCategory.id).toBe(2);
     });
 
     it('should load next page when chooseNextClientCategory() called and the last category selected', () => {
@@ -49,7 +49,7 @@ describe('FeedCategoriesListComponent', () => {
         component.totalCategoriesNumber = 100;
         const spy = spyOn(component.pageChanged, 'emit');
         component.chooseClientCategory(component.categories[1]);
-        component.chooseNextClientCategory();
+        component.chooseNextCatalogCategory();
         expect(spy).toHaveBeenCalled();
     });
 
@@ -60,7 +60,7 @@ describe('FeedCategoriesListComponent', () => {
         component.totalCategoriesNumber = 50;
         const spy = spyOn(component.pageChanged, 'emit');
         component.chooseClientCategory(component.categories[9]);
-        component.chooseNextClientCategory();
+        component.chooseNextCatalogCategory();
         expect(spy).not.toHaveBeenCalled();
     });
 });

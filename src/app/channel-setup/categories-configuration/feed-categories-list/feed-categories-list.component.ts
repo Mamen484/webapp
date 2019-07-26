@@ -1,19 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FeedCategory } from '../../../core/entities/feed-category';
 import { PageEvent } from '@angular/material';
+import { CategoryState } from '../../category-state';
 
 @Component({
     selector: 'sf-feed-categories-list',
     templateUrl: './feed-categories-list.component.html',
     styleUrls: ['./feed-categories-list.component.scss']
 })
-export class FeedCategoriesListComponent implements OnInit {
+export class FeedCategoriesListComponent implements OnChanges {
 
     @Input() categories: FeedCategory[];
     @Output() pageChanged = new EventEmitter();
 
+    categoryState = CategoryState;
+
     /** matched categories */
-    chosenClientsCategory: FeedCategory;
+    chosenCatalogCategory: FeedCategory;
 
     /** pagination */
     itemsPerPage = '10';
@@ -24,15 +27,21 @@ export class FeedCategoriesListComponent implements OnInit {
     constructor() {
     }
 
-    ngOnInit() {
+    ngOnChanges() {
+        if (this.categories && this.categories.length) {
+            const category = this.chosenCatalogCategory
+                ? this.categories.find(cat => this.chosenCatalogCategory.id === cat.id)
+                : null;
+            this.chosenCatalogCategory = category || this.categories[0];
+        }
     }
 
     chooseClientCategory(category: FeedCategory) {
-        this.chosenClientsCategory = category;
+        this.chosenCatalogCategory = category;
     }
 
-    chooseNextClientCategory() {
-        const index = this.categories.indexOf(this.chosenClientsCategory);
+    chooseNextCatalogCategory() {
+        const index = this.categories.indexOf(this.chosenCatalogCategory);
         if (index < this.categories.length - 1) {
             this.chooseClientCategory(this.categories[index + 1]);
             return;

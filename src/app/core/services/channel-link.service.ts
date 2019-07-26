@@ -4,7 +4,7 @@ import { flatMap, map } from 'rxjs/operators';
 import { ChannelLinkPipe } from '../../shared/channel-link/channel-link.pipe';
 import { FeedService } from './feed.service';
 import { ChannelService } from './channel.service';
-import { CategoryMapping } from '../../channel-setup/category-mapping';
+import { CategoryState } from '../../channel-setup/category-state';
 import { SflLocaleIdService, SflWindowRefService } from 'sfl-shared/services';
 import { Router } from '@angular/router';
 import { Channel } from 'sfl-shared/entities';
@@ -51,7 +51,7 @@ export class ChannelLinkService {
     }
 
     protected hasConfiguredCategories(feedId): Observable<boolean> {
-        return this.feedService.fetchCategoryCollection(feedId, {mapping: CategoryMapping.Mapped})
+        return this.feedService.fetchCategoryCollection(feedId, {state: CategoryState.Configured})
             .pipe(map(response => Boolean(response._embedded.category.length)));
     }
 

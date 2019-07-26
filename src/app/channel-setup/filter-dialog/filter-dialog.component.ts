@@ -1,5 +1,5 @@
 import { Component, Inject, Optional } from '@angular/core';
-import { CategoryMapping } from '../category-mapping';
+import { CategoryState } from '../category-state';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -9,10 +9,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class FilterDialogComponent {
 
-    categoryMapping = CategoryMapping;
-    chosenMapping = CategoryMapping.NotSpecified;
+    categoryState = CategoryState;
+    chosenMapping = CategoryState.NotSpecified;
 
-    constructor(@Optional() @Inject(MAT_DIALOG_DATA) protected data: CategoryMapping, protected matDialogRef: MatDialogRef<FilterDialogComponent, CategoryMapping>) {
+    constructor(@Optional() @Inject(MAT_DIALOG_DATA) protected data: CategoryState, protected matDialogRef: MatDialogRef<FilterDialogComponent, CategoryState>) {
         if (data) {
             this.chosenMapping = data;
         }

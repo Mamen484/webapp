@@ -2,15 +2,15 @@
     <mat-card-content>
         <mat-list dense>
             <mat-list-item *ngFor="let category of (categories || [])" (click)="chooseClientCategory(category)"
-                           [class.selected]="chosenClientsCategory.id === category.catalogCategory.id">
+                           [class.selected]="chosenCatalogCategory.id === category.catalogCategory.id">
                 <div fxLayout="row" class="user-category-row" fxLayoutAlign="center center">
                     <div fxFlex>{{category.catalogCategory.name}}</div>
-                    <div class="sf-label red mat-chip" *ngIf="!category.channelCategory">
+                    <div class="sf-label red mat-chip" *ngIf="category.state === categoryState.Misconfigured">
                         <mat-icon color="warn">cancel</mat-icon>
                         <ng-container i18n>Misconfigured</ng-container>
                     </div>
 
-                    <div class="sf-label green mat-chip" *ngIf="category.channelCategory">
+                    <div class="sf-label green mat-chip" *ngIf="category.state === categoryState.Configured">
                         <mat-icon>check_circle</mat-icon>
                         <ng-container i18n>Configured</ng-container>
                     </div>

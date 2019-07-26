@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime, filter, flatMap, switchMap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
@@ -55,7 +55,11 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         this.searchChannelCategoryControl.reset(category);
     }
 
-    ngOnChanges() {
+    ngOnChanges({channelId, feedCategory}: SimpleChanges) {
+        if (feedCategory.previousValue.id === feedCategory.currentValue.id
+            && channelId.previousValue === channelId.currentValue) {
+            return;
+        }
         this.searchChannelCategoryControl.reset(this.feedCategory.channelCategory);
         if (this.searchSubscription) {
             this.searchSubscription.unsubscribe();
@@ -109,6 +113,11 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         if (this.searchChannelCategoryControl.value === '') {
             this.chosenChannelCategory = null;
         }
+    }
+
+    removeValue() {
+        this.searchChannelCategoryControl.reset('');
+        this.chosenChannelCategory = null;
     }
 
     usePreviousMapping() {

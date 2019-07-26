@@ -7,7 +7,7 @@ import { ChannelService } from '../../core/services/channel.service';
 import { FeedService } from '../../core/services/feed.service';
 import { EMPTY, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryMapping } from '../category-mapping';
+import { CategoryState } from '../category-state';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
@@ -72,7 +72,7 @@ describe('CategoriesConfigurationComponent', () => {
 
     it('should set a correct percentage of mapped categories', () => {
         feedService.fetchCategoryCollection.and.callFake((feedId, filters) => {
-            return filters.mapping === CategoryMapping.Mapped
+            return filters.state === CategoryState.Configured
                 ? of(<any>{_embedded: {}, total: 1})
                 : of(<any>{_embedded: {category: []}, total: 10})
         });
@@ -82,14 +82,14 @@ describe('CategoriesConfigurationComponent', () => {
 
     it('should update data when a user filters categories by mapping', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue(<any>{afterClosed: () => of(CategoryMapping.Mapped)});
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(CategoryState.Configured)});
         component.feed = <any>{id: 15};
         component.openFilterDialog();
         expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
             page: '1',
             limit: component.feedCategoriesList.itemsPerPage,
             name: null,
-            mapping: CategoryMapping.Mapped,
+            state: CategoryState.Configured,
         })
     });
 
@@ -102,7 +102,7 @@ describe('CategoriesConfigurationComponent', () => {
             page: '3',
             limit: component.feedCategoriesList.itemsPerPage,
             name: null,
-            mapping: undefined,
+            state: undefined,
         })
     });
 

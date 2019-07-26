@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { flatMap, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
-import { CategoryMapping } from '../../channel-setup/category-mapping';
+import { CategoryState } from '../../channel-setup/category-state';
 import { Autotag } from '../../channel-setup/autotag';
 import { MappingCollection } from '../../channel-setup/mapping-collection';
 import { FeedCategoryMapping } from '../../channel-setup/feed-category-mapping';
@@ -26,7 +26,7 @@ export class FeedService {
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
-    fetchCategoryCollection(feedId, {name, page, limit, mapping}: { name?: string, page?: string, limit?: string, mapping?: CategoryMapping }) {
+    fetchCategoryCollection(feedId, {name, page, limit, state}: { name?: string, page?: string, limit?: string, state?: CategoryState }) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);
@@ -39,8 +39,8 @@ export class FeedService {
             params = params.set('limit', limit);
         }
 
-        if (mapping) {
-            params = params.set('mapping', mapping);
+        if (state) {
+            params = params.set('state', state);
         }
         return this.httpClient.get(
             `${environment.API_URL}/feed/${feedId}/category`, {params}

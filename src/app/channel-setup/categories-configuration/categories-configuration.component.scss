@@ -38,3 +38,18 @@ mat-card.client-category-search {
 .next-category-button {
   align-self: flex-end;
 }
+
+mat-chip-list.filter-chips {
+  margin-bottom: $content-margin;
+  display: block;
+
+  mat-chip {
+    mat-icon {
+      cursor: pointer;
+      color: mat-color($grey);
+    }
+    mat-icon, span {
+      vertical-align: middle;
+    }
+  }
+}

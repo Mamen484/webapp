@@ -24,22 +24,35 @@
                     </mat-card-content>
                 </mat-card>
             </label>
-            <sf-feed-categories-list [categories]="!processingClientCategorySearch && categories"
+            <mat-chip-list [selectable]="false" class="filter-chips" *ngIf="categoryStateFilter">
+                <mat-chip color="accent">
+                    <ng-container i18n *ngIf="categoryStateFilter === categoryStateOptions.Configured">Configured
+                        categories only
+                    </ng-container>
+                    <ng-container i18n *ngIf="categoryStateFilter === categoryStateOptions.Misconfigured">Misconfigured
+                        categories only
+                    </ng-container>
+                    <mat-icon (click)="cancelFilter()">cancel</mat-icon>
+                </mat-chip>
+            </mat-chip-list>
+            <sf-feed-categories-list [categories]="categories"
                                      (pageChanged)="refreshCategoriesList()">
             </sf-feed-categories-list>
         </div>
         <div fxFlex="30%" fxLayout="column" fxLayoutGap="20px" *ngIf="feedCategoriesList?.categories?.length">
             <sf-category-mapping
                     [channelId]="channel.id"
-                    [feedCategory]="feedCategoriesList?.chosenClientsCategory"></sf-category-mapping>
-            <sf-autotag-mapping [feedId]="feed.id" *ngIf="feedCategoriesList?.chosenClientsCategory?.channelCategory"
-                                [catalogCategoryId]="feedCategoriesList?.chosenClientsCategory?.id"
-                                [channelCategoryId]="feedCategoriesList?.chosenClientsCategory?.channelCategory?.id"
-                                (autotagsLoaded)="onAutotagsLoaded()"></sf-autotag-mapping>
-            <button mat-stroked-button color="accent" i18n (click)="feedCategoriesList.chooseNextClientCategory()"
-                    class="next-category-button">Next
-            </button>
-
+                    [feedCategory]="feedCategoriesList?.chosenCatalogCategory"></sf-category-mapping>
+            <ng-container *ngIf="feedCategoriesList?.chosenCatalogCategory?.channelCategory">
+                <sf-autotag-mapping [feedId]="feed.id"
+                                    [catalogCategoryId]="feedCategoriesList?.chosenCatalogCategory?.id"
+                                    [channelCategoryId]="feedCategoriesList?.chosenCatalogCategory?.channelCategory?.id"
+                                    (autotagsLoaded)="onAutotagsLoaded()"
+                                    (autotagUpdated)="refreshCategoriesList()"></sf-autotag-mapping>
+                <button mat-stroked-button color="accent" i18n (click)="feedCategoriesList.chooseNextCatalogCategory()"
+                        class="next-category-button">Next
+                </button>
+            </ng-container>
         </div>
 
 

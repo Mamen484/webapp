@@ -4,9 +4,9 @@
     <form>
         <mat-form-field appearance="outline" color="accent">
             <mat-select [(ngModel)]="chosenMapping" name="chosenState">
-                <mat-option i18n [value]="categoryMapping.NotSpecified">All states</mat-option>
-                <mat-option i18n [value]="categoryMapping.Mapped">Configured</mat-option>
-                <mat-option i18n [value]="categoryMapping.Unmapped">Misconfigured</mat-option>
+                <mat-option i18n [value]="categoryState.NotSpecified">All states</mat-option>
+                <mat-option i18n [value]="categoryState.Configured">Configured</mat-option>
+                <mat-option i18n [value]="categoryState.Misconfigured">Misconfigured</mat-option>
             </mat-select>
         </mat-form-field>
     </form>

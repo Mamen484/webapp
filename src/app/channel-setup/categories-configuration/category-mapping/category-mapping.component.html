@@ -1,23 +1,19 @@
+<div fxLayout="row" fxLayoutAlign="start center">
+    <div i18n fxFlex>Assign a category</div>
+    <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use previous
+    </button>
+</div>
 <mat-card>
     <mat-card-content>
         <div class="category-mapping" fxLayout="column" fxLayoutGap="20px">
-            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutAlign.lt-lg="start start">
-                <div i18n fxFlex>Assign a category</div>
-                <div fxLayout="row" fxLayout.lt-lg="column" fxLayoutGap="10px" fxLayoutAlign="start center" fxLayoutAlign.lt-lg="start end">
-                    <a href="#" (click)="downloadCategoryList($event)" i18n *ngIf="!processingDownload">Download
-                        category list</a>
-                    <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="processingDownload"
-                                 color="accent"></mat-spinner>
-                    <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping"
-                            i18n>Use previous
-                    </button>
-                </div>
-            </div>
             <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
                 <mat-form-field appearance="outline" color="accent" fxFlex>
                     <mat-label i18n>Category matching</mat-label>
-                    <input matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()"
+                    <input type="search" matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()"
                            [matAutocomplete]="auto">
+                    <button *ngIf="searchChannelCategoryControl.value" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeValue()">
+                        <mat-icon>close</mat-icon>
+                    </button>
                     <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')">Please select
                         category from list
                     </mat-error>

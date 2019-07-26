@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { EMPTY, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CategoryMapping } from '../../channel-setup/category-mapping';
+import { CategoryState } from '../../channel-setup/category-state';
 
 describe('FeedService', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -39,9 +39,9 @@ describe('FeedService', () => {
     });
 
     it('should include page, limit and mapping params to a fetchCategoryCollection call', () => {
-        service.fetchCategoryCollection(11, {limit: '10', page: '3', mapping: CategoryMapping.Mapped}).subscribe();
+        service.fetchCategoryCollection(11, {limit: '10', page: '3', state: CategoryState.Configured}).subscribe();
 
-        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/category?page=3&limit=10&mapping=${CategoryMapping.Mapped}`);
+        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/category?page=3&limit=10&state=${CategoryState.Configured}`);
         expect(req.request.method).toBe('GET');
     });
 
