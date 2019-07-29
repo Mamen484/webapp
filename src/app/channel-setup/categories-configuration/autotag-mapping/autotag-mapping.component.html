@@ -1,23 +1,26 @@
-<mat-card *ngIf="autotagList?.length">
-    <mat-card-content fxLayout="column" fxLayoutGap="40px">
-        <div fxLayout="row">
-            <div i18n fxFlex>Fill in the autotags</div>
-            <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use previous</button>
-        </div>
+<ng-container *ngIf="autotagList?.length">
+    <div fxLayout="row" fxLayoutAlign="start center">
+        <div i18n fxFlex>Fill in the autotags</div>
+        <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use
+            previous
+        </button>
+    </div>
+    <mat-card>
+        <mat-card-content fxLayout="column" fxLayoutGap="40px">
+            <form #form="ngForm">
+                <ng-container *ngFor="let autotag of autotagList; index as i">
+                    <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
+                                      [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-input>
+                    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
+                                         [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-dropdown>
+                </ng-container>
 
-        <form #form="ngForm">
-            <ng-container *ngFor="let autotag of autotagList; index as i">
-                <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
-                                  [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-input>
-                <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
-                                     [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-dropdown>
-            </ng-container>
-
-            <div class="actions" fxLayout="row" fxLayoutAlign="end center">
-                <button mat-raised-button i18n color="accent" (click)="saveMatching()">
-                    Save
-                </button>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center">
+                    <button mat-raised-button i18n color="accent" (click)="saveMatching()">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</ng-container>

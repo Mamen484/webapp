@@ -22,7 +22,6 @@ export class FeedCategoriesListComponent implements OnChanges {
     itemsPerPage = '10';
     currentPage = 0;
     totalCategoriesNumber = 0;
-    pageSizeOptions = [10, 25, 50, 100];
 
     constructor() {
     }

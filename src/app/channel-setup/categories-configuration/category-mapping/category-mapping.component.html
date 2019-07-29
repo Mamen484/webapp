@@ -8,7 +8,7 @@
         <div class="category-mapping" fxLayout="column" fxLayoutGap="20px">
             <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
                 <mat-form-field appearance="outline" color="accent" fxFlex>
-                    <mat-label i18n>Category matching</mat-label>
+                    <mat-label i18n>Category mapping</mat-label>
                     <input type="search" matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()"
                            [matAutocomplete]="auto">
                     <button *ngIf="searchChannelCategoryControl.value" mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removeValue()">

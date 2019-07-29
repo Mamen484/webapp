@@ -32,6 +32,6 @@ mat-card.categories-list {
   }
 
   mat-paginator {
-    padding: calc(#{$line-padding} - 8px);
+    padding: 0;
   }
 }
