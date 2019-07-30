@@ -47,7 +47,7 @@ describe('AutotagInputComponent', () => {
         component.ngOnInit();
         component.value = 'str';
         component.createSuggestions();
-        expect(component.suggestions).toEqual(['{someString}', '{String1234}', '{123str}', '[str]']);
+        expect(component.suggestions).toEqual(['[str]', '{someString}', '{String1234}', '{123str}']);
     });
 
     it('should save autotag value on setAutotagValue()', () => {

@@ -61,7 +61,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
         this.suggestions = this.mappingCollection._embedded.mapping
             .filter(m => m.catalogField.toLowerCase().includes(this.value.toLowerCase()))
             .map(m => `{${m.catalogField}}`);
-        this.suggestions.push(`[${this.value}]`);
+        this.suggestions.unshift(`[${this.value}]`);
     }
 
     setAutotagValue(value: string) {

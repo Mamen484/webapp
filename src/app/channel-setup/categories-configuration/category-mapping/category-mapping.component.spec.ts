@@ -74,13 +74,6 @@ describe('CategoryMappingComponent', () => {
         expect(categoryMappingService.notifyMappingChange).toHaveBeenCalledWith({id: 22});
     });
 
-    it('should show a snackbar when a category is saved successfully', async () => {
-        component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(of({}));
-        component.saveMatching();
-        expect(matSnackBar.openFromComponent).toHaveBeenCalled();
-    });
-
     it('should show a loading bar when a category mapping save clicked', async () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(EMPTY);
