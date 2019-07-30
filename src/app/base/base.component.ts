@@ -32,7 +32,7 @@ export class BaseComponent implements OnInit {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
-            map(({_embedded}) => _embedded.channel.map(({_embedded: {channel}}) => channel))
+            map(({_embedded}) => _embedded.channel)
         )
             .subscribe(channels => {
                 this.appStore.dispatch({type: SET_CHANNELS, channels})

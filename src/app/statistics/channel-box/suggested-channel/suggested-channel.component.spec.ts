@@ -76,7 +76,7 @@ describe('SuggestedChannelComponent', () => {
         channelLinkService.getChannelLink.and.returnValue(<any>channelLink);
         component.channel = <any>{_embedded: {channel: {id: ChannelMap.laredoute}}};
         component.goToChannel();
-        expect(channelLinkService.navigateToChannel).toHaveBeenCalledWith(<any>{id: ChannelMap.laredoute});
+        expect(channelLinkService.navigateToChannel).toHaveBeenCalledWith(<any>{_embedded: {channel: {id: ChannelMap.laredoute}}});
     });
 
     it('should not send international account request when user did not agree for that', () => {

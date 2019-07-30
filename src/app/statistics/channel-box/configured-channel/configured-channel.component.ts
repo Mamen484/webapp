@@ -20,7 +20,7 @@ export class ConfiguredChannelComponent implements OnInit {
     }
 
     goToChannel() {
-        this.channelLinkService.navigateToChannel(this.channel._embedded.channel);
+        this.channelLinkService.navigateToChannel(this.channel);
     }
 
     ngOnInit() {

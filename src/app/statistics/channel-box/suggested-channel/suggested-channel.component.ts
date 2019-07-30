@@ -42,10 +42,10 @@ export class SuggestedChannelComponent implements OnInit {
     goToChannel() {
         if (this.channel._embedded.channel.id === ChannelMap.cdiscount) {
             this.windowRefService.nativeWindow.location.href =
-                environment.CDISCOUNT_TRACKING_LINK + this.channelLinkService.getChannelLink(this.channel._embedded.channel);
+                environment.CDISCOUNT_TRACKING_LINK + this.channelLinkService.getChannelLink(this.channel);
             return;
         }
-        this.channelLinkService.navigateToChannel(this.channel._embedded.channel);
+        this.channelLinkService.navigateToChannel(this.channel);
     }
 
     showInternationalChannelDialog() {

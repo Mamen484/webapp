@@ -356,7 +356,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         this.appStore.select('installedChannels').pipe(take(1)).subscribe(channels => {
             try {
                 this.selectedChannel = this.ordersFilter.channel
-                    ? channels.find(ch => ch.id === this.ordersFilter.channel).name
+                    ? channels.find(ch => ch._embedded.channel.id === this.ordersFilter.channel)._embedded.channel.name
                     : undefined;
             } catch (e) {
                 this.selectedChannel = undefined;

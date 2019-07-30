@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { LegacyLinkService } from './legacy-link.service';
 import { SflLocaleIdService, SflWindowRefService } from 'sfl-shared/services';
 import { of } from 'rxjs';
-import { Channel } from 'sfl-shared/entities';
+import { StoreChannel } from 'sfl-shared/entities';
 
 describe('ChannelLinkService', () => {
 
@@ -64,7 +64,7 @@ describe('ChannelLinkService', () => {
         feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: []}}));
         channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
         const channel = <any>mockChannel();
-        channel.id = 12;
+        channel._embedded.channel.id = 12;
         channel.installed = true;
         service.navigateToChannel(channel);
         expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 12]);
@@ -87,7 +87,7 @@ describe('ChannelLinkService', () => {
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
         feedService.create.and.returnValue(of({}));
         const channel = mockChannel();
-        channel.id = 51;
+        channel._embedded.channel.id = 51;
         service.navigateToChannel(channel);
         expect(feedService.create).toHaveBeenCalled();
         expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 51]);
@@ -95,10 +95,20 @@ describe('ChannelLinkService', () => {
 
     function mockChannel() {
         return {
-            _links: {image: {href: ''}},
-            name: 'channel_name',
-            type: 'shopbot',
+            store: 27,
+            channel: 99,
+            stats: {},
+            statistics: {},
+            _embedded: {
+                channel: {
+                    _links: {image: {href: ''}},
+                    name: 'channel_name',
+                    type: 'shopbot',
+
+                }
+            },
+            _links: {},
             installed: false,
-        } as Channel;
+        } as StoreChannel;
     }
 });

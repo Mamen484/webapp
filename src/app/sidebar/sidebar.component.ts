@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { AggregatedUserInfo, Channel, PaymentType, Store, StoreChannelDetails, StoreStatus } from 'sfl-shared/entities';
+import { AggregatedUserInfo, PaymentType, Store, StoreChannel, StoreStatus } from 'sfl-shared/entities';
 import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TimelineService } from '../core/services/timeline.service';
@@ -22,7 +22,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     currentStore: Store;
     currentRoute;
-    channels: StoreChannelDetails[];
+    channels: StoreChannel[];
     linkToSupportCenter;
     hideTooltips = false;
 
@@ -73,7 +73,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
             || this.currentStore.permission.solomo;
     }
 
-    goToChannel(channel: Channel) {
+    goToChannel(channel: StoreChannel) {
         this.channelLinkService.navigateToChannel(channel);
     }
 
@@ -104,15 +104,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.windowRef.nativeWindow.location.href = `${environment.APP_URL}/index/logout`;
     }
 
-    protected updateEventsNumber() {
-        this.timelineService.getUpdatesNumber()
-            .subscribe(events => this.newEvents = events);
-    }
-
     ngOnDestroy() {
         if (this.newEventsSubscription) {
             this.newEventsSubscription.unsubscribe();
         }
+    }
+
+    protected updateEventsNumber() {
+        this.timelineService.getUpdatesNumber()
+            .subscribe(events => this.newEvents = events);
     }
 
 }

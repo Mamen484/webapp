@@ -3,7 +3,7 @@ import { DAY, OrdersFilter } from '../../core/entities/orders/orders-filter';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AppState } from '../../core/entities/app-state';
 import { Store } from '@ngrx/store';
-import { ChannelType, StoreChannelDetails } from 'sfl-shared/entities';
+import { Channel, ChannelType } from 'sfl-shared/entities';
 import { Tag } from '../../core/entities/tag';
 
 @Component({
@@ -13,7 +13,7 @@ import { Tag } from '../../core/entities/tag';
 })
 export class OrdersFilterDialogComponent implements OnInit {
 
-    channels: StoreChannelDetails[];
+    channels: Channel[];
     dateOption = 'anytime';
     tags: Tag[];
 
@@ -32,7 +32,8 @@ export class OrdersFilterDialogComponent implements OnInit {
 
         this.appStore.select('installedChannels').subscribe(channels =>
             this.channels = channels
-                ? channels.filter(channel => channel.type === ChannelType.marketplace.toLowerCase())
+                ? channels.filter(channel => channel._embedded.channel.type === ChannelType.marketplace.toLowerCase())
+                    .map(channel => channel._embedded.channel)
                 : []
         );
         this.appStore.select('tags').subscribe(tags => this.tags = tags);

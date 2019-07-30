@@ -7,7 +7,7 @@ import { ChannelService } from './channel.service';
 import { CategoryState } from '../../channel-setup/category-state';
 import { SflLocaleIdService, SflWindowRefService } from 'sfl-shared/services';
 import { Router } from '@angular/router';
-import { Channel } from 'sfl-shared/entities';
+import { StoreChannel } from 'sfl-shared/entities';
 import { LegacyLinkService } from './legacy-link.service';
 import { environment } from '../../../environments/environment';
 
@@ -24,26 +24,26 @@ export class ChannelLinkService {
                 protected localeIdService: SflLocaleIdService) {
     }
 
-    navigateToChannel(channel: Channel) {
+    navigateToChannel(channel: StoreChannel) {
         this.decideToSkipSetup(channel).subscribe(skipSetup => {
             if (skipSetup) {
-                this.goToChannel(ChannelLinkPipe.getChannelLink(channel));
+                this.goToChannel(ChannelLinkPipe.getChannelLink(channel._embedded.channel));
             } else {
-                this.goToChannelSetup(channel.id);
+                this.goToChannelSetup(channel._embedded.channel.id);
             }
         });
     }
 
-    getChannelLink(channel) {
+    getChannelLink(channel: StoreChannel) {
         return this.decideToSkipSetup(channel).pipe(map(skipSetup => {
             return skipSetup
-                ? ChannelLinkPipe.getChannelLink(channel)
-                : `${this.getWebappLink()}/channel-setup/${channel.id}`;
+                ? ChannelLinkPipe.getChannelLink(channel._embedded.channel)
+                : `${this.getWebappLink()}/channel-setup/${channel._embedded.channel.id}`;
         }));
     }
 
-    protected decideToSkipSetup(channel) {
-        return this.channelService.getChannelCategories(channel.id, {limit: '1'}).pipe(
+    protected decideToSkipSetup(channel: StoreChannel) {
+        return this.channelService.getChannelCategories(channel._embedded.channel.id, {limit: '1'}).pipe(
             flatMap(categoriesPage => categoriesPage._embedded.category.length > 0
                 ? this.getFeedCollection(channel).pipe(flatMap(feed => this.hasConfiguredCategories(feed._embedded.feed[0].id)))
                 : of(true)
@@ -55,12 +55,12 @@ export class ChannelLinkService {
             .pipe(map(response => Boolean(response._embedded.category.length)));
     }
 
-    protected getFeedCollection(channel) {
+    protected getFeedCollection(channel: StoreChannel) {
         if (channel.installed) {
-            return this.feedService.fetchFeedCollection(channel.id);
+            return this.feedService.fetchFeedCollection(channel._embedded.channel.id);
         }
-        return this.feedService.create(channel.id)
-            .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel.id)))
+        return this.feedService.create(channel._embedded.channel.id)
+            .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel._embedded.channel.id)))
     }
 
     protected getWebappLink() {
