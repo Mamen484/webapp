@@ -12,6 +12,7 @@ import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-c
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { MappingCacheService } from '../mapping-cache.service';
 import { autotagsMock } from './autotags-mock';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -35,7 +36,7 @@ describe('AutotagMappingComponent', () => {
                 {provide: MappingCacheService, useValue: mappingCacheService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
-            imports: [FormsModule],
+            imports: [FormsModule, FlexLayoutModule],
         })
             .compileComponents();
     }));
@@ -55,6 +56,7 @@ describe('AutotagMappingComponent', () => {
         component.autotagList = <Autotag[]>[{
             _embedded: {attribute: {constraintGroupId: null}}
         }];
+        component.loadedFields = 1;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(1);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(0);
@@ -64,6 +66,7 @@ describe('AutotagMappingComponent', () => {
         component.autotagList = <Autotag[]>[{
             _embedded: {attribute: {constraintGroupId: 1}}
         }];
+        component.loadedFields = 1;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(0);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(1);
@@ -77,6 +80,7 @@ describe('AutotagMappingComponent', () => {
             {_embedded: {attribute: {constraintGroupId: 2}}},
             {_embedded: {attribute: {constraintGroupId: 3}}},
         ];
+        component.loadedFields = 5;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(2);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(3);
@@ -98,6 +102,7 @@ describe('AutotagMappingComponent', () => {
             {_embedded: {attribute: {constraintGroupId: 2}}},
             {_embedded: {attribute: {constraintGroupId: 3}}},
         ];
+        component.loadedFields = 5;
         feedService.matchAutotagByCategory.and.returnValue((EMPTY));
         component.form = <any>{controls: {}, invalid: false};
         component.saveMatching();
@@ -120,11 +125,30 @@ describe('AutotagMappingComponent', () => {
         expect(component.autotagList.length).toBe(2);
     });
 
-    it('should emit autotagLoaded event when autotags list is fetched from the API', () => {
+    it('should emit autotagLoaded event when all autotag fields loaded', () => {
         let spy = spyOn(component.autotagsLoaded, 'emit');
         autotags$.next(<any>{
-            _embedded: {autotag: []},
+            _embedded: {
+                autotag: [
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 1, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: true}}},
+                ]
+            },
         });
+
+        component.markLoadingProgress();
+        expect(spy).not.toHaveBeenCalled();
+        component.markLoadingProgress();
+        expect(spy).not.toHaveBeenCalled();
+        component.markLoadingProgress();
+        expect(spy).not.toHaveBeenCalled();
+        component.markLoadingProgress();
+        expect(spy).not.toHaveBeenCalled();
+
+        component.markLoadingProgress();
         expect(spy).toHaveBeenCalled();
     });
 
@@ -199,6 +223,38 @@ describe('AutotagMappingComponent', () => {
         const previousMappingList = JSON.stringify(component.autotagList);
 
         expect(onChangesList).toBe(previousMappingList);
+    });
+
+    it('should NOT show any content when autotagList is empty', () => {
+        component.autotagList = [];
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent).toBe('');
+    });
+
+    it('should hide all content when autotagList has more items then returned loaded event', () => {
+        component.autotagList = <any>[
+            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
+            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
+            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
+        ];
+        component.loadedFields = 2;
+        fixture.detectChanges();
+        const elem = fixture.debugElement.nativeElement;
+        expect((<HTMLDivElement>elem.querySelector('.autotag-mapping-header')).style.display).toBe('none');
+        expect((<HTMLDivElement>elem.querySelector('.autotag-mapping-header + div')).style.display).toBe('none');
+    });
+
+
+    it('should show only the header when a previous mapping is being loaded ', () => {
+        component.autotagList = <any>[
+            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
+            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
+            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
+        ];
+        component.loadedFields = 2;
+        component.loadingPreviousMapping = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.querySelector('.autotag-mapping-header')).toBeTruthy();
     });
 
 });

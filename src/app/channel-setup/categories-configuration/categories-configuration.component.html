@@ -48,10 +48,8 @@
                                     [catalogCategoryId]="feedCategoriesList?.chosenCatalogCategory?.id"
                                     [channelCategoryId]="feedCategoriesList?.chosenCatalogCategory?.channelCategory?.id"
                                     (autotagsLoaded)="onAutotagsLoaded()"
-                                    (autotagUpdated)="refreshCategoriesList()"></sf-autotag-mapping>
-                <button mat-stroked-button color="accent" i18n (click)="feedCategoriesList.chooseNextCatalogCategory()"
-                        class="next-category-button">Next
-                </button>
+                                    (autotagUpdated)="refreshCategoriesList()"
+                                    (nextClicked)="feedCategoriesList.chooseNextCatalogCategory()"></sf-autotag-mapping>
             </ng-container>
         </div>
 

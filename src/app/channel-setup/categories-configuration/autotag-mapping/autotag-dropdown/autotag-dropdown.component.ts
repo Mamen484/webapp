@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ChannelService } from '../../../../core/services/channel.service';
 import { Autotag } from '../../../autotag';
 import {
@@ -11,6 +11,7 @@ import {
     ValidationErrors,
     Validator
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'sf-autotag-dropdown',
@@ -29,22 +30,25 @@ import {
         },
     ],
 })
-export class AutotagDropdownComponent implements OnInit, ControlValueAccessor, Validator {
+export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
     @ViewChild(NgModel, {static: false}) ngModel: NgControl;
 
     @Input() autotag: Autotag;
+    @Output() loaded = new EventEmitter();
     options: string[];
     onChange: (value: string) => any;
+    subscription: Subscription;
 
     constructor(protected channelService: ChannelService) {
     }
 
     ngOnInit() {
         const attribute = this.autotag._embedded.attribute;
-        this.channelService.fetchChannelConstraintCollection(attribute.taxonomyId, attribute.constraintGroupId)
+        this.subscription = this.channelService.fetchChannelConstraintCollection(attribute.taxonomyId, attribute.constraintGroupId)
             .subscribe(response => {
                 this.options = response._embedded.constraint.map(constraint => constraint.label);
+                this.loaded.emit();
             })
     }
 
@@ -61,6 +65,12 @@ export class AutotagDropdownComponent implements OnInit, ControlValueAccessor, V
 
     validate(control: AbstractControl): ValidationErrors | null {
         return this.ngModel.errors;
+    }
+
+    ngOnDestroy() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
 }

@@ -1,17 +1,22 @@
-<ng-container *ngIf="autotagList?.length">
-    <div fxLayout="row" fxLayoutAlign="start center">
-        <div i18n fxFlex>Fill in the autotags</div>
-        <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping" i18n>Use
-            previous
-        </button>
-    </div>
+<div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="autotag-mapping-header"
+     [fxHide]="autotagList?.length > loadedFields && !loadingPreviousMapping">
+    <div i18n fxFlex>Fill in the autotags</div>
+    <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping && !loadingPreviousMapping" i18n>Use
+        previous
+    </button>
+    <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="loadingPreviousMapping"
+                 color="accent"></mat-spinner>
+</div>
+<div *ngIf="autotagList?.length" [fxHide]="autotagList?.length > loadedFields">
     <mat-card>
         <mat-card-content fxLayout="column" fxLayoutGap="40px">
             <form #form="ngForm">
                 <ng-container *ngFor="let autotag of autotagList; index as i">
                     <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
+                                      (loaded)="markLoadingProgress()"
                                       [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-input>
                     <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
+                                         (loaded)="markLoadingProgress()"
                                          [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-dropdown>
                 </ng-container>
 
@@ -23,4 +28,8 @@
             </form>
         </mat-card-content>
     </mat-card>
-</ng-container>
+    <div class="next-category-button">
+        <button mat-stroked-button color="accent" i18n (click)="nextClicked.emit()">Next
+        </button>
+    </div>
+</div>

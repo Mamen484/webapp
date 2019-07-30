@@ -44,4 +44,14 @@ describe('AutotagDropdownComponent', () => {
         fixture.detectChanges();
         expect(component.options).toEqual(['label1', 'label2']);
     });
+
+    it('should emit a loaded event when constraint collection loading finishes', () => {
+        component.autotag = <any>{_embedded: {attribute: {}}};
+        channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
+            _embedded: {constraint: []}
+        }));
+        spyOn(component.loaded, 'emit');
+        fixture.detectChanges();
+        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
+    });
 });

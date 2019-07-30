@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Autotag } from '../../../autotag';
 import { FeedService } from '../../../../core/services/feed.service';
 import { MappingCollection } from '../../../mapping-collection';
@@ -35,6 +35,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     @ViewChild(NgModel, {static: false}) ngModel: NgControl;
 
     @Input() autotag: Autotag;
+    @Output() loaded = new EventEmitter();
     value = '';
     mappingCollection: MappingCollection;
     suggestions: string[];
@@ -47,7 +48,10 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     ngOnInit() {
         this.value = this.autotag.value;
         this.feedService.fetchMappingCollection()
-            .subscribe(mappingCollection => this.mappingCollection = mappingCollection);
+            .subscribe(mappingCollection => {
+                this.mappingCollection = mappingCollection;
+                this.loaded.emit();
+            });
     }
 
     createSuggestions() {

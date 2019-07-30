@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
@@ -100,8 +100,10 @@ export class CategoriesConfigurationComponent implements OnInit {
         return this.matDialog.open(UnsavedDataDialogComponent);
     }
 
-    refreshCategoriesList() {
-        this.processingClientCategorySearch = true;
+    refreshCategoriesList(silently = false) {
+        if (!silently) {
+            this.processingClientCategorySearch = true;
+        }
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
@@ -126,7 +128,7 @@ export class CategoriesConfigurationComponent implements OnInit {
 
     protected listenCategoryMappingChanged() {
         this.categoryMappingService.getState().subscribe(channelCategory => {
-            this.refreshCategoriesList();
+            this.refreshCategoriesList(true);
         });
     }
 

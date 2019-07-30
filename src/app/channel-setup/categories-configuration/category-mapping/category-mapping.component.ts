@@ -7,8 +7,6 @@ import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { MatSnackBar } from '@angular/material';
-import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
-import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { Subscription } from 'rxjs';
 import { FeedCategory } from '../../../core/entities/feed-category';
 import { CategoryMappingService } from './category-mapping.service';
@@ -56,8 +54,8 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges({channelId, feedCategory}: SimpleChanges) {
-        if (feedCategory.previousValue.id === feedCategory.currentValue.id
-            && channelId.previousValue === channelId.currentValue) {
+        if (feedCategory.previousValue
+            && feedCategory.previousValue.id === feedCategory.currentValue.id) {
             return;
         }
         this.searchChannelCategoryControl.reset(this.feedCategory.channelCategory);
@@ -94,7 +92,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             .subscribe(() => {
                 this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
                 this.mappingCache.addCategoryMapping(this.chosenChannelCategory);
-                this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
                 if (this.chosenChannelCategory) {
                     this.hasCachedMapping = true;
                 }

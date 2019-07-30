@@ -63,4 +63,14 @@ describe('AutotagInputComponent', () => {
         component.setAutotagValue('[someName]');
         expect(component.autotag.value).toBe('[someName]');
     });
+
+    it('should emit loaded event when mapping collection is fetched', () => {
+        feedService.fetchMappingCollection.and.returnValue(of({
+            count: 0, _embedded: {mapping: []}
+        }));
+        component.autotag = <any>{};
+        spyOn(component.loaded, 'emit');
+        component.ngOnInit();
+        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
+    });
 });
