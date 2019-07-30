@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="autotag-mapping-header"
      [fxHide]="autotagList?.length > loadedFields && !loadingPreviousMapping">
-    <div i18n fxFlex>Fill in the autotags</div>
+    <div i18n fxFlex class="mat-body-1 card-label">Fill in the autotags</div>
     <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping && !loadingPreviousMapping" i18n>Use
         previous
     </button>
@@ -9,8 +9,8 @@
 </div>
 <div *ngIf="autotagList?.length" [fxHide]="autotagList?.length > loadedFields">
     <mat-card>
-        <mat-card-content fxLayout="column" fxLayoutGap="40px">
-            <form #form="ngForm">
+        <mat-card-content>
+            <form #form="ngForm" fxLayout="column" fxLayoutGap="20px">
                 <ng-container *ngFor="let autotag of autotagList; index as i">
                     <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
                                       (loaded)="markLoadingProgress()"
