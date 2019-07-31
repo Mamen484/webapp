@@ -15,6 +15,7 @@ import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snack
 import { SelectionModel } from '@angular/cdk/collections';
 import { OrderStatus } from '../../../core/entities/orders/order-status.enum';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 @Component({
     selector: 'sf-items-table',
@@ -90,10 +91,7 @@ export class ItemsTableComponent implements OnInit {
     }
 
     protected showUpdateSkuError({message}) {
-        this.snackBar.open(message, '', {
-            panelClass: 'sf-snackbar-error',
-            duration: 5000,
-        })
+        this.snackBar.open(message, '', new ErrorSnackbarConfig())
     }
 
     protected updateSku(row: OrderDetailsItem, updatedSku: string) {

@@ -69,6 +69,11 @@ $badge-font-level: caption;
 .sf-snackbar-error {
   color: mat-color($warn);
   font-weight: mat-font-weight($config, body-2);
+  text-align: center;
+}
+
+.sf-snackbar-success {
+  text-align: center;
 }
 
 // avoid double gaps on the grid where we have a gap between two elements, and one of them
