@@ -1,7 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="autotag-mapping-header"
      [fxHide]="autotagList?.length > loadedFields && !loadingPreviousMapping">
     <div i18n fxFlex class="mat-body-1 card-label">Fill in the autotags</div>
-    <button mat-stroked-button color="accent" (click)="usePreviousMapping()" *ngIf="hasCachedMapping && !loadingPreviousMapping" i18n>Use
+    <button mat-stroked-button color="accent" (click)="usePreviousMapping()"
+            *ngIf="hasCachedMapping && !loadingPreviousMapping" i18n>Use
         previous
     </button>
     <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="loadingPreviousMapping"
@@ -10,16 +11,17 @@
 <div *ngIf="autotagList?.length" [fxHide]="autotagList?.length > loadedFields">
     <mat-card>
         <mat-card-content>
-            <form #form="ngForm" fxLayout="column" fxLayoutGap="20px">
-                <ng-container *ngFor="let autotag of autotagList; index as i">
-                    <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
-                                      (loaded)="markLoadingProgress()"
-                                      [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-input>
-                    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
-                                         (loaded)="markLoadingProgress()"
-                                         [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-dropdown>
-                </ng-container>
-
+            <form #form="ngForm">
+                <div class="autotags-list">
+                    <ng-container *ngFor="let autotag of autotagList; index as i">
+                        <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
+                                          (loaded)="markLoadingProgress()"
+                                          [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-input>
+                        <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
+                                             (loaded)="markLoadingProgress()"
+                                             [autotag]="autotag" ngModel name="autotag{{i}}"></sf-autotag-dropdown>
+                    </ng-container>
+                </div>
                 <div class="actions" fxLayout="row" fxLayoutAlign="end center">
                     <button mat-raised-button i18n color="accent" (click)="saveMatching()">
                         Save

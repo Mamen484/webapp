@@ -1,5 +1,7 @@
 @import '../../../sass/variables';
 
+$header-section-width: 84px;
+
 mat-card.client-category-search {
   margin: 0 0 20px 0;
   padding: 0;
@@ -31,10 +33,6 @@ mat-card.client-category-search {
   }
 }
 
-.launch-channel-box {
-  margin-bottom: 20px;
-}
-
 mat-chip-list.filter-chips {
   margin-bottom: $content-margin;
   display: block;
@@ -48,4 +46,8 @@ mat-chip-list.filter-chips {
       vertical-align: middle;
     }
   }
+}
+
+.scrollable-container {
+  height: calc(100vh - 2 * #{$content-margin} - #{$header-section-width});
 }
