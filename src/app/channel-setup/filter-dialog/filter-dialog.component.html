@@ -3,6 +3,7 @@
 <mat-dialog-content>
     <form>
         <mat-form-field appearance="outline" color="accent">
+            <mat-label i18n>Filter</mat-label>
             <mat-select [(ngModel)]="chosenMapping" name="chosenState">
                 <mat-option i18n [value]="categoryState.NotSpecified">All states</mat-option>
                 <mat-option i18n [value]="categoryState.Configured">Configured</mat-option>
