@@ -50,7 +50,7 @@ describe('CreateUserComponent', () => {
         });
 
         it('should send the store creating request when the form is valid', () => {
-            storeService.createStore.and.returnValue(of({owner: {token: ''}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {token: ''}}));
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
             component.save();
@@ -59,7 +59,7 @@ describe('CreateUserComponent', () => {
 
         it('should clear an error when click save', () => {
             component.error = 'error';
-            storeService.createStore.and.returnValue(of({owner: {token: ''}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {token: ''}}));
             component.save();
             expect(component.error).toEqual('');
         });
@@ -67,7 +67,7 @@ describe('CreateUserComponent', () => {
         it('should open a dialog with creating results and pass to it login, token and password', () => {
             component.form.setValue(createFormMock({login: 'login1', password: 'password1'}));
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(of({owner: {token: 'token1'}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {token: 'token1'}}));
             component.save();
             expect(matDialog.open.calls.count()).toEqual(1);
             expect(matDialog.open.calls.first().args[0]).toEqual(UserCreatedDialogComponent);
@@ -165,7 +165,7 @@ describe('CreateUserComponent', () => {
         it('should set processing to false after successful creating a user', () => {
             component.form.setValue(createFormMock());
             expect(component.form.valid).toEqual(true);
-            storeService.createStore.and.returnValue(of({owner: {token: 'token1'}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {token: 'token1'}}));
             component.save();
             expect(component.processing).toEqual(false);
         });

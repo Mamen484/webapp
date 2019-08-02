@@ -19,7 +19,7 @@ fdescribe('CreateAccountComponent', () => {
     beforeEach(async(() => {
         storeService = jasmine.createSpyObj('StoreService spy', ['createStore']);
         channelPermissionService = jasmine.createSpyObj('ChannelPermissionService spy', ['addChannelPermission']);
-        channelService = jasmine.createSpyObj('ChannelService spy', ['createChannel']);
+        channelService = jasmine.createSpyObj('ChannelService spy', ['createChannel', 'listChannels']);
         TestBed.configureTestingModule({
             declarations: [CreateAccountComponent],
             providers: [
@@ -40,8 +40,40 @@ fdescribe('CreateAccountComponent', () => {
         fixture.detectChanges();
     });
 
+    it('should NOT create an account on a form save if specified channel does exist', () => {
+        channelService.listChannels.and.returnValue(of(<any>{total: 1}));
+        storeService.createStore.and.returnValue(EMPTY);
+
+        setFormValue();
+        component.save();
+
+        expect(storeService.createStore).not.toHaveBeenCalled();
+
+    });
+
+    it('should create an account on a form save if specified channel does not exist', () => {
+        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+        storeService.createStore.and.returnValue(EMPTY);
+
+        setFormValue();
+        component.save();
+
+        expect(storeService.createStore).toHaveBeenCalledWith({
+            owner: {
+                email: 'channel-owner@gmail.com',
+                login: 'channel-owner',
+                password: 'qwerty123',
+            },
+            country: 'es',
+            feed: {
+                url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
+                source: 'xml',
+            },
+        });
+    });
 
     it('should create a channel on a form save', () => {
+        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
         channelService.createChannel.and.returnValue(EMPTY);
         storeService.createStore.and.returnValue(<any>of({id: 789}));
 
@@ -62,27 +94,8 @@ fdescribe('CreateAccountComponent', () => {
         });
     });
 
-    it('should create an account on a form save', () => {
-        storeService.createStore.and.returnValue(EMPTY);
-
-        setFormValue();
-        component.save();
-
-        expect(storeService.createStore).toHaveBeenCalledWith({
-            owner: {
-                email: 'channel-owner@gmail.com',
-                login: 'channel-owner',
-                password: 'qwerty123',
-            },
-            country: 'es',
-            feed: {
-                url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
-                source: 'xml',
-            },
-        });
-    });
-
     it('should create a channel permission on a form save', () => {
+        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
         channelService.createChannel.and.returnValue(of(<any>{id: 222}));
         channelPermissionService.addChannelPermission.and.returnValue(EMPTY);
         storeService.createStore.and.returnValue(of(<any>{id: 111}));

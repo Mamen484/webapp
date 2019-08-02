@@ -22,4 +22,16 @@ describe('ChannelService', () => {
         let req = httpMock.expectOne('someLink/channel');
         expect(req.request.method).toBe('POST');
     });
+
+    it('should GET /channel on listChannels() call', () => {
+        service.listChannels().subscribe();
+        let req = httpMock.expectOne('someLink/channel');
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should GET /channel with params on listChannels() call', () => {
+        service.listChannels('someName').subscribe();
+        let req = httpMock.expectOne('someLink/channel?name=someName');
+        expect(req.request.method).toBe('GET');
+    });
 });

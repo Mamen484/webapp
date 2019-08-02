@@ -4,8 +4,9 @@ import { Country } from '../../../../../../src/app/core/entities/country';
 import { ChannelPermissionService } from '../channel-permission.service';
 import { ChannelService, StoreService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { flatMap, map } from 'rxjs/operators';
+import { catchError, flatMap, map } from 'rxjs/operators';
 import { Channel, Store } from 'sfl-shared/entities';
+import { of, throwError } from 'rxjs';
 
 @Component({
     templateUrl: './create-account.component.html',
@@ -47,10 +48,13 @@ export class CreateAccountComponent implements OnInit {
     }
 
     save() {
-        this.createStore()
+        this.channelService.listChannels(this.formGroup.get(['channelName']).value)
             .pipe(
+                flatMap((response) => response.total === 0 ? of({}) : throwError({type: 'channelExists'})),
+                flatMap(() => this.createStore()),
                 flatMap((store: Store) => this.createChannel().pipe(map((channel: Channel) => [store, channel]))),
                 flatMap(([store, channel]) => this.createChannelPermission(channel.id, store.id)),
+                catchError(() => of({})),
             ).subscribe();
     }
 
