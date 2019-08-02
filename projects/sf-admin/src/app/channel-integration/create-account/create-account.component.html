@@ -44,7 +44,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Type</mat-label>
-                        <mat-select formControlName="type" color="accent" required>
+                        <mat-select formControlName="channelType" color="accent" required>
                             <mat-option value="marketplace">Affiliate network</mat-option>
                             <mat-option value="ads">Product Listing Ads</mat-option>
                             <mat-option value="retargeting">Retargetting</mat-option>
@@ -52,7 +52,7 @@
                         </mat-select>
                         <mat-error>Field is required</mat-error>
                     </mat-form-field>
-                    <mat-form-field color="accent" appearance="outline">
+                    <mat-form-field color="accent" appearance="outline" fxFlex>
                         <mat-label i18n>Country</mat-label>
                         <input matInput formControlName="country" sfaSearchCountry [matAutocomplete]="auto"  class="country-autocomplete"
                                autocomplete="off" (searchResults)="countriesList = $event" [searchControl]="formGroup.controls.country">
@@ -63,10 +63,37 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
+                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
+                    <mat-form-field appearance="outline" color="accent">
+                        <mat-label>Export type</mat-label>
+                        <mat-select formControlName="exportType">
+                            <mat-option value="xml">XML</mat-option>
+                            <mat-option value="csv">CSV</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
+                        <mat-label>Head</mat-label>
+                        <input matInput formControlName="xmlHead">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
+                        <mat-label>Product tag</mat-label>
+                        <input matInput formControlName="xmlProductTag">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
+                        <mat-label>Separator</mat-label>
+                        <input matInput formControlName="csvSeparator">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
+                        <mat-label>Round-String</mat-label>
+                        <input matInput formControlName="csvRoundTrip">
+                    </mat-form-field>
+                    <mat-slide-toggle color="accent" formControlName="headerInFirstRaw" *ngIf="formGroup.controls.exportType.value === 'csv'">Header in first raw</mat-slide-toggle>
+                </div>
             </mat-card-content>
         </mat-card>
         <div fxLayout="row" fxLayoutAlign="end end">
-            <button mat-raised-button color="accent">Save</button>
+            <button mat-raised-button color="accent">Create and associate</button>
         </div>
     </form>
 

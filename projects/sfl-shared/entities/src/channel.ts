@@ -1,7 +1,7 @@
 import { Link } from './link';
 
 export interface Channel {
-    id: number;
+    id?: number;
     name: string;
     description?: string;
     installed?: boolean;
@@ -10,7 +10,17 @@ export interface Channel {
     offer?: string;
     countries?: any[],
     _links?: {
-        self: Link
-        image: Link
-    }
+        self: Link,
+        image: Link,
+    };
+
+    // create channel request
+    feedType?: string;
+    feed?: {
+        separator?: string,
+        enclosure?: string,
+        head: string,
+        productTag: string,
+        headerFirst: string,
+    };
 }

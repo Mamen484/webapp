@@ -8,7 +8,8 @@ export const environment = {
     SFA_BILLING_API: '//api.shopping-feed.lan/v1/billing',
     APP_TOKEN: 'Bearer 33bb2cc5944579049fcdcaddb3144886726cfb9b',
     SFA_LEGACY_LINK: '//app.shopping-feed.lan',
-    WEBAPP_URL: '//localhost:4200/v3/en'
+    WEBAPP_URL: '//localhost:4200/v3/en',
+    defaultFeedSource: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
 };
 
 /*
