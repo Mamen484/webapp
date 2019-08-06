@@ -8,10 +8,11 @@ import { SfaSharedModule } from '../shared/shared.module';
 import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { SearchCountryDirective } from './create-account/search-country/search-country.directive';
+import { AccountListPipe } from './channel-list/account-list.pipe';
 
 
 @NgModule({
-    declarations: [ChannelListComponent, CreateAccountComponent, SearchCountryDirective],
+    declarations: [ChannelListComponent, CreateAccountComponent, SearchCountryDirective, AccountListPipe],
     imports: [
         CommonModule,
         ChannelIntegrationRoutingModule,

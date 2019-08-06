@@ -12,6 +12,6 @@ export class ChannelListComponent extends TableOperations<ChannelPermission> {
     displayedColumns = ['channelName', 'accountName', 'lastChanged', 'active'];
 
     protected fetchCollection(params: { limit: number; page: number; search: string }): Observable<{ total: number; dataList: any[] }> {
-        return of({total: channelsList.total, dataList: channelsList._embedded.permission});
+        return of({total: channelsList.total, dataList: channelsList._embedded.channel});
     }
 }
