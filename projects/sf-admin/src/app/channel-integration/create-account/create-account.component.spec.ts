@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('CreateAccountComponent', () => {
+describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
     let fixture: ComponentFixture<CreateAccountComponent>;
     let storeService: jasmine.SpyObj<StoreService>;
@@ -70,8 +70,10 @@ fdescribe('CreateAccountComponent', () => {
                 email: 'channel-owner@gmail.com',
                 login: 'channel-owner',
                 password: 'qwerty123',
+                payment: 'other',
             },
             country: 'es',
+            status: 'demo',
             feed: {
                 url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
                 source: 'xml',
@@ -110,7 +112,7 @@ fdescribe('CreateAccountComponent', () => {
         setFormValue();
         component.save();
 
-        expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, []);
+        expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, ['edit']);
     });
 
     it('should clear the error message on Save', () => {

@@ -5,7 +5,7 @@ import { ChannelPermissionService } from '../channel-permission.service';
 import { ChannelService, StoreService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { catchError, flatMap, map } from 'rxjs/operators';
-import { Channel, Store } from 'sfl-shared/entities';
+import { Channel, Store, StoreStatus } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
 
@@ -130,11 +130,13 @@ export class CreateAccountComponent implements OnInit {
                 email: this.formGroup.get(['email']).value,
                 login: this.formGroup.get(['login']).value,
                 password: this.formGroup.get(['password']).value,
+                payment: 'other',
             },
+            status: StoreStatus.demo,
             country: this.formGroup.get(['country']).value.code,
             feed: {
                 url: environment.defaultFeedSource,
-                source: this.formGroup.get(['exportType']).value,
+                source: 'xml',
             },
         }).pipe(catchError(({error}) =>
             throwError({detail: 'Account error: ' + error.detail, validationMessages: error.validationMessages})
@@ -142,7 +144,7 @@ export class CreateAccountComponent implements OnInit {
     }
 
     protected createChannelPermission(channelId: number, storeId: number) {
-        return this.channelPermissionService.addChannelPermission(channelId, storeId, [])
+        return this.channelPermissionService.addChannelPermission(channelId, storeId, ['edit'])
             .pipe(catchError(({error}) => throwError({
                 detail: 'Association error: ' + error.detail,
                 validationMessages: error.validationMessages

@@ -14,7 +14,7 @@ export class ChannelPermissionService {
     }
 
     addChannelPermission(channelId: number, accountId: number, allow: string[]) {
-        return this.httpClient.post(`${environment.SFA_API}/v1/channel/permission`, {permission: {channelId, accountId, allow}});
+        return this.httpClient.post(`${environment.SFA_API}/channel/permission`, {permission: {channelId, accountId, allow}});
     }
 
     getChannelPermissions(queryParam: { search?: string, accountName?: string, limit?: number, page?: number } = {}) {
@@ -31,6 +31,6 @@ export class ChannelPermissionService {
         if (typeof queryParam.accountName === 'string') {
             params = params.set('accountName', queryParam.accountName);
         }
-        return this.httpClient.get(`${environment.SFA_API}/v1/channel/permission`, {params}) as Observable<PagedResponse<{ permission: ChannelPermission[] }>>
+        return this.httpClient.get(`${environment.SFA_API}/channel/permission`, {params}) as Observable<PagedResponse<{ permission: ChannelPermission[] }>>
     }
 }
