@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { catchError, flatMap, map } from 'rxjs/operators';
 import { Channel, Store } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
+import { get, set } from 'lodash';
 
 @Component({
     templateUrl: './create-account.component.html',
@@ -14,26 +15,42 @@ import { of, throwError } from 'rxjs';
 })
 export class CreateAccountComponent implements OnInit {
 
+    pathToFields = {
+        login: ['owner', 'login'],
+        email: ['owner', 'email'],
+        password: ['owner', 'password'],
+        channelName: ['name'],
+        channelType: ['type'],
+        country: ['country'],
+        exportType: ['feedType'],
+        xmlHead: ['feed', 'head'],
+        xmlProductTag: ['feed', 'productTag'],
+        csvSeparator: ['feed', 'separator'],
+        csvRoundTrip: ['feed', 'enclosure'],
+    };
+
     formGroup = new FormGroup({
-        login: new FormControl('', Validators.required),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', Validators.required),
-        channelName: new FormControl('', Validators.required),
-        channelType: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required),
-        exportType: new FormControl('', Validators.required),
+        login: new FormControl('', [Validators.required, () => this.getValidationMessages(['owner', 'login'])]),
+        email: new FormControl('', [Validators.required, Validators.email, () => this.getValidationMessages(['owner', 'email'])]),
+        password: new FormControl('', [Validators.required, Validators.minLength(6), () => this.getValidationMessages(['owner', 'password'])]),
+        channelName: new FormControl('', [Validators.required, Validators.minLength(2), () => this.getValidationMessages(['name'])]),
+        channelType: new FormControl('', [Validators.required, () => this.getValidationMessages(['type'])]),
+        country: new FormControl('', [Validators.required, () => this.getValidationMessages(['country'])]),
+        exportType: new FormControl('', [Validators.required, () => this.getValidationMessages(['feedType'])]),
 
         // exportType = XML
-        xmlHead: new FormControl(),
-        xmlProductTag: new FormControl(),
+        xmlHead: new FormControl('', () => this.getValidationMessages(['feed', 'head'])),
+        xmlProductTag: new FormControl('', () => this.getValidationMessages(['feed', 'productTag'])),
 
         // exportType = CSV
-        csvSeparator: new FormControl(),
-        csvRoundTrip: new FormControl(),
+        csvSeparator: new FormControl('', () => this.getValidationMessages(['feed', 'separator'])),
+        csvRoundTrip: new FormControl('', () => this.getValidationMessages(['feed', 'enclosure'])),
         headerInFirstRaw: new FormControl(),
     });
 
     countriesList;
+    errorMessage: string;
+    validationMessages = <{ [key: string]: any }>{};
 
     constructor(protected channelPermissionService: ChannelPermissionService,
                 protected channelService: ChannelService,
@@ -41,6 +58,7 @@ export class CreateAccountComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.clearValidationMessages();
     }
 
     displayFn(country: Country) {
@@ -48,21 +66,46 @@ export class CreateAccountComponent implements OnInit {
     }
 
     save() {
+        this.errorMessage = undefined;
+        this.validationMessages = {};
+        if (this.formGroup.invalid) {
+            return;
+        }
         this.channelService.listChannels(this.formGroup.get(['channelName']).value)
             .pipe(
-                flatMap((response) => response.total === 0 ? of({}) : throwError({type: 'channelExists'})),
+                catchError(this.handleChannelError),
+                flatMap((response) => response.total === 0 ? of({}) : throwError({detail: 'Channel error: channel already exists'})),
                 flatMap(() => this.createStore()),
-                flatMap((store: Store) => this.createChannel().pipe(map((channel: Channel) => [store, channel]))),
+                flatMap((store: Store) => this.createChannel().pipe(
+                    map((channel: Channel) => [store, channel]),
+                )),
                 flatMap(([store, channel]) => this.createChannelPermission(channel.id, store.id)),
-                catchError(() => of({})),
-            ).subscribe();
+            ).subscribe(() => {
+            },
+            error => {
+                this.errorMessage = error.detail;
+                this.validationMessages = error.validationMessages;
+                Object.values(this.formGroup.controls).forEach(control => {
+                    control.updateValueAndValidity();
+                })
+            });
+    }
+
+    /**
+     * Clear server messages when input is edited
+     */
+    protected clearValidationMessages() {
+        Object.keys(this.formGroup.controls).forEach(key =>
+            this.formGroup.controls[key].valueChanges.subscribe(() =>
+                set(this.validationMessages, this.pathToFields[key], undefined)
+            ));
     }
 
     protected createChannel() {
         return this.channelService.createChannel({
             name: this.formGroup.get(['channelName']).value,
             type: this.formGroup.get(['channelType']).value,
-            countries: [{code: this.formGroup.get(['country']).value.code}],
+            countries: [this.formGroup.get(['country']).value.code],
             feedType: this.formGroup.get(['exportType']).value,
             feed: {
                 head: this.formGroup.get(['xmlHead']).value,
@@ -71,6 +114,13 @@ export class CreateAccountComponent implements OnInit {
                 enclosure: this.formGroup.get(['csvRoundTrip']).value,
                 headerFirst: this.formGroup.get(['headerInFirstRaw']).value,
             }
+        }).pipe(catchError(this.handleChannelError));
+    }
+
+    protected handleChannelError({error}) {
+        return throwError({
+            detail: 'Channel error: ' + error.detail,
+            validationMessages: error.validationMessages
         });
     }
 
@@ -86,10 +136,27 @@ export class CreateAccountComponent implements OnInit {
                 url: environment.defaultFeedSource,
                 source: this.formGroup.get(['exportType']).value,
             },
-        });
+        }).pipe(catchError(({error}) =>
+            throwError({detail: 'Account error: ' + error.detail, validationMessages: error.validationMessages})
+        ));
     }
 
     protected createChannelPermission(channelId: number, storeId: number) {
-        return this.channelPermissionService.addChannelPermission(channelId, storeId, []);
+        return this.channelPermissionService.addChannelPermission(channelId, storeId, [])
+            .pipe(catchError(({error}) => throwError({
+                detail: 'Association error: ' + error.detail,
+                validationMessages: error.validationMessages
+            })));
+    }
+
+    protected getValidationMessages(path) {
+        const field = get(this.validationMessages, path);
+        if (!field) {
+            return null;
+        }
+        const errors = Object.values(field);
+        return errors.length
+            ? {validationError: errors[0]}
+            : null;
     }
 }

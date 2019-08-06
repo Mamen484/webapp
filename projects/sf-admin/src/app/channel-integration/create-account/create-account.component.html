@@ -16,19 +16,30 @@
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Login</mat-label>
                         <input matInput formControlName="login" required>
-                        <mat-error>Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.login.hasError('required')">Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.login.hasError('validationError')">
+                            {{formGroup.controls.login.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Email</mat-label>
                         <input type="email" matInput formControlName="email" required>
-                        <mat-error>A proper email required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.email.hasError('email')">A proper email required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.email.hasError('required')">Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.email.hasError('validationError')">
+                            {{formGroup.controls.email.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Password</mat-label>
                         <input type="password" matInput formControlName="password" required autocomplete="new-password">
-                        <mat-error>Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.password.hasError('minlength')">Field is less the 6 chars long</mat-error>
+                        <mat-error *ngIf="formGroup.controls.password.hasError('required')">Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.password.hasError('validationError')">
+                            {{formGroup.controls.password.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </mat-card-content>
@@ -40,7 +51,11 @@
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>New channel</mat-label>
                         <input matInput formControlName="channelName" required>
-                        <mat-error>Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.channelName.hasError('required')">Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.channelName.hasError('validationError')">
+                            {{formGroup.controls.channelName.getError('validationError')}}
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.controls.channelName.hasError('minlength')">Field is less the 2 chars long</mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Type</mat-label>
@@ -50,7 +65,10 @@
                             <mat-option value="retargeting">Retargetting</mat-option>
                             <mat-option value="shopbot">Shopbot</mat-option>
                         </mat-select>
-                        <mat-error>Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.channelType.hasError('required')">Field is required</mat-error>
+                        <mat-error *ngIf="formGroup.controls.channelType.hasError('validationError')">
+                            {{formGroup.controls.channelType.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field color="accent" appearance="outline" fxFlex>
                         <mat-label i18n>Country</mat-label>
@@ -61,6 +79,9 @@
                                 {{option.name}}
                             </mat-option>
                         </mat-autocomplete>
+                        <mat-error *ngIf="formGroup.controls.country.hasError('validationError')">
+                            {{formGroup.controls.country.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
@@ -70,28 +91,44 @@
                             <mat-option value="xml">XML</mat-option>
                             <mat-option value="csv">CSV</mat-option>
                         </mat-select>
+                        <mat-error *ngIf="formGroup.controls.exportType.hasError('validationError')">
+                            {{formGroup.controls.exportType.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
                         <mat-label>Head</mat-label>
                         <input matInput formControlName="xmlHead">
+                        <mat-error *ngIf="formGroup.controls.xmlHead.hasError('validationError')">
+                            {{formGroup.controls.xmlHead.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
                         <mat-label>Product tag</mat-label>
                         <input matInput formControlName="xmlProductTag">
+                        <mat-error *ngIf="formGroup.controls.xmlProductTag.hasError('validationError')">
+                            {{formGroup.controls.xmlProductTag.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
                         <mat-label>Separator</mat-label>
                         <input matInput formControlName="csvSeparator">
+                        <mat-error *ngIf="formGroup.controls.csvSeparator.hasError('validationError')">
+                            {{formGroup.controls.csvSeparator.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
                         <mat-label>Round-String</mat-label>
                         <input matInput formControlName="csvRoundTrip">
+                        <mat-error *ngIf="formGroup.controls.csvRoundTrip.hasError('validationError')">
+                            {{formGroup.controls.csvRoundTrip.getError('validationError')}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-slide-toggle color="accent" formControlName="headerInFirstRaw" *ngIf="formGroup.controls.exportType.value === 'csv'">Header in first raw</mat-slide-toggle>
                 </div>
             </mat-card-content>
         </mat-card>
+        <sfa-error-message *ngIf="errorMessage">{{errorMessage}}</sfa-error-message>
         <div fxLayout="row" fxLayoutAlign="end end">
             <button mat-raised-button color="accent">Create and associate</button>
         </div>
