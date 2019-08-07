@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CategoriesConfigurationComponent } from './categories-configuration.component';
-import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class UnsavedDataGuard implements CanDeactivate<CategoriesConfigurationComponent> {
     canDeactivate(component: CategoriesConfigurationComponent): Observable<boolean> | boolean {
         return component.hasModifications()
-            ? component.showCloseDialog().afterClosed().pipe(map(confirmed => confirmed || false))
+            ? component.showCloseDialog()
             : true;
     }
 }

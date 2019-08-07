@@ -107,8 +107,23 @@ describe('CategoriesConfigurationComponent', () => {
     });
 
     it('should open an unsaved data dialog on showCloseDialog() call', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(true))});
         component.showCloseDialog();
         expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
+    });
+
+    it('should open an unsaved data dialog only once if user agreed to leave the page (prevent multiple dialog show on several canDeactivate() calls)', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(true))});
+        component.showCloseDialog().subscribe();
+        component.showCloseDialog().subscribe();
+        expect(matDialog.open).toHaveBeenCalledTimes(1);
+    });
+
+    it('should open an unsaved data dialog twice if user declined to leave the page, but then navigated from the page one more time', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(false))});
+        component.showCloseDialog().subscribe();
+        component.showCloseDialog().subscribe();
+        expect(matDialog.open).toHaveBeenCalledTimes(2);
     });
 
     it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {

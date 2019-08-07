@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { Subscription, zip } from 'rxjs';
+import { of, Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
@@ -44,6 +44,8 @@ export class CategoriesConfigurationComponent implements OnInit {
     /** applied filter */
     categoryStateOptions = CategoryState;
     categoryStateFilter: CategoryState;
+
+    leavePageDialogOpened = false;
 
     protected subscription: Subscription;
 
@@ -97,7 +99,14 @@ export class CategoriesConfigurationComponent implements OnInit {
 
 
     showCloseDialog() {
-        return this.matDialog.open(UnsavedDataDialogComponent);
+        // prevent the dialog opened twice if the canDeactivate guard is called twice
+        if (this.leavePageDialogOpened) {
+            return of(true);
+        }
+        return this.matDialog.open(UnsavedDataDialogComponent).afterClosed().pipe(tap(
+            // reset the flag if the user has declined leaving the page
+            confirmed => this.leavePageDialogOpened = confirmed || false
+        ));
     }
 
     refreshCategoriesList(silently = false) {
