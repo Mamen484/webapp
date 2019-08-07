@@ -9,6 +9,7 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 describe('RefundDialogComponent', () => {
     let component: RefundDialogComponent;
@@ -54,7 +55,7 @@ describe('RefundDialogComponent', () => {
     it('should show SelectItems dialog if no items nor shipping refund selected on refund() call', () => {
         component.itemsTable = <any>{selection: {selected: [], refundShipping: false}};
         component.refund();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(SelectItemsDialogComponent, {duration: 5000});
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(SelectItemsDialogComponent, new SuccessSnackbarConfig());
     });
 
     it('should NOT request an order refund if no items nor shipping refund selected on refund() call', () => {
@@ -97,10 +98,7 @@ describe('RefundDialogComponent', () => {
         component.order = <any>{reference: '4321', _embedded: {channel: {name: 'Laredoute'}}};
         ordersService.notifyRefund.and.returnValue(of({}));
         component.refund();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: 1, action: OrderNotifyAction.refund},
-        });
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: 1, action: OrderNotifyAction.refund}}));
         expect(matDialogRef.close).toHaveBeenCalled();
     });
 

@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
 import { EMPTY, of, throwError } from 'rxjs';
 import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 describe('AddressesComponent', () => {
     let component: AddressesComponent;
@@ -88,10 +89,7 @@ describe('AddressesComponent', () => {
         component.orderCopy.billingAddress.firstName = 'some firstname';
         ordersService.modifyBillingAddress.and.returnValue(of({}));
         component.saveBillingAddress();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(AddressSavedSnackbarComponent, {
-            data: {type: AddressType.billingAddress},
-            duration: 2000,
-        });
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(AddressSavedSnackbarComponent, new SuccessSnackbarConfig({data: {type: AddressType.billingAddress}}));
     });
 
     it('should show a snackbar after billing address save failed', () => {
@@ -124,10 +122,7 @@ describe('AddressesComponent', () => {
         component.orderCopy.shippingAddress.firstName = 'some firstname';
         ordersService.modifyShippingAddress.and.returnValue(of({}));
         component.saveShippingAddress();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(AddressSavedSnackbarComponent, {
-            data: {type: AddressType.shippingAddress},
-            duration: 2000,
-        });
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(AddressSavedSnackbarComponent, new SuccessSnackbarConfig({data: {type: AddressType.shippingAddress}}));
     });
 
     it('should show a snackbar after shipping address save failed', () => {
