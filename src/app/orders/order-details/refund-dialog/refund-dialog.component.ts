@@ -9,6 +9,7 @@ import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-ac
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { SelectItemsDialogComponent } from '../select-items-dialog/select-items-dialog.component';
 import { cloneDeep } from 'lodash';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 @Component({
     selector: 'sf-refund-dialog',
@@ -42,9 +43,7 @@ export class RefundDialogComponent implements OnInit {
 
     refund() {
         if (!this.itemsTable.selection.selected.length && !this.itemsTable.refundShipping) {
-            this.snackBar.openFromComponent(SelectItemsDialogComponent, {
-                duration: 5000
-            });
+            this.snackBar.openFromComponent(SelectItemsDialogComponent, new SuccessSnackbarConfig());
             return;
         }
         this.ordersService.notifyRefund([{
@@ -64,10 +63,7 @@ export class RefundDialogComponent implements OnInit {
     }
 
     protected showSuccess() {
-        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: 1, action: OrderNotifyAction.refund},
-        });
+        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: 1, action: OrderNotifyAction.refund}}));
     }
 
 }

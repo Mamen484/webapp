@@ -14,6 +14,7 @@ import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-
 import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component';
 import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -93,10 +94,7 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     protected showSuccess(action) {
-        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: 1, action}
-        });
+        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({ data: {ordersNumber: 1, action}}));
     }
 
     protected checkIfRefundable() {

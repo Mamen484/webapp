@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHandler } from '@angular/common/http
 import { Observable, Observer } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServerErrorComponent } from '../../snackbars/server-error/server-error.component';
+import { ErrorSnackbarConfig } from '../entities/error-snackbar-config';
 
 const RETRY_INTERVAL = 3000;
 const RETRIES_NUMBER = 2;
@@ -37,7 +38,7 @@ export class HttpClientService extends HttpClient {
                     setTimeout(() => this.tryData(observer, args, --retries), this.retryInterval);
                 } else {
                     if (args[0].slice(-3) !== '/me') {
-                        this.snackBar.openFromComponent(ServerErrorComponent);
+                        this.snackBar.openFromComponent(ServerErrorComponent, ErrorSnackbarConfig.createStatic());
                     }
                     if (error instanceof HttpErrorResponse) {
                         observer.error(error);

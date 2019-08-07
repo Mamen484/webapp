@@ -29,6 +29,7 @@ import { ConfirmDialogData } from '../../../core/entities/orders/confirm-dialog-
 import { environment } from '../../../../environments/environment';
 import { AssignTagsDialogComponent } from '../../assign-tags-dialog/assign-tags-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 
@@ -279,10 +280,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     }
 
     protected showStatusChangedSnackbar(action) {
-        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: this.selection.selected.length, action}
-        });
+        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: this.selection.selected.length, action}}));
     }
 
     protected fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number; dataList: any[] }> {

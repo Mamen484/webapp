@@ -11,6 +11,7 @@ import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-sna
 import { Observable } from 'rxjs';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 @Component({
     selector: 'sf-addresses',
@@ -71,10 +72,7 @@ export class AddressesComponent implements OnInit {
     }
 
     protected notifySuccess(addressType) {
-        this.snackBar.openFromComponent(AddressSavedSnackbarComponent, {
-            data: {type: addressType},
-            duration: 2000,
-        });
+        this.snackBar.openFromComponent(AddressSavedSnackbarComponent, new SuccessSnackbarConfig({data: {type: addressType}}));
     }
 
     protected notifyError({message}) {
