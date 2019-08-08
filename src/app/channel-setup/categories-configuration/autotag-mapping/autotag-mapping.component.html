@@ -12,7 +12,7 @@
     <mat-card>
         <mat-card-content>
             <form #form="ngForm">
-                <div class="autotags-list">
+                <div class="autotags-list" fxLayout="column" fxLayoutGap="20px">
                     <ng-container *ngFor="let autotag of autotagList; index as i">
                         <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
                                           (loaded)="markLoadingProgress()"

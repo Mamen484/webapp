@@ -12,6 +12,7 @@ import {
     Validator
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { AutotagInputComponent } from '../autotag-input/autotag-input.component';
 
 @Component({
     selector: 'sf-autotag-dropdown',
@@ -33,12 +34,16 @@ import { Subscription } from 'rxjs';
 export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
     @ViewChild(NgModel, {static: false}) ngModel: NgControl;
+    @ViewChild(AutotagInputComponent, {static: false}) input: AutotagInputComponent;
 
     @Input() autotag: Autotag;
     @Output() loaded = new EventEmitter();
     options: string[];
     onChange: (value: string) => any;
     subscription: Subscription;
+
+    inputLoaded = false;
+    constraintLoaded = false;
 
     constructor(protected channelService: ChannelService) {
     }
@@ -48,10 +53,20 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
         this.subscription = this.channelService.fetchChannelConstraintCollection(attribute.taxonomyId, attribute.constraintGroupId)
             .subscribe(response => {
                 this.options = response._embedded.constraint.map(constraint => constraint.label);
-                this.loaded.emit();
+                this.constraintLoaded = true;
+                this.markAsLoaded();
             })
     }
 
+    markAsLoaded() {
+        if (this.inputLoaded && this.constraintLoaded) {
+            this.loaded.emit();
+        }
+    }
+
+    notifyChange() {
+        this.input.value = this.autotag.value;
+    }
 
     registerOnChange(fn: any): void {
         this.onChange = fn;

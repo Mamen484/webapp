@@ -50,6 +50,21 @@ describe('AutotagInputComponent', () => {
         expect(component.suggestions).toEqual(['[str]', '{someString}', '{String1234}', '{123str}']);
     });
 
+    it('should not display a static value if an input is empty', () => {
+        feedService.fetchMappingCollection.and.returnValue(of({
+            count: 1, _embedded: {
+                mapping: [
+                    {catalogField: 'someString', standardField: ''},
+                ]
+            }
+        }));
+        component.autotag = <any>{};
+        component.ngOnInit();
+        component.value = '';
+        component.createSuggestions();
+        expect(component.suggestions).toEqual(['{someString}']);
+    });
+
     it('should save autotag value on setAutotagValue()', () => {
         feedService.fetchMappingCollection.and.returnValue(EMPTY);
         component.autotag = <any>{};

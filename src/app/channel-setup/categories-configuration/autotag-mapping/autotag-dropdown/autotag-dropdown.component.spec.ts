@@ -45,13 +45,31 @@ describe('AutotagDropdownComponent', () => {
         expect(component.options).toEqual(['label1', 'label2']);
     });
 
-    it('should emit a loaded event when constraint collection loading finishes', () => {
+    it('should emit a loaded event when both constraint collection and sf-autotag-input loading finishes', () => {
+        component.autotag = <any>{_embedded: {attribute: {}}};
+        channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
+            _embedded: {constraint: []}
+        }));
+        spyOn(component.loaded, 'emit');
+        component.inputLoaded = true;
+        fixture.detectChanges();
+        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
+    });
+
+    it('should NOT emit a loaded event if sf-autotag-input loading is not finished', () => {
         component.autotag = <any>{_embedded: {attribute: {}}};
         channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
             _embedded: {constraint: []}
         }));
         spyOn(component.loaded, 'emit');
         fixture.detectChanges();
-        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
+        expect(component.loaded.emit).not.toHaveBeenCalled();
+    });
+
+    it('should NOT emit a loaded event if constraint collection loading is not finished', () => {
+        component.inputLoaded = true;
+        spyOn(component.loaded, 'emit');
+        component.markAsLoaded();
+        expect(component.loaded.emit).not.toHaveBeenCalled();
     });
 });

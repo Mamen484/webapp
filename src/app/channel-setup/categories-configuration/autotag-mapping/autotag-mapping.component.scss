@@ -20,14 +20,3 @@ mat-card {
 .card-label {
   color: $black-87-opacity;
 }
-
-.autotags-list {
-  display: grid;
-  grid-template-rows: auto;
-  grid-template-columns: auto;
-  gap: 20px;
-
-  @media #{$gt-md} {
-    grid-template-columns: 1fr 1fr;
-  }
-}
