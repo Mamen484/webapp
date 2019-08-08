@@ -104,11 +104,15 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.subscription = this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId).subscribe(response => {
             this.autotagList = this.filterMandatory(response._embedded.autotag);
+            if (!this.autotagList.length) {
+                // no autotag to emit a (loaded) event, so notify that all autotags are loaded
+                this.autotagsLoaded.emit();
+            }
         });
     }
 
     protected filterMandatory(autotag: Autotag[]) {
-        return autotag.filter(({_embedded}) => _embedded.attribute.isRequired);
+        return autotag.filter(({_embedded}) => _embedded.attribute.isRequired && !_embedded.attribute.defaultMapping);
     }
 
 }

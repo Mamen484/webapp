@@ -26,7 +26,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Categor\u00eda',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{category_channel}'
+                    'defaultMapping': null
                 }
             }
         }, {
@@ -314,7 +314,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Descripci\u00f3n abreviada por defecto',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{short_description}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -346,7 +346,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Descripci\u00f3n larga por defecto',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{description}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -378,7 +378,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'EAN',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{ean}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -410,7 +410,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Imagen de tipo Grande 1',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{image1}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -506,7 +506,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Marca',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{brand}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -522,7 +522,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'Referencia de vendedor (SKU)',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{reference}'
+                    'defaultMapping': null,
                 }
             }
         }, {
@@ -554,7 +554,7 @@ export const autotagsMock = <PagedResponse<{ autotag: Autotag[] }>>{
                     'name': 'T\u00edtulo',
                     'isRequired': true,
                     'constraintGroupId': null,
-                    'defaultMapping': '{name}'
+                    'defaultMapping': null,
                 }
             }
         }, {

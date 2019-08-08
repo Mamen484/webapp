@@ -109,15 +109,17 @@ describe('AutotagMappingComponent', () => {
         expect(feedService.matchAutotagByCategory.calls.count()).toBe(5);
     });
 
-    it('should display only required attributes', () => {
+    it('should display only required attributes without a default value', () => {
         autotags$.next(<any>{
             _embedded: {
                 autotag: [
                     {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true, defaultMapping: 'some mapping'}}},
                     {_embedded: {attribute: {constraintGroupId: 1, isRequired: false}}},
                     {_embedded: {attribute: {constraintGroupId: null, isRequired: false}}},
                     {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: false}}},
+                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: true, defaultMapping: 'some mapping'}}},
+                    {_embedded: {attribute: {constraintGroupId: 4, isRequired: false}}},
                 ]
             }
         });
