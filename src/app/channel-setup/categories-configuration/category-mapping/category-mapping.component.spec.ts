@@ -7,7 +7,7 @@ import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
-import { EMPTY, of, throwError } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { CategoryMappingService } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
 
@@ -29,7 +29,7 @@ describe('CategoryMappingComponent', () => {
         appStore = jasmine.createSpyObj('App Store spy', ['select']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         categoryMappingService = jasmine.createSpyObj('CategoryMappingService spy', ['notifyMappingChange']);
-        mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getCategoryMapping', 'addCategoryMapping']);
+        mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getCategoryMapping', 'addCategoryMapping', 'hasCategoryMapping']);
 
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent],
@@ -123,11 +123,9 @@ describe('CategoryMappingComponent', () => {
         expect(component.searchChannelCategoryControl.valid).toBe(false);
     });
 
-    it('should show a previous mapping button when at least one category is configured', () => {
-        component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(of({}));
-        expect(component.hasCachedMapping).toBe(false);
-        component.saveMatching();
+    it('should show a previous mapping button if mappingCacheService.hasCategoryMapping() returns true', () => {
+        mappingCacheService.hasCategoryMapping.and.returnValue(true);
+        component.ngOnChanges({feedCategory: <any>{previousValue: {id: 1}, currentValue: {id: 2}}})
         expect(component.hasCachedMapping).toBe(true);
     });
 

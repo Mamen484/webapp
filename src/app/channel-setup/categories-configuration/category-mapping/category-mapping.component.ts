@@ -53,7 +53,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         this.searchChannelCategoryControl.reset(category);
     }
 
-    ngOnChanges({channelId, feedCategory}: SimpleChanges) {
+    ngOnChanges({feedCategory}: SimpleChanges) {
         if (feedCategory.previousValue
             && feedCategory.previousValue.id === feedCategory.currentValue.id) {
             return;
@@ -64,7 +64,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         }
         this.loading = Boolean(this.feedCategory.channelCategory);
         this.chosenChannelCategory = this.feedCategory.channelCategory;
-
+        this.hasCachedMapping = this.mappingCache.hasCategoryMapping();
     }
 
     displayFn(category: Category) {
@@ -77,6 +77,12 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
 
     saveMatching() {
         if (this.searchChannelCategoryControl.invalid) {
+            return;
+        }
+        if (this.feedCategory.channelCategory
+            && this.chosenChannelCategory
+            && this.feedCategory.channelCategory.id === this.chosenChannelCategory.id) {
+            // not allow to send save request for the same category to prevent side effect
             return;
         }
         this.loading = true;
@@ -92,9 +98,6 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             .subscribe(() => {
                 this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
                 this.mappingCache.addCategoryMapping(this.chosenChannelCategory);
-                if (this.chosenChannelCategory) {
-                    this.hasCachedMapping = true;
-                }
                 // we don't wait for autotags loading, so we can hide the progress bar immediately
                 if (!this.chosenChannelCategory) {
                     this.loading = false;

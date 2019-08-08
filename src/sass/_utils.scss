@@ -149,3 +149,13 @@ $badge-font-level: caption;
     color: $black-87-opacity;
   }
 }
+
+button.sf-button-chip-alike {
+  &.mat-button, &.mat-stroked-button, &.mat-raised-button {
+    border-radius: 16px;
+
+    &.blue {
+      background-color: mat-color($mat-blue, 700, 0.15);
+    }
+  }
+}

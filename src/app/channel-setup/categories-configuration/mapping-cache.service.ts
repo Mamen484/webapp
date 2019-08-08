@@ -20,6 +20,10 @@ export class MappingCacheService {
         this.categoryMapping = channelCategory;
     }
 
+    hasCategoryMapping() {
+        return Boolean(this.categoryMapping);
+    }
+
     getCategoryMapping(): Category {
         return this.categoryMapping;
     }
