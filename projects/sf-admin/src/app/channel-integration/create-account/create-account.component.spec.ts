@@ -95,7 +95,7 @@ describe('CreateAccountComponent', () => {
             feedType: 'xml',
             feed: {
                 head: 'Some text 1',
-                productTag: 'Some text 2',
+                productTag: 'a',
                 separator: '',
                 enclosure: '',
                 headerFirst: '',
@@ -228,10 +228,10 @@ describe('CreateAccountComponent', () => {
             expect(component.formGroup.controls.channelName.getError('validationError')).toBe('some error message');
             expect(component.formGroup.controls.channelType.getError('validationError')).toBe('some error message');
             expect(component.formGroup.controls.exportType.getError('validationError')).toBe('some error message');
-            expect(component.formGroup.controls.xmlHead.getError('validationError')).toBe('some error message');
-            expect(component.formGroup.controls.xmlProductTag.getError('validationError')).toBe('some error message');
-            expect(component.formGroup.controls.csvSeparator.getError('validationError')).toBe('some error message');
-            expect(component.formGroup.controls.csvRoundTrip.getError('validationError')).toBe('some error message');
+            expect(component.formGroup.controls.head.getError('validationError')).toBe('some error message');
+            expect(component.formGroup.controls.productTag.getError('validationError')).toBe('some error message');
+            expect(component.formGroup.controls.separator.getError('validationError')).toBe('some error message');
+            expect(component.formGroup.controls.enclosure.getError('validationError')).toBe('some error message');
         });
     });
 
@@ -245,10 +245,10 @@ describe('CreateAccountComponent', () => {
             channelType: 'ads',
             country: {code: 'es'},
             exportType: 'xml',
-            xmlHead: 'Some text 1',
-            xmlProductTag: 'Some text 2',
-            csvSeparator: '',
-            csvRoundTrip: '',
+            head: 'Some text 1',
+            productTag: 'a',
+            separator: '',
+            enclosure: '',
             headerInFirstRaw: '',
         });
     }

@@ -1,7 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelListComponent } from './channel-list.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
+import { MatTableModule } from '@angular/material';
+
+@Pipe({
+    name: 'accountList',
+})
+class AccountListPipe implements PipeTransform {
+    transform(value: any, ...args: any[]): any {
+    }
+}
 
 describe('ChannelListComponent', () => {
     let component: ChannelListComponent;
@@ -9,8 +18,9 @@ describe('ChannelListComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ChannelListComponent],
+            declarations: [ChannelListComponent, AccountListPipe],
             schemas: [NO_ERRORS_SCHEMA],
+            imports: [MatTableModule],
         })
             .compileComponents();
     }));

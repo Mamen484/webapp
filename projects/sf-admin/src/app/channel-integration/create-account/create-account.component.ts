@@ -23,10 +23,10 @@ export class CreateAccountComponent implements OnInit {
         channelType: ['type'],
         country: ['country'],
         exportType: ['feedType'],
-        xmlHead: ['feed', 'head'],
-        xmlProductTag: ['feed', 'productTag'],
-        csvSeparator: ['feed', 'separator'],
-        csvRoundTrip: ['feed', 'enclosure'],
+        head: ['feed', 'head'],
+        productTag: ['feed', 'productTag'],
+        separator: ['feed', 'separator'],
+        enclosure: ['feed', 'enclosure'],
     };
 
     formGroup = new FormGroup({
@@ -39,12 +39,12 @@ export class CreateAccountComponent implements OnInit {
         exportType: new FormControl('', [Validators.required, () => this.getValidationMessages(['feedType'])]),
 
         // exportType = XML
-        xmlHead: new FormControl('', () => this.getValidationMessages(['feed', 'head'])),
-        xmlProductTag: new FormControl('', () => this.getValidationMessages(['feed', 'productTag'])),
+        head: new FormControl('', () => this.getValidationMessages(['feed', 'head'])),
+        productTag: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'productTag'])]),
 
         // exportType = CSV
-        csvSeparator: new FormControl('', () => this.getValidationMessages(['feed', 'separator'])),
-        csvRoundTrip: new FormControl('', () => this.getValidationMessages(['feed', 'enclosure'])),
+        separator: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'separator'])]),
+        enclosure: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'enclosure'])]),
         headerInFirstRaw: new FormControl(),
     });
 
@@ -108,10 +108,10 @@ export class CreateAccountComponent implements OnInit {
             countries: [this.formGroup.get(['country']).value.code],
             feedType: this.formGroup.get(['exportType']).value,
             feed: {
-                head: this.formGroup.get(['xmlHead']).value,
-                productTag: this.formGroup.get(['xmlProductTag']).value,
-                separator: this.formGroup.get(['csvSeparator']).value,
-                enclosure: this.formGroup.get(['csvRoundTrip']).value,
+                head: this.formGroup.get(['head']).value,
+                productTag: this.formGroup.get(['productTag']).value,
+                separator: this.formGroup.get(['separator']).value,
+                enclosure: this.formGroup.get(['enclosure']).value,
                 headerFirst: this.formGroup.get(['headerInFirstRaw']).value,
             }
         }).pipe(catchError(this.handleChannelError));

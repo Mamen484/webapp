@@ -88,8 +88,8 @@
                     <mat-form-field appearance="outline" color="accent">
                         <mat-label>Export type</mat-label>
                         <mat-select formControlName="exportType">
-                            <mat-option value="xml">XML</mat-option>
                             <mat-option value="csv">CSV</mat-option>
+                            <mat-option value="xml">XML</mat-option>
                         </mat-select>
                         <mat-error *ngIf="formGroup.controls.exportType.hasError('validationError')">
                             {{formGroup.controls.exportType.getError('validationError')}}
@@ -97,31 +97,40 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
                         <mat-label>Head</mat-label>
-                        <input matInput formControlName="xmlHead">
-                        <mat-error *ngIf="formGroup.controls.xmlHead.hasError('validationError')">
-                            {{formGroup.controls.xmlHead.getError('validationError')}}
+                        <input matInput formControlName="head">
+                        <mat-error *ngIf="formGroup.controls.head.hasError('validationError')">
+                            {{formGroup.controls.head.getError('validationError')}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'xml'">
                         <mat-label>Product tag</mat-label>
-                        <input matInput formControlName="xmlProductTag">
-                        <mat-error *ngIf="formGroup.controls.xmlProductTag.hasError('validationError')">
-                            {{formGroup.controls.xmlProductTag.getError('validationError')}}
+                        <input matInput formControlName="productTag">
+                        <mat-error *ngIf="formGroup.controls.productTag.hasError('validationError')">
+                            {{formGroup.controls.productTag.getError('validationError')}}
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.controls.productTag.hasError('maxlength')">
+                            Field is more then 1 character long
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
                         <mat-label>Separator</mat-label>
-                        <input matInput formControlName="csvSeparator">
-                        <mat-error *ngIf="formGroup.controls.csvSeparator.hasError('validationError')">
-                            {{formGroup.controls.csvSeparator.getError('validationError')}}
+                        <input matInput formControlName="separator">
+                        <mat-error *ngIf="formGroup.controls.separator.hasError('validationError')">
+                            {{formGroup.controls.separator.getError('validationError')}}
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.controls.separator.hasError('maxlength')">
+                            Field is more then 1 character long
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
                         <mat-label>Round-String</mat-label>
-                        <input matInput formControlName="csvRoundTrip">
-                        <mat-error *ngIf="formGroup.controls.csvRoundTrip.hasError('validationError')">
-                            {{formGroup.controls.csvRoundTrip.getError('validationError')}}
+                        <input matInput formControlName="enclosure">
+                        <mat-error *ngIf="formGroup.controls.enclosure.hasError('validationError')">
+                            {{formGroup.controls.enclosure.getError('validationError')}}
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.controls.enclosure.hasError('maxlength')">
+                            Field is more then 1 character long
                         </mat-error>
                     </mat-form-field>
                     <mat-slide-toggle color="accent" formControlName="headerInFirstRaw" *ngIf="formGroup.controls.exportType.value === 'csv'">Header in first raw</mat-slide-toggle>
