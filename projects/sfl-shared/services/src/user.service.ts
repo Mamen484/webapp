@@ -20,6 +20,9 @@ export class SflUserService {
                 @Inject(SFL_API) protected sflApi) {
     }
 
+    /**
+     *  Caches userInfo on a first call and always returns a cached copy.
+     */
     public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
         if (!this.userInfo$) {
             this.userInfo$ = this.httpClient.get(`${this.sflApi}/me`)
