@@ -6,7 +6,7 @@ import { UnsavedDataGuard } from './categories-configuration/unsaved-data.guard'
 
 const routes: Routes = [
     {
-        path: ':channelId', component: CategoriesConfigurationComponent,
+        path: ':feedId/setup', component: CategoriesConfigurationComponent,
         resolve: {
             data: SetupResolverGuard
         },

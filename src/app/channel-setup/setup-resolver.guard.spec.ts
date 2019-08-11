@@ -14,7 +14,7 @@ describe('SetupResolverGuard', () => {
 
     beforeEach(() => {
         channelService = jasmine.createSpyObj('ChannelService', ['getChannel']);
-        feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection']);
+        feedService = jasmine.createSpyObj('FeedService', ['fetchFeed']);
         router = jasmine.createSpyObj('Router', ['navigate']);
 
         TestBed.configureTestingModule({
@@ -31,23 +31,23 @@ describe('SetupResolverGuard', () => {
 
     it('should redirect to a channel-not-found error page when the channel endpoint returned an error', () => {
         channelService.getChannel.and.returnValue(throwError({}));
-        feedService.fetchFeedCollection.and.returnValue(of(<any>{}));
-        guard.resolve(<any>{params: {channelId: 20}}, <any>{}).subscribe();
+        feedService.fetchFeed.and.returnValue(of(<any>{channelId: 20}));
+        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).subscribe();
         expect(router.navigate).toHaveBeenCalledWith(['channel-not-found'])
     });
 
-    it('should redirect to a feed-not-found error page when the feed categories endpoint returned 0 categories', () => {
+    it('should redirect to a feed-not-found error page when fetch feed returned an error', () => {
         channelService.getChannel.and.returnValue(of(<any>{}));
-        feedService.fetchFeedCollection.and.returnValue(of(<any>{_embedded: {feed: []}}));
-        guard.resolve(<any>{params: {channelId: 20}}, <any>{}).subscribe();
+        feedService.fetchFeed.and.returnValue(throwError({}));
+        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).subscribe();
         expect(router.navigate).toHaveBeenCalledWith(['feed-not-found'])
     });
 
     it('should resolve an object when the channel returns success and feed categories array is not empty', async () => {
         channelService.getChannel.and.returnValue(of(<any>{id: 3}));
-        feedService.fetchFeedCollection.and.returnValue(of(<any>{_embedded: {feed: [{id: 2}]}}));
-        const resolved = guard.resolve(<any>{params: {channelId: 20}}, <any>{});
+        feedService.fetchFeed.and.returnValue(of(<any>{id: 2, channelId: 3}));
+        const resolved = guard.resolve(<any>{params: {feedId: 2}}, <any>{});
         expect(router.navigate).not.toHaveBeenCalled();
-        expect(await resolved.toPromise()).toEqual(<any>{channel: {id: 3}, feed: {id: 2}});
+        expect(await resolved.toPromise()).toEqual(<any>{channel: {id: 3}, feed: {id: 2, channelId: 3}});
     });
 });

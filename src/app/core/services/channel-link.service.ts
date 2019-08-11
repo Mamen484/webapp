@@ -25,28 +25,32 @@ export class ChannelLinkService {
     }
 
     navigateToChannel(channel: StoreChannel) {
-        this.decideToSkipSetup(channel).subscribe(skipSetup => {
+        this.decideToSkipSetup(channel).subscribe(({skipSetup, feedId}) => {
             if (skipSetup) {
                 this.goToChannel(ChannelLinkPipe.getChannelLink(channel._embedded.channel));
             } else {
-                this.goToChannelSetup(channel._embedded.channel.id);
+                this.goToFeedSetup(feedId);
             }
         });
     }
 
     getChannelLink(channel: StoreChannel) {
-        return this.decideToSkipSetup(channel).pipe(map(skipSetup => {
+        return this.decideToSkipSetup(channel).pipe(map(({skipSetup, feedId}) => {
             return skipSetup
                 ? ChannelLinkPipe.getChannelLink(channel._embedded.channel)
-                : `${this.getWebappLink()}/channel-setup/${channel._embedded.channel.id}`;
+                : `${this.getWebappLink()}/feed/${feedId}/setup`;
         }));
     }
 
-    protected decideToSkipSetup(channel: StoreChannel) {
+    protected decideToSkipSetup(channel: StoreChannel): Observable<{ skipSetup: boolean, feedId?: number }> {
         return this.channelService.getChannelCategories(channel._embedded.channel.id, {limit: '1'}).pipe(
             flatMap(categoriesPage => categoriesPage._embedded.category.length > 0
-                ? this.getFeedCollection(channel).pipe(flatMap(feed => this.hasConfiguredCategories(feed._embedded.feed[0].id)))
-                : of(true)
+                ? this.getFeed(channel).pipe(
+                    flatMap(feed => this.hasConfiguredCategories(feed.id).pipe(
+                        map(skipSetup => ({skipSetup, feedId: feed.id}))
+                    )),
+                )
+                : of({skipSetup: true})
             ));
     }
 
@@ -55,12 +59,13 @@ export class ChannelLinkService {
             .pipe(map(response => Boolean(response._embedded.category.length)));
     }
 
-    protected getFeedCollection(channel: StoreChannel) {
+    protected getFeed(channel: StoreChannel) {
         if (channel.installed) {
-            return this.feedService.fetchFeedCollection(channel._embedded.channel.id);
+            return this.feedService.fetchFeedCollection(channel._embedded.channel.id).pipe(
+                map(feedCollection => feedCollection._embedded.feed[0])
+            );
         }
-        return this.feedService.create(channel._embedded.channel.id)
-            .pipe(flatMap(() => this.feedService.fetchFeedCollection(channel._embedded.channel.id)))
+        return this.feedService.create(channel._embedded.channel.id);
     }
 
     protected getWebappLink() {
@@ -71,7 +76,7 @@ export class ChannelLinkService {
         this.windowRefService.nativeWindow.location.href = this.legacyLinkService.getLegacyLink(channelLink);
     }
 
-    protected goToChannelSetup(channelId) {
-        this.router.navigate(['/channel-setup', channelId]);
+    protected goToFeedSetup(feedId) {
+        this.router.navigate(['/feed', feedId, 'setup']);
     }
 }

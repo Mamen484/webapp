@@ -79,7 +79,7 @@ export class FeedService {
             flatMap((store) => this.httpClient.post(`${environment.API_URL}/feed`, {
                 feed: {catalogId: store.id, channelId, country: store.country},
             }))
-        );
+        ) as Observable<Feed>;
     }
 
     fetchAutotagByCategory(feedId, catalogCategoryId) {
@@ -114,5 +114,9 @@ export class FeedService {
 
     fetchCategoryMapping(feedId, catalogCategoryId) {
         return this.httpClient.get(`${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`) as Observable<FeedCategoryMapping>;
+    }
+
+    fetchFeed(feedId) {
+        return this.httpClient.get(`${environment.API_URL}/feed${feedId}`) as Observable<Feed>;
     }
 }
