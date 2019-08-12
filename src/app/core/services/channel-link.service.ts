@@ -44,14 +44,18 @@ export class ChannelLinkService {
 
     protected decideToSkipSetup(channel: StoreChannel): Observable<{ skipSetup: boolean, feedId?: number }> {
         return this.channelService.getChannelCategories(channel._embedded.channel.id, {limit: '1'}).pipe(
-            flatMap(categoriesPage => categoriesPage._embedded.category.length > 0
-                ? this.getFeed(channel).pipe(
-                    flatMap(feed => this.hasConfiguredCategories(feed.id).pipe(
-                        map(skipSetup => ({skipSetup, feedId: feed.id}))
-                    )),
-                )
-                : of({skipSetup: true})
-            ));
+            flatMap(categoriesPage => {
+                if (categoriesPage._embedded.category.length > 0) {
+                    return channel.installed ? this.getFeed(channel._embedded.channel.id).pipe(
+                        flatMap(feed => this.hasConfiguredCategories(feed.id).pipe(
+                            map(skipSetup => ({skipSetup, feedId: feed.id}))
+                        )))
+                        : this.createFeed(channel._embedded.channel.id).pipe(
+                            map(feed => ({skipSetup: false, feedId: feed.id})),
+                        )
+                }
+                return of({skipSetup: true});
+            }));
     }
 
     protected hasConfiguredCategories(feedId): Observable<boolean> {
@@ -59,13 +63,15 @@ export class ChannelLinkService {
             .pipe(map(response => Boolean(response._embedded.category.length)));
     }
 
-    protected getFeed(channel: StoreChannel) {
-        if (channel.installed) {
-            return this.feedService.fetchFeedCollection(channel._embedded.channel.id).pipe(
-                map(feedCollection => feedCollection._embedded.feed[0])
-            );
-        }
-        return this.feedService.create(channel._embedded.channel.id);
+
+    protected getFeed(channelId) {
+        return this.feedService.fetchFeedCollection(channelId).pipe(
+            map(feedCollection => feedCollection._embedded.feed[0])
+        );
+    }
+
+    protected createFeed(channelId) {
+        return this.feedService.create(channelId);
     }
 
     protected getWebappLink() {

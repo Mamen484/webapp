@@ -45,7 +45,11 @@ describe('ChannelLinkService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should open a legacy channel page if the channel is installed, has at least one category and the feed has configured categories', () => {
+    it(`should open a legacy channel page if:
+       - the channel has at least one category
+       - the channel is installed
+       - the feed has configured categories
+       - the channel type is NOT marketplace`, () => {
         feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
         feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
         channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
@@ -59,7 +63,29 @@ describe('ChannelLinkService', () => {
         expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
 
-    it('should open channel setup page if the channel has at least one category but the feed has no configured categories', () => {
+    it(`should open a legacy channel page if:
+       - the channel has at least one category
+       - the channel is installed
+       - the feed has configured categories
+       - the channel type is marketplace`, () => {
+        feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
+        feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
+
+        legacyLinkService.getLegacyLink.and.returnValue('/some-link');
+        const channel = mockChannel();
+        channel.installed = true;
+        channel._embedded.channel.type = 'marketplace';
+        service.navigateToChannel(channel);
+        expect(feedService.fetchCategoryCollection).toHaveBeenCalled();
+        expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/channel_name');
+        expect(windowRef.nativeWindow.location.href).toBe('/some-link');
+    });
+
+    it(`should open a feed setup page if
+       - the channel has at least one category
+       - the channel is installed
+       - the feed has NO configured categories`, () => {
         feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
         feedService.fetchCategoryCollection.and.returnValue(of(<any>{_embedded: {category: []}}));
         channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
@@ -67,10 +93,23 @@ describe('ChannelLinkService', () => {
         channel._embedded.channel.id = 12;
         channel.installed = true;
         service.navigateToChannel(channel);
-        expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 12]);
+        expect(router.navigate).toHaveBeenCalledWith(['/feed', 20, 'setup']);
     });
 
-    it('should open a legacy channel page if the channel has no categories', () => {
+    it(`should create a feed and open a feed setup page if
+       - the channel has at least one category
+       - the channel is NOT installed`, () => {
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [{}]}}));
+        feedService.create.and.returnValue(of(<any>{id: 20}));
+        const channel = <any>mockChannel();
+        channel.installed = false;
+        service.navigateToChannel(channel);
+        expect(router.navigate).toHaveBeenCalledWith(['/feed', 20, 'setup']);
+    });
+
+    it(`should open a legacy channel page if
+      - the channel has no categories
+      - the channel type is NOT marketplace`, () => {
         feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
         channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: []}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
@@ -80,18 +119,20 @@ describe('ChannelLinkService', () => {
         expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
 
-    it('should create a feed when a channel is not installed and navigate to setup', () => {
+    it(`should open a legacy channel page if
+      - the channel has no categories
+      - the channel type is marketplace`, () => {
         feedService.fetchFeedCollection.and.returnValue(of(<any>{total: 1, _embedded: {feed: [{id: 20}]}}));
-        feedService.fetchCategoryCollection.and.returnValue(of(<any>{total: 0, _embedded: {category: []}}));
-        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [<any>{}]}}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: []}}));
         legacyLinkService.getLegacyLink.and.returnValue('/some-link');
-        feedService.create.and.returnValue(of({}));
         const channel = mockChannel();
-        channel._embedded.channel.id = 51;
+        channel._embedded.channel.type = 'marketplace';
         service.navigateToChannel(channel);
-        expect(feedService.create).toHaveBeenCalled();
-        expect(router.navigate).toHaveBeenCalledWith(['/channel-setup', 51]);
+        expect(feedService.fetchCategoryCollection).not.toHaveBeenCalled();
+        expect(legacyLinkService.getLegacyLink).toHaveBeenCalledWith('/channel_name');
+        expect(windowRef.nativeWindow.location.href).toBe('/some-link');
     });
+
 
     function mockChannel() {
         return {

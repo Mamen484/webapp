@@ -117,6 +117,6 @@ export class FeedService {
     }
 
     fetchFeed(feedId) {
-        return this.httpClient.get(`${environment.API_URL}/feed${feedId}`) as Observable<Feed>;
+        return this.httpClient.get(`${environment.API_URL}/feed/${feedId}`) as Observable<Feed>;
     }
 }
