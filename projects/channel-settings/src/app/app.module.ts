@@ -6,8 +6,17 @@ import { ChannelSettingsComponent } from './channel-settings/channel-settings.co
 import { AppRoutingModule } from './app-routing.module';
 import { SflSidebarModule } from 'sfl-shared/sidebar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatListModule } from '@angular/material';
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatListModule,
+    MatSelectModule
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -19,7 +28,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         BrowserAnimationsModule,
         BrowserModule,
         FlexLayoutModule,
+        FormsModule,
+        MatButtonModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatInputModule,
         MatListModule,
+        MatSelectModule,
+        ReactiveFormsModule,
         SflSidebarModule,
     ],
     providers: [],

@@ -1,3 +1,5 @@
+@import '../sass/variables';
+
 mat-list-item {
   outline: none;
   cursor: pointer;
@@ -5,4 +7,10 @@ mat-list-item {
   .nav-link.home {
     margin: auto;
   }
+}
+
+mat-panel-title.mat-title {
+  // avoid panel-description mispositioning
+  line-height: mat-font-size($config, title);
+  margin: 0;
 }
