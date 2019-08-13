@@ -8,6 +8,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CountryAutocompleteStubComponent} from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
@@ -21,7 +22,7 @@ describe('CreateAccountComponent', () => {
         channelPermissionService = jasmine.createSpyObj('ChannelPermissionService spy', ['addChannelPermission']);
         channelService = jasmine.createSpyObj('ChannelService spy', ['createChannel', 'listChannels']);
         TestBed.configureTestingModule({
-            declarations: [CreateAccountComponent],
+            declarations: [CreateAccountComponent, CountryAutocompleteStubComponent],
             providers: [
                 {provide: StoreService, useValue: storeService},
                 {provide: ChannelPermissionService, useValue: channelPermissionService},
@@ -243,7 +244,7 @@ describe('CreateAccountComponent', () => {
             password: 'qwerty123',
             channelName: 'A testing channel',
             channelType: 'ads',
-            country: {code: 'es'},
+            country: 'es',
             exportType: 'xml',
             head: 'Some text 1',
             productTag: 'a',

@@ -47,7 +47,6 @@ export class CreateAccountComponent implements OnInit {
         headerInFirstRaw: new FormControl(),
     });
 
-    countriesList;
     errorMessage: string;
     validationMessages = <{ [key: string]: any }>{};
 
@@ -104,7 +103,7 @@ export class CreateAccountComponent implements OnInit {
         return this.channelService.createChannel({
             name: this.formGroup.get(['channelName']).value,
             type: this.formGroup.get(['channelType']).value,
-            countries: [this.formGroup.get(['country']).value.code],
+            countries: [this.formGroup.get(['country']).value],
             feedType: this.formGroup.get(['exportType']).value,
             feed: {
                 head: this.formGroup.get(['head']).value,
@@ -132,7 +131,7 @@ export class CreateAccountComponent implements OnInit {
                 payment: 'other',
             },
             status: StoreStatus.demo,
-            country: this.formGroup.get(['country']).value.code,
+            country: this.formGroup.get(['country']).value,
             feed: {
                 url: environment.defaultFeedSource,
                 source: 'xml',

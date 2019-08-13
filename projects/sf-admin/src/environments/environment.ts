@@ -10,6 +10,7 @@ export const environment = {
     SFA_LEGACY_LINK: '//app.shopping-feed.lan',
     WEBAPP_URL: '//localhost:4200/v3/en',
     defaultFeedSource: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
+    countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master',
 };
 
 /*

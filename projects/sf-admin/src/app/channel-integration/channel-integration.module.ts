@@ -7,12 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SfaSharedModule } from '../shared/shared.module';
 import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
 import { CreateAccountComponent } from './create-account/create-account.component';
-import { SearchCountryDirective } from './create-account/search-country/search-country.directive';
 import { AccountListPipe } from './channel-list/account-list.pipe';
+import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 
 
 @NgModule({
-    declarations: [ChannelListComponent, CreateAccountComponent, SearchCountryDirective, AccountListPipe],
+    declarations: [ChannelListComponent, CreateAccountComponent, AccountListPipe],
     imports: [
         CommonModule,
         ChannelIntegrationRoutingModule,
@@ -20,6 +20,7 @@ import { AccountListPipe } from './channel-list/account-list.pipe';
         ReactiveFormsModule,
         SfaSharedModule,
         AdminSidebarModule,
+        SflCountryAutocompleteModule,
     ]
 })
 export class ChannelIntegrationModule {
