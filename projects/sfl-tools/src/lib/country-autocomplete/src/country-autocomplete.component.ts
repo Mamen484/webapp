@@ -6,11 +6,10 @@ import { MatOption } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { FullCountriesListService } from './full-countries-list.service';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
-import { MatChipInputEvent } from '@angular/material';
 
 
 @Component({
-    selector: 'sfl-country-autocomplete',
+    selector: 'sft-country-autocomplete',
     templateUrl: './country-autocomplete.component.html',
     styleUrls: ['./country-autocomplete.component.scss'],
     providers: [

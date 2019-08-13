@@ -47,7 +47,8 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
 import { SflSharedModule } from 'sfl-shared';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
-import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
+import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
+import { environment } from '../../../projects/channel-settings/src/environments/environment';
 
 @NgModule({
     imports: [
@@ -84,7 +85,9 @@ import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocompl
         MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
-        SflCountryAutocompleteModule,
+        SftCountryAutocompleteModule.forRoot({
+            sflCountriesListLink: environment.countriesListLink,
+        }),
         SflSharedModule,
         SflSoloSearchModule,
     ],
