@@ -1,0 +1,10 @@
+@import '../../../../../src/sass/variables';
+
+input {
+  text-transform: capitalize;
+}
+
+mat-form-field {
+  width: 100%;
+  font-size: mat-font-size($config, body-1);
+}

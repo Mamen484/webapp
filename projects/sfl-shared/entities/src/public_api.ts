@@ -5,6 +5,7 @@ export * from './channel-statistics';
 export * from './channel-type.enum';
 export * from './channels-request-params';
 export * from './channels-response';
+export * from './country';
 export * from './feed-source';
 export * from './link';
 export * from './paged-response';

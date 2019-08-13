@@ -26,4 +26,5 @@ export const environment = {
     zeConciergeName: 'Team Shopping Feed',
     zeConciergeTitle: 'I can answer all your questions!',
     zeConciergeTitleFr: 'Posez-nous toutes vos questions',
+    countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master'
 };

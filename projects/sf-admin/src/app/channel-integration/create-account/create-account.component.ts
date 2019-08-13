@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Country } from '../../../../../../src/app/core/entities/country';
 import { ChannelPermissionService } from '../channel-permission.service';
 import { ChannelService, StoreService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { catchError, flatMap, map } from 'rxjs/operators';
-import { Channel, Store, StoreStatus } from 'sfl-shared/entities';
+import { Channel, Store, StoreStatus, Country } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
 

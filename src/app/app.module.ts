@@ -38,6 +38,7 @@ import { ZendeskConfig } from './core/widgets/zendesk.config';
             sflApi: environment.API_URL,
             sflAppToken: environment.APP_AUTHORIZATION,
             sflLegacyLink: environment.APP_URL,
+            sflCountriesListLink: environment.countriesListLink,
         }),
         TicketsModule,
         ngxZendeskWebwidgetModule.forRoot(ZendeskConfig),

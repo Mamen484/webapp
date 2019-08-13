@@ -1,4 +1,4 @@
-import { Country } from '../../../../../../../src/app/core/entities/country';
+import { Country } from 'sfl-shared/entities';
 
 export const countriesList = <Country[]>[
     {

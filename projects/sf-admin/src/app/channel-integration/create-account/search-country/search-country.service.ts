@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SflSearchService } from 'sfl-shared/utils/async-autocomplete-search';
-import { Country } from '../../../../../../../src/app/core/entities/country';
+import { Country } from 'sfl-shared/entities';
 import { countriesList } from './countries';
 import { of } from 'rxjs';
 
