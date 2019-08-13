@@ -17,6 +17,10 @@ import {
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
+import { SflSharedModule } from 'sfl-shared/core';
+import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -29,6 +33,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         BrowserModule,
         FlexLayoutModule,
         FormsModule,
+        HttpClientModule,
         MatButtonModule,
         MatCardModule,
         MatExpansionModule,
@@ -37,7 +42,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         MatListModule,
         MatSelectModule,
         ReactiveFormsModule,
+        SflCountryAutocompleteModule,
         SflSidebarModule,
+        SflSharedModule.forRoot({
+            baseHref: '',
+            languageOptions: {en: 'English'},
+            sflApi: environment.apiLink,
+            sflAppToken: environment.appToken,
+            sflLegacyLink: environment.legacyLink,
+            sflCountriesListLink: environment.countriesListLink,
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, forwardRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { filter, map, startWith, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -6,6 +6,7 @@ import { MatOption } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { FullCountriesListService } from './full-countries-list.service';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { MatChipInputEvent } from '@angular/material';
 
 
 @Component({
@@ -22,11 +23,16 @@ import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 })
 export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
 
+    @ViewChild('input', {static: false}) input: HTMLInputElement;
+
     @Input() appearance: MatFormFieldAppearance = 'standard';
     @Input() valid = true;
+    @Input() multipleSelection: 'none' | 'chips' = 'none';
+    @Input() required = false;
     countries: Country[] = [];
     filteredCountries: Observable<Country[]>;
-    onChange: (value: string) => any;
+    onChange: (value: string | string[]) => any;
+    selectedCountries = [];
     protected validationError;
     control = new FormControl('', () => this.validationError ? {serverError: true} : null);
 
@@ -66,9 +72,21 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     optionSelected({option}: { option: MatOption }) {
         this.matchCountryByName(option.value).subscribe((country: Country) => {
             if (country) {
-                this.onChange(country.code);
+                if (this.multipleSelection === 'chips') {
+                    this.selectedCountries.push(country);
+                    this.onChange(this.selectedCountries.map(({code}) => code));
+                    this.control.reset(null);
+                    this.input.value = '';
+                } else {
+                    this.onChange(country.code);
+                }
             }
         });
+    }
+
+    remove(country) {
+        this.selectedCountries.splice(this.selectedCountries.indexOf(country), 1);
+        this.onChange(this.selectedCountries);
     }
 
     protected filterCountries(name: string) {

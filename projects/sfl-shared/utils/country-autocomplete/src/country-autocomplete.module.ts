@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CountryAutocompleteComponent } from './country-autocomplete.component';
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatAutocompleteModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
         CommonModule,
         FormsModule,
         MatAutocompleteModule,
+        MatChipsModule,
         MatFormFieldModule,
+        MatIconModule,
         MatInputModule,
         ReactiveFormsModule,
     ],
