@@ -347,7 +347,7 @@
               "projects/channel-settings/src/assets"
             ],
             "styles": [
-              "projects/channel-settings/src/styles.css"
+              "projects/channel-settings/src/styles.scss"
             ],
             "scripts": []
           }

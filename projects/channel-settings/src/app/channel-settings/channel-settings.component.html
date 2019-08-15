@@ -15,15 +15,15 @@
                 <mat-panel-description>Define channel main data : contact, category, and countries.
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <form fxLayout="column" fxLayoutGap="20px">
+            <form fxLayout="column" fxLayoutGap="20px" [formGroup]="channelSettingsGroup">
                 <mat-form-field appearance="outline">
                     <mat-label>Contact email</mat-label>
-                    <input matInput required>
+                    <input matInput required formControlName="contact">
                     <mat-hint>Contact email displayed to users in Shopping Feed</mat-hint>
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Category</mat-label>
-                    <mat-select>
+                    <mat-select formControlName="segment">
                         <mat-option value="professional">Professional</mat-option>
                         <mat-option value="motors">Motors</mat-option>
                         <mat-option value="organic">Organic</mat-option>
@@ -41,9 +41,12 @@
                     </mat-select>
                     <mat-hint>Category allows user to find channel more easily through filters</mat-hint>
                 </mat-form-field>
-                <sft-country-autocomplete name="country" multipleSelection="chips" [ngModel]="['fr', 'en']" appearance="outline"
+                <sft-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline"
                                           [required]="true" hintText="Countries where channel is available" i18n-hintText>
                 </sft-country-autocomplete>
+                <div class="actions">
+                    <button mat-raised-button (click)="saveSettings()">Save</button>
+                </div>
             </form>
         </mat-expansion-panel>
         <mat-expansion-panel>

@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
+import { SflSharedModule } from 'sfl-shared/core';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,14 @@ import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
             sflCountriesListLink: environment.countriesListLink,
         }),
         SflSidebarModule,
+        SflSharedModule.forRoot({
+            baseHref: '',
+            languageOptions: {en: 'English'},
+            sflApi: environment.apiLink,
+            sflAppToken: environment.appToken,
+            sflLegacyLink: environment.legacyLink,
+            sflCountriesListLink: environment.countriesListLink,
+        }),
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -17,7 +17,11 @@ export class ChannelService {
         if (name) {
             params = params.set('name', name);
         }
-        return this.httpClient.get(`${this.sflApi}/channel`, {params}) as Observable<PagedResponse<{channel: Channel[]}>>;
+        return this.httpClient.get(`${this.sflApi}/channel`, {params}) as Observable<PagedResponse<{ channel: Channel[] }>>;
+    }
+
+    modifyChannel(channel: Channel, id: number) {
+        return this.httpClient.put(`${this.sflApi}/channel/${id}`, {channel});
     }
 
 }

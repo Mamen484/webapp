@@ -103,7 +103,7 @@ export class CreateAccountComponent implements OnInit {
         return this.channelService.createChannel({
             name: this.formGroup.get(['channelName']).value,
             type: this.formGroup.get(['channelType']).value,
-            countries: [this.formGroup.get(['country']).value],
+            country: [this.formGroup.get(['country']).value],
             feedType: this.formGroup.get(['exportType']).value,
             feed: {
                 head: this.formGroup.get(['head']).value,

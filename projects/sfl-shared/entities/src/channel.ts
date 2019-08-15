@@ -2,13 +2,16 @@ import { Link } from './link';
 
 export interface Channel {
     id?: number;
-    name: string;
+    name?: string;
+    /* object - on GET, string - on PUT */
+    contact?: {email: string} | string;
     description?: string;
     installed?: boolean;
     type?: string;
     segment?: string;
     offer?: string;
     countries?: any[],
+    country?: any[]; // only for PUT request
     _links?: {
         self: Link,
         image: Link,
