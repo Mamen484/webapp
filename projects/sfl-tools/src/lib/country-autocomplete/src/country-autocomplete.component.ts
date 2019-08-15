@@ -22,12 +22,13 @@ import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 })
 export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
 
-    @ViewChild('input', {static: false}) input: HTMLInputElement;
+    @ViewChild('input', {static: false}) input;
 
     @Input() appearance: MatFormFieldAppearance = 'standard';
     @Input() valid = true;
     @Input() multipleSelection: 'none' | 'chips' = 'none';
     @Input() required = false;
+    @Input() hintText = '';
     countries: Country[] = [];
     filteredCountries: Observable<Country[]>;
     onChange: (value: string | string[]) => any;
@@ -62,9 +63,9 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     registerOnTouched(fn: any): void {
     }
 
-    writeValue(countryCode: string): void {
-        if (countryCode) {
-            this.formatDisplayedValue(countryCode);
+    writeValue(value: string | string[]): void {
+        if (value) {
+            this.formatDisplayedValue(value);
         }
     }
 
@@ -72,10 +73,12 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
         this.matchCountryByName(option.value).subscribe((country: Country) => {
             if (country) {
                 if (this.multipleSelection === 'chips') {
-                    this.selectedCountries.push(country);
+                    if (!this.selectedCountries.includes(country)) {
+                        this.selectedCountries.push(country);
+                    }
                     this.onChange(this.selectedCountries.map(({code}) => code));
-                    this.control.reset(null);
-                    this.input.value = '';
+                    this.control.reset('');
+                    this.input.nativeElement.value = '';
                 } else {
                     this.onChange(country.code);
                 }
@@ -96,10 +99,15 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
      * Ensure that we have fetched the countries list from the server,
      * then write to the input a country name according to the passed from parent country code.
      */
-    protected formatDisplayedValue(value: string) {
+    protected formatDisplayedValue(value: string | string[]) {
         this.getCountries().subscribe(countries => {
-            let c = countries.find(({code}) => code === value);
-            this.control.setValue(c ? c.name : '');
+            if (typeof value === 'string') {
+                let c = countries.find(({code}) => code === value);
+                this.control.setValue(c ? c.name : '');
+            } else {
+                this.selectedCountries = value.map((countryCode: string) => countries.find(({code}) => code === countryCode));
+            }
+
         });
     }
 

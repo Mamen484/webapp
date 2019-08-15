@@ -5,10 +5,10 @@
                 *ngFor="let country of selectedCountries"
                 [removable]="true"
                 (removed)="remove(country)">
-            {{country.name}}
+            <span>{{country.name}}</span>
             <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
-        <input [matChipInputFor]="chipList" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete" required="required">
+        <input #input [matChipInputFor]="chipList" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete" [required]="required">
     </mat-chip-list>
     <mat-autocomplete #countryAutocomplete="matAutocomplete" class="sf-countries-autocomplete" (optionSelected)="optionSelected($event)">
         <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name">
@@ -19,5 +19,5 @@
     <mat-error *ngIf="control.hasError('serverError')" i18n>
         Country name is missing. Please, choose one from a list.
     </mat-error>
-    <ng-content></ng-content>
+    <mat-hint *ngIf="hintText">{{hintText}}</mat-hint>
 </mat-form-field>
