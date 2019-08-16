@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
 import { SflSharedModule } from 'sfl-shared/core';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { SflSharedModule } from 'sfl-shared/core';
         FlexLayoutModule,
         FormsModule,
         HttpClientModule,
+        LoginModule,
         MatButtonModule,
         MatCardModule,
         MatExpansionModule,
