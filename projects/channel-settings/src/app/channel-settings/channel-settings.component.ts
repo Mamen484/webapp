@@ -8,6 +8,8 @@ import { ChannelService } from 'sfl-shared/services';
 })
 export class ChannelSettingsComponent implements OnInit {
 
+    channelId = 32592;
+
     channelSettingsGroup = new FormGroup({
         contact: new FormControl(),
         segment: new FormControl(),
@@ -25,7 +27,7 @@ export class ChannelSettingsComponent implements OnInit {
             contact: this.channelSettingsGroup.get('contact').value,
             segment: this.channelSettingsGroup.get('segment').value,
             country: this.channelSettingsGroup.get('country').value.map(code => ({code})),
-        }, 23).subscribe();
+        }, this.channelId).subscribe();
     }
 
 }

@@ -80,17 +80,6 @@ describe('LoginComponent', () => {
         expect(component.showDeletedStoreError).toEqual(true);
     });
 
-    it('should drop authorization, when all the stores in the userInfo have deleted status', () => {
-        let userInfo = cloneDeep(aggregatedUserInfoMock);
-        userInfo._embedded.store[0].status = 'deleted';
-        userInfo._embedded.store[1].status = 'deleted';
-        userInfo._embedded.store[2].status = 'deleted';
-        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
-        authService.login.and.returnValue(of({}));
-        component.login({username: '123', password: '456'});
-        expect(authService.logout).toHaveBeenCalled();
-    });
-
     it('should NOT show an error that the store is deleted, when at least one store in the userInfo has deleted status', () => {
         let userInfo = cloneDeep(aggregatedUserInfoMock);
         userInfo._embedded.store[0].status = 'deleted';

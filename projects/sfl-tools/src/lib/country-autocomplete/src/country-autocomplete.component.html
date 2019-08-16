@@ -1,6 +1,6 @@
 <mat-form-field color="accent" [appearance]="appearance">
     <mat-label i18n>Country</mat-label>
-    <mat-chip-list #chipList aria-label="Country selection">
+    <mat-chip-list #chipList aria-label="Country selection" *ngIf="multipleSelection === 'chips'">
         <mat-chip
                 *ngFor="let country of selectedCountries"
                 [removable]="true"
@@ -10,6 +10,8 @@
         </mat-chip>
         <input #input [matChipInputFor]="chipList" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete" [required]="required">
     </mat-chip-list>
+
+    <input #input *ngIf="multipleSelection !== 'chips'" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete" [required]="required">
     <mat-autocomplete #countryAutocomplete="matAutocomplete" class="sf-countries-autocomplete" (optionSelected)="optionSelected($event)">
         <mat-option *ngFor="let country of filteredCountries | async" [value]="country.name">
             <img src="{{countriesListLink}}/images/{{country.flag}}" class="sf-flag-filter">

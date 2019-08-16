@@ -57,14 +57,6 @@ describe('IsAuthorizedGuard', () => {
         expect(canActivate).toEqual(false);
     });
 
-    it('should return false if the authorization is valid but the user is not admin', async () => {
-        store.select.and.returnValue(of(null));
-        sflAuthService.isLoggedIn.and.returnValue(true);
-        fetchAggregatedInfoSpy.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
-        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
-        expect(canActivate).toEqual(false);
-    });
-
     it('should redirect to the login page if the server returned a client error', async () => {
         sflAuthService.isLoggedIn.and.returnValue(true);
         store.select.and.returnValue(of(null));
@@ -82,17 +74,6 @@ describe('IsAuthorizedGuard', () => {
         expect(canActivate).toEqual(false);
         expect(router.navigate).toHaveBeenCalledWith(['/critical-error'], {skipLocationChange: true});
     });
-
-    it('should redirect to the login if the user is not admin and does not have enabled stores', async () => {
-        sflAuthService.isLoggedIn.and.returnValue(true);
-        store.select.and.returnValue(of(null));
-        fetchAggregatedInfoSpy.and.returnValue(
-            of(AggregatedUserInfo.create({_embedded: {store: [{status: 'deleted'}]}, roles: ['user']})));
-        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{queryParams: {}})).toPromise();
-        expect(canActivate).toEqual(false);
-        expect(router.navigate).toHaveBeenCalledWith(['/login']);
-    });
-
 });
 
 export const aggregatedUserInfoMock = {

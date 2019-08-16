@@ -40,6 +40,7 @@ describe('ChannelSettingsComponent', () => {
             segment: 'clothes',
             country: ['fr', 'uk'],
         });
+        component.channelId = 23;
         component.saveSettings();
         expect(channelService.modifyChannel).toHaveBeenCalledWith(<Channel>{
             contact: 'test',

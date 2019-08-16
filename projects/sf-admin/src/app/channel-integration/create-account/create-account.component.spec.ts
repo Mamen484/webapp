@@ -92,7 +92,7 @@ describe('CreateAccountComponent', () => {
         expect(channelService.createChannel).toHaveBeenCalledWith({
             name: 'A testing channel',
             type: 'ads',
-            country: ['es'],
+            countries: ['es'],
             feedType: 'xml',
             feed: {
                 head: 'Some text 1',
