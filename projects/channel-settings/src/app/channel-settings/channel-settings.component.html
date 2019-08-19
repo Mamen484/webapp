@@ -15,39 +15,7 @@
                 <mat-panel-description>Define channel main data : contact, category, and countries.
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <form fxLayout="column" fxLayoutGap="20px" [formGroup]="channelSettingsGroup">
-                <mat-form-field appearance="outline">
-                    <mat-label>Contact email</mat-label>
-                    <input matInput required formControlName="contact">
-                    <mat-hint>Contact email displayed to users in Shopping Feed</mat-hint>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Category</mat-label>
-                    <mat-select formControlName="segment">
-                        <mat-option value="professional">Professional</mat-option>
-                        <mat-option value="motors">Motors</mat-option>
-                        <mat-option value="organic">Organic</mat-option>
-                        <mat-option value="appliances">Appliances</mat-option>
-                        <mat-option value="gastronomy">Gastronomy</mat-option>
-                        <mat-option value="highTech">HighTech</mat-option>
-                        <mat-option value="toys">Toys</mat-option>
-                        <mat-option value="homeAndGarden">Home And Garden</mat-option>
-                        <mat-option value="fashion">Fashion</mat-option>
-                        <mat-option value="nursery">Nursery</mat-option>
-                        <mat-option value="healthAndBeauty">Health And Beauty</mat-option>
-                        <mat-option value="wineAndSpirits">Wine And Spirits</mat-option>
-                        <mat-option value="universal">Universal</mat-option>
-                        <mat-option value="sports">Sports</mat-option>
-                    </mat-select>
-                    <mat-hint>Category allows user to find channel more easily through filters</mat-hint>
-                </mat-form-field>
-                <sft-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline"
-                                          [required]="true" hintText="Countries where channel is available" i18n-hintText>
-                </sft-country-autocomplete>
-                <div class="actions">
-                    <button mat-raised-button (click)="saveSettings()">Save</button>
-                </div>
-            </form>
+            <sfcs-settings [channelId]="channelId"></sfcs-settings>
         </mat-expansion-panel>
         <mat-expansion-panel>
             <mat-expansion-panel-header>
