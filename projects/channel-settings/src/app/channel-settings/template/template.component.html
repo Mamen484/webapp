@@ -1,0 +1,30 @@
+<form fxLayout="column" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutGap="20px" *ngFor="let fieldSet of fields; let i = index">
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Channel field</mat-label>
+            <input matInput [formControl]="fieldSet.channelField" required>
+            <mat-hint i18n>Input field name as written in feed</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label i18n>SF field</mat-label>
+            <mat-select [formControl]="fieldSet.sfField">
+                <mat-option>autotag_color</mat-option>
+            </mat-select>
+            <mat-hint i18n>Select feed name as written in feed</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label i18n>Default value</mat-label>
+            <input matInput [formControl]="fieldSet.defaultValue">
+            <mat-hint i18n>Or input default value of feed</mat-hint>
+        </mat-form-field>
+        <button mat-icon-button *ngIf="i === 0" (click)="addField()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="i > 0" (click)="removeField(fieldSet)">
+            <mat-icon>remove</mat-icon>
+        </button>
+    </div>
+    <div class="actions">
+        <button mat-raised-button (click)="save()">Save</button>
+    </div>
+</form>

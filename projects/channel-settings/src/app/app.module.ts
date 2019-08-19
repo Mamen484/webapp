@@ -10,7 +10,7 @@ import {
     MatButtonModule,
     MatCardModule,
     MatExpansionModule,
-    MatFormFieldModule,
+    MatFormFieldModule, MatIconModule,
     MatInputModule,
     MatListModule,
     MatSelectModule
@@ -23,12 +23,14 @@ import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
 import { SflSharedModule } from 'sfl-shared/core';
 import { LoginModule } from './login/login.module';
 import { SettingsComponent } from './channel-settings/settings/settings.component';
+import { TemplateComponent } from './channel-settings/template/template.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ChannelSettingsComponent,
-        SettingsComponent
+        SettingsComponent,
+        TemplateComponent
     ],
     imports: [
         AppRoutingModule,
@@ -42,6 +44,7 @@ import { SettingsComponent } from './channel-settings/settings/settings.componen
         MatCardModule,
         MatExpansionModule,
         MatFormFieldModule,
+        MatIconModule,
         MatInputModule,
         MatListModule,
         MatSelectModule,

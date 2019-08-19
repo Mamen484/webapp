@@ -1,4 +1,5 @@
 import { Link } from './link';
+import { ChannelTemplate } from './channel-template';
 
 export interface Channel {
     id?: number;
@@ -16,7 +17,7 @@ export interface Channel {
         self: Link,
         image: Link,
     };
-
+    template: ChannelTemplate[];
     // create channel request
     feedType?: string;
     feed?: {
