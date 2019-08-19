@@ -1,6 +1,6 @@
 #!/bin/bash
 for lang in $LOCALES; do \
-        LOCALE_ID=$lang production=true npx ts-node compile-environment.ts projects/channel-settings/src/environments && \
+        LOCALE_ID=$lang production=true npx npm run compile-env projects/channel-settings/src/environments && \
         npx ng build channel-settings --output-path=dist/$lang \
                  --prod \
                  --aot \

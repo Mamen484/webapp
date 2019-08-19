@@ -19,10 +19,10 @@ import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
     declarations: [CountryAutocompleteComponent],
     exports: [CountryAutocompleteComponent],
 })
-export class SftCountryAutocompleteModule {
+export class SflCountryAutocompleteModule {
     static forRoot(dependency: { sflCountriesListLink }): ModuleWithProviders {
         return {
-            ngModule: SftCountryAutocompleteModule,
+            ngModule: SflCountryAutocompleteModule,
             providers: [
                 {provide: SFL_COUNTRIES_LIST_LINK, useValue: dependency.sflCountriesListLink},
             ]

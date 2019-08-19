@@ -1,6 +1,6 @@
 #!/bin/bash
 for lang in $LOCALES; do \
-        LOCALE_ID=$lang production=true npx ts-node compile-environment.ts && \
+        LOCALE_ID=$lang production=true npx npm run compile-env && \
         npx ng build --output-path=dist/webapp/$BASE_HREF/$lang \
                  --prod \
                  --aot \

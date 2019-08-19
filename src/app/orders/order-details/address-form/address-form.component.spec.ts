@@ -63,7 +63,7 @@ describe('AddressFormComponent', () => {
 });
 
 @Component({
-    selector: 'sft-country-autocomplete', template: '',
+    selector: 'sfl-country-autocomplete', template: '',
     providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CountryAutocompleteStubComponent), multi: true}]
 })
 export class CountryAutocompleteStubComponent implements ControlValueAccessor {

@@ -378,41 +378,6 @@
           }
         }
       }
-    },
-    "sfl-tools": {
-      "projectType": "library",
-      "root": "projects/sfl-tools",
-      "sourceRoot": "projects/sfl-tools/src",
-      "prefix": "sft",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/sfl-tools/tsconfig.lib.json",
-            "project": "projects/sfl-tools/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/sfl-tools/src/test.ts",
-            "tsConfig": "projects/sfl-tools/tsconfig.spec.json",
-            "karmaConfig": "projects/sfl-tools/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/sfl-tools/tsconfig.lib.json",
-              "projects/sfl-tools/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
     }
   },
   "defaultProject": "webapp",

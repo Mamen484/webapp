@@ -8,7 +8,7 @@ import { SfaSharedModule } from '../shared/shared.module';
 import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { AccountListPipe } from './channel-list/account-list.pipe';
-import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
+import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
         ReactiveFormsModule,
         SfaSharedModule,
         AdminSidebarModule,
-        SftCountryAutocompleteModule,
+        SflCountryAutocompleteModule,
     ]
 })
 export class ChannelIntegrationModule {

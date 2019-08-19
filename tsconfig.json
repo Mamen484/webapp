@@ -31,12 +31,6 @@
       ],
       "core-js/es6/*": [
         "node_modules/core-js/es/*"
-      ],
-      "sfl-tools": [
-        "dist/sfl-tools"
-      ],
-      "sfl-tools/*":  [
-        "dist/sfl-tools/src/lib/*"
       ]
     }
   }

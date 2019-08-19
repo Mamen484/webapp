@@ -12,10 +12,10 @@ COPY ./ /app/
 RUN npm install
 
 # download translations
-ARG CROWDIN_API_KEY
-RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
-RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
-RUN unzip -o all.zip
+#ARG CROWDIN_API_KEY
+#RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/export?key=$CROWDIN_API_KEY
+#RUN curl https://api.crowdin.com/api/project/shoppingfeed-webapp/download/all.zip?key=$CROWDIN_API_KEY -o all.zip
+#RUN unzip -o all.zip
 
 ARG env=prod
 ARG LOCALES="en"
@@ -31,7 +31,6 @@ ARG WEBAPP_URL
 RUN npm run compile-env projects/sf-admin/src/environments
 
 RUN npx ng build sfl-shared
-RUN npx ng build sfl-tools
 
 RUN chmod +x ./build-admin.sh
 RUN ./build-admin.sh

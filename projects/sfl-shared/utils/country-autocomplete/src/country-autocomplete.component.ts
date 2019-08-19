@@ -9,7 +9,7 @@ import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 
 
 @Component({
-    selector: 'sft-country-autocomplete',
+    selector: 'sfl-country-autocomplete',
     templateUrl: './country-autocomplete.component.html',
     styleUrls: ['./country-autocomplete.component.scss'],
     providers: [
@@ -73,7 +73,7 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
         this.matchCountryByName(option.value).subscribe((country: Country) => {
             if (country) {
                 if (this.multipleSelection === 'chips') {
-                    if (!this.selectedCountries.includes(country)) {
+                    if (this.selectedCountries.indexOf(country) === -1) {
                         this.selectedCountries.push(country);
                     }
                     this.onChange(this.selectedCountries.map(({code}) => code));

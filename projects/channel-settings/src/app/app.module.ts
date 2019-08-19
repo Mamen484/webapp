@@ -19,7 +19,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
-import { SftCountryAutocompleteModule } from 'sfl-tools/country-autocomplete';
+import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { SflSharedModule } from 'sfl-shared/core';
 import { LoginModule } from './login/login.module';
 import { SettingsComponent } from './channel-settings/settings/settings.component';
@@ -49,7 +49,7 @@ import { TemplateComponent } from './channel-settings/template/template.componen
         MatListModule,
         MatSelectModule,
         ReactiveFormsModule,
-        SftCountryAutocompleteModule.forRoot({
+        SflCountryAutocompleteModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,
         }),
         SflSidebarModule,
