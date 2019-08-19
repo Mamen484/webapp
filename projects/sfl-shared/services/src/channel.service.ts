@@ -36,4 +36,8 @@ export class ChannelService {
         return this.httpClient.put(`${this.sflApi}/channel/${id}`, {channel});
     }
 
+    fetchChannel(channelId) {
+        return this.httpClient.get(`${this.sflApi}/channel/${channelId}`) as Observable<Channel>;
+    }
+
 }
