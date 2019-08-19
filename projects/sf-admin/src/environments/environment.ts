@@ -11,6 +11,7 @@ export const environment = {
     WEBAPP_URL: '//localhost:4200/v3/en',
     defaultFeedSource: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
     countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master',
+    channelOperatorLink: 'http://localhost:4204/en',
 };
 
 /*

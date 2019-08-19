@@ -34,4 +34,8 @@ describe('ChannelListComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+
+    it('should redirect to correct url on a channel click', () => {
+        expect(false).toBe(true);
+    });
 });

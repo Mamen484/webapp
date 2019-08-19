@@ -27,6 +27,9 @@ ARG SFA_BILLING_API
 ARG APP_TOKEN
 ARG SFA_LEGACY_LINK
 ARG WEBAPP_URL
+ARG channelOperatorLink
+ARG defaultFeedSource
+ARG countriesListLink
 
 RUN npm run compile-env projects/sf-admin/src/environments
 

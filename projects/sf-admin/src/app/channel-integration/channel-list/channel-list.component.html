@@ -32,7 +32,8 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToChannel(row.id)">
+            </tr>
         </table>
         <div *ngIf="!isLoadingResults && !dataSource.data.length" i18n class="no-results mat-body-1">
             No channels found.
