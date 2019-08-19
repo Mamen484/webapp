@@ -69,7 +69,7 @@ export class CreateAccountComponent implements OnInit {
         if (this.formGroup.invalid) {
             return;
         }
-        this.channelService.listChannels(this.formGroup.get(['channelName']).value)
+        this.channelService.listChannels({search: this.formGroup.get(['channelName']).value})
             .pipe(
                 catchError(this.handleChannelError),
                 flatMap((response) => response.total === 0 ? of({}) : throwError({detail: 'Channel error: channel already exists'})),

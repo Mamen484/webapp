@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AccountListPipe implements PipeTransform {
 
     transform(value: any, ...args: any[]): any {
-        return value.map(({account}) => account.name).join(', ');
+        return value
+            ? value.map(({account}) => account.name).join(', ')
+            : '';
     }
 
 }

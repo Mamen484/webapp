@@ -30,7 +30,7 @@ describe('ChannelService', () => {
     });
 
     it('should GET /channel with params on listChannels() call', () => {
-        service.listChannels('someName').subscribe();
+        service.listChannels({search: 'someName'}).subscribe();
         let req = httpMock.expectOne('someLink/channel?name=someName');
         expect(req.request.method).toBe('GET');
     });

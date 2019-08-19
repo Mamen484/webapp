@@ -1,6 +1,7 @@
 export * from './aggregated-user-info';
 export * from './channel';
 export * from './channel-category.enum';
+export * from './channel-state';
 export * from './channel-statistics';
 export * from './channel-type.enum';
 export * from './channels-request-params';

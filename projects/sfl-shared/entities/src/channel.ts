@@ -1,5 +1,6 @@
 import { Link } from './link';
 import { ChannelTemplate } from './channel-template';
+import { ChannelState } from './channel-state';
 
 export interface Channel {
     id?: number;
@@ -27,4 +28,8 @@ export interface Channel {
         productTag: string,
         headerFirst: string,
     };
+    state?: ChannelState;
+    _embedded?: {
+        account?: {id: number, name: string}[],
+    }
 }

@@ -12,10 +12,19 @@ export class ChannelService {
         return this.httpClient.post(`${this.sflApi}/channel`, {channel}) as Observable<Channel>;
     }
 
-    listChannels(name?: string) {
+    listChannels(queryParam: { permission?: string, limit?: number, page?: number, search?: string } = {}) {
         let params = new HttpParams();
-        if (name) {
-            params = params.set('name', name);
+        if (queryParam.permission) {
+            params = params.set('permission', queryParam.permission);
+        }
+        if (queryParam.limit) {
+            params = params.set('limit', queryParam.limit.toString());
+        }
+        if (queryParam.page) {
+            params = params.set('page', queryParam.page.toString());
+        }
+        if (typeof queryParam.search === 'string') {
+            params = params.set('name', queryParam.search);
         }
         return this.httpClient.get(`${this.sflApi}/channel`, {params}) as Observable<PagedResponse<{ channel: Channel[] }>>;
     }
