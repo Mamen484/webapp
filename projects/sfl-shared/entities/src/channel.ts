@@ -17,7 +17,7 @@ export interface Channel {
         self: Link,
         image: Link,
     };
-    template: ChannelTemplate[];
+    template?: ChannelTemplate[];
     // create channel request
     feedType?: string;
     feed?: {
