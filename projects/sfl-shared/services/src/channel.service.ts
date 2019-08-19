@@ -12,10 +12,13 @@ export class ChannelService {
         return this.httpClient.post(`${this.sflApi}/channel`, {channel}) as Observable<Channel>;
     }
 
-    listChannels(queryParam: { permission?: string, limit?: number, page?: number, search?: string } = {}) {
+    listChannels(queryParam: { state?: string, permission?: string, limit?: number, page?: number, search?: string } = {}) {
         let params = new HttpParams();
         if (queryParam.permission) {
             params = params.set('permission', queryParam.permission);
+        }
+        if (queryParam.state) {
+            params = params.set('state', queryParam.state);
         }
         if (queryParam.limit) {
             params = params.set('limit', queryParam.limit.toString());

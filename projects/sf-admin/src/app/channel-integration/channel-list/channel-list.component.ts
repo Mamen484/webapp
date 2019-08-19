@@ -22,7 +22,12 @@ export class ChannelListComponent extends TableOperations<Channel> {
     }
 
     protected fetchCollection(params: { limit: number; page: number; search: string }): Observable<{ total: number; dataList: Channel[] }> {
-        return this.channelService.listChannels(Object.assign({}, params, {permission: 'edit'})).pipe(
+        return this.channelService.listChannels(
+            Object.assign({}, params, {
+                permission: 'edit',
+                state: 'active,inactive',
+            })
+        ).pipe(
             map(channelsList => ({total: channelsList.total, dataList: channelsList._embedded.channel}))
         );
     }
