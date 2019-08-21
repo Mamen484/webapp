@@ -4,9 +4,11 @@ import { ChannelPermissionService } from '../channel-permission.service';
 import { ChannelService, StoreService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { catchError, flatMap, map } from 'rxjs/operators';
-import { Channel, Store, StoreStatus, Country } from 'sfl-shared/entities';
+import { Channel, Country, Store, StoreStatus } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
+import { MatDialog } from '@angular/material';
+import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
 
 @Component({
     templateUrl: './create-account.component.html',
@@ -52,7 +54,8 @@ export class CreateAccountComponent implements OnInit {
 
     constructor(protected channelPermissionService: ChannelPermissionService,
                 protected channelService: ChannelService,
-                protected storeService: StoreService) {
+                protected storeService: StoreService,
+                protected matDialog: MatDialog) {
     }
 
     ngOnInit() {
@@ -79,8 +82,16 @@ export class CreateAccountComponent implements OnInit {
                 )),
                 flatMap(([store, channel]) => this.createChannelPermission(channel.id, store.id)),
             ).subscribe(() => {
+                this.matDialog.open(CredentialsDialogComponent, {
+                    data: {
+                        channelName: this.formGroup.get(['channelName']).value,
+                        login: this.formGroup.get(['login']).value,
+                        password: this.formGroup.get(['password']).value,
+                    }
+                });
             },
             error => {
+                console.log(error);
                 this.errorMessage = error.detail;
                 this.validationMessages = error.validationMessages;
                 Object.values(this.formGroup.controls).forEach(control => {

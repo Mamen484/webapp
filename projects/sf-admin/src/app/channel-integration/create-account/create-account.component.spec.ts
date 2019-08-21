@@ -6,9 +6,10 @@ import { ChannelPermissionService } from '../channel-permission.service';
 import { EMPTY, of, throwError } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
+import { MatAutocompleteModule, MatDialog, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CountryAutocompleteStubComponent} from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
+import { CountryAutocompleteStubComponent } from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
+import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
@@ -16,17 +17,21 @@ describe('CreateAccountComponent', () => {
     let storeService: jasmine.SpyObj<StoreService>;
     let channelPermissionService: jasmine.SpyObj<ChannelPermissionService>;
     let channelService: jasmine.SpyObj<ChannelService>;
+    let matDialog: jasmine.SpyObj<MatDialog>;
 
     beforeEach(async(() => {
         storeService = jasmine.createSpyObj('StoreService spy', ['createStore']);
         channelPermissionService = jasmine.createSpyObj('ChannelPermissionService spy', ['addChannelPermission']);
         channelService = jasmine.createSpyObj('ChannelService spy', ['createChannel', 'listChannels']);
+        matDialog = jasmine.createSpyObj('MatDialog spy', ['open']);
+
         TestBed.configureTestingModule({
             declarations: [CreateAccountComponent, CountryAutocompleteStubComponent],
             providers: [
                 {provide: StoreService, useValue: storeService},
                 {provide: ChannelPermissionService, useValue: channelPermissionService},
                 {provide: ChannelService, useValue: channelService},
+                {provide: MatDialog, useValue: matDialog},
             ],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [
@@ -35,7 +40,7 @@ describe('CreateAccountComponent', () => {
                 MatSelectModule,
                 MatFormFieldModule,
                 MatInputModule,
-                NoopAnimationsModule
+                NoopAnimationsModule,
             ],
         })
             .compileComponents();
@@ -114,6 +119,24 @@ describe('CreateAccountComponent', () => {
         component.save();
 
         expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, ['edit']);
+    });
+
+    it('should show a credentials dialogs if store, channel and permission created successfully', () => {
+        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+        channelService.createChannel.and.returnValue(of(<any>{id: 222}));
+        channelPermissionService.addChannelPermission.and.returnValue(of({}));
+        storeService.createStore.and.returnValue(of(<any>{id: 111}));
+
+        setFormValue();
+        component.save();
+
+        expect(matDialog.open).toHaveBeenCalledWith(CredentialsDialogComponent, {
+            data: {
+                channelName: 'A testing channel',
+                login: 'channel-owner',
+                password: 'qwerty123',
+            }
+        });
     });
 
     it('should clear the error message on Save', () => {

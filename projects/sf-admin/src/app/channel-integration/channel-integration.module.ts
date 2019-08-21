@@ -9,10 +9,11 @@ import { AdminSidebarModule } from '../admin-sidebar/admin-sidebar.module';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { AccountListPipe } from './channel-list/account-list.pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
+import { CredentialsDialogComponent } from './create-account/credentials-dialog/credentials-dialog.component';
 
 
 @NgModule({
-    declarations: [ChannelListComponent, CreateAccountComponent, AccountListPipe],
+    declarations: [ChannelListComponent, CreateAccountComponent, AccountListPipe, CredentialsDialogComponent],
     imports: [
         CommonModule,
         ChannelIntegrationRoutingModule,
@@ -21,7 +22,8 @@ import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocompl
         SfaSharedModule,
         AdminSidebarModule,
         SflCountryAutocompleteModule,
-    ]
+    ],
+    entryComponents: [CredentialsDialogComponent],
 })
 export class ChannelIntegrationModule {
 }

@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChannelListComponent } from './channel-list.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatTableModule } from '@angular/material';
+import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
+import { environment } from '../../../environments/environment';
 
 @Pipe({
     name: 'accountList',
@@ -15,12 +17,20 @@ class AccountListPipe implements PipeTransform {
 describe('ChannelListComponent', () => {
     let component: ChannelListComponent;
     let fixture: ComponentFixture<ChannelListComponent>;
+    let channelService: jasmine.SpyObj<ChannelService>;
+    let nativeWindow: jasmine.SpyObj<Window>;
 
     beforeEach(async(() => {
+        channelService = jasmine.createSpyObj('ChannelService spy', ['listChannels']);
+        nativeWindow = jasmine.createSpyObj('window spy', ['open']);
         TestBed.configureTestingModule({
             declarations: [ChannelListComponent, AccountListPipe],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [MatTableModule],
+            providers: [
+                {provide: ChannelService, useValue: channelService},
+                {provide: SflWindowRefService, useValue: {nativeWindow}},
+            ]
         })
             .compileComponents();
     }));
@@ -28,7 +38,6 @@ describe('ChannelListComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ChannelListComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
     });
 
     it('should create', () => {
@@ -36,6 +45,7 @@ describe('ChannelListComponent', () => {
     });
 
     it('should redirect to correct url on a channel click', () => {
-        expect(false).toBe(true);
+        component.goToChannel(441);
+        expect(nativeWindow.open).toHaveBeenCalledWith(`${environment.channelOperatorLink}/?channelId=441`);
     });
 });

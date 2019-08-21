@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, forwardRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { filter, map, startWith, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
@@ -34,7 +34,10 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     onChange: (value: string | string[]) => any;
     selectedCountries = [];
     protected validationError;
-    control = new FormControl('', () => this.validationError ? {serverError: true} : null);
+    control = new FormControl('', [
+        () => this.validationError ? {serverError: this.validationError} : null,
+        this.required ? Validators.required : () => null,
+    ]);
 
     constructor(@Inject(SFL_COUNTRIES_LIST_LINK) public countriesListLink,
                 protected countriesListService: FullCountriesListService,

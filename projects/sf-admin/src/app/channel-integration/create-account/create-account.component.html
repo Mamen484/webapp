@@ -59,8 +59,8 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="accent" fxFlex>
                         <mat-label>Type</mat-label>
-                        <mat-select formControlName="channelType" color="accent" required>
-                            <mat-option value="affiliation">Affiliate network</mat-option>
+                        <mat-select formControlName="channelType" required>
+                            <mat-option value="affiliate">Affiliate network</mat-option>
                             <mat-option value="ads">Product Listing Ads</mat-option>
                             <mat-option value="retargeting">Retargetting</mat-option>
                             <mat-option value="shopbot">Shopbot</mat-option>
@@ -70,7 +70,7 @@
                             {{formGroup.controls.channelType.getError('validationError')}}
                         </mat-error>
                     </mat-form-field>
-                    <sfl-country-autocomplete appearance="outline" formControlName="country"></sfl-country-autocomplete>
+                    <sfl-country-autocomplete appearance="outline" formControlName="country" required [serverError]="formGroup.controls.country.getError('validationError')"></sfl-country-autocomplete>
                 </div>
                 <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start baseline">
                     <mat-form-field appearance="outline" color="accent">

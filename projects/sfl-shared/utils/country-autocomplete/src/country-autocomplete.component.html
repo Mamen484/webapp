@@ -18,8 +18,11 @@
             <ng-container>{{country.name}}</ng-container>
         </mat-option>
     </mat-autocomplete>
-    <mat-error *ngIf="control.hasError('serverError')" i18n>
+    <mat-error *ngIf="control.hasError('required')" i18n>
         Country name is missing. Please, choose one from a list.
+    </mat-error>
+    <mat-error *ngIf="control.hasError('serverError')" i18n>
+        {{ control.getError('serverError') }}
     </mat-error>
     <mat-hint *ngIf="hintText">{{hintText}}</mat-hint>
 </mat-form-field>

@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChannelSettingsComponent } from './channel-settings.component';
 import { ChannelService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EMPTY } from 'rxjs';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -16,6 +18,7 @@ describe('ChannelSettingsComponent', () => {
             declarations: [ChannelSettingsComponent],
             providers: [
                 {provide: ChannelService, useValue: channelService},
+                {provide: ActivatedRoute, useValue: {data: EMPTY}},
             ]
         })
             .compileComponents();

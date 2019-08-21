@@ -30,6 +30,4 @@ export class SettingsComponent implements OnInit {
             country: this.channelSettingsGroup.get('country').value.map(code => ({code})),
         }, this.channelId).subscribe();
     }
-
-
 }
