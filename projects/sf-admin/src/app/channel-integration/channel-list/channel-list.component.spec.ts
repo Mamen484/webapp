@@ -5,6 +5,7 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatTableModule } from '@angular/material';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
+import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 
 @Pipe({
     name: 'accountList',
@@ -48,4 +49,10 @@ describe('ChannelListComponent', () => {
         component.goToChannel(441);
         expect(nativeWindow.open).toHaveBeenCalledWith(`${environment.channelOperatorLink}/?channelId=441`);
     });
+
+    runTableOperationSpecs(() => ({
+        fetchCollectionSpy: channelService.listChannels,
+        fixture,
+        collectionResponse: {_embedded: {channel: []}}
+    }));
 });

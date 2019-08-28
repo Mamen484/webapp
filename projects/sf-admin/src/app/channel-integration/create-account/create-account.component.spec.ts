@@ -53,143 +53,147 @@ describe('CreateAccountComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should NOT create an account on a form save if specified channel does exist', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 1}));
-        storeService.createStore.and.returnValue(EMPTY);
+    describe('save button click', () => {
+        it('should NOT create an account if specified channel does exist', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 1}));
+            storeService.createStore.and.returnValue(EMPTY);
 
-        setFormValue();
-        component.save();
+            setFormValue();
+            component.save();
 
-        expect(storeService.createStore).not.toHaveBeenCalled();
+            expect(storeService.createStore).not.toHaveBeenCalled();
 
-    });
+        });
 
-    it('should create an account on a form save if specified channel does not exist', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        storeService.createStore.and.returnValue(EMPTY);
+        it('should create an account if specified channel does not exist', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            storeService.createStore.and.returnValue(EMPTY);
 
-        setFormValue();
-        component.save();
+            setFormValue();
+            component.save();
 
-        expect(storeService.createStore).toHaveBeenCalledWith({
-            owner: {
-                email: 'channel-owner@gmail.com',
-                login: 'channel-owner',
-                password: 'qwerty123',
-                payment: 'other',
-            },
-            country: 'es',
-            status: 'demo',
-            feed: {
-                url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
-                source: 'xml',
-            },
+            expect(storeService.createStore).toHaveBeenCalledWith({
+                owner: {
+                    email: 'channel-owner@gmail.com',
+                    login: 'channel-owner',
+                    password: 'qwerty123',
+                    payment: 'other',
+                },
+                country: 'es',
+                status: 'demo',
+                feed: {
+                    url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
+                    source: 'xml',
+                },
+            });
+        });
+
+        it('should create a channel', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(EMPTY);
+            storeService.createStore.and.returnValue(<any>of({id: 789}));
+
+            setFormValue();
+            component.save();
+            expect(channelService.createChannel).toHaveBeenCalledWith({
+                name: 'A testing channel',
+                type: 'ads',
+                countries: ['es'],
+                feedType: 'xml',
+                feed: {
+                    head: 'Some text 1',
+                    productTag: 'a',
+                    separator: '',
+                    enclosure: '',
+                    headerFirst: '',
+                }
+            });
+        });
+
+        it('should create a channel permission', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(of(<any>{id: 222}));
+            channelPermissionService.addChannelPermission.and.returnValue(EMPTY);
+            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+
+            setFormValue();
+            component.save();
+
+            expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, ['edit']);
+        });
+
+        it('should show a credentials dialogs if store, channel and permission created successfully', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(of(<any>{id: 222}));
+            channelPermissionService.addChannelPermission.and.returnValue(of({}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+
+            setFormValue();
+            component.save();
+
+            expect(matDialog.open).toHaveBeenCalledWith(CredentialsDialogComponent, {
+                data: {
+                    channelName: 'A testing channel',
+                    login: 'channel-owner',
+                    password: 'qwerty123',
+                }
+            });
+        });
+
+        it('should clear the error message', () => {
+            component.errorMessage = 'some error message';
+            channelService.listChannels.and.returnValue(EMPTY);
+            component.save();
+            expect(component.errorMessage).not.toBeDefined();
+        });
+
+        it('should clear validationMessages', () => {
+            component.validationMessages = {owner: {login: {alreadyExists: 'Specified login already exists'}}};
+            channelService.listChannels.and.returnValue(EMPTY);
+            component.save();
+            expect(component.validationMessages).toEqual({});
         });
     });
 
-    it('should create a channel on a form save', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        channelService.createChannel.and.returnValue(EMPTY);
-        storeService.createStore.and.returnValue(<any>of({id: 789}));
+    describe('server error message', () => {
+        it('should show if a channel exists', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 1}));
+            storeService.createStore.and.returnValue(EMPTY);
 
-        setFormValue();
-        component.save();
-        expect(channelService.createChannel).toHaveBeenCalledWith({
-            name: 'A testing channel',
-            type: 'ads',
-            countries: ['es'],
-            feedType: 'xml',
-            feed: {
-                head: 'Some text 1',
-                productTag: 'a',
-                separator: '',
-                enclosure: '',
-                headerFirst: '',
-            }
+            setFormValue();
+            component.save();
+            expect(component.errorMessage).toBe('Channel error: channel already exists');
         });
-    });
 
-    it('should create a channel permission on a form save', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        channelService.createChannel.and.returnValue(of(<any>{id: 222}));
-        channelPermissionService.addChannelPermission.and.returnValue(EMPTY);
-        storeService.createStore.and.returnValue(of(<any>{id: 111}));
+        it('should show if a create store returns an error', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            storeService.createStore.and.returnValue(throwError({error: {detail: 'some error message'}}));
 
-        setFormValue();
-        component.save();
-
-        expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, ['edit']);
-    });
-
-    it('should show a credentials dialogs if store, channel and permission created successfully', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        channelService.createChannel.and.returnValue(of(<any>{id: 222}));
-        channelPermissionService.addChannelPermission.and.returnValue(of({}));
-        storeService.createStore.and.returnValue(of(<any>{id: 111}));
-
-        setFormValue();
-        component.save();
-
-        expect(matDialog.open).toHaveBeenCalledWith(CredentialsDialogComponent, {
-            data: {
-                channelName: 'A testing channel',
-                login: 'channel-owner',
-                password: 'qwerty123',
-            }
+            setFormValue();
+            component.save();
+            expect(component.errorMessage).toBe('Account error: some error message');
         });
-    });
 
-    it('should clear the error message on Save', () => {
-        component.errorMessage = 'some error message';
-        channelService.listChannels.and.returnValue(EMPTY);
-        component.save();
-        expect(component.errorMessage).not.toBeDefined();
-    });
+        it('should show if a create channel returns an error', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(throwError({error: {detail: 'some error message'}}));
+            storeService.createStore.and.returnValue(<any>of({id: 789}));
 
-    it('should clear validationMessages on Save', () => {
-        component.validationMessages = {owner: {login: {alreadyExists: 'Specified login already exists'}}};
-        channelService.listChannels.and.returnValue(EMPTY);
-        component.save();
-        expect(component.validationMessages).toEqual({});
-    });
+            setFormValue();
+            component.save();
+            expect(component.errorMessage).toBe('Channel error: some error message');
+        });
 
-    it('should show an error message if a channel exists', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 1}));
-        storeService.createStore.and.returnValue(EMPTY);
+        it('should show if a create channel permission returns an error', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(of(<any>{id: 222}));
+            channelPermissionService.addChannelPermission.and.returnValue(throwError({error: {detail: 'some error message'}}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111}));
 
-        setFormValue();
-        component.save();
-        expect(component.errorMessage).toBe('Channel error: channel already exists');
-    });
-
-    it('should show an error message if a create store returns an error', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        storeService.createStore.and.returnValue(throwError({error: {detail: 'some error message'}}));
-
-        setFormValue();
-        component.save();
-        expect(component.errorMessage).toBe('Account error: some error message');
-    });
-
-    it('should show an error message if a create channel returns an error', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        channelService.createChannel.and.returnValue(throwError({error: {detail: 'some error message'}}));
-        storeService.createStore.and.returnValue(<any>of({id: 789}));
-
-        setFormValue();
-        component.save();
-        expect(component.errorMessage).toBe('Channel error: some error message');
-    });
-
-    it('should show an error message if a create channel permission returns an error', () => {
-        channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-        channelService.createChannel.and.returnValue(of(<any>{id: 222}));
-        channelPermissionService.addChannelPermission.and.returnValue(throwError({error: {detail: 'some error message'}}));
-        storeService.createStore.and.returnValue(of(<any>{id: 111}));
-
-        setFormValue();
-        component.save();
-        expect(component.errorMessage).toBe('Association error: some error message');
+            setFormValue();
+            component.save();
+            expect(component.errorMessage).toBe('Association error: some error message');
+        });
     });
 
     describe('server validation', () => {

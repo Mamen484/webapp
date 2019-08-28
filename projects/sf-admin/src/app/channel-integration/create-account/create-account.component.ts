@@ -91,7 +91,6 @@ export class CreateAccountComponent implements OnInit {
                 });
             },
             error => {
-                console.log(error);
                 this.errorMessage = error.detail;
                 this.validationMessages = error.validationMessages;
                 Object.values(this.formGroup.controls).forEach(control => {
