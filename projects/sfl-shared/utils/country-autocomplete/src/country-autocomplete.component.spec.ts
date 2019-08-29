@@ -35,7 +35,12 @@ describe('CountryAutocompleteComponent', () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(CountryAutocompleteComponent);
             component = fixture.componentInstance;
-            component.control = <any>{valueChanges, setValue: jasmine.createSpy(), hasError: () => jasmine.createSpy()};
+            component.control = <any>{
+                valueChanges,
+                setValue: jasmine.createSpy(),
+                hasError: () => jasmine.createSpy(),
+                getError: jasmine.createSpy()
+            };
             fixture.detectChanges();
         });
 

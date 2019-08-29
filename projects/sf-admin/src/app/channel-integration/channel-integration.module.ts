@@ -10,6 +10,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 import { AccountListPipe } from './channel-list/account-list.pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { CredentialsDialogComponent } from './create-account/credentials-dialog/credentials-dialog.component';
+import { UnsavedDataModule } from 'sfl-shared/utils/unsved-data-guard';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { CredentialsDialogComponent } from './create-account/credentials-dialog/
         SfaSharedModule,
         AdminSidebarModule,
         SflCountryAutocompleteModule,
+        UnsavedDataModule,
     ],
     entryComponents: [CredentialsDialogComponent],
 })

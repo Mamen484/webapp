@@ -4,17 +4,19 @@ import { ChannelPermissionService } from '../channel-permission.service';
 import { ChannelService, StoreService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 import { catchError, flatMap, map } from 'rxjs/operators';
-import { Channel, Country, Store, StoreStatus } from 'sfl-shared/entities';
+import { Channel, Store, StoreStatus } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
 import { MatDialog } from '@angular/material';
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
+import { UnsavedDataInterface } from 'sfl-shared/utils/unsved-data-guard';
+import { UnsavedDataDialogComponent } from 'sfl-shared/utils/unsved-data-guard';
 
 @Component({
     templateUrl: './create-account.component.html',
     styleUrls: ['./create-account.component.scss']
 })
-export class CreateAccountComponent implements OnInit {
+export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
 
     pathToFields = {
         login: ['owner', 'login'],
@@ -51,6 +53,7 @@ export class CreateAccountComponent implements OnInit {
 
     errorMessage: string;
     validationMessages = <{ [key: string]: any }>{};
+    submitted = false;
 
     constructor(protected channelPermissionService: ChannelPermissionService,
                 protected channelService: ChannelService,
@@ -62,9 +65,14 @@ export class CreateAccountComponent implements OnInit {
         this.clearValidationMessages();
     }
 
-    displayFn(country: Country) {
-        return country.name;
+    hasModifications() {
+        return this.formGroup.dirty && !this.submitted;
     }
+
+    showCloseDialog() {
+        return this.matDialog.open(UnsavedDataDialogComponent).afterClosed();
+    }
+
 
     save() {
         this.errorMessage = undefined;
@@ -82,6 +90,7 @@ export class CreateAccountComponent implements OnInit {
                 )),
                 flatMap(([store, channel]) => this.createChannelPermission(channel.id, store.id)),
             ).subscribe(() => {
+                this.submitted = true;
                 this.matDialog.open(CredentialsDialogComponent, {
                     data: {
                         channelName: this.formGroup.get(['channelName']).value,

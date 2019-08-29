@@ -10,6 +10,8 @@ import { MatAutocompleteModule, MatDialog, MatFormFieldModule, MatInputModule, M
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { CountryAutocompleteStubComponent } from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
+import { By } from '@angular/platform-browser';
+import { UnsavedDataDialogComponent } from 'sfl-shared/utils/unsved-data-guard';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
@@ -228,6 +230,7 @@ describe('CreateAccountComponent', () => {
             }));
 
             setFormValue();
+            fixture.detectChanges();
             component.save();
             expect(component.formGroup.controls.channelName.getError('validationError')).toBe('some error message');
         });
@@ -261,6 +264,44 @@ describe('CreateAccountComponent', () => {
             expect(component.formGroup.controls.separator.getError('validationError')).toBe('some error message');
             expect(component.formGroup.controls.enclosure.getError('validationError')).toBe('some error message');
         });
+    });
+
+    describe('unsaved data', () => {
+        it('should return false on hasModifications() call if form was not touched', () => {
+            expect(component.hasModifications()).toBe(false);
+        });
+
+        it('should return true on hasModifications() call if any form field has value', () => {
+            triggerInput();
+            expect(component.hasModifications()).toBe(true);
+        });
+
+        it('should return false on hasModifications() call if any form field has value, but the form was successfully saved', () => {
+            channelService.listChannels.and.returnValue(of(<any>{total: 0}));
+            channelService.createChannel.and.returnValue(of(<any>{id: 222}));
+            channelPermissionService.addChannelPermission.and.returnValue(of({}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+            setFormValue();
+            triggerInput();
+            expect(component.hasModifications()).toBe(true);
+            component.save();
+            fixture.detectChanges();
+
+            expect(component.hasModifications()).toBe(false);
+        });
+
+        it('should show a dialog on showCloseDialog()', () => {
+            matDialog.open.and.returnValue(<any>{afterClosed: () => {}});
+            component.showCloseDialog();
+            expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
+        });
+
+        function triggerInput() {
+            const input = fixture.debugElement.query(By.css('input'));
+            input.nativeElement.value = 'test text';
+            input.triggerEventHandler('input', {target: input.nativeElement});
+            fixture.detectChanges();
+        }
     });
 
 
