@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="autotag-mapping-header"
+<div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="mapping-header"
      [fxHide]="autotagList?.length > loadedFields && !loadingPreviousMapping">
     <div i18n fxFlex class="mat-body-1 card-label">Fill in the autotags</div>
     <button mat-stroked-button color="accent" class="sf-button-chip-alike blue" (click)="usePreviousMapping()"

@@ -1,4 +1,7 @@
 @import '../../../../sass/variables';
+@import '../mapping-common.mixin';
+
+@include mappingCommon();
 
 mat-form-field {
   width: 100%;
@@ -15,12 +18,4 @@ button.save-matching {
 mat-card {
   padding: 0;
   margin-top: 20px;
-}
-
-.category-mapping-header {
-  height: 36px;
-}
-
-.card-label {
-  color: $black-87-opacity;
 }

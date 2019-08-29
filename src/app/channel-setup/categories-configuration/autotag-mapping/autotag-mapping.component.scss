@@ -1,4 +1,7 @@
 @import '../../../../sass/variables';
+@import '../mapping-common.mixin';
+
+@include mappingCommon();
 
 sf-autotag-input, sf-autotag-dropdown {
   width: 100%;
@@ -13,10 +16,3 @@ mat-card {
   margin-top: 20px;
 }
 
-.autotag-mapping-header {
-  height: 36px;
-}
-
-.card-label {
-  color: $black-87-opacity;
-}
