@@ -110,6 +110,7 @@ describe('AutotagMappingComponent', () => {
     });
 
     it('should display only required attributes without a default value', () => {
+        component.ngOnChanges({});
         autotags$.next(<any>{
             _embedded: {
                 autotag: [
@@ -123,16 +124,15 @@ describe('AutotagMappingComponent', () => {
                 ]
             }
         });
-
         expect(component.autotagList.length).toBe(2);
     });
 
     it('should empty autotags list and fetch a new autotags list when the catalogCategoryId input property changes it`s value', () => {
-        expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(1);
+        expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(0);
         component.autotagList = <any>[{_embedded: {attribute: {}}}];
         component.ngOnChanges({});
         expect(component.autotagList.length).toBe(0);
-        expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(2);
+        expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(1);
     });
 
     it('should set hasCachedMapping to true when the autotag mapping cache saved', () => {

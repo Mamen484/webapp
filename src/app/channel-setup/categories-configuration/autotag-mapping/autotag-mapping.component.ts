@@ -42,7 +42,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.fetchAutotags();
         this.categoryMappingService.getState().pipe(filter(category => category.id !== this.channelCategoryId))
             .subscribe((category: Category) => {
                 this.channelCategoryId = category.id;
