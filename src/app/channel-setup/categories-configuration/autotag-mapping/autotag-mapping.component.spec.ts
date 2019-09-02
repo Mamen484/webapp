@@ -13,6 +13,7 @@ import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/setti
 import { MappingCacheService } from '../mapping-cache.service';
 import { autotagsMock } from './autotags-mock';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChannelService } from '../../../core/services/channel.service';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -21,12 +22,14 @@ describe('AutotagMappingComponent', () => {
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
     let autotags$: Subject<PagedResponse<{ autotag: Autotag[] }>>;
     let mappingCacheService: jasmine.SpyObj<MappingCacheService>;
+    let channelService: jasmine.SpyObj<ChannelService>;
 
     beforeEach(async(() => {
         feedService = jasmine.createSpyObj('FeedService spy', ['fetchAutotagByCategory', 'matchAutotagByCategory']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         autotags$ = new Subject();
         mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getAutotagMapping', 'hasAutotagMapping', 'addAutotagMapping']);
+        channelService = jasmine.createSpyObj('ChannelService spy', ['fetchChannelConstraintCollection']);
 
         TestBed.configureTestingModule({
             declarations: [AutotagMappingComponent, AutotagInputMockComponent, AutotagDropdownMockComponent],
@@ -34,6 +37,7 @@ describe('AutotagMappingComponent', () => {
                 {provide: FeedService, useValue: feedService},
                 {provide: MatSnackBar, useValue: matSnackBar},
                 {provide: MappingCacheService, useValue: mappingCacheService},
+                {provide: ChannelService, useValue: channelService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [FormsModule, FlexLayoutModule],
@@ -56,7 +60,6 @@ describe('AutotagMappingComponent', () => {
         component.autotagList = <Autotag[]>[{
             _embedded: {attribute: {constraintGroupId: null}}
         }];
-        component.loadedFields = 1;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(1);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(0);
@@ -66,7 +69,6 @@ describe('AutotagMappingComponent', () => {
         component.autotagList = <Autotag[]>[{
             _embedded: {attribute: {constraintGroupId: 1}}
         }];
-        component.loadedFields = 1;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(0);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(1);
@@ -80,7 +82,6 @@ describe('AutotagMappingComponent', () => {
             {_embedded: {attribute: {constraintGroupId: 2}}},
             {_embedded: {attribute: {constraintGroupId: 3}}},
         ];
-        component.loadedFields = 5;
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-input').length).toBe(2);
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(3);
@@ -102,7 +103,6 @@ describe('AutotagMappingComponent', () => {
             {_embedded: {attribute: {constraintGroupId: 2}}},
             {_embedded: {attribute: {constraintGroupId: 3}}},
         ];
-        component.loadedFields = 5;
         feedService.matchAutotagByCategory.and.returnValue((EMPTY));
         component.form = <any>{controls: {}, invalid: false};
         component.saveMatching();
@@ -125,33 +125,6 @@ describe('AutotagMappingComponent', () => {
         });
 
         expect(component.autotagList.length).toBe(2);
-    });
-
-    it('should emit autotagLoaded event when all autotag fields loaded', () => {
-        let spy = spyOn(component.autotagsLoaded, 'emit');
-        autotags$.next(<any>{
-            _embedded: {
-                autotag: [
-                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: 1, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: true}}},
-                ]
-            },
-        });
-
-        component.markLoadingProgress();
-        expect(spy).not.toHaveBeenCalled();
-        component.markLoadingProgress();
-        expect(spy).not.toHaveBeenCalled();
-        component.markLoadingProgress();
-        expect(spy).not.toHaveBeenCalled();
-        component.markLoadingProgress();
-        expect(spy).not.toHaveBeenCalled();
-
-        component.markLoadingProgress();
-        expect(spy).toHaveBeenCalled();
     });
 
     it('should empty autotags list and fetch a new autotags list when the catalogCategoryId input property changes it`s value', () => {
@@ -183,6 +156,20 @@ describe('AutotagMappingComponent', () => {
         component.feedId = 118;
         component.saveMatching();
         expect(mappingCacheService.addAutotagMapping).toHaveBeenCalledWith(45, 90, 118);
+    });
+
+    it('should show a loading spinner  when USE PREVIOUS button clicked', () => {
+        mappingCacheService.getAutotagMapping.and.returnValue(EMPTY);
+        component.usePreviousMapping();
+        expect(component.loadingPreviousMapping)
+            .toBe(true);
+    });
+
+    it('should hide a loading spinner when USE PREVIOUS button clicked and the result is loaded', () => {
+        mappingCacheService.getAutotagMapping.and.returnValue(of([]));
+        component.usePreviousMapping();
+        expect(component.loadingPreviousMapping)
+            .toBe(false);
     });
 
     it('should reset autotag values when USE previous button clicked', () => {
@@ -232,33 +219,6 @@ describe('AutotagMappingComponent', () => {
         fixture.detectChanges();
         expect(fixture.debugElement.nativeElement.textContent).toBe('');
     });
-
-    it('should hide all content when autotagList has more items then returned loaded event', () => {
-        component.autotagList = <any>[
-            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
-            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
-            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
-        ];
-        component.loadedFields = 2;
-        fixture.detectChanges();
-        const elem = fixture.debugElement.nativeElement;
-        expect((<HTMLDivElement>elem.querySelector('.autotag-mapping-header')).style.display).toBe('none');
-        expect((<HTMLDivElement>elem.querySelector('.autotag-mapping-header + div')).style.display).toBe('none');
-    });
-
-
-    it('should show only the header when a previous mapping is being loaded ', () => {
-        component.autotagList = <any>[
-            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
-            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
-            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
-        ];
-        component.loadedFields = 2;
-        component.loadingPreviousMapping = true;
-        fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.querySelector('.autotag-mapping-header')).toBeTruthy();
-    });
-
 });
 
 export class AutotagControlMockComponent implements ControlValueAccessor {

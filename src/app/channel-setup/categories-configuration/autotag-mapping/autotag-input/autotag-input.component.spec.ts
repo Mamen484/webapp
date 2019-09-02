@@ -43,7 +43,6 @@ describe('AutotagInputComponent', () => {
                 ]
             }
         }));
-        component.autotag = <any>{};
         component.ngOnInit();
         component.value = 'str';
         component.createSuggestions();
@@ -58,34 +57,23 @@ describe('AutotagInputComponent', () => {
                 ]
             }
         }));
-        component.autotag = <any>{};
         component.ngOnInit();
         component.value = '';
         component.createSuggestions();
         expect(component.suggestions).toEqual(['{someString}']);
     });
 
-    it('should save autotag value on setAutotagValue()', () => {
+    it('should save autotag value on setAutotagValue()', async () => {
         feedService.fetchMappingCollection.and.returnValue(EMPTY);
-        component.autotag = <any>{};
+        const changed = component.changed.asObservable().take(1).toPromise();
         component.setAutotagValue('{someName}');
-        expect(component.autotag.value).toBe('{someName}');
+        expect(await changed).toBe('{someName}');
     });
 
-    it('should NOT remove square brackets from autotag value on setAutotagValue()', () => {
+    it('should NOT remove square brackets from autotag value on setAutotagValue()', async () => {
         feedService.fetchMappingCollection.and.returnValue(EMPTY);
-        component.autotag = <any>{};
+        const changed = component.changed.asObservable().take(1).toPromise();
         component.setAutotagValue('[someName]');
-        expect(component.autotag.value).toBe('[someName]');
-    });
-
-    it('should emit loaded event when mapping collection is fetched', () => {
-        feedService.fetchMappingCollection.and.returnValue(of({
-            count: 0, _embedded: {mapping: []}
-        }));
-        component.autotag = <any>{};
-        spyOn(component.loaded, 'emit');
-        component.ngOnInit();
-        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
+        expect(await changed).toBe('[someName]');
     });
 });

@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-    <mat-label>{{autotag._embedded.attribute.name}}</mat-label>
+    <mat-label>{{label}}</mat-label>
     <input matInput [(ngModel)]="value" (keyup)="createSuggestions(); watchDeletion()" [matAutocomplete]="auto" required>
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setAutotagValue($event.option.value)">
         <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion">{{suggestion}}</mat-option>

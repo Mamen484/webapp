@@ -10,6 +10,7 @@ import { CategoryMappingService } from '../category-mapping/category-mapping.ser
 import { MappingCacheService } from '../mapping-cache.service';
 import { Category } from '../../../core/entities/category';
 import { filter } from 'rxjs/operators';
+import { ChannelService } from '../../../core/services/channel.service';
 
 @Component({
     selector: 'sf-autotag-mapping',
@@ -30,14 +31,14 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     autotagList: Autotag[];
     hasCachedMapping = false;
-    loadedFields = 0;
     loadingPreviousMapping = false;
     subscription: Subscription;
 
     constructor(protected feedService: FeedService,
                 protected snackbar: MatSnackBar,
                 protected categoryMappingService: CategoryMappingService,
-                protected mappingCacheService: MappingCacheService) {
+                protected mappingCacheService: MappingCacheService,
+                protected channelService: ChannelService) {
     }
 
     ngOnInit() {
@@ -51,7 +52,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges): void {
         this.autotagList = [];
-        this.loadedFields = 0;
         this.loadingPreviousMapping = false;
         this.hasCachedMapping = this.mappingCacheService.hasAutotagMapping(this.channelCategoryId);
         this.fetchAutotags();
@@ -83,19 +83,13 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
             });
     }
 
-    markLoadingProgress() {
-        this.loadedFields += 1;
-        if (this.loadedFields === this.autotagList.length) {
-            this.loadingPreviousMapping = false;
-            this.autotagsLoaded.emit();
-        }
-    }
-
     usePreviousMapping() {
         this.loadingPreviousMapping = true;
-        this.loadedFields = 0;
         this.mappingCacheService.getAutotagMapping(this.channelCategoryId)
-            .subscribe(autotag => this.autotagList = this.filterMandatory(autotag));
+            .subscribe(autotag => {
+                this.autotagList = this.filterMandatory(autotag);
+                this.loadingPreviousMapping = false;
+            });
     }
 
     protected fetchAutotags() {
@@ -104,15 +98,11 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
         }
         this.subscription = this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId).subscribe(response => {
             this.autotagList = this.filterMandatory(response._embedded.autotag);
-            if (!this.autotagList.length) {
-                // no autotag to emit a (loaded) event, so notify that all autotags are loaded
-                this.autotagsLoaded.emit();
-            }
+            this.autotagsLoaded.emit();
         });
     }
 
     protected filterMandatory(autotag: Autotag[]) {
         return autotag.filter(({_embedded}) => _embedded.attribute.isRequired && !_embedded.attribute.defaultMapping);
     }
-
 }

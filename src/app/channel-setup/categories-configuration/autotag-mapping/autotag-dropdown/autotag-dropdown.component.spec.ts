@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { AutotagDropdownComponent } from './autotag-dropdown.component';
 import { ChannelService } from '../../../../core/services/channel.service';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
+import { MatAutocompleteModule } from '@angular/material';
 
 describe('AutotagDropdownComponent', () => {
     let component: AutotagDropdownComponent;
@@ -18,6 +19,7 @@ describe('AutotagDropdownComponent', () => {
                 {provide: ChannelService, useValue: channelService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
+            imports: [MatAutocompleteModule],
         })
             .compileComponents();
     }));
@@ -31,8 +33,8 @@ describe('AutotagDropdownComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should initialize options on init', () => {
-        component.autotag = <any>{_embedded: {attribute: {}}};
+    it('should load options when user types text', fakeAsync(() => {
+        component.attribute = <any>{};
         channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
             _embedded: {
                 constraint: [
@@ -42,34 +44,41 @@ describe('AutotagDropdownComponent', () => {
             }
         }));
         fixture.detectChanges();
+        component.control.setValue('');
+        tick(300);
         expect(component.options).toEqual(['label1', 'label2']);
-    });
+    }));
 
-    it('should emit a loaded event when both constraint collection and sf-autotag-input loading finishes', () => {
-        component.autotag = <any>{_embedded: {attribute: {}}};
+    it('should load options on component init', fakeAsync(() => {
+        component.attribute = <any>{taxonomyId: 22, constraintGroupId: 33};
         channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
-            _embedded: {constraint: []}
+            _embedded: {
+                constraint: [
+                    {label: 'label1'},
+                    {label: 'label2'}
+                ]
+            }
         }));
-        spyOn(component.loaded, 'emit');
-        component.inputLoaded = true;
         fixture.detectChanges();
-        expect(component.loaded.emit).toHaveBeenCalledTimes(1);
-    });
+        tick(300);
+        expect(component.options).toEqual(['label1', 'label2']);
+        expect(channelService.fetchChannelConstraintCollection).toHaveBeenCalledWith(22, 33, '');
+    }));
 
-    it('should NOT emit a loaded event if sf-autotag-input loading is not finished', () => {
-        component.autotag = <any>{_embedded: {attribute: {}}};
+    it('should fetch appropriate resource when user types text', fakeAsync(() => {
+        component.attribute = <any>{taxonomyId: 22, constraintGroupId: 33};
         channelService.fetchChannelConstraintCollection.and.returnValue(<any>of({
-            _embedded: {constraint: []}
+            _embedded: {
+                constraint: [
+                    {label: 'label1'},
+                    {label: 'label2'}
+                ]
+            }
         }));
-        spyOn(component.loaded, 'emit');
         fixture.detectChanges();
-        expect(component.loaded.emit).not.toHaveBeenCalled();
-    });
+        component.control.setValue('fda');
+        tick(300);
+        expect(channelService.fetchChannelConstraintCollection).toHaveBeenCalledWith(22, 33, 'fda');
+    }));
 
-    it('should NOT emit a loaded event if constraint collection loading is not finished', () => {
-        component.inputLoaded = true;
-        spyOn(component.loaded, 'emit');
-        component.markAsLoaded();
-        expect(component.loaded.emit).not.toHaveBeenCalled();
-    });
 });

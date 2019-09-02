@@ -28,4 +28,11 @@ describe('ChannelService', () => {
 
         expect(req.request.method).toBe('GET');
     });
+
+    it('should call a proper endpoint on fetchChannelConstraintCollection call when results are filtered', () => {
+        service.fetchChannelConstraintCollection(11, 14, 'fba').subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14&label=fba`);
+
+        expect(req.request.method).toBe('GET');
+    });
 });

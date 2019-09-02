@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Autotag } from '../../../autotag';
 import { FeedService } from '../../../../core/services/feed.service';
 import { MappingCollection } from '../../../mapping-collection';
 import {
@@ -34,9 +33,9 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
 
     @ViewChild(NgModel, {static: false}) ngModel: NgControl;
 
-    @Input() autotag: Autotag;
-    @Output() loaded = new EventEmitter();
-    value = '';
+    @Input() value: string;
+    @Input() label: string;
+    @Output() changed = new EventEmitter<string>();
     mappingCollection: MappingCollection;
     suggestions: string[];
 
@@ -46,12 +45,8 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     }
 
     ngOnInit() {
-        this.value = this.autotag.value;
         this.feedService.fetchMappingCollection()
-            .subscribe(mappingCollection => {
-                this.mappingCollection = mappingCollection;
-                this.loaded.emit();
-            });
+            .subscribe(mappingCollection => this.mappingCollection = mappingCollection);
     }
 
     createSuggestions() {
@@ -68,7 +63,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     }
 
     setAutotagValue(value: string) {
-        this.autotag.value = value;
+        this.changed.emit(value);
     }
 
     registerOnChange(fn: any): void {
@@ -87,7 +82,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
 
     watchDeletion() {
         if (!this.value) {
-            this.autotag.value = '';
+            this.changed.emit('');
         }
     }
 

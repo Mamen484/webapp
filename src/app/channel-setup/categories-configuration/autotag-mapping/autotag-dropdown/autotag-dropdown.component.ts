@@ -1,18 +1,20 @@
 import { Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ChannelService } from '../../../../core/services/channel.service';
-import { Autotag } from '../../../autotag';
 import {
     AbstractControl,
     ControlValueAccessor,
+    FormControl,
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR,
-    NgControl,
-    NgModel,
     ValidationErrors,
     Validator
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AutotagInputComponent } from '../autotag-input/autotag-input.component';
+import { ChannelAttribute } from '../../../channel-attribute';
+import { debounceTime, startWith, switchMap } from 'rxjs/operators';
+
+const SEARCH_DEBOUNCE = 200;
 
 @Component({
     selector: 'sf-autotag-dropdown',
@@ -33,39 +35,30 @@ import { AutotagInputComponent } from '../autotag-input/autotag-input.component'
 })
 export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
-    @ViewChild(NgModel, {static: false}) ngModel: NgControl;
     @ViewChild(AutotagInputComponent, {static: false}) input: AutotagInputComponent;
 
-    @Input() autotag: Autotag;
-    @Output() loaded = new EventEmitter();
-    options: string[];
+    @Input() value: string;
+    @Input() attribute: ChannelAttribute;
+
+    @Output() changed = new EventEmitter<string>();
     onChange: (value: string) => any;
     subscription: Subscription;
 
-    inputLoaded = false;
-    constraintLoaded = false;
+    options: string[];
+    control = new FormControl();
 
     constructor(protected channelService: ChannelService) {
     }
 
     ngOnInit() {
-        const attribute = this.autotag._embedded.attribute;
-        this.subscription = this.channelService.fetchChannelConstraintCollection(attribute.taxonomyId, attribute.constraintGroupId)
-            .subscribe(response => {
-                this.options = response._embedded.constraint.map(constraint => constraint.label);
-                this.constraintLoaded = true;
-                this.markAsLoaded();
-            })
-    }
-
-    markAsLoaded() {
-        if (this.inputLoaded && this.constraintLoaded) {
-            this.loaded.emit();
-        }
-    }
-
-    notifyChange() {
-        this.input.value = this.autotag.value;
+        this.control.valueChanges.pipe(
+            debounceTime(SEARCH_DEBOUNCE),
+            startWith(''),
+            switchMap(name =>
+                this.channelService.fetchChannelConstraintCollection(this.attribute.taxonomyId, this.attribute.constraintGroupId, name)
+            ),
+        )
+            .subscribe(response => this.options = response._embedded.constraint.map(constraint => constraint.label));
     }
 
     registerOnChange(fn: any): void {
@@ -79,7 +72,7 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
     }
 
     validate(control: AbstractControl): ValidationErrors | null {
-        return this.ngModel.errors;
+        return this.control.errors;
     }
 
     ngOnDestroy() {

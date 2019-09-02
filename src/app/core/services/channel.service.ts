@@ -40,10 +40,14 @@ export class ChannelService {
         return this.httpClient.get(`${environment.API_URL}/channel/${channelId}`) as Observable<Channel>;
     }
 
-    fetchChannelConstraintCollection(taxonomyId: number, groupId: number) {
+    fetchChannelConstraintCollection(taxonomyId: number, groupId: number, label?: string) {
+        let params = new HttpParams().set('groupId', groupId.toString());
+        if (label) {
+            params = params.set('label', label);
+        }
         return this.httpClient.get(
             `${environment.API_URL}/channel/taxonomy/${taxonomyId}/constraint`,
-            {params: new HttpParams().set('groupId', groupId.toString())}
+            {params}
         ) as Observable<PagedResponse<{ constraint: ChannelConstraint[] }>>;
     }
 }
