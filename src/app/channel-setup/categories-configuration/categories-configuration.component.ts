@@ -70,7 +70,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return Boolean(this.categoryMapping.searchChannelCategoryControl.value);
+        return this.categoryMapping.searchChannelCategoryControl.dirty;
     }
 
     ngOnInit() {

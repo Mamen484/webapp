@@ -51,6 +51,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     chooseCategory(category: Category) {
         this.chosenChannelCategory = category;
         this.searchChannelCategoryControl.reset(category);
+        this.searchChannelCategoryControl.markAsDirty();
     }
 
     ngOnChanges({feedCategory}: SimpleChanges) {
@@ -59,6 +60,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             return;
         }
         this.searchChannelCategoryControl.reset(this.feedCategory.channelCategory);
+        this.searchChannelCategoryControl.markAsPristine();
         if (this.searchSubscription) {
             this.searchSubscription.unsubscribe();
         }
@@ -96,6 +98,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
                 : null
         )
             .subscribe(() => {
+                this.searchChannelCategoryControl.markAsPristine();
                 this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
                 this.mappingCache.addCategoryMapping(this.chosenChannelCategory);
                 // we don't wait for autotags loading, so we can hide the progress bar immediately
@@ -117,6 +120,7 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
 
     removeValue() {
         this.searchChannelCategoryControl.reset('');
+        this.searchChannelCategoryControl.markAsDirty();
         this.chosenChannelCategory = null;
     }
 

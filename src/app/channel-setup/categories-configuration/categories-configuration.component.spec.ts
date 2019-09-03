@@ -126,13 +126,13 @@ describe('CategoriesConfigurationComponent', () => {
         expect(matDialog.open).toHaveBeenCalledTimes(2);
     });
 
-    it('should be marked as having modifications if searchChannelCategoryControl has a value', () => {
-        component.categoryMapping = <any>{searchChannelCategoryControl: {value: 'some value'}};
+    it('should be marked as having modifications if categoryMapping.searchChannelCategoryControl is dirty', () => {
+        component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: true}};
         expect(component.hasModifications()).toBe(true);
     });
 
-    it('should be marked as NOT having modifications if if only a channel category chosen', () => {
-        component.categoryMapping = <any>{searchChannelCategoryControl: <any>{}};
+    it('should be marked as NOT having modifications categoryMapping.searchChannelCategoryControl is pristine', () => {
+        component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: false}};
         expect(component.hasModifications()).toBe(false);
     });
 });

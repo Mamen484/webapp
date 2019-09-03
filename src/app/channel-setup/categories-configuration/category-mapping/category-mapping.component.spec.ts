@@ -10,6 +10,8 @@ import { AppState } from '../../../core/entities/app-state';
 import { EMPTY, of } from 'rxjs';
 import { CategoryMappingService } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
+import { By } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
@@ -34,7 +36,7 @@ describe('CategoryMappingComponent', () => {
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent],
             schemas: [NO_ERRORS_SCHEMA],
-            imports: [MatAutocompleteModule],
+            imports: [MatAutocompleteModule, FormsModule, ReactiveFormsModule],
             providers: [
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
@@ -148,5 +150,64 @@ describe('CategoryMappingComponent', () => {
         feedService.mapFeedCategory.and.returnValue(of({}));
         component.saveMatching();
         expect(mappingCacheService.addCategoryMapping).toHaveBeenCalledWith({id: 22});
+    });
+
+    describe('modifications check (for parent hasModifications() check)', () => {
+        beforeEach(() => {
+            appStore.select.and.returnValue(EMPTY);
+            expect(component.searchChannelCategoryControl.dirty).toBe(false);
+        });
+        it('should be dirty when user types to a search input', fakeAsync(() => {
+            setInputValue();
+            tick(300);
+            expect(component.searchChannelCategoryControl.dirty).toBe(true);
+        }));
+
+        it('should be dirty when user removes selection', fakeAsync(() => {
+            component.removeValue();
+            tick(300);
+            expect(component.searchChannelCategoryControl.dirty).toBe(true);
+        }));
+
+        it('should be pristine after user successfully saves selection', fakeAsync(() => {
+            feedService.mapFeedCategory.and.returnValue(of({}));
+            component.removeValue();
+            tick(300);
+            fixture.debugElement.nativeElement.querySelector('button.save-matching').click();
+            fixture.detectChanges();
+
+            expect(component.searchChannelCategoryControl.dirty).toBe(false);
+        }));
+
+        it('should be dirty when user saves selection and then alters search', fakeAsync(() => {
+            feedService.mapFeedCategory.and.returnValue(of({}));
+            component.removeValue();
+            tick(300);
+            fixture.debugElement.nativeElement.querySelector('button.save-matching').click();
+            setInputValue();
+            tick(300);
+            expect(component.searchChannelCategoryControl.dirty).toBe(true);
+        }));
+
+        it('should be pristine when new category is set', fakeAsync(() => {
+            setInputValue();
+            tick(300);
+            component.ngOnChanges(<any>{feedCategory: {previousValue: {id: 12}, currentValue: {id: 14}}});
+            tick(300);
+            expect(component.searchChannelCategoryControl.dirty).toBe(false);
+        }));
+
+        it('should be dirty when user chooses a category from autocomplete', fakeAsync(() => {
+            component.chooseCategory({id: 15, channelId: 100, name: 'some category'});
+            tick(300);
+            expect(component.searchChannelCategoryControl.dirty).toBe(true);
+        }));
+
+        function setInputValue() {
+            const input = fixture.debugElement.query(By.css('input'));
+            input.nativeElement.value = 'test text';
+            input.triggerEventHandler('input', {target: input.nativeElement});
+            fixture.detectChanges();
+        }
     });
 });
