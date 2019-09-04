@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { AggregatedUserInfo, Channel, PaymentType, Store, StoreChannelDetails, StoreStatus } from 'sfl-shared/entities';
@@ -9,8 +9,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
+import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
+const referralProgramCode = '-Lh7C5RlCRb6V6lLoBIj';
 
 @Component({
     selector: 'sf-sidebar',
@@ -31,6 +33,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     isManager = false;
     paymentTypes = PaymentType;
     isAdmin = false;
+    appcuesEnabled = false;
 
     protected newEventsSubscription;
 
@@ -42,7 +45,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected route: ActivatedRoute,
                 protected router: Router,
                 protected userService: SflUserService,
-                protected ticketsDataService: TicketsDataService) {
+                protected ticketsDataService: TicketsDataService,
+                protected appcuesEnabledService: AppcuesEnabledService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -60,6 +64,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
         });
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.newEventsSubscription = timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
+        this.appcuesEnabledService.getState().subscribe(enabled => this.appcuesEnabled = enabled);
     }
 
     hasChannelsPermissions() {
@@ -99,9 +104,19 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     }
 
+    ngOnDestroy() {
+        if (this.newEventsSubscription) {
+            this.newEventsSubscription.unsubscribe();
+        }
+    }
+
     logout() {
         this.localStorage.removeItem('Authorization');
         this.windowRef.nativeWindow.location.href = `${environment.APP_URL}/index/logout`;
+    }
+
+    openAppcuesDialog() {
+        this.windowRef.nativeWindow.Appcues.show(<any>referralProgramCode);
     }
 
     protected updateEventsNumber() {
@@ -109,10 +124,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
             .subscribe(events => this.newEvents = events);
     }
 
-    ngOnDestroy() {
-        if (this.newEventsSubscription) {
-            this.newEventsSubscription.unsubscribe();
-        }
-    }
 
 }
