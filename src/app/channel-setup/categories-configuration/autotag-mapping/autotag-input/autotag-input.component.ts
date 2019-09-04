@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FeedService } from '../../../../core/services/feed.service';
 import { MappingCollection } from '../../../mapping-collection';
 import {
@@ -11,6 +11,8 @@ import {
     ValidationErrors,
     Validator
 } from '@angular/forms';
+import { AutotagFormStateService } from '../autotag-form-state.service';
+import { AutotagFormState } from '../autotag-form-state.enum';
 
 @Component({
     selector: 'sf-autotag-input',
@@ -41,7 +43,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
 
     onChange: (value: string) => any;
 
-    constructor(protected feedService: FeedService, protected changeDetectorRef: ChangeDetectorRef) {
+    constructor(protected feedService: FeedService, protected stateService: AutotagFormStateService) {
     }
 
     ngOnInit() {
@@ -62,8 +64,13 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
 
     }
 
+    notifyInputDirty() {
+        this.stateService.changeState(AutotagFormState.dirty);
+    }
+
     setAutotagValue(value: string) {
         this.changed.emit(value);
+        this.notifyInputDirty();
     }
 
     registerOnChange(fn: any): void {

@@ -11,6 +11,7 @@ import { CategoryState } from '../category-state';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
+import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -128,11 +129,19 @@ describe('CategoriesConfigurationComponent', () => {
 
     it('should be marked as having modifications if categoryMapping.searchChannelCategoryControl is dirty', () => {
         component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: true}};
+        component.autotagFormState = AutotagFormState.pristine;
         expect(component.hasModifications()).toBe(true);
     });
 
-    it('should be marked as NOT having modifications categoryMapping.searchChannelCategoryControl is pristine', () => {
+    it('should be marked as having modifications if autotagFormState is dirty', () => {
         component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: false}};
+        component.autotagFormState = AutotagFormState.dirty;
+        expect(component.hasModifications()).toBe(true);
+    });
+
+    it('should be marked as NOT having modifications categoryMapping.searchChannelCategoryControl is pristine and autotagFormState is pristine', () => {
+        component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: false}};
+        component.autotagFormState = AutotagFormState.pristine;
         expect(component.hasModifications()).toBe(false);
     });
 });

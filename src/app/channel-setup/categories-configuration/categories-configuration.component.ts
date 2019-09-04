@@ -16,6 +16,8 @@ import { Store } from '@ngrx/store';
 import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
 import { CategoryMappingComponent } from './category-mapping/category-mapping.component';
 import { CategoryMappingService } from './category-mapping/category-mapping.service';
+import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.service';
+import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -46,6 +48,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     categoryStateFilter: CategoryState;
 
     leavePageDialogOpened = false;
+    autotagFormState: AutotagFormState;
 
     protected subscription: Subscription;
 
@@ -53,7 +56,8 @@ export class CategoriesConfigurationComponent implements OnInit {
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected appStore: Store<AppState>,
-                protected categoryMappingService: CategoryMappingService) {
+                protected categoryMappingService: CategoryMappingService,
+                protected stateService: AutotagFormStateService) {
     }
 
 
@@ -70,7 +74,7 @@ export class CategoriesConfigurationComponent implements OnInit {
     }
 
     hasModifications() {
-        return this.categoryMapping.searchChannelCategoryControl.dirty;
+        return this.categoryMapping.searchChannelCategoryControl.dirty || this.autotagFormState === AutotagFormState.dirty;
     }
 
     ngOnInit() {
@@ -82,6 +86,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.listenClientCategorySearch();
             this.listenCategoryMappingChanged();
         });
+        this.stateService.getState().subscribe(state => this.autotagFormState = state);
     }
 
     onAutotagsLoaded() {

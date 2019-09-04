@@ -13,10 +13,10 @@
                 <div class="autotags-list" fxLayout="column" fxLayoutGap="20px">
                     <ng-container *ngFor="let autotag of autotagList; index as i">
                         <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
-                                          (changed)="autotag.value = $event" [label]="autotag._embedded.attribute.name"
+                                          (changed)="setAutotagValue(autotag, $event)" [label]="autotag._embedded.attribute.name"
                                           [value]="autotag.value" ngModel name="autotag{{i}}"></sf-autotag-input>
                         <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
-                                             [value]="autotag.value" (changed)="autotag.value = $event"
+                                             [value]="autotag.value" (changed)="setAutotagValue(autotag, $event)"
                                              [attribute]="autotag._embedded.attribute"
                                              ngModel name="autotag{{i}}"></sf-autotag-dropdown>
                     </ng-container>

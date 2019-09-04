@@ -11,6 +11,8 @@ import { MappingCacheService } from '../mapping-cache.service';
 import { Category } from '../../../core/entities/category';
 import { filter } from 'rxjs/operators';
 import { ChannelService } from '../../../core/services/channel.service';
+import { AutotagFormStateService } from './autotag-form-state.service';
+import { AutotagFormState } from './autotag-form-state.enum';
 
 @Component({
     selector: 'sf-autotag-mapping',
@@ -27,6 +29,9 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() autotagUpdated = new EventEmitter();
     @Output() autotagsLoaded = new EventEmitter();
+    /**
+     * Some of autotag values changed
+     */
     @Output() nextClicked = new EventEmitter();
 
     autotagList: Autotag[];
@@ -38,7 +43,8 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
                 protected snackbar: MatSnackBar,
                 protected categoryMappingService: CategoryMappingService,
                 protected mappingCacheService: MappingCacheService,
-                protected channelService: ChannelService) {
+                protected channelService: ChannelService,
+                protected stateService: AutotagFormStateService) {
     }
 
     ngOnInit() {
@@ -54,6 +60,7 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
         this.loadingPreviousMapping = false;
         this.hasCachedMapping = this.mappingCacheService.hasAutotagMapping(this.channelCategoryId);
         this.fetchAutotags();
+        this.stateService.changeState(AutotagFormState.pristine);
     }
 
     ngOnDestroy(): void {
@@ -79,7 +86,12 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
                 this.mappingCacheService.addAutotagMapping(this.channelCategoryId, this.catalogCategoryId, this.feedId);
                 this.autotagUpdated.emit();
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
+                this.stateService.changeState(AutotagFormState.pristine);
             });
+    }
+
+    setAutotagValue(autotag, value) {
+        autotag.value = value;
     }
 
     usePreviousMapping() {

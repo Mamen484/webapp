@@ -4,7 +4,13 @@ import { AutotagInputComponent } from './autotag-input.component';
 import { FeedService } from '../../../../core/services/feed.service';
 import { EMPTY, of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { AutotagFormStateService } from '../autotag-form-state.service';
+import { take } from 'rxjs/operators';
+import { AutotagFormState } from '../autotag-form-state.enum';
+import { By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AutotagInputComponent', () => {
     let component: AutotagInputComponent;
@@ -17,7 +23,7 @@ describe('AutotagInputComponent', () => {
             declarations: [AutotagInputComponent],
             providers: [{provide: FeedService, useValue: feedService}],
             schemas: [NO_ERRORS_SCHEMA],
-            imports: [MatAutocompleteModule],
+            imports: [MatAutocompleteModule, FormsModule, MatInputModule, NoopAnimationsModule, MatFormFieldModule],
         })
             .compileComponents();
     }));
@@ -75,5 +81,24 @@ describe('AutotagInputComponent', () => {
         const changed = component.changed.asObservable().take(1).toPromise();
         component.setAutotagValue('[someName]');
         expect(await changed).toBe('[someName]');
+    });
+
+    it('should change autotagFormState to dirty when input changes', async () => {
+        feedService.fetchMappingCollection.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const input = fixture.debugElement.query(By.css('input'));
+        input.nativeElement.value = 'some value that makes input dirty';
+        input.triggerEventHandler('input', {target: input.nativeElement});
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const stateService: AutotagFormStateService = TestBed.get(AutotagFormStateService);
+        expect(await stateService.getState().pipe(take(1)).toPromise()).toBe(AutotagFormState.dirty);
+    });
+
+    it('should change autotagFormState to dirty on setAutotagValue() call', async () => {
+        component.setAutotagValue('some value that makes input dirty');
+        const stateService: AutotagFormStateService = TestBed.get(AutotagFormStateService);
+        expect(await stateService.getState().pipe(take(1)).toPromise()).toBe(AutotagFormState.dirty);
     });
 });

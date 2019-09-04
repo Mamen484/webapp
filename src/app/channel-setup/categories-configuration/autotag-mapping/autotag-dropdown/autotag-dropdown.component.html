@@ -1,11 +1,11 @@
 <div fxLayout="row" fxLayoutGap="20px">
-    <sf-autotag-input [value]="value" [label]="attribute.name" fxFlex (changed)="changed.emit($event)"></sf-autotag-input>
+    <sf-autotag-input #input [value]="value" [label]="attribute.name" fxFlex (changed)="changed.emit($event)"></sf-autotag-input>
     <mat-form-field appearance="outline" color="accent" fxFlex>
         <mat-label i18n>Authorized values</mat-label>
         <input type="text" matInput [formControl]="control" [matAutocomplete]="auto">
     </mat-form-field>
 
-    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="changed.emit($event.option.value)">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="changed.emit($event.option.value); input.notifyInputDirty()">
         <mat-option *ngFor="let option of options" [value]="'['+option+']'">{{option}}</mat-option>
     </mat-autocomplete>
 </div>
