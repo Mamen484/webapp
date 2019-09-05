@@ -29,7 +29,9 @@
             </ng-container>
             <ng-container matColumnDef="active">
                 <th mat-header-cell *matHeaderCellDef i18n> </th>
-                <td mat-cell *matCellDef="let element"> <mat-slide-toggle color="accent" [checked]="element.state === 'active'"></mat-slide-toggle> </td>
+                <td mat-cell *matCellDef="let element" (click)="changeState(element, $event)">
+                    <mat-slide-toggle color="accent" [checked]="element.state === 'active'"></mat-slide-toggle>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

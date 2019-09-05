@@ -40,4 +40,16 @@ describe('ChannelService', () => {
         let req = httpMock.expectOne('someLink/channel/23');
         expect(req.request.method).toBe('PUT');
     });
+
+    it('should PUT to /channel/{id}/activate on activate() call', () => {
+        service.activate(23).subscribe();
+        let req = httpMock.expectOne('someLink/channel/23/activate');
+        expect(req.request.method).toBe('PUT');
+    });
+
+    it('should PUT to /channel/{id}/deactivate on deactivate() call', () => {
+        service.deactivate(23).subscribe();
+        let req = httpMock.expectOne('someLink/channel/23/deactivate');
+        expect(req.request.method).toBe('PUT');
+    });
 });

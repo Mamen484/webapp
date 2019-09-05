@@ -40,4 +40,12 @@ export class ChannelService {
         return this.httpClient.get(`${this.sflApi}/channel/${channelId}`) as Observable<Channel>;
     }
 
+    activate(channelId) {
+        return this.httpClient.put(`${this.sflApi}/channel/${channelId}/activate`, {});
+    }
+
+    deactivate(channelId) {
+        return this.httpClient.put(`${this.sflApi}/channel/${channelId}/deactivate`, {});
+    }
+
 }
