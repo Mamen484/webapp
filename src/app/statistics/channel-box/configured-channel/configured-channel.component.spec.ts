@@ -7,19 +7,16 @@ import { ChannelTurnoverComponent } from '../channel-turnover/channel-turnover.c
 import { ChannelOnlineComponent } from '../channel-online/channel-online.component';
 import { StatsUnavailableComponent } from '../stats-unavailable/stats-unavailable.component';
 import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
-import { ChannelLinkService } from '../../../core/services/channel-link.service';
 
 describe('ConfiguredChannelComponent', () => {
     let component: ConfiguredChannelComponent;
     let fixture: ComponentFixture<ConfiguredChannelComponent>;
 
-    let channelLinkService: ChannelLinkService;
-
     beforeEach(async(() => {
 
-        channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel']);
         TestBed.configureTestingModule({
             declarations: [
+                ChannelLinkMockPipe,
                 ConfiguredChannelComponent,
                 SfCurrencyPipe,
                 LargeNumberSuffixPipe,
@@ -29,9 +26,7 @@ describe('ConfiguredChannelComponent', () => {
                 StatsUnavailableComponent,
             ],
             schemas: [NO_ERRORS_SCHEMA],
-            providers: [
-                {provide: ChannelLinkService, useValue: channelLinkService},
-            ],
+            providers: [],
         })
             .compileComponents();
     }));
@@ -155,7 +150,7 @@ describe('ConfiguredChannelComponent', () => {
         expect(element('.channel-online').textContent.trim()).toContain('--');
     });
 
-    it('should NOT fails is statistics is not defined at all', () => {
+    it('should NOT fail is statistics is not defined at all', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics = undefined;
         fixture.detectChanges();
@@ -182,4 +177,10 @@ describe('ConfiguredChannelComponent', () => {
 
 @Pipe({name: 'sfCurrency'})
 class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}
+
+@Pipe({name: 'sfChannelLink'})
+class ChannelLinkMockPipe implements PipeTransform {
+    transform() {
+    }
 }

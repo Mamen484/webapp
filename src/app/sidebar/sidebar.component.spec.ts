@@ -1,6 +1,6 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Directive, Input, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Directive, Input, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
@@ -41,7 +41,7 @@ describe('SidebarComponent', () => {
         ticketsDataService = jasmine.createSpyObj('TicketsDataService spy', ['requestUpdate']);
         channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel']);
         TestBed.configureTestingModule({
-            declarations: [SidebarComponent, LegacyLinkDirective],
+            declarations: [SidebarComponent, LegacyLinkDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},
@@ -171,5 +171,12 @@ describe('SidebarComponent', () => {
     class LegacyLinkDirective {
         @Input() path;
         @Input() storeId;
+    }
+
+
+    @Pipe({name: 'sfChannelLink'})
+    class ChannelLinkMockPipe implements PipeTransform {
+        transform() {
+        }
     }
 });

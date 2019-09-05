@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreChannel } from 'sfl-shared/entities';
-import { ChannelLinkService } from '../../../core/services/channel-link.service';
 
 @Component({
     selector: 'sf-configured-channel',
@@ -15,13 +14,6 @@ export class ConfiguredChannelComponent implements OnInit {
     revenueStatisticsAvailable = false;
 
     channelsOnline: number;
-
-    constructor(protected channelLinkService: ChannelLinkService) {
-    }
-
-    goToChannel() {
-        this.channelLinkService.navigateToChannel(this.channel);
-    }
 
     ngOnInit() {
         this.initializeOnline();

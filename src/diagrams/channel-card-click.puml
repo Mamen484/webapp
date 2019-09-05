@@ -1,18 +1,8 @@
 @startuml
-|ChannelLinkService|
 start
 :A user clicks on a channel card;
-if (channel has categories) then (no)
-        if (channel type is marketplace) then (yes)
-            :Navigate to https://app.shopping-feed.com/{channelName};
-            stop
-        else (no)
-            :Navigate to https://app.shopping-feed.com/{channelType}/manage/{channelName};
-            stop
-        endif
-else (yes)
 if (channel is installed) then (yes)
-    if (the feed has configured categories) then (yes)
+
         if (channel type is marketplace) then (yes)
             :Navigate to https://app.shopping-feed.com/{channelName};
             stop
@@ -20,28 +10,25 @@ if (channel is installed) then (yes)
             :Navigate to https://app.shopping-feed.com/{channelType}/manage/{channelName};
             stop
         endif
-    else (no)
-       :Go to /feed/setup/{feedId};
-        stop
-    endif
+
 else (no)
-|SuggestedChannelComponent|
 if (channel has a different country, then a store) then (yes)
     :Show a dialog that the request has been sent;
     stop
 else (no)
-|ChannelLinkService|
-    :Create a feed for this channel;
-|SuggestedChannelComponent|
+
     if (The channel id is 111 (CDiscount)) then (yes)
-        :Navigate to \nhttp://track.cdiscount-affiliation.com/servlet/effi.redir\n?id_compteur=22032794&url=\nhttps://app.shopping-feed.com/v3/{lang}/feed/setup/{feedId};
-        stop
-|ChannelLinkService|
-    else (no)
-        :Navigate to https://app.shopping-feed.com/v3/{lang}/feed/setup/{feedId}};
-        stop
+        :Navigate to \nhttp://track.cdiscount-affiliation.com/servlet/effi.redir\n?id_compteur=22032794&url=\nhttps://app.shopping-feed.com/CDiscount;
+
+    else (yes)
+    if (channel type is marketplace) then (yes)
+                :Navigate to https://app.shopping-feed.com/{channelName};
+                stop
+            else (no)
+                :Navigate to https://app.shopping-feed.com/{channelType}/manage/{channelName};
+                stop
+            endif
     endif
-endif
 endif
 stop
 @enduml
