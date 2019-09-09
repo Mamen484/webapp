@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChannelService } from 'sfl-shared/services';
+import { Channel } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sfcs-settings',
@@ -9,7 +10,7 @@ import { ChannelService } from 'sfl-shared/services';
 })
 export class SettingsComponent implements OnInit {
 
-    @Input() channelId: number;
+    @Input() channel: Channel;
 
     channelSettingsGroup = new FormGroup({
         contact: new FormControl(),
@@ -21,6 +22,11 @@ export class SettingsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.channelSettingsGroup.setValue({
+            contact: (<any>this.channel.contact).email,
+            segment: this.channel.segment,
+            country: this.channel.countries,
+        });
     }
 
     saveSettings() {
@@ -28,6 +34,6 @@ export class SettingsComponent implements OnInit {
             contact: this.channelSettingsGroup.get('contact').value,
             segment: this.channelSettingsGroup.get('segment').value,
             country: this.channelSettingsGroup.get('country').value.map(code => ({code})),
-        }, this.channelId).subscribe();
+        }, this.channel.id).subscribe();
     }
 }

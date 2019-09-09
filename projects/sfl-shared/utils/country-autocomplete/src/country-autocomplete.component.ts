@@ -46,8 +46,8 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
 
     @Input() set serverError(value) {
         this.validationError = value;
-        this.changeDetectorRef.detectChanges();
         this.control.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges();
     }
 
     ngOnInit() {

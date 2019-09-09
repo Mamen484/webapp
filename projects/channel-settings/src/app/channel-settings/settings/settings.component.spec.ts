@@ -39,6 +39,7 @@ describe('SettingsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(SettingsComponent);
         component = fixture.componentInstance;
+        component.channel = {contact: <any>{email: ''}, segment: '', countries: []};
         fixture.detectChanges();
     });
 
@@ -53,7 +54,7 @@ describe('SettingsComponent', () => {
             segment: 'clothes',
             country: ['fr', 'uk'],
         });
-        component.channelId = 23;
+        component.channel = {id: 23};
         component.saveSettings();
         expect(channelService.modifyChannel).toHaveBeenCalledWith(<Channel>{
             contact: 'test',
