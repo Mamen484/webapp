@@ -43,7 +43,7 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
 
         // exportType = XML
         head: new FormControl('', () => this.getValidationMessages(['feed', 'head'])),
-        productTag: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'productTag'])]),
+        productTag: new FormControl('', [() => this.getValidationMessages(['feed', 'productTag'])]),
 
         // exportType = CSV
         separator: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'separator'])]),
@@ -122,7 +122,7 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
         return this.channelService.createChannel({
             name: this.formGroup.get(['channelName']).value,
             type: this.formGroup.get(['channelType']).value,
-            countries: [this.formGroup.get(['country']).value],
+            country: [{code: this.formGroup.get(['country']).value}],
             feedType: this.formGroup.get(['exportType']).value,
             feed: {
                 head: this.formGroup.get(['head']).value,

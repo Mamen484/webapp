@@ -96,9 +96,6 @@
                         <mat-error *ngIf="formGroup.controls.productTag.hasError('validationError')">
                             {{formGroup.controls.productTag.getError('validationError')}}
                         </mat-error>
-                        <mat-error *ngIf="formGroup.controls.productTag.hasError('maxlength')">
-                            Field is more then 1 character long
-                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
