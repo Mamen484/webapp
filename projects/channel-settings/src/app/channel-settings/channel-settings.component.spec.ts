@@ -11,7 +11,7 @@ describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
     let fixture: ComponentFixture<ChannelSettingsComponent>;
     let channelService: jasmine.SpyObj<ChannelService>;
-    let routeData: Subject<Channel>;
+    let routeData: Subject<{channel: Channel}>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
@@ -38,7 +38,7 @@ describe('ChannelSettingsComponent', () => {
     });
 
     it('should assign a channelId and channel from routeData', () => {
-        routeData.next({id: 100});
+        routeData.next({channel: {id: 100}});
         expect(component.channel).toEqual({id: 100});
         expect(component.channelId).toEqual(100);
     });
