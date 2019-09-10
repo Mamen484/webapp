@@ -29,6 +29,7 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     @Input() multipleSelection: 'none' | 'chips' = 'none';
     @Input() required = false;
     @Input() hintText = '';
+    @Input() color: 'primary' | 'accent' = 'accent';
     countries: Country[] = [];
     filteredCountries: Observable<Country[]>;
     onChange: (value: string | string[]) => any;

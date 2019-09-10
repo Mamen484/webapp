@@ -1,10 +1,10 @@
 <form fxLayout="column" fxLayoutGap="20px" [formGroup]="channelSettingsGroup">
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" color="primary">
         <mat-label>Contact email</mat-label>
         <input matInput required formControlName="contact">
         <mat-hint>Contact email displayed to users in Shopping Feed</mat-hint>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" color="primary">
         <mat-label>Category</mat-label>
         <mat-select formControlName="segment">
             <mat-option value="professional">Professional</mat-option>
@@ -24,10 +24,10 @@
         </mat-select>
         <mat-hint>Category allows user to find channel more easily through filters</mat-hint>
     </mat-form-field>
-    <sfl-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline"
+    <sfl-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline" color="primary"
                               [required]="true" hintText="Countries where channel is available" i18n-hintText>
     </sfl-country-autocomplete>
     <div class="actions">
-        <button mat-raised-button (click)="saveSettings()">Save</button>
+        <button mat-raised-button (click)="saveSettings()" color="primary">Save</button>
     </div>
 </form>
