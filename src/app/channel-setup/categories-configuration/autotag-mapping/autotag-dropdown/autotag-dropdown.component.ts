@@ -47,6 +47,8 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
     options: string[];
     control = new FormControl();
 
+    displayFn = () => '';
+
     constructor(protected channelService: ChannelService) {
     }
 
