@@ -101,4 +101,18 @@ describe('AutotagInputComponent', () => {
         const stateService: AutotagFormStateService = TestBed.get(AutotagFormStateService);
         expect(await stateService.getState().pipe(take(1)).toPromise()).toBe(AutotagFormState.dirty);
     });
+
+    it('should take a static value when a user doesn`t select a suggested value', async () => {
+        feedService.fetchMappingCollection.and.returnValue(EMPTY);
+        const changed = component.changed.asObservable().take(1).toPromise();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        const input = fixture.debugElement.query(By.css('input'));
+        input.nativeElement.value = 'some_value';
+        input.triggerEventHandler('input', {target: input.nativeElement});
+        fixture.detectChanges();
+        input.triggerEventHandler('blur', {target: input.nativeElement});
+        await fixture.whenStable();
+        expect(await changed).toBe('[some_value]');
+    });
 });

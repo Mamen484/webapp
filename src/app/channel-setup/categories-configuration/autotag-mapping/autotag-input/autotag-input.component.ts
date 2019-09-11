@@ -1,4 +1,4 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FeedService } from '../../../../core/services/feed.service';
 import { MappingCollection } from '../../../mapping-collection';
 import {
@@ -31,7 +31,7 @@ import { AutotagFormState } from '../autotag-form-state.enum';
         },
     ],
 })
-export class AutotagInputComponent implements OnInit, ControlValueAccessor, Validator {
+export class AutotagInputComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
 
     @ViewChild(NgModel, {static: false}) ngModel: NgControl;
 
@@ -40,6 +40,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     @Output() changed = new EventEmitter<string>();
     mappingCollection: MappingCollection;
     suggestions: string[];
+    lastEmittedValue = '';
 
     onChange: (value: string) => any;
 
@@ -49,6 +50,12 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
     ngOnInit() {
         this.feedService.fetchMappingCollection()
             .subscribe(mappingCollection => this.mappingCollection = mappingCollection);
+    }
+
+    ngOnChanges({value}: SimpleChanges) {
+        if (value.currentValue !== value.previousValue) {
+            this.lastEmittedValue = value.currentValue;
+        }
     }
 
     createSuggestions() {
@@ -68,9 +75,17 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
         this.stateService.changeState(AutotagFormState.dirty);
     }
 
+    onBlur() {
+        // use a static value if nothing was selected from suggestions
+        if (this.value && this.value !== this.lastEmittedValue) {
+            this.setAutotagValue('[' + this.value + ']');
+        }
+    }
+
     setAutotagValue(value: string) {
         this.changed.emit(value);
         this.notifyInputDirty();
+        this.lastEmittedValue = value;
     }
 
     registerOnChange(fn: any): void {
@@ -89,7 +104,7 @@ export class AutotagInputComponent implements OnInit, ControlValueAccessor, Vali
 
     watchDeletion() {
         if (!this.value) {
-            this.changed.emit('');
+            this.setAutotagValue('');
         }
     }
 
