@@ -14,3 +14,17 @@ mat-panel-title.mat-title {
   line-height: mat-font-size($config, title);
   margin: 0;
 }
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.actions {
+  text-align: right;
+}
+
+::ng-deep {
+  .sf-content .mat-card-header-text {
+    margin: 0;
+  }
+}
