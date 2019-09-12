@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -10,13 +10,16 @@ import { MatDialogRef } from '@angular/material';
         </mat-dialog-content>
 
         <mat-dialog-actions>
-            <button mat-button matDialogClose i18n>Cancel</button>
-            <button mat-button (click)="confirm()" i18n>Confirm</button>
+            <button mat-button [color]="color" matDialogClose i18n>Cancel</button>
+            <button mat-button [color]="color" (click)="confirm()" i18n>Confirm</button>
         </mat-dialog-actions>
     `,
     styles: []
 })
 export class UnsavedDataDialogComponent {
+
+    @Input() color: 'primary' | 'accent' = 'accent';
+
     constructor(protected matDialogRef: MatDialogRef<UnsavedDataDialogComponent>) {
     }
 

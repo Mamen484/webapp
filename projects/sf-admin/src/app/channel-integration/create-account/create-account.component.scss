@@ -1,3 +1,5 @@
+@import '../../../../src/sass/variables';
+
 mat-card, button {
   margin-top: 20px;
 }
@@ -8,4 +10,10 @@ mat-card, button {
 
 sfa-error-message {
   margin-top: 20px;
+}
+
+a.dashboard-link {
+  &, &:visited {
+    color: mat-color($accent);
+  }
 }
