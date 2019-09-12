@@ -31,6 +31,9 @@ export class SflLoginFormComponent {
     /** The form-field appearance style, inhereted from mat-form-field. */
     @Input() appearance: MatFormFieldAppearance = 'standard';
 
+    /** Material color scheme for form fields and buttons */
+    @Input() color: 'accent' | 'primary' = 'accent';
+
     /**
      * Event emitted when not empty username and password submitted on a form
      */
