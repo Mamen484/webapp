@@ -3,6 +3,7 @@ import { ChannelService } from 'sfl-shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Field } from './field';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -20,7 +21,10 @@ export class ChannelSettingsComponent implements OnInit {
         template: new FormArray([])
     });
 
-    constructor(protected channelService: ChannelService, protected route: ActivatedRoute) {
+    templateFields: Field[];
+
+    constructor(protected channelService: ChannelService,
+                protected route: ActivatedRoute) {
     }
 
     get templateControl() {
@@ -32,36 +36,39 @@ export class ChannelSettingsComponent implements OnInit {
     }
 
     addField() {
-        this.templateControl.push(new FormGroup({
-                channelField: new FormControl(),
-                sfField: new FormControl(),
-                defaultValue: new FormControl(),
+        this.templateControl.push(this.createTemplateRow());
+    }
+
+    createTemplateRow({channelField = '', appField = '', defaultValue = ''} = {}) {
+        return new FormGroup({
+                channelField: new FormControl(channelField),
+                appField: new FormControl(appField),
+                defaultValue: new FormControl(defaultValue),
             }
-        ));
+        )
     }
 
     initializeChannel(channel) {
         this.channel = channel;
         this.channelId = channel.id;
-        if (this.channel.template) {
-            this.channel.template.forEach(() => this.addField());
-        } else {
-            this.addField();
-        }
+    }
+
+    initializeControlValues() {
+        this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
+        this.formGroup.controls.segment.setValue(this.channel.segment);
+        this.formGroup.controls.country.setValue(this.channel.countries);
+        const template = this.channel.template || [{appField: '', channelField: '', defaultValue: ''}];
+        template.forEach(({appField, channelField, defaultValue}) => {
+            this.templateControl.push(this.createTemplateRow({appField, channelField, defaultValue}));
+        })
     }
 
     ngOnInit() {
-        this.route.data.subscribe(({channel}) => {
-
+        this.route.data.subscribe(({channel, fields}) => {
             this.initializeChannel(channel);
-
-            this.formGroup.setValue({
-                contact: (<any>this.channel.contact).email,
-                segment: this.channel.segment,
-                country: this.channel.countries,
-                template: this.channel.template || [{sfField: '', channelField: '', defaultValue: ''}],
-            });
-        })
+            this.initializeControlValues();
+            this.templateFields = fields;
+        });
     }
 
     removeField(index) {

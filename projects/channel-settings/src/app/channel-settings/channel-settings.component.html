@@ -7,7 +7,7 @@
         </mat-list-item>
     </mat-list>
 </sfl-sidebar-container>
-<form class="sf-content" [formGroup]="formGroup">
+<form class="sf-content scrollable-container" [formGroup]="formGroup">
     <mat-card>
 
         <mat-card-header>
@@ -70,8 +70,8 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" color="primary">
                         <mat-label i18n>SF field</mat-label>
-                        <mat-select [formControl]="fieldSet.controls.sfField">
-                            <mat-option>autotag_color</mat-option>
+                        <mat-select [formControl]="fieldSet.controls.appField">
+                            <mat-option *ngFor="let field of templateFields" [value]="field.label">{{field.label}}</mat-option>
                         </mat-select>
                         <mat-hint i18n>Select feed name as written in feed</mat-hint>
                     </mat-form-field>

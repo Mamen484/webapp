@@ -1,5 +1,5 @@
 export interface ChannelTemplate {
     channelField: string;
-    sfField?: string;
+    appField: string;
     defaultValue?: any;
 }
