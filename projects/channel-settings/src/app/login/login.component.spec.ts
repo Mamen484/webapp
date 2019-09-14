@@ -57,6 +57,27 @@ describe('LoginComponent', () => {
         expect(authService.login).toHaveBeenCalledWith('123', 'asf');
     });
 
+    it('should logout if a user does not have an embedded channel', () => {
+        authService.login.and.returnValue(of({}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({_embedded: {}})));
+        component.login({username: '123', password: 'asf'});
+        expect(authService.logout).toHaveBeenCalled();
+    });
+
+    it('should NOT logout if a user does have an embedded channel', () => {
+        authService.login.and.returnValue(of({}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({_embedded: {channel: [{id: 22}]}})));
+        component.login({username: '123', password: 'asf'});
+        expect(authService.logout).not.toHaveBeenCalled();
+    });
+
+    it('should navigate to the app if a user does have an embedded channel', () => {
+        authService.login.and.returnValue(of({}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({_embedded: {channel: [{id: 22}]}})));
+        component.login({username: '123', password: 'asf'});
+        expect(router.navigate).toHaveBeenCalled();
+    });
+
     it('should write the error when the SflUserService returns an error', () => {
         authService.login.and.returnValue(throwError({error: {detail: 'bubidu'}}));
         component.login({username: '123', password: '456'});

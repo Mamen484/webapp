@@ -27,11 +27,10 @@ export class LoginComponent implements OnInit {
         this.authService.login(username, password).subscribe(
             data => {
                 this.userService.fetchAggregatedInfo().subscribe(userData => {
-                    // TODO: uncomment when backend is ready
-                    // if (!userData._embedded.channel.id) {
-                    //     this.authService.logout();
-                    //     return;
-                    // }
+                    if (!userData._embedded.channel) {
+                        this.authService.logout();
+                        return;
+                    }
                     this.router.navigate(['/']);
                 })
             },

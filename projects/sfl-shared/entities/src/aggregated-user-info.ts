@@ -24,7 +24,7 @@ export class AggregatedUserInfo {
             }
         },
         store: Store[],
-        channel: Channel,
+        channel: Channel[],
     };
 
     static create(userInfo) {
