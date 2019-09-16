@@ -48,8 +48,8 @@ export class ChannelSettingsComponent implements OnInit {
 
     createTemplateRow({channelField = '', appField = '', defaultValue = ''} = {}) {
         return new FormGroup({
-                channelField: new FormControl(channelField),
-                appField: new FormControl(appField, [Validators.required]),
+                channelField: new FormControl(channelField, [Validators.required]),
+                appField: new FormControl(appField),
                 defaultValue: new FormControl(defaultValue),
             }
         )
