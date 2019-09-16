@@ -14,7 +14,7 @@ import {
     MatIconModule,
     MatInputModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule, MatSnackBarModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,11 +24,13 @@ import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocompl
 import { SflSharedModule } from 'sfl-shared/core';
 import { LoginModule } from './login/login.module';
 import { SflImageModule } from 'sfl-shared/utils/image';
+import { SettingsSavedSnackbarComponent } from './channel-settings/settings-saved-snackbar/settings-saved-snackbar.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         ChannelSettingsComponent,
+        SettingsSavedSnackbarComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -46,6 +48,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         MatInputModule,
         MatListModule,
         MatSelectModule,
+        MatSnackBarModule,
         ReactiveFormsModule,
         SflCountryAutocompleteModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,
@@ -62,7 +65,8 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         SflImageModule,
     ],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [SettingsSavedSnackbarComponent],
 })
 export class AppModule {
 }

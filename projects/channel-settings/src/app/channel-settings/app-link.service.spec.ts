@@ -33,6 +33,6 @@ describe('AppLinkService', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({token: 'some_token'})));
         const service: AppLinkService = TestBed.get(AppLinkService);
         expect(await service.getLink('/some/link').toPromise())
-            .toBe(environment.webappLink + '/some/link?token=some_token&store=90909');
+            .toBe(environment.webappLink + '/some/link?token=some_token');
     });
 });

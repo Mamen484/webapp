@@ -8,6 +8,8 @@ import { of, Subject } from 'rxjs';
 import { Channel } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
+import { MatSnackBar } from '@angular/material';
+import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -15,11 +17,13 @@ describe('ChannelSettingsComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let routeData: Subject<{ channel: Channel, fields?: Field[] }>;
     let appLinkService: jasmine.SpyObj<AppLinkService>;
+    let matSnackBar: jasmine.SpyObj<MatSnackBar>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
         appLinkService = jasmine.createSpyObj('AppLinkService spy', ['getLink']);
         routeData = new Subject();
+        matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
 
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
@@ -27,7 +31,8 @@ describe('ChannelSettingsComponent', () => {
             providers: [
                 {provide: ChannelService, useValue: channelService},
                 {provide: ActivatedRoute, useValue: {data: routeData}},
-                {provide: AppLinkService, useValue: {data: appLinkService}},
+                {provide: AppLinkService, useValue: appLinkService},
+                {provide: MatSnackBar, useValue: matSnackBar},
             ]
         })
             .compileComponents();
@@ -66,6 +71,20 @@ describe('ChannelSettingsComponent', () => {
             country: [{code: 'fr'}, {code: 'uk'}],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         }, 23);
+    });
+
+    it('should show a snackbar on successful save', () => {
+        channelService.modifyChannel.and.returnValue(of({}));
+        component.addField();
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['fr', 'uk'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+        });
+        component.channel = {id: 23};
+        component.save();
+        expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent);
     });
 
     it('should remove a template row by specified index', () => {

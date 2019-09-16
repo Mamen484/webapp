@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ChannelService } from 'sfl-shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { Channel } from 'sfl-shared/entities';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
+import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -28,7 +30,8 @@ export class ChannelSettingsComponent implements OnInit {
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
-                protected appLinkService: AppLinkService) {
+                protected appLinkService: AppLinkService,
+                protected matSnackBar: MatSnackBar) {
     }
 
     get templateControl() {
@@ -46,7 +49,7 @@ export class ChannelSettingsComponent implements OnInit {
     createTemplateRow({channelField = '', appField = '', defaultValue = ''} = {}) {
         return new FormGroup({
                 channelField: new FormControl(channelField),
-                appField: new FormControl(appField),
+                appField: new FormControl(appField, [Validators.required]),
                 defaultValue: new FormControl(defaultValue),
             }
         )
@@ -86,7 +89,9 @@ export class ChannelSettingsComponent implements OnInit {
             segment: this.formGroup.get('segment').value,
             country: this.formGroup.get('country').value.map(code => ({code})),
             template: this.formGroup.get('template').value,
-        }, this.channel.id).subscribe();
+        }, this.channel.id).subscribe(() => {
+            this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent);
+        });
     }
 
 
