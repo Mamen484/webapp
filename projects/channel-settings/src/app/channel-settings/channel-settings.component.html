@@ -87,10 +87,10 @@
                         <input matInput [formControl]="fieldSet.controls.defaultValue">
                         <mat-hint i18n>Or input default value of feed</mat-hint>
                     </mat-form-field>
-                    <button mat-icon-button *ngIf="i === 0" (click)="addField()">
+                    <button mat-stroked-button *ngIf="i === 0" (click)="addField()">
                         <mat-icon>add</mat-icon>
                     </button>
-                    <button mat-icon-button *ngIf="i > 0" (click)="removeField(i)">
+                    <button mat-stroked-button *ngIf="i > 0" (click)="removeField(i)">
                         <mat-icon>remove</mat-icon>
                     </button>
                 </div>

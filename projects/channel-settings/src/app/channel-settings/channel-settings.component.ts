@@ -64,10 +64,17 @@ export class ChannelSettingsComponent implements OnInit {
         this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
         this.formGroup.controls.segment.setValue(this.channel.segment);
         this.formGroup.controls.country.setValue(this.channel.countries);
-        const template = this.channel.template || [{appField: '', channelField: '', defaultValue: ''}];
-        template.forEach(({appField, channelField, defaultValue}) => {
-            this.templateControl.push(this.createTemplateRow({appField, channelField, defaultValue}));
-        })
+        this.getChannelTemplate()
+            .forEach(({appField, channelField, defaultValue}) => {
+                this.templateControl.push(this.createTemplateRow({appField, channelField, defaultValue}));
+            })
+    }
+
+    getChannelTemplate() {
+        if (this.channel.template && this.channel.template.length) {
+            return this.channel.template;
+        }
+        return [{appField: '', channelField: '', defaultValue: ''}];
     }
 
     ngOnInit() {
