@@ -1,4 +1,5 @@
 export class StoreOwner {
+    id?: number;
     email ?= '';
     login ?= '';
     password ?= '';

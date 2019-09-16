@@ -7,7 +7,7 @@ export class AccountListPipe implements PipeTransform {
 
     transform(value: any, ...args: any[]): any {
         return value
-            ? value.map(({account}) => account.name).join(', ')
+            ? value.map((permission) => permission._embedded.account.name).join(', ')
             : '';
     }
 

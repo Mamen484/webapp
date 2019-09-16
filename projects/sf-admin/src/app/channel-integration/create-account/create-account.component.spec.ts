@@ -93,14 +93,14 @@ describe('CreateAccountComponent', () => {
         it('should create a channel', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(EMPTY);
-            storeService.createStore.and.returnValue(<any>of({id: 789}));
+            storeService.createStore.and.returnValue(<any>of({id: 789, owner: {id: 9890}}));
 
             setFormValue();
             component.save();
             expect(channelService.createChannel).toHaveBeenCalledWith({
                 name: 'A testing channel',
                 type: 'ads',
-                countries: ['es'],
+                country: [{code: 'es'}],
                 feedType: 'xml',
                 feed: {
                     head: 'Some text 1',
@@ -116,19 +116,19 @@ describe('CreateAccountComponent', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(of(<any>{id: 222}));
             channelPermissionService.addChannelPermission.and.returnValue(EMPTY);
-            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111, owner: {id: 9090}}));
 
             setFormValue();
             component.save();
 
-            expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 111, ['edit']);
+            expect(channelPermissionService.addChannelPermission).toHaveBeenCalledWith(222, 9090, ['edit']);
         });
 
         it('should show a credentials dialogs if store, channel and permission created successfully', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(of(<any>{id: 222}));
             channelPermissionService.addChannelPermission.and.returnValue(of({}));
-            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111, owner: {}}));
 
             setFormValue();
             component.save();
@@ -179,7 +179,7 @@ describe('CreateAccountComponent', () => {
         it('should show if a create channel returns an error', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(throwError({error: {detail: 'some error message'}}));
-            storeService.createStore.and.returnValue(<any>of({id: 789}));
+            storeService.createStore.and.returnValue(<any>of({id: 789, owner: {}}));
 
             setFormValue();
             component.save();
@@ -190,7 +190,7 @@ describe('CreateAccountComponent', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(of(<any>{id: 222}));
             channelPermissionService.addChannelPermission.and.returnValue(throwError({error: {detail: 'some error message'}}));
-            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111, owner: {}}));
 
             setFormValue();
             component.save();
@@ -237,7 +237,7 @@ describe('CreateAccountComponent', () => {
 
         it('should show a server validation messages for create channel', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
-            storeService.createStore.and.returnValue(of(<any>{id: 22}));
+            storeService.createStore.and.returnValue(of(<any>{id: 22, owner: {}}));
             channelService.createChannel.and.returnValue(throwError({
                 error: {
                     validationMessages: {
@@ -280,7 +280,7 @@ describe('CreateAccountComponent', () => {
             channelService.listChannels.and.returnValue(of(<any>{total: 0}));
             channelService.createChannel.and.returnValue(of(<any>{id: 222}));
             channelPermissionService.addChannelPermission.and.returnValue(of({}));
-            storeService.createStore.and.returnValue(of(<any>{id: 111}));
+            storeService.createStore.and.returnValue(of(<any>{id: 111, owner: {}}));
             setFormValue();
             triggerInput();
             expect(component.hasModifications()).toBe(true);

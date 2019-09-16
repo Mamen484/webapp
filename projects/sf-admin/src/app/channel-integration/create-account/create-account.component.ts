@@ -88,7 +88,7 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
                 flatMap((store: Store) => this.createChannel().pipe(
                     map((channel: Channel) => [store, channel]),
                 )),
-                flatMap(([store, channel]) => this.createChannelPermission(channel.id, store.id)),
+                flatMap(([store, channel]) => this.createChannelPermission(channel.id, (<Store>store).owner.id)),
             ).subscribe(() => {
                 this.submitted = true;
                 this.matDialog.open(CredentialsDialogComponent, {
@@ -160,8 +160,8 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
         ));
     }
 
-    protected createChannelPermission(channelId: number, storeId: number) {
-        return this.channelPermissionService.addChannelPermission(channelId, storeId, ['edit'])
+    protected createChannelPermission(channelId: number, accountId: number) {
+        return this.channelPermissionService.addChannelPermission(channelId, accountId, ['edit'])
             .pipe(catchError(({error}) => throwError({
                 detail: 'Association error: ' + error.detail,
                 validationMessages: error.validationMessages

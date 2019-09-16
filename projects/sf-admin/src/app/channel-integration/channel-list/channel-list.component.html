@@ -21,7 +21,7 @@
             </ng-container>
             <ng-container matColumnDef="accountName">
                 <th mat-header-cell *matHeaderCellDef i18n> Account</th>
-                <td mat-cell *matCellDef="let element"> {{element?._embedded?.account | accountList}} </td>
+                <td mat-cell *matCellDef="let element"> {{element?._embedded?.permission | accountList}} </td>
             </ng-container>
             <ng-container matColumnDef="lastChanged">
                 <th mat-header-cell *matHeaderCellDef i18n> Last changed</th>
