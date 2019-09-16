@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ChannelService } from 'sfl-shared/services';
 import { ActivatedRoute } from '@angular/router';
-import { Channel } from 'sfl-shared/entities';
+import { Channel, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
+import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
+import { filter } from 'rxjs/operators';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -27,11 +29,14 @@ export class ChannelSettingsComponent implements OnInit {
 
     templateFields: Field[];
     appLink: Observable<string>;
+    countryList: Country[] = [];
+    countryNames: { [countryCode: string]: string } = {};
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
                 protected appLinkService: AppLinkService,
-                protected matSnackBar: MatSnackBar) {
+                protected matSnackBar: MatSnackBar,
+                protected countriesListService: FullCountriesListService) {
     }
 
     get templateControl() {
@@ -63,11 +68,27 @@ export class ChannelSettingsComponent implements OnInit {
     initializeControlValues() {
         this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
         this.formGroup.controls.segment.setValue(this.channel.segment);
+        this.formGroup.controls.country.valueChanges.pipe(filter(value => value))
+            .subscribe((value: string[]) => {
+                this.countryList = value.map(countryCode => {
+                    const match = this.countryList.find(country => country.code === countryCode);
+                    if (match) {
+                        return match;
+                    }
+                    return {code: countryCode};
+                });
+            });
         this.formGroup.controls.country.setValue(this.channel.countries);
         this.getChannelTemplate()
             .forEach(({appField, channelField, defaultValue}) => {
                 this.templateControl.push(this.createTemplateRow({appField, channelField, defaultValue}));
             })
+    }
+
+    initializeCountryNames() {
+        this.countriesListService.getCountries().subscribe(countries => {
+            countries.forEach(country => this.countryNames[country.code] = country.name);
+        })
     }
 
     getChannelTemplate() {
@@ -84,6 +105,7 @@ export class ChannelSettingsComponent implements OnInit {
             this.templateFields = fields;
         });
         this.appLink = this.appLinkService.getLink('/');
+        this.initializeCountryNames();
     }
 
     removeField(index) {
@@ -94,7 +116,7 @@ export class ChannelSettingsComponent implements OnInit {
         this.channelService.modifyChannel({
             contact: this.formGroup.get('contact').value,
             segment: this.formGroup.get('segment').value,
-            country: this.formGroup.get('country').value.map(code => ({code})),
+            country: this.countryList,
             template: this.formGroup.get('template').value,
         }, this.channel.id).subscribe(() => {
             this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent);

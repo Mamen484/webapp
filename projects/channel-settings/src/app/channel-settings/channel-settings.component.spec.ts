@@ -5,11 +5,12 @@ import { ChannelService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
-import { Channel } from 'sfl-shared/entities';
+import { Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
+import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -18,12 +19,17 @@ describe('ChannelSettingsComponent', () => {
     let routeData: Subject<{ channel: Channel, fields?: Field[] }>;
     let appLinkService: jasmine.SpyObj<AppLinkService>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
+    let countriesListService: jasmine.SpyObj<FullCountriesListService>;
+    let countries$: Subject<Country[]>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
         appLinkService = jasmine.createSpyObj('AppLinkService spy', ['getLink']);
         routeData = new Subject();
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
+        countriesListService = jasmine.createSpyObj('FullCountriesListService spy', ['getCountries']);
+        countries$ = new Subject<Country[]>();
+        countriesListService.getCountries.and.returnValue(countries$.asObservable());
 
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
@@ -33,6 +39,7 @@ describe('ChannelSettingsComponent', () => {
                 {provide: ActivatedRoute, useValue: {data: routeData}},
                 {provide: AppLinkService, useValue: appLinkService},
                 {provide: MatSnackBar, useValue: matSnackBar},
+                {provide: FullCountriesListService, useValue: countriesListService},
             ]
         })
             .compileComponents();
@@ -56,7 +63,7 @@ describe('ChannelSettingsComponent', () => {
 
     it('should call saveChannel endpoint on save()', () => {
         channelService.modifyChannel.and.returnValue(of({}));
-        component.addField();
+        routeData.next({channel: {id: 100, contact: <any>{}}});
         component.formGroup.setValue({
             contact: 'test',
             segment: 'clothes',
@@ -75,7 +82,7 @@ describe('ChannelSettingsComponent', () => {
 
     it('should show a snackbar on successful save', () => {
         channelService.modifyChannel.and.returnValue(of({}));
-        component.addField();
+        routeData.next({channel: {id: 100, contact: <any>{}}});
         component.formGroup.setValue({
             contact: 'test',
             segment: 'clothes',
@@ -127,5 +134,26 @@ describe('ChannelSettingsComponent', () => {
     it('should assign templateFields', () => {
         routeData.next({fields: [<any>{someProp: 'someValue'}], channel: {id: 100, contact: <any>{}}});
         expect(component.templateFields).toEqual([<any>{someProp: 'someValue'}]);
+    });
+
+    it('should assign country names', () => {
+        countries$.next([
+            {code: 'FR', name: 'France'},
+            {code: 'DE', name: 'Germany'},
+            {code: 'US', name: 'United States'},
+        ]);
+        expect(component.countryNames).toEqual({FR: 'France', DE: 'Germany', US: 'United States'});
+    });
+
+    it('should not remove existing taxonomyId values', () => {
+        routeData.next({channel: {id: 100, contact: <any>{}}});
+        component.countryList = [{code: 'FR', taxonomyId: 110}];
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['FR', 'UK'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+        });
+        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK'}])
     });
 });

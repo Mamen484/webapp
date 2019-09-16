@@ -98,6 +98,29 @@
             </form>
         </mat-card-content>
     </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <div fxLayout="row" fxLayoutAlign="center baseline" fxLayoutGap="60px">
+                <mat-card-title class="mat-title">Taxonomies</mat-card-title>
+                <mat-card-subtitle>Import your categories sellers will use to classify their product.
+                </mat-card-subtitle>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            <form fxLayout="column" fxLayoutGap="20px">
+                <div *ngFor="let country of countryList" fxLayout="row" fxLayoutGap="60px" fxLayoutAlign="start center">
+                    <div fxFlex="25%" class="country-name">{{countryNames[country.code]}}</div>
+                    <mat-form-field appearance="outline" color="primary" fxFlex="30%">
+                        <mat-label>Choose a taxonomy</mat-label>
+                    <mat-select>
+                        <mat-option>Google Taxonomy</mat-option>
+                        <mat-option>I don't have categories</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
     <div class="actions">
         <button mat-raised-button (click)="save()" color="primary">Save</button>
     </div>
