@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Channel } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Field } from './field';
+import { AppLinkService } from './app-link.service';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -22,9 +24,11 @@ export class ChannelSettingsComponent implements OnInit {
     });
 
     templateFields: Field[];
+    appLink: Observable<string>;
 
     constructor(protected channelService: ChannelService,
-                protected route: ActivatedRoute) {
+                protected route: ActivatedRoute,
+                protected appLinkService: AppLinkService) {
     }
 
     get templateControl() {
@@ -69,6 +73,7 @@ export class ChannelSettingsComponent implements OnInit {
             this.initializeControlValues();
             this.templateFields = fields;
         });
+        this.appLink = this.appLinkService.getLink('/');
     }
 
     removeField(index) {

@@ -23,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { SflSharedModule } from 'sfl-shared/core';
 import { LoginModule } from './login/login.module';
+import { SflImageModule } from 'sfl-shared/utils/image';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { LoginModule } from './login/login.module';
             sflLegacyLink: environment.legacyLink,
             sflCountriesListLink: environment.countriesListLink,
         }),
+        SflImageModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

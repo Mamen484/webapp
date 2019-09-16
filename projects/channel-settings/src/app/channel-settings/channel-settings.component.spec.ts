@@ -7,15 +7,18 @@ import { ActivatedRoute } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Channel } from 'sfl-shared/entities';
 import { Field } from './field';
+import { AppLinkService } from './app-link.service';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
     let fixture: ComponentFixture<ChannelSettingsComponent>;
     let channelService: jasmine.SpyObj<ChannelService>;
     let routeData: Subject<{ channel: Channel, fields?: Field[] }>;
+    let appLinkService: jasmine.SpyObj<AppLinkService>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
+        appLinkService = jasmine.createSpyObj('AppLinkService spy', ['getLink']);
         routeData = new Subject();
 
         TestBed.configureTestingModule({
@@ -24,6 +27,7 @@ describe('ChannelSettingsComponent', () => {
             providers: [
                 {provide: ChannelService, useValue: channelService},
                 {provide: ActivatedRoute, useValue: {data: routeData}},
+                {provide: AppLinkService, useValue: {data: appLinkService}},
             ]
         })
             .compileComponents();

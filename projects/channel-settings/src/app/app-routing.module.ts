@@ -4,10 +4,11 @@ import { ChannelSettingsComponent } from './channel-settings/channel-settings.co
 import { IsAuthorizedGuard } from './login/is-authorized.guard';
 import { ChannelResolveGuard } from './channel-settings/channel-resolve.guard';
 import { FieldsResolveGuard } from './channel-settings/fields-resolve.guard';
+import { SflLoginByTokenGuard } from 'sfl-shared/auth';
 
 const routes = [
     {
-        path: '', component: ChannelSettingsComponent, canActivate: [IsAuthorizedGuard], resolve: {
+        path: '', component: ChannelSettingsComponent, canActivate: [SflLoginByTokenGuard, IsAuthorizedGuard], resolve: {
             channel: ChannelResolveGuard,
             fields: FieldsResolveGuard,
         }

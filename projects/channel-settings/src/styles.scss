@@ -2,3 +2,6 @@
 @import '../../../src/styles';
 
 @import '../src/sass/material-theme';
+a[mat-stroked-button]{
+  text-transform: uppercase;
+}

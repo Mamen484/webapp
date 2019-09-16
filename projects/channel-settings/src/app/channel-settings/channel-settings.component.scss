@@ -1,5 +1,11 @@
 @import '../../sass/variables';
 
+$static-bar-height: 103px;
+
+.scrollable-container {
+  height: calc(100vh - (2 * #{$content-margin}) - #{$static-bar-height});
+}
+
 mat-list-item {
   outline: none;
   cursor: pointer;

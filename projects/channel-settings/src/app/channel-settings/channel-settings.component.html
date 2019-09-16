@@ -7,6 +7,13 @@
         </mat-list-item>
     </mat-list>
 </sfl-sidebar-container>
+<div class="sf-content settings-static-bar" fxLayout="row" fxLayoutAlign="center center">
+    <div fxFlex>
+        <img [src]="channel._links.image.href" height="60">
+    </div>
+    <a mat-stroked-button color="primary" i18n [href]="appLink | async">Access demo store</a>
+</div>
+<mat-divider></mat-divider>
 <form class="sf-content scrollable-container" [formGroup]="formGroup">
     <mat-card>
 
