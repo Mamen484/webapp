@@ -14,6 +14,7 @@ import { AppState } from '../../core/entities/app-state';
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -36,6 +37,7 @@ describe('CategoriesConfigurationComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
     let store: jasmine.SpyObj<Store<AppState>>;
+    let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
 
     beforeEach(async(() => {
         windowRef.nativeWindow = {FS: {identify: jasmine.createSpy()}};
@@ -45,6 +47,8 @@ describe('CategoriesConfigurationComponent', () => {
         route = {data: new Subject()};
         store = jasmine.createSpyObj('Store spy', ['select']);
         userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
+        fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
+
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigurationComponent, LegacyLinkMockDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -57,6 +61,8 @@ describe('CategoriesConfigurationComponent', () => {
                 {provide: Store, useValue: store},
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: SflUserService, useValue: userService},
+                {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
+
             ],
         })
             .compileComponents();
@@ -166,9 +172,6 @@ describe('CategoriesConfigurationComponent', () => {
             email: 'some_email'
         })));
         component.ngOnInit();
-        expect(windowRef.nativeWindow.FS.identify).toHaveBeenCalledWith('some_id', {
-            displayName: 'some_name',
-            email: 'some_email',
-        });
+        expect(fullstoryLoaderService.load).toHaveBeenCalled();
     });
 });

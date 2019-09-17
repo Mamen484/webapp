@@ -11,6 +11,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { TagsService } from '../core/services/tags.service';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
+import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
 
 describe('BaseComponent', () => {
 
@@ -23,6 +24,7 @@ describe('BaseComponent', () => {
     let userService: jasmine.SpyObj<SflUserService>;
     let tagsService: jasmine.SpyObj<TagsService>;
     let zendeskService: jasmine.SpyObj<ngxZendeskWebwidgetService>;
+    let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
 
     let component: BaseComponent;
     let fixture: ComponentFixture<BaseComponent>;
@@ -34,10 +36,11 @@ describe('BaseComponent', () => {
         storeService = jasmine.createSpyObj('StoreService', ['getStoreChannels']);
         tagsService = jasmine.createSpyObj('TagsService', ['fetchAll']);
         zendeskService = jasmine.createSpyObj('ngxZendeskWebwidgetService spy', ['setLocale', 'setSettings', 'show']);
+        fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
 
         router.events = new Subject();
         windowRef.nativeWindow = {
-            gtag: jasmine.createSpy(), FS: {identify: jasmine.createSpy()},
+            gtag: jasmine.createSpy(),
             Appcues: {identify: jasmine.createSpy()},
             Autopilot: jasmine.createSpyObj('Autopilot', ['run'])
         };
@@ -57,6 +60,7 @@ describe('BaseComponent', () => {
                 {provide: TagsService, useValue: tagsService},
                 {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ngxZendeskWebwidgetService, useValue: zendeskService},
+                {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
             ]
         });
 
@@ -137,10 +141,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(windowRef.nativeWindow.FS.identify).toHaveBeenCalledWith('some_id', {
-            displayName: 'some_name',
-            email: 'some_email',
-        });
+        expect(fullstoryLoaderService.load).toHaveBeenCalled();
     });
 
     it('should NOT run fullstory code if the user has role admin', () => {
@@ -159,7 +160,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+        expect(fullstoryLoaderService.load).not.toHaveBeenCalled();
     });
 
     it('should NOT run fullstory code if the user has role employee', () => {
@@ -178,7 +179,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+        expect(fullstoryLoaderService.load).not.toHaveBeenCalled();
     });
 
     it('should NOT run fullstory code if the store is created more then then 7 days before', () => {
@@ -196,7 +197,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+        expect(fullstoryLoaderService.load).not.toHaveBeenCalled();
     });
 
     it('should NOT run fullstory code if the store country is not US', () => {
@@ -215,7 +216,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(windowRef.nativeWindow.FS.identify).not.toHaveBeenCalled();
+        expect(fullstoryLoaderService.load).not.toHaveBeenCalled();
     });
 
     it('should run Appcues code if the user is not admin and the country is US and the source is shopify', () => {

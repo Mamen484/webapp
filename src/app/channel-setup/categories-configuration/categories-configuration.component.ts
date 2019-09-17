@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { of, Subscription, zip } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, map, tap } from 'rxjs/operators';
+import { debounceTime, filter, tap } from 'rxjs/operators';
 import { FeedService } from '../../core/services/feed.service';
 import { Channel } from 'sfl-shared/entities';
 import { FeedCategory } from '../../core/entities/feed-category';
@@ -18,9 +18,8 @@ import { CategoryMappingComponent } from './category-mapping/category-mapping.co
 import { CategoryMappingService } from './category-mapping/category-mapping.service';
 import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.service';
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
-import { LOAD_FULLSTORY } from '../../../trackers/fullstory';
-import { environment } from '../../../environments/environment';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -62,7 +61,8 @@ export class CategoriesConfigurationComponent implements OnInit {
                 protected categoryMappingService: CategoryMappingService,
                 protected stateService: AutotagFormStateService,
                 protected windowRef: SflWindowRefService,
-                protected userService: SflUserService) {
+                protected userService: SflUserService,
+                protected fullstoryLoader: FullstoryLoaderService) {
     }
 
 
@@ -78,27 +78,12 @@ export class CategoriesConfigurationComponent implements OnInit {
         this.refreshCategoriesList();
     }
 
-    enableFullstory() {
-        this.appStore.select('currentStore').pipe(
-            flatMap(store => this.userService.fetchAggregatedInfo()
-                .pipe(map(userInfo => ({store, userInfo}))))
-        ).subscribe(
-            ({store, userInfo}) => {
-                LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
-                this.windowRef.nativeWindow.FS.identify(store.id, {
-                    displayName: store.name,
-                    email: userInfo.email,
-                });
-            }
-        )
-    }
-
     hasModifications() {
         return this.categoryMapping.searchChannelCategoryControl.dirty || this.autotagFormState === AutotagFormState.dirty;
     }
 
     ngOnInit() {
-        this.enableFullstory();
+        this.fullstoryLoader.load();
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
             this.feed = data.feed;

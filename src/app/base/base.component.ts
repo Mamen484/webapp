@@ -10,8 +10,8 @@ import { filter, flatMap, map, take } from 'rxjs/operators';
 import { TagsService } from '../core/services/tags.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { LOAD_AUTOPILOT } from '../../trackers/autopilot';
-import { LOAD_FULLSTORY } from '../../trackers/fullstory';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
+import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
 
 @Component({
     selector: 'app-homepage',
@@ -28,7 +28,8 @@ export class BaseComponent implements OnInit {
                 protected renderer: Renderer2,
                 protected router: Router,
                 protected zendeskService: ngxZendeskWebwidgetService,
-                protected localeIdService: SflLocaleIdService) {
+                protected localeIdService: SflLocaleIdService,
+                protected fullstoryLoader: FullstoryLoaderService) {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
@@ -114,11 +115,7 @@ export class BaseComponent implements OnInit {
         if (!UserStore.storeIsNew(store)) {
             return;
         }
-        LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
-        this.windowRef.nativeWindow.FS.identify(store.id, {
-            displayName: store.name,
-            email: userEmail,
-        });
+        this.fullstoryLoader.load();
     }
 
     protected enableAppcues(store: UserStore, userEmail: string) {
