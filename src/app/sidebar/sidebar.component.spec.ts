@@ -1,4 +1,3 @@
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Input, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -14,6 +13,7 @@ import { SidebarComponent } from './sidebar.component';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 import { ChannelLinkService } from '../core/services/channel-link.service';
+import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
 
 describe('SidebarComponent', () => {
 
@@ -54,6 +54,7 @@ describe('SidebarComponent', () => {
                 {provide: SupportLinkService, useValue: 'support-link/'},
                 {provide: TicketsDataService, useValue: ticketsDataService},
                 {provide: ChannelLinkService, useValue: channelLinkService},
+                AppcuesEnabledService,
             ],
             imports: [MatMenuModule, NoopAnimationsModule],
         })
@@ -151,6 +152,28 @@ describe('SidebarComponent', () => {
         expect(stores[2].getAttribute('ng-reflect-store-id')).toEqual('13');
         expect(stores[2].hasAttribute('disabled')).toEqual(false);
         expect(stores.length).toEqual(3);
+    });
+
+    it('should display an appcues referal link if appcues enabled', () => {
+        const appcuesEnabledService: AppcuesEnabledService = TestBed.get(AppcuesEnabledService);
+        appStore.select.and.returnValue(of({permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
+        appcuesEnabledService.setEnabled();
+        fixture.detectChanges();
+        const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
+        expect(component.appcuesEnabled).toBe(true);
+        expect(link).toBeTruthy();
+
+    });
+
+    it('should NOT display an appcues referal link if appcues NOT enabled', () => {
+        appStore.select.and.returnValue(of({permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
+        fixture.detectChanges();
+        const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
+        expect(component.appcuesEnabled).toBe(false);
+        expect(link).toBeFalsy();
+
     });
 
     function membershipElement() {

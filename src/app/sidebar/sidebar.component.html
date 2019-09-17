@@ -65,6 +65,15 @@
             </a>
         </mat-list-item>
         <mat-list-item fxFlex></mat-list-item>
+
+        <mat-list-item matTooltip="REFERRAL" matTooltipPosition="after" i18n-matTooltip *ngIf="appcuesEnabled"
+                       [matTooltipDisabled]="hideTooltips">
+            <a (click)="openAppcuesDialog()" class="sf-icon-link homepage-link appcues-link">
+                <mat-icon>beenhere</mat-icon>
+            </a>
+            <span fxHide fxShow.xs i18n>Referral</span>
+        </mat-list-item>
+
         <mat-list-item matTooltip="SUPPORT" matTooltipPosition="after" i18n-matTooltip
                        [matTooltipDisabled]="hideTooltips">
             <a [href]="linkToSupportCenter" target="_blank" class="homepage-link">
@@ -72,15 +81,17 @@
             </a>
             <span fxHide fxShow.xs i18n>Support</span>
         </mat-list-item>
+
         <mat-list-item matTooltip="TIMELINE" matTooltipPosition="after" i18n-matTooltip
-                                       [matTooltipDisabled]="hideTooltips">
-        <a (click)="navigateToTimeline()" class="sf-icon-link homepage-link">
-            <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}" [class.active]="currentRoute === 'timeline'"
-                      [attr.data-badge]="newEvents">notifications
-            </mat-icon>
-        </a>
-        <span fxHide fxShow.xs i18n>Timeline</span>
-    </mat-list-item>
+                       [matTooltipDisabled]="hideTooltips">
+            <a (click)="navigateToTimeline()" class="sf-icon-link homepage-link">
+                <mat-icon class="sf-nav-icon" [ngClass]="{'sf-badge': newEvents > 0}"
+                          [class.active]="currentRoute === 'timeline'"
+                          [attr.data-badge]="newEvents">notifications
+                </mat-icon>
+            </a>
+            <span fxHide fxShow.xs i18n>Timeline</span>
+        </mat-list-item>
         <mat-list-item [matTooltip]="currentStore.name" matTooltipPosition="after"
                        [matTooltipDisabled]="hideTooltips">
             <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person</mat-icon>
@@ -137,12 +148,14 @@
        *ngIf="currentStore.permission.facturation && currentStore.paymentType !== paymentTypes.other">Membership</a>
     <a mat-menu-item sflLegacyLink path="/tools/access" i18n *ngIf="!isManager">Access</a>
     <hr>
-    <ng-container  *ngIf="!isAdmin">
+    <ng-container *ngIf="!isAdmin">
         <ng-container *ngFor="let store of userInfo._embedded.store">
-            <a class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
+            <a class="store-link" mat-menu-item
+               *ngIf="store.id !== currentStore.id && store.status !== storeStatus.deleted"
                sflLegacyLink path="/" [storeId]="store.id">{{store.name}}
             </a>
-            <button class="store-link" mat-menu-item *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
+            <button class="store-link" mat-menu-item
+                    *ngIf="store.id !== currentStore.id && store.status === storeStatus.deleted"
                     disabled title="This store is deleted" i18n-title>{{store.name}}
             </button>
         </ng-container>
