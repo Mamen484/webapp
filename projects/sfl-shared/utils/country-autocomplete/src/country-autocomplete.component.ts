@@ -24,6 +24,8 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
 
     @ViewChild('input', {static: false}) input;
 
+    /** show in autocomplete only countries with specified codes */
+    @Input() allowedCodes: string[];
     @Input() appearance: MatFormFieldAppearance = 'standard';
     @Input() valid = true;
     @Input() multipleSelection: 'none' | 'chips' = 'none';
@@ -52,7 +54,9 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     }
 
     ngOnInit() {
-        this.getCountries().subscribe(countries => this.countries = countries);
+        this.getCountries().subscribe(countries => this.countries = this.allowedCodes
+            ? countries.filter(country => this.allowedCodes.indexOf(country.code.toLowerCase()) !== -1)
+            : countries);
 
         this.filteredCountries = this.control.valueChanges.pipe(
             startWith(''),
@@ -92,7 +96,7 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
 
     remove(country) {
         this.selectedCountries.splice(this.selectedCountries.indexOf(country), 1);
-        this.onChange(this.selectedCountries);
+        this.onChange(this.selectedCountries.map(({code}) => code));
     }
 
     protected filterCountries(name: string) {

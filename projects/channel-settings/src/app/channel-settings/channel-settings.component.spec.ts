@@ -62,15 +62,7 @@ describe('ChannelSettingsComponent', () => {
     });
 
     it('should call saveChannel endpoint on save()', () => {
-        channelService.modifyChannel.and.returnValue(of({}));
-        routeData.next({channel: {id: 100, contact: <any>{}}});
-        component.formGroup.setValue({
-            contact: 'test',
-            segment: 'clothes',
-            country: ['fr', 'uk'],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
-        });
-        component.channel = {id: 23};
+        prepareChannelForSave();
         component.save();
         expect(channelService.modifyChannel).toHaveBeenCalledWith(<Channel>{
             contact: 'test',
@@ -81,15 +73,7 @@ describe('ChannelSettingsComponent', () => {
     });
 
     it('should show a snackbar on successful save', () => {
-        channelService.modifyChannel.and.returnValue(of({}));
-        routeData.next({channel: {id: 100, contact: <any>{}}});
-        component.formGroup.setValue({
-            contact: 'test',
-            segment: 'clothes',
-            country: ['fr', 'uk'],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
-        });
-        component.channel = {id: 23};
+        prepareChannelForSave();
         component.save();
         expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent);
     });
@@ -116,7 +100,7 @@ describe('ChannelSettingsComponent', () => {
                     {channelField: 'someChannelField1', appField: 'someSfField', defaultValue: ''},
                     {channelField: 'someChannelField2', appField: 'someSfField', defaultValue: ''},
                     {channelField: 'someChannelField3', appField: 'someSfField', defaultValue: ''},
-                ]
+                ], _embedded: <any>{country: []}
             }
         });
         expect(component.templateControl.length).toBe(3);
@@ -125,14 +109,14 @@ describe('ChannelSettingsComponent', () => {
     it('should add an empty row if template has no rows', () => {
         routeData.next({
             channel: {
-                id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment'
+                id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment', _embedded: <any>{country: []}
             }
         });
         expect(component.templateControl.length).toBe(1);
     });
 
     it('should assign templateFields', () => {
-        routeData.next({fields: [<any>{someProp: 'someValue'}], channel: {id: 100, contact: <any>{}}});
+        routeData.next({fields: [<any>{someProp: 'someValue'}], channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
         expect(component.templateFields).toEqual([<any>{someProp: 'someValue'}]);
     });
 
@@ -146,7 +130,7 @@ describe('ChannelSettingsComponent', () => {
     });
 
     it('should not remove existing taxonomyId values', () => {
-        routeData.next({channel: {id: 100, contact: <any>{}}});
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
         component.countryList = [{code: 'FR', taxonomyId: 110}];
         component.formGroup.setValue({
             contact: 'test',
@@ -156,4 +140,35 @@ describe('ChannelSettingsComponent', () => {
         });
         expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK'}])
     });
+
+    it('should use taxonomyId values from channel', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['FR', 'UK'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+        });
+        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK'}])
+    });
+
+    function prepareChannelForSave() {
+        channelService.modifyChannel.and.returnValue(of({}));
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['fr', 'uk'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+        });
+        component.channel = {id: 23};
+    }
 });

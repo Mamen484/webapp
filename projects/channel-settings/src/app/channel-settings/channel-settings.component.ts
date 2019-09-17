@@ -10,6 +10,8 @@ import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 import { filter } from 'rxjs/operators';
+import { googleTaxonomy } from './google-taxonomy';
+import { allowedCountries } from './allowed-countries';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -31,6 +33,9 @@ export class ChannelSettingsComponent implements OnInit {
     appLink: Observable<string>;
     countryList: Country[] = [];
     countryNames: { [countryCode: string]: string } = {};
+
+    googleTaxonomyList = googleTaxonomy;
+    allowedCountries = allowedCountries;
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
@@ -68,6 +73,7 @@ export class ChannelSettingsComponent implements OnInit {
     initializeControlValues() {
         this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
         this.formGroup.controls.segment.setValue(this.channel.segment);
+        this.countryList = this.channel._embedded.country;
         this.formGroup.controls.country.valueChanges.pipe(filter(value => value))
             .subscribe((value: string[]) => {
                 this.countryList = value.map(countryCode => {

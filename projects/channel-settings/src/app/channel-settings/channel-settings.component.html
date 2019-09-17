@@ -51,7 +51,7 @@
                     <mat-hint>Category allows user to find channel more easily through filters</mat-hint>
                 </mat-form-field>
                 <sfl-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline"
-                                          color="primary"
+                                          color="primary" [allowedCodes]="allowedCountries"
                                           [required]="true" hintText="Countries where channel is available"
                                           i18n-hintText>
                 </sfl-country-autocomplete>
@@ -112,9 +112,9 @@
                     <div fxFlex="25%" class="country-name">{{countryNames[country.code]}}</div>
                     <mat-form-field appearance="outline" color="primary" fxFlex="30%">
                         <mat-label>Choose a taxonomy</mat-label>
-                    <mat-select>
-                        <mat-option>Google Taxonomy</mat-option>
-                        <mat-option>I don't have categories</mat-option>
+                    <mat-select [(value)]="country.taxonomyId">
+                        <mat-option *ngIf="googleTaxonomyList[country.code]" [value]="googleTaxonomyList[country.code]">Google Taxonomy</mat-option>
+                        <mat-option value="">I don't have categories</mat-option>
                     </mat-select>
                     </mat-form-field>
                 </div>
