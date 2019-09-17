@@ -125,7 +125,9 @@ export class ChannelSettingsComponent implements OnInit {
             country: this.countryList,
             template: this.formGroup.get('template').value,
         }, this.channel.id).subscribe(() => {
-            this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent);
+            this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {
+                duration: 2000,
+            });
         });
     }
 
