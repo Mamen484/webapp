@@ -12,6 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LOAD_AUTOPILOT } from '../../trackers/autopilot';
 import { LOAD_FULLSTORY } from '../../trackers/fullstory';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
+import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
 
 @Component({
     selector: 'app-homepage',
@@ -28,7 +29,8 @@ export class BaseComponent implements OnInit {
                 protected renderer: Renderer2,
                 protected router: Router,
                 protected zendeskService: ngxZendeskWebwidgetService,
-                protected localeIdService: SflLocaleIdService) {
+                protected localeIdService: SflLocaleIdService,
+                protected appcuesEnabledService: AppcuesEnabledService) {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
@@ -133,6 +135,7 @@ export class BaseComponent implements OnInit {
                 email: userEmail,
                 created_at: new Date(store.createdAt).getTime(),
             });
+            this.appcuesEnabledService.setEnabled();
         };
 
         this.renderer.appendChild(document.body, script);

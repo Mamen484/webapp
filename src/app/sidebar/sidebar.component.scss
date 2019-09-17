@@ -54,3 +54,9 @@ mat-list.sf-nav-list {
 .nav-link.home {
   margin: auto;
 }
+
+.appcues-link {
+  mat-icon {
+    color: mat-color($accent);
+  }
+}
