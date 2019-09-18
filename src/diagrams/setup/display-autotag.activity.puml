@@ -1,0 +1,22 @@
+@startuml
+start
+floating note
+    The algorithm of display an autotag attribute
+    on setup page (SFWEB-394)
+end note
+if (attribute has a constraintGroupID property) then (yes)
+    if (property value is __null__) then (yes)
+        :show a text input;
+    else (property value is an integer)
+            :show a dropdown;
+            :user clicks a dropdown;
+            :GET FetchChannelConstraintCollection;
+            :show dropdown inputs with \noptions from an API response;
+    endif
+else (no)
+:show a text input;
+endif
+end
+
+
+@enduml

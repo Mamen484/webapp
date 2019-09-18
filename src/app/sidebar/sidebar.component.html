@@ -102,9 +102,8 @@
 </sfl-sidebar-container>
 
 <mat-menu #channelsMenu="matMenu" class="sf-sidebar-menu channels-menu" xPosition="after" yPosition="above">
-    <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sflLegacyLink
-       [path]="getChannelLink(channel)">
-        <img [src]="channel._links.image.href" [alt]="channel.name">
+    <a mat-menu-item *ngFor="let channel of channels" class="channel-logo" sflLegacyLink [path]="channel._embedded.channel | sfChannelLink">
+        <img [src]="channel._embedded.channel._links.image.href" [alt]="channel._embedded.channel.name">
     </a>
     <a mat-menu-item sflLegacyLink path="/tools/export" i18n>Custom data feeds</a>
 </mat-menu>

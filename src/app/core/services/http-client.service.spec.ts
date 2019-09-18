@@ -4,6 +4,7 @@ import { HttpClientService } from './http-client.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ServerErrorComponent } from '../../snackbars/server-error/server-error.component';
+import { ErrorSnackbarConfig } from '../entities/error-snackbar-config';
 
 describe('HttpClientService', () => {
     let snackBar;
@@ -59,7 +60,7 @@ describe('HttpClientService', () => {
         req.flush('data', {status: 503, statusText: 'Service Unavailable'});
         tick();
         httpMock.expectNone('/smth');
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ServerErrorComponent);
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(ServerErrorComponent, ErrorSnackbarConfig.createStatic());
         expect(callbackSpy).not.toHaveBeenCalled();
         expect(callbackErrorSpy).toHaveBeenCalled();
 

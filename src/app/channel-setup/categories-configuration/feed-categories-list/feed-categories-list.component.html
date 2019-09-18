@@ -1,0 +1,27 @@
+<mat-card class="categories-list">
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item *ngFor="let category of (categories || [])" (click)="chooseClientCategory(category)"
+                           [class.selected]="chosenCatalogCategory.id === category.catalogCategory.id">
+                <div fxLayout="row" class="user-category-row mat-body-1" fxLayoutAlign="center center">
+                    <div fxFlex>{{category.catalogCategory.name}}</div>
+                    <div class="sf-label red mat-chip" *ngIf="category.state === categoryState.Misconfigured">
+                        <mat-icon color="warn">cancel</mat-icon>
+                        <ng-container i18n>Misconfigured</ng-container>
+                    </div>
+
+                    <div class="sf-label green mat-chip" *ngIf="category.state === categoryState.Configured">
+                        <mat-icon>check_circle</mat-icon>
+                        <ng-container i18n>Configured</ng-container>
+                    </div>
+                </div>
+            </mat-list-item>
+            <mat-list-item *ngIf="categories && categories.length === 0" i18n>
+                No category found.
+            </mat-list-item>
+        </mat-list>
+        <mat-paginator [pageIndex]="currentPage" [length]="totalCategoriesNumber" [pageSize]="itemsPerPage"
+                       (page)="changePage($event)"></mat-paginator>
+
+    </mat-card-content>
+</mat-card>

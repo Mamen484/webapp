@@ -1,0 +1,21 @@
+@import '../../../../sass/variables';
+@import '../mapping-common.mixin';
+
+@include mappingCommon();
+
+mat-form-field {
+  width: 100%;
+}
+
+button.save-matching {
+  margin-top: 12px;
+}
+
+.category-mapping {
+  padding: 16px;
+}
+
+mat-card {
+  padding: 0;
+  margin-top: 20px;
+}

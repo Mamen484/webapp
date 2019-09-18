@@ -1,0 +1,16 @@
+@startuml
+
+class FeedService {
+    +fetchAutotagByCategoryCollection()
+    +fetchMappingCollection()
+    +matchAutotagByCategory()
+}
+
+
+FeedService o-- AutotagMappingComponent
+AutotagInput *-- AutotagMappingComponent
+AutotagDropdown *-- AutotagMappingComponent
+
+
+hide empty members
+@enduml

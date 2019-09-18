@@ -53,7 +53,7 @@ sf-filter-channels-dialog {
 
 }
 
-button {
+button, a {
   &[mat-button], &[mat-raised-button] {
     text-transform: uppercase;
   }

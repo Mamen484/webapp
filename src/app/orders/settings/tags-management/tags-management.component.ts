@@ -8,6 +8,7 @@ import { AppState } from '../../../core/entities/app-state';
 import { flatMap, take } from 'rxjs/operators';
 import { SET_TAGS } from '../../../core/reducers/tags-reducer';
 import { Tag } from '../../../core/entities/tag';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 @Component({
     selector: 'sf-tags-management',
@@ -91,10 +92,7 @@ export class TagsManagementComponent implements OnInit {
 
     protected showServerError({message}) {
         this.loading = false;
-        return this.snackBar.open(message, '', {
-                panelClass: 'sf-snackbar-error',
-                duration: 5000,
-            }
+        return this.snackBar.open(message, '', new ErrorSnackbarConfig()
         )
     }
 

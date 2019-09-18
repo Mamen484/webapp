@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreChannel } from 'sfl-shared/entities';
-import { Channel } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-configured-channel',
@@ -12,21 +11,13 @@ export class ConfiguredChannelComponent implements OnInit {
     @Input() channel: StoreChannel;
     @Input() hasStatisticsPermission = false;
 
+    revenueStatisticsAvailable = false;
+
     channelsOnline: number;
 
     ngOnInit() {
         this.initializeOnline();
-    }
-
-    goToChannelLink(channel: Channel) {
-        return channel.type === 'marketplace'
-            ? `/${channel.name}`
-            : `/${channel.type}/manage/${channel.name}`;
-    }
-
-    // @TODO: improve performance of change detection
-    statisticsExistsFor(property) {
-        return Boolean(this.channel.statistics) && typeof this.channel.statistics[property] === 'number';
+        this.revenueStatisticsAvailable = this.statisticsExistsFor('revenue');
     }
 
     protected initializeOnline() {
@@ -44,5 +35,9 @@ export class ConfiguredChannelComponent implements OnInit {
         if (this.channelsOnline > 100) {
             this.channelsOnline = 100;
         }
+    }
+
+    protected statisticsExistsFor(property) {
+        return Boolean(this.channel.statistics) && typeof this.channel.statistics[property] === 'number';
     }
 }

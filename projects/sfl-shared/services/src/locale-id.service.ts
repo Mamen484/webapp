@@ -1,5 +1,5 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { SFL_LANGUAGE_OPTIONS, SFL_DEFAULT_LANGUAGE } from 'sfl-shared/entities';
+import { SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS } from 'sfl-shared/entities';
 
 export const LOCALES_MAP = {
     'us': 'en'
@@ -44,6 +44,4 @@ export class SflLocaleIdService {
     ) {
         this.localeId = SflLocaleIdService.detectLocale(this.originalLocaleId, this.languageOptions, this.defaultLanguage);
     }
-
-
 }

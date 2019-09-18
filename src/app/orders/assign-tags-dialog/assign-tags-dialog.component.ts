@@ -9,6 +9,7 @@ import { TagsService } from '../../core/services/tags.service';
 import { flatMap } from 'rxjs/operators';
 import { of, zip } from 'rxjs';
 import { OrdersTableItem } from '../../core/entities/orders/orders-table-item';
+import { ErrorSnackbarConfig } from '../../core/entities/error-snackbar-config';
 
 @Component({
     selector: 'sf-assign-tags-dialog',
@@ -69,10 +70,7 @@ export class AssignTagsDialogComponent implements OnInit {
             .subscribe(() => this.matDialogRef.close(
                 this.tagsToAdd.length > 0 || this.tagsToRemove.length > 0
                 ),
-                error => this.snackBar.open(error.message, '', {
-                    panelClass: 'sf-snackbar-error',
-                    duration: 5000,
-                }));
+                error => this.snackBar.open(error.message, '', new ErrorSnackbarConfig()));
     }
 
     /**

@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { AggregatedUserInfo, Channel, PaymentType, Store, StoreChannelDetails, StoreStatus } from 'sfl-shared/entities';
+import { AggregatedUserInfo, PaymentType, Store, StoreChannel, StoreStatus } from 'sfl-shared/entities';
 import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { ChannelLinkService } from '../core/services/channel-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
 
@@ -23,7 +24,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     currentStore: Store;
     currentRoute;
-    channels: StoreChannelDetails[];
+    channels: StoreChannel[];
     linkToSupportCenter;
     hideTooltips = false;
 
@@ -45,6 +46,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected route: ActivatedRoute,
                 protected router: Router,
                 protected userService: SflUserService,
+                protected channelLinkService: ChannelLinkService,
                 protected ticketsDataService: TicketsDataService,
                 protected appcuesEnabledService: AppcuesEnabledService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
@@ -76,10 +78,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
             || this.currentStore.permission.solomo;
     }
 
-    getChannelLink(channel: Channel) {
-        return channel.type === 'marketplace'
-            ? `/${channel.name}`
-            : `/${channel.type}/manage/${channel.name}`;
+    goToChannel(channel: StoreChannel) {
+        this.channelLinkService.navigateToChannel(channel);
     }
 
     onMenuOpen() {
@@ -123,6 +123,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
         this.timelineService.getUpdatesNumber()
             .subscribe(events => this.newEvents = events);
     }
-
 
 }

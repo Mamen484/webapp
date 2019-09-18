@@ -13,7 +13,7 @@ import { SflSharedModule } from 'sfl-shared/core';
 import { ChannelLanguage } from './core/entities/channel-language.enum';
 import { environment } from '../environments/environment';
 import { SflAuthModule } from 'sfl-shared/auth';
-import { SflErrorPagesModule } from 'sfl-shared/error-pages';
+import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
 import { ZendeskConfig } from './core/widgets/zendesk.config';
@@ -42,7 +42,7 @@ import { ZendeskConfig } from './core/widgets/zendesk.config';
         TicketsModule,
         ngxZendeskWebwidgetModule.forRoot(ZendeskConfig),
         // keep this module in the bottom as it contains a wildcard route
-        SflErrorPagesModule,
+        ErrorPagesModule,
     ],
     bootstrap: [AppComponent]
 })

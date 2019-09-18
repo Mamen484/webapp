@@ -5,7 +5,7 @@ import { Channel } from './channel';
 export interface StoreChannel {
     id: number;
     store: number;
-    installed: true;
+    installed: boolean;
     // custom field set in runtime, statistics for the installed channel
     statistics: ChannelStatistics;
 

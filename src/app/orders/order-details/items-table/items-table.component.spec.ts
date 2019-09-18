@@ -12,6 +12,8 @@ import { SkuModificationDialogComponent } from '../sku-modification-dialog/sku-m
 import { SkuSavedSnackbarComponent } from '../sku-saved-snackbar/sku-saved-snackbar.component';
 import { ArrayFromNumberPipe } from '../../../shared/array-from-number/array-from-number.pipe';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
+import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 
 describe('ItemsTableComponent', () => {
     let component: ItemsTableComponent;
@@ -128,9 +130,7 @@ describe('ItemsTableComponent', () => {
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
         component.updateItemReference(<any>{sku: '234'});
-        expect(snackbar.openFromComponent).toHaveBeenCalledWith(SkuSavedSnackbarComponent, {
-            duration: 2000,
-        });
+        expect(snackbar.openFromComponent).toHaveBeenCalledWith(SkuSavedSnackbarComponent, new SuccessSnackbarConfig());
     });
 
     it('should show an error snackbar when save sku fails', () => {
@@ -139,10 +139,7 @@ describe('ItemsTableComponent', () => {
         appStore.select.and.returnValue(of({id: 34}));
         component.order = <any>{id: 12};
         component.updateItemReference(<any>{sku: '234'});
-        expect(snackbar.open).toHaveBeenCalledWith('err', '', {
-            panelClass: 'sf-snackbar-error',
-            duration: 5000,
-        });
+        expect(snackbar.open).toHaveBeenCalledWith('err', '', new ErrorSnackbarConfig());
     });
 
     it('should initialize a selectedQuantity field if the mode is `refund`', () => {

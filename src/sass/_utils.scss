@@ -1,4 +1,5 @@
 @import 'variables';
+
 $badge-font-level: caption;
 
 .sf-badge {
@@ -68,12 +69,18 @@ $badge-font-level: caption;
 .sf-snackbar-error {
   color: mat-color($warn);
   font-weight: mat-font-weight($config, body-2);
+  text-align: center;
+}
+
+.sf-snackbar-success {
+  text-align: center;
 }
 
 // avoid double gaps on the grid where we have a gap between two elements, and one of them
 // contains nothing (conditionally displayed content, for instance)
 .sf-gap-compensate-parent {
   margin-top: -$default-grid-gap;
+
   .sf-gap-compensate-child {
     margin-top: $default-grid-gap;
   }
@@ -84,26 +91,33 @@ $badge-font-level: caption;
 }
 
 .tag-color-blue {
-  background-color: rgba(25,118,210,0.3) !important;
+  background-color: rgba(25, 118, 210, 0.3) !important;
 }
+
 .tag-color-green {
-  background-color: rgba(56,142,60,0.3) !important;
+  background-color: rgba(56, 142, 60, 0.3) !important;
 }
+
 .tag-color-red {
-  background-color: rgba(183,28,28,0.3) !important;
+  background-color: rgba(183, 28, 28, 0.3) !important;
 }
+
 .tag-color-orange {
   background-color: #FFCCBC !important;
 }
+
 .tag-color-yellow {
   background-color: #FFE0B2 !important;
 }
+
 .tag-color-indigo {
   background-color: #C5CAE9 !important;
 }
+
 .tag-color-grey {
   background-color: #B0BEC5 !important;
 }
+
 .tag-color-brown {
   background-color: #BCAAA4 !important;
 }
@@ -133,5 +147,15 @@ $badge-font-level: caption;
   &.blue {
     background-color: mat-color($mat-blue, 700, 0.3);
     color: $black-87-opacity;
+  }
+}
+
+button.sf-button-chip-alike {
+  &.mat-button, &.mat-stroked-button, &.mat-raised-button {
+    border-radius: 16px;
+
+    &.blue {
+      background-color: mat-color($mat-blue, 700, 0.15);
+    }
   }
 }

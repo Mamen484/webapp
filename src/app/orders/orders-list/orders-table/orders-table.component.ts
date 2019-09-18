@@ -29,6 +29,7 @@ import { ConfirmDialogData } from '../../../core/entities/orders/confirm-dialog-
 import { environment } from '../../../../environments/environment';
 import { AssignTagsDialogComponent } from '../../assign-tags-dialog/assign-tags-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
+import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 
@@ -279,10 +280,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     }
 
     protected showStatusChangedSnackbar(action) {
-        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, {
-            duration: 2000,
-            data: {ordersNumber: this.selection.selected.length, action}
-        });
+        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: this.selection.selected.length, action}}));
     }
 
     protected fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number; dataList: any[] }> {
@@ -356,7 +354,7 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         this.appStore.select('installedChannels').pipe(take(1)).subscribe(channels => {
             try {
                 this.selectedChannel = this.ordersFilter.channel
-                    ? channels.find(ch => ch.id === this.ordersFilter.channel).name
+                    ? channels.find(ch => ch._embedded.channel.id === this.ordersFilter.channel)._embedded.channel.name
                     : undefined;
             } catch (e) {
                 this.selectedChannel = undefined;

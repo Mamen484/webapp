@@ -13,8 +13,10 @@ describe('ConfiguredChannelComponent', () => {
     let fixture: ComponentFixture<ConfiguredChannelComponent>;
 
     beforeEach(async(() => {
+
         TestBed.configureTestingModule({
             declarations: [
+                ChannelLinkMockPipe,
                 ConfiguredChannelComponent,
                 SfCurrencyPipe,
                 LargeNumberSuffixPipe,
@@ -23,7 +25,8 @@ describe('ConfiguredChannelComponent', () => {
                 ChannelOnlineComponent,
                 StatsUnavailableComponent,
             ],
-            schemas: [NO_ERRORS_SCHEMA]
+            schemas: [NO_ERRORS_SCHEMA],
+            providers: [],
         })
             .compileComponents();
     }));
@@ -147,7 +150,7 @@ describe('ConfiguredChannelComponent', () => {
         expect(element('.channel-online').textContent.trim()).toContain('--');
     });
 
-    it('should NOT fails is statistics is not defined at all', () => {
+    it('should NOT fail is statistics is not defined at all', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics = undefined;
         fixture.detectChanges();
@@ -159,7 +162,8 @@ describe('ConfiguredChannelComponent', () => {
             _embedded: {
                 channel: {
                     _links: {image: {href: ''}},
-                    name: 'channel name'
+                    name: 'channel_name',
+                    type: 'shopbot'
                 }
             },
             statistics: {}
@@ -173,4 +177,10 @@ describe('ConfiguredChannelComponent', () => {
 
 @Pipe({name: 'sfCurrency'})
 class SfCurrencyPipe extends BlankPipe implements PipeTransform {
+}
+
+@Pipe({name: 'sfChannelLink'})
+class ChannelLinkMockPipe implements PipeTransform {
+    transform() {
+    }
 }
