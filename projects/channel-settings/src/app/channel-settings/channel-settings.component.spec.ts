@@ -4,13 +4,15 @@ import { ChannelSettingsComponent } from './channel-settings.component';
 import { ChannelService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { of, Subject } from 'rxjs';
+import { EMPTY, of, Subject } from 'rxjs';
 import { Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -21,6 +23,7 @@ describe('ChannelSettingsComponent', () => {
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
     let countriesListService: jasmine.SpyObj<FullCountriesListService>;
     let countries$: Subject<Country[]>;
+    let matDialog: jasmine.SpyObj<MatDialog>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
@@ -30,6 +33,8 @@ describe('ChannelSettingsComponent', () => {
         countriesListService = jasmine.createSpyObj('FullCountriesListService spy', ['getCountries']);
         countries$ = new Subject<Country[]>();
         countriesListService.getCountries.and.returnValue(countries$.asObservable());
+        matDialog = jasmine.createSpyObj('MatDialog spy', ['open']);
+
 
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
@@ -40,6 +45,7 @@ describe('ChannelSettingsComponent', () => {
                 {provide: AppLinkService, useValue: appLinkService},
                 {provide: MatSnackBar, useValue: matSnackBar},
                 {provide: FullCountriesListService, useValue: countriesListService},
+                {provide: MatDialog, useValue: matDialog},
             ]
         })
             .compileComponents();
@@ -86,7 +92,22 @@ describe('ChannelSettingsComponent', () => {
         expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent, {duration: 2000});
     });
 
-    it('should remove a template row by specified index', () => {
+    it('should open a removal dialog when remove icon clicked', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
+        component.addField();
+        component.addField();
+        component.addField();
+        component.templateControl.setValue([
+            {channelField: 'someChannelField1', appField: 'someSfField', defaultValue: ''},
+            {channelField: 'someChannelField2', appField: 'someSfField', defaultValue: ''},
+            {channelField: 'someChannelField3', appField: 'someSfField', defaultValue: ''},
+        ]);
+        component.removeField(1);
+        expect(matDialog.open).toHaveBeenCalledWith(DeleteRowDialogComponent);
+    });
+
+    it('should remove a template row by specified index, if user confirmed deletion', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(true)});
         component.addField();
         component.addField();
         component.addField();
@@ -99,6 +120,20 @@ describe('ChannelSettingsComponent', () => {
         expect(component.templateControls.length).toBe(2);
         expect(component.templateControls[0].controls.channelField.value).toBe('someChannelField1');
         expect(component.templateControls[1].controls.channelField.value).toBe('someChannelField3');
+    });
+
+    it('should NOT remove a template row by specified index, if user canceled deletion', () => {
+        matDialog.open.and.returnValue(<any>{afterClosed: () => of(false)});
+        component.addField();
+        component.addField();
+        component.addField();
+        component.templateControl.setValue([
+            {channelField: 'someChannelField1', appField: 'someSfField', defaultValue: ''},
+            {channelField: 'someChannelField2', appField: 'someSfField', defaultValue: ''},
+            {channelField: 'someChannelField3', appField: 'someSfField', defaultValue: ''},
+        ]);
+        component.removeField(1);
+        expect(component.templateControls.length).toBe(3);
     });
 
     it('should add as many fields as template has rows', () => {

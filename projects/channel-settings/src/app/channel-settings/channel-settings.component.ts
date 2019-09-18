@@ -12,6 +12,8 @@ import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete'
 import { filter } from 'rxjs/operators';
 import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -41,7 +43,8 @@ export class ChannelSettingsComponent implements OnInit {
                 protected route: ActivatedRoute,
                 protected appLinkService: AppLinkService,
                 protected matSnackBar: MatSnackBar,
-                protected countriesListService: FullCountriesListService) {
+                protected countriesListService: FullCountriesListService,
+                protected matDialog: MatDialog) {
     }
 
     get templateControl() {
@@ -115,7 +118,11 @@ export class ChannelSettingsComponent implements OnInit {
     }
 
     removeField(index) {
-        this.templateControl.removeAt(index);
+        this.matDialog.open(DeleteRowDialogComponent).afterClosed().subscribe(confirmed => {
+            if (confirmed) {
+                this.templateControl.removeAt(index);
+            }
+        });
     }
 
     save() {

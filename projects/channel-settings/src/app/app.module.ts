@@ -25,12 +25,15 @@ import { SflSharedModule } from 'sfl-shared/core';
 import { LoginModule } from './login/login.module';
 import { SflImageModule } from 'sfl-shared/utils/image';
 import { SettingsSavedSnackbarComponent } from './channel-settings/settings-saved-snackbar/settings-saved-snackbar.component';
+import { DeleteRowDialogComponent } from './channel-settings/delete-row-dialog/delete-row-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
         AppComponent,
         ChannelSettingsComponent,
         SettingsSavedSnackbarComponent,
+        DeleteRowDialogComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -42,6 +45,7 @@ import { SettingsSavedSnackbarComponent } from './channel-settings/settings-save
         LoginModule,
         MatButtonModule,
         MatCardModule,
+        MatDialogModule,
         MatExpansionModule,
         MatFormFieldModule,
         MatIconModule,
@@ -66,7 +70,7 @@ import { SettingsSavedSnackbarComponent } from './channel-settings/settings-save
     ],
     providers: [],
     bootstrap: [AppComponent],
-    entryComponents: [SettingsSavedSnackbarComponent],
+    entryComponents: [SettingsSavedSnackbarComponent, DeleteRowDialogComponent],
 })
 export class AppModule {
 }
