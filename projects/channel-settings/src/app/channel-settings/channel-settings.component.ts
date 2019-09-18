@@ -23,9 +23,9 @@ export class ChannelSettingsComponent implements OnInit {
     channel: Channel;
 
     formGroup = new FormGroup({
-        contact: new FormControl(),
-        segment: new FormControl(),
-        country: new FormControl(),
+        contact: new FormControl('', [Validators.required]),
+        segment: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
         template: new FormArray([])
     });
 
@@ -119,6 +119,9 @@ export class ChannelSettingsComponent implements OnInit {
     }
 
     save() {
+        if (!this.formGroup.valid) {
+            return;
+        }
         this.channelService.modifyChannel({
             contact: this.formGroup.get('contact').value,
             segment: this.formGroup.get('segment').value,

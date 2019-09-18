@@ -72,10 +72,18 @@ describe('ChannelSettingsComponent', () => {
         }, 23);
     });
 
+    it('should NOT call saveChannel endpoint on save() if the form is invalid', () => {
+        channelService.modifyChannel.and.returnValue(of({}));
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.channel = {id: 23};
+        component.save();
+        expect(channelService.modifyChannel).not.toHaveBeenCalled();
+    });
+
     it('should show a snackbar on successful save', () => {
         prepareChannelForSave();
         component.save();
-        expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent);
+        expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent, {duration: 2000});
     });
 
     it('should remove a template row by specified index', () => {
