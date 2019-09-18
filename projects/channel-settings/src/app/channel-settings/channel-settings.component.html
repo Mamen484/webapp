@@ -112,7 +112,7 @@
                     <div fxFlex="25%" class="country-name">{{countryNames[country.code]}}</div>
                     <mat-form-field appearance="outline" color="primary" fxFlex="30%">
                         <mat-label>Choose a taxonomy</mat-label>
-                    <mat-select [(value)]="country.taxonomyId">
+                    <mat-select [ngModel]="country.taxonomyId || ''" (ngModelChange)="country.taxonomyId = ($event || null)" name="taxonomyId[{{country.code}}]">
                         <mat-option *ngIf="googleTaxonomyList[country.code]" [value]="googleTaxonomyList[country.code]">Google Taxonomy</mat-option>
                         <mat-option value="">I don't have categories</mat-option>
                     </mat-select>

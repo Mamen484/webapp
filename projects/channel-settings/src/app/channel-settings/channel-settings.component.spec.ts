@@ -74,7 +74,7 @@ describe('ChannelSettingsComponent', () => {
         expect(channelService.modifyChannel).toHaveBeenCalledWith(<Channel>{
             contact: 'test',
             segment: 'clothes',
-            country: [{code: 'fr'}, {code: 'uk'}],
+            country: [{code: 'fr', taxonomyId: null}, {code: 'uk', taxonomyId: null}],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         }, 23);
     });
@@ -210,7 +210,7 @@ describe('ChannelSettingsComponent', () => {
             country: ['FR', 'UK'],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         });
-        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK'}])
+        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK', taxonomyId: null}])
     });
 
     it('should use taxonomyId values from channel', () => {
@@ -229,7 +229,7 @@ describe('ChannelSettingsComponent', () => {
             country: ['FR', 'UK'],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         });
-        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK'}])
+        expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK', taxonomyId: null}])
     });
 
     function prepareChannelForSave() {

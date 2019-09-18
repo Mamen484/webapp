@@ -85,7 +85,7 @@ export class ChannelSettingsComponent implements OnInit {
                     if (match) {
                         return match;
                     }
-                    return {code: countryCode};
+                    return {code: countryCode, taxonomyId: null};
                 });
             });
         this.formGroup.controls.country.setValue(this.channel.countries);
