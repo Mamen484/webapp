@@ -9,8 +9,7 @@ import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
 import { MatDialog } from '@angular/material';
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
-import { UnsavedDataInterface } from 'sfl-shared/utils/unsved-data-guard';
-import { UnsavedDataDialogComponent } from 'sfl-shared/utils/unsved-data-guard';
+import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-shared/utils/unsved-data-guard';
 
 @Component({
     templateUrl: './create-account.component.html',
@@ -38,7 +37,12 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
         password: new FormControl('', [Validators.required, Validators.minLength(6), () => this.getValidationMessages(['owner', 'password'])]),
         channelName: new FormControl('', [Validators.required, Validators.minLength(2), () => this.getValidationMessages(['name'])]),
         channelType: new FormControl('', [Validators.required, () => this.getValidationMessages(['type'])]),
-        country: new FormControl('', [Validators.required, () => this.getValidationMessages(['country'])]),
+        country: new FormControl('', [
+                Validators.required,
+                () => this.getValidationMessages(['country']),
+                (control) => control.value ? null : {validationError: 'Country name is missing. Please, choose one from a list.'}
+            ],
+        ),
         exportType: new FormControl('', [Validators.required, () => this.getValidationMessages(['feedType'])]),
 
         // exportType = XML
