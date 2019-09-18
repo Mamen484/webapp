@@ -27,6 +27,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
 import { SettingsSavedSnackbarComponent } from './channel-settings/settings-saved-snackbar/settings-saved-snackbar.component';
 import { DeleteRowDialogComponent } from './channel-settings/delete-row-dialog/delete-row-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RowValidationDialogComponent } from './channel-settings/row-validation-dialog/row-validation-dialog.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +35,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         ChannelSettingsComponent,
         SettingsSavedSnackbarComponent,
         DeleteRowDialogComponent,
+        RowValidationDialogComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -70,7 +72,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ],
     providers: [],
     bootstrap: [AppComponent],
-    entryComponents: [SettingsSavedSnackbarComponent, DeleteRowDialogComponent],
+    entryComponents: [SettingsSavedSnackbarComponent, DeleteRowDialogComponent, RowValidationDialogComponent],
 })
 export class AppModule {
 }

@@ -14,6 +14,7 @@ import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
+import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -127,6 +128,12 @@ export class ChannelSettingsComponent implements OnInit {
 
     save() {
         if (!this.formGroup.valid) {
+            return;
+        }
+        if ((<FormArray>this.formGroup.controls.template).controls.find(
+            (group: FormGroup) => group.controls.appField.value
+                && group.controls.defaultValue.value)) {
+            this.matDialog.open(RowValidationDialogComponent);
             return;
         }
         this.channelService.modifyChannel({

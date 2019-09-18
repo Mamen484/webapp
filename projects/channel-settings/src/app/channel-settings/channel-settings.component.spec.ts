@@ -13,6 +13,7 @@ import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settin
 import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
+import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -76,6 +77,34 @@ describe('ChannelSettingsComponent', () => {
             country: [{code: 'fr'}, {code: 'uk'}],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         }, 23);
+    });
+
+    it('should show a dialog on save() if both appField and defaultValue contain a value', () => {
+        channelService.modifyChannel.and.returnValue(of({}));
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['fr', 'uk'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'some value'}]
+        });
+        component.channel = {id: 23};
+        component.save();
+        expect(matDialog.open).toHaveBeenCalledWith(RowValidationDialogComponent);
+    });
+
+    it('should NOT call saveChannel endpoint on save() if both appField and defaultValue contain a value', () => {
+        channelService.modifyChannel.and.returnValue(of({}));
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['fr', 'uk'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'some value'}]
+        });
+        component.channel = {id: 23};
+        component.save();
+        expect(channelService.modifyChannel).not.toHaveBeenCalled();
     });
 
     it('should NOT call saveChannel endpoint on save() if the form is invalid', () => {
