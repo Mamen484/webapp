@@ -49,3 +49,33 @@ button.mat-stroked-button {
 .country-name {
   text-transform: capitalize;
 }
+
+sfl-sidebar-container {
+  mat-list.main-sidenav {
+    height: 100%;
+  }
+
+  mat-icon {
+    font-size: mat-font-size($config, headline);
+    color: white;
+    cursor: pointer;
+    margin: auto;
+
+    &.active {
+      color: mat-color($primary);
+    }
+
+    &:hover {
+      color: mat-color($primary);
+    }
+
+    @media #{$xs} {
+      margin-right: 10px;
+      margin-left: 10px;
+
+      & + span {
+        margin-right: 10px;
+      }
+    }
+  }
+}

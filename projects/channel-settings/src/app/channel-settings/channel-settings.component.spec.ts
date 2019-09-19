@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSettingsComponent } from './channel-settings.component';
-import { ChannelService } from 'sfl-shared/services';
+import { ChannelService, SflLocalStorageService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
 import { Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
+import { MatMenuModule } from '@angular/material/menu';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -26,6 +27,8 @@ describe('ChannelSettingsComponent', () => {
     let countriesListService: jasmine.SpyObj<FullCountriesListService>;
     let countries$: Subject<Country[]>;
     let matDialog: jasmine.SpyObj<MatDialog>;
+    let router: jasmine.SpyObj<Router>;
+    let localStorage: jasmine.SpyObj<SflLocalStorageService>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
@@ -36,9 +39,12 @@ describe('ChannelSettingsComponent', () => {
         countries$ = new Subject<Country[]>();
         countriesListService.getCountries.and.returnValue(countries$.asObservable());
         matDialog = jasmine.createSpyObj('MatDialog spy', ['open']);
+        router = jasmine.createSpyObj('Router spy', ['navigate']);
+        localStorage = jasmine.createSpyObj('LocalStorage spy', ['removeItem']);
 
 
         TestBed.configureTestingModule({
+            imports: [MatMenuModule],
             schemas: [NO_ERRORS_SCHEMA],
             declarations: [ChannelSettingsComponent],
             providers: [
@@ -48,6 +54,8 @@ describe('ChannelSettingsComponent', () => {
                 {provide: MatSnackBar, useValue: matSnackBar},
                 {provide: FullCountriesListService, useValue: countriesListService},
                 {provide: MatDialog, useValue: matDialog},
+                {provide: Router, useValue: router},
+                {provide: SflLocalStorageService, useValue: localStorage},
             ]
         })
             .compileComponents();
@@ -238,6 +246,12 @@ describe('ChannelSettingsComponent', () => {
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         });
         expect(component.countryList).toEqual([{code: 'FR', taxonomyId: 110}, {code: 'UK', taxonomyId: null}])
+    });
+
+    it('should logout', () => {
+        component.logout();
+        expect(localStorage.removeItem).toHaveBeenCalledWith('Authorization');
+        expect(router.navigate).toHaveBeenCalledWith(['/login']);
     });
 
     function prepareChannelForSave() {

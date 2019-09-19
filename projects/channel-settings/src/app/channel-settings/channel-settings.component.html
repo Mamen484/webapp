@@ -5,7 +5,15 @@
                 <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
             </a>
         </mat-list-item>
+        <mat-list-item fxFlex></mat-list-item>
+        <mat-list-item matTooltip="Admin" matTooltipPosition="after">
+            <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
+            <span fxHide fxShow.xs i18n>Account</span>
+        </mat-list-item>
     </mat-list>
+    <mat-menu #accountMenu="matMenu" class="sf-sidebar-bottom-menu account-menu" [overlapTrigger]="true">
+        <a mat-menu-item i18n (click)="logout()">Logout</a>
+    </mat-menu>
 </sfl-sidebar-container>
 <div class="sf-content settings-static-bar" fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex>

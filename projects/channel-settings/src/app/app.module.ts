@@ -28,6 +28,7 @@ import { SettingsSavedSnackbarComponent } from './channel-settings/settings-save
 import { DeleteRowDialogComponent } from './channel-settings/delete-row-dialog/delete-row-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RowValidationDialogComponent } from './channel-settings/row-validation-dialog/row-validation-dialog.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { RowValidationDialogComponent } from './channel-settings/row-validation-
         MatIconModule,
         MatInputModule,
         MatListModule,
+        MatMenuModule,
         MatSelectModule,
         MatSnackBarModule,
         ReactiveFormsModule,

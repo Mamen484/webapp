@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChannelService } from 'sfl-shared/services';
-import { ActivatedRoute } from '@angular/router';
+import { ChannelService, SflLocalStorageService } from 'sfl-shared/services';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Channel, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from './field';
@@ -46,7 +46,9 @@ export class ChannelSettingsComponent implements OnInit {
                 protected appLinkService: AppLinkService,
                 protected matSnackBar: MatSnackBar,
                 protected countriesListService: FullCountriesListService,
-                protected matDialog: MatDialog) {
+                protected matDialog: MatDialog,
+                protected router: Router,
+                protected localStorage: SflLocalStorageService) {
     }
 
     get templateControl() {
@@ -147,6 +149,11 @@ export class ChannelSettingsComponent implements OnInit {
             ({error}) => this.matSnackBar.open('An error occured: ' + error.detail, '', new ErrorSnackbarConfig())
             );
 
+    }
+
+    logout() {
+        this.localStorage.removeItem('Authorization');
+        this.router.navigate(['/login']);
     }
 
 
