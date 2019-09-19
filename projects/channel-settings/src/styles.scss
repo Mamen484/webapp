@@ -5,3 +5,8 @@
 a[mat-stroked-button]{
   text-transform: uppercase;
 }
+
+.sf-snackbar-error {
+  color: mat-color($warn);
+  font-weight: mat-font-weight($config, body-2);
+}

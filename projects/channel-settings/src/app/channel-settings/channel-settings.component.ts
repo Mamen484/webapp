@@ -15,6 +15,7 @@ import { allowedCountries } from './allowed-countries';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
+import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -141,11 +142,11 @@ export class ChannelSettingsComponent implements OnInit {
             segment: this.formGroup.get('segment').value,
             country: this.countryList,
             template: this.formGroup.get('template').value,
-        }, this.channel.id).subscribe(() => {
-            this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {
-                duration: 2000,
-            });
-        });
+        }, this.channel.id).subscribe(
+            () => this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000}),
+            ({error}) => this.matSnackBar.open('An error occured: ' + error.detail, '', new ErrorSnackbarConfig())
+            );
+
     }
 
 

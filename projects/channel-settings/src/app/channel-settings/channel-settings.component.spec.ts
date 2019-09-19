@@ -4,7 +4,7 @@ import { ChannelSettingsComponent } from './channel-settings.component';
 import { ChannelService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, of, Subject } from 'rxjs';
+import { EMPTY, of, Subject, throwError } from 'rxjs';
 import { Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
@@ -14,6 +14,7 @@ import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete'
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
+import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -30,7 +31,7 @@ describe('ChannelSettingsComponent', () => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
         appLinkService = jasmine.createSpyObj('AppLinkService spy', ['getLink']);
         routeData = new Subject();
-        matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
+        matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent', 'open']);
         countriesListService = jasmine.createSpyObj('FullCountriesListService spy', ['getCountries']);
         countries$ = new Subject<Country[]>();
         countriesListService.getCountries.and.returnValue(countries$.asObservable());
@@ -119,6 +120,13 @@ describe('ChannelSettingsComponent', () => {
         prepareChannelForSave();
         component.save();
         expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(SettingsSavedSnackbarComponent, {duration: 2000});
+    });
+
+    it('should show a snackbar on a save error', () => {
+        prepareChannelForSave();
+        channelService.modifyChannel.and.returnValue(throwError({error: {detail: 'some error'}}));
+        component.save();
+        expect(matSnackBar.open).toHaveBeenCalledWith('An error occured: some error', '', new ErrorSnackbarConfig());
     });
 
     it('should open a removal dialog when remove icon clicked', () => {
