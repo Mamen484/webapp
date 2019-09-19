@@ -2,10 +2,10 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { Observable } from 'rxjs';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
-import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { Channel, ChannelState } from 'sfl-shared/entities';
 import { MatTableDataSource } from '@angular/material';
+import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.service';
 
 @Component({
     templateUrl: './channel-list.component.html',
@@ -14,7 +14,10 @@ import { MatTableDataSource } from '@angular/material';
 export class ChannelListComponent extends TableOperations<Channel> {
     displayedColumns = ['channelName', 'accountName', 'lastChanged', 'active'];
 
-    constructor(protected windowRef: SflWindowRefService, protected channelService: ChannelService, protected changeDetectorRef: ChangeDetectorRef) {
+    constructor(protected windowRef: SflWindowRefService,
+                protected channelService: ChannelService,
+                protected changeDetectorRef: ChangeDetectorRef,
+                protected channelSettingsLink: ChannelOperatorsAppLinkService) {
         super();
     }
 
@@ -34,7 +37,9 @@ export class ChannelListComponent extends TableOperations<Channel> {
     }
 
     goToChannel(channelId) {
-        this.windowRef.nativeWindow.open(`${environment.channelOperatorLink}/?channelId=${channelId}`);
+        this.channelSettingsLink.getLink('/', new URLSearchParams({channelId})).subscribe(link => {
+            this.windowRef.nativeWindow.open(link);
+        });
     }
 
     protected changeElementState(element: Channel, state: ChannelState) {

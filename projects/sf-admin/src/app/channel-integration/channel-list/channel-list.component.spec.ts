@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 import { ChannelState } from '../../../../../sfl-shared/entities/src/channel-state';
 import { EMPTY, of, throwError } from 'rxjs';
+import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.service';
 
 @Pipe({
     name: 'accountList',
@@ -22,10 +23,12 @@ describe('ChannelListComponent', () => {
     let fixture: ComponentFixture<ChannelListComponent>;
     let channelService: jasmine.SpyObj<ChannelService>;
     let nativeWindow: jasmine.SpyObj<Window>;
+    let channelSettingsLink: jasmine.SpyObj<ChannelOperatorsAppLinkService>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['listChannels', 'activate', 'deactivate']);
         nativeWindow = jasmine.createSpyObj('window spy', ['open']);
+        channelSettingsLink = jasmine.createSpyObj('ChannelOperatorsAppLinkService spy', ['getLink']);
         TestBed.configureTestingModule({
             declarations: [ChannelListComponent, AccountListPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -33,6 +36,7 @@ describe('ChannelListComponent', () => {
             providers: [
                 {provide: ChannelService, useValue: channelService},
                 {provide: SflWindowRefService, useValue: {nativeWindow}},
+                {provide: ChannelOperatorsAppLinkService, useValue: channelSettingsLink},
             ]
         })
             .compileComponents();
@@ -48,8 +52,10 @@ describe('ChannelListComponent', () => {
     });
 
     it('should redirect to correct url on a channel click', () => {
+        channelSettingsLink.getLink.and.returnValue(of('someLink'));
         component.goToChannel(441);
-        expect(nativeWindow.open).toHaveBeenCalledWith(`${environment.channelOperatorLink}/?channelId=441`);
+        expect(channelSettingsLink.getLink).toHaveBeenCalledWith(['/', 'channelId=441']);
+        expect(nativeWindow.open).toHaveBeenCalledWith(`someLink`);
     });
 
     describe('channel state', () => {
