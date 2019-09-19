@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
                 this.userService.fetchAggregatedInfo().subscribe(userData => {
                     if (!userData._embedded.channel) {
                         this.authService.logout();
+                        this.loadingNextPage = false;
+                        this.error = 'We could not find your account';
                         return;
                     }
                     this.router.navigate(['/']);
