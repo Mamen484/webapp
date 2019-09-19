@@ -54,7 +54,7 @@ describe('ChannelListComponent', () => {
     it('should redirect to correct url on a channel click', () => {
         channelSettingsLink.getLink.and.returnValue(of('someLink'));
         component.goToChannel(441);
-        expect(channelSettingsLink.getLink).toHaveBeenCalledWith(['/', 'channelId=441']);
+        expect(channelSettingsLink.getLink).toHaveBeenCalledWith('/', new URLSearchParams({channelId: '441'}));
         expect(nativeWindow.open).toHaveBeenCalledWith(`someLink`);
     });
 
