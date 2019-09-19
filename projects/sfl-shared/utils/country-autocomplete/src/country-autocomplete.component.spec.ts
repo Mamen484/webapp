@@ -14,12 +14,14 @@ describe('CountryAutocompleteComponent', () => {
         let fixture: ComponentFixture<CountryAutocompleteComponent>;
         let countriesListService: jasmine.SpyObj<FullCountriesListService>;
         let valueChanges: BehaviorSubject<any>;
+        let statusChanges: Subject<any>;
         let countries: Subject<Country[]>;
         beforeEach(async(() => {
             countriesListService = jasmine.createSpyObj(['getCountries']);
             countries = new Subject();
             countriesListService.getCountries.and.returnValue(countries);
             valueChanges = new BehaviorSubject<any>('');
+            statusChanges = new Subject<any>();
             TestBed.configureTestingModule({
                 declarations: [CountryAutocompleteComponent],
                 providers: [
@@ -37,9 +39,11 @@ describe('CountryAutocompleteComponent', () => {
             component = fixture.componentInstance;
             component.control = <any>{
                 valueChanges,
+                statusChanges,
                 setValue: jasmine.createSpy(),
                 hasError: () => jasmine.createSpy(),
-                getError: jasmine.createSpy()
+                getError: jasmine.createSpy(),
+                setValidators: jasmine.createSpy(),
             };
         });
 
@@ -114,5 +118,6 @@ describe('CountryAutocompleteComponent', () => {
                 {code: 'UK3', name: 'Uk 3', flag: 'uk'},
             ]);
         });
+
     });
 });

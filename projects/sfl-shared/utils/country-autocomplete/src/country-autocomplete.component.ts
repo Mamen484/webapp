@@ -6,6 +6,7 @@ import { MatOption } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { FullCountriesListService } from './full-countries-list.service';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { MatChipList } from '@angular/material/chips';
 
 
 @Component({
@@ -23,6 +24,7 @@ import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
 
     @ViewChild('input', {static: false}) input;
+    @ViewChild('chipList', {static: false}) chipList: MatChipList;
 
     /** show in autocomplete only countries with specified codes */
     @Input() allowedCodes: string[];
@@ -37,10 +39,7 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     onChange: (value: string | string[]) => any;
     selectedCountries = [];
     protected validationError;
-    control = new FormControl('', [
-        () => this.validationError ? {serverError: this.validationError} : null,
-        this.required ? Validators.required : () => null,
-    ]);
+    control = new FormControl('');
 
     constructor(@Inject(SFL_COUNTRIES_LIST_LINK) public countriesListLink,
                 protected countriesListService: FullCountriesListService,
@@ -54,6 +53,13 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     }
 
     ngOnInit() {
+        this.control.setValidators([
+            () => this.validationError ? {serverError: this.validationError} : null,
+            this.required && this.multipleSelection === 'none' ? Validators.required : () => null,
+            this.required && this.multipleSelection === 'chips'
+                ? () => this.selectedCountries.length ? null : {multipleRequired: true}
+                : () => null,
+        ]);
         this.getCountries().subscribe(countries => this.countries = this.allowedCodes
             ? countries.filter(country => this.allowedCodes.indexOf(country.code.toLowerCase()) !== -1)
             : countries);
@@ -62,6 +68,11 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
             startWith(''),
             map(state => state ? this.filterCountries(state) : this.countries.slice())
         );
+        if (this.multipleSelection === 'chips'){
+            this.control.statusChanges.subscribe(
+                status => this.chipList.errorState = status === 'INVALID'
+            );
+        }
     }
 
     registerOnChange(fn: any): void {
@@ -97,6 +108,8 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     remove(country) {
         this.selectedCountries.splice(this.selectedCountries.indexOf(country), 1);
         this.onChange(this.selectedCountries.map(({code}) => code));
+        this.control.updateValueAndValidity();
+        this.changeDetectorRef.detectChanges();
     }
 
     protected filterCountries(name: string) {
