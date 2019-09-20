@@ -23,8 +23,8 @@ export class SflUserService {
     /**
      *  Caches userInfo on a first call and always returns a cached copy.
      */
-    public fetchAggregatedInfo(): Observable<AggregatedUserInfo> {
-        if (!this.userInfo$) {
+    public fetchAggregatedInfo(reFetch = false): Observable<AggregatedUserInfo> {
+        if (!this.userInfo$ || reFetch) {
             this.userInfo$ = this.httpClient.get(`${this.sflApi}/me`)
                 .pipe(map(userInfo => AggregatedUserInfo.create(userInfo)),
                     publishReplay()) as ConnectableObservable<AggregatedUserInfo>;

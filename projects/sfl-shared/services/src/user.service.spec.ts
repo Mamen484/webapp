@@ -45,6 +45,17 @@ describe('UserService', () => {
         httpMock.verify();
     });
 
+    it('should request server only twice if reFetch=true', () => {
+        const call1 = service.fetchAggregatedInfo(true);
+        const call2 = service.fetchAggregatedInfo(true);
+        expect(call1).not.toBe(call2);
+        call1.subscribe();
+        call2.subscribe();
+        let req = httpMock.match('someLink/me');
+        httpMock.verify();
+        expect(req.length).toBe(2);
+    });
+
     it('should return an instance of AggregatedUserInfo', async () => {
         let respPromise = service.fetchAggregatedInfo().toPromise();
         const req = httpMock.expectOne('someLink/me');

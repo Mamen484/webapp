@@ -4,7 +4,6 @@ import { ChannelListComponent } from './channel-list.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
-import { environment } from '../../../environments/environment';
 import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 import { ChannelState } from '../../../../../sfl-shared/entities/src/channel-state';
 import { EMPTY, of, throwError } from 'rxjs';

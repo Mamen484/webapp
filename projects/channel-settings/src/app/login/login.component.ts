@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
         this.loadingNextPage = true;
         this.authService.login(username, password).subscribe(
             data => {
-                this.userService.fetchAggregatedInfo().subscribe(userData => {
+                this.userService.fetchAggregatedInfo(true).subscribe(userData => {
                     if (!userData._embedded.channel) {
                         this.authService.logout();
                         this.loadingNextPage = false;
