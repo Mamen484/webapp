@@ -29,6 +29,7 @@ import { DeleteRowDialogComponent } from './channel-settings/delete-row-dialog/d
 import { MatDialogModule } from '@angular/material/dialog';
 import { RowValidationDialogComponent } from './channel-settings/row-validation-dialog/row-validation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -57,6 +58,7 @@ import { MatMenuModule } from '@angular/material/menu';
         MatMenuModule,
         MatSelectModule,
         MatSnackBarModule,
+        MatTooltipModule,
         ReactiveFormsModule,
         SflCountryAutocompleteModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,

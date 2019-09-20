@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ChannelService, SflLocalStorageService } from 'sfl-shared/services';
+import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -40,6 +40,7 @@ export class ChannelSettingsComponent implements OnInit {
 
     googleTaxonomyList = googleTaxonomy;
     allowedCountries = allowedCountries;
+    accountName = '';
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
@@ -48,7 +49,8 @@ export class ChannelSettingsComponent implements OnInit {
                 protected countriesListService: FullCountriesListService,
                 protected matDialog: MatDialog,
                 protected router: Router,
-                protected localStorage: SflLocalStorageService) {
+                protected localStorage: SflLocalStorageService,
+                protected userService: SflUserService) {
     }
 
     get templateControl() {
@@ -119,6 +121,7 @@ export class ChannelSettingsComponent implements OnInit {
         });
         this.appLink = this.appLinkService.getLink('/');
         this.initializeCountryNames();
+        this.userService.fetchAggregatedInfo().subscribe(userInfo => this.accountName = userInfo.findFirstEnabledStore().name);
     }
 
     removeField(index) {
@@ -147,7 +150,7 @@ export class ChannelSettingsComponent implements OnInit {
         }, this.channel.id).subscribe(
             () => this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000}),
             ({error}) => this.matSnackBar.open('An error occured: ' + error.detail, '', new ErrorSnackbarConfig())
-            );
+        );
 
     }
 

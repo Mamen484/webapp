@@ -6,7 +6,7 @@
             </a>
         </mat-list-item>
         <mat-list-item fxFlex></mat-list-item>
-        <mat-list-item matTooltip="Admin" matTooltipPosition="after">
+        <mat-list-item [matTooltip]="accountName" matTooltipPosition="after">
             <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
             <span fxHide fxShow.xs i18n>Account</span>
         </mat-list-item>
