@@ -79,3 +79,15 @@ sfl-sidebar-container {
     }
   }
 }
+
+.contact-field, .category-field {
+  width: 50%;
+}
+
+.active-state {
+  color: mat-color($accent);
+}
+
+.inactive-state {
+  color: $black-54-opacity;
+}

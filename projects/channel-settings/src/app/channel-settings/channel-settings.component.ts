@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Channel, Country } from 'sfl-shared/entities';
+import { Channel, ChannelState, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
@@ -25,6 +25,7 @@ export class ChannelSettingsComponent implements OnInit {
 
     channelId: number;
     channel: Channel;
+    channelState = ChannelState;
 
     formGroup = new FormGroup({
         contact: new FormControl('', [Validators.required]),

@@ -15,9 +15,18 @@
         <a mat-menu-item i18n (click)="logout()">Logout</a>
     </mat-menu>
 </sfl-sidebar-container>
-<div class="sf-content settings-static-bar" fxLayout="row" fxLayoutAlign="center center">
+<div class="sf-content settings-static-bar" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="center center">
     <div fxFlex>
-        <img [src]="channel?._links?.image?.href" height="60">
+        <img [src]="channel?._links?.image?.href" height="60" [matTooltip]="channel.name">
+    </div>
+    <div *ngIf="channel.state === channelState.active" class="active-state" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-icon>check_circle_outline</mat-icon>
+        <div i18n>Online</div>
+    </div>
+
+    <div *ngIf="channel.state === channelState.inactive" class="inactive-state" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center">
+        <mat-icon>highlight_off</mat-icon>
+        <div i18n>Offline</div>
     </div>
     <a mat-stroked-button color="primary" i18n [href]="appLink | async" target="_blank">Access demo store</a>
 </div>
@@ -33,12 +42,12 @@
         </mat-card-header>
         <mat-card-content>
             <div fxLayout="column" fxLayoutGap="20px">
-                <mat-form-field appearance="outline" color="primary">
+                <mat-form-field appearance="outline" color="primary" class="contact-field">
                     <mat-label>Contact email</mat-label>
                     <input matInput required formControlName="contact">
                     <mat-hint>Contact email displayed to users in Shopping Feed</mat-hint>
                 </mat-form-field>
-                <mat-form-field appearance="outline" color="primary">
+                <mat-form-field appearance="outline" color="primary" class="category-field">
                     <mat-label>Category</mat-label>
                     <mat-select formControlName="segment" required>
                         <mat-option value="professional">Professional</mat-option>
@@ -86,7 +95,8 @@
                     <mat-form-field appearance="outline" color="primary">
                         <mat-label i18n>SF field</mat-label>
                         <mat-select [formControl]="fieldSet.controls.appField">
-                            <mat-option *ngFor="let field of templateFields" [value]="field.label">{{field.label}}</mat-option>
+                            <mat-option *ngFor="let field of templateFields"
+                                        [value]="field.label">{{field.label}}</mat-option>
                         </mat-select>
                         <mat-hint i18n>Select feed name as written in feed</mat-hint>
                     </mat-form-field>
@@ -95,7 +105,8 @@
                         <input matInput [formControl]="fieldSet.controls.defaultValue">
                         <mat-hint i18n>Or input default value of feed</mat-hint>
                     </mat-form-field>
-                    <button mat-stroked-button *ngIf="i === 0" (click)="addField()" [disabled]="!templateControls[templateControls.length -1].controls.channelField.value">
+                    <button mat-stroked-button *ngIf="i === 0" (click)="addField()"
+                            [disabled]="!templateControls[templateControls.length -1].controls.channelField.value">
                         <mat-icon>add</mat-icon>
                     </button>
                     <button mat-stroked-button *ngIf="i > 0" (click)="removeField(i)">
@@ -120,10 +131,14 @@
                     <div fxFlex="25%" class="country-name">{{countryNames[country.code]}}</div>
                     <mat-form-field appearance="outline" color="primary" fxFlex="30%">
                         <mat-label>Choose a taxonomy</mat-label>
-                    <mat-select [ngModel]="country.taxonomyId || ''" (ngModelChange)="country.taxonomyId = ($event || null)" name="taxonomyId[{{country.code}}]">
-                        <mat-option *ngIf="googleTaxonomyList[country.code]" [value]="googleTaxonomyList[country.code]">Google Taxonomy</mat-option>
-                        <mat-option value="">I don't have categories</mat-option>
-                    </mat-select>
+                        <mat-select [ngModel]="country.taxonomyId || ''"
+                                    (ngModelChange)="country.taxonomyId = ($event || null)"
+                                    name="taxonomyId[{{country.code}}]">
+                            <mat-option *ngIf="googleTaxonomyList[country.code]"
+                                        [value]="googleTaxonomyList[country.code]">Google Taxonomy
+                            </mat-option>
+                            <mat-option value="">I don't have categories</mat-option>
+                        </mat-select>
                     </mat-form-field>
                 </div>
             </form>
