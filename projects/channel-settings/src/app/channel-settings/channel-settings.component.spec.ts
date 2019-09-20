@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSettingsComponent } from './channel-settings.component';
-import { ChannelService, SflLocalStorageService } from 'sfl-shared/services';
+import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
-import { Channel, Country } from 'sfl-shared/entities';
+import { AggregatedUserInfo, Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { MatSnackBar } from '@angular/material';
@@ -29,6 +29,8 @@ describe('ChannelSettingsComponent', () => {
     let matDialog: jasmine.SpyObj<MatDialog>;
     let router: jasmine.SpyObj<Router>;
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
+    let userService: jasmine.SpyObj<SflUserService>;
+    let userData: Subject<AggregatedUserInfo>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
@@ -41,6 +43,9 @@ describe('ChannelSettingsComponent', () => {
         matDialog = jasmine.createSpyObj('MatDialog spy', ['open']);
         router = jasmine.createSpyObj('Router spy', ['navigate']);
         localStorage = jasmine.createSpyObj('LocalStorage spy', ['removeItem']);
+        userService = jasmine.createSpyObj('UserService spy', ['fetchAggregatedInfo']);
+        userData = new Subject();
+        userService.fetchAggregatedInfo.and.returnValue(userData);
 
 
         TestBed.configureTestingModule({
@@ -56,6 +61,7 @@ describe('ChannelSettingsComponent', () => {
                 {provide: MatDialog, useValue: matDialog},
                 {provide: Router, useValue: router},
                 {provide: SflLocalStorageService, useValue: localStorage},
+                {provide: SflUserService, useValue: userService},
             ]
         })
             .compileComponents();
@@ -64,6 +70,7 @@ describe('ChannelSettingsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(ChannelSettingsComponent);
         component = fixture.componentInstance;
+        component.channel = {};
         fixture.detectChanges();
     });
 
@@ -252,6 +259,11 @@ describe('ChannelSettingsComponent', () => {
         component.logout();
         expect(localStorage.removeItem).toHaveBeenCalledWith('Authorization');
         expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    });
+
+    it('should initialize an account name', () => {
+        userData.next(AggregatedUserInfo.create({_embedded: {store: [{name: 'someName'}]}}));
+        expect(component.accountName).toBe('someName');
     });
 
     function prepareChannelForSave() {

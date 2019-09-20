@@ -85,14 +85,14 @@
             </div>
         </mat-card-header>
         <mat-card-content>
-            <form fxLayout="column" fxLayoutGap="20px">
+            <form fxLayout="column" fxLayoutGap="20px" class="template-form">
                 <div fxLayout="row" fxLayoutGap="20px" *ngFor="let fieldSet of templateControls; let i = index">
-                    <mat-form-field appearance="outline" color="primary">
+                    <mat-form-field appearance="outline" color="primary" fxFlex>
                         <mat-label i18n>Channel field</mat-label>
                         <input matInput [formControl]="fieldSet.controls.channelField" required>
                         <mat-hint i18n>Input field name as written in feed</mat-hint>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" color="primary">
+                    <mat-form-field appearance="outline" color="primary" fxFlex>
                         <mat-label i18n>SF field</mat-label>
                         <mat-select [formControl]="fieldSet.controls.appField">
                             <mat-option *ngFor="let field of templateFields"
@@ -100,7 +100,7 @@
                         </mat-select>
                         <mat-hint i18n>Select feed name as written in feed</mat-hint>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" color="primary">
+                    <mat-form-field appearance="outline" color="primary" fxFlex>
                         <mat-label i18n>Default value</mat-label>
                         <input matInput [formControl]="fieldSet.controls.defaultValue">
                         <mat-hint i18n>Or input default value of feed</mat-hint>

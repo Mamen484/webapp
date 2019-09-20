@@ -23,6 +23,10 @@ mat-panel-title.mat-title {
 
 mat-card {
   margin-bottom: 20px;
+
+  mat-card-content {
+    margin-top: 20px;
+  }
 }
 
 .actions {
@@ -38,7 +42,7 @@ mat-card {
 button.mat-stroked-button {
   margin-top: 13px;
   align-self: start;
-  min-width: 0;
+  min-width: 46px;
   padding: 0 10px;
 
   mat-icon {
@@ -90,4 +94,8 @@ sfl-sidebar-container {
 
 .inactive-state {
   color: $black-54-opacity;
+}
+
+form.template-form {
+  width: calc(55% + 60px);
 }
