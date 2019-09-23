@@ -5,7 +5,7 @@
                 <mat-icon>search</mat-icon>
                 <input [formControl]="searchControl" class="mat-subheading-1" [value]="value"
                        [placeholder]="placeholder" (focus)="focused = true" (blur)="focused = false">
-                <button mat-stroked-button color="accent" (click)="openFilters.emit()" *ngIf="filterButtonText">
+                <button mat-button color="accent" (click)="openFilters.emit()" *ngIf="filterButtonText">
                     {{filterButtonText}}
                 </button>
             </div>
