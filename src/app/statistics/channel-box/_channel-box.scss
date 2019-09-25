@@ -1,27 +1,27 @@
 @import '../../../sass/variables';
 
-.channel-logo-container {
-  text-align: center;
-  padding-right: $card-padding;
-}
-
-::ng-deep {
-  mat-card-content {
-    margin-bottom: 0;
-    &, & > div {
-      align-items: center;
-    }
-  }
-
+@mixin channelBox() {
   .channel-logo {
     text-align: center;
     width: 100%;
+    margin-top: 15px;
+
     img {
-      max-height: 67px;
+      max-height: 78px;
       max-width: calc(100% - #{$card-padding});
       width: auto;
       height: auto;
       margin: -17px 0 0 0;
+    }
+
+  }
+
+  .channel-box-line {
+    width: 100%;
+    font-size: 15px;
+
+    .channel-box-line-title {
+      color: $black-54-opacity;
     }
   }
 }

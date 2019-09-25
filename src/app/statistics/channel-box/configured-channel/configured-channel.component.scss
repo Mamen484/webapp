@@ -1,4 +1,7 @@
 @import '../../../../sass/variables';
+@import '../channel-box';
+
+@include channelBox();
 
 .channel-link {
   text-decoration: none;

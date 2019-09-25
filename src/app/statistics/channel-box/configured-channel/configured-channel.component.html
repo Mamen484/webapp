@@ -1,27 +1,27 @@
 <a sflLegacyLink [path]="channel._embedded.channel | sfChannelLink" class="channel-link">
-    <sf-channel-box>
+    <mat-card-content fxFlex fxLayout="column" fxLayoutGap="15px">
         <a class="channel-logo" sfChannelLogo>
             <img mat-card-image [src]="channel._embedded.channel._links.image.href"
                  [alt]="channel._embedded.channel.name"></a>
-        <sf-channel-turnover>
-        <span sfTitle i18n matTooltip="Last 30 days - Includes Taxes"
-              i18n-matTooltip
-              matTooltipPosition="right">Turnover</span>
-            <span *ngIf="revenueStatisticsAvailable && hasStatisticsPermission; else unavailable">
-            {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:0}}
-        </span>
-        </sf-channel-turnover>
-        <sf-channel-online [class.online-low]="channelsOnline <= 30"
-                           [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
-                           [class.online-high]="channelsOnline >= 75">
-        <span sfTitle i18n matTooltip="Products successfully sent to channel"
-              i18n-matTooltip
-              matTooltipPosition="right">Online</span>
+
+        <div class="channel-box-line" fxLayout="row">
+            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
+                 matTooltipPosition="right" fxFlex>Turnover</div>
+            <div class="sf-color-grey" *ngIf="revenueStatisticsAvailable && hasStatisticsPermission; else unavailable">
+                {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:0}}
+            </div>
+        </div>
+
+        <div class="channel-box-line" fxLayout="row" [class.online-low]="channelsOnline <= 30"
+             [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
+             [class.online-high]="channelsOnline >= 75">
+            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
+                 matTooltipPosition="right" fxFlex>Online</div>
             <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
-        </sf-channel-online>
+        </div>
 
         <ng-template #unavailable>
-            <sf-stats-unavailable></sf-stats-unavailable>
+            <span i18n class="sf-color-grey" matTooltip="Unavailable" i18n-matTooltip matTooltipPosition="right">--</span>
         </ng-template>
-    </sf-channel-box>
+    </mat-card-content>
 </a>
