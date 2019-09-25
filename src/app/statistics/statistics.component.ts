@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
-import { flatMap, take, tap } from 'rxjs/operators';
-import { zip } from 'rxjs';
+import { flatMap, map, take, tap } from 'rxjs/operators';
+import { Observable, Subject, zip } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
 import { Store as AppStore } from '@ngrx/store';
-import { ChannelsRequestParams, ChannelsResponse, PagedResponse, Store, StoreChannel } from 'sfl-shared/entities';
-import { Statistics } from 'sfl-shared/entities';
+import { ChannelsRequestParams, ChannelsResponse, PagedResponse, Statistics, Store, StoreChannel } from 'sfl-shared/entities';
 import { StoreService } from 'sfl-shared/services';
 import { MatDialog } from '@angular/material';
 import { cloneDeep } from 'lodash';
+import { TimelineEvent } from '../core/entities/timeline-event';
+import { TimelineFilter } from '../core/entities/timeline-filter';
+import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
+import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
+import { TimelineService } from '../core/services/timeline.service';
 
 const LOAD_CHANNELS_COUNT = 6;
+const maxEvents = 200;
 /**
  * load pages on page initialization
  * @type {number}
@@ -33,21 +38,26 @@ export class StatisticsComponent {
     haveNoChannels = false;
     hasStatisticsPermission = false;
 
-    constructor(protected appStore: AppStore<AppState>, protected storeService: StoreService, protected dialog: MatDialog) {
+    exportsLoaded = new Subject<TimelineEvent[]>();
+
+    constructor(protected appStore: AppStore<AppState>,
+                protected storeService: StoreService,
+                protected dialog: MatDialog,
+                protected timelineService: TimelineService) {
 
         this.appStore.select('currentStore').pipe(
             tap(() => this.displayPageLoading()),
             tap((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics)),
             flatMap(currentStore => this.fetchData(currentStore))
         )
-            .subscribe(([statistics, channels]) => {
+            .subscribe(([statistics, channels, exports]) => {
                 this.statistics = statistics;
                 if (!this.statistics._embedded) {
                     this.statistics._embedded = {channel: []};
                 } else if (!Array.isArray(this.statistics._embedded.channel)) {
                     this.statistics._embedded.channel = [];
                 }
-                this.initialize(channels);
+                this.initialize(channels, exports);
                 this.processing = false;
 
                 this.appStore.select('currentStore').pipe(take(1)).subscribe(currentStore => {
@@ -85,13 +95,18 @@ export class StatisticsComponent {
         this.processingFilters = true;
         this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap(currentStore => this.storeService.getStoreChannels(
-                currentStore.id,
-                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}),
-                this.isForeignCountry(currentStore.country)
-            ))
+            flatMap(currentStore =>
+                zip(
+                    this.storeService.getStoreChannels(
+                        currentStore.id,
+                        Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT}),
+                        this.isForeignCountry(currentStore.country)
+                    ),
+                    this.fetchExports(),
+                )
+            )
         )
-            .subscribe(channels => this.initialize(channels));
+            .subscribe(([channels, exports]) => this.initialize(channels, exports));
     }
 
     resetFilter() {
@@ -133,7 +148,7 @@ export class StatisticsComponent {
         });
     }
 
-    protected initialize(data) {
+    protected initialize(data, exports: TimelineEvent[]) {
 
         this.channels = cloneDeep(data);
         this.channels._embedded.channel.forEach((channel: StoreChannel) => {
@@ -141,6 +156,10 @@ export class StatisticsComponent {
                 channel.statistics = this.statistics._embedded.channel.find(ch => ch.id === channel.id);
                 if (channel.statistics) {
                     channel.statistics.currency = this.statistics.currency;
+                }
+                const lastExport = exports.find(event => channel.id === event._embedded.channel.id);
+                if (lastExport) {
+                    channel.lastExport = lastExport.occurredAt;
                 }
             }
         });
@@ -150,8 +169,7 @@ export class StatisticsComponent {
         this.infiniteScrollDisabled = this.channels.page >= this.channels.pages;
         this.appStore.select('currentStore').pipe(take(1)).subscribe((store: Store) => {
             this.internationalMode = this.isForeignCountry(store.country);
-        })
-
+        });
     }
 
     protected displayPageLoading() {
@@ -161,9 +179,23 @@ export class StatisticsComponent {
     }
 
     protected fetchData(currentStore) {
-        return zip(this.storeService.getStatistics(currentStore.id), this.storeService.getStoreChannels(
-            currentStore.id,
-            Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
-        ))
+        return zip(
+            this.storeService.getStatistics(currentStore.id),
+            this.storeService.getStoreChannels(
+                currentStore.id,
+                Object.assign({}, this.filterState, {limit: LOAD_CHANNELS_COUNT * INITIAL_PAGES_AMOUNT})
+            ),
+            this.fetchExports(),
+        )
+    }
+
+    protected fetchExports(): Observable<TimelineEvent[]> {
+        const filter = new TimelineFilter();
+        filter.action = [TimelineEventAction.finish, TimelineEventAction.error];
+        filter.name = [TimelineEventName.export];
+
+        return this.timelineService.getEvents(filter, maxEvents).pipe(
+            map(response => response._embedded.timeline)
+        );
     }
 }

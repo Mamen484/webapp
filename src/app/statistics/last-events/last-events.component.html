@@ -8,15 +8,6 @@
             </div>
             <mat-divider></mat-divider>
         </section>
-        <section *ngIf="lastExports.length">
-            <div class="mat-body-2" i18n>Last exports</div>
-            <div *ngFor="let lastExport of lastExports">
-                <sf-event-stats-row [action]="lastExport.action"
-                                    [channelName]="lastExport._embedded.channel.name"
-                                    [date]="lastExport.occurredAt"></sf-event-stats-row>
-            </div>
-            <mat-divider></mat-divider>
-        </section>
         <section *ngIf="acknowledgeErrors.length" class="section-with-chip">
             <div class="mat-body-2" i18n>Acknowledgment failed <mat-chip color="warn">{{totalAcknowledgeErrors}}</mat-chip></div>
             <div *ngFor="let order of acknowledgeErrors">

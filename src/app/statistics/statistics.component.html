@@ -30,5 +30,5 @@
         </div>
 
     </div>
-    <sf-last-events #lastEvents fxHide.xs fxHide.sm></sf-last-events>
+    <sf-last-events #lastEvents fxHide.xs fxHide.sm (loaded)="exportsLoaded.next($event.exports)"></sf-last-events>
 </div>
