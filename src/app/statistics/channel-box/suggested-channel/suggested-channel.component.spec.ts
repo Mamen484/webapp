@@ -13,7 +13,6 @@ import { ChannelStorageService } from '../../../core/services/channel-storage.se
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
 import { SflWindowRefService } from 'sfl-shared/services';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
-import { environment } from '../../../../environments/environment';
 
 describe('SuggestedChannelComponent', () => {
     let component: SuggestedChannelComponent;
@@ -62,13 +61,12 @@ describe('SuggestedChannelComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should navigate a user to a special cdiscount link when a channel is cdiscount', () => {
+    it('should navigate a user to a normal channel link when a channel is cdiscount', () => {
         const channelLink = 'some_channel_link';
         channelLinkService.getChannelLink.and.returnValue(<any>channelLink);
         component.channel = <any>{_embedded: {channel: {id: ChannelMap.cdiscount}}};
         component.goToChannel();
-        expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href)
-            .toBe(environment.CDISCOUNT_TRACKING_LINK + channelLink);
+        expect(channelLink);
     });
 
     it('should call channelLinkService.navigateToChannel() when channel is different from cdiscount', () => {
