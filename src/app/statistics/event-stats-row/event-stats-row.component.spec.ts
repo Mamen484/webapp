@@ -10,7 +10,7 @@ describe('EventStatsRowComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [EventStatsRowComponent, MockDatePipe],
+            declarations: [EventStatsRowComponent, MockTimeAgoPipe],
         })
             .compileComponents();
     }));
@@ -31,7 +31,7 @@ describe('EventStatsRowComponent', () => {
         jasmine.clock().withMock(() => {
             fixture.detectChanges();
         });
-        expect(fixture.debugElement.nativeElement.textContent).toBe('Completed some_date');
+        expect(fixture.debugElement.nativeElement.textContent).toBe(' Completed some_date');
     });
 
     it('should render a proper content for completed export event', () => {
@@ -41,14 +41,14 @@ describe('EventStatsRowComponent', () => {
         jasmine.clock().withMock(() => {
             fixture.detectChanges();
         });
-        expect(fixture.debugElement.nativeElement.textContent).toBe('Amazon Completed some_date');
+        expect(fixture.debugElement.nativeElement.textContent).toBe('Amazon  Completed some_date');
     });
 
     it('should render a proper content for import event', () => {
         component.action = TimelineEventAction.error;
         component.date = '2017-11-22T12:06:47+00:00';
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('Error some_date');
+        expect(fixture.debugElement.nativeElement.textContent).toBe(' Error some_date');
     });
 
     it('should render a proper content for failed export event', () => {
@@ -56,13 +56,13 @@ describe('EventStatsRowComponent', () => {
         component.date = '2017-11-22T12:06:47+00:00';
         component.channelName = 'Amazon';
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('Amazon Error some_date');
+        expect(fixture.debugElement.nativeElement.textContent).toBe('Amazon  Error some_date');
     });
 
     @Pipe({
-        name: 'date',
+        name: 'timeAgo',
     })
-    class MockDatePipe implements PipeTransform {
+    class MockTimeAgoPipe implements PipeTransform {
         transform() {
             return 'some_date';
         }

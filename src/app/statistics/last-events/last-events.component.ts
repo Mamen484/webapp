@@ -12,7 +12,8 @@ import { TimelineEventAction } from '../../core/entities/timeline-event-action.e
 import { PagedResponse } from 'sfl-shared/entities';
 import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 
-const maxEvents = 5;
+const maxErrors = 3;
+const maxImports = 4;
 
 @Component({
     selector: 'sf-last-events',
@@ -66,12 +67,12 @@ export class LastEventsComponent implements OnInit {
         filter.action = [TimelineEventAction.finish, TimelineEventAction.error];
         filter.name = [TimelineEventName.import];
 
-        return this.timelineService.getEvents(filter, maxEvents);
+        return this.timelineService.getEvents(filter, maxImports);
     }
 
     protected fetchAcknowledgmentErrors(): Observable<PagedResponse<{ order: Order[] }>> {
         const filter = new OrdersFilter();
-        filter.limit = String(maxEvents);
+        filter.limit = String(maxErrors);
         filter.error = OrderErrorType.acknowledge;
         filter.since = OrdersFilter.aWeekBefore();
 
@@ -80,7 +81,7 @@ export class LastEventsComponent implements OnInit {
 
     protected fetchShippingErrors(): Observable<PagedResponse<{ order: Order[] }>> {
         const filter = new OrdersFilter();
-        filter.limit = String(maxEvents);
+        filter.limit = String(maxErrors);
         filter.error = OrderErrorType.ship;
         filter.since = OrdersFilter.aWeekBefore();
 

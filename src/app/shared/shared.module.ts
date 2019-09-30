@@ -49,6 +49,7 @@ import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @NgModule({
     imports: [
@@ -133,6 +134,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         SfNumberPipe,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
+        TimeAgoPipe,
 
         // directives
         HasServerErrorDirective,
@@ -158,6 +160,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         MinNumberDirective,
         HasServerErrorDirective,
         ChannelLinkPipe,
+        TimeAgoPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

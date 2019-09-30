@@ -1,29 +1,47 @@
-<mat-card *ngIf="isDisplayed">
-    <mat-card-content>
-        <section *ngIf="lastImports.length">
-            <div class="mat-body-2" i18n>Last imports</div>
-            <div *ngFor="let lastImport of lastImports">
+<div *ngIf="isDisplayed" fxLayout="column" fxLayoutGap="20px" class="last-events-content">
+    <mat-card *ngIf="lastImports.length">
+        <mat-card-content>
+
+            <div class="mat-title" i18n>Last Imports</div>
+            <div *ngFor="let lastImport of lastImports" fxLayout="column" fxLayoutGap="20px">
+                <mat-divider></mat-divider>
                 <sf-event-stats-row [action]="lastImport.action"
                                     [date]="lastImport.occurredAt"></sf-event-stats-row>
             </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="acknowledgeErrors.length" class="section-with-chip">
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                <mat-icon color="warn">error</mat-icon>
+                <div class="mat-title" i18n fxFlex>Order Acknowledgment Errors</div>
+            </div>
             <mat-divider></mat-divider>
-        </section>
-        <section *ngIf="acknowledgeErrors.length" class="section-with-chip">
-            <div class="mat-body-2" i18n>Acknowledgment failed <mat-chip color="warn">{{totalAcknowledgeErrors}}</mat-chip></div>
             <div *ngFor="let order of acknowledgeErrors">
                 <sf-order-error-row [channelName]="order._embedded.channel.name"
                                     [reference]="order.reference"></sf-order-error-row>
+                <mat-divider></mat-divider>
             </div>
-            <div class="view-link"><a routerLink="/orders" [queryParams]="{view: orderView.importErrors}" i18n>View all</a></div>
+            <div class="view-link"><a mat-button color="accent" routerLink="/orders"
+                                      [queryParams]="{view: orderView.importErrors}" i18n>View
+                all ({{totalAcknowledgeErrors}})</a></div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="shipmentErrors.length" class="section-with-chip">
+        <mat-card-content>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                <mat-icon color="warn">error</mat-icon>
+                <div class="mat-title" i18n fxFlex>Shipment Errors</div>
+            </div>
             <mat-divider></mat-divider>
-        </section>
-        <section *ngIf="shipmentErrors.length" class="section-with-chip">
-            <div class="mat-body-2" i18n>Shipment failed <mat-chip color="warn">{{totalShipmentErrors}}</mat-chip></div>
             <div *ngFor="let order of shipmentErrors">
                 <sf-order-error-row [channelName]="order._embedded.channel.name"
                                     [reference]="order.reference"></sf-order-error-row>
+                <mat-divider></mat-divider>
             </div>
-            <div class="view-link"><a routerLink="/orders" [queryParams]="{view: orderView.shippingErrors}" i18n>View all</a></div>
-        </section>
-    </mat-card-content>
-</mat-card>
+            <div class="view-link"><a mat-button color="accent" routerLink="/orders"
+                                      [queryParams]="{view: orderView.shippingErrors}" i18n>View
+                all ({{totalShipmentErrors}})</a></div>
+        </mat-card-content>
+    </mat-card>
+</div>
