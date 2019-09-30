@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of, Subject } from 'rxjs';
-import { cloneDeep } from 'lodash';
 
 import { StatisticsComponent } from './statistics.component';
 import { statisticsMock } from '../../mocks/statistics-mock';

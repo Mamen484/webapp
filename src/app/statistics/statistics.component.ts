@@ -160,6 +160,7 @@ export class StatisticsComponent {
                 const lastExport = exports.find(event => channel.id === event._embedded.channel.id);
                 if (lastExport) {
                     channel.lastExport = lastExport.occurredAt;
+                    channel.lastExportFailed = lastExport.action === TimelineEventAction.error;
                 }
             }
         });

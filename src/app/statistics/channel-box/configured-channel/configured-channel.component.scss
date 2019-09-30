@@ -19,3 +19,7 @@
 .online-high {
   color: mat-color($green);
 }
+
+mat-icon[color="warn"]{
+  color: mat-color($warn, 900);
+}

@@ -23,8 +23,9 @@
         <div class="channel-box-line" fxLayout="row">
             <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
                  matTooltipPosition="right" fxFlex>Latest export</div>
-            <div class="sf-color-dark-grey" *ngIf="channel.lastExport; else unavailable">
-                {{channel.lastExport | timeAgo}}
+            <div class="sf-color-dark-grey" *ngIf="channel.lastExport; else unavailable" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+                <mat-icon color="warn" *ngIf="channel.lastExportFailed">error</mat-icon>
+                <span>{{channel.lastExport | timeAgo}}</span>
             </div>
         </div>
 
