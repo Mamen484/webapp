@@ -62,7 +62,7 @@ describe('InitializeStoreGuard', () => {
         })));
         const canActivate = await guard.canActivate(<any>{queryParams: {store: 'some store'}}).toPromise();
         expect(canActivate).toBe(true);
-        expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_STORE', store: {name: 'some store', status: 'active'}});
+        expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_STORE', store: {name: 'some store', status: 'active'}});
     });
 
     it('should write to the application store the store, specified in the queryParams', async () => {
@@ -81,7 +81,7 @@ describe('InitializeStoreGuard', () => {
 
         const canActivate = await guard.canActivate(<any>{queryParams: {store: '3'}}).toPromise();
         expect(canActivate).toBe(true);
-        expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_STORE', store: {name: 'someStore1', status: 'active', id: 3}});
+        expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_STORE', store: {name: 'someStore1', status: 'active', id: 3}});
 
     });
 
@@ -99,7 +99,7 @@ describe('InitializeStoreGuard', () => {
 
         const canActivate = await guard.canActivate(<any>{queryParams: {store: 'some store'}}).toPromise();
         expect(canActivate).toBe(true);
-        expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_STORE', store: {name: 'someStore', status: 'active'}});
+        expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_STORE', store: {name: 'someStore', status: 'active'}});
     });
 
     it('should redirect to store-not-found error page when an admin tries to fetch non-existent store',

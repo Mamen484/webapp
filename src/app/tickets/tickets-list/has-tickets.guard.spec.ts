@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { HasTicketsGuard } from './has-tickets.guard';
 import { TicketsService } from '../tickets.service';
 import { EMPTY, of } from 'rxjs';
+import { TicketType } from '../entities/ticket-type.enum';
 
 describe('HasTicketsGuard', () => {
     let ticketService: jasmine.SpyObj<TicketsService>;
@@ -32,6 +33,6 @@ describe('HasTicketsGuard', () => {
     it('should request fetchTicketCollection, specifying that only tickets, containing *order* should be requested', () => {
         ticketService.fetchTicketCollection.and.returnValue(EMPTY);
         guard.resolve().subscribe();
-        expect(ticketService.fetchTicketCollection).toHaveBeenCalledWith({limit: 1, type: 'order'});
+        expect(ticketService.fetchTicketCollection).toHaveBeenCalledWith({limit: 1, type: TicketType.default});
     });
 });

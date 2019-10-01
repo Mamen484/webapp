@@ -38,9 +38,9 @@ describe('SflLocalStorageService', () => {
     });
 
     it('setItem should call setItem on a window.localStorage', () => {
-        service.setItem(123, 321);
+        service.setItem('123', '321');
         expect(localStorage.setItem).toHaveBeenCalledTimes(1);
-        expect(localStorage.setItem).toHaveBeenCalledWith(123, 321);
+        expect(localStorage.setItem).toHaveBeenCalledWith('123', '321');
     });
 
     it('clear should call clear on a window.localStorage', () => {
