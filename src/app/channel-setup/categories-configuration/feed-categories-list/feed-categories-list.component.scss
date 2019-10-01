@@ -4,6 +4,10 @@ $line-padding: 5px;
 mat-card.categories-list {
   padding: 0;
 
+  .sf-label.mat-chip {
+    cursor: pointer;
+  }
+
   mat-list {
     padding-top: 0;
     mat-list-item {
