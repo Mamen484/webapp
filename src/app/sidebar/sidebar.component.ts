@@ -10,7 +10,7 @@ import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ChannelLinkService } from '../core/services/channel-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
-import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
+import { AppcuesService } from '../core/services/appcues.service';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 const referralProgramCode = '-Lh7C5RlCRb6V6lLoBIj';
@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected userService: SflUserService,
                 protected channelLinkService: ChannelLinkService,
                 protected ticketsDataService: TicketsDataService,
-                protected appcuesEnabledService: AppcuesEnabledService) {
+                protected appcuesEnabledService: AppcuesService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });

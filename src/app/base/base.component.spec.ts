@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { TagsService } from '../core/services/tags.service';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
+import { AppcuesService } from '../core/services/appcues.service';
 
 describe('BaseComponent', () => {
 
@@ -25,6 +26,7 @@ describe('BaseComponent', () => {
     let tagsService: jasmine.SpyObj<TagsService>;
     let zendeskService: jasmine.SpyObj<ngxZendeskWebwidgetService>;
     let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
+    let appcuesService: jasmine.SpyObj<AppcuesService>;
 
     let component: BaseComponent;
     let fixture: ComponentFixture<BaseComponent>;
@@ -37,6 +39,7 @@ describe('BaseComponent', () => {
         tagsService = jasmine.createSpyObj('TagsService', ['fetchAll']);
         zendeskService = jasmine.createSpyObj('ngxZendeskWebwidgetService spy', ['setLocale', 'setSettings', 'show']);
         fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
+        appcuesService = jasmine.createSpyObj('Appcues Spy', ['enable']);
 
         router.events = new Subject();
         windowRef.nativeWindow = {
@@ -61,6 +64,7 @@ describe('BaseComponent', () => {
                 {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ngxZendeskWebwidgetService, useValue: zendeskService},
                 {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
+                {provide: AppcuesService, useValue: appcuesService},
             ]
         });
 
@@ -226,10 +230,8 @@ describe('BaseComponent', () => {
             token: 'token_1',
             email: 'some_email'
         })));
-        const renderer = fixture.debugElement.injector.get(Renderer2);
-        spyOn(renderer, 'appendChild');
         fixture.detectChanges();
-        expect(renderer.appendChild).toHaveBeenCalled();
+        expect(appcuesService.enable).toHaveBeenCalled();
     });
 
     it('should NOT run Appcues code if the user is admin and the country is US and the source is shopify', () => {
@@ -239,10 +241,8 @@ describe('BaseComponent', () => {
             token: 'token_1',
             email: 'some_email'
         })));
-        const renderer = fixture.debugElement.injector.get(Renderer2);
-        spyOn(renderer, 'appendChild');
         fixture.detectChanges();
-        expect(renderer.appendChild).not.toHaveBeenCalled();
+        expect(appcuesService.enable).not.toHaveBeenCalled();
     });
 
     it('should NOT run Appcues code if the user is not admin and the country is NOT US and the source is shopify', () => {
@@ -252,10 +252,8 @@ describe('BaseComponent', () => {
             token: 'token_1',
             email: 'some_email'
         })));
-        const renderer = fixture.debugElement.injector.get(Renderer2);
-        spyOn(renderer, 'appendChild');
         fixture.detectChanges();
-        expect(renderer.appendChild).not.toHaveBeenCalled();
+        expect(appcuesService.enable).not.toHaveBeenCalled();
     });
 
     it('should NOT run Appcues code if the user is not admin and the country is US and the source is NOT shopify', () => {
@@ -265,10 +263,8 @@ describe('BaseComponent', () => {
             token: 'token_1',
             email: 'some_email'
         })));
-        const renderer = fixture.debugElement.injector.get(Renderer2);
-        spyOn(renderer, 'appendChild');
         fixture.detectChanges();
-        expect(renderer.appendChild).not.toHaveBeenCalled();
+        expect(appcuesService.enable).not.toHaveBeenCalled();
     });
 
     it('should show zendesk chat if a store has a chat permission', () => {

@@ -66,7 +66,7 @@ describe('SuggestedChannelComponent', () => {
         channelLinkService.getChannelLink.and.returnValue(<any>channelLink);
         component.channel = <any>{_embedded: {channel: {id: ChannelMap.cdiscount}}};
         component.goToChannel();
-        expect(channelLink);
+        expect(channelLinkService.navigateToChannel).toHaveBeenCalledWith(<any>{_embedded: {channel: {id: ChannelMap.cdiscount}}});
     });
 
     it('should call channelLinkService.navigateToChannel() when channel is different from cdiscount', () => {
