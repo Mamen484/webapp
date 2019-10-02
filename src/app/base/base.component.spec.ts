@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { TagsService } from '../core/services/tags.service';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
-import { AppcuesService } from '../core/services/appcues.service';
+import { AppcuesService } from './appcues/appcues.service';
 
 describe('BaseComponent', () => {
 

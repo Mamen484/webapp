@@ -13,7 +13,8 @@ import { SidebarComponent } from './sidebar.component';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 import { ChannelLinkService } from '../core/services/channel-link.service';
-import { AppcuesService } from '../core/services/appcues.service';
+import { AppcuesService } from '../base/appcues/appcues.service';
+import { AppcuesState } from '../base/appcues/appcues-state.enum';
 
 describe('SidebarComponent', () => {
 
@@ -157,10 +158,10 @@ describe('SidebarComponent', () => {
         expect(stores.length).toEqual(3);
     });
 
-    it('should display an appcues referal link if appcues enabled', () => {
+    it('should display an appcues referal link if appcues loaded', () => {
         appStore.select.and.returnValue(of({permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
-        appcuesService.getState.and.returnValue(of(true));
+        appcuesService.getState.and.returnValue(of(AppcuesState.loaded));
         fixture.detectChanges();
         const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
         expect(component.appcuesEnabled).toBe(true);

@@ -7,6 +7,7 @@ import { SidebarModule } from '../sidebar/sidebar.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
+import { AppcuesComponent } from './appcues/appcues.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
     ],
     declarations: [
         BaseComponent,
+        AppcuesComponent,
     ],
     providers: [
         AggregatedUserInfoResolveGuard
