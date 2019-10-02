@@ -1,36 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { zip } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { AppcuesService } from './appcues.service';
 import { AppcuesState } from './appcues-state.enum';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
     selector: 'sf-appcues',
-    templateUrl: './appcues.component.html',
-    styleUrls: ['./appcues.component.scss']
+    template: '',
+    styles: ['']
 })
 export class AppcuesComponent implements OnInit {
-
-    appcuesEnabled = false;
 
     constructor(protected windowRef: SflWindowRefService,
                 protected appStore: Store<AppState>,
                 protected userService: SflUserService,
                 protected appcuesService: AppcuesService,
                 protected localeIdService: SflLocaleIdService,
-                protected router: Router) {
+                protected router: Router,
+                protected renderer: Renderer2) {
     }
 
     ngOnInit() {
-        this.appcuesService.getState().pipe(filter(state => state === AppcuesState.enabled))
-            .subscribe(() => this.appcuesEnabled = true);
+        this.appcuesService.getState().pipe(
+            filter(state => state === AppcuesState.enabled),
+            take(1),
+        )
+            .subscribe(() => {
+                const script: HTMLScriptElement = this.renderer.createElement('script');
+                console.log(script);
+                script.src = '//fast.appcues.com/28284.js';
+                script.onload = () => this.loadAppcues();
+                this.renderer.appendChild(document.body, script);
+            })
     }
 
-    loaded() {
+    protected loadAppcues() {
         zip(
             this.appStore.select('currentStore'),
             this.userService.fetchAggregatedInfo()
