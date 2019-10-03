@@ -9,6 +9,10 @@
             <mat-icon>attach_money</mat-icon>
             <span fxHide fxShow.xs i18n>Billing</span>
         </mat-list-item>
+        <mat-list-item matTooltip="Channel Integration" matTooltipPosition="after" routerLink="/channel-integration">
+            <mat-icon>cloud</mat-icon>
+            <span fxHide fxShow.xs i18n>Channel Integration</span>
+        </mat-list-item>
         <mat-list-item fxFlex></mat-list-item>
         <mat-list-item matTooltip="Admin" matTooltipPosition="after">
             <mat-icon class="sf-nav-icon" [matMenuTriggerFor]="accountMenu">person_outline</mat-icon>
@@ -17,7 +21,7 @@
     </mat-list>
 </sfl-sidebar-container>
 
-<sfl-left-navigation>
+<sfl-left-navigation *ngIf="showSubnavigation">
     <mat-list dense>
         <mat-list-item>
             <div class="nav-title" i18n>Admin</div>

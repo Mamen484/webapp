@@ -33,7 +33,6 @@ import { OrderDetailsResolveGuard } from './guards/order-details-resolve.guard';
 import { tagsReducer } from './reducers/tags-reducer';
 import { OrdersFilterService } from './services/orders-filter.service';
 import { SupportLinkService } from './services/support-link.service';
-import { FullCountriesListService } from './services/full-countries-list.service';
 import { TagsService } from './services/tags.service';
 import { ChannelStorageService } from './services/channel-storage.service';
 import { SflLegacyLinkService } from 'sfl-shared/services';
@@ -70,7 +69,6 @@ import { TimelineRouteGuard } from './guards/timeline-route.guard';
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,
-        FullCountriesListService,
         ShopifyAuthentifyService,
         RegistrationCacheGuard,
         CreatePasswordService,

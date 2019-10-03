@@ -82,7 +82,7 @@ export class StoreService {
     }
 
     public createStore(store: Store) {
-        return this.httpClient.post(`${this.sflApi}/store`, {store});
+        return this.httpClient.post(`${this.sflApi}/store`, {store}) as Observable<Store>;
     }
 }
 

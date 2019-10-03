@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../../../src/styles';
+
+@import '../src/sass/material-theme';
+a[mat-stroked-button]{
+  text-transform: uppercase;
+}
+
+.sf-snackbar-error {
+  color: mat-color($warn);
+  font-weight: mat-font-weight($config, body-2);
+}

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StoreListComponent } from './store-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -10,6 +10,7 @@ import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 
 describe('StoreListComponent', () => {
     let component: StoreListComponent;
@@ -46,35 +47,11 @@ describe('StoreListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should fetch and show billing stores on init', () => {
-        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
-        fixture.detectChanges();
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
-        expect(component.dataSource.data).toEqual([]);
-    });
-
-    it('should reset page when a search string is provided', fakeAsync(() => {
-        billingService.fetchStoreCollection.and.returnValue(EMPTY);
-        fixture.detectChanges();
-        component.currentPage = 6;
-        component.search('some name');
-        tick(1000);
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: 'some name'});
+    runTableOperationSpecs(() => ({
+        fetchCollectionSpy: billingService.fetchStoreCollection,
+        fixture,
+        collectionResponse: {_embedded: {store: []}}
     }));
-
-    it('should change a page and refresh data on pageChanged()', () => {
-        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
-        component.pageChanged(<any>{pageIndex: 1, previousPageIndex: 0});
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 15, page: 2, search: ''});
-        expect(component.currentPage).toEqual(1);
-    });
-
-    it('should change a pageSize on pageChanged()', () => {
-        billingService.fetchStoreCollection.and.returnValue(of(<any>{_embedded: {store: []}}));
-        component.pageChanged(<any>{pageIndex: 3, previousPageIndex: 3, pageSize: 25});
-        expect(billingService.fetchStoreCollection).toHaveBeenCalledWith({limit: 25, page: 1, search: ''});
-        expect(component.pageSize).toEqual(25);
-    });
 
     it('should open a StoreDialogComponent on openCreateStoreDialog()', () => {
         matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});

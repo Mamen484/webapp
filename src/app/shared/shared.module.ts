@@ -38,7 +38,6 @@ import { BlankComponent } from './blank.component';
 import { ScheduleCallIframeComponent } from './schedule-call-iframe.component';
 import { RemoveUnderlinePipe } from './remove-underline.pipe';
 import { LayoutModule } from '@angular/cdk/layout';
-import { CountryAutocompleteComponent } from './country-autocomplete/country-autocomplete.component';
 import { ValidationErrorsSnackbarComponent } from './validation-errors-snackbar/validation-errors-snackbar.component';
 import { InvoicesLinkPipe } from './invoices-link/invoices-link.pipe';
 import { OrdersExportLinkPipe } from './orders-export-link/orders-export-link.pipe';
@@ -49,6 +48,8 @@ import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
+import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
+import { environment } from '../../../projects/channel-settings/src/environments/environment';
 
 @NgModule({
     imports: [
@@ -85,6 +86,9 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
+        SflCountryAutocompleteModule.forRoot({
+            sflCountriesListLink: environment.countriesListLink,
+        }),
         SflSharedModule,
         SflSoloSearchModule,
     ],
@@ -121,6 +125,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         MatTooltipModule,
         ReactiveFormsModule,
         RouterModule,
+        SflCountryAutocompleteModule,
         SflSharedModule,
         SflSoloSearchModule,
 
@@ -139,7 +144,6 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         MinNumberDirective,
 
         // components
-        CountryAutocompleteComponent,
         ScheduleCallIframeComponent,
         ValidationErrorsSnackbarComponent,
     ],
@@ -150,7 +154,6 @@ import { SflImageModule } from 'sfl-shared/utils/image';
         BlankComponent,
         ScheduleCallIframeComponent,
         RemoveUnderlinePipe,
-        CountryAutocompleteComponent,
         ValidationErrorsSnackbarComponent,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
