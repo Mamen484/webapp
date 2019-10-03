@@ -13,7 +13,8 @@ import { SidebarComponent } from './sidebar.component';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
 import { ChannelLinkService } from '../core/services/channel-link.service';
-import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
+import { AppcuesService } from '../base/appcues/appcues.service';
+import { AppcuesState } from '../base/appcues/appcues-state.enum';
 
 describe('SidebarComponent', () => {
 
@@ -29,6 +30,7 @@ describe('SidebarComponent', () => {
     let router: Router;
     let ticketsDataService: jasmine.SpyObj<TicketsDataService>;
     let channelLinkService: jasmine.SpyObj<ChannelLinkService>;
+    let appcuesService: jasmine.SpyObj<AppcuesService>;
 
     beforeEach(() => {
         appStore = jasmine.createSpyObj(['select']);
@@ -40,6 +42,7 @@ describe('SidebarComponent', () => {
         router = <any>{routeReuseStrategy: {shouldDetach: jasmine.createSpy('shouldDetach'), navigate: jasmine.createSpy('navigate')}};
         ticketsDataService = jasmine.createSpyObj('TicketsDataService spy', ['requestUpdate']);
         channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel']);
+        appcuesService = jasmine.createSpyObj('AppcuesService spy', ['enable', 'getState']);
         TestBed.configureTestingModule({
             declarations: [SidebarComponent, LegacyLinkDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -54,7 +57,7 @@ describe('SidebarComponent', () => {
                 {provide: SupportLinkService, useValue: 'support-link/'},
                 {provide: TicketsDataService, useValue: ticketsDataService},
                 {provide: ChannelLinkService, useValue: channelLinkService},
-                AppcuesEnabledService,
+                {provide: AppcuesService, useValue: appcuesService},
             ],
             imports: [MatMenuModule, NoopAnimationsModule],
         })
@@ -64,6 +67,7 @@ describe('SidebarComponent', () => {
     beforeEach(() => {
         timelineService.getUpdatesNumber.and.returnValue(EMPTY);
         appStore.select.and.returnValue(EMPTY);
+        appcuesService.getState.and.returnValue(EMPTY);
         fixture = TestBed.createComponent(SidebarComponent);
         component = fixture.componentInstance;
     });
@@ -154,11 +158,10 @@ describe('SidebarComponent', () => {
         expect(stores.length).toEqual(3);
     });
 
-    it('should display an appcues referal link if appcues enabled', () => {
-        const appcuesEnabledService: AppcuesEnabledService = TestBed.get(AppcuesEnabledService);
+    it('should display an appcues referal link if appcues loaded', () => {
         appStore.select.and.returnValue(of({permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
-        appcuesEnabledService.setEnabled();
+        appcuesService.getState.and.returnValue(of(AppcuesState.loaded));
         fixture.detectChanges();
         const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
         expect(component.appcuesEnabled).toBe(true);
@@ -169,6 +172,7 @@ describe('SidebarComponent', () => {
     it('should NOT display an appcues referal link if appcues NOT enabled', () => {
         appStore.select.and.returnValue(of({permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
+        appcuesService.getState.and.returnValue(EMPTY);
         fixture.detectChanges();
         const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
         expect(component.appcuesEnabled).toBe(false);

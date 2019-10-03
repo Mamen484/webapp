@@ -15,12 +15,14 @@ import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import { AppcuesService } from '../../base/appcues/appcues.service';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
     let fixture: ComponentFixture<CategoriesConfigurationComponent>;
     let userService: jasmine.SpyObj<SflUserService>;
     let windowRef = <any>{};
+    let appcuesService: jasmine.SpyObj<AppcuesService>;
 
     @Directive({selector: '[sfLegacyLink]'})
     class LegacyLinkMockDirective {
@@ -48,6 +50,7 @@ describe('CategoriesConfigurationComponent', () => {
         store = jasmine.createSpyObj('Store spy', ['select']);
         userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
+        appcuesService = jasmine.createSpyObj('AppcuesService spy', ['enable']);
 
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigurationComponent, LegacyLinkMockDirective, ChannelLinkMockPipe],
@@ -62,6 +65,7 @@ describe('CategoriesConfigurationComponent', () => {
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: SflUserService, useValue: userService},
                 {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
+                {provide: AppcuesService, useValue: appcuesService},
 
             ],
         })

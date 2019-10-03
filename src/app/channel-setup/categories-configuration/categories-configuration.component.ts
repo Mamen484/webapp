@@ -20,6 +20,7 @@ import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.se
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import { AppcuesService } from '../../base/appcues/appcues.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -62,7 +63,8 @@ export class CategoriesConfigurationComponent implements OnInit {
                 protected stateService: AutotagFormStateService,
                 protected windowRef: SflWindowRefService,
                 protected userService: SflUserService,
-                protected fullstoryLoader: FullstoryLoaderService) {
+                protected fullstoryLoader: FullstoryLoaderService,
+                protected appcuesService: AppcuesService) {
     }
 
 
@@ -93,6 +95,7 @@ export class CategoriesConfigurationComponent implements OnInit {
             this.listenCategoryMappingChanged();
         });
         this.stateService.getState().subscribe(state => this.autotagFormState = state);
+        this.appcuesService.enable();
     }
 
     onAutotagsLoaded() {
