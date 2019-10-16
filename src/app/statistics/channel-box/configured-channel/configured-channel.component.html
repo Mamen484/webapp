@@ -5,7 +5,7 @@
                  [alt]="channel._embedded.channel.name"></a>
 
         <div class="channel-box-line channel-turnover" fxLayout="row">
-            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
+            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Tax included" i18n-matTooltip
                  matTooltipPosition="right" fxFlex>Turnover</div>
             <span class="sf-color-dark-grey" *ngIf="revenueStatisticsAvailable && hasStatisticsPermission; else unavailable">
                 {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:0}}
@@ -15,14 +15,13 @@
         <div class="channel-box-line channel-online" fxLayout="row" [class.online-low]="channelsOnline <= 30"
              [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
              [class.online-high]="channelsOnline >= 75">
-            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
+            <div class="channel-box-line-title" i18n matTooltip="Products successfully sent to channel" i18n-matTooltip
                  matTooltipPosition="right" fxFlex>Online</div>
             <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
         </div>
 
         <div class="channel-box-line" fxLayout="row">
-            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Includes Taxes" i18n-matTooltip
-                 matTooltipPosition="right" fxFlex>Latest export</div>
+            <div class="channel-box-line-title" i18n fxFlex>Latest export</div>
             <div class="sf-color-dark-grey" *ngIf="channel.lastExport; else unavailable" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
                 <mat-icon color="warn" *ngIf="channel.lastExportFailed">error</mat-icon>
                 <span>{{channel.lastExport | timeAgo}}</span>

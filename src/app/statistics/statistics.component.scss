@@ -20,6 +20,8 @@ mat-card.channel-card {
   margin-bottom: 20px;
   height: 235px;
 
+  padding: 30px 40px;
+
   &.suggested-channel {
     background-color: mat-color($accent, 0.03);
   }
