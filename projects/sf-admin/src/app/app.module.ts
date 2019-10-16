@@ -42,6 +42,7 @@ import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
             sflApi: environment.SFA_API,
             sflAppToken: environment.APP_TOKEN,
             sflLegacyLink: environment.SFA_LEGACY_LINK,
+            sflCountriesListLink: environment.countriesListLink,
         }),
         SflMenuModule,
         SfaSharedModule,

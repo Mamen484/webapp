@@ -1,0 +1,101 @@
+@import '../../sass/variables';
+
+$static-bar-height: 103px;
+
+.scrollable-container {
+  height: calc(100vh - (2 * #{$content-margin}) - #{$static-bar-height});
+}
+
+mat-list-item {
+  outline: none;
+  cursor: pointer;
+
+  .nav-link.home {
+    margin: auto;
+  }
+}
+
+mat-panel-title.mat-title {
+  // avoid panel-description mispositioning
+  line-height: mat-font-size($config, title);
+  margin: 0;
+}
+
+mat-card {
+  margin-bottom: 20px;
+
+  mat-card-content {
+    margin-top: 20px;
+  }
+}
+
+.actions {
+  text-align: right;
+}
+
+::ng-deep {
+  .sf-content .mat-card-header-text {
+    margin: 0;
+  }
+}
+
+button.mat-stroked-button {
+  margin-top: 13px;
+  align-self: start;
+  min-width: 46px;
+  padding: 0 10px;
+
+  mat-icon {
+    color: rgba(0, 0, 0, 0.26);
+  }
+}
+
+.country-name {
+  text-transform: capitalize;
+}
+
+sfl-sidebar-container {
+  mat-list.main-sidenav {
+    height: 100%;
+  }
+
+  mat-icon {
+    font-size: mat-font-size($config, headline);
+    color: white;
+    cursor: pointer;
+    margin: auto;
+
+    &.active {
+      color: mat-color($primary);
+    }
+
+    &:hover {
+      color: mat-color($primary);
+    }
+
+    @media #{$xs} {
+      margin-right: 10px;
+      margin-left: 10px;
+
+      & + span {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.contact-field, .category-field {
+  width: 50%;
+}
+
+.active-state {
+  color: mat-color($accent);
+}
+
+.inactive-state {
+  color: $black-54-opacity;
+}
+
+form.template-form {
+  width: calc(55% + 60px);
+}

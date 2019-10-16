@@ -8,9 +8,7 @@ import { RequestFailedDialogComponent } from '../../request-failed-dialog/reques
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 import { get } from 'lodash';
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
-import { ChannelMap } from '../../../core/entities/channel-map.enum';
 import { SflWindowRefService } from 'sfl-shared/services';
-import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -40,11 +38,6 @@ export class SuggestedChannelComponent implements OnInit {
     }
 
     goToChannel() {
-        if (this.channel._embedded.channel.id === ChannelMap.cdiscount) {
-            this.windowRefService.nativeWindow.location.href =
-                environment.CDISCOUNT_TRACKING_LINK + this.channelLinkService.getChannelLink(this.channel);
-            return;
-        }
         this.channelLinkService.navigateToChannel(this.channel);
     }
 
@@ -61,18 +54,6 @@ export class SuggestedChannelComponent implements OnInit {
         });
     }
 
-    protected initializeStats() {
-        const stats = this.channel.stats || {};
-        this.clientsConnected = this.findConnectedClients(stats.connectedStores, stats.totalStores);
-    }
-
-    protected findPotentialTurnover() {
-        const turnover = this.channel.stats && this.channel.stats.turnoverAverage || 0;
-        return turnover < MIN_TURNOVER
-            ? this.channelStorage.getGeneratedTurnover(get(this.channel, ['_embedded', 'channel', 'id'], this.channel.id))
-            : turnover;
-    }
-
     findConnectedClients(connected, total) {
 
         if (!connected || !total) {
@@ -84,6 +65,18 @@ export class SuggestedChannelComponent implements OnInit {
         return value < MIN_ONLINE
             ? this.channelStorage.getGeneratedOnline(this.channel.id)
             : value;
+    }
+
+    protected initializeStats() {
+        const stats = this.channel.stats || {};
+        this.clientsConnected = this.findConnectedClients(stats.connectedStores, stats.totalStores);
+    }
+
+    protected findPotentialTurnover() {
+        const turnover = this.channel.stats && this.channel.stats.turnoverAverage || 0;
+        return turnover < MIN_TURNOVER
+            ? this.channelStorage.getGeneratedTurnover(get(this.channel, ['_embedded', 'channel', 'id'], this.channel.id))
+            : turnover;
     }
 
 }

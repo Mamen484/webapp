@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { EMPTY, of } from 'rxjs';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
+import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 
 describe('GroupListComponent', () => {
     let component: GroupListComponent;
@@ -43,13 +44,11 @@ describe('GroupListComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should fetch and show billing groups on init', () => {
-        billingGroupService.fetchGroupCollection.and.returnValue(of(<any>{_embedded: {group: []}}));
-        fixture.detectChanges();
-        expect(billingGroupService.fetchGroupCollection).toHaveBeenCalledWith({limit: 15, page: 1, search: ''});
-        expect(component.dataSource.data).toEqual([]);
-    });
-
+    runTableOperationSpecs(() => ({
+        fetchCollectionSpy: billingGroupService.fetchGroupCollection,
+        fixture,
+        collectionResponse: {_embedded: {group: []}}
+    }));
 
     it('should open a GroupDialogComponent on openCreateGroupDialog()', () => {
         matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});

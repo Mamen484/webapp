@@ -1,7 +1,7 @@
 <div class="form-container">
     <div>
         <sfl-image source="assets/images/sf-full-logo.png" width="260px"></sfl-image>
-        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loadingNextPage"></mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" [color]="color" *ngIf="loadingNextPage"></mat-progress-bar>
         <mat-card>
             <mat-card-content>
                 <div class="form-title mat-display-1">
@@ -9,7 +9,7 @@
                 </div>
                 <form (ngSubmit)="login()">
 
-                    <mat-form-field color="accent" [appearance]="appearance">
+                    <mat-form-field [color]="color" [appearance]="appearance">
                         <mat-label i18n>Username</mat-label>
                         <input matInput [formControl]="userNameControl">
                         <mat-error *ngIf="userNameControl.hasError('required')" i18n>
@@ -17,7 +17,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="margin-top-20" color="accent" [appearance]="appearance">
+                    <mat-form-field class="margin-top-20" [color]="color" [appearance]="appearance">
                         <mat-label i18n>Password</mat-label>
                         <input matInput type="password" [formControl]="passwordControl">
                         <mat-error *ngIf="passwordControl.hasError('required')" i18n>
@@ -28,7 +28,7 @@
                     <ng-content></ng-content>
 
                     <div class="form-actions">
-                        <button mat-raised-button color="accent" i18n>LOGIN</button>
+                        <button mat-raised-button [color]="color" i18n>LOGIN</button>
                     </div>
                 </form>
             </mat-card-content>

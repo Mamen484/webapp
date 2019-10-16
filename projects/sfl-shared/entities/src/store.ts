@@ -8,22 +8,22 @@ const DAY = 1000 * 60 * 60 * 24;
 const WEEK = 7 * DAY;
 
 export class Store {
-    id: number;
-    name: string;
-    status: StoreStatus;
-    permission: Permission;
+    id?: number;
+    name?: string;
+    status?: StoreStatus;
+    permission?: Permission;
     owner = new StoreOwner();
     feed = new StoreFeed();
     country = '';
-    createdAt: string;
-    paymentType = PaymentType.other;
-    sales: {pathIsActive: boolean};
-    _links: {
+    createdAt?: string;
+    paymentType ? = PaymentType.other;
+    sales?: { pathIsActive: boolean };
+    _links?: {
         self: {
             href: string
         }
     };
-    _embedded: {
+    _embedded?: {
         order: {
             newCount: number;
         }

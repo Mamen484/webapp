@@ -1,6 +1,7 @@
 import { UserRole } from './user-role';
 import { Store } from './store';
 import { StoreStatus } from './store-status.enum';
+import { Channel } from './channel';
 
 export class AggregatedUserInfo {
     token: string;
@@ -22,7 +23,8 @@ export class AggregatedUserInfo {
                 }
             }
         },
-        store: Store[]
+        store: Store[],
+        channel: Channel[],
     };
 
     static create(userInfo) {

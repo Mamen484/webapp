@@ -1,3 +1,11 @@
+@import '../../../../../sass/variables';
+
 mat-form-field {
   width: 100%;
+}
+
+mat-icon[matSuffix] {
+  color: $black-54-opacity;
+  font-size: 24px;
+  cursor: pointer;
 }

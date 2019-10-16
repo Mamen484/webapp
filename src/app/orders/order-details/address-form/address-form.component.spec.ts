@@ -60,24 +60,24 @@ describe('AddressFormComponent', () => {
         component.save(true);
         expect(snackBar.openFromComponent).not.toHaveBeenCalled();
     });
-
-    @Component({
-        selector: 'sf-country-autocomplete', template: '',
-        providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CountryAutocompleteStubComponent), multi: true}]
-    })
-    class CountryAutocompleteStubComponent implements ControlValueAccessor {
-        registerOnChange(fn: any): void {
-        }
-
-        registerOnTouched(fn: any): void {
-        }
-
-        setDisabledState(isDisabled: boolean): void {
-        }
-
-        writeValue(obj: any): void {
-        }
-
-    }
 });
+
+@Component({
+    selector: 'sfl-country-autocomplete', template: '',
+    providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CountryAutocompleteStubComponent), multi: true}]
+})
+export class CountryAutocompleteStubComponent implements ControlValueAccessor {
+    registerOnChange(fn: any): void {
+    }
+
+    registerOnTouched(fn: any): void {
+    }
+
+    setDisabledState(isDisabled: boolean): void {
+    }
+
+    writeValue(obj: any): void {
+    }
+
+}
 

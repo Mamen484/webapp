@@ -40,7 +40,7 @@ testem.log
 Thumbs.db
 
 # docker local config
-/src/environments/environment.prod.ts
+environment.prod.ts
 
 # Build files
 .v8flags.*

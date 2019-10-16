@@ -10,7 +10,9 @@ import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ChannelLinkService } from '../core/services/channel-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
-import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
+import { filter } from 'rxjs/operators';
+import { AppcuesState } from '../base/appcues/appcues-state.enum';
+import { AppcuesService } from '../base/appcues/appcues.service';
 
 const UPDATE_EVENTS_INTERVAL = 6e4;
 const referralProgramCode = '-Lh7C5RlCRb6V6lLoBIj';
@@ -48,7 +50,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected userService: SflUserService,
                 protected channelLinkService: ChannelLinkService,
                 protected ticketsDataService: TicketsDataService,
-                protected appcuesEnabledService: AppcuesEnabledService) {
+                protected appcuesEnabledService: AppcuesService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -66,7 +68,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
         });
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.newEventsSubscription = timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
-        this.appcuesEnabledService.getState().subscribe(enabled => this.appcuesEnabled = enabled);
+        this.appcuesEnabledService.getState().pipe(filter(state => state === AppcuesState.loaded))
+            .subscribe(enabled => this.appcuesEnabled = true);
     }
 
     hasChannelsPermissions() {

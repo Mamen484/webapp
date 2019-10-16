@@ -61,7 +61,7 @@ export class CreateUserComponent {
     mappingsForm = new FormGroup({
         brand: new FormControl(''),
         brandLink: new FormControl(''),
-        category: new FormControl(''),
+        segment: new FormControl(''),
         description: new FormControl(''),
         ean: new FormControl(''),
         ecotax: new FormControl(''),

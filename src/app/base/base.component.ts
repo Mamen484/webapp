@@ -12,7 +12,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LOAD_AUTOPILOT } from '../../trackers/autopilot';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
-import { AppcuesEnabledService } from '../core/services/appcues-enabled.service';
+import { AppcuesService } from './appcues/appcues.service';
 
 @Component({
     selector: 'app-homepage',
@@ -31,7 +31,7 @@ export class BaseComponent implements OnInit {
                 protected zendeskService: ngxZendeskWebwidgetService,
                 protected localeIdService: SflLocaleIdService,
                 protected fullstoryLoader: FullstoryLoaderService,
-                protected appcuesEnabledService: AppcuesEnabledService) {
+                protected appcuesService: AppcuesService) {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
@@ -109,7 +109,7 @@ export class BaseComponent implements OnInit {
             take(1),
         ).subscribe((store: UserStore) => {
             this.enableFullstory(store, userInfo.email);
-            this.enableAppcues(store, userInfo.email);
+            this.enableAppcues(store);
         });
     }
 
@@ -120,30 +120,12 @@ export class BaseComponent implements OnInit {
         this.fullstoryLoader.load();
     }
 
-    protected enableAppcues(store: UserStore, userEmail: string) {
+    protected enableAppcues(store: UserStore) {
         if (!store.feed || !store.feed.source || store.feed.source.toLowerCase() !== 'shopify') {
             return false;
         }
-        const script: HTMLScriptElement = this.renderer.createElement('script');
-        script.src = '//fast.appcues.com/28284.js';
-        script.onload = () => {
-            this.windowRef.nativeWindow.Appcues.identify(store.id, {
-                name: store.name,
-                email: userEmail,
-                created_at: new Date(store.createdAt).getTime(),
-            });
-            this.appcuesEnabledService.setEnabled();
-        };
 
-        this.renderer.appendChild(document.body, script);
-
-        // enable appcues to track spa route changes
-        this.router.events
-            .subscribe((event) => {
-                if (event instanceof NavigationEnd && this.windowRef.nativeWindow.Appcues) {
-                    this.windowRef.nativeWindow.Appcues.page();
-                }
-            });
+        this.appcuesService.enable();
     }
 
     protected configureZendesk() {

@@ -25,6 +25,7 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { SubnavComponent } from './subnav/subnav.component';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
+import { MatSlideToggleModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -48,6 +49,7 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatSelectModule,
+        MatSlideToggleModule,
         MatSnackBarModule,
         MatTooltipModule,
         SflSoloSearchModule,
@@ -72,6 +74,7 @@ import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
         MatProgressBarModule,
         MatProgressSpinnerModule,
         MatSelectModule,
+        MatSlideToggleModule,
         MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
