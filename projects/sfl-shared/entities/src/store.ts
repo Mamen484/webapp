@@ -9,6 +9,7 @@ const WEEK = 7 * DAY;
 
 export class Store {
     id?: number;
+    storeId?: number; // for posting a new store
     name?: string;
     status?: StoreStatus;
     permission?: Permission;
@@ -31,6 +32,46 @@ export class Store {
 
     static storeIsNew(store): boolean {
         return Boolean(store.createdAt) && new Date(store.createdAt).getTime() > (new Date().getTime() - WEEK);
+    }
+
+    static createFromResponse(data, name): Store {
+        return Object.assign(new Store(), {
+            storeId: data.storeId,
+            owner: {
+                email: data.email,
+                login: name,
+                password: '',
+                token: data.token,
+                phone: data.phone,
+            },
+            feed: {
+                url: data.feed,
+                source: 'shopify',
+                mapping: {
+                    'category': 'category',
+                    'brand': 'brand',
+                    'brand-link': 'brand-link',
+                    'reference': 'id',
+                    'name': 'name',
+                    'link': 'uri',
+                    'description': 'description',
+                    'short_description': 'short_description',
+                    'price': 'price',
+                    'old_price': 'old-price',
+                    'shipping_cost': 'shipping-cost',
+                    'shipping_time': 'shipping-time',
+                    'quantity': 'quantity',
+                    'ean': 'barcode',
+                    'weight': 'weight',
+                    'ecotax': 'ecotax',
+                    'tva': 'vat'
+                },
+                settings: {
+                    xmlProductNode: 'product'
+                }
+            },
+            country: data.language,
+        });
     }
 
 }

@@ -3,13 +3,13 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Params } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { CreateStoreModel } from '../entities/create-store-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Store } from 'sfl-shared/entities';
 
 @Injectable()
 export class ShopifyAuthentifyService {
     protected apiUrl = environment.API_URL;
-    protected storeData: CreateStoreModel;
+    protected storeData: Store;
 
     constructor(protected httpClient: HttpClient) {
     }
@@ -19,7 +19,7 @@ export class ShopifyAuthentifyService {
             .pipe(map((data: { authorizeUrl: string }) => data.authorizeUrl));
     }
 
-    public getStoreData(shop: string, {code, timestamp, hmac}: Params): Observable<CreateStoreModel> {
+    public getStoreData(shop: string, {code, timestamp, hmac}: Params): Observable<Store> {
         if (!this.storeData) {
             return this.httpClient.get(this.apiUrl + '/shopify/store/' + this.getShopName(shop), {
                 params: new HttpParams()
@@ -27,14 +27,14 @@ export class ShopifyAuthentifyService {
                     .set('timestamp', timestamp)
                     .set('hmac', hmac)
             })
-                .pipe(map((data: any) => CreateStoreModel.createFromResponse(data, this.getShopName(shop))))
+                .pipe(map((data: any) => Store.createFromResponse(data, this.getShopName(shop))))
                 .pipe(tap(data => this.storeData = data));
         }
         return of(this.storeData);
 
     }
 
-    public updateStore(store: CreateStoreModel) {
+    public updateStore(store: Store) {
 
         let data = [{
             op: 'replace',
