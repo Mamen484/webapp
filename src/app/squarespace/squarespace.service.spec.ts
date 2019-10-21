@@ -14,11 +14,19 @@ describe('SquarespaceService', () => {
         expect(service).toBeTruthy();
     });
 
-    it('should call an appropriate endpoint', () => {
+    it('should call an appropriate endpoint on auth()', () => {
         const service: SquarespaceService = TestBed.get(SquarespaceService);
         const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
         service.auth(243).subscribe();
         const req = httpMock.expectOne(`${environment.API_URL}/squarespace/auth/243`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should call an appropriate endpoint on getStore()', () => {
+        const service: SquarespaceService = TestBed.get(SquarespaceService);
+        const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
+        service.getStore('someCode', 'someState').subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/store?code=someCode&state=someState`);
         expect(req.request.method).toBe('GET');
     });
 });

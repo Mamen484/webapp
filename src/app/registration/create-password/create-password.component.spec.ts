@@ -79,7 +79,12 @@ describe('CreatePasswordComponent', () => {
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
             component.createPassword({email: 'test@test.com', password: '1234567'});
-            expect(storeService.createStore).toHaveBeenCalled();
+            expect(storeService.createStore).toHaveBeenCalledWith({
+                owner: {
+                    email: 'test@test.com',
+                    password: '1234567',
+                },
+            });
         });
 
         it('should use cached data if it is in the local storage', () => {

@@ -29,7 +29,8 @@ export class CreateAccountComponent implements OnInit {
     protected showProgress() {
         interval(this.updateFrequency).pipe(take(PERCENTS)).subscribe(
             () => this.progress += 1,
-            () => {},
+            () => {
+            },
             () => this.onFinish()
         )
     }

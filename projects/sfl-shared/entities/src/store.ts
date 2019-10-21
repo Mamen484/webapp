@@ -34,19 +34,19 @@ export class Store {
         return Boolean(store.createdAt) && new Date(store.createdAt).getTime() > (new Date().getTime() - WEEK);
     }
 
-    static createFromResponse(data, name): Store {
+    static createFromResponse(data, name, feedSource = 'shopify'): Store {
         return Object.assign(new Store(), {
             storeId: data.storeId,
             owner: {
                 email: data.email,
                 login: name,
                 password: '',
-                token: data.token,
+                token: data.token || data.sfToken,
                 phone: data.phone,
             },
             feed: {
                 url: data.feed,
-                source: 'shopify',
+                source: feedSource,
                 mapping: {
                     'category': 'category',
                     'brand': 'brand',
