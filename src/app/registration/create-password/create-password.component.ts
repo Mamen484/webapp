@@ -14,8 +14,6 @@ import { Store } from 'sfl-shared/entities';
 })
 export class CreatePasswordComponent implements OnInit {
 
-    public emailControl = new FormControl('', [Validators.required, Validators.email]);
-    public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
     public supportEmail = environment.SUPPORT_EMAIL;
     public displayServerError = false;
 
@@ -41,17 +39,9 @@ export class CreatePasswordComponent implements OnInit {
             })
     }
 
-    public createPassword() {
-        if (this.emailControl.hasError('required')
-            || this.passwordControl.hasError('required')
-            || this.emailControl.hasError('email')
-            || this.passwordControl.hasError('minlength')
-        ) {
-            return;
-        }
-        // This is currently shopify specific
-        this.store.owner.email = this.emailControl.value;
-        this.store.owner.password = this.passwordControl.value;
+    public createPassword({email, password}) {
+        this.store.owner.email = email;
+        this.store.owner.password = password;
         this.storeService.createStore(this.store)
             .subscribe((store: Store) => {
                     this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);

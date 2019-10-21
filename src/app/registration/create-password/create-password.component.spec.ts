@@ -5,10 +5,9 @@ import { CreatePasswordComponent } from './create-password.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SflLocaleIdService, StoreService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
-import { SflLocalStorageService } from 'sfl-shared/services';
 import { BlankComponent } from '../../shared/blank.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -75,44 +74,11 @@ describe('CreatePasswordComponent', () => {
             expect(shopifyService.getStoreData).toHaveBeenCalled();
         });
 
-        it('should NOT call password service if email or password are invalid', () => {
-            shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            storeService.createStore.and.returnValue(of(<any>{owner: {}}));
-
-            fixture.detectChanges();
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('tadada');
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-
-            component.passwordControl.setValue('1');
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-
-            component.passwordControl.setValue('123456');
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('123456');
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('fferqw');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
-            expect(storeService.createStore).not.toHaveBeenCalled();
-        });
-
-        it('should send email and password to the server when both controls are valid', () => {
+        it('should send email and password to the server createPassword() called', () => {
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(storeService.createStore).toHaveBeenCalled();
         });
 
@@ -120,9 +86,7 @@ describe('CreatePasswordComponent', () => {
             localStorage.getItem.and.returnValue('{"owner": {"some_data":"some data"}}');
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect((<any>storeService.createStore.calls.mostRecent().args[0].owner).some_data)
                 .toEqual('some data')
         });
@@ -132,9 +96,7 @@ describe('CreatePasswordComponent', () => {
             shopifyService.getStoreData.and.returnValue(of({owner: {some_data: 'some data from server'}}));
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect((<any>storeService.createStore.calls.mostRecent().args[0].owner).some_data)
                 .toEqual('some data from server');
         });
@@ -145,9 +107,7 @@ describe('CreatePasswordComponent', () => {
             storeService.createStore.and.returnValue(of(<any>{owner: {token: 'some token'}}));
 
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some token');
         });
 
@@ -158,9 +118,7 @@ describe('CreatePasswordComponent', () => {
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account'])
         });
 
@@ -172,9 +130,7 @@ describe('CreatePasswordComponent', () => {
             storeService.createStore.and.returnValue(throwError('some error'));
             fixture.detectChanges();
             expect(component.displayServerError).toEqual(false);
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(component.displayServerError).toEqual(true);
         })
 

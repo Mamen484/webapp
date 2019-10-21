@@ -1,0 +1,35 @@
+<div class="form-container">
+    <div>
+        <div class="form-title mat-display-1" i18n>Create your Shopping Feed account</div>
+        <mat-card>
+            <mat-card-content>
+                <form (ngSubmit)="submit()" *ngIf="!hideForm">
+                    <mat-form-field color="accent" appearance="outline">
+                        <input matInput type="email" [formControl]="emailControl" placeholder="Email address" i18n-placeholder>
+                        <mat-error *ngIf="emailControl.hasError('required')" i18n>
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="!emailControl.hasError('required') && emailControl.hasError('email')" i18n>
+                            Email should be a valid email address
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field color="accent" appearance="outline">
+                        <input matInput type="password" [formControl]="passwordControl" placeholder="Create a password">
+                        <mat-error *ngIf="passwordControl.hasError('required')" i18n>
+                            Password is required
+                        </mat-error>
+                        <mat-error
+                                *ngIf="!passwordControl.hasError('required') && passwordControl.hasError('minlength')" i18n>
+                            Password should contain at least 7 symbols.
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="form-actions">
+                        <button mat-raised-button color="accent" i18n>NEXT</button>
+                    </div>
+                </form>
+                <ng-content select="[sf-server-error]"></ng-content>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
