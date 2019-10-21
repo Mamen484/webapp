@@ -3,7 +3,7 @@ import { ShopifyAuthentifyService } from './shopify-authentify.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { Store } from 'sfl-shared/entities/store';
+import { Store } from 'sfl-shared/entities';
 
 describe('ShopifyAuthentifyServuce', () => {
     let httpClient;
