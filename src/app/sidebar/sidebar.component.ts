@@ -10,7 +10,7 @@ import { timer } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ChannelLinkService } from '../core/services/channel-link.service';
 import { TicketsDataService } from '../tickets/tickets-list/tickets-data.service';
-import { filter } from 'rxjs/operators';
+import { filter, flatMap, take } from 'rxjs/operators';
 import { AppcuesState } from '../base/appcues/appcues-state.enum';
 import { AppcuesService } from '../base/appcues/appcues.service';
 
@@ -36,7 +36,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     isManager = false;
     paymentTypes = PaymentType;
     isAdmin = false;
-    appcuesEnabled = false;
+    showReferralLink = false;
 
     protected newEventsSubscription;
 
@@ -68,8 +68,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
         });
         this.appStore.select('currentStore').subscribe(store => this.currentStore = store);
         this.newEventsSubscription = timer(0, UPDATE_EVENTS_INTERVAL).subscribe(() => this.updateEventsNumber());
-        this.appcuesEnabledService.getState().pipe(filter(state => state === AppcuesState.loaded))
-            .subscribe(enabled => this.appcuesEnabled = true);
+        this.appcuesEnabledService.getState().pipe(
+            filter(state => state === AppcuesState.loaded),
+            flatMap(() => this.appStore.select('currentStore').pipe(take(1))),
+        ).subscribe(store => this.showReferralLink = store.country.toLowerCase() === 'us');
     }
 
     hasChannelsPermissions() {
