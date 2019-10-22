@@ -1,15 +1,4 @@
 <div *ngIf="isDisplayed" fxLayout="column" fxLayoutGap="20px" class="last-events-content">
-    <mat-card *ngIf="lastImports.length">
-        <mat-card-content>
-
-            <div class="mat-title" i18n>Last Imports</div>
-            <div *ngFor="let lastImport of lastImports" fxLayout="column" fxLayoutGap="20px">
-                <mat-divider></mat-divider>
-                <sf-event-stats-row [action]="lastImport.action"
-                                    [date]="lastImport.occurredAt"></sf-event-stats-row>
-            </div>
-        </mat-card-content>
-    </mat-card>
     <mat-card *ngIf="acknowledgeErrors.length" class="section-with-chip">
         <mat-card-content>
             <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
@@ -42,6 +31,17 @@
             <div class="view-link"><a mat-button color="accent" routerLink="/orders"
                                       [queryParams]="{view: orderView.shippingErrors}" i18n>View
                 all ({{totalShipmentErrors}})</a></div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="lastImports.length">
+        <mat-card-content>
+
+            <div class="mat-title" i18n>Last Imports</div>
+            <div *ngFor="let lastImport of lastImports" fxLayout="column" fxLayoutGap="20px">
+                <mat-divider></mat-divider>
+                <sf-event-stats-row [action]="lastImport.action"
+                                    [date]="lastImport.occurredAt"></sf-event-stats-row>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

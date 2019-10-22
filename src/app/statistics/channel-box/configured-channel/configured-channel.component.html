@@ -4,9 +4,9 @@
             <img mat-card-image [src]="channel._embedded.channel._links.image.href"
                  [alt]="channel._embedded.channel.name"></a>
 
-        <div class="channel-box-line channel-turnover" fxLayout="row">
-            <div class="channel-box-line-title" i18n matTooltip="Last 30 days - Tax included" i18n-matTooltip
-                 matTooltipPosition="right" fxFlex>Turnover</div>
+        <div class="channel-box-line channel-turnover" fxLayout="row" matTooltip="Last 30 days - Tax included" i18n-matTooltip
+             matTooltipPosition="right">
+            <div class="channel-box-line-title" i18n fxFlex>Turnover</div>
             <span class="sf-color-dark-grey" *ngIf="revenueStatisticsAvailable && hasStatisticsPermission; else unavailable">
                 {{channel.statistics.revenue | sfCurrency:channel.statistics.currency:0}}
             </span>
@@ -14,9 +14,9 @@
 
         <div class="channel-box-line channel-online" fxLayout="row" [class.online-low]="channelsOnline <= 30"
              [class.online-middle]="channelsOnline > 30 && channelsOnline < 75"
-             [class.online-high]="channelsOnline >= 75">
-            <div class="channel-box-line-title" i18n matTooltip="Products successfully sent to channel" i18n-matTooltip
-                 matTooltipPosition="right" fxFlex>Online</div>
+             [class.online-high]="channelsOnline >= 75" matTooltip="Products successfully sent to channel" i18n-matTooltip
+             matTooltipPosition="right">
+            <div class="channel-box-line-title" i18n fxFlex>Online</div>
             <span *ngIf="channelsOnline >= 0; else unavailable">{{channelsOnline}}%</span>
         </div>
 

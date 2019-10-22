@@ -4,18 +4,18 @@
              [alt]="channel._embedded.channel.name">
     </div>
 
-    <div class="channel-box-line" fxLayout="row">
-        <div class="channel-box-line-title" i18n matTooltip="Per month" i18n-matTooltip
-             matTooltipPosition="right" fxFlex>Potential turnover
+    <div class="channel-box-line" fxLayout="row" matTooltip="Per month" i18n-matTooltip
+         matTooltipPosition="right">
+        <div class="channel-box-line-title" i18n fxFlex>Potential turnover
         </div>
         <div class="sf-color-grey">
             {{potentialTurnover | sfCurrency:currency}}
         </div>
     </div>
 
-    <div class="channel-box-line" fxLayout="row">
-        <div class="channel-box-line-title" i18n matTooltip="This month" i18n-matTooltip
-             matTooltipPosition="right" fxFlex>Clients connected
+    <div class="channel-box-line" fxLayout="row" matTooltip="This month" i18n-matTooltip
+         matTooltipPosition="right">
+        <div class="channel-box-line-title" i18n fxFlex>Clients connected
         </div>
         <div class="sf-color-grey">
             {{clientsConnected}}%
