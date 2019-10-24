@@ -13,9 +13,9 @@ import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settin
 import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
-import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 import { MatMenuModule } from '@angular/material/menu';
+import { FormArray, FormGroup } from '@angular/forms';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -93,20 +93,6 @@ describe('ChannelSettingsComponent', () => {
             country: [{code: 'fr', taxonomyId: null}, {code: 'uk', taxonomyId: null}],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         }, 23);
-    });
-
-    it('should show a dialog on save() if both appField and defaultValue contain a value', () => {
-        channelService.modifyChannel.and.returnValue(of({}));
-        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
-        component.formGroup.setValue({
-            contact: 'test',
-            segment: 'clothes',
-            country: ['fr', 'uk'],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'some value'}]
-        });
-        component.channel = {id: 23};
-        component.save();
-        expect(matDialog.open).toHaveBeenCalledWith(RowValidationDialogComponent);
     });
 
     it('should NOT call saveChannel endpoint on save() if both appField and defaultValue contain a value', () => {
@@ -264,6 +250,103 @@ describe('ChannelSettingsComponent', () => {
     it('should initialize an account name', () => {
         userData.next(AggregatedUserInfo.create({_embedded: {store: [{name: 'someName'}]}}));
         expect(component.accountName).toBe('someName');
+    });
+
+    it('should show invalidField error on form group and fields appField and defaultValue if both appField and defaultValue are specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'someDefaultValue'},
+        );
+        expect(templateRow.getError('invalidField')).toBe(true);
+        expect(templateRow.controls.appField.getError('invalidField')).toBe(true);
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBe(true);
+    });
+
+    it('should NOT show invalidField error on form group and fields appField and defaultValue if only appField is specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''},
+        );
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error on form group and fields appField and defaultValue if only defaultValue is specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: '', defaultValue: 'someDefaultValue'},
+        );
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error after a new valid appField value specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.appField.setValue('');
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error after a new valid defaultValue value specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.defaultValue.setValue('');
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
     });
 
     function prepareChannelForSave() {
