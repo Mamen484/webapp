@@ -4,7 +4,7 @@ import { filter, map, startWith, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatOption } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
-import { FullCountriesListService } from './full-countries-list.service';
+import { FullCountriesListService } from 'sfl-shared/services';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 import { MatChipList } from '@angular/material/chips';
 

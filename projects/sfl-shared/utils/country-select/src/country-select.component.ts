@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Optional, Self, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, Optional, Self, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import { Country } from 'sfl-shared/entities';
+import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 import { filter, take } from 'rxjs/operators';
 import { FullCountriesListService } from 'sfl-shared/services';
 
@@ -31,6 +31,7 @@ export class SflCountrySelectComponent implements ControlValueAccessor, OnInit {
     onTouched: () => void;
 
     constructor(@Optional() @Self() public controlDir: NgControl,
+                @Inject(SFL_COUNTRIES_LIST_LINK) public countriesListLink,
                 protected countriesListService: FullCountriesListService) {
         if (controlDir) {
             controlDir.valueAccessor = this;

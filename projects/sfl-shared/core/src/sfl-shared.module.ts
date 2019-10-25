@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK } from 'sfl-shared/entities';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [SflLegacyLinkDirective],
 })
 export class SflSharedModule {
-    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink, sflCountriesListLink }): ModuleWithProviders {
+    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders {
         return {
             ngModule: SflSharedModule,
             providers: [
@@ -40,8 +40,5 @@ export class SflSharedModule {
                 {provide: SFL_LEGACY_LINK, useValue: dependency.sflLegacyLink},
             ]
         }
-    }
-
-    constructor() {
     }
 }

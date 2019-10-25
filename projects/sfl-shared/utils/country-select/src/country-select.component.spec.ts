@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SflCountrySelectComponent } from './country-select.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FullCountriesListService } from 'sfl-shared/services';
+import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { of } from 'rxjs';
 
 describe('SflCountrySelectComponent', () => {
     let fixture: ComponentFixture<SflCountrySelectComponent>;
@@ -13,6 +15,7 @@ describe('SflCountrySelectComponent', () => {
             declarations: [SflCountrySelectComponent],
             providers: [
                 {provide: FullCountriesListService, useValue: countriesListService},
+                {provide: SFL_COUNTRIES_LIST_LINK, useValue: 'someLink'},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });
@@ -22,7 +25,11 @@ describe('SflCountrySelectComponent', () => {
     });
 
     it('should assign countries with allowed codes', () => {
-
+        countriesListService.getCountries.and.returnValue(of([
+            {code: 'au'}, {code: 'bg'}, {code: 'zz1'}, {code: 'zz2'},
+        ]));
+        component.ngOnInit();
+        expect(component.countries).toEqual([{code: 'au'}, {code: 'bg'}]);
     });
 
     it('should assign onChange on registerOnChange call', () => {
@@ -45,7 +52,7 @@ describe('SflCountrySelectComponent', () => {
 
 describe('SflCountrySelectComponent value accessor', () => {
     it('should write valueAccessor property', () => {
-        let component = new SflCountrySelectComponent(<any>{}, 'baseHref', 'en');
+        let component = new SflCountrySelectComponent(<any>{}, 'baseHref', <any>{});
         expect(component.controlDir.valueAccessor).toBe(component);
     });
 });
