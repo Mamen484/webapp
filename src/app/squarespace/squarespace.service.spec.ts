@@ -17,8 +17,8 @@ describe('SquarespaceService', () => {
     it('should call an appropriate endpoint on auth()', () => {
         const service: SquarespaceService = TestBed.get(SquarespaceService);
         const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
-        service.auth(243).subscribe();
-        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/auth/243`);
+        service.auth().subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/auth`);
         expect(req.request.method).toBe('GET');
     });
 

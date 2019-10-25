@@ -17,15 +17,10 @@ export class AuthentifyGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-        const websiteId = route.queryParamMap.get('website_id');
-        if (!websiteId) {
-            return of(false);
-        }
-
-        return this.service.auth(websiteId).pipe(
+        return this.service.auth().pipe(
             tap(response => {
                 this.saveState(response.authorizeUrl);
-                this.windowRef.nativeWindow.href = response.authorizeUrl;
+                this.windowRef.nativeWindow.location.href = response.authorizeUrl;
             }),
             map(() => false),
         );

@@ -12,8 +12,8 @@ export class SquarespaceService {
     constructor(protected httpClient: HttpClient) {
     }
 
-    auth(websiteId) {
-        return this.httpClient.get(`${environment.API_URL}/squarespace/auth/${websiteId}`) as Observable<{ authorizeUrl: string }>;
+    auth() {
+        return this.httpClient.get(`${environment.API_URL}/squarespace/auth`) as Observable<{ authorizeUrl: string }>;
     }
 
     getStore(code, state) {
