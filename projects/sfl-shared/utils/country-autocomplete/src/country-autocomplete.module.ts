@@ -4,6 +4,7 @@ import { MatAutocompleteModule, MatChipsModule, MatFormFieldModule, MatIconModul
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { FullCountriesListService } from 'sfl-shared/services';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
         MatInputModule,
         ReactiveFormsModule,
     ],
+    providers: [FullCountriesListService],
     declarations: [CountryAutocompleteComponent],
     exports: [CountryAutocompleteComponent],
 })

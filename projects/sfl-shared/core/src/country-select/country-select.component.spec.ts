@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SflCountrySelectComponent } from './country-select.component';
-import { LOCALE_ID, NO_ERRORS_SCHEMA } from '@angular/core';
-import { SFL_BASE_HREF } from 'sfl-shared/entities';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FullCountriesListService } from 'sfl-shared/services';
 
 describe('SflCountrySelectComponent', () => {
     let fixture: ComponentFixture<SflCountrySelectComponent>;
     let component: SflCountrySelectComponent;
+    let countriesListService: jasmine.SpyObj<FullCountriesListService>;
     beforeEach(() => {
+        countriesListService = jasmine.createSpyObj('FullCountriesListService', ['getCountries']);
         TestBed.configureTestingModule({
             declarations: [SflCountrySelectComponent],
             providers: [
-                {provide: LOCALE_ID, useValue: 'en'},
-                {provide: SFL_BASE_HREF, useValue: 'baseHref'},
+                {provide: FullCountriesListService, useValue: countriesListService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         });
@@ -20,8 +21,8 @@ describe('SflCountrySelectComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should assign baseHref on construction', () => {
-        expect(component.baseHref).toBe('baseHref/en');
+    it('should assign countries with allowed codes', () => {
+
     });
 
     it('should assign onChange on registerOnChange call', () => {
