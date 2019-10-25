@@ -5,7 +5,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { SflLegacyLinkDirective } from './legacy-link.directive';
-import { SflCountrySelectComponent } from './country-select/country-select.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,8 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule,
     ],
-    declarations: [SflLegacyLinkDirective, SflCountrySelectComponent],
-    exports: [SflLegacyLinkDirective, SflCountrySelectComponent],
+    declarations: [SflLegacyLinkDirective],
+    exports: [SflLegacyLinkDirective],
 })
 export class SflSharedModule {
     static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink, sflCountriesListLink }): ModuleWithProviders {
@@ -39,7 +38,6 @@ export class SflSharedModule {
                 {provide: SFL_API, useValue: dependency.sflApi},
                 {provide: SFL_APP_TOKEN, useValue: dependency.sflAppToken},
                 {provide: SFL_LEGACY_LINK, useValue: dependency.sflLegacyLink},
-                {provide: SFL_COUNTRIES_LIST_LINK, useValue: dependency.sflCountriesListLink},
             ]
         }
     }
