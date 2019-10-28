@@ -70,7 +70,7 @@ export class Store {
                     xmlProductNode: 'product'
                 }
             },
-            country: data.language,
+            country: data.language === 'en' && feedSource === 'squarespace' ? 'us' : data.language,
         });
     }
 
