@@ -70,7 +70,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
             sflApi: environment.apiLink,
             sflAppToken: environment.appToken,
             sflLegacyLink: environment.legacyLink,
-            sflCountriesListLink: environment.countriesListLink,
         }),
         SflImageModule,
     ],

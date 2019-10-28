@@ -1,12 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
-import { ChannelsRequestParams, ChannelType } from 'sfl-shared/entities';
+import { ChannelsRequestParams, ChannelType, Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { FullCountriesListService } from 'sfl-shared/services';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'sf-search-channels',
     templateUrl: './search-channels.component.html',
-    styleUrls: ['./search-channels.component.scss']
+    styleUrls: ['./search-channels.component.scss'],
+    providers: [
+        FullCountriesListService,
+        {provide: SFL_COUNTRIES_LIST_LINK, useValue: environment.countriesListLink},
+    ],
 })
 export class SearchChannelsComponent {
 
@@ -14,9 +20,14 @@ export class SearchChannelsComponent {
     @Input() processing = false;
     @Input() filter: ChannelsRequestParams;
 
+    countries = {};
+
     types = ChannelType;
 
-    constructor(protected dialog: MatDialog) {
+    constructor(protected dialog: MatDialog, protected countriesListService: FullCountriesListService) {
+        this.countriesListService.getCountries().subscribe((countries: Country[]) => {
+            countries.forEach(country => this.countries[country.code] = country.name);
+        });
     }
 
     openDialog() {

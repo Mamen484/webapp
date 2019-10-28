@@ -1,24 +1,22 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { FullCountriesListService } from 'sfl-shared/services';
 import { SflCountrySelectComponent } from './country-select.component';
 import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        MatAutocompleteModule,
-        MatChipsModule,
         MatFormFieldModule,
         MatIconModule,
         MatInputModule,
+        MatSelectModule,
         ReactiveFormsModule,
     ],
     providers: [FullCountriesListService],
