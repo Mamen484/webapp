@@ -54,9 +54,9 @@ describe('CreateStoreComponent', () => {
     it('should create a SF store', () => {
         service.getStore.and.returnValue(of({
             accessToken: '6709rrr75974e807ebc987a75a6bfd897',
-            refreshToken: '6709rrr75974e807ebc987a75a6bfd897',
+            refreshToken: '6709rrr75974e807ebc987a75a6bfd896',
             tokenExpiresAt: 1553532363.542,
-            language: 'FR',
+            language: 'en',
             storeId: 123,
             feed: 'https://domain/lib/import/some_feed_url',
             sfToken: '4679rrr75974e807ebc987a75a6bfd290',
@@ -73,35 +73,42 @@ describe('CreateStoreComponent', () => {
             login: 'sfdev, 12345',
             password: '1234567',
             token: '4679rrr75974e807ebc987a75a6bfd290',
-            phone: undefined
+            payment: 'other'
         });
         expect(storeService.createStore.calls.mostRecent().args[0].feed).toEqual({
             url: 'https://domain/lib/import/some_feed_url',
             source: 'squarespace',
             mapping: {
-                category: 'category',
-                brand: 'brand',
-                'brand-link': 'brand-link',
-                reference: 'id',
-                name: 'name',
-                link: 'uri',
-                description: 'description',
-                short_description: 'short_description',
-                price: 'price',
-                old_price: 'old-price',
-                shipping_cost: 'shipping-cost',
-                shipping_time: 'shipping-time',
-                quantity: 'quantity',
-                ean: 'barcode',
-                weight: 'weight',
-                ecotax: 'ecotax',
-                tva: 'vat'
+                'category': 'category',
+                'brand': 'brand',
+                'reference': 'reference',
+                'ean': 'ean',
+                'name': 'name',
+                'link': 'link',
+                'description': 'description',
+                'short_description': 'short_description',
+                'price': 'price',
+                'old_price': 'old_price',
+                'shipping_cost': 'shipping_cost',
+                'shipping_time': 'shipping_time',
+                'quantity': 'quantity',
+                'weight': 'weight',
+                'ecotax': 'ecotax',
+                'tva': 'tva',
             },
-            settings: {xmlProductNode: 'product'}
+            settings: {
+                xmlProductNode: 'product', credentials: {
+                    type: 'oauth2',
+                    accessToken: '6709rrr75974e807ebc987a75a6bfd897',
+                    refreshToken: '6709rrr75974e807ebc987a75a6bfd896',
+                    expiryTimeAccessToken: '1553532363.542',
+                    expiryTimeRefreshToken: '1553532363.542',
+                }
+            }
         });
-        expect(storeService.createStore.calls.mostRecent().args[0].country).toEqual('FR');
-        expect(storeService.createStore.calls.mostRecent().args[0].paymentType).toEqual(PaymentType.other);
+        expect(storeService.createStore.calls.mostRecent().args[0].country).toEqual('us');
         expect(storeService.createStore.calls.mostRecent().args[0].storeId).toEqual(123);
+        expect(storeService.createStore.calls.mostRecent().args[0].paymentType).not.toBeDefined();
     });
 
     it('should set Authorization to localStorage if the store is created successfully', () => {

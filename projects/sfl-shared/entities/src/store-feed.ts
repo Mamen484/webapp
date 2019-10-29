@@ -6,7 +6,14 @@ export class StoreFeed {
     mapping ? = <any>{};
     settings?: {
         xmlProductNode?: string,
-        csvFieldSeparator?: string
+        csvFieldSeparator?: string,
+        credentials?: {
+            type: string;
+            accessToken: string;
+            expiryTimeAccessToken: string;
+            refreshToken: string;
+            expiryTimeRefreshToken: string;
+        }
     } = {
         xmlProductNode: '',
         csvFieldSeparator: ''

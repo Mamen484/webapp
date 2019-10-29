@@ -3,6 +3,7 @@ import { StoreStatus } from './store-status.enum';
 import { StoreOwner } from './store-owner';
 import { StoreFeed } from './store-feed';
 import { PaymentType } from './payment-type.enum';
+import { SquarespaceStore } from './squarespace-store';
 
 const DAY = 1000 * 60 * 60 * 24;
 const WEEK = 7 * DAY;
@@ -70,7 +71,52 @@ export class Store {
                     xmlProductNode: 'product'
                 }
             },
-            country: data.language === 'en' && feedSource === 'squarespace' ? 'us' : data.language,
+            country: data.language,
+        });
+    }
+
+    static createForSquarespace(data: SquarespaceStore, name) {
+        return Object.assign(new Store(), {
+            storeId: data.storeId,
+            owner: {
+                login: name,
+                token: data.sfToken,
+                payment: PaymentType.other,
+            },
+            feed: {
+                url: data.feed,
+                source: 'squarespace',
+                mapping: {
+                    'category': 'category',
+                    'brand': 'brand',
+                    'reference': 'reference',
+                    'ean': 'ean',
+                    'name': 'name',
+                    'link': 'link',
+                    'description': 'description',
+                    'short_description': 'short_description',
+                    'price': 'price',
+                    'old_price': 'old_price',
+                    'shipping_cost': 'shipping_cost',
+                    'shipping_time': 'shipping_time',
+                    'quantity': 'quantity',
+                    'weight': 'weight',
+                    'ecotax': 'ecotax',
+                    'tva': 'tva',
+                },
+                settings: {
+                    xmlProductNode: 'product',
+                    credentials: {
+                        type: 'oauth2',
+                        accessToken: data.accessToken,
+                        expiryTimeAccessToken: String(data.tokenExpiresAt),
+                        refreshToken: data.refreshToken,
+                        expiryTimeRefreshToken: String(data.tokenExpiresAt),
+                    }
+                }
+            },
+            country: data.language === 'en' ? 'us' : data.language,
+            paymentType: undefined,
         });
     }
 

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { SquarespaceStore } from './squarespace-store';
 import { CustomParamsEncoder } from './custom-params-encoder';
+import { SquarespaceStore } from 'sfl-shared/entities';
 
 @Injectable({
     providedIn: 'root'

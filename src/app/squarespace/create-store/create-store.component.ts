@@ -4,7 +4,7 @@ import { flatMap } from 'rxjs/operators';
 import { SquarespaceService } from '../squarespace.service';
 import { Store } from 'sfl-shared/entities';
 import { SflLocalStorageService, StoreService } from 'sfl-shared/services';
-import { SquarespaceStore } from '../squarespace-store';
+import { SquarespaceStore } from 'sfl-shared/entities';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 
 @Component({
@@ -25,7 +25,7 @@ export class CreateStoreComponent {
         this.route.queryParamMap.pipe(
             flatMap(queryParamMap => this.service.getStore(queryParamMap.get('code'), queryParamMap.get('state'))),
             flatMap((spStore: SquarespaceStore) => {
-                const store = Store.createFromResponse(spStore, spStore.name, 'squarespace');
+                const store = Store.createForSquarespace(spStore, spStore.name);
                 store.owner.email = email;
                 store.owner.password = password;
 
