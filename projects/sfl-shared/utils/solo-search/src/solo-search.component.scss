@@ -51,6 +51,18 @@ mat-card.mat-card {
         }
       }
     }
+
+    mat-progress-bar {
+      position: relative;
+      // not to make bigger the input
+      margin-top: -4px;
+      // all values received experimentally
+      top: -1px;
+      left: 6px;
+      width: calc(100% - 12px);
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+    }
   }
 
 }
