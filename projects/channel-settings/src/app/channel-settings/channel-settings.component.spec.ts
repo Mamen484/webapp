@@ -349,6 +349,25 @@ describe('ChannelSettingsComponent', () => {
         expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
     });
 
+    it('should set the valid status for template control when both appField and defaultValue had values, and one of them was removed', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.defaultValue.setValue('');
+        expect(templateRow.errors).toBe(null);
+        expect(templateRow.valid).toBe(true);
+    });
+
     function prepareChannelForSave() {
         channelService.modifyChannel.and.returnValue(of({}));
         routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});

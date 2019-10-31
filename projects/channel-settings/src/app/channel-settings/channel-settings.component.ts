@@ -160,6 +160,8 @@ export class ChannelSettingsComponent implements OnInit {
             formGroup.controls[controlName].markAsTouched({onlySelf: true});
             formGroup.controls[controlName].updateValueAndValidity({onlySelf: true});
         });
+        // do not emit event to prevent recursion
+        formGroup.updateValueAndValidity({onlySelf: true, emitEvent: false});
     }
 
     protected validateFieldPair(control: FormControl) {
