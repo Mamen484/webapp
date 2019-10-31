@@ -17,6 +17,7 @@ import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.servi
 import { SfaSharedModule } from './shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
+import { SflCountrySelectModule } from 'sfl-shared/utils/country-select';
 
 
 @NgModule({
@@ -36,13 +37,15 @@ import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
         HttpClientModule,
         LoginModule,
         MatSidenavModule,
+        SflCountrySelectModule.forRoot({
+            sflCountriesListLink: environment.countriesListLink,
+        }),
         SflSharedModule.forRoot({
             baseHref: '',
             languageOptions: {en: 'English'},
             sflApi: environment.SFA_API,
             sflAppToken: environment.APP_TOKEN,
             sflLegacyLink: environment.SFA_LEGACY_LINK,
-            sflCountriesListLink: environment.countriesListLink,
         }),
         SflMenuModule,
         SfaSharedModule,

@@ -73,7 +73,7 @@ describe('CategoryMappingComponent', () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(of({}));
         component.saveMatching();
-        expect(categoryMappingService.notifyMappingChange).toHaveBeenCalledWith({id: 22});
+        expect(categoryMappingService.notifyMappingChange).toHaveBeenCalledWith(<any>{id: 22});
     });
 
     it('should show a loading bar when a category mapping save clicked', async () => {
@@ -149,7 +149,7 @@ describe('CategoryMappingComponent', () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(of({}));
         component.saveMatching();
-        expect(mappingCacheService.addCategoryMapping).toHaveBeenCalledWith({id: 22});
+        expect(mappingCacheService.addCategoryMapping).toHaveBeenCalledWith(<any>{id: 22});
     });
 
     describe('modifications check (for parent hasModifications() check)', () => {

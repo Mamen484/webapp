@@ -5,6 +5,7 @@ import { ChannelService } from '../core/services/channel.service';
 import { FeedService } from '../core/services/feed.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 describe('SetupResolverGuard', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
@@ -32,14 +33,14 @@ describe('SetupResolverGuard', () => {
     it('should redirect to a channel-not-found error page when the channel endpoint returned an error', () => {
         channelService.getChannel.and.returnValue(throwError({}));
         feedService.fetchFeed.and.returnValue(of(<any>{channelId: 20}));
-        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).subscribe(() => {}, () => {});
+        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).pipe(catchError(() => of({}))).subscribe();
         expect(router.navigate).toHaveBeenCalledWith(['channel-not-found'])
     });
 
     it('should redirect to a feed-not-found error page when fetch feed returned an error', () => {
         channelService.getChannel.and.returnValue(of(<any>{}));
         feedService.fetchFeed.and.returnValue(throwError({}));
-        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).subscribe(() => {}, () => {});
+        guard.resolve(<any>{params: {feedId: 20}}, <any>{}).pipe(catchError(() => of({}))).subscribe();
         expect(router.navigate).toHaveBeenCalledWith(['feed-not-found'])
     });
 

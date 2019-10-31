@@ -1,22 +1,32 @@
-<sf-channel-box>
-    <div class="channel-logo" sfChannelLogo>
+<mat-card-content fxFlex fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+    <div class="channel-logo">
         <img mat-card-image [src]="channel._embedded.channel._links.image.href"
              [alt]="channel._embedded.channel.name">
     </div>
 
-    <div class="connect-button" sfConnectButton>
+    <div class="channel-box-line" fxLayout="row" matTooltip="Per month" i18n-matTooltip
+         matTooltipPosition="right">
+        <div class="channel-box-line-title" i18n fxFlex>Potential turnover
+        </div>
+        <div class="sf-color-grey">
+            {{potentialTurnover | sfCurrency:currency}}
+        </div>
+    </div>
+
+    <div class="channel-box-line" fxLayout="row" matTooltip="This month" i18n-matTooltip
+         matTooltipPosition="right">
+        <div class="channel-box-line-title" i18n fxFlex>Clients connected
+        </div>
+        <div class="sf-color-grey">
+            {{clientsConnected}}%
+        </div>
+    </div>
+
+    <div class="connect-button">
         <a mat-raised-button color="accent" *ngIf="!internationalMode"
-          (click)="goToChannel()" i18n>CONNECT</a>
+           (click)="goToChannel()" i18n>CONNECT</a>
         <a mat-raised-button color="accent" *ngIf="internationalMode"
            (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
     </div>
 
-    <sf-channel-turnover>
-        <span sfTitle i18n matTooltip="Per month" matTooltipPosition="right" i18n-matTooltip>Potential turnover</span>
-        <span class="sf-color-grey">{{potentialTurnover | sfCurrency:currency}}</span>
-    </sf-channel-turnover>
-    <sf-channel-online>
-        <span sfTitle i18n matTooltip="This month" matTooltipPosition="right" i18n-matTooltip>Clients connected</span>
-        <span class="sf-color-grey">{{clientsConnected}}%</span>
-    </sf-channel-online>
-</sf-channel-box>
+</mat-card-content>

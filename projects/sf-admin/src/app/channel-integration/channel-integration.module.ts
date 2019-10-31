@@ -11,6 +11,7 @@ import { AccountListPipe } from './channel-list/account-list.pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { CredentialsDialogComponent } from './create-account/credentials-dialog/credentials-dialog.component';
 import { UnsavedDataModule } from 'sfl-shared/utils/unsved-data-guard';
+import { environment } from '../../environments/environment';
 
 
 @NgModule({
@@ -22,7 +23,9 @@ import { UnsavedDataModule } from 'sfl-shared/utils/unsved-data-guard';
         ReactiveFormsModule,
         SfaSharedModule,
         AdminSidebarModule,
-        SflCountryAutocompleteModule,
+        SflCountryAutocompleteModule.forRoot({
+            sflCountriesListLink: environment.countriesListLink,
+        }),
         UnsavedDataModule,
     ],
     entryComponents: [CredentialsDialogComponent],

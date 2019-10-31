@@ -2,8 +2,10 @@ class MockChannel {
     'id' = 123;
     'store' = 45;
     'channel' = 789;
+    installed = true;
     '_embedded' = {
         'channel': {
+            'id': 123,
             'name': 'amazon',
             '_links': {
                 'self': {
@@ -23,6 +25,7 @@ class MockChannel {
 
     constructor(name, id) {
         this._embedded.channel.name = name;
+        this._embedded.channel.id = id;
         this.id = id;
     }
 }

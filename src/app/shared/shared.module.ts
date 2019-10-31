@@ -48,6 +48,7 @@ import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
+import { TimeAgoPipe } from 'time-ago-pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
 
@@ -138,6 +139,7 @@ import { environment } from '../../../projects/channel-settings/src/environments
         SfNumberPipe,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
+        TimeAgoPipe,
 
         // directives
         HasServerErrorDirective,
@@ -161,6 +163,7 @@ import { environment } from '../../../projects/channel-settings/src/environments
         MinNumberDirective,
         HasServerErrorDirective,
         ChannelLinkPipe,
+        TimeAgoPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

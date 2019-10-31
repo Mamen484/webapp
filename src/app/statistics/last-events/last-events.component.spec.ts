@@ -67,9 +67,9 @@ describe('LastEventsComponent', () => {
     });
 
     it('should set `isDisplayed` to true when at least one export received from server', () => {
-        timelineService.getEvents.and.returnValues(
-            of(<any>{_embedded: {timeline: []}}),
-            of(<any>{_embedded: {timeline: [{name: TimelineEventName.import, _embedded: {channel: {name: 'any name'}}}]}}));
+        timelineService.getEvents.and.returnValue(
+            of(<any>{_embedded: {timeline: [{name: TimelineEventName.import}]}})
+        ),
         ordersService.fetchOrdersList.and.returnValues(
             of(<any>{_embedded: {order: []}}),
             of(<any>{_embedded: {order: []}}));
@@ -109,12 +109,6 @@ describe('LastEventsComponent', () => {
         validateImport(component.lastImports[3], TimelineEventAction.error, '2017-11-22T12:06:47+00:00');
         validateImport(component.lastImports[4], TimelineEventAction.error, '2017-11-22T12:00:59+00:00');
 
-        validateExport(component.lastExports[0], TimelineEventAction.error, '2018-04-27T17:27:44+00:00');
-        validateExport(component.lastExports[1], TimelineEventAction.finish, '2017-12-07T11:26:12+00:00');
-        validateExport(component.lastExports[2], TimelineEventAction.finish, '2017-11-23T11:31:45+00:00');
-        validateExport(component.lastExports[3], TimelineEventAction.error, '2017-11-22T12:06:47+00:00');
-        validateExport(component.lastExports[4], TimelineEventAction.error, '2017-11-22T12:00:59+00:00');
-
         validateError(component.acknowledgeErrors[0], 'Amazon', '11');
         validateError(component.acknowledgeErrors[1], 'Ebay', '12');
 
@@ -131,13 +125,6 @@ describe('LastEventsComponent', () => {
         expect(importObject.name).toBe(TimelineEventName.import);
         expect(importObject.action).toBe(action);
         expect(importObject.occurredAt).toBe(date);
-    }
-
-    function validateExport(exportObject: TimelineEvent, action: TimelineEventAction, date: string) {
-        expect(exportObject.name).toBe(TimelineEventName.export);
-        expect(exportObject.action).toBe(action);
-        expect(exportObject.occurredAt).toBe(date);
-        expect(exportObject._embedded.channel.name).toBe('SmartFeed');
     }
 
     function validateError(order: Order, channelName: string, reference: string) {

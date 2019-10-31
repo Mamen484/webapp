@@ -1,6 +1,6 @@
 import { SflSharedModule } from './sfl-shared.module';
 import { TestBed } from '@angular/core/testing';
-import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_LEGACY_LINK, SFL_LANGUAGE_OPTIONS, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK } from 'sfl-shared/entities';
 
 describe('SflSharedModule', () => {
     beforeEach(() => {
@@ -11,7 +11,6 @@ describe('SflSharedModule', () => {
                 sflApi: 'apiLink',
                 sflLegacyLink: 'legacyLink',
                 sflAppToken: 'appToken',
-                sflCountriesListLink: 'countriesLink',
             })]
         });
     });
@@ -34,9 +33,5 @@ describe('SflSharedModule', () => {
 
     it('should provide SFL_LANGUAGE_OPTIONS', () => {
         expect(TestBed.get(SFL_LANGUAGE_OPTIONS)).toEqual({'en': 'English'});
-    });
-
-    it('should provide SFL_COUNTRIES_LIST_LINK', () => {
-        expect(TestBed.get(SFL_COUNTRIES_LIST_LINK)).toEqual('countriesLink');
     });
 });

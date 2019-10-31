@@ -16,10 +16,15 @@ import { OrderErrorRowComponent } from './order-error-row/order-error-row.compon
 import { ChannelBoxModule } from './channel-box/channel-box.module';
 import { SflSharedModule } from 'sfl-shared';
 import { SidebarModule } from '../sidebar/sidebar.module';
+import { SflCountrySelectModule } from 'sfl-shared/utils/country-select';
+import { environment } from '../../../projects/sf-admin/src/environments/environment';
 
 @NgModule({
     imports: [
         CommonModule,
+        SflCountrySelectModule.forRoot({
+            sflCountriesListLink: environment.countriesListLink,
+        }),
         SidebarModule,
         SharedModule,
         StatisticsRoutingModule,

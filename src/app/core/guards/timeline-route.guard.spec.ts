@@ -17,7 +17,7 @@ describe('TimelineRouteGuard', () => {
 
     it('should write \'channels\' as the currentRoute value and return true', inject([TimelineRouteGuard], (guard: TimelineRouteGuard) => {
         expect(guard.canActivate()).toEqual(true);
-        expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_ROUTE', routeName: 'timeline'});
+        expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_ROUTE', routeName: 'timeline'});
     }));
 
 });

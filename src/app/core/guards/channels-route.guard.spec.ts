@@ -17,7 +17,7 @@ describe('ChannelsRouteGuard', () => {
 
     it('should write \'channels\' as the currentRoute value and return true', inject([ChannelsRouteGuard], (guard: ChannelsRouteGuard) => {
         expect(guard.canActivate()).toEqual(true);
-        expect(store.dispatch).toHaveBeenCalledWith( {type: 'SET_ROUTE', routeName: 'channels'});
+        expect(store.dispatch).toHaveBeenCalledWith( <any>{type: 'SET_ROUTE', routeName: 'channels'});
     }));
 
 });

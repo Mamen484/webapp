@@ -5,11 +5,10 @@ import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 
 /**
  * Load countries for the countries autocomplete component with translations according to the current locale.
+ * The module that provides the service must provide also SFL_COUNTRIES_LIST_LINK.
  */
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class FullCountriesListService {
 
     countries = new BehaviorSubject<Country[]>([]);
