@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
-import { SquarespaceService } from '../squarespace.service';
 import { Store } from 'sfl-shared/entities';
-import { SflLocalStorageService, StoreService } from 'sfl-shared/services';
-import { SquarespaceStore } from 'sfl-shared/entities';
+import { SflAuthService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 
 @Component({
@@ -15,16 +13,15 @@ import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
 export class CreateStoreComponent {
 
     constructor(protected route: ActivatedRoute,
-                protected service: SquarespaceService,
+                protected authService: SflAuthService,
                 protected storeService: StoreService,
                 protected router: Router,
                 protected localStorage: SflLocalStorageService) {
     }
 
     createStore({email, password}) {
-        this.route.queryParamMap.pipe(
-            flatMap(queryParamMap => this.service.getStore(queryParamMap.get('code'), queryParamMap.get('state'))),
-            flatMap((spStore: SquarespaceStore) => {
+        this.route.data.pipe(
+            flatMap(({spStore}) => {
                 const store = Store.createForSquarespace(spStore, spStore.name);
                 store.owner.email = email;
                 store.owner.password = password;
@@ -34,7 +31,7 @@ export class CreateStoreComponent {
         )
             .subscribe(
                 (store) => {
-                    this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+                    this.authService.loginByToken(store.owner.token);
                     this.localStorage.removeItem(LocalStorageKey.squarespaceState);
                     this.router.navigate(['register', 'create-account']);
                 },

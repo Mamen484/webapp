@@ -25,16 +25,16 @@ describe('SquarespaceService', () => {
     it('should call an appropriate endpoint on getStore()', () => {
         const service: SquarespaceService = TestBed.get(SquarespaceService);
         const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
-        service.getStore('someCode', 'someState').subscribe();
-        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/store?code=someCode&state=someState`);
+        service.getStore('someCode').subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/store?code=someCode`);
         expect(req.request.method).toBe('GET');
     });
 
     it('should use encodeURIComponent() for the code param when fetching getStore() to get back the code that was passed in the query params', () => {
         const service: SquarespaceService = TestBed.get(SquarespaceService);
         const httpMock: HttpTestingController = TestBed.get(HttpTestingController);
-        service.getStore('1|HT0Jrb8kM5V8oom2ChaJPkwzUHRLTEAtSUvAolPp7DU=|e21DjI6I0Kncv84N5TNoeoJqzkJtsqhfTZLgkbRClxM=', 'someState').subscribe();
-        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/store?code=1%7CHT0Jrb8kM5V8oom2ChaJPkwzUHRLTEAtSUvAolPp7DU%3D%7Ce21DjI6I0Kncv84N5TNoeoJqzkJtsqhfTZLgkbRClxM%3D&state=someState`);
+        service.getStore('1|HT0Jrb8kM5V8oom2ChaJPkwzUHRLTEAtSUvAolPp7DU=|e21DjI6I0Kncv84N5TNoeoJqzkJtsqhfTZLgkbRClxM=').subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/squarespace/store?code=1%7CHT0Jrb8kM5V8oom2ChaJPkwzUHRLTEAtSUvAolPp7DU%3D%7Ce21DjI6I0Kncv84N5TNoeoJqzkJtsqhfTZLgkbRClxM%3D`);
         expect(req.request.method).toBe('GET');
     });
 });

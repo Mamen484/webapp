@@ -33,8 +33,18 @@ export class SflAuthService {
             username,
             password
         }).pipe(tap(({token_type, access_token}: any) => {
-            this.localStorage.setItem('Authorization', `${token_type} ${access_token}`);
+            this.loginByToken(access_token, token_type);
         }));
+    }
+
+    /**
+     * Save authorization into a local storage
+     *
+     * @param tokenType
+     * @param token
+     */
+    public loginByToken(token: string, tokenType = 'Bearer') {
+        this.localStorage.setItem('Authorization', `${tokenType} ${token}`);
     }
 
     /**

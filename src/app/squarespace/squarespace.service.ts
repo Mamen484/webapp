@@ -17,10 +17,9 @@ export class SquarespaceService {
         return this.httpClient.get(`${environment.API_URL}/squarespace/auth`) as Observable<{ authorizeUrl: string }>;
     }
 
-    getStore(code, state) {
+    getStore(code) {
         const params = new HttpParams({encoder: new CustomParamsEncoder()})
-            .set('code', code)
-            .set('state', state);
+            .set('code', code);
         return this.httpClient.get(`${environment.API_URL}/squarespace/store`, {params}) as Observable<SquarespaceStore>;
     }
 }

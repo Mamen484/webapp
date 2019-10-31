@@ -5,25 +5,27 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SquarespaceService } from '../squarespace.service';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
-import { SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { SflAuthService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
-import { PaymentType } from 'sfl-shared/entities';
 
 describe('CreateStoreComponent', () => {
     let component: CreateStoreComponent;
     let fixture: ComponentFixture<CreateStoreComponent>;
-    let route: { queryParamMap: Subject<Map<string, any>> };
+    let route: { data: Subject<Object> };
     let service: jasmine.SpyObj<SquarespaceService>;
     let storeService: jasmine.SpyObj<StoreService>;
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
     let router: jasmine.SpyObj<Router>;
+    let authService: jasmine.SpyObj<SflAuthService>;
 
     beforeEach(async(() => {
-        route = <any>{queryParamMap: new Subject()};
+        route = <any>{data: new Subject()};
         service = jasmine.createSpyObj('SquarespaceService', ['getStore']);
         storeService = jasmine.createSpyObj('StoreService', ['createStore']);
         localStorage = jasmine.createSpyObj('SflLocalStorageService', ['getItem', 'setItem', 'removeItem']);
         router = jasmine.createSpyObj('Router', ['navigate']);
+        authService = jasmine.createSpyObj('SflAuthService', ['loginByToken']);
+
         TestBed.configureTestingModule({
             declarations: [CreateStoreComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -33,6 +35,7 @@ describe('CreateStoreComponent', () => {
                 {provide: StoreService, useValue: storeService},
                 {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: Router, useValue: router},
+                {provide: SflAuthService, useValue: authService},
             ],
         })
             .compileComponents();
@@ -44,27 +47,21 @@ describe('CreateStoreComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should fetch a squarespace store from API', () => {
-        service.getStore.and.returnValue(EMPTY);
-        component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
-        expect(service.getStore).toHaveBeenCalledWith('someCode', 'someState');
-    });
-
     it('should create a SF store', () => {
-        service.getStore.and.returnValue(of({
-            accessToken: '6709rrr75974e807ebc987a75a6bfd897',
-            refreshToken: '6709rrr75974e807ebc987a75a6bfd896',
-            tokenExpiresAt: 1553532363.542,
-            language: 'en',
-            storeId: 123,
-            feed: 'https://domain/lib/import/some_feed_url',
-            sfToken: '4679rrr75974e807ebc987a75a6bfd290',
-            name: 'sfdev, 12345',
-        }));
         storeService.createStore.and.returnValue(EMPTY);
         component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
+        route.data.next({
+            spStore: {
+                accessToken: '6709rrr75974e807ebc987a75a6bfd897',
+                refreshToken: '6709rrr75974e807ebc987a75a6bfd896',
+                tokenExpiresAt: 1553532363.542,
+                language: 'en',
+                storeId: null,
+                feed: 'https://domain/lib/import/some_feed_url',
+                sfToken: '4679rrr75974e807ebc987a75a6bfd290',
+                name: 'sfdev, 12345',
+            }
+        });
 
         expect(Object.keys(storeService.createStore.calls.mostRecent().args[0])).toEqual(['owner', 'feed', 'country', 'paymentType', 'storeId']);
 
@@ -107,51 +104,38 @@ describe('CreateStoreComponent', () => {
             }
         });
         expect(storeService.createStore.calls.mostRecent().args[0].country).toEqual('us');
-        expect(storeService.createStore.calls.mostRecent().args[0].storeId).toEqual(123);
+        expect(storeService.createStore.calls.mostRecent().args[0].storeId).toEqual(null);
         expect(storeService.createStore.calls.mostRecent().args[0].paymentType).not.toBeDefined();
     });
 
-    it('should set Authorization to localStorage if the store is created successfully', () => {
-        service.getStore.and.returnValue(of(<any>{}));
+    it('should login a user if the store is created successfully', () => {
         storeService.createStore.and.returnValue(of(<any>{owner: {token: 'someToken'}}));
         component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
+        route.data.next({spStore: {}});
 
-        expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer someToken');
+        expect(authService.loginByToken).toHaveBeenCalledWith('someToken');
     });
 
     it('should remove squarespace state from local storage if the store is created successfully', () => {
-        service.getStore.and.returnValue(of(<any>{}));
         storeService.createStore.and.returnValue(of(<any>{owner: {token: 'someToken'}}));
         component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
+        route.data.next({spStore: {}});
 
         expect(localStorage.removeItem).toHaveBeenCalledWith(LocalStorageKey.squarespaceState);
     });
 
     it('should redirect to the /register/create-account path if the store is created successfully', () => {
-        service.getStore.and.returnValue(of(<any>{}));
         storeService.createStore.and.returnValue(of(<any>{owner: {token: 'someToken'}}));
         component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
+        route.data.next({spStore: {}});
 
         expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account']);
     });
 
-    it('should redirect to the squarespace error page if the store fetching failed', () => {
-        service.getStore.and.returnValue(throwError({}));
-        storeService.createStore.and.returnValue(of(<any>{owner: {token: 'someToken'}}));
-        component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
-
-        expect(router.navigate).toHaveBeenCalledWith(['squarespace', 'error']);
-    });
-
     it('should redirect to the squarespace error page if the store creation failed', () => {
-        service.getStore.and.returnValue(of(<any>{}));
         storeService.createStore.and.returnValue(throwError({}));
         component.createStore({email: 'some@email.com', password: '1234567'});
-        route.queryParamMap.next(new Map().set('code', 'someCode').set('state', 'someState'));
+        route.data.next({spStore: {}});
 
         expect(router.navigate).toHaveBeenCalledWith(['squarespace', 'error']);
     });

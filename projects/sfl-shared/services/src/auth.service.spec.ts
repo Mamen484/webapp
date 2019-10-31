@@ -52,7 +52,13 @@ describe('AuthService', () => {
         const req = httpMock.expectOne('someLink/auth');
         req.flush({token_type: 'Bearer', access_token: 'some_token'});
         expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some_token');
+>    });
 
+    it('should write a token into a localstorage on loginByToken call', () => {
+        const service: SflAuthService = TestBed.get(SflAuthService);
+
+        service.loginByToken('some_token');
+        expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some_token');
     });
 
     it('should remove a token from a localstorage on logout() call', () => {
