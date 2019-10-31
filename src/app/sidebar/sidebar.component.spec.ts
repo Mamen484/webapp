@@ -158,26 +158,34 @@ describe('SidebarComponent', () => {
         expect(stores.length).toEqual(3);
     });
 
-    it('should display an appcues referal link if appcues loaded', () => {
-        appStore.select.and.returnValue(of({permission: {}}));
+    it('should display an appcues referal link if appcues loaded and the store.coutry is US', () => {
+        appStore.select.and.returnValue(of({country: 'US', permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         appcuesService.getState.and.returnValue(of(AppcuesState.loaded));
         fixture.detectChanges();
         const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
-        expect(component.appcuesEnabled).toBe(true);
+        expect(component.showReferralLink).toBe(true);
         expect(link).toBeTruthy();
+    });
 
+    it('should NOT display an appcues referal link if appcues loaded and the store.coutry is FR', () => {
+        appStore.select.and.returnValue(of({country: 'FR', permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
+        appcuesService.getState.and.returnValue(of(AppcuesState.loaded));
+        fixture.detectChanges();
+        const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
+        expect(component.showReferralLink).toBe(false);
+        expect(link).toBeFalsy();
     });
 
     it('should NOT display an appcues referal link if appcues NOT enabled', () => {
-        appStore.select.and.returnValue(of({permission: {}}));
+        appStore.select.and.returnValue(of({country: 'US', permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({roles: ['user'], _embedded: {store: []}})));
         appcuesService.getState.and.returnValue(EMPTY);
         fixture.detectChanges();
         const link = fixture.debugElement.nativeElement.querySelector('.appcues-link');
-        expect(component.appcuesEnabled).toBe(false);
+        expect(component.showReferralLink).toBe(false);
         expect(link).toBeFalsy();
-
     });
 
     function membershipElement() {
