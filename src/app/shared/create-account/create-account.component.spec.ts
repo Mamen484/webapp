@@ -58,7 +58,7 @@ describe('CreateAccountComponent', () => {
         component.emailControl.setValue('test@test.com');
         component.passwordControl.setValue('1234567');
         component.submit();
-        expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalledWith({email: 'test@test.com', password: '1234567'});
     });
 
 });

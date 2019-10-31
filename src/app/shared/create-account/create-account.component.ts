@@ -23,7 +23,7 @@ export class CreateAccountComponent {
             return;
         }
 
-        this.submitted.emit({email: this.emailControl.value, password: this.emailControl.value});
+        this.submitted.emit({email: this.emailControl.value, password: this.passwordControl.value});
     }
 
 }
