@@ -5,24 +5,23 @@ import { CreatePasswordComponent } from './create-password.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreatePasswordService } from '../../core/services/create-password.service';
-import { SflLocaleIdService } from 'sfl-shared/services';
+import { SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
-import { SflLocalStorageService } from 'sfl-shared/services';
 import { BlankComponent } from '../../shared/blank.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
     let fixture: ComponentFixture<CreatePasswordComponent>;
-    let queryParams, localStorage, shopifyService, createPasswordService;
+    let queryParams, localStorage, shopifyService;
+    let storeService: jasmine.SpyObj<StoreService>;
 
     beforeEach(async(() => {
         localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'setItem', 'removeItem']);
         queryParams = of({});
         shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getStoreData']);
-        createPasswordService = jasmine.createSpyObj('CreatePasswordService', ['createPassword']);
+        storeService = jasmine.createSpyObj('StoreService', ['createStore']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -34,7 +33,7 @@ describe('CreatePasswordComponent', () => {
             providers: [
                 {provide: ShopifyAuthentifyService, useValue: shopifyService},
                 {provide: SflLocalStorageService, useValue: localStorage},
-                {provide: CreatePasswordService, useValue: createPasswordService},
+                {provide: StoreService, useValue: storeService},
                 {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: ActivatedRoute, useValue: {queryParams: of({})}},
                 {
@@ -75,79 +74,45 @@ describe('CreatePasswordComponent', () => {
             expect(shopifyService.getStoreData).toHaveBeenCalled();
         });
 
-        it('should NOT call password service if email or password are invalid', () => {
+        it('should send email and password to the server createPassword() called', () => {
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(of({owner: {}}));
-
+            storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('tadada');
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-
-            component.passwordControl.setValue('1');
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-
-            component.passwordControl.setValue('123456');
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('123456');
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-
-            component.emailControl.setValue('fferqw');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
-            expect(createPasswordService.createPassword).not.toHaveBeenCalled();
-        });
-
-        it('should send email and password to the server when both controls are valid', () => {
-            shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(of({owner: {}}));
-            fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
-            expect(createPasswordService.createPassword).toHaveBeenCalled();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
+            expect(storeService.createStore).toHaveBeenCalledWith({
+                owner: {
+                    email: 'test@test.com',
+                    password: '1234567',
+                },
+            });
         });
 
         it('should use cached data if it is in the local storage', () => {
             localStorage.getItem.and.returnValue('{"owner": {"some_data":"some data"}}');
-            createPasswordService.createPassword.and.returnValue(of({owner: {}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
-            expect(createPasswordService.createPassword.calls.mostRecent().args[0].owner.some_data)
+            component.createPassword({email: 'test@test.com', password: '1234567'});
+            expect((<any>storeService.createStore.calls.mostRecent().args[0].owner).some_data)
                 .toEqual('some data')
         });
 
         it('should use the data from the server if there is no cache in the local storage', () => {
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {some_data: 'some data from server'}}));
-            createPasswordService.createPassword.and.returnValue(of({owner: {}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
-            expect(createPasswordService.createPassword.calls.mostRecent().args[0].owner.some_data)
+            component.createPassword({email: 'test@test.com', password: '1234567'});
+            expect((<any>storeService.createStore.calls.mostRecent().args[0].owner).some_data)
                 .toEqual('some data from server');
         });
 
         it('should save the authorization to the local storage if a call to the server was successful', () => {
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(of({owner: {token: 'some token'}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {token: 'some token'}}));
 
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some token');
         });
 
@@ -156,11 +121,9 @@ describe('CreatePasswordComponent', () => {
             spyOn(router, 'navigate');
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(of({owner: {}}));
+            storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account'])
         });
 
@@ -169,12 +132,10 @@ describe('CreatePasswordComponent', () => {
             spyOn(router, 'navigate');
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
-            createPasswordService.createPassword.and.returnValue(throwError('some error'));
+            storeService.createStore.and.returnValue(throwError('some error'));
             fixture.detectChanges();
             expect(component.displayServerError).toEqual(false);
-            component.emailControl.setValue('test@test.com');
-            component.passwordControl.setValue('1234567');
-            component.createPassword();
+            component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(component.displayServerError).toEqual(true);
         })
 

@@ -16,7 +16,6 @@ import { ShopifyAuthentifyService } from './services/shopify-authentify.service'
 import { ShopifyGuard } from './guards/shopify.guard';
 import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
 import { RegistrationCacheGuard } from './guards/registration-cache.guard';
-import { CreatePasswordService } from './services/create-password.service';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
@@ -71,7 +70,6 @@ import { TimelineRouteGuard } from './guards/timeline-route.guard';
         ChannelStorageService,
         ShopifyAuthentifyService,
         RegistrationCacheGuard,
-        CreatePasswordService,
         SupportService,
         PasswordRecoveryService,
         TimelineService,

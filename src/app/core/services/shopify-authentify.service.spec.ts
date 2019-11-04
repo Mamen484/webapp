@@ -2,8 +2,8 @@ import { TestBed, inject } from '@angular/core/testing';
 import { ShopifyAuthentifyService } from './shopify-authentify.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { CreateStoreModel } from '../entities/create-store-model';
 import { environment } from '../../../environments/environment';
+import { Store } from 'sfl-shared/entities';
 
 describe('ShopifyAuthentifyServuce', () => {
     let httpClient;
@@ -63,7 +63,7 @@ describe('ShopifyAuthentifyServuce', () => {
 
     it('updateStore should make a proper request to api', inject([ShopifyAuthentifyService, HttpClient],
         (service: ShopifyAuthentifyService) => {
-        let store = new CreateStoreModel();
+        let store = new Store();
         store.owner.token = 'token token';
         store.storeId = 343;
         service.updateStore(store);

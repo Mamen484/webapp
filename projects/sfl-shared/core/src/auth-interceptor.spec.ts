@@ -83,6 +83,26 @@ describe('AuthInterceptor', () => {
         httpMock.verify();
     });
 
+    it('should add App Authorization and Accept headers to an http request when the user requests squarespace/store resource', () => {
+        http.get('apiLink/squarespace/store').subscribe();
+        const request = httpMock.expectOne(req =>
+            req.headers.get('Authorization') === 'app_token'
+            && req.headers.get('Accept') === 'application/json');
+
+        expect(request.request.method).toEqual('GET');
+        httpMock.verify();
+    });
+
+    it('should add App Authorization and Accept headers to an http request when the user requests squarespace/auth resource', () => {
+        http.get('apiLink/squarespace/auth').subscribe();
+        const request = httpMock.expectOne(req =>
+            req.headers.get('Authorization') === 'app_token'
+            && req.headers.get('Accept') === 'application/json');
+
+        expect(request.request.method).toEqual('GET');
+        httpMock.verify();
+    });
+
     it('should NOT add App Authorization and Accept headers to an http request when the user requests shopify/subscription resource', () => {
         authService.getAuthString.and.returnValue('tarampapam');
         authService.isLoggedIn.and.returnValue(true);

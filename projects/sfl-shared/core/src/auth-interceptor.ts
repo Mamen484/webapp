@@ -49,6 +49,8 @@ export class AuthInterceptor implements HttpInterceptor {
     protected appTokenNeeded(req) {
         return (req.url.indexOf(this.apiUrl + '/shopify/auth') === 0 && req.method === 'GET')
             || (req.url.indexOf(this.apiUrl + '/shopify/store') === 0 && req.method === 'GET')
+            || (req.url.indexOf(this.apiUrl + '/squarespace/auth') === 0 && req.method === 'GET')
+            || (req.url.indexOf(this.apiUrl + '/squarespace/store') === 0 && req.method === 'GET')
             || (req.url.indexOf(this.apiUrl + '/store') === 0
                 && (req.method === 'POST' || req.method === 'PATCH')
                 && req.url.indexOf('/order') === -1)

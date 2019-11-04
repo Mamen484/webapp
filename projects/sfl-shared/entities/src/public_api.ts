@@ -14,6 +14,7 @@ export * from './payment-type.enum';
 export * from './permission';
 export * from './server-exception';
 export * from './sfl-dependencies';
+export * from './squarespace-store';
 export * from './statistics';
 export * from './store';
 export * from './store-channel';

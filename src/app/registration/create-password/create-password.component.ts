@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CreatePasswordService } from '../../core/services/create-password.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
-import { CreateStoreModel } from '../../core/entities/create-store-model';
 import { environment } from '../../../environments/environment';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { Store } from 'sfl-shared/entities';
 
 @Component({
     selector: 'app-create-password',
@@ -15,14 +14,12 @@ import { SflLocalStorageService } from 'sfl-shared/services';
 })
 export class CreatePasswordComponent implements OnInit {
 
-    public emailControl = new FormControl('', [Validators.required, Validators.email]);
-    public passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
     public supportEmail = environment.SUPPORT_EMAIL;
     public displayServerError = false;
 
     protected store;
 
-    constructor(protected service: CreatePasswordService,
+    constructor(protected storeService: StoreService,
                 protected router: Router,
                 protected route: ActivatedRoute,
                 protected shopifyService: ShopifyAuthentifyService,
@@ -42,19 +39,11 @@ export class CreatePasswordComponent implements OnInit {
             })
     }
 
-    public createPassword() {
-        if (this.emailControl.hasError('required')
-            || this.passwordControl.hasError('required')
-            || this.emailControl.hasError('email')
-            || this.passwordControl.hasError('minlength')
-        ) {
-            return;
-        }
-        // This is currently shopify specific
-        this.store.owner.email = this.emailControl.value;
-        this.store.owner.password = this.passwordControl.value;
-        this.service.createPassword(this.store)
-            .subscribe((store: CreateStoreModel) => {
+    public createPassword({email, password}) {
+        this.store.owner.email = email;
+        this.store.owner.password = password;
+        this.storeService.createStore(this.store)
+            .subscribe((store: Store) => {
                     this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
                     this.router.navigate(['register', 'create-account']);
                 },

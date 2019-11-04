@@ -51,6 +51,7 @@ import { SflImageModule } from 'sfl-shared/utils/image';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 @NgModule({
     imports: [
@@ -146,6 +147,7 @@ import { environment } from '../../../projects/channel-settings/src/environments
         MinNumberDirective,
 
         // components
+        CreateAccountComponent,
         ScheduleCallIframeComponent,
         ValidationErrorsSnackbarComponent,
     ],
@@ -164,6 +166,7 @@ import { environment } from '../../../projects/channel-settings/src/environments
         HasServerErrorDirective,
         ChannelLinkPipe,
         TimeAgoPipe,
+        CreateAccountComponent,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

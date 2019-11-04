@@ -44,6 +44,7 @@ const routes: Routes = [
     {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
     {path: 'reset-password/:token', component: ResetPasswordComponent},
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
+    {path: 'squarespace', loadChildren: () => import('./squarespace/squarespace.module').then(m => m.SquarespaceModule)},
     {path: 'register', loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule)},
 ];
 
