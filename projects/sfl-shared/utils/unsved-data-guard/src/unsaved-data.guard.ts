@@ -16,7 +16,6 @@ export class UnsavedDataGuard implements CanDeactivate<UnsavedDataInterface> {
     lastEmit = new Date();
 
     canDeactivate(component: UnsavedDataInterface): Observable<boolean> {
-        console.log(component);
         if (component.hasModifications() && this.lastEmit.getTime() < new Date().getTime() - guardDebounce) {
             this.lastEmit = new Date();
             return component.showCloseDialog();

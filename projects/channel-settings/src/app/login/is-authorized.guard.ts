@@ -31,8 +31,6 @@ export class IsAuthorizedGuard implements CanActivate {
 
         return this.userService.fetchAggregatedInfo().pipe(
             map(userInfo => {
-                // TODO: add a check if channel attached
-                // return Boolean(userInfo._embedded.channel.id);
                 return true;
             }),
             catchError(// do not activate and redirect to /login when an error

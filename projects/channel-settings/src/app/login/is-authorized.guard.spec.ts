@@ -74,6 +74,15 @@ describe('IsAuthorizedGuard', () => {
         expect(canActivate).toEqual(false);
         expect(router.navigate).toHaveBeenCalledWith(['/critical-error'], {skipLocationChange: true});
     });
+
+    it('should NOT redirect to the critical error page if the server returned an error < 400', async () => {
+        sflAuthService.isLoggedIn.and.returnValue(true);
+        store.select.and.returnValue(of(null));
+        fetchAggregatedInfoSpy.and.returnValue(throwError({status: 300}));
+        const canActivate = await (<Observable<boolean>>guard.canActivate(<any>{})).toPromise();
+        expect(canActivate).toEqual(false);
+        expect(router.navigate).not.toHaveBeenCalled();
+    });
 });
 
 export const aggregatedUserInfoMock = {

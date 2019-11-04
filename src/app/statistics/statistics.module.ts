@@ -18,6 +18,8 @@ import { SflSharedModule } from 'sfl-shared';
 import { SidebarModule } from '../sidebar/sidebar.module';
 import { SflCountrySelectModule } from 'sfl-shared/utils/country-select';
 import { environment } from '../../../projects/sf-admin/src/environments/environment';
+import { FullCountriesListService } from 'sfl-shared/services';
+import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 
 @NgModule({
     imports: [
@@ -50,7 +52,11 @@ import { environment } from '../../../projects/sf-admin/src/environments/environ
         IntlRequestSuccessDialogComponent,
         RequestFailedDialogComponent,
         AcceptChannelDialogComponent,
-    ]
+    ],
+    providers: [
+        FullCountriesListService,
+        {provide: SFL_COUNTRIES_LIST_LINK, useValue: environment.countriesListLink},
+    ],
 })
 export class StatisticsModule {
 }

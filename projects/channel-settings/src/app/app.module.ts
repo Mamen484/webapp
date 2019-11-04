@@ -30,6 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RowValidationDialogComponent } from './channel-settings/row-validation-dialog/row-validation-dialog.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SflErrorPagesModule } from 'sfl-shared/error-pages';
 
 @NgModule({
     declarations: [
@@ -63,6 +64,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         SflCountryAutocompleteModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,
         }),
+        SflErrorPagesModule,
         SflSidebarModule,
         SflSharedModule.forRoot({
             baseHref: '',
