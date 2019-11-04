@@ -12,6 +12,7 @@ import { CountryAutocompleteStubComponent } from '../../../../../../src/app/orde
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
 import { By } from '@angular/platform-browser';
 import { UnsavedDataDialogComponent } from 'sfl-shared/utils/unsved-data-guard';
+import { StoreStatus } from 'sfl-shared/entities';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
@@ -82,7 +83,7 @@ describe('CreateAccountComponent', () => {
                     payment: 'other',
                 },
                 country: 'es',
-                status: 'demo',
+                status: StoreStatus.demo,
                 feed: {
                     url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
                     source: 'xml',

@@ -1,11 +1,10 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { SFL_API, SFL_APP_TOKEN, SFL_BASE_HREF, SFL_DEFAULT_LANGUAGE, SFL_LANGUAGE_OPTIONS, SFL_LEGACY_LINK } from 'sfl-shared/entities';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { SflLegacyLinkDirective } from './legacy-link.directive';
-import { SflCountrySelectComponent } from './country-select/country-select.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,11 +22,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule,
     ],
-    declarations: [SflLegacyLinkDirective, SflCountrySelectComponent],
-    exports: [SflLegacyLinkDirective, SflCountrySelectComponent],
+    declarations: [SflLegacyLinkDirective],
+    exports: [SflLegacyLinkDirective],
 })
 export class SflSharedModule {
-    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink, sflCountriesListLink }): ModuleWithProviders {
+    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders {
         return {
             ngModule: SflSharedModule,
             providers: [
@@ -39,11 +38,7 @@ export class SflSharedModule {
                 {provide: SFL_API, useValue: dependency.sflApi},
                 {provide: SFL_APP_TOKEN, useValue: dependency.sflAppToken},
                 {provide: SFL_LEGACY_LINK, useValue: dependency.sflLegacyLink},
-                {provide: SFL_COUNTRIES_LIST_LINK, useValue: dependency.sflCountriesListLink},
             ]
         }
-    }
-
-    constructor() {
     }
 }

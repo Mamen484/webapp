@@ -17,7 +17,7 @@ describe('OrdersRouteGuard', () => {
 
   it('should write `orders` as the currentRoute value and return true', inject([OrdersRouteGuard], (guard: OrdersRouteGuard) => {
     expect(guard.canActivate()).toEqual(true);
-    expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_ROUTE', routeName: 'orders'});
+    expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_ROUTE', routeName: 'orders'});
   }));
 
 });

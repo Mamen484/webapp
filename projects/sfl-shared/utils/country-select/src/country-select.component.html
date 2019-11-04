@@ -1,0 +1,14 @@
+<mat-form-field color="accent" appearance="outline">
+    <mat-label i18n>Country</mat-label>
+    <mat-select class="sf-country-name" [formControl]="controlDir.control" #select (click)="onTouched()"
+                (selectionChange)="onChange($event.value)" [required]="required">
+        <mat-option [value]="country.code" *ngFor="let country of countries">
+            <img src="{{countriesListLink}}/images/{{country.flag}}" class="sf-flag-filter">
+            <span class="sf-country-name" i18n>{{country.name}}</span>
+        </mat-option>
+    </mat-select>
+    <mat-error *ngIf="controlDir.control.hasError('required')" i18n>This field is required</mat-error>
+    <mat-error *ngIf="controlDir.control.hasError('create-user-error') && !controlDir.control.hasError('required')">
+        {{controlDir.control.getError('create-user-error')}}
+    </mat-error>
+</mat-form-field>

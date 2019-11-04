@@ -2,10 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfiguredChannelComponent } from './configured-channel.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { LargeNumberSuffixPipe } from '../../../shared/large-number-suffix.pipe';
-import { ChannelBoxComponent } from '../channel-box.component';
-import { ChannelTurnoverComponent } from '../channel-turnover/channel-turnover.component';
-import { ChannelOnlineComponent } from '../channel-online/channel-online.component';
-import { StatsUnavailableComponent } from '../stats-unavailable/stats-unavailable.component';
 import { BlankPipe } from '../../../orders/order-details/items-table/items-table.component.spec';
 
 describe('ConfiguredChannelComponent', () => {
@@ -20,10 +16,7 @@ describe('ConfiguredChannelComponent', () => {
                 ConfiguredChannelComponent,
                 SfCurrencyPipe,
                 LargeNumberSuffixPipe,
-                ChannelBoxComponent,
-                ChannelTurnoverComponent,
-                ChannelOnlineComponent,
-                StatsUnavailableComponent,
+                TimeAgoMockPipe,
             ],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [],
@@ -98,8 +91,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.selected = 100;
         component.channel.statistics.exported = 30;
         fixture.detectChanges();
-        expect(element('.channel-online span').textContent.trim()).toEqual('30%');
-        expect(element('sf-channel-online').className).toContain('online-low')
+        expect(element('.online-low span').textContent.trim()).toEqual('30%');
     });
 
     it('should add `online-middle` class when the number of products online is higher than 30% but lower than 75%', () => {
@@ -107,8 +99,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.selected = 100;
         component.channel.statistics.exported = 74;
         fixture.detectChanges();
-        expect(element('.channel-online span').textContent.trim()).toEqual('74%');
-        expect(element('sf-channel-online').className).toContain('online-middle')
+        expect(element('.online-middle span').textContent.trim()).toEqual('74%');
     });
 
     it('should add `online-low` class when the number of products online is not lower than 75%', () => {
@@ -116,8 +107,7 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.selected = 100;
         component.channel.statistics.exported = 75;
         fixture.detectChanges();
-        expect(element('.channel-online span').textContent.trim()).toEqual('75%');
-        expect(element('sf-channel-online').className).toContain('online-high')
+        expect(element('.online-high span').textContent.trim()).toEqual('75%');
     });
 
     it('should display channel online if exported is 0', () => {
@@ -133,21 +123,21 @@ describe('ConfiguredChannelComponent', () => {
         component.channel.statistics.selected = 0;
         component.channel.statistics.exported = 0;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toEqual('--');
+        expect(element('.channel-online span').textContent.trim()).toEqual('--');
     });
 
     it('should display `unavailable` instead of number of issues if selected is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.exported = 1000;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toContain('--');
+        expect(element('.channel-online span').textContent.trim()).toContain('--');
     });
 
     it('should display `unavailable` instead of number of issues if exported is NOT in the response', () => {
         component.channel = <any>mockChannel();
         component.channel.statistics.selected = 1000;
         fixture.detectChanges();
-        expect(element('.channel-online').textContent.trim()).toContain('--');
+        expect(element('.channel-online span').textContent.trim()).toContain('--');
     });
 
     it('should NOT fail is statistics is not defined at all', () => {
@@ -181,6 +171,13 @@ class SfCurrencyPipe extends BlankPipe implements PipeTransform {
 
 @Pipe({name: 'sfChannelLink'})
 class ChannelLinkMockPipe implements PipeTransform {
+    transform() {
+    }
+}
+
+
+@Pipe({name: 'timeAgo'})
+class TimeAgoMockPipe implements PipeTransform {
     transform() {
     }
 }

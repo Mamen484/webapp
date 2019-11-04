@@ -8,7 +8,6 @@
   flex: 1;
   padding-left: 30px;
   padding-top: $content-margin;
-  display: block;
   height: calc(100vh - #{$content-margin});
   overflow: auto;
 
@@ -19,7 +18,9 @@
 
 mat-card.channel-card {
   margin-bottom: 20px;
-  height: 183px;
+  height: 253px;
+
+  padding: 30px 40px;
 
   &.suggested-channel {
     background-color: mat-color($accent, 0.03);
@@ -32,6 +33,7 @@ mat-card.channel-card {
 
 .channels-list {
   max-height: none !important;
+  margin-top: 20px;
 }
 
 mat-spinner {

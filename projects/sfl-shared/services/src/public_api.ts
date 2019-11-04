@@ -1,5 +1,6 @@
 export * from './auth.service';
 export * from './channel.service';
+export * from './full-countries-list.service';
 export * from './legacy-link.service';
 export * from './local-storage.service';
 export * from './locale-id.service';

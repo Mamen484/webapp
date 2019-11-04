@@ -17,7 +17,7 @@ describe('TicketsRouteGuard', () => {
 
   it('should write `api` as the currentRoute value and return true', inject([TicketsRouteGuard], (guard: TicketsRouteGuard) => {
     expect(guard.canActivate()).toEqual(true);
-    expect(store.dispatch).toHaveBeenCalledWith({type: 'SET_ROUTE', routeName: 'api'});
+    expect(store.dispatch).toHaveBeenCalledWith(<any>{type: 'SET_ROUTE', routeName: 'api'});
   }));
 
 });

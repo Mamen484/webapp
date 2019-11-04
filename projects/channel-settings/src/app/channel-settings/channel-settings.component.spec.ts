@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSettingsComponent } from './channel-settings.component';
-import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
@@ -10,12 +10,11 @@ import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
-import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 import { MatMenuModule } from '@angular/material/menu';
+import { FormArray, FormGroup } from '@angular/forms';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -93,20 +92,6 @@ describe('ChannelSettingsComponent', () => {
             country: [{code: 'fr', taxonomyId: null}, {code: 'uk', taxonomyId: null}],
             template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
         }, 23);
-    });
-
-    it('should show a dialog on save() if both appField and defaultValue contain a value', () => {
-        channelService.modifyChannel.and.returnValue(of({}));
-        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
-        component.formGroup.setValue({
-            contact: 'test',
-            segment: 'clothes',
-            country: ['fr', 'uk'],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'some value'}]
-        });
-        component.channel = {id: 23};
-        component.save();
-        expect(matDialog.open).toHaveBeenCalledWith(RowValidationDialogComponent);
     });
 
     it('should NOT call saveChannel endpoint on save() if both appField and defaultValue contain a value', () => {
@@ -264,6 +249,152 @@ describe('ChannelSettingsComponent', () => {
     it('should initialize an account name', () => {
         userData.next(AggregatedUserInfo.create({_embedded: {store: [{name: 'someName'}]}}));
         expect(component.accountName).toBe('someName');
+    });
+
+    it('should show invalidField error on form group and fields appField and defaultValue' +
+        'if both appField and defaultValue are specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'someDefaultValue'},
+        );
+        expect(templateRow.getError('invalidField')).toBe(true);
+        expect(templateRow.controls.appField.getError('invalidField')).toBe(true);
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBe(true);
+    });
+
+    it('should NOT show invalidField error on form group and fields appField and defaultValue if only appField is specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''},
+        );
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error on form group and fields appField and defaultValue if only defaultValue is specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: '', defaultValue: 'someDefaultValue'},
+        );
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error after a new valid appField value specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.appField.setValue('');
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should NOT show invalidField error after a new valid defaultValue value specified', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.defaultValue.setValue('');
+        expect(templateRow.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.appField.getError('invalidField')).toBeFalsy();
+        expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
+    });
+
+    it('should set the valid status for template control when both appField and defaultValue had values,' +
+        ' and one of them was removed', () => {
+        routeData.next({
+            channel: {
+                id: 100, contact: <any>{}, _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 110}
+                    ]
+                }
+            }
+        });
+        const templateRow = <FormGroup>(<FormArray>component.formGroup.controls.template).controls[0];
+        templateRow.setValue(
+            {channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'defaultValue'},
+        );
+        templateRow.controls.defaultValue.setValue('');
+        expect(templateRow.errors).toBe(null);
+        expect(templateRow.valid).toBe(true);
+    });
+
+    it('should assign the countryList', () => {
+        routeData.next({
+            channel: {
+                id: 22,
+                contact: {email: 'some email'},
+                countries: ['FR', 'US'],
+                segment: 'some segment',
+                _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 122},
+                        {code: 'DE', taxonomyId: null},
+                        {code: 'US', taxonomyId: null},
+                    ],
+                }
+            }
+        });
+        expect(component.countryList).toEqual(<any>[
+            {code: 'FR', taxonomyId: 122},
+            {code: 'US', taxonomyId: null}]);
+    });
+
+    it('should initialize the countryList with empty array if no value provided', () => {
+        routeData.next({
+            channel: {id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment'}
+        });
+        expect(component.countryList).toEqual([]);
     });
 
     function prepareChannelForSave() {

@@ -1,48 +1,10 @@
 <sfl-solo-search [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel"
-                filterButtonText="Filter" i18n-filterButtonText (openFilters)="openDialog()"
-                (searchQueryChanged)="filter.searchQuery = $event; applyFilter.emit(filter)"
-                [processing]="processing"></sfl-solo-search>
+                 filterButtonText="Filter" i18n-filterButtonText (openFilters)="openDialog()"
+                 (searchQueryChanged)="filter.searchQuery = $event; applyFilter.emit(filter)"
+                 [processing]="processing"></sfl-solo-search>
 <mat-chip-list [selectable]="false">
     <mat-chip *ngIf="filter.country">
-        <span *ngIf="filter.country === 'at'" i18n>Austria</span>
-        <span *ngIf="filter.country === 'au'" i18n>Australia</span>
-        <span *ngIf="filter.country === 'be'" i18n>Belgium</span>
-        <span *ngIf="filter.country === 'bg'" i18n>Bulgaria</span>
-        <span *ngIf="filter.country === 'br'" i18n>Brazil</span>
-        <span *ngIf="filter.country === 'ca'" i18n>Canada</span>
-        <span *ngIf="filter.country === 'ch'" i18n>Switzerland</span>
-        <span *ngIf="filter.country === 'cz'" i18n>Czech Republic</span>
-        <span *ngIf="filter.country === 'de'" i18n>Germany</span>
-        <span *ngIf="filter.country === 'dk'" i18n>Denmark</span>
-        <span *ngIf="filter.country === 'ee'" i18n>Estonia</span>
-        <span *ngIf="filter.country === 'es'" i18n>Spain</span>
-        <span *ngIf="filter.country === 'fi'" i18n>Finland</span>
-        <span *ngIf="filter.country === 'fr'" i18n>France</span>
-        <span *ngIf="filter.country === 'gr'" i18n>Greece</span>
-        <span *ngIf="filter.country === 'hr'" i18n>Croatia</span>
-        <span *ngIf="filter.country === 'hu'" i18n>Hungary</span>
-        <span *ngIf="filter.country === 'ie'" i18n>Ireland</span>
-        <span *ngIf="filter.country === 'in'" i18n>India</span>
-        <span *ngIf="filter.country === 'it'" i18n>Italy</span>
-        <span *ngIf="filter.country === 'jp'" i18n>Japan</span>
-        <span *ngIf="filter.country === 'lt'" i18n>Lithuania</span>
-        <span *ngIf="filter.country === 'lv'" i18n>Latvia</span>
-        <span *ngIf="filter.country === 'mx'" i18n>Mexico</span>
-        <span *ngIf="filter.country === 'nl'" i18n>Netherlands</span>
-        <span *ngIf="filter.country === 'no'" i18n>Norway</span>
-        <span *ngIf="filter.country === 'pl'" i18n>Poland</span>
-        <span *ngIf="filter.country === 'pt'" i18n>Portugal</span>
-        <span *ngIf="filter.country === 'ro'" i18n>Romania</span>
-        <span *ngIf="filter.country === 'ru'" i18n>Russian Federation</span>
-        <span *ngIf="filter.country === 'se'" i18n>Sweden</span>
-        <span *ngIf="filter.country === 'si'" i18n>Slovenia</span>
-        <span *ngIf="filter.country === 'sk'" i18n>Slovakia</span>
-        <span *ngIf="filter.country === 'sl'" i18n>Sierra Leone</span>
-        <span *ngIf="filter.country === 'th'" i18n>Thailand</span>
-        <span *ngIf="filter.country === 'tr'" i18n>Turkey</span>
-        <span *ngIf="filter.country === 'uk'" i18n>United Kingdom</span>
-        <span *ngIf="filter.country === 'us'" i18n>United States</span>
-
+        <span class="sf-country-name"> {{ countries[filter.country] }}</span>
         <mat-icon (click)="cancelFilter('country')">cancel</mat-icon>
     </mat-chip>
     <mat-chip *ngIf="filter.type">

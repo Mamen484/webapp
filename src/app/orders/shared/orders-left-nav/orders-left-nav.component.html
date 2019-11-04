@@ -1,7 +1,7 @@
 <sfl-left-navigation>
     <mat-list dense>
-        <mat-list-item i18n>
-            <div class="nav-title">Orders</div>
+        <mat-list-item>
+            <div class="nav-title" i18n>Orders</div>
         </mat-list-item>
 
         <mat-divider></mat-divider>
@@ -38,7 +38,7 @@
                            sflLegacyLink path="/marketplaces/listexport" i18n fxFlex class="mat-body-1">Reporting</a>
                     </mat-list-item>
                     <mat-list-item routerLink="/orders/tags-management" >
-                        <a [class.active]="activeLink === 'tags-management'" class="mat-body-1">Tags management</a>
+                        <a [class.active]="activeLink === 'tags-management'" class="mat-body-1" i18n>Tags management</a>
                     </mat-list-item>
                 </mat-list>
             </sf-expandable>

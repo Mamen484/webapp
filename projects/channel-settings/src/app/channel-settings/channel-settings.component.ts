@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel, ChannelState, Country } from 'sfl-shared/entities';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
+import { FullCountriesListService } from 'sfl-shared/services';
 import { filter } from 'rxjs/operators';
 import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
-import { RowValidationDialogComponent } from './row-validation-dialog/row-validation-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
+import { get } from 'lodash';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -66,15 +66,6 @@ export class ChannelSettingsComponent implements OnInit {
         this.templateControl.push(this.createTemplateRow());
     }
 
-    createTemplateRow({channelField = '', appField = '', defaultValue = ''} = {}) {
-        return new FormGroup({
-                channelField: new FormControl(channelField, [Validators.required]),
-                appField: new FormControl(appField),
-                defaultValue: new FormControl(defaultValue),
-            }
-        )
-    }
-
     initializeChannel(channel) {
         this.channel = channel;
         this.channelId = channel.id;
@@ -83,7 +74,7 @@ export class ChannelSettingsComponent implements OnInit {
     initializeControlValues() {
         this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
         this.formGroup.controls.segment.setValue(this.channel.segment);
-        this.countryList = this.channel._embedded.country;
+        this.countryList = get(this.channel, '_embedded.country', []);
         this.formGroup.controls.country.valueChanges.pipe(filter(value => value))
             .subscribe((value: string[]) => {
                 this.countryList = value.map(countryCode => {
@@ -137,12 +128,6 @@ export class ChannelSettingsComponent implements OnInit {
         if (!this.formGroup.valid) {
             return;
         }
-        if ((<FormArray>this.formGroup.controls.template).controls.find(
-            (group: FormGroup) => group.controls.appField.value
-                && group.controls.defaultValue.value)) {
-            this.matDialog.open(RowValidationDialogComponent);
-            return;
-        }
         this.channelService.modifyChannel({
             contact: this.formGroup.get('contact').value,
             segment: this.formGroup.get('segment').value,
@@ -158,6 +143,34 @@ export class ChannelSettingsComponent implements OnInit {
     logout() {
         this.localStorage.removeItem('Authorization');
         this.router.navigate(['/login']);
+    }
+
+    protected createTemplateRow({channelField = '', appField = '', defaultValue = ''} = {}) {
+        const formGroup = new FormGroup({
+                channelField: new FormControl(channelField, [Validators.required]),
+                appField: new FormControl(appField, [this.validateFieldPair]),
+                defaultValue: new FormControl(defaultValue, [this.validateFieldPair]),
+            }, [this.validateRow]
+        );
+        formGroup.statusChanges.subscribe(status => this.validateControl(formGroup, ['appField', 'defaultValue']));
+        return formGroup;
+    }
+
+    protected validateControl(formGroup: FormGroup, controlNames: string[]) {
+        controlNames.forEach(controlName => {
+            formGroup.controls[controlName].markAsTouched({onlySelf: true});
+            formGroup.controls[controlName].updateValueAndValidity({onlySelf: true});
+        });
+        // do not emit event to prevent recursion
+        formGroup.updateValueAndValidity({onlySelf: true, emitEvent: false});
+    }
+
+    protected validateFieldPair(control: FormControl) {
+        return control.parent && control.parent.getError('invalidField') ? {invalidField: true} : null;
+    }
+
+    protected validateRow(control: FormGroup): ValidationErrors {
+        return control && control.controls.appField.value && control.controls.defaultValue.value ? {invalidField: true} : null;
     }
 
 

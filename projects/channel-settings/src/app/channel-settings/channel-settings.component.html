@@ -2,7 +2,7 @@
     <mat-list fxLayout="column" class="main-sidenav">
         <mat-list-item>
             <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
-                <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.png">
+                <img alt="Home" title="Home" i18n-alt i18n-title width="35" src="assets/images/s-logo.svg">
             </a>
         </mat-list-item>
         <mat-list-item fxFlex></mat-list-item>
@@ -86,33 +86,37 @@
         </mat-card-header>
         <mat-card-content>
             <form fxLayout="column" fxLayoutGap="20px" class="template-form">
-                <div fxLayout="row" fxLayoutGap="20px" *ngFor="let fieldSet of templateControls; let i = index">
-                    <mat-form-field appearance="outline" color="primary" fxFlex>
-                        <mat-label i18n>Channel field</mat-label>
-                        <input matInput [formControl]="fieldSet.controls.channelField" required>
-                        <mat-hint i18n>Input field name as written in feed</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" color="primary" fxFlex>
-                        <mat-label i18n>SF field</mat-label>
-                        <mat-select [formControl]="fieldSet.controls.appField">
-                            <mat-option *ngFor="let field of templateFields"
-                                        [value]="field.label">{{field.label}}</mat-option>
-                        </mat-select>
-                        <mat-hint i18n>Select feed name as written in feed</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" color="primary" fxFlex>
-                        <mat-label i18n>Default value</mat-label>
-                        <input matInput [formControl]="fieldSet.controls.defaultValue">
-                        <mat-hint i18n>Or input default value of feed</mat-hint>
-                    </mat-form-field>
-                    <button mat-stroked-button *ngIf="i === 0" (click)="addField()"
-                            [disabled]="!templateControls[templateControls.length -1].controls.channelField.value">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                    <button mat-stroked-button *ngIf="i > 0" (click)="removeField(i)">
-                        <mat-icon>remove</mat-icon>
-                    </button>
-                </div>
+                <ng-container *ngFor="let fieldSet of templateControls; let i = index">
+                    <div fxLayout="row" fxLayoutGap="20px">
+                        <mat-form-field appearance="outline" color="primary" fxFlex>
+                            <mat-label i18n>Channel field</mat-label>
+                            <input matInput [formControl]="fieldSet.controls.channelField" required>
+                            <mat-hint i18n>Input field name as written in feed</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" fxFlex>
+                            <mat-label i18n>SF field</mat-label>
+                            <mat-select [formControl]="fieldSet.controls.appField">
+                                <mat-option value=""></mat-option>
+                                <mat-option *ngFor="let field of templateFields"
+                                            [value]="field.label">{{field.label}}</mat-option>
+                            </mat-select>
+                            <mat-hint i18n>Select feed name as written in feed</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" color="primary" fxFlex>
+                            <mat-label i18n>Default value</mat-label>
+                            <input matInput [formControl]="fieldSet.controls.defaultValue">
+                            <mat-hint i18n>Or input default value of feed</mat-hint>
+                        </mat-form-field>
+                        <button mat-stroked-button *ngIf="i === 0" (click)="addField()"
+                                [disabled]="!templateControls[templateControls.length -1].controls.channelField.value">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button mat-stroked-button *ngIf="i > 0" (click)="removeField(i)">
+                            <mat-icon>remove</mat-icon>
+                        </button>
+                    </div>
+                    <mat-error *ngIf="fieldSet.hasError('invalidField')">The field can have either a sfField or a defaultValue.</mat-error>
+                </ng-container>
 
             </form>
         </mat-card-content>

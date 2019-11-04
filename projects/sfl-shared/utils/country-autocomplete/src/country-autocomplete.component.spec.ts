@@ -4,7 +4,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatAutocompleteModule } from '@angular/material';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { take, takeLast } from 'rxjs/operators';
-import { FullCountriesListService } from './full-countries-list.service';
+import { FullCountriesListService } from 'sfl-shared/services';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 
 describe('CountryAutocompleteComponent', () => {

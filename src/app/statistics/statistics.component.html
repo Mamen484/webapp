@@ -1,34 +1,36 @@
 <div class="statistics-wrapper">
-    <div class="statistics-container" infiniteScroll [infiniteScrollDistance]="2"
+    <div class="statistics-container" fxLayout="row" infiniteScroll [infiniteScrollDistance]="2"
          [infiniteScrollDisabled]="infiniteScrollDisabled"
          [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
-        <sf-store-statistics [statistics]="statistics" *ngIf="hasStatisticsPermission"></sf-store-statistics>
-        <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
-                            [processing]="processingFilters"></sf-search-channels>
-        <div fxLayout="row wrap" fxLayoutGap="30px" fxLayoutAlign="start stretch" class="channels-list">
+        <div fxFlex>
+            <sf-store-statistics [statistics]="statistics" *ngIf="hasStatisticsPermission"></sf-store-statistics>
+            <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
+                                [processing]="processingFilters"></sf-search-channels>
+            <div fxLayout="row wrap" fxLayoutGap="30px" fxLayoutAlign="start stretch" class="channels-list">
 
-            <mat-card class="channel-card"
-                      fxFlex.lt-md="1 1 100%"
-                      [fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(100% - 30px)' : '0 0 calc(50% - 30px)'"
-                      [fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(50% - 30px)' : '0 0 calc(33.33% - 30px)'"
-                      [fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(33.33% - 30px)' : '0 0 calc(25% - 30px)'"
-                      *ngFor="let channel of channels._embedded.channel"
-                      [class.suggested-channel]="!channel.installed">
-                <sf-configured-channel [channel]="channel" *ngIf="channel.installed"
-                                       [hasStatisticsPermission]="hasStatisticsPermission"></sf-configured-channel>
+                <mat-card class="channel-card"
+                          fxFlex.lt-md="1 1 100%"
+                          [fxFlex.md]="lastEvents.isDisplayed ? '0 0 calc(100% - 30px)' : '0 0 calc(50% - 30px)'"
+                          [fxFlex.lg]="lastEvents.isDisplayed ? '0 0 calc(50% - 30px)' : '0 0 calc(33.33% - 30px)'"
+                          [fxFlex.xl]="lastEvents.isDisplayed ? '0 0 calc(33.33% - 30px)' : '0 0 calc(25% - 30px)'"
+                          *ngFor="let channel of channels._embedded.channel"
+                          [class.suggested-channel]="!channel.installed">
+                    <sf-configured-channel [channel]="channel" *ngIf="channel.installed"
+                                           [hasStatisticsPermission]="hasStatisticsPermission"></sf-configured-channel>
 
-                <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
-                                      [firstChannel]="haveNoChannels" [currency]="statistics.currency"></sf-suggested-channel>
-            </mat-card>
+                    <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
+                                          [firstChannel]="haveNoChannels" [currency]="statistics.currency"></sf-suggested-channel>
+                </mat-card>
+            </div>
+            <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">
+                <div i18n>No results</div>
+                <a href="#" (click)="resetFilter()" i18n>Clear the selection</a>
+            </div>
+            <div class="spinner-parent">
+                <mat-spinner *ngIf="!infiniteScrollDisabled" color="accent"></mat-spinner>
+            </div>
         </div>
-        <div class="no-results-container" *ngIf="!channels._embedded.channel.length && !processingFilters && !processing">
-            <div i18n>No results</div>
-            <a href="#" (click)="resetFilter()" i18n>Clear the selection</a>
-        </div>
-        <div class="spinner-parent">
-            <mat-spinner *ngIf="!infiniteScrollDisabled" color="accent"></mat-spinner>
-        </div>
+        <sf-last-events [fxHide]="!lastEvents.isDisplayed" fxHide.lt-md fxFlex.md="360px" fxFlex.lg="28%" fxFlex.gt-lg="22%" #lastEvents fxHide.xs fxHide.sm (loaded)="exportsLoaded.next($event.exports)"></sf-last-events>
 
     </div>
-    <sf-last-events #lastEvents fxHide.xs fxHide.sm></sf-last-events>
 </div>
