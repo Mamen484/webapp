@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSettingsComponent } from './channel-settings.component';
-import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of, Subject, throwError } from 'rxjs';
@@ -10,7 +10,6 @@ import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
@@ -252,7 +251,8 @@ describe('ChannelSettingsComponent', () => {
         expect(component.accountName).toBe('someName');
     });
 
-    it('should show invalidField error on form group and fields appField and defaultValue if both appField and defaultValue are specified', () => {
+    it('should show invalidField error on form group and fields appField and defaultValue' +
+        'if both appField and defaultValue are specified', () => {
         routeData.next({
             channel: {
                 id: 100, contact: <any>{}, _embedded: <any>{
@@ -349,7 +349,8 @@ describe('ChannelSettingsComponent', () => {
         expect(templateRow.controls.defaultValue.getError('invalidField')).toBeFalsy();
     });
 
-    it('should set the valid status for template control when both appField and defaultValue had values, and one of them was removed', () => {
+    it('should set the valid status for template control when both appField and defaultValue had values,' +
+        ' and one of them was removed', () => {
         routeData.next({
             channel: {
                 id: 100, contact: <any>{}, _embedded: <any>{
@@ -366,6 +367,34 @@ describe('ChannelSettingsComponent', () => {
         templateRow.controls.defaultValue.setValue('');
         expect(templateRow.errors).toBe(null);
         expect(templateRow.valid).toBe(true);
+    });
+
+    it('should assign the countryList', () => {
+        routeData.next({
+            channel: {
+                id: 22,
+                contact: {email: 'some email'},
+                countries: ['FR', 'US'],
+                segment: 'some segment',
+                _embedded: <any>{
+                    country: [
+                        {code: 'FR', taxonomyId: 122},
+                        {code: 'DE', taxonomyId: null},
+                        {code: 'US', taxonomyId: null},
+                    ],
+                }
+            }
+        });
+        expect(component.countryList).toEqual(<any>[
+            {code: 'FR', taxonomyId: 122},
+            {code: 'US', taxonomyId: null}]);
+    });
+
+    it('should initialize the countryList with empty array if no value provided', () => {
+        routeData.next({
+            channel: {id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment'}
+        });
+        expect(component.countryList).toEqual([]);
     });
 
     function prepareChannelForSave() {

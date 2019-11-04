@@ -8,13 +8,14 @@ import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { FullCountriesListService } from 'sfl-shared/utils/country-autocomplete';
+import { FullCountriesListService } from 'sfl-shared/services';
 import { filter } from 'rxjs/operators';
 import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
+import { get } from 'lodash';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -73,7 +74,7 @@ export class ChannelSettingsComponent implements OnInit {
     initializeControlValues() {
         this.formGroup.controls.contact.setValue((<any>this.channel.contact).email);
         this.formGroup.controls.segment.setValue(this.channel.segment);
-        this.countryList = this.channel._embedded.country;
+        this.countryList = get(this.channel, '_embedded.country', []);
         this.formGroup.controls.country.valueChanges.pipe(filter(value => value))
             .subscribe((value: string[]) => {
                 this.countryList = value.map(countryCode => {

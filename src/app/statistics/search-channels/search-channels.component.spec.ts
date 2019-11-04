@@ -1,24 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchChannelsComponent } from './search-channels.component';
-import {
-    MatButtonModule, MatCardModule, MatChipsModule, MatDialog, MatIconModule,
-    MatProgressBarModule
-} from '@angular/material';
+import { MatButtonModule, MatCardModule, MatChipsModule, MatDialog, MatIconModule, MatProgressBarModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { startWith } from 'rxjs/operators';
+import { FullCountriesListService } from 'sfl-shared/services';
 
 describe('SearchChannelsComponent', () => {
     let component: SearchChannelsComponent;
     let fixture: ComponentFixture<SearchChannelsComponent>;
     let afterClosedSpy: jasmine.Spy;
+    let countriesListService: jasmine.SpyObj<FullCountriesListService>;
 
     beforeEach(async(() => {
-        afterClosedSpy = jasmine.createSpy('afterClosedSpy')
+        afterClosedSpy = jasmine.createSpy('afterClosedSpy');
+        countriesListService = jasmine.createSpyObj('FullCountriesListService', ['getCountries']);
+        countriesListService.getCountries.and.returnValue((of([{code: 'FR', name: 'france'}, {code: 'US', country: 'The USA'}])));
         TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -34,7 +34,8 @@ describe('SearchChannelsComponent', () => {
                 SearchChannelsComponent,
             ],
             providers: [
-                {provide: MatDialog, useValue: {open: () => ({afterClosed: afterClosedSpy})}}
+                {provide: MatDialog, useValue: {open: () => ({afterClosed: afterClosedSpy})}},
+                {provide: FullCountriesListService, useValue: countriesListService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         })
