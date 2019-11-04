@@ -31,7 +31,6 @@ export class AppcuesComponent implements OnInit {
         )
             .subscribe(() => {
                 const script: HTMLScriptElement = this.renderer.createElement('script');
-                console.log(script);
                 script.src = '//fast.appcues.com/28284.js';
                 script.onload = () => this.loadAppcues();
                 this.renderer.appendChild(document.body, script);
