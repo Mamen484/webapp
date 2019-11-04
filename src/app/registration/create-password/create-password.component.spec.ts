@@ -79,7 +79,7 @@ describe('CreatePasswordComponent', () => {
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
             component.createPassword({email: 'test@test.com', password: '1234567'});
-            expect(storeService.createStore).toHaveBeenCalledWith({
+            expect(storeService.createStore).toHaveBeenCalledWith(<any>{
                 owner: {
                     email: 'test@test.com',
                     password: '1234567',
