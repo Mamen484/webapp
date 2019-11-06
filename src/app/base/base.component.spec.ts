@@ -3,7 +3,7 @@ import { BaseComponent } from './base.component';
 import { environment } from '../../environments/environment';
 import { SflLocaleIdService, SflUserService, SflWindowRefService, StoreService } from 'sfl-shared/services';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
-import { NO_ERRORS_SCHEMA, Renderer2 } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { Location } from '@angular/common';
@@ -234,7 +234,7 @@ describe('BaseComponent', () => {
         expect(appcuesService.enable).toHaveBeenCalled();
     });
 
-    it('should NOT run Appcues code if the user is admin and the country is US and the source is shopify', () => {
+    it('should NOT run Appcues code if the user is admin', () => {
         store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'Shopify'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['admin'],
@@ -245,7 +245,7 @@ describe('BaseComponent', () => {
         expect(appcuesService.enable).not.toHaveBeenCalled();
     });
 
-    it('should NOT run Appcues code if the user is not admin and the country is NOT US and the source is shopify', () => {
+    it('should run Appcues code if the user is not admin and the country is NOT US and the source is shopify', () => {
         store.select.and.returnValue(of({id: 'some_id', country: 'FR', name: 'some_name', feed: {source: 'Shopify'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
@@ -253,10 +253,10 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(appcuesService.enable).not.toHaveBeenCalled();
+        expect(appcuesService.enable).toHaveBeenCalled();
     });
 
-    it('should NOT run Appcues code if the user is not admin and the country is US and the source is NOT shopify', () => {
+    it('should run Appcues code if the user is not admin and the country is US and the source is NOT shopify', () => {
         store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', feed: {source: 'prestashop'}, permission: {}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
@@ -264,7 +264,7 @@ describe('BaseComponent', () => {
             email: 'some_email'
         })));
         fixture.detectChanges();
-        expect(appcuesService.enable).not.toHaveBeenCalled();
+        expect(appcuesService.enable).toHaveBeenCalled();
     });
 
     it('should show zendesk chat if a store has a chat permission', () => {

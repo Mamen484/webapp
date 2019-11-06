@@ -57,6 +57,7 @@ export class BaseComponent implements OnInit {
                     this.configureGoogleAnalytics(userInfo);
                     this.runCountrySpecificCode(userInfo);
                     this.configureAutopilot(userInfo);
+                    this.enableAppcues();
                 }
             });
     }
@@ -109,7 +110,6 @@ export class BaseComponent implements OnInit {
             take(1),
         ).subscribe((store: UserStore) => {
             this.enableFullstory(store, userInfo.email);
-            this.enableAppcues(store);
         });
     }
 
@@ -120,11 +120,7 @@ export class BaseComponent implements OnInit {
         this.fullstoryLoader.load();
     }
 
-    protected enableAppcues(store: UserStore) {
-        if (!store.feed || !store.feed.source || store.feed.source.toLowerCase() !== 'shopify') {
-            return false;
-        }
-
+    protected enableAppcues() {
         this.appcuesService.enable();
     }
 
