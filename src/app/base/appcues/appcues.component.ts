@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';
 import { zip } from 'rxjs';
@@ -19,7 +19,6 @@ export class AppcuesComponent implements OnInit {
                 protected appStore: Store<AppState>,
                 protected userService: SflUserService,
                 protected appcuesService: AppcuesService,
-                protected localeIdService: SflLocaleIdService,
                 protected router: Router,
                 protected renderer: Renderer2) {
     }
@@ -46,10 +45,9 @@ export class AppcuesComponent implements OnInit {
                 name: store.name,
                 email: userInfo.email,
                 created_at: new Date(store.createdAt).getTime(),
+                country: store.country,
+                feed_source: store.feed.source,
             };
-            if (this.localeIdService.localeId === 'fr') {
-                params.language = 'fr';
-            }
             this.windowRef.nativeWindow.Appcues.identify(store.id, params);
             // enable appcues to track spa route changes
             this.router.events

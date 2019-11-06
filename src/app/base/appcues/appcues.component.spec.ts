@@ -19,7 +19,6 @@ describe('AppcuesComponent', () => {
     let windowRef = <any>{};
     let appcuesService: jasmine.SpyObj<AppcuesService>;
     let renderer: jasmine.SpyObj<Renderer2>;
-    let localeIdService: SflLocaleIdService;
 
 
     beforeEach(async(() => {
@@ -29,19 +28,18 @@ describe('AppcuesComponent', () => {
         windowRef.nativeWindow = {Appcues: {identify: jasmine.createSpy()}};
         appcuesService = jasmine.createSpyObj('AppcuesService spy', ['enable', 'markLoaded', 'getState']);
         renderer = jasmine.createSpyObj('Renderer2 spy', ['createElement', 'appendChild']);
-        localeIdService = <any>{};
 
         component = new AppcuesComponent(
-            windowRef, store, userService, appcuesService, localeIdService, router, renderer
+            windowRef, store, userService, appcuesService, router, renderer
         );
     }));
 
     beforeEach(() => {
-        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', permission: {}, feed: {source: 'Shopify'}}));
+        store.select.and.returnValue(of({id: 'some_id', country: 'US', name: 'some_name', createdAt: 12345678, permission: {}, feed: {source: 'Shopify'}}));
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
             roles: ['user'],
             token: 'token_1',
-            email: 'some_email'
+            email: 'some_email',
         })));
     });
 
@@ -49,26 +47,20 @@ describe('AppcuesComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should add a language param if the locale is fr', () => {
-        appcuesService.getState.and.returnValue(of(AppcuesState.enabled));
-        renderer.createElement.and.returnValue({
-            set onload(callback) {
-                callback();
-            }
-        });
-        localeIdService.localeId = 'fr';
-        component.ngOnInit();
-        expect(windowRef.nativeWindow.Appcues.identify.calls.mostRecent().args[1].language).toBe('fr');
-    });
-    it('should NOT add a language param if the locale is en', () => {
+    it('should call identify with correct params', () => {
         appcuesService.getState.and.returnValue(of(AppcuesState.enabled));
         renderer.createElement.and.returnValue({
             set onload(callback) {
                 callback()
             }
         });
-        localeIdService.localeId = 'en';
         component.ngOnInit();
-        expect(windowRef.nativeWindow.Appcues.identify.calls.mostRecent().args[1].language).not.toBeDefined();
+        expect(windowRef.nativeWindow.Appcues.identify.calls.mostRecent().args[1]).toEqual({
+            name: 'some_name',
+            email: 'some_email',
+            country: 'US',
+            feed_source: 'Shopify',
+            created_at: 12345678,
+        });
     });
 });
