@@ -21,9 +21,13 @@ export class ResolveStoreGuard implements Resolve<SquarespaceStore> {
         return this.service.getStore(route.queryParamMap.get('code')).pipe(
             flatMap(store => {
                 if (store.storeId) {
-                    this.authService.loginByToken(store.sfToken);
-                    this.router.navigate(['/'], {queryParams: {store: store.storeId}});
-                    return EMPTY;
+                    return this.service.patchStore(store).pipe(flatMap(
+                        () => {
+                            this.authService.loginByToken(store.sfToken);
+                            this.router.navigate(['/'], {queryParams: {store: store.storeId}});
+                            return EMPTY;
+                        })
+                    );
                 }
 
                 return of(store);

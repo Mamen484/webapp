@@ -22,4 +22,15 @@ export class SquarespaceService {
             .set('code', code);
         return this.httpClient.get(`${environment.API_URL}/squarespace/store`, {params}) as Observable<SquarespaceStore>;
     }
+
+    patchStore({storeId, accessToken, tokenExpiresAt, refreshToken}:
+                   { storeId: number, accessToken: string, tokenExpiresAt: number, refreshToken: string }) {
+        let data = [{
+            op: 'replace',
+            path: '/feed/settings/credentials',
+            value: {accessToken, expiryTimeAccessToken: tokenExpiresAt, refreshToken},
+        }];
+        return this.httpClient.patch(`${environment.API_URL}/store/${storeId}`, data);
+    }
+
 }
