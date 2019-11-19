@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'sfl-error-page',
@@ -6,4 +6,5 @@ import { Component } from '@angular/core';
     templateUrl: 'error-page.component.html',
 })
 export class SflErrorPageComponent {
+    @Input() showLink = true;
 }

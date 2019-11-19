@@ -4,7 +4,7 @@
         <div class="mat-display-1 error-message">
             <ng-content></ng-content>
         </div>
-        <a routerLink="/" class="reload mat-subheading-2" i18n>Go to homepage</a>
+        <a routerLink="/" *ngIf="showLink" class="reload mat-subheading-2" i18n>Go to homepage</a>
     </div>
 
 </div>
