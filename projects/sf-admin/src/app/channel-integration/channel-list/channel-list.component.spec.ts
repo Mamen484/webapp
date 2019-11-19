@@ -5,9 +5,12 @@ import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
-import { ChannelState } from '../../../../../sfl-shared/entities/src/channel-state';
+import { ChannelState } from 'sfl-shared/entities';
 import { EMPTY, of, throwError } from 'rxjs';
 import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
+import { Filter } from './filters-dialog/filter';
 
 @Pipe({
     name: 'accountList',
@@ -23,11 +26,13 @@ describe('ChannelListComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let nativeWindow: jasmine.SpyObj<Window>;
     let channelSettingsLink: jasmine.SpyObj<ChannelOperatorsAppLinkService>;
+    let matDialog: jasmine.SpyObj<MatDialog>;
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['listChannels', 'activate', 'deactivate']);
         nativeWindow = jasmine.createSpyObj('window spy', ['open']);
         channelSettingsLink = jasmine.createSpyObj('ChannelOperatorsAppLinkService spy', ['getLink']);
+        matDialog = jasmine.createSpyObj('MatDialog', ['open']);
         TestBed.configureTestingModule({
             declarations: [ChannelListComponent, AccountListPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -36,6 +41,7 @@ describe('ChannelListComponent', () => {
                 {provide: ChannelService, useValue: channelService},
                 {provide: SflWindowRefService, useValue: {nativeWindow}},
                 {provide: ChannelOperatorsAppLinkService, useValue: channelSettingsLink},
+                {provide: MatDialog, useValue: matDialog},
             ]
         })
             .compileComponents();
@@ -114,6 +120,29 @@ describe('ChannelListComponent', () => {
                 }
             });
             expect(component.dataSource.data[0].state).toBe(ChannelState.active);
+        });
+
+        it('should open a dialog on openFilters() call', () => {
+            matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
+            component.openFilters();
+            expect(matDialog.open).toHaveBeenCalled();
+        });
+
+        it('should cancel a permission filter and update data on a cancelFilter() call', () => {
+            component.filter.permission = ChannelsPermission.notEmpty;
+            channelService.listChannels.and.returnValue(EMPTY);
+            component.cancelFilter();
+            expect(component.filter.permission).toBe(ChannelsPermission.all);
+            expect(component.isLoadingResults).toBe(true);
+            expect(channelService.listChannels).toHaveBeenCalled();
+        });
+
+        it('should reload data on openFilters() call', () => {
+            matDialog.open.and.returnValue(<any>{afterClosed: () => of(new Filter())});
+            channelService.listChannels.and.returnValue(EMPTY);
+            component.openFilters();
+            expect(component.isLoadingResults).toBe(true);
+            expect(channelService.listChannels).toHaveBeenCalled();
         });
     });
 

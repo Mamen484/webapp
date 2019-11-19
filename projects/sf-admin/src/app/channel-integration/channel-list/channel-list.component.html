@@ -1,16 +1,20 @@
 <sfa-sidebar></sfa-sidebar>
 
-<div class="sf-content">
+<div class="sf-content" [class.filters-applied]="filter.permission">
     <div fxLayout="row" class="page-header">
         <div i18n fxFlex class="mat-title list-title">Channel Operators</div>
         <a mat-raised-button color="accent" routerLink="/channel-integration/create-account">Create account</a>
     </div>
 
     <sfl-solo-search i18n-placeholder placeholder="Search channel"
-                     (searchQueryChanged)="search($event)" [value]="searchQuery"></sfl-solo-search>
-    <div *ngIf="isLoadingResults" class="progress-bar-wrapper">
-        <mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
-    </div>
+                     (searchQueryChanged)="search($event)" [value]="searchQuery"
+                     filterButtonText="Filter" (openFilters)="openFilters()" [processing]="isLoadingResults"></sfl-solo-search>
+    <mat-chip-list [selectable]="false" *ngIf="filter.permission">
+        <mat-chip>
+            <span i18n>With accounts</span>
+            <mat-icon (click)="cancelFilter()">cancel</mat-icon>
+        </mat-chip>
+    </mat-chip-list>
 
     <div class="table-container mat-elevation-z1">
         <table mat-table [dataSource]="dataSource">

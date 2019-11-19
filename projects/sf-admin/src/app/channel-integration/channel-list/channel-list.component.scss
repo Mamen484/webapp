@@ -3,8 +3,9 @@
 
 $page-header-height: 56px;
 $search-field-height: 89px;
+$filters-height: 50px;
 
-@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}));
+@include scrollableTable(calc(#{$page-header-height} + #{$search-field-height}), $filters-height);
 
 td:last-child {
   width: 60px;
@@ -22,4 +23,19 @@ sfl-solo-search {
 
 [mat-row] {
   cursor: pointer;
+}
+
+mat-chip-list {
+  display: block;
+  margin-bottom: 10px;
+
+  mat-chip {
+    mat-icon {
+      cursor: pointer;
+      color: mat-color($grey);
+    }
+    mat-icon, span {
+      vertical-align: middle;
+    }
+  }
 }

@@ -12,10 +12,12 @@ import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocompl
 import { CredentialsDialogComponent } from './create-account/credentials-dialog/credentials-dialog.component';
 import { UnsavedDataModule } from 'sfl-shared/utils/unsved-data-guard';
 import { environment } from '../../environments/environment';
+import { FiltersDialogComponent } from './channel-list/filters-dialog/filters-dialog.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
-    declarations: [ChannelListComponent, CreateAccountComponent, AccountListPipe, CredentialsDialogComponent],
+    declarations: [ChannelListComponent, CreateAccountComponent, AccountListPipe, CredentialsDialogComponent, FiltersDialogComponent],
     imports: [
         CommonModule,
         ChannelIntegrationRoutingModule,
@@ -27,8 +29,9 @@ import { environment } from '../../environments/environment';
             sflCountriesListLink: environment.countriesListLink,
         }),
         UnsavedDataModule,
+        MatChipsModule,
     ],
-    entryComponents: [CredentialsDialogComponent],
+    entryComponents: [CredentialsDialogComponent, FiltersDialogComponent],
 })
 export class ChannelIntegrationModule {
 }

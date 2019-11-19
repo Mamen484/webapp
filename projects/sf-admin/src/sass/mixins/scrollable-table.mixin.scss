@@ -1,6 +1,6 @@
 @import '../variables';
 
-@mixin scrollableTable($top-margin){
+@mixin scrollableTable($top-margin, $filters-height: 0) {
   .table-container {
     max-height: calc(100vh - 2 * #{$content-margin} - #{$paginator-height} - #{$top-margin});
     overflow: auto;
@@ -8,6 +8,12 @@
     mat-icon {
       cursor: pointer;
       color: $black-54-opacity;
+    }
+  }
+
+  .filters-applied {
+    .table-container {
+      max-height: calc(100vh - 2 * #{$content-margin} - #{$paginator-height} - #{$top-margin} - #{$filters-height});
     }
   }
 
@@ -44,6 +50,7 @@
     padding: 0;
     display: flex;
     flex-direction: column;
+
     mat-card-content {
       flex: 1;
       margin-bottom: 0;
@@ -54,9 +61,11 @@
         margin: 4px 24px;
         align-items: center;
         padding: 8px 0;
+
         mat-icon {
           color: mat-color($grey);
         }
+
         input {
           margin: 0 10px;
           border: none;
