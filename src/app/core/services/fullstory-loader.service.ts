@@ -29,7 +29,7 @@ export class FullstoryLoaderService {
                 map(store => ({userInfo, store}))
             )),
         ).subscribe(({userInfo, store}) => {
-            LOAD_FULLSTORY(environment.FULLSTORY_ORG_ID);
+            LOAD_FULLSTORY(this.windowRef.nativeWindow, environment.FULLSTORY_ORG_ID);
             this.windowRef.nativeWindow.FS.identify(store.id, {
                 displayName: store.name,
                 email: userInfo.email,

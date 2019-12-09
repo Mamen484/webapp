@@ -26,7 +26,6 @@ export class BaseComponent implements OnInit {
                 protected storeService: StoreService,
                 protected tagsService: TagsService,
                 protected userService: SflUserService,
-                protected renderer: Renderer2,
                 protected router: Router,
                 protected zendeskService: ngxZendeskWebwidgetService,
                 protected localeIdService: SflLocaleIdService,

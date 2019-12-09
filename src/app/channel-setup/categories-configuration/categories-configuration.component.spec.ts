@@ -1,26 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CategoriesConfigurationComponent } from './categories-configuration.component';
-import { Directive, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { MatAutocompleteModule, MatDialog } from '@angular/material';
-import { ChannelService } from '../../core/services/channel.service';
-import { FeedService } from '../../core/services/feed.service';
-import { EMPTY, of, Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { CategoryState } from '../category-state';
-import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
-import { Store } from '@ngrx/store';
-import { AppState } from '../../core/entities/app-state';
-import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
-import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
-import { AggregatedUserInfo } from 'sfl-shared/entities';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import {CategoriesConfigurationComponent} from './categories-configuration.component';
+import {Directive, NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
+import {MatAutocompleteModule, MatDialog} from '@angular/material';
+import {ChannelService} from '../../core/services/channel.service';
+import {FeedService} from '../../core/services/feed.service';
+import {EMPTY, of, Subject} from 'rxjs';
+import {ActivatedRoute} from '@angular/router';
+import {CategoryState} from '../category-state';
+import {UnsavedDataDialogComponent} from './unsaved-data-dialog/unsaved-data-dialog.component';
+import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
+import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
     let fixture: ComponentFixture<CategoriesConfigurationComponent>;
-    let userService: jasmine.SpyObj<SflUserService>;
-    let windowRef = <any>{};
 
     @Directive({selector: '[sfLegacyLink]'})
     class LegacyLinkMockDirective {
@@ -36,17 +30,13 @@ describe('CategoriesConfigurationComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
-    let store: jasmine.SpyObj<Store<AppState>>;
     let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
 
     beforeEach(async(() => {
-        windowRef.nativeWindow = {FS: {identify: jasmine.createSpy()}};
         matDialog = jasmine.createSpyObj(['open']);
         channelService = jasmine.createSpyObj('ChannelService', ['getChannelCategories']);
         feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection', 'fetchCategoryCollection']);
         route = {data: new Subject()};
-        store = jasmine.createSpyObj('Store spy', ['select']);
-        userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
 
         TestBed.configureTestingModule({
@@ -58,9 +48,6 @@ describe('CategoriesConfigurationComponent', () => {
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
                 {provide: ActivatedRoute, useValue: route},
-                {provide: Store, useValue: store},
-                {provide: SflWindowRefService, useValue: windowRef},
-                {provide: SflUserService, useValue: userService},
                 {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
 
             ],
@@ -69,7 +56,6 @@ describe('CategoriesConfigurationComponent', () => {
     }));
 
     beforeEach(() => {
-        store.select.and.returnValue(EMPTY);
         fixture = TestBed.createComponent(CategoriesConfigurationComponent);
         component = fixture.componentInstance;
         component.feedCategoriesList = <any>{
@@ -161,16 +147,6 @@ describe('CategoriesConfigurationComponent', () => {
     });
 
     it('should run fullstory code', () => {
-        store.select.and.returnValue(of({
-            id: 'some_id',
-            name: 'some_name',
-            permission: {}
-        }));
-        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
-            roles: ['user'],
-            token: 'token_1',
-            email: 'some_email'
-        })));
         component.ngOnInit();
         expect(fullstoryLoaderService.load).toHaveBeenCalled();
     });

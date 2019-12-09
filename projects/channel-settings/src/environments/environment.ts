@@ -9,6 +9,7 @@ export const environment = {
     legacyLink: '//app.shopping-feed.lan',
     webappLink: '//localhost:4200/v3/en',
     countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master',
+    fullstoryOrgId: 'D6X8Q',
 };
 
 /*

@@ -1,9 +1,8 @@
 /* tslint:disable */
 
-declare var window;
 declare var _fs_host;
 
-export const LOAD_FULLSTORY = (orgId) => {
+export const LOAD_FULLSTORY = (window, orgId) => {
     window['_fs_debug'] = false;
     window['_fs_host'] = 'fullstory.com';
     window['_fs_org'] = orgId;

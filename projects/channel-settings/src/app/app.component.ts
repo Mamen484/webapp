@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { SflAuthService } from 'sfl-shared/services';
-import { filter } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {SflAuthService} from 'sfl-shared/services';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'app-root',

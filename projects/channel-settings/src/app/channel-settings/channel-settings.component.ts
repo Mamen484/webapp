@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 import { get } from 'lodash';
+import {FullstoryLoaderService} from '../fullstory-loader.service';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -51,7 +52,8 @@ export class ChannelSettingsComponent implements OnInit {
                 protected matDialog: MatDialog,
                 protected router: Router,
                 protected localStorage: SflLocalStorageService,
-                protected userService: SflUserService) {
+                protected userService: SflUserService,
+                protected fullstoryLoaderService: FullstoryLoaderService) {
     }
 
     get templateControl() {
@@ -114,6 +116,7 @@ export class ChannelSettingsComponent implements OnInit {
         this.appLink = this.appLinkService.getLink('/');
         this.initializeCountryNames();
         this.userService.fetchAggregatedInfo().subscribe(userInfo => this.accountName = userInfo.findFirstEnabledStore().name);
+        this.fullstoryLoaderService.load();
     }
 
     removeField(index) {

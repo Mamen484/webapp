@@ -1,25 +1,22 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { of, Subscription, zip } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { debounceTime, filter, tap } from 'rxjs/operators';
-import { FeedService } from '../../core/services/feed.service';
-import { Channel } from 'sfl-shared/entities';
-import { FeedCategory } from '../../core/entities/feed-category';
-import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
-import { ActivatedRoute } from '@angular/router';
-import { CategoryState } from '../category-state';
-import { UnsavedDataDialogComponent } from './unsaved-data-dialog/unsaved-data-dialog.component';
-import { Feed } from '../../core/entities/feed';
-import { AppState } from '../../core/entities/app-state';
-import { Store } from '@ngrx/store';
-import { FeedCategoriesListComponent } from './feed-categories-list/feed-categories-list.component';
-import { CategoryMappingComponent } from './category-mapping/category-mapping.component';
-import { CategoryMappingService } from './category-mapping/category-mapping.service';
-import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.service';
-import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
-import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {of, Subscription, zip} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {debounceTime, filter, tap} from 'rxjs/operators';
+import {FeedService} from '../../core/services/feed.service';
+import {Channel} from 'sfl-shared/entities';
+import {FeedCategory} from '../../core/entities/feed-category';
+import {FilterDialogComponent} from '../filter-dialog/filter-dialog.component';
+import {ActivatedRoute} from '@angular/router';
+import {CategoryState} from '../category-state';
+import {UnsavedDataDialogComponent} from './unsaved-data-dialog/unsaved-data-dialog.component';
+import {Feed} from '../../core/entities/feed';
+import {FeedCategoriesListComponent} from './feed-categories-list/feed-categories-list.component';
+import {CategoryMappingComponent} from './category-mapping/category-mapping.component';
+import {CategoryMappingService} from './category-mapping/category-mapping.service';
+import {AutotagFormStateService} from './autotag-mapping/autotag-form-state.service';
+import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
+import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -57,11 +54,8 @@ export class CategoriesConfigurationComponent implements OnInit {
     constructor(protected matDialog: MatDialog,
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
-                protected appStore: Store<AppState>,
                 protected categoryMappingService: CategoryMappingService,
                 protected stateService: AutotagFormStateService,
-                protected windowRef: SflWindowRefService,
-                protected userService: SflUserService,
                 protected fullstoryLoader: FullstoryLoaderService) {
     }
 

@@ -1,20 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ChannelSettingsComponent } from './channel-settings.component';
-import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, of, Subject, throwError } from 'rxjs';
-import { AggregatedUserInfo, Channel, Country } from 'sfl-shared/entities';
-import { Field } from './field';
-import { AppLinkService } from './app-link.service';
-import { MatSnackBar } from '@angular/material';
-import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
-import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
-import { MatMenuModule } from '@angular/material/menu';
-import { FormArray, FormGroup } from '@angular/forms';
+import {ChannelSettingsComponent} from './channel-settings.component';
+import {ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService} from 'sfl-shared/services';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EMPTY, of, Subject, throwError} from 'rxjs';
+import {AggregatedUserInfo, Channel, Country} from 'sfl-shared/entities';
+import {Field} from './field';
+import {AppLinkService} from './app-link.service';
+import {MatSnackBar} from '@angular/material';
+import {SettingsSavedSnackbarComponent} from './settings-saved-snackbar/settings-saved-snackbar.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteRowDialogComponent} from './delete-row-dialog/delete-row-dialog.component';
+import {ErrorSnackbarConfig} from '../../../../../src/app/core/entities/error-snackbar-config';
+import {MatMenuModule} from '@angular/material/menu';
+import {FormArray, FormGroup} from '@angular/forms';
+import {FullstoryLoaderService} from '../fullstory-loader.service';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -30,6 +31,8 @@ describe('ChannelSettingsComponent', () => {
     let localStorage: jasmine.SpyObj<SflLocalStorageService>;
     let userService: jasmine.SpyObj<SflUserService>;
     let userData: Subject<AggregatedUserInfo>;
+    let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
+
 
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['modifyChannel']);
@@ -45,6 +48,7 @@ describe('ChannelSettingsComponent', () => {
         userService = jasmine.createSpyObj('UserService spy', ['fetchAggregatedInfo']);
         userData = new Subject();
         userService.fetchAggregatedInfo.and.returnValue(userData);
+        fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService', ['load'])
 
 
         TestBed.configureTestingModule({
@@ -61,6 +65,7 @@ describe('ChannelSettingsComponent', () => {
                 {provide: Router, useValue: router},
                 {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: SflUserService, useValue: userService},
+                {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
             ]
         })
             .compileComponents();
@@ -75,6 +80,10 @@ describe('ChannelSettingsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should load a fullstory on init', () => {
+        expect(fullstoryLoaderService.load).toHaveBeenCalled();
     });
 
     it('should assign a channelId and channel from routeData', () => {

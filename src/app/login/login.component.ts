@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         this.loadingNextPage = true;
         this.authService.login(username, password).subscribe(
             data => {
-                this.userService.fetchAggregatedInfo()
+                this.userService.fetchAggregatedInfo(true)
                     .subscribe(userData => {
                         let activeStore = userData.findFirstEnabledStore();
                         if (activeStore) {
