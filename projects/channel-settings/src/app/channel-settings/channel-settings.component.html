@@ -107,16 +107,18 @@
                             <input matInput [formControl]="fieldSet.controls.defaultValue">
                             <mat-hint i18n>Or input default value of feed</mat-hint>
                         </mat-form-field>
-                        <button mat-stroked-button *ngIf="i === 0" (click)="addField()"
-                                [disabled]="!templateControls[templateControls.length -1].controls.channelField.value">
-                            <mat-icon>add</mat-icon>
-                        </button>
-                        <button mat-stroked-button *ngIf="i > 0" (click)="removeField(i)">
+                        <button mat-stroked-button (click)="removeField(i)" [disabled]="templateControls.length  < 2">
                             <mat-icon>remove</mat-icon>
                         </button>
                     </div>
                     <mat-error *ngIf="fieldSet.hasError('invalidField')">The field can have either a sfField or a defaultValue.</mat-error>
                 </ng-container>
+                <div fxLayout="row">
+                    <div fxFlex></div>
+                    <button mat-stroked-button (click)="addField()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
 
             </form>
         </mat-card-content>
