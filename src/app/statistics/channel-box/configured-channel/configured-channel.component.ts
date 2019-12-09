@@ -15,6 +15,9 @@ export class ConfiguredChannelComponent implements OnInit {
 
     channelsOnline: number;
 
+    constructor() {
+    }
+
     ngOnInit() {
         this.initializeOnline();
         this.revenueStatisticsAvailable = this.statisticsExistsFor('revenue');

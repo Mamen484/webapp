@@ -1,51 +1,44 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { LargeNumberFormat } from '../core/entities/large-number-format';
+import {Pipe, PipeTransform} from '@angular/core';
+import {LargeNumberFormat} from '../core/entities/large-number-format';
+import {Store} from '@ngrx/store';
+import {AppState} from '../core/entities/app-state';
+import {LocaleId} from '../core/entities/locale-id';
+import {SflLocaleIdService} from 'sfl-shared/services';
 
-const fractionDigits = 2;
 
 @Pipe({
     name: 'largeNumberSuffix'
 })
 export class LargeNumberSuffixPipe implements PipeTransform {
 
-    transform(value: number, returnObject = false): string | LargeNumberFormat {
+    numberFormat: Intl.NumberFormat;
 
-        let number = this.formatNumber(value);
-
-        if (returnObject) {
-            return number;
-        }
-
-        return number.number + number.suffix;
-
+    constructor(protected appStore: Store<AppState>, protected localeIdService: SflLocaleIdService) {
+        this.appStore.select('currentStore').subscribe(store => {
+            this.numberFormat = Intl.NumberFormat(LocaleId.createFromCountryCode(store.country, localeIdService.localeId), {
+                style: 'decimal',
+                useGrouping: false,
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            });
+        });
     }
 
-    protected formatNumber(value) {
-        let number: LargeNumberFormat = {
-            number: '0',
-            suffix: ''
-        };
 
+    transform(value: number | string, returnObject = false): string | LargeNumberFormat {
+        const {number, suffix} = this.formatNumber(Number(value));
+        return returnObject
+            ? {number, suffix}
+            : this.numberFormat.format(number) + suffix;
+    }
+
+    protected formatNumber(value): LargeNumberFormat {
         if (value < 1e3) {
-            number.number = this.toFixed(value);
-        } else if (value < 1e6) {
-            number.number = this.toFixed(value / 1e3);
-            number.suffix = 'K';
-        } else {
-            number.number = this.toFixed(value / 1e6);
-            number.suffix = 'M';
+            return {number: value, suffix: ''};
         }
-
-        return number;
+        if (value < 1e6) {
+            return {number: value / 1e3, suffix: 'K'};
+        }
+        return {number: value / 1e6, suffix: 'M'};
     }
-
-    /**
-     * Convert the number to fixed value with precision not more then fractionDigits const value
-     *
-     * @param number
-     */
-    protected toFixed(number: number): string {
-        return (+number.toFixed(fractionDigits)).toString();
-    }
-
 }

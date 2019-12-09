@@ -22,6 +22,7 @@ module.exports = function (config) {
             './node_modules/intl/locale-data/jsonp/it.js',
             './node_modules/intl/locale-data/jsonp/es.js',
             './node_modules/intl/locale-data/jsonp/de.js',
+            './node_modules/intl/locale-data/jsonp/pt.js',
             './node_modules/intl/locale-data/jsonp/en-AU.js',
             './node_modules/intl/locale-data/jsonp/en-US.js',
             './node_modules/intl/locale-data/jsonp/en-GB.js',

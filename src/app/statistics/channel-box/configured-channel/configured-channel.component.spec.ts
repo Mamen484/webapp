@@ -16,7 +16,6 @@ describe('ConfiguredChannelComponent', () => {
                 ConfiguredChannelComponent,
                 SfCurrencyPipe,
                 LargeNumberSuffixPipe,
-                TimeAgoMockPipe,
             ],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [],
@@ -171,13 +170,6 @@ class SfCurrencyPipe extends BlankPipe implements PipeTransform {
 
 @Pipe({name: 'sfChannelLink'})
 class ChannelLinkMockPipe implements PipeTransform {
-    transform() {
-    }
-}
-
-
-@Pipe({name: 'timeAgo'})
-class TimeAgoMockPipe implements PipeTransform {
     transform() {
     }
 }

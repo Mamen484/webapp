@@ -1,4 +1,4 @@
 export interface LargeNumberFormat {
-    number: string;
+    number: number;
     suffix: '' | 'K' | 'M';
 }

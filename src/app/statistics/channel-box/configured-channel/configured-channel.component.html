@@ -24,7 +24,7 @@
             <div class="channel-box-line-title" i18n fxFlex>Latest export</div>
             <div class="sf-color-dark-grey" *ngIf="channel.lastExport; else unavailable" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
                 <mat-icon color="warn" *ngIf="channel.lastExportFailed">error</mat-icon>
-                <span>{{channel.lastExport | timeAgo}}</span>
+                <span timeago [date]="channel.lastExport"></span>
             </div>
         </div>
 

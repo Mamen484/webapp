@@ -9,13 +9,16 @@ import { TimelineEventAction } from '../../core/entities/timeline-event-action.e
 export class EventStatsRowComponent implements OnInit {
 
     @Input() action: TimelineEventAction;
-    @Input() date: string;
     @Input() channelName?: string;
-
+    eventDate: number;
     actions = TimelineEventAction;
 
     constructor() {
     }
+
+    @Input() set date(value: string) {
+        this.eventDate = new Date(value).getTime();
+    };
 
     ngOnInit() {
     }

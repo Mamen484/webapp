@@ -48,10 +48,10 @@ import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { SflImageModule } from 'sfl-shared/utils/image';
-import { TimeAgoPipe } from 'time-ago-pipe';
 import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
     imports: [
@@ -93,6 +93,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
         }),
         SflSharedModule,
         SflSoloSearchModule,
+        TimeagoModule,
     ],
     exports: [
         // modules
@@ -130,6 +131,7 @@ import { CreateAccountComponent } from './create-account/create-account.componen
         SflCountryAutocompleteModule,
         SflSharedModule,
         SflSoloSearchModule,
+        TimeagoModule,
 
         // pipes
         ArrayFromNumberPipe,
@@ -140,7 +142,6 @@ import { CreateAccountComponent } from './create-account/create-account.componen
         SfNumberPipe,
         InvoicesLinkPipe,
         OrdersExportLinkPipe,
-        TimeAgoPipe,
 
         // directives
         HasServerErrorDirective,
@@ -165,7 +166,6 @@ import { CreateAccountComponent } from './create-account/create-account.componen
         MinNumberDirective,
         HasServerErrorDirective,
         ChannelLinkPipe,
-        TimeAgoPipe,
         CreateAccountComponent,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]

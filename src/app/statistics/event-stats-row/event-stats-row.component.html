@@ -4,7 +4,7 @@
             <ng-container *ngIf="channelName">{{channelName}} </ng-container>
             Completed
         </div>
-        <div>{{date | timeAgo}}</div>
+        <div timeago [date]="eventDate"></div>
     </div>
 </ng-container>
 
@@ -14,6 +14,6 @@
             <ng-container *ngIf="channelName">{{channelName}} </ng-container>
             Error
         </div>
-        <div>{{date | timeAgo}}</div>
+        <div timeago [date]="eventDate"></div>
     </div>
 </ng-container>

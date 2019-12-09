@@ -16,6 +16,8 @@ import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { TicketsModule } from './tickets/tickets.module';
 import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
 import { ZendeskConfig } from './core/widgets/zendesk.config';
+import { TimeagoCustomFormatter, TimeagoFormatter, TimeagoIntl, TimeagoModule } from 'ngx-timeago';
+import { SfTimeagoIntlService } from './core/services/sf-timeago-intl.service';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,10 @@ import { ZendeskConfig } from './core/widgets/zendesk.config';
         }),
         TicketsModule,
         ngxZendeskWebwidgetModule.forRoot(ZendeskConfig),
+        TimeagoModule.forRoot({
+            intl: {provide: TimeagoIntl, useClass: SfTimeagoIntlService},
+            formatter: { provide: TimeagoFormatter, useClass: TimeagoCustomFormatter }
+        }),
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
     ],

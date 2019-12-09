@@ -13,7 +13,7 @@ import { ChannelLanguage } from '../../core/entities/channel-language.enum';
 export class StoreStatisticsComponent implements OnInit {
 
     @Input() statistics: Statistics;
-    userLanguage: AggregatedUserInfo;
+    userLanguage: string;
 
     constructor(protected route: ActivatedRoute) {
         this.route.parent.parent.data.subscribe(({userInfo}) => {

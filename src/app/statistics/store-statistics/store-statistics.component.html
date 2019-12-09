@@ -1,9 +1,9 @@
-<div fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutGap.xs="0" *ngIf="statistics">
-  <div fxFlex class="statistics-item"  fxFlexAlign="center">
+<div class="store-statistics" fxLayout="row" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutGap.xs="0" *ngIf="statistics">
+  <div fxFlex="33%" class="statistics-item"  fxFlexAlign="center">
     <div class="mat-body-1 statistics-item-title" i18n>Turnover of the last 30 days</div>
-    <div class="mat-display-2 statistics-value"> {{ statistics.revenue  | sfCurrency:statistics.currency }}</div>
+    <div class="mat-display-2 statistics-value"> {{ statistics.revenue | largeNumberSuffix:true | sfCurrency:statistics.currency }}</div>
   </div>
-  <div fxFlex class="statistics-item" fxFlexAlign="center">
+  <div fxFlex="33%" class="statistics-item" fxFlexAlign="center">
     <div class="mat-body-1 statistics-item-title" i18n>Orders during the last 30 days</div>
     <div class="mat-display-2 statistics-value">{{ statistics.orders | largeNumberSuffix }}</div>
   </div>

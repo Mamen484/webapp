@@ -31,7 +31,7 @@ export class FilterChannelsDialogComponent {
     protected initializeFilter() {
         this.filter = Object.assign({}, this.data);
         this.appStore.select('currentStore').subscribe(store => {
-            this.filter.country = this.filter.country || store.country.toLowerCase();
+            this.filter.country = this.filter.country || store.country;
         });
     }
 
