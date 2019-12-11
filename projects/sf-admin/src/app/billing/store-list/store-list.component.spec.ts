@@ -10,7 +10,7 @@ import { EMPTY, of } from 'rxjs';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { StoreBlockDialogComponent } from './store-block-dialog/store-block-dialog.component';
 import { ActivatedRoute } from '@angular/router';
-import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
+import {runTableOperationSpecs} from '../../../../../sfl-tools/src/lib/table-operations/src/table-operations.spec';
 
 describe('StoreListComponent', () => {
     let component: StoreListComponent;

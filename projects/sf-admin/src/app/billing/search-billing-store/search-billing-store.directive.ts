@@ -1,12 +1,12 @@
-import { Directive } from '@angular/core';
-import { SflAsyncAutocompleteSearchDirective, SflSearchService } from 'sfl-shared/utils/async-autocomplete-search';
-import { SearchBillingStoreService } from './search-billing-store.service';
+import {Directive} from '@angular/core';
+import {SearchBillingStoreService} from './search-billing-store.service';
+import {SftAsyncAutocompleteSearchDirective, SftSearchService} from 'sfl-tools/src/lib/async-autocomplete-search';
 
 @Directive({
     selector: '[sfaSearchBillingStore]',
     providers: [
-        {provide: SflSearchService, useClass: SearchBillingStoreService}
+        {provide: SftSearchService, useClass: SearchBillingStoreService}
     ]
 })
-export class SearchBillingStoreDirective extends SflAsyncAutocompleteSearchDirective {
+export class SearchBillingStoreDirective extends SftAsyncAutocompleteSearchDirective {
 }

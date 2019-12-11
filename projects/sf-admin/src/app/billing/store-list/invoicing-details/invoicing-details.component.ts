@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ngxCsv } from 'ngx-csv/ngx-csv';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {ngxCsv} from 'ngx-csv/ngx-csv';
 
-import { BillingStore } from '../billing-store';
-import { Invoice } from './invoice';
-import { BillingStoreService } from '../billing-store.service';
-import { TableOperations } from 'sfl-shared/utils/table-operations';
-import { InvoiceOrder } from './invoice-order';
-import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import {BillingStore} from '../billing-store';
+import {Invoice} from './invoice';
+import {BillingStoreService} from '../billing-store.service';
+import {InvoiceOrder} from './invoice-order';
+import {Observable} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 @Component({
     selector: 'sfa-invoicing-details',

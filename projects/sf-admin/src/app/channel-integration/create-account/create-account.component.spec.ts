@@ -1,18 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CreateAccountComponent } from './create-account.component';
-import { ChannelService, StoreService } from 'sfl-shared/services';
-import { ChannelPermissionService } from '../channel-permission.service';
-import { EMPTY, of, throwError } from 'rxjs';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule, MatDialog, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CountryAutocompleteStubComponent } from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
-import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
-import { By } from '@angular/platform-browser';
-import { UnsavedDataDialogComponent } from 'sfl-shared/utils/unsved-data-guard';
-import { StoreStatus } from 'sfl-shared/entities';
+import {CreateAccountComponent} from './create-account.component';
+import {ChannelService, StoreService} from 'sfl-shared/services';
+import {ChannelPermissionService} from '../channel-permission.service';
+import {EMPTY, of, throwError} from 'rxjs';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatAutocompleteModule, MatDialog, MatFormFieldModule, MatInputModule, MatSelectModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {CountryAutocompleteStubComponent} from '../../../../../../src/app/orders/order-details/address-form/address-form.component.spec';
+import {CredentialsDialogComponent} from './credentials-dialog/credentials-dialog.component';
+import {By} from '@angular/platform-browser';
+import {StoreStatus} from 'sfl-shared/entities';
+import {UnsavedDataDialogComponent} from 'sfl-tools/src/lib/unsaved-data-guard';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;
@@ -292,7 +292,10 @@ describe('CreateAccountComponent', () => {
         });
 
         it('should show a dialog on showCloseDialog()', () => {
-            matDialog.open.and.returnValue(<any>{afterClosed: () => {}});
+            matDialog.open.and.returnValue(<any>{
+                afterClosed: () => {
+                }
+            });
             component.showCloseDialog();
             expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
         });

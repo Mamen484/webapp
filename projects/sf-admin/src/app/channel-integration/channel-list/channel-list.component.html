@@ -6,9 +6,9 @@
         <a mat-raised-button color="accent" routerLink="/channel-integration/create-account">Create account</a>
     </div>
 
-    <sfl-solo-search i18n-placeholder placeholder="Search channel"
+    <sft-solo-search i18n-placeholder placeholder="Search channel"
                      (searchQueryChanged)="search($event)" [value]="searchQuery"
-                     filterButtonText="Filter" (openFilters)="openFilters()" [processing]="isLoadingResults"></sfl-solo-search>
+                     filterButtonText="Filter" (openFilters)="openFilters()" [processing]="isLoadingResults"></sft-solo-search>
     <mat-chip-list [selectable]="false" *ngIf="filter.permission">
         <mat-chip>
             <span i18n>With accounts</span>

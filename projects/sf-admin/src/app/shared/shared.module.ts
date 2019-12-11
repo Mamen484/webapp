@@ -24,8 +24,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { SubnavComponent } from './subnav/subnav.component';
-import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
 import { MatSlideToggleModule } from '@angular/material';
+import {SftSoloSearchModule} from 'sfl-tools/src/lib/solo-search';
 
 @NgModule({
     imports: [
@@ -52,7 +52,7 @@ import { MatSlideToggleModule } from '@angular/material';
         MatSlideToggleModule,
         MatSnackBarModule,
         MatTooltipModule,
-        SflSoloSearchModule,
+        SftSoloSearchModule,
     ],
     exports: [
         ClipboardModule,
@@ -78,7 +78,7 @@ import { MatSlideToggleModule } from '@angular/material';
         MatSnackBarModule,
         MatTableModule,
         MatTooltipModule,
-        SflSoloSearchModule,
+        SftSoloSearchModule,
 
         ErrorMessageComponent,
         SubnavComponent,

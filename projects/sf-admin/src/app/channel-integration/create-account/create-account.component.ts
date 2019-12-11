@@ -9,7 +9,7 @@ import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
 import { MatDialog } from '@angular/material';
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
-import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-shared/utils/unsved-data-guard';
+import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/src/lib/unsaved-data-guard';
 
 @Component({
     templateUrl: './create-account.component.html',

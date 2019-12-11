@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {CategoriesConfigurationComponent} from './categories-configuration.component';
 import {Directive, NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
@@ -8,9 +8,9 @@ import {FeedService} from '../../core/services/feed.service';
 import {EMPTY, of, Subject} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryState} from '../category-state';
-import {UnsavedDataDialogComponent} from './unsaved-data-dialog/unsaved-data-dialog.component';
 import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
 import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
+import {UnsavedDataDialogComponent} from 'sfl-tools/src/lib/unsaved-data-guard';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -112,13 +112,6 @@ describe('CategoriesConfigurationComponent', () => {
         matDialog.open.and.returnValue(<any>{afterClosed: () => (of(true))});
         component.showCloseDialog();
         expect(matDialog.open).toHaveBeenCalledWith(UnsavedDataDialogComponent);
-    });
-
-    it('should open an unsaved data dialog only once if user agreed to leave the page (prevent multiple dialog show on several canDeactivate() calls)', () => {
-        matDialog.open.and.returnValue(<any>{afterClosed: () => (of(true))});
-        component.showCloseDialog().subscribe();
-        component.showCloseDialog().subscribe();
-        expect(matDialog.open).toHaveBeenCalledTimes(1);
     });
 
     it('should open an unsaved data dialog twice if user declined to leave the page, but then navigated from the page one more time', () => {

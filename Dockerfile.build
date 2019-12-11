@@ -40,7 +40,7 @@ ARG RUN_AUTOPILOT
 
 RUN npm run compile-env
 
-RUN npx ng build sfl-shared
+RUN npm run build-lib
 
 RUN chmod +x ./build-multiple-locales.sh
 RUN ./build-multiple-locales.sh

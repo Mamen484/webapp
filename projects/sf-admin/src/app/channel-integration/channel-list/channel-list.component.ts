@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { Observable } from 'rxjs';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { map } from 'rxjs/operators';
@@ -10,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
 import { Filter } from './filters-dialog/filter';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 @Component({
     templateUrl: './channel-list.component.html',

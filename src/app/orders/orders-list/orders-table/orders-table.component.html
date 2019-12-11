@@ -1,5 +1,5 @@
-<sfl-solo-search i18n-placeholder placeholder="Search orders" i18n-filterButtonText filterButtonText="Filter"
-                 (openFilters)="openDialog()" (searchQueryChanged)="search($event)"></sfl-solo-search>
+<sft-solo-search i18n-placeholder placeholder="Search orders" i18n-filterButtonText filterButtonText="Filter"
+                 (openFilters)="openDialog()" (searchQueryChanged)="search($event)"></sft-solo-search>
 <mat-chip-list [selectable]="false" class="filter-chips" *ngIf="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
     <mat-chip *ngIf="selectedChannel">
         <ng-container i18n>Channel: {{selectedChannel}}</ng-container>

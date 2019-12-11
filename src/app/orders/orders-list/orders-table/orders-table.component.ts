@@ -10,7 +10,6 @@ import { Observable, Subject, Subscription, zip } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, filter, flatMap, map, take, tap } from 'rxjs/operators';
 import { SflLocaleIdService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
-import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { ActivatedRoute } from '@angular/router';
 
 import { OrdersTableItem } from '../../../core/entities/orders/orders-table-item';
@@ -30,6 +29,7 @@ import { environment } from '../../../../environments/environment';
 import { AssignTagsDialogComponent } from '../../assign-tags-dialog/assign-tags-dialog.component';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 const UPDATE_TABLE_ON_RESIZE_INTERVAL = 200;
 

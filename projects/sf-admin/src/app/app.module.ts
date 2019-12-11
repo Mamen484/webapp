@@ -17,8 +17,7 @@ import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.servi
 import { SfaSharedModule } from './shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
-import { SflCountrySelectModule } from 'sfl-shared/utils/country-select';
-
+import {SftCountrySelectModule} from 'sfl-tools/src/lib/country-select';
 
 @NgModule({
     declarations: [
@@ -37,7 +36,7 @@ import { SflCountrySelectModule } from 'sfl-shared/utils/country-select';
         HttpClientModule,
         LoginModule,
         MatSidenavModule,
-        SflCountrySelectModule.forRoot({
+        SftCountrySelectModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,
         }),
         SflSharedModule.forRoot({

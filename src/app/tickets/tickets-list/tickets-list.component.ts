@@ -5,7 +5,6 @@ import { TicketsService } from '../tickets.service';
 import { Store as UserStore } from 'sfl-shared/entities/store';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { TableOperations } from 'sfl-shared/utils/table-operations';
 import { Observable } from 'rxjs';
 import { Ticket } from '../entities/ticket';
 import { map } from 'rxjs/operators';
@@ -16,6 +15,7 @@ import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tic
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { TicketsDataService } from './tickets-data.service';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 @Component({
     selector: 'sf-tickets-list',

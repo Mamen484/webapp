@@ -46,12 +46,12 @@ import { MinNumberDirective } from './min-number/min-number.directive';
 import { HasServerErrorDirective } from './validators/has-server-error.directive';
 import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
-import { SflSoloSearchModule } from 'sfl-shared/utils/solo-search';
-import { SflImageModule } from 'sfl-shared/utils/image';
-import { SflCountryAutocompleteModule } from 'sfl-shared/utils/country-autocomplete';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
 import { CreateAccountComponent } from './create-account/create-account.component';
+import {SftSoloSearchModule} from 'sfl-tools/src/lib/solo-search';
+import {SftCountryAutocompleteModule} from 'sfl-tools/src/lib/country-autocomplete';
 import { TimeagoModule } from 'ngx-timeago';
+import {SflImageModule} from 'sfl-shared/image';
 
 @NgModule({
     imports: [
@@ -88,11 +88,11 @@ import { TimeagoModule } from 'ngx-timeago';
         MatTabsModule,
         ReactiveFormsModule,
         RouterModule,
-        SflCountryAutocompleteModule.forRoot({
+        SftCountryAutocompleteModule.forRoot({
             sflCountriesListLink: environment.countriesListLink,
         }),
         SflSharedModule,
-        SflSoloSearchModule,
+        SftSoloSearchModule,
         TimeagoModule,
     ],
     exports: [
@@ -128,9 +128,9 @@ import { TimeagoModule } from 'ngx-timeago';
         MatTooltipModule,
         ReactiveFormsModule,
         RouterModule,
-        SflCountryAutocompleteModule,
+        SftCountryAutocompleteModule,
         SflSharedModule,
-        SflSoloSearchModule,
+        SftSoloSearchModule,
         TimeagoModule,
 
         // pipes

@@ -1,14 +1,14 @@
 import { SearchStoreDirective } from './search-store.directive';
-import { SflSearchService } from 'sfl-shared/utils/async-autocomplete-search';
 import { FormControl } from '@angular/forms';
+import {SftSearchService} from 'sfl-tools/src/lib/async-autocomplete-search';
 
 describe('SearchStoreDirective', () => {
 
-    let searchService: jasmine.SpyObj<SflSearchService<any>>;
+    let searchService: jasmine.SpyObj<SftSearchService<any>>;
     let directive: SearchStoreDirective;
 
     beforeEach(() => {
-        searchService = jasmine.createSpyObj('SflSearchService', ['getResults']);
+        searchService = jasmine.createSpyObj('SftSearchService', ['getResults']);
         directive = new SearchStoreDirective(searchService);
         directive.searchControl = new FormControl();
 

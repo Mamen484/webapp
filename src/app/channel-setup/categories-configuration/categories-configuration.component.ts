@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from '@angular/material';
-import {of, Subscription, zip} from 'rxjs';
+import {Subscription, zip} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {debounceTime, filter, tap} from 'rxjs/operators';
 import {FeedService} from '../../core/services/feed.service';
@@ -9,7 +9,6 @@ import {FeedCategory} from '../../core/entities/feed-category';
 import {FilterDialogComponent} from '../filter-dialog/filter-dialog.component';
 import {ActivatedRoute} from '@angular/router';
 import {CategoryState} from '../category-state';
-import {UnsavedDataDialogComponent} from './unsaved-data-dialog/unsaved-data-dialog.component';
 import {Feed} from '../../core/entities/feed';
 import {FeedCategoriesListComponent} from './feed-categories-list/feed-categories-list.component';
 import {CategoryMappingComponent} from './category-mapping/category-mapping.component';
@@ -17,6 +16,7 @@ import {CategoryMappingService} from './category-mapping/category-mapping.servic
 import {AutotagFormStateService} from './autotag-mapping/autotag-form-state.service';
 import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
 import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
+import {UnsavedDataDialogComponent, UnsavedDataInterface} from 'sfl-tools/src/lib/unsaved-data-guard';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
@@ -26,7 +26,7 @@ const CONFLICT_ERROR_CODE = 409;
     templateUrl: './categories-configuration.component.html',
     styleUrls: ['./categories-configuration.component.scss']
 })
-export class CategoriesConfigurationComponent implements OnInit {
+export class CategoriesConfigurationComponent implements OnInit, UnsavedDataInterface {
 
     @ViewChild(FeedCategoriesListComponent, {static: true}) feedCategoriesList: FeedCategoriesListComponent;
     @ViewChild(CategoryMappingComponent, {static: false}) categoryMapping: CategoryMappingComponent;
@@ -46,7 +46,6 @@ export class CategoriesConfigurationComponent implements OnInit {
     categoryStateOptions = CategoryState;
     categoryStateFilter: CategoryState;
 
-    leavePageDialogOpened = false;
     autotagFormState: AutotagFormState;
 
     protected subscription: Subscription;
@@ -104,14 +103,7 @@ export class CategoriesConfigurationComponent implements OnInit {
 
 
     showCloseDialog() {
-        // prevent the dialog opened twice if the canDeactivate guard is called twice
-        if (this.leavePageDialogOpened) {
-            return of(true);
-        }
-        return this.matDialog.open(UnsavedDataDialogComponent).afterClosed().pipe(tap(
-            // reset the flag if the user has declined leaving the page
-            confirmed => this.leavePageDialogOpened = confirmed || false
-        ));
+        return this.matDialog.open(UnsavedDataDialogComponent).afterClosed();
     }
 
     refreshCategoriesList(silently = false) {

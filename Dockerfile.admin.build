@@ -33,7 +33,7 @@ ARG countriesListLink
 
 RUN npm run compile-env projects/sf-admin/src/environments
 
-RUN npx ng build sfl-shared
+RUN npm run build-lib
 
 RUN chmod +x ./build-admin.sh
 RUN ./build-admin.sh

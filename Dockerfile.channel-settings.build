@@ -30,7 +30,7 @@ ARG countriesLink
 
 RUN npm run compile-env projects/channel-settings/src/environments
 
-RUN npx ng build sfl-shared
+RUN npm run build-lib
 
 RUN chmod +x ./build-channel-settings.sh
 RUN ./build-channel-settings.sh

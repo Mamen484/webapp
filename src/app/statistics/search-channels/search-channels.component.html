@@ -1,7 +1,7 @@
-<sfl-solo-search [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel"
+<sft-solo-search [value]="filter.searchQuery" i18n-placeholder placeholder="Find your next channel"
                  filterButtonText="Filter" i18n-filterButtonText (openFilters)="openDialog()"
                  (searchQueryChanged)="filter.searchQuery = $event; applyFilter.emit(filter)"
-                 [processing]="processing"></sfl-solo-search>
+                 [processing]="processing"></sft-solo-search>
 <mat-chip-list [selectable]="false">
     <mat-chip *ngIf="filter.country">
         <span class="sf-country-name"> {{ countries[filter.country] }}</span>

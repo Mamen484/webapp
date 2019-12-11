@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { SflSearchService } from 'sfl-shared/utils/async-autocomplete-search';
-import { map } from 'rxjs/operators';
-import { BillingStoreService } from '../store-list/billing-store.service';
-import { BillingStore } from '../store-list/billing-store';
+import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
+import {BillingStoreService} from '../store-list/billing-store.service';
+import {BillingStore} from '../store-list/billing-store';
+import {SftSearchService} from 'sfl-tools/src/lib/async-autocomplete-search';
 
 @Injectable()
-export class SearchBillingStoreService implements SflSearchService<BillingStore> {
+export class SearchBillingStoreService implements SftSearchService<BillingStore> {
 
     constructor(protected storeService: BillingStoreService) {
     }

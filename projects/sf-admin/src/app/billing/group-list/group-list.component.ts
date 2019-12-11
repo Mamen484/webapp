@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Group, GroupDialogComponent } from './group-dialog/group-dialog.component';
 import { Observable } from 'rxjs';
 import { get } from 'lodash';
-import { TableOperations } from 'sfl-shared/utils/table-operations';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 

@@ -4,13 +4,13 @@ import { ChannelListComponent } from './channel-list.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
-import { runTableOperationSpecs } from '../../../../../sfl-shared/utils/table-operations/src/table-operations.spec';
 import { ChannelState } from 'sfl-shared/entities';
 import { EMPTY, of, throwError } from 'rxjs';
 import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
 import { Filter } from './filters-dialog/filter';
+import {runTableOperationSpecs} from '../../../../../sfl-tools/src/lib/table-operations/src/table-operations.spec';
 
 @Pipe({
     name: 'accountList',
