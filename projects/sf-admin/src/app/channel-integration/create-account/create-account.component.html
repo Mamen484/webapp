@@ -78,6 +78,7 @@
                         <mat-select formControlName="exportType">
                             <mat-option value="csv">CSV</mat-option>
                             <mat-option value="xml">XML</mat-option>
+                            <mat-option value="txt">TXT</mat-option>
                         </mat-select>
                         <mat-error *ngIf="formGroup.controls.exportType.hasError('validationError')">
                             {{formGroup.controls.exportType.getError('validationError')}}
@@ -98,7 +99,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv' || formGroup.controls.exportType.value === 'txt'">
                         <mat-label>Separator</mat-label>
                         <input matInput formControlName="separator">
                         <mat-error *ngIf="formGroup.controls.separator.hasError('validationError')">
@@ -108,7 +109,7 @@
                             Field is more then 1 character long
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv'">
+                    <mat-form-field appearance="outline" color="accent" *ngIf="formGroup.controls.exportType.value === 'csv' || formGroup.controls.exportType.value === 'txt'">
                         <mat-label>Round-String</mat-label>
                         <input matInput formControlName="enclosure">
                         <mat-error *ngIf="formGroup.controls.enclosure.hasError('validationError')">
@@ -118,7 +119,7 @@
                             Field is more then 1 character long
                         </mat-error>
                     </mat-form-field>
-                    <mat-slide-toggle color="accent" formControlName="headerInFirstRaw" *ngIf="formGroup.controls.exportType.value === 'csv'">Header in first raw</mat-slide-toggle>
+                    <mat-slide-toggle color="accent" formControlName="headerInFirstRaw" *ngIf="formGroup.controls.exportType.value === 'csv' || formGroup.controls.exportType.value === 'txt'">Header in first raw</mat-slide-toggle>
                 </div>
             </mat-card-content>
         </mat-card>

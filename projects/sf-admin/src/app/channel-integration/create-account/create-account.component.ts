@@ -49,7 +49,7 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
         head: new FormControl('', () => this.getValidationMessages(['feed', 'head'])),
         productTag: new FormControl('', [() => this.getValidationMessages(['feed', 'productTag'])]),
 
-        // exportType = CSV
+        // exportType = CSV || TXT
         separator: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'separator'])]),
         enclosure: new FormControl('', [Validators.maxLength(1), () => this.getValidationMessages(['feed', 'enclosure'])]),
         headerInFirstRaw: new FormControl(),
