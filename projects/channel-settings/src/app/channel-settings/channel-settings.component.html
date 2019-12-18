@@ -98,7 +98,7 @@
                             <mat-select [formControl]="fieldSet.controls.appField">
                                 <mat-option value=""></mat-option>
                                 <mat-option *ngFor="let field of templateFields"
-                                            [value]="field.label">{{field.label}}</mat-option>
+                                            [value]="field.id">{{field.label}}</mat-option>
                             </mat-select>
                             <mat-hint i18n>Select feed name as written in feed</mat-hint>
                         </mat-form-field>
