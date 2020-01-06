@@ -292,4 +292,26 @@ describe('BaseComponent', () => {
         expect(zendeskService.setSettings).not.toHaveBeenCalled();
         expect(zendeskService.show).not.toHaveBeenCalled();
     });
+
+    it('should add sf-chat-enabled class to document body when the chat is enabled', () => {
+        store.select.and.returnValue(of({id: 'some_id', permission: {chat: '*'}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
+            roles: ['user'],
+            token: 'token_1',
+            email: 'some_email'
+        })));
+        fixture.detectChanges();
+        expect(document.body.classList).toContain('sf-chat-enabled');
+    });
+
+    it('should NOT add sf-chat-enabled class to document body when the chat is NOT enabled', () => {
+        store.select.and.returnValue(of({id: 'some_id', permission: {}}));
+        userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({
+            roles: ['user'],
+            token: 'token_1',
+            email: 'some_email'
+        })));
+        fixture.detectChanges();
+        expect(document.body.classList).not.toContain('sf-chat-enabled');
+    });
 });

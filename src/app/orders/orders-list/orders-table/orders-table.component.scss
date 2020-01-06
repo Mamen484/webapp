@@ -19,19 +19,25 @@ $hover-row-bg: #EBEBEB;
 $actions-height: 61px;
 $search-block-height: 60px;
 $applied-filters-height: 52px;
+$chat-height: 50px;
 
 
 .table-container {
   max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height});
   overflow: auto;
+
+  /* if zendesk chat is enabled, reduce table height so the widget doesn't overlap table pagination */
+  ::ng-deep .sf-chat-enabled & {
+    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$chat-height}) !important;
+  }
 }
 
-.filters-applied {
-  .table-container {
-    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height});
+.filters-applied .table-container {
+  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height});
+
+  ::ng-deep .sf-chat-enabled & {
+    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height} - #{$chat-height}) !important;
   }
-
-
 }
 
 mat-card {
@@ -127,6 +133,7 @@ table {
         position: sticky;
         right: 0;
         background-color: $hover-row-bg;
+
         .invoice-link {
           visibility: visible;
 
@@ -167,6 +174,7 @@ mat-chip-list.filter-chips {
       cursor: pointer;
       color: mat-color($grey);
     }
+
     mat-icon, span {
       vertical-align: middle;
     }

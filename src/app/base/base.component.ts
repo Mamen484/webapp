@@ -30,7 +30,8 @@ export class BaseComponent implements OnInit {
                 protected zendeskService: ngxZendeskWebwidgetService,
                 protected localeIdService: SflLocaleIdService,
                 protected fullstoryLoader: FullstoryLoaderService,
-                protected appcuesService: AppcuesService) {
+                protected appcuesService: AppcuesService,
+                protected renderer: Renderer2) {
 
         this.appStore.select('currentStore').pipe(
             flatMap(store => this.storeService.getStoreChannels(store.id, new ChannelsRequestParams(true))),
@@ -147,6 +148,7 @@ export class BaseComponent implements OnInit {
                     }
                 });
                 this.zendeskService.show();
+                this.renderer.addClass(document.body, 'sf-chat-enabled');
             }
         });
     }
