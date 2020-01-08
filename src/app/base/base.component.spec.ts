@@ -72,6 +72,11 @@ describe('BaseComponent', () => {
         component = fixture.componentInstance;
     });
 
+    afterEach(() => {
+        // clean classList to avoid side effects
+        document.body.classList.remove('sf-chat-enabled');
+    });
+
 
     it('should run `autopilot associate()` with store\'s name and user\'s email when stores name equals user\'s login', () => {
         userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create({login: 'login1', email: 'email1', roles: ['user']})));
