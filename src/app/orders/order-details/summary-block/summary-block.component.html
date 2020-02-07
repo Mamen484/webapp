@@ -13,6 +13,7 @@
                 <div>Date: {{order.createdAt | date:'short'}}</div>
                 <div i18n *ngIf="order.acknowledgedAt">Acknowledged at: {{order.acknowledgedAt | date:'short'}}</div>
                 <div i18n *ngIf="order.storeReference">Store reference: {{order.storeReference}}</div>
+                <div i18n *ngIf="order?.shipment?.trackingNumber">Tracking number: {{order.shipment.trackingNumber}}</div>
                 <div *ngFor="let field of additionalFields">
                     {{field[0]}}: {{field[1]}}
                 </div>
