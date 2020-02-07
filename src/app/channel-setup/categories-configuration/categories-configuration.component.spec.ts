@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 import {CategoryState} from '../category-state';
 import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
 import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
-import {UnsavedDataDialogComponent} from 'sfl-tools/src/lib/unsaved-data-guard';
+import {UnsavedDataDialogComponent} from 'sfl-tools/unsaved-data-guard';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;

@@ -19,7 +19,7 @@ import {SidebarModule} from '../sidebar/sidebar.module';
 import {environment} from '../../../projects/sf-admin/src/environments/environment';
 import {FullCountriesListService} from 'sfl-shared/services';
 import {SFL_COUNTRIES_LIST_LINK} from 'sfl-shared/entities';
-import {SftCountrySelectModule} from 'sfl-tools/src/lib/country-select';
+import {SftCountrySelectModule} from 'sfl-tools/country-select';
 
 @NgModule({
     imports: [

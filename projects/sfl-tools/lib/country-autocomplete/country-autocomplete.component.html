@@ -1,0 +1,28 @@
+<mat-form-field [color]="color" [appearance]="appearance">
+    <mat-label i18n>Country</mat-label>
+    <mat-chip-list #chipList aria-label="Country selection" *ngIf="multipleSelection === 'chips'" [required]="required">
+        <mat-chip
+                *ngFor="let country of selectedCountries"
+                [removable]="true"
+                (removed)="remove(country)">
+            <span>{{country.name}}</span>
+            <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input #input [matChipInputFor]="chipList" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete">
+    </mat-chip-list>
+
+    <input #input *ngIf="multipleSelection !== 'chips'" autocomplete="off" type="text" matInput [formControl]="control" [matAutocomplete]="countryAutocomplete" [required]="required">
+    <mat-autocomplete #countryAutocomplete="matAutocomplete" class="sf-countries-autocomplete" (optionSelected)="optionSelected($event)">
+        <mat-option *ngFor="let country of filteredCountries" [value]="country.name">
+            <img src="{{countriesListLink}}/images/{{country.flag}}" class="sf-flag-filter">
+            <ng-container>{{country.name}}</ng-container>
+        </mat-option>
+    </mat-autocomplete>
+    <mat-error *ngIf="control.hasError('required') || control.hasError('multipleRequired')" i18n>
+        Country name is missing. Please, choose one from a list.
+    </mat-error>
+    <mat-error *ngIf="control.hasError('serverError')">
+        {{ control.getError('serverError') }}
+    </mat-error>
+    <mat-hint *ngIf="hintText">{{hintText}}</mat-hint>
+</mat-form-field>

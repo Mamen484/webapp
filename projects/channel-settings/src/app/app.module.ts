@@ -21,7 +21,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
-import {SflSharedModule} from 'sfl-shared/core';
+import {SflSharedModule} from 'sfl-shared';
 import {LoginModule} from './login/login.module';
 import {SettingsSavedSnackbarComponent} from './channel-settings/settings-saved-snackbar/settings-saved-snackbar.component';
 import {DeleteRowDialogComponent} from './channel-settings/delete-row-dialog/delete-row-dialog.component';
@@ -30,7 +30,7 @@ import {RowValidationDialogComponent} from './channel-settings/row-validation-di
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SflErrorPagesModule} from 'sfl-shared/error-pages';
-import {SftCountryAutocompleteModule} from 'sfl-tools/src/lib/country-autocomplete';
+import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
 
 @NgModule({
     declarations: [

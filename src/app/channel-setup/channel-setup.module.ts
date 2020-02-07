@@ -12,7 +12,7 @@ import {AutotagInputComponent} from './categories-configuration/autotag-mapping/
 import {AutotagDropdownComponent} from './categories-configuration/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
 import {SettingsSavedSnackbarComponent} from './categories-configuration/settings-saved-snackbar/settings-saved-snackbar.component';
 import {AutotagsRequiredSnackbarComponent} from './categories-configuration/autotag-mapping/autotags-required-snackbar/autotags-required-snackbar.component';
-import {SftUnsavedDataModule} from 'sfl-tools/src/lib/unsaved-data-guard';
+import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
 
 @NgModule({
     declarations: [

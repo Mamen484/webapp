@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SflErrorPagesModule } from 'sfl-shared/error-pages';
-import { SflSharedModule } from 'sfl-shared/core';
+import { SflSharedModule } from 'sfl-shared';
 import { environment } from '../environments/environment';
 import { LoginModule } from './login/login.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -17,7 +17,7 @@ import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.servi
 import { SfaSharedModule } from './shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
-import {SftCountrySelectModule} from 'sfl-tools/src/lib/country-select';
+import {SftCountrySelectModule} from 'sfl-tools/country-select';
 
 @NgModule({
     declarations: [

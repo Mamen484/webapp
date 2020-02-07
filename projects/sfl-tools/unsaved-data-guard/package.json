@@ -1,0 +1,7 @@
+{
+  "ngPackage": {
+    "lib": {
+      "entryFile": "../lib/unsaved-data-guard/public-api"
+    }
+  }
+}

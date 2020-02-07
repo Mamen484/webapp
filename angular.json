@@ -382,7 +382,7 @@
     "sfl-tools": {
       "projectType": "library",
       "root": "projects/sfl-tools",
-      "sourceRoot": "projects/sfl-tools/src",
+      "sourceRoot": "projects/sfl-tools",
       "prefix": "sft",
       "architect": {
         "build": {
@@ -395,7 +395,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/sfl-tools/src/test.ts",
+            "main": "projects/sfl-tools/test.ts",
             "tsConfig": "projects/sfl-tools/tsconfig.spec.json",
             "karmaConfig": "projects/sfl-tools/karma.conf.js"
           }

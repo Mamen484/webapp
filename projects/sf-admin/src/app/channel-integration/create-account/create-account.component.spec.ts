@@ -12,7 +12,7 @@ import {CountryAutocompleteStubComponent} from '../../../../../../src/app/orders
 import {CredentialsDialogComponent} from './credentials-dialog/credentials-dialog.component';
 import {By} from '@angular/platform-browser';
 import {StoreStatus} from 'sfl-shared/entities';
-import {UnsavedDataDialogComponent} from 'sfl-tools/src/lib/unsaved-data-guard';
+import {UnsavedDataDialogComponent} from 'sfl-tools/unsaved-data-guard';
 
 describe('CreateAccountComponent', () => {
     let component: CreateAccountComponent;

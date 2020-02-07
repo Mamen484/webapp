@@ -14,7 +14,7 @@ To use major number of modules, you need to import the SflSharedModule to your a
 
 ```typescript
 import { NgModule } from 'angular/core';
-import { SflSharedModule } from 'sfl-shared/core';
+import { SflSharedModule } from 'sfl-shared';
 
 @NgModule({
     imports: [

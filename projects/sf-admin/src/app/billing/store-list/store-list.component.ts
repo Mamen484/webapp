@@ -8,7 +8,7 @@ import { BillingStoreService } from './billing-store.service';
 import { StoreDialogComponent } from './store-dialog/store-dialog.component';
 import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import {TableOperations} from 'sfl-tools/src/lib/table-operations';
+import {TableOperations} from 'sfl-tools/table-operations';
 
 const SNACKBAR_MESSAGE_DURATION = 5000;
 

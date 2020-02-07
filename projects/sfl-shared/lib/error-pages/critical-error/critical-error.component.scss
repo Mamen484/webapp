@@ -1,0 +1,10 @@
+@import '../../../../../src/sass/variables';
+@import '../../../../../src/sass/mixins/form-page';
+@import '../../../../../src/sass/mixins/error-pages';
+
+@include form-page();
+@include error-pages();
+
+.reload {
+  font-weight: bold;
+}

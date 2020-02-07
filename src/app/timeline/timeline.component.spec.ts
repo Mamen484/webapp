@@ -19,7 +19,7 @@ import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
 import { AppState } from '../core/entities/app-state';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
-import { SflSharedModule } from 'sfl-shared/core';
+import { SflSharedModule } from 'sfl-shared';
 import { PageLoadingService } from '../core/services/page-loading.service';
 
 @Pipe({

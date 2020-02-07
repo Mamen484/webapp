@@ -1,0 +1,8 @@
+{
+  "ngPackage": {
+    "dest": "dist/auth",
+    "lib": {
+      "entryFile": "./public-api"
+    }
+  }
+}

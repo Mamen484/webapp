@@ -25,7 +25,7 @@ import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { SubnavComponent } from './subnav/subnav.component';
 import { MatSlideToggleModule } from '@angular/material';
-import {SftSoloSearchModule} from 'sfl-tools/src/lib/solo-search';
+import {SftSoloSearchModule} from 'sfl-tools/solo-search';
 
 @NgModule({
     imports: [

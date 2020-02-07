@@ -16,7 +16,7 @@ import {CategoryMappingService} from './category-mapping/category-mapping.servic
 import {AutotagFormStateService} from './autotag-mapping/autotag-form-state.service';
 import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
 import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
-import {UnsavedDataDialogComponent, UnsavedDataInterface} from 'sfl-tools/src/lib/unsaved-data-guard';
+import {UnsavedDataDialogComponent, UnsavedDataInterface} from 'sfl-tools/unsaved-data-guard';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;

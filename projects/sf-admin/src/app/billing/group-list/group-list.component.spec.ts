@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { EMPTY, of } from 'rxjs';
 import { GroupDialogComponent } from './group-dialog/group-dialog.component';
-import {runTableOperationSpecs} from '../../../../../sfl-tools/src/lib/table-operations/src/table-operations.spec';
+import { runTableOperationSpecs } from '../../../../../sfl-tools/lib/table-operations/table-operations.spec';
 
 describe('GroupListComponent', () => {
     let component: GroupListComponent;
