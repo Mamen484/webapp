@@ -129,6 +129,7 @@
                         <th mat-header-cell *matHeaderCellDef i18n> Services</th>
                         <td mat-cell *matCellDef="let row">
                             <div *ngIf="row.services.paymentIsAfn" i18n>Amazon FBA</div>
+                            <div *ngIf="row.services.isAmazonB2B" i18n>Amazon B2B</div>
                             <div *ngIf="row.services.isAmazonPrime" i18n>Amazon Prime</div>
                             <div *ngIf="row.services.paymentIsClogistique" i18n>Clogistique</div>
                             <div *ngIf="row.services.isCdiscountPro" i18n>Cdiscount PRO</div>

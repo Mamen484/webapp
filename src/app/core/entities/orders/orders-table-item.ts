@@ -68,6 +68,7 @@ export class OrdersTableItem {
             paymentIsClogistique: false,
             shippedByManomano: false,
             isAmazonPrime: false,
+            isAmazonB2B: false,
             isCdiscountPro: false,
         };
         const payment = get(order, ['payment', 'method'], '').toLowerCase();
@@ -77,6 +78,7 @@ export class OrdersTableItem {
 
                 services.paymentIsAfn = payment === 'afn';
                 services.isAmazonPrime = Boolean(additionalFields.is_prime);
+                services.isAmazonB2B = Boolean(additionalFields.is_business_order);
                 break;
 
             case ChannelMap.cdiscount:
