@@ -67,8 +67,9 @@ $badge-font-level: caption;
 }
 
 .sf-snackbar-error {
-  color: mat-color($warn);
-  font-weight: mat-font-weight($config, body-2);
+  background-color: mat-color($warn, 100);
+  color: mat-color($warn, 900);
+  font-size: mat-font-size($config, body-1);
   text-align: center;
 }
 
