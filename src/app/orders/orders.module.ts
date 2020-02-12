@@ -28,6 +28,7 @@ import { SelectItemsDialogComponent } from './order-details/select-items-dialog/
 import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
 import { SflSidebarModule } from 'sfl-shared/sidebar';
+import { OrderErrorsAlertComponent } from './orders-list/orders-table/order-errors-alert/order-errors-alert.component';
 
 @NgModule({
     imports: [
@@ -61,6 +62,7 @@ import { SflSidebarModule } from 'sfl-shared/sidebar';
         SkuSavedSnackbarComponent,
         RefundDialogComponent,
         SelectItemsDialogComponent,
+        OrderErrorsAlertComponent,
     ],
     entryComponents: [
         AssignTagsDialogComponent,

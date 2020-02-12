@@ -55,14 +55,19 @@ $badge-font-level: caption;
 
 .sf-warn-alert {
   background-color: mat-color($warn, 900, 0.1);
-  color: mat-color($warn, 900);
-  border: mat-color($warn, 900) 1px solid;
-  padding: 10px;
+  border-radius: 4px;
+  padding: 15px;
   margin-bottom: 20px;
+  font-size: mat-font-size($config, body-1);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.26);
 
+  &, a {
+    color: mat-color($warn, 900);
+  }
   mat-icon.mat-icon.mat-warn {
     vertical-align: middle;
     color: mat-color($warn, 900);
+    margin-right: 5px;
   }
 }
 

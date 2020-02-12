@@ -1,13 +1,10 @@
 <mat-card>
     <mat-card-content>
-        <div fxLayout="row" fxLayoutGap="40px">
-            <div fxFlex="1 1 50%">
+        <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center center">
+            <div>
                 <img [src]="order?._embedded?.channel?._links?.image?.href"
                      [alt]="order?._embedded?.channel?.name">
             </div>
-            <sf-order-status fxFlex="1 1 50%" [status]="order.status" class="mat-subheading-2"></sf-order-status>
-        </div>
-        <div fxLayout="column" fxLayout.gt-xs="row">
             <div fxFlex>
                 <div class="mat-body-2" i18n>Order ID: {{order.reference}}</div>
                 <div>Date: {{order.createdAt | date:'short'}}</div>
@@ -18,9 +15,13 @@
                     {{field[0]}}: {{field[1]}}
                 </div>
             </div>
-            <mat-chip-list class="sf-tags-chips" *ngIf="order._embedded.tag && order._embedded.tag.length">
-                <sf-tag-chip *ngFor="let tag of order._embedded.tag" [tag]="tag"></sf-tag-chip>
-            </mat-chip-list>
+            <div fxLayout="column" fxLayoutGap="30px" fxLayoutAlign="start end">
+                <sf-order-status [status]="order.status" class="mat-title"></sf-order-status>
+                <mat-chip-list class="sf-tags-chips" *ngIf="order._embedded.tag && order._embedded.tag.length">
+                    <sf-tag-chip *ngFor="let tag of order._embedded.tag" [tag]="tag"></sf-tag-chip>
+                </mat-chip-list>
+            </div>
+
         </div>
     </mat-card-content>
 </mat-card>

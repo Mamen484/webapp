@@ -1,0 +1,14 @@
+<div *ngIf="shippingErrorsNumber || importErrorsNumber" class="sf-warn-alert mat-elevation-z2">
+    <mat-icon color="warn">error</mat-icon>
+    <ng-container i18n>You have
+        <a routerLink="/orders" [queryParams]="{view: ordersView.importErrors}"
+           queryParamsHandling="merge" *ngIf="importErrorsNumber">{{ importErrorsNumber }} import
+            {importErrorsNumber, plural, =1 {error} other {errors}} </a>
+        <ng-container *ngIf="!importErrorsNumber" i18n>0 import errors</ng-container>
+        and
+        <a routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}"
+           queryParamsHandling="merge" *ngIf="shippingErrorsNumber">{{ shippingErrorsNumber }} shipping
+            {shippingErrorsNumber, plural, =1 {error} other {errors}}</a>
+        <ng-container *ngIf="!shippingErrorsNumber" i18n>0 shipping errors</ng-container>.
+    </ng-container>
+</div>

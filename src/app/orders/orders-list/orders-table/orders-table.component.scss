@@ -4,8 +4,8 @@
 @include order-actions-bar();
 
 $actions-left-padding: 29px;
-
 $hover-row-bg: #EBEBEB;
+$chat-height: 50px;
 
 .actions {
   justify-content: flex-start;
@@ -16,27 +16,40 @@ $hover-row-bg: #EBEBEB;
   }
 }
 
-$actions-height: 61px;
-$search-block-height: 60px;
-$applied-filters-height: 52px;
-$chat-height: 50px;
+.table-list-layout {
+  height: calc(100vh - 2 * #{$content-margin});
 
-
-.table-container {
-  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height});
-  overflow: auto;
-
-  /* if zendesk chat is enabled, reduce table height so the widget doesn't overlap table pagination */
   ::ng-deep .sf-chat-enabled & {
-    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$actions-height} - #{$chat-height}) !important;
+    height: calc(100vh - 2 * #{$content-margin} - #{$chat-height});
   }
-}
 
-.filters-applied .table-container {
-  max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height});
+  align-content: start;
+  overflow: hidden;
+  display: grid;
 
-  ::ng-deep .sf-chat-enabled & {
-    max-height: calc(100vh - 3 * #{$content-margin} - #{$search-block-height} - #{$applied-filters-height} - #{$actions-height} - #{$chat-height}) !important;
+  mat-card.orders {
+    height: 100%;
+    overflow: hidden;
+
+    mat-card-content {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .table-scrollable {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        .table-container {
+          height: 100%;
+          overflow: auto;
+        }
+
+        mat-progress-bar {
+          z-index: 200;
+        }
+      }
+    }
   }
 }
 
@@ -53,18 +66,6 @@ mat-tab-group {
   text-transform: uppercase;
 }
 
-.loading-container {
-  position: absolute;
-  top: 117px;
-  left: 0;
-  bottom: 56px;
-  right: 0;
-  background: rgba(0, 0, 0, 0.15);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .selected-orders {
   color: mat-color($accent);
@@ -87,15 +88,6 @@ mat-progress-bar {
 
 button:not([mat-menu-item]) {
   margin-left: 10px;
-}
-
-.table-scrollable {
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  mat-progress-bar {
-    z-index: 200;
-  }
 }
 
 table {

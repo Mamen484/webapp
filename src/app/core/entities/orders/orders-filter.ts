@@ -2,6 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { OrderStatus } from './order-status.enum';
 import { OrderErrorType } from './order-error-type.enum';
 import { OrderAcknowledgment } from './order-acknowledgment.enum';
+import { OrdersView } from './orders-view.enum';
+import { ViewToPatchMap } from './view-to-patch-map';
 
 export const DAY = 1000 * 60 * 60 * 24;
 
@@ -39,6 +41,10 @@ export class OrdersFilter {
     static aMonthBefore() {
         let date = new Date().getTime() - 30 * DAY;
         return new Date(date);
+    }
+
+    static getRecentByView(view: OrdersView) {
+        return Object.assign(new OrdersFilter({limit: 1, since: OrdersFilter.aMonthBefore()}), ViewToPatchMap[view]);
     }
 
     constructor(filter = {}) {

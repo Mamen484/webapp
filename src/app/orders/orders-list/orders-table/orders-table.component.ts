@@ -65,6 +65,8 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     showStickyBorder = false;
     resize$ = new Subject();
     selectedChannel;
+    currentView = OrdersView.allOrders;
+    ordersView = OrdersView;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected ordersService: OrdersService,
@@ -141,9 +143,9 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
         super.ngOnInit();
 
         this.route.queryParams.subscribe(({view}) => {
-            const currentView = view in OrdersView ? Number(view) : OrdersView.allOrders;
+            this.currentView = view in OrdersView ? Number(view) : OrdersView.allOrders;
             // filter orders according to the chosen view
-            Object.assign(this.ordersFilter, ViewToPatchMap[currentView]);
+            Object.assign(this.ordersFilter, ViewToPatchMap[this.currentView]);
             this.isLoadingResults = true;
             this.currentPage = 0;
             this.fetchData();
@@ -280,7 +282,12 @@ export class OrdersTableComponent extends TableOperations<OrdersTableItem> imple
     }
 
     protected showStatusChangedSnackbar(action) {
-        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: this.selection.selected.length, action}}));
+        this.snackbar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({
+            data: {
+                ordersNumber: this.selection.selected.length,
+                action
+            }
+        }));
     }
 
     protected fetchCollection(params: { limit: number, page: number, search: string }): Observable<{ total: number; dataList: any[] }> {
