@@ -43,7 +43,7 @@ describe('OrderErrorsAlertComponent', () => {
         component.importErrorsNumber = 10;
         component.shippingErrorsNumber = 12;
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 10 import errors and 12 shipping errors. ');
+        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 10 import errors and 12 shipping errors.');
     });
 
     it('should put the errors number > 0 into a link', () => {
@@ -68,20 +68,21 @@ describe('OrderErrorsAlertComponent', () => {
         component.importErrorsNumber = 1;
         component.shippingErrorsNumber = 51;
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 1 import error and 51 shipping errors. ');
+        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 1 import error and 51 shipping errors.');
     });
 
     it('should show an appropriate message when there is 0 import errors', () => {
         component.importErrorsNumber = 0;
         component.shippingErrorsNumber = 21;
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 0 import errors and 21 shipping errors. ');
+        console.log(fixture.debugElement.nativeElement.textContent);
+        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 0 import errors and 21 shipping errors.');
     });
 
     it('should show an appropriate message when there is 0 shipping errors', () => {
         component.importErrorsNumber = 191;
         component.shippingErrorsNumber = 0;
         fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 191 import errors and 0 shipping errors. ');
+        expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 191 import errors and 0 shipping errors.');
     });
 });
