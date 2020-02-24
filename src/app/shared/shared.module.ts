@@ -47,6 +47,7 @@ import { HasServerErrorDirective } from './validators/has-server-error.directive
 import { SflSharedModule } from 'sfl-shared';
 import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
+import { HighlightPipe } from './highlight.pipe';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import {SftSoloSearchModule} from 'sfl-tools/solo-search';
 import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
@@ -136,6 +137,7 @@ import {SflImageModule} from 'sfl-shared/image';
         // pipes
         ArrayFromNumberPipe,
         ChannelLinkPipe,
+        HighlightPipe,
         LargeNumberSuffixPipe,
         RemoveUnderlinePipe,
         SfCurrencyPipe,
@@ -167,6 +169,7 @@ import {SflImageModule} from 'sfl-shared/image';
         HasServerErrorDirective,
         ChannelLinkPipe,
         CreateAccountComponent,
+        HighlightPipe,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

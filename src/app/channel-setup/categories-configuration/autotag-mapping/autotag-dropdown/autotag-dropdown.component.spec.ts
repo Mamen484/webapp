@@ -2,7 +2,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { AutotagDropdownComponent } from './autotag-dropdown.component';
 import { ChannelService } from '../../../../core/services/channel.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { of } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material';
 
@@ -14,7 +14,7 @@ describe('AutotagDropdownComponent', () => {
     beforeEach(async(() => {
         channelService = jasmine.createSpyObj('ChannelService spy', ['fetchChannelConstraintCollection']);
         TestBed.configureTestingModule({
-            declarations: [AutotagDropdownComponent],
+            declarations: [AutotagDropdownComponent, HighlightPipe],
             providers: [
                 {provide: ChannelService, useValue: channelService},
             ],
@@ -82,3 +82,11 @@ describe('AutotagDropdownComponent', () => {
     }));
 
 });
+@Pipe({
+    name: 'highlight'
+})
+class HighlightPipe implements PipeTransform {
+    transform() {
+        return '';
+    }
+}

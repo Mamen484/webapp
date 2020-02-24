@@ -4,7 +4,7 @@
     </div>
     <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
     <a sflLegacyLink [path]="channel | sfChannelLink" mat-raised-button color="accent" i18n
-       [disabled]="percentage === 0">Launch</a>
+       [disabled]="percentage === 0">Continue</a>
 </div>
 <mat-divider></mat-divider>
 <div class="scrollable-container sf-content">
@@ -40,7 +40,7 @@
                                      (pageChanged)="refreshCategoriesList()">
             </sf-feed-categories-list>
         </div>
-        <div fxFlex="40%" fxLayout="column" fxLayoutGap="20px" *ngIf="feedCategoriesList?.categories?.length">
+        <div fxFlex fxLayout="column" fxLayoutGap="20px" *ngIf="feedCategoriesList?.categories?.length">
             <sf-category-mapping
                     [channelId]="channel.id"
                     [feedCategory]="feedCategoriesList?.chosenCatalogCategory"></sf-category-mapping>

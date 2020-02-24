@@ -7,7 +7,6 @@ import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/setti
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { NgForm } from '@angular/forms';
 import { CategoryMappingService } from '../category-mapping/category-mapping.service';
-import { MappingCacheService } from '../mapping-cache.service';
 import { Category } from '../../../core/entities/category';
 import { filter } from 'rxjs/operators';
 import { ChannelService } from '../../../core/services/channel.service';
@@ -35,14 +34,11 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
     @Output() nextClicked = new EventEmitter();
 
     autotagList: Autotag[];
-    hasCachedMapping = false;
-    loadingPreviousMapping = false;
     subscription: Subscription;
 
     constructor(protected feedService: FeedService,
                 protected snackbar: MatSnackBar,
                 protected categoryMappingService: CategoryMappingService,
-                protected mappingCacheService: MappingCacheService,
                 protected channelService: ChannelService,
                 protected stateService: AutotagFormStateService) {
     }
@@ -57,8 +53,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges): void {
         this.autotagList = [];
-        this.loadingPreviousMapping = false;
-        this.hasCachedMapping = this.mappingCacheService.hasAutotagMapping(this.channelCategoryId);
         this.fetchAutotags();
         this.stateService.changeState(AutotagFormState.pristine);
     }
@@ -83,7 +77,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
             autotag.value
         )))
             .subscribe(() => {
-                this.mappingCacheService.addAutotagMapping(this.channelCategoryId, this.catalogCategoryId, this.feedId);
                 this.autotagUpdated.emit();
                 this.snackbar.openFromComponent(SettingsSavedSnackbarComponent, new SuccessSnackbarConfig());
                 this.stateService.changeState(AutotagFormState.pristine);
@@ -92,15 +85,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     setAutotagValue(autotag, value) {
         autotag.value = value;
-    }
-
-    usePreviousMapping() {
-        this.loadingPreviousMapping = true;
-        this.mappingCacheService.getAutotagMapping(this.channelCategoryId)
-            .subscribe(autotag => {
-                this.autotagList = this.filterMandatory(autotag);
-                this.loadingPreviousMapping = false;
-            });
     }
 
     protected fetchAutotags() {

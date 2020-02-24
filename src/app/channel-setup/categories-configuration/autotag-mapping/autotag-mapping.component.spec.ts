@@ -1,19 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AutotagMappingComponent } from './autotag-mapping.component';
-import { Autotag } from '../../autotag';
-import { FeedService } from '../../../core/services/feed.service';
-import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
-import { EMPTY, of, Subject } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PagedResponse } from 'sfl-shared/entities';
-import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
-import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
-import { MappingCacheService } from '../mapping-cache.service';
-import { autotagsMock } from './autotags-mock';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { ChannelService } from '../../../core/services/channel.service';
+import {AutotagMappingComponent} from './autotag-mapping.component';
+import {Autotag} from '../../autotag';
+import {FeedService} from '../../../core/services/feed.service';
+import {Component, forwardRef, NO_ERRORS_SCHEMA} from '@angular/core';
+import {EMPTY, of, Subject} from 'rxjs';
+import {MatSnackBar} from '@angular/material';
+import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {PagedResponse} from 'sfl-shared/entities';
+import {SuccessSnackbarConfig} from '../../../core/entities/success-snackbar-config';
+import {SettingsSavedSnackbarComponent} from '../settings-saved-snackbar/settings-saved-snackbar.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {ChannelService} from '../../../core/services/channel.service';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -21,14 +19,12 @@ describe('AutotagMappingComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
     let autotags$: Subject<PagedResponse<{ autotag: Autotag[] }>>;
-    let mappingCacheService: jasmine.SpyObj<MappingCacheService>;
     let channelService: jasmine.SpyObj<ChannelService>;
 
     beforeEach(async(() => {
         feedService = jasmine.createSpyObj('FeedService spy', ['fetchAutotagByCategory', 'matchAutotagByCategory']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
         autotags$ = new Subject();
-        mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getAutotagMapping', 'hasAutotagMapping', 'addAutotagMapping']);
         channelService = jasmine.createSpyObj('ChannelService spy', ['fetchChannelConstraintCollection']);
 
         TestBed.configureTestingModule({
@@ -36,7 +32,6 @@ describe('AutotagMappingComponent', () => {
             providers: [
                 {provide: FeedService, useValue: feedService},
                 {provide: MatSnackBar, useValue: matSnackBar},
-                {provide: MappingCacheService, useValue: mappingCacheService},
                 {provide: ChannelService, useValue: channelService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
@@ -133,85 +128,6 @@ describe('AutotagMappingComponent', () => {
         component.ngOnChanges({});
         expect(component.autotagList.length).toBe(0);
         expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(1);
-    });
-
-    it('should set hasCachedMapping to true when the autotag mapping cache saved', () => {
-        mappingCacheService.hasAutotagMapping.and.returnValue(true);
-        component.ngOnChanges({});
-        expect(component.hasCachedMapping).toBe(true);
-    });
-
-    it('should set hasCachedMapping to false when the autotag mapping cache NOT saved', () => {
-        mappingCacheService.hasAutotagMapping.and.returnValue(false);
-        component.ngOnChanges({});
-        expect(component.hasCachedMapping).toBe(false);
-    });
-
-    it('should save autotag cache when autotags saved', () => {
-        component.autotagList = <Autotag[]>[{_embedded: {attribute: {constraintGroupId: null}}}];
-        feedService.matchAutotagByCategory.and.returnValue(of({}));
-        component.form = <any>{controls: {}, invalid: false};
-        component.channelCategoryId = 45;
-        component.catalogCategoryId = 90;
-        component.feedId = 118;
-        component.saveMatching();
-        expect(mappingCacheService.addAutotagMapping).toHaveBeenCalledWith(45, 90, 118);
-    });
-
-    it('should show a loading spinner  when USE PREVIOUS button clicked', () => {
-        mappingCacheService.getAutotagMapping.and.returnValue(EMPTY);
-        component.usePreviousMapping();
-        expect(component.loadingPreviousMapping)
-            .toBe(true);
-    });
-
-    it('should hide a loading spinner when USE PREVIOUS button clicked and the result is loaded', () => {
-        mappingCacheService.getAutotagMapping.and.returnValue(of([]));
-        component.usePreviousMapping();
-        expect(component.loadingPreviousMapping)
-            .toBe(false);
-    });
-
-    it('should reset autotag values when USE previous button clicked', () => {
-        mappingCacheService.getAutotagMapping.and.returnValue(of(<any>[
-            {id: 15, _embedded: {attribute: {isRequired: true}}},
-            {id: 22, _embedded: {attribute: {isRequired: true}}},
-            {id: 31, _embedded: {attribute: {isRequired: true}}},
-        ]));
-        component.usePreviousMapping();
-        expect(component.autotagList.map(autotag => ({id: autotag.id})))
-            .toEqual(<any>[{id: 15}, {id: 22}, {id: 31}]);
-
-    });
-
-    it('should pass values from previous mapping to a server', () => {
-        component.form = <any>{controls: {}, invalid: false};
-        feedService.matchAutotagByCategory.and.returnValue(EMPTY);
-        mappingCacheService.getAutotagMapping.and.returnValue(of(<any>[
-            {id: 15, value: 'some value 1', _embedded: {attribute: {isRequired: true}}},
-            {id: 22, value: 'some value 2', _embedded: {attribute: {isRequired: true}}},
-            {id: 31, value: 'some value 3', _embedded: {attribute: {isRequired: true}}},
-        ]));
-        component.usePreviousMapping();
-        component.saveMatching();
-        expect(feedService.matchAutotagByCategory).toHaveBeenCalledTimes(3);
-        expect(feedService.matchAutotagByCategory.calls.argsFor(0)[3]).toBe('some value 1');
-        expect(feedService.matchAutotagByCategory.calls.argsFor(1)[3]).toBe('some value 2');
-        expect(feedService.matchAutotagByCategory.calls.argsFor(2)[3]).toBe('some value 3');
-
-    });
-
-    it('should assign equal values to autotagList on OnChanges() and on usePreviousMapping()', () => {
-        feedService.fetchAutotagByCategory.and.returnValue(of(autotagsMock));
-        mappingCacheService.getAutotagMapping.and.returnValue(of(autotagsMock._embedded.autotag));
-        component.ngOnChanges({});
-        expect(component.autotagList.length).toBe(8);
-        const onChangesList = JSON.stringify(component.autotagList);
-        component.autotagList = [];
-        component.usePreviousMapping();
-        const previousMappingList = JSON.stringify(component.autotagList);
-
-        expect(onChangesList).toBe(previousMappingList);
     });
 
     it('should NOT show any content when autotagList is empty', () => {

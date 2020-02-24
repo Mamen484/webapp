@@ -1,26 +1,26 @@
 <mat-card class="categories-list">
     <mat-card-content>
         <mat-list>
-            <mat-list-item *ngIf="categories && categories.length">
-                <div fxLayout="row" class="user-category-row user-category-header-row mat-caption" fxLayoutAlign="center center">
+            <mat-list-item *ngIf="categories && categories.length" class="user-category-header-row">
+                <div fxLayout="row" class="mat-caption user-category-header-row-content" fxLayoutAlign="center center">
                     <div fxFlex i18n>Category from your catalog</div>
                     <div fxFlex="150px" i18n>Status</div>
                 </div>
             </mat-list-item>
             <mat-list-item *ngFor="let category of (categories || [])" (click)="chooseClientCategory(category)"
-                           [class.selected]="chosenCatalogCategory.id === category.catalogCategory.id">
-                <div fxLayout="row" class="user-category-row mat-body-1" fxLayoutAlign="center center">
+                           [class.selected]="chosenCatalogCategory.id === category.catalogCategory.id" class="user-category-row">
+                <div fxLayout="row" class="mat-body-1 user-category-row-content" fxLayoutAlign="center center">
                     <div fxFlex *ngIf="category.catalogCategory.name">{{category.catalogCategory.name}}</div>
                     <div fxFlex *ngIf="!category.catalogCategory.name" i18n>Uncategorized products</div>
-                    <div fxFlex="150px" class="sf-label red mat-chip" *ngIf="category.state === categoryState.Misconfigured">
-                        <mat-icon color="warn">cancel</mat-icon>
+                    <div class="sf-label red mat-chip" *ngIf="category.state === categoryState.Misconfigured">
                         <ng-container i18n>Misconfigured</ng-container>
                     </div>
 
-                    <div fxFlex="150px" class="sf-label green mat-chip" *ngIf="category.state === categoryState.Configured">
-                        <mat-icon>check_circle</mat-icon>
+                    <div class="sf-label green mat-chip" *ngIf="category.state === categoryState.Configured">
                         <ng-container i18n>Configured</ng-container>
                     </div>
+                    <mat-icon color="accent" *ngIf="chosenCatalogCategory.id === category.catalogCategory.id; else spaceForIcon">keyboard_arrow_right</mat-icon>
+                    <ng-template #spaceForIcon><div fxFlex="24px"></div></ng-template>
                 </div>
             </mat-list-item>
             <mat-list-item *ngIf="categories && categories.length === 0" i18n>

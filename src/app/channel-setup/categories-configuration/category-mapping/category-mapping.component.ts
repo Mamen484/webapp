@@ -14,6 +14,7 @@ import { MappingCacheService } from '../mapping-cache.service';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
+const maxApiLimit = '200';
 
 @Component({
     selector: 'sf-category-mapping',
@@ -137,7 +138,8 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
                 this.appStore.select('currentStore').pipe(
                     flatMap(store => this.channelService.getChannelCategories(this.channelId, {
                         name,
-                        country: store.country
+                        country: store.country,
+                        limit: maxApiLimit,
                     })))
             ),
         )

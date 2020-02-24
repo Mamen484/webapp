@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AutotagInputComponent } from './autotag-input.component';
 import { FeedService } from '../../../../core/services/feed.service';
 import { EMPTY, of } from 'rxjs';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import {NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
 import { MatAutocompleteModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { AutotagFormStateService } from '../autotag-form-state.service';
 import { take } from 'rxjs/operators';
@@ -20,7 +20,7 @@ describe('AutotagInputComponent', () => {
     beforeEach(async(() => {
         feedService = jasmine.createSpyObj('FeedService spy', ['fetchMappingCollection']);
         TestBed.configureTestingModule({
-            declarations: [AutotagInputComponent],
+            declarations: [AutotagInputComponent, HighlightPipe],
             providers: [{provide: FeedService, useValue: feedService}],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [MatAutocompleteModule, FormsModule, MatInputModule, NoopAnimationsModule, MatFormFieldModule],
@@ -116,3 +116,12 @@ describe('AutotagInputComponent', () => {
         expect(await changed).toBe('[some_value]');
     });
 });
+
+@Pipe({
+    name: 'highlight'
+})
+class HighlightPipe implements PipeTransform {
+    transform() {
+        return '';
+    }
+}

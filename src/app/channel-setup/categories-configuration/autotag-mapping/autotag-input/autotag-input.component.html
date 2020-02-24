@@ -2,7 +2,8 @@
     <mat-label>{{label}}</mat-label>
     <input matInput [(ngModel)]="value" (keyup)="createSuggestions(); watchDeletion()" (blur)="onBlur()" [matAutocomplete]="auto" required (ngModelChange)="notifyInputDirty()">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setAutotagValue($event.option.value)">
-        <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion">{{suggestion}}</mat-option>
+        <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion"
+                    [innerHTML]="suggestion | highlight:value"></mat-option>
     </mat-autocomplete>
     <mat-error i18n>Field is required to send products</mat-error>
 </mat-form-field>

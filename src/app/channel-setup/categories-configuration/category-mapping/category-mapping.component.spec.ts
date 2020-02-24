@@ -1,7 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 
 import { CategoryMappingComponent } from './category-mapping.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { MatAutocompleteModule, MatSnackBar } from '@angular/material';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
@@ -34,7 +34,7 @@ describe('CategoryMappingComponent', () => {
         mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getCategoryMapping', 'addCategoryMapping', 'hasCategoryMapping']);
 
         TestBed.configureTestingModule({
-            declarations: [CategoryMappingComponent],
+            declarations: [CategoryMappingComponent, HighlightPipe],
             schemas: [NO_ERRORS_SCHEMA],
             imports: [MatAutocompleteModule, FormsModule, ReactiveFormsModule],
             providers: [
@@ -211,3 +211,12 @@ describe('CategoryMappingComponent', () => {
         }
     });
 });
+
+@Pipe({
+    name: 'highlight'
+})
+class HighlightPipe implements PipeTransform {
+    transform() {
+        return '';
+    }
+}

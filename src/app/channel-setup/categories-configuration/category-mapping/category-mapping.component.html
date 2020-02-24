@@ -15,13 +15,14 @@
                         aria-label="Clear" (click)="removeValue()">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')">Please select
+                <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')" i18n>Please select
                     category from list
                 </mat-error>
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                  (optionSelected)="chooseCategory($event.option.value)">
-                    <mat-option *ngFor="let category of channelCategoryOptions"
-                                [value]="category">{{category.name}}</mat-option>
+                                  (optionSelected)="chooseCategory($event.option.value)" class="sf-category-autocomplete">
+                    <mat-option *ngFor="let category of channelCategoryOptions" [value]="category">
+                        <div class="sf-option-content" [innerHTML]="category.name | highlight:searchChannelCategoryControl.value"></div>
+                    </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
             <button class="save-matching" mat-raised-button i18n color="accent" (click)="saveMatching()">Save

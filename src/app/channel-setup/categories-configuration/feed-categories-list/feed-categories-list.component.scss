@@ -15,14 +15,20 @@ mat-card.categories-list {
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
       }
-      cursor: pointer;
+
       padding: $line-padding;
       border-bottom: 1px solid $black-12-opacity;
       width: auto;
 
-      &.selected {
-        background-color: mat-color($accent, 0.1);
+      &.user-category-row {
+        opacity: 0.5;
+        cursor: pointer;
+        &.selected, &:hover {
+          opacity: 1;
+          background-color: mat-color($accent, 0.1);
+        }
       }
+
 
       div.green {
         mat-icon {
@@ -30,16 +36,12 @@ mat-card.categories-list {
         }
       }
 
-      .user-category-header-row {
+      &.user-category-header-row {
         color: $black-54-opacity;
       }
 
-      .user-category-row {
+      .user-category-row-content, .user-category-header-row-content {
         width: 100%;
-
-        mat-icon {
-          margin-right: 10px;
-        }
       }
     }
   }
