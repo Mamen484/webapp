@@ -117,6 +117,18 @@ describe('ChannelSettingsComponent', () => {
         expect(channelService.modifyChannel).not.toHaveBeenCalled();
     });
 
+    it('should properly handle the empty error object', () => {
+        routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.validationErrors = {contact: {}, segment: {}, country: {}};
+        component.formGroup.setValue({
+            contact: 'test',
+            segment: 'clothes',
+            country: ['fr', 'uk'],
+            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: 'some value'}]
+        });
+        expect(component.formGroup.controls.contact.errors).toBeNull();
+    });
+
     it('should NOT call saveChannel endpoint on save() if the form is invalid', () => {
         channelService.modifyChannel.and.returnValue(of({}));
         routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
@@ -404,6 +416,53 @@ describe('ChannelSettingsComponent', () => {
             channel: {id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment'}
         });
         expect(component.countryList).toEqual([]);
+    });
+
+    it('should focus the added field when focus is true', () => {
+        component.addField(true);
+        const field: HTMLInputElement = fixture.debugElement.nativeElement.querySelectorAll('.channel-field')[0];
+        expect(document.activeElement).toBe(field);
+    });
+
+    describe('server validation error', () => {
+        beforeEach(() => {
+            routeData.next({
+                channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}
+            });
+
+            component.validationErrors = {
+                contact: 'contact error',
+                segment: 'segment error',
+                country: 'country error',
+            };
+        });
+
+        it('should reset on contact field when value changes', () => {
+            component.formGroup.controls.contact.setValue('some value');
+            expect(component.validationErrors).toEqual({
+                contact: undefined,
+                segment: 'segment error',
+                country: 'country error',
+            });
+        });
+
+        it('should reset on segment field when value changes', () => {
+            component.formGroup.controls.segment.setValue('some value');
+            expect(component.validationErrors).toEqual({
+                contact: 'contact error',
+                segment: undefined,
+                country: 'country error',
+            });
+        });
+
+        it('should reset on country field when value changes', () => {
+            component.formGroup.controls.country.setValue(['some value']);
+            expect(component.validationErrors).toEqual({
+                contact: 'contact error',
+                segment: 'segment error',
+                country: undefined,
+            });
+        });
     });
 
     function prepareChannelForSave() {

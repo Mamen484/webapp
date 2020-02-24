@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ChannelService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Channel, ChannelState, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
@@ -8,7 +8,6 @@ import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
-import { FullCountriesListService } from 'sfl-shared/services';
 import { filter } from 'rxjs/operators';
 import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
@@ -16,7 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
 import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 import { get } from 'lodash';
-import {FullstoryLoaderService} from '../fullstory-loader.service';
+import { FullstoryLoaderService } from '../fullstory-loader.service';
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -29,9 +28,9 @@ export class ChannelSettingsComponent implements OnInit {
     channelState = ChannelState;
 
     formGroup = new FormGroup({
-        contact: new FormControl('', [Validators.required]),
-        segment: new FormControl('', [Validators.required]),
-        country: new FormControl('', [Validators.required]),
+        contact: new FormControl('', [Validators.required, () => this.getValidationMessages('contact')]),
+        segment: new FormControl('', [Validators.required, () => this.getValidationMessages('segment')]),
+        country: new FormControl('', [Validators.required, () => this.getValidationMessages('country')]),
         template: new FormArray([])
     });
 
@@ -43,6 +42,15 @@ export class ChannelSettingsComponent implements OnInit {
     googleTaxonomyList = googleTaxonomy;
     allowedCountries = allowedCountries;
     accountName = '';
+    validationErrors = {};
+
+    get templateControl() {
+        return this.formGroup.controls.template as FormArray;
+    }
+
+    get templateControls() {
+        return this.templateControl.controls as FormGroup[];
+    }
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
@@ -53,19 +61,20 @@ export class ChannelSettingsComponent implements OnInit {
                 protected router: Router,
                 protected localStorage: SflLocalStorageService,
                 protected userService: SflUserService,
-                protected fullstoryLoaderService: FullstoryLoaderService) {
+                protected fullstoryLoaderService: FullstoryLoaderService,
+                protected elementRef: ElementRef,
+                protected changeDetectorRef: ChangeDetectorRef) {
     }
 
-    get templateControl() {
-        return this.formGroup.controls.template as FormArray;
-    }
-
-    get templateControls() {
-        return this.templateControl.controls as FormGroup[];
-    }
-
-    addField() {
-        this.templateControl.push(this.createTemplateRow());
+    addField(focus = false) {
+        const formGroup = this.createTemplateRow();
+        this.templateControl.push(formGroup);
+        if (focus) {
+            this.changeDetectorRef.detectChanges();
+            const channelFields = this.elementRef.nativeElement.querySelectorAll('.channel-field');
+            const input: HTMLInputElement = channelFields.item(channelFields.length - 1);
+            input.focus();
+        }
     }
 
     initializeChannel(channel) {
@@ -91,7 +100,15 @@ export class ChannelSettingsComponent implements OnInit {
         this.getChannelTemplate()
             .forEach(({appField, channelField, defaultValue}) => {
                 this.templateControl.push(this.createTemplateRow({appField, channelField, defaultValue}));
-            })
+            });
+
+        ['contact', 'segment', 'country'].forEach(controlName => {
+            this.formGroup.controls[controlName].valueChanges.subscribe(() => {
+                if (this.validationErrors && this.validationErrors[controlName]) {
+                    this.validationErrors[controlName] = undefined;
+                }
+            });
+        });
     }
 
     initializeCountryNames() {
@@ -128,6 +145,7 @@ export class ChannelSettingsComponent implements OnInit {
     }
 
     save() {
+        this.validationErrors = {};
         if (!this.formGroup.valid) {
             return;
         }
@@ -138,7 +156,13 @@ export class ChannelSettingsComponent implements OnInit {
             template: this.formGroup.get('template').value,
         }, this.channel.id).subscribe(
             () => this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000}),
-            ({error}) => this.matSnackBar.open('An error occured: ' + error.detail, '', new ErrorSnackbarConfig())
+            ({error}) => {
+                this.validationErrors = error.validationMessages;
+                this.formGroup.controls.contact.updateValueAndValidity();
+                this.formGroup.controls.segment.updateValueAndValidity();
+                this.formGroup.controls.country.updateValueAndValidity();
+                this.matSnackBar.open('An error occured: ' + error.detail, '', new ErrorSnackbarConfig());
+            }
         );
 
     }
@@ -174,6 +198,17 @@ export class ChannelSettingsComponent implements OnInit {
 
     protected validateRow(control: FormGroup): ValidationErrors {
         return control && control.controls.appField.value && control.controls.defaultValue.value ? {invalidField: true} : null;
+    }
+
+    protected getValidationMessages(path) {
+        const field = get(this.validationErrors, path);
+        if (!field) {
+            return null;
+        }
+        const errors = Object.values(field);
+        return errors.length
+            ? {validationError: errors[0]}
+            : null;
     }
 
 

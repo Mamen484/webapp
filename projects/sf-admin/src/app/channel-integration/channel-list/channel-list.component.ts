@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { map } from 'rxjs/operators';
@@ -9,19 +9,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
 import { Filter } from './filters-dialog/filter';
-import {TableOperations} from 'sfl-tools/table-operations';
+import { TableOperations } from 'sfl-tools/table-operations';
 
 @Component({
     templateUrl: './channel-list.component.html',
     styleUrls: ['./channel-list.component.scss']
 })
 export class ChannelListComponent extends TableOperations<Channel> {
-    displayedColumns = ['channelName', 'accountName', 'lastChanged', 'active'];
+    displayedColumns = ['channelId', 'channelName', 'accountName', 'lastChanged', 'active'];
     filter = new Filter();
 
     constructor(protected windowRef: SflWindowRefService,
                 protected channelService: ChannelService,
-                protected changeDetectorRef: ChangeDetectorRef,
                 protected channelSettingsLink: ChannelOperatorsAppLinkService,
                 protected matDialog: MatDialog) {
         super();

@@ -46,6 +46,9 @@
                     <mat-label>Contact email</mat-label>
                     <input matInput required formControlName="contact">
                     <mat-hint>Contact email displayed to users in Shopping Feed</mat-hint>
+                    <mat-error *ngIf="formGroup.controls.contact.hasError('validationError')">
+                        {{formGroup.controls.contact.getError('validationError')}}
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="outline" color="primary" class="category-field">
                     <mat-label>Category</mat-label>
@@ -66,11 +69,14 @@
                         <mat-option value="sports">Sports</mat-option>
                     </mat-select>
                     <mat-hint>Category allows user to find channel more easily through filters</mat-hint>
+                    <mat-error *ngIf="formGroup.controls.segment.hasError('validationError')">
+                        {{formGroup.controls.segment.getError('validationError')}}
+                    </mat-error>
                 </mat-form-field>
                 <sft-country-autocomplete multipleSelection="chips" formControlName="country" appearance="outline"
                                           color="primary" [allowedCodes]="allowedCountries"
                                           [required]="true" hintText="Countries where channel is available"
-                                          i18n-hintText>
+                                          [serverError]="formGroup.controls.country.getError('validationError')">
                 </sft-country-autocomplete>
             </div>
         </mat-card-content>
@@ -90,7 +96,7 @@
                     <div fxLayout="row" fxLayoutGap="20px">
                         <mat-form-field appearance="outline" color="primary" fxFlex>
                             <mat-label i18n>Channel field</mat-label>
-                            <input matInput [formControl]="fieldSet.controls.channelField" required>
+                            <input class="channel-field" matInput [formControl]="fieldSet.controls.channelField" required>
                             <mat-hint i18n>Input field name as written in feed</mat-hint>
                         </mat-form-field>
                         <mat-form-field appearance="outline" color="primary" fxFlex>
@@ -115,7 +121,7 @@
                 </ng-container>
                 <div fxLayout="row">
                     <div fxFlex></div>
-                    <button mat-stroked-button (click)="addField()">
+                    <button mat-stroked-button (click)="addField(true)">
                         <mat-icon>add</mat-icon>
                     </button>
                 </div>
