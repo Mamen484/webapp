@@ -5,7 +5,8 @@
     <a routerLink="/orders" [queryParams]="{view: ordersView.importErrors}"
        queryParamsHandling="merge" *ngIf="importErrorsNumber"
        i18n="1 or more import errors message@@sfOrderAlertPart2">{{ importErrorsNumber }}
-        {importErrorsNumber, plural, =1 {import error} other {import errors}}</a>
+        {importErrorsNumber, plural, =1 {import error} other {import errors}}
+        <ng-container *ngIf="false">This is for showing translation with interpolations only</ng-container></a>
     <ng-container *ngIf="!importErrorsNumber" i18n="No import errors message@@sfOrderAlertPart3">0 import errors</ng-container>
     <ng-container>&nbsp;</ng-container>
     <ng-container i18n="@@sfOrderAlertPart4">and</ng-container>
@@ -13,7 +14,8 @@
     <a routerLink="/orders" [queryParams]="{view: ordersView.shippingErrors}"
        queryParamsHandling="merge" *ngIf="shippingErrorsNumber"
        i18n="1 or more shipping errors message@@sfOrderAlertPart5">{{ shippingErrorsNumber }}
-        {shippingErrorsNumber, plural, =1 {shipping error} other {shipping errors}}</a>
+        {shippingErrorsNumber, plural, =1 {shipping error} other {shipping errors}}
+        <ng-container *ngIf="false">This is for showing translation with interpolations only</ng-container></a>
     <ng-container *ngIf="!shippingErrorsNumber" i18n="No shipping errors message@@sfOrderAlertPart6">0 shipping errors</ng-container>
     <ng-container>.</ng-container>
 </div>

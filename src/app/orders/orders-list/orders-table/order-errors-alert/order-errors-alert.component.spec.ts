@@ -75,7 +75,6 @@ describe('OrderErrorsAlertComponent', () => {
         component.importErrorsNumber = 0;
         component.shippingErrorsNumber = 21;
         fixture.detectChanges();
-        console.log(fixture.debugElement.nativeElement.textContent);
         expect(fixture.debugElement.nativeElement.textContent).toBe('errorYou have 0 import errors and 21 shipping errors.');
     });
 
