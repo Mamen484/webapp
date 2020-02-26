@@ -5,7 +5,7 @@
 
 .details-container {
   display: grid;
-  grid-template-areas: "order-error order-error"
+  grid-template-areas: "order-error addresses"
                        "summary addresses"
                        "items-table addresses";
   grid-template-columns: 2fr 1fr;
