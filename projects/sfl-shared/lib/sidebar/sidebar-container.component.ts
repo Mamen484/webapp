@@ -39,6 +39,9 @@ export class SflSidebarContainerComponent implements OnInit {
     /** Right border color of the sidebar */
     @Input() borderColor = '#eeeeee';
 
+    /** CSS position of mat-sidenav */
+    @Input() position = 'sticky';
+
 
     opened = true;
     isMobile = false;

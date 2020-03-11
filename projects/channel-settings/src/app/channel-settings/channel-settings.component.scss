@@ -1,9 +1,14 @@
 @import '../../sass/variables';
 
-$static-bar-height: 103px;
+@mixin draggableLine(){
+  padding: 10px 15px 5px;
+  background: mat-color($grey, 50);
+  border: solid 1px $black-6-opacity;
 
-.scrollable-container {
-  height: calc(100vh - (2 * #{$content-margin}) - #{$static-bar-height});
+  .drag-icon {
+    margin-top: 20px;
+    color: $black-54-opacity;
+  }
 }
 
 mat-list-item {
@@ -97,6 +102,67 @@ sfl-sidebar-container {
 }
 
 form.template-form {
-  width: calc(55% + 60px);
-  min-width: 710px;
+  width: calc(
+          55% // form width
+          + 60px // add/remove button
+          + 66px // drag&drop icon + index badge
+  );
+  min-width: 795px;
+
+  border: solid 1px $black-6-opacity;
+  border-radius: 4px;
+  overflow: hidden;
+
+  .draggable-line {
+    cursor: move;
+
+    &:active {
+      cursor: move;
+    }
+
+   @include draggableLine();
+
+    &:last-child {
+      border: none;
+    }
+  }
+}
+
+
+.index-indicator {
+  color: white;
+  margin-top: 21px;
+
+  mat-chip {
+    font-size: 12px;
+    padding: 0;
+    min-height: 22px;
+    width: 22px;
+
+    & > div {
+      margin: auto;
+    }
+  }
+}
+
+
+.cdk-drag-preview {
+  @include draggableLine();
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.template-form.cdk-drop-list-dragging .draggable-line:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
-import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Channel, ChannelState, Country } from 'sfl-shared/entities';
+import { Channel, ChannelState, ChannelTemplate, Country } from 'sfl-shared/entities';
 import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
@@ -13,9 +13,12 @@ import { googleTaxonomy } from './google-taxonomy';
 import { allowedCountries } from './allowed-countries';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
-import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
 import { get } from 'lodash';
 import { FullstoryLoaderService } from '../fullstory-loader.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
+
+const templateRowHeight = 98;
 
 @Component({
     templateUrl: './channel-settings.component.html',
@@ -44,14 +47,6 @@ export class ChannelSettingsComponent implements OnInit {
     accountName = '';
     validationErrors = {};
 
-    get templateControl() {
-        return this.formGroup.controls.template as FormArray;
-    }
-
-    get templateControls() {
-        return this.templateControl.controls as FormGroup[];
-    }
-
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
                 protected appLinkService: AppLinkService,
@@ -63,7 +58,16 @@ export class ChannelSettingsComponent implements OnInit {
                 protected userService: SflUserService,
                 protected fullstoryLoaderService: FullstoryLoaderService,
                 protected elementRef: ElementRef,
-                protected changeDetectorRef: ChangeDetectorRef) {
+                protected changeDetectorRef: ChangeDetectorRef,
+                protected windowRefService: SflWindowRefService) {
+    }
+
+    get templateControl() {
+        return this.formGroup.controls.template as FormArray;
+    }
+
+    get templateControls() {
+        return this.templateControl.controls as FormGroup[];
     }
 
     addField(focus = false) {
@@ -75,9 +79,25 @@ export class ChannelSettingsComponent implements OnInit {
             const input: HTMLInputElement = channelFields.item(channelFields.length - 1);
             input.focus();
         }
+        this.autoScrollToAddedLine();
     }
 
-    initializeChannel(channel) {
+    drop({previousIndex, currentIndex}: CdkDragDrop<ChannelTemplate>) {
+        if (currentIndex === previousIndex) {
+            return;
+        }
+        const template = <FormArray>this.formGroup.controls.template;
+        if (currentIndex > previousIndex) {
+            template.insert(currentIndex + 1, template.at(previousIndex));
+            template.removeAt(previousIndex);
+        } else {
+            template.insert(currentIndex, template.at(previousIndex));
+            template.removeAt(previousIndex + 1);
+        }
+
+    }
+
+    initializeChannel(channel: Channel) {
         this.channel = channel;
         this.channelId = channel.id;
     }
@@ -153,7 +173,7 @@ export class ChannelSettingsComponent implements OnInit {
             contact: this.formGroup.get('contact').value,
             segment: this.formGroup.get('segment').value,
             country: this.countryList,
-            template: this.formGroup.get('template').value,
+            template: this.formGroup.get('template').value.map((el: ChannelTemplate, index: number) => Object.assign({}, el, {position: index + 1})),
         }, this.channel.id).subscribe(
             () => this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000}),
             ({error}) => {
@@ -209,6 +229,11 @@ export class ChannelSettingsComponent implements OnInit {
         return errors.length
             ? {validationError: errors[0]}
             : null;
+    }
+
+    protected autoScrollToAddedLine() {
+        const window = this.windowRefService.nativeWindow;
+        window.scroll({top: window.scrollY + templateRowHeight});
     }
 
 

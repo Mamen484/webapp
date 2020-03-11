@@ -31,6 +31,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SflErrorPagesModule} from 'sfl-shared/error-pages';
 import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
     declarations: [
@@ -44,12 +46,14 @@ import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        DragDropModule,
         FlexLayoutModule,
         FormsModule,
         HttpClientModule,
         LoginModule,
         MatButtonModule,
         MatCardModule,
+        MatChipsModule,
         MatDialogModule,
         MatExpansionModule,
         MatFormFieldModule,

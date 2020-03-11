@@ -10,3 +10,10 @@ a[mat-stroked-button]{
   color: mat-color($warn);
   font-weight: mat-font-weight($config, body-2);
 }
+
+html, body, app-root {
+  overflow: initial;
+  height: auto;
+}
+
+

@@ -1,4 +1,4 @@
-<sfl-sidebar-container bgColor="#006064" menuHeight="0px">
+<sfl-sidebar-container bgColor="#006064" menuHeight="0px" position="fixed">
     <mat-list fxLayout="column" class="main-sidenav">
         <mat-list-item>
             <a class="nav-link home" routerLink="/" fxShow fxHide.xs>
@@ -31,7 +31,7 @@
     <a mat-stroked-button color="primary" i18n [href]="appLink | async" target="_blank">Access demo store</a>
 </div>
 <mat-divider></mat-divider>
-<form class="sf-content scrollable-container" [formGroup]="formGroup">
+<form class="sf-content" [formGroup]="formGroup">
     <mat-card>
 
         <mat-card-header>
@@ -91,9 +91,13 @@
             </div>
         </mat-card-header>
         <mat-card-content>
-            <form fxLayout="column" fxLayoutGap="20px" class="template-form">
-                <ng-container *ngFor="let fieldSet of templateControls; let i = index">
+            <form class="template-form" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)">
+                <div fxLayout="column" fxLayoutGap="20px" *ngFor="let fieldSet of templateControls; let i = index" cdkDrag class="draggable-line">
                     <div fxLayout="row" fxLayoutGap="20px">
+                        <mat-icon class="drag-icon">format_line_spacing</mat-icon>
+                        <mat-chip-list class="index-indicator">
+                            <mat-chip selected color="primary" class="mat-caption"><div>{{i + 1}}</div></mat-chip>
+                        </mat-chip-list>
                         <mat-form-field appearance="outline" color="primary" fxFlex>
                             <mat-label i18n>Channel field</mat-label>
                             <input class="channel-field" matInput [formControl]="fieldSet.controls.channelField" required>
@@ -118,15 +122,14 @@
                         </button>
                     </div>
                     <mat-error *ngIf="fieldSet.hasError('invalidField')">The field can have either a sfField or a defaultValue.</mat-error>
-                </ng-container>
-                <div fxLayout="row">
-                    <div fxFlex></div>
-                    <button mat-stroked-button (click)="addField(true)">
-                        <mat-icon>add</mat-icon>
-                    </button>
                 </div>
-
             </form>
+            <div fxLayout="row">
+                <div fxFlex></div>
+                <button mat-stroked-button (click)="addField(true)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
         </mat-card-content>
     </mat-card>
     <mat-card>

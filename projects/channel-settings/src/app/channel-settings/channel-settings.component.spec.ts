@@ -1,21 +1,22 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ChannelSettingsComponent} from './channel-settings.component';
-import {ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService} from 'sfl-shared/services';
-import {NO_ERRORS_SCHEMA} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {EMPTY, of, Subject, throwError} from 'rxjs';
-import {AggregatedUserInfo, Channel, Country} from 'sfl-shared/entities';
-import {Field} from './field';
-import {AppLinkService} from './app-link.service';
-import {MatSnackBar} from '@angular/material';
-import {SettingsSavedSnackbarComponent} from './settings-saved-snackbar/settings-saved-snackbar.component';
-import {MatDialog} from '@angular/material/dialog';
-import {DeleteRowDialogComponent} from './delete-row-dialog/delete-row-dialog.component';
-import {ErrorSnackbarConfig} from '../../../../../src/app/core/entities/error-snackbar-config';
-import {MatMenuModule} from '@angular/material/menu';
-import {FormArray, FormGroup} from '@angular/forms';
-import {FullstoryLoaderService} from '../fullstory-loader.service';
+import { ChannelSettingsComponent } from './channel-settings.component';
+import { ChannelService, FullCountriesListService, SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EMPTY, of, Subject, throwError } from 'rxjs';
+import { AggregatedUserInfo, Channel, Country } from 'sfl-shared/entities';
+import { Field } from './field';
+import { AppLinkService } from './app-link.service';
+import { MatSnackBar } from '@angular/material';
+import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
+import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-snackbar-config';
+import { MatMenuModule } from '@angular/material/menu';
+import { FormArray, FormGroup } from '@angular/forms';
+import { FullstoryLoaderService } from '../fullstory-loader.service';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -52,7 +53,7 @@ describe('ChannelSettingsComponent', () => {
 
 
         TestBed.configureTestingModule({
-            imports: [MatMenuModule],
+            imports: [MatMenuModule, ScrollingModule],
             schemas: [NO_ERRORS_SCHEMA],
             declarations: [ChannelSettingsComponent],
             providers: [
@@ -99,7 +100,10 @@ describe('ChannelSettingsComponent', () => {
             contact: 'test',
             segment: 'clothes',
             country: [{code: 'fr', taxonomyId: null}, {code: 'uk', taxonomyId: null}],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+            template: [
+                {channelField: 'someChannelField', appField: 'someSfField', defaultValue: '', position: 1},
+                {channelField: 'someChannelField', appField: 'someSfField', defaultValue: '', position: 2},
+                ]
         }, 23);
     });
 
@@ -198,9 +202,9 @@ describe('ChannelSettingsComponent', () => {
         routeData.next({
             channel: {
                 id: 22, contact: {email: 'some email'}, countries: [], segment: 'some segment', template: [
-                    {channelField: 'someChannelField1', appField: 'someSfField', defaultValue: ''},
-                    {channelField: 'someChannelField2', appField: 'someSfField', defaultValue: ''},
-                    {channelField: 'someChannelField3', appField: 'someSfField', defaultValue: ''},
+                    {channelField: 'someChannelField1', appField: 'someSfField', defaultValue: '', position: 1},
+                    {channelField: 'someChannelField2', appField: 'someSfField', defaultValue: '', position: 2},
+                    {channelField: 'someChannelField3', appField: 'someSfField', defaultValue: '', position: 3},
                 ], _embedded: <any>{country: []}
             }
         });
@@ -465,14 +469,46 @@ describe('ChannelSettingsComponent', () => {
         });
     });
 
+    it('should move template element to a specified position on drop() call', () => {
+        component.addField();
+        component.addField();
+        component.addField();
+        component.formGroup.controls.template.setValue([
+            {appField: '', channelField: '1', defaultValue: ''},
+            {appField: '', channelField: '2', defaultValue: ''},
+            {appField: '', channelField: '3', defaultValue: ''},
+        ]);
+        const template = <FormArray>component.formGroup.get('template');
+
+        component.drop(<any>{previousIndex: 2, currentIndex: 0});
+        expect(template.at(0).value.channelField).toBe('3');
+        expect(template.at(1).value.channelField).toBe('1');
+        expect(template.at(2).value.channelField).toBe('2');
+
+        component.drop(<any>{previousIndex: 1, currentIndex: 2});
+        console.log(template);
+        expect(template.at(0).value.channelField).toBe('3');
+        expect(template.at(1).value.channelField).toBe('2');
+        expect(template.at(2).value.channelField).toBe('1');
+
+        component.drop(<any>{previousIndex: 1, currentIndex: 1});
+        expect(template.at(0).value.channelField).toBe('3');
+        expect(template.at(1).value.channelField).toBe('2');
+        expect(template.at(2).value.channelField).toBe('1');
+    });
+
     function prepareChannelForSave() {
         channelService.modifyChannel.and.returnValue(of({}));
         routeData.next({channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
+        component.addField();
         component.formGroup.setValue({
             contact: 'test',
             segment: 'clothes',
             country: ['fr', 'uk'],
-            template: [{channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''}]
+            template: [
+                {channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''},
+                {channelField: 'someChannelField', appField: 'someSfField', defaultValue: ''},
+            ]
         });
         component.channel = {id: 23};
     }
