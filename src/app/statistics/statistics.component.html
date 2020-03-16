@@ -3,6 +3,10 @@
          [infiniteScrollDisabled]="infiniteScrollDisabled"
          [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false">
         <div fxFlex>
+            <div class="sf-warn-alert" fxLayout="row" fxLayoutAlign="start center" *ngIf="showCovid19Banner">
+                <mat-icon color="warn">error</mat-icon>
+                <div i18n>COVID-19 : If you can’t make sure of your deliveries, <a sflLegacyLink path="/tools/infos" hash="pause">click here</a> to set your inventories down to 0 on all your channels</div>
+            </div>
             <sf-store-statistics [statistics]="statistics" *ngIf="hasStatisticsPermission"></sf-store-statistics>
             <sf-search-channels (applyFilter)="onApplyFilter()" [filter]="filterState"
                                 [processing]="processingFilters"></sf-search-channels>

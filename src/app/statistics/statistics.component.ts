@@ -12,6 +12,7 @@ import { TimelineFilter } from '../core/entities/timeline-filter';
 import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
 import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
 import { TimelineService } from '../core/services/timeline.service';
+import { environment } from '../../environments/environment';
 
 const LOAD_CHANNELS_COUNT = 6;
 const maxEvents = 200;
@@ -39,6 +40,8 @@ export class StatisticsComponent {
     hasStatisticsPermission = false;
 
     exportsLoaded = new Subject<TimelineEvent[]>();
+
+    showCovid19Banner = environment.showCovid19Banner;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected storeService: StoreService,

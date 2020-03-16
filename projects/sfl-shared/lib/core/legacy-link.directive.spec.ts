@@ -32,4 +32,19 @@ describe('LegacyLinkDirective', () => {
         expect(legacyLink.getLegacyLink.calls.mostRecent().args[0]).toEqual('/');
         expect((<any>legacyLink.getLegacyLink.calls.mostRecent().args[1]).store).not.toBeDefined();
     });
+
+    it('should NOT add hash to the link when NOT specified', () => {
+        directive.path = '/';
+        legacyLink.getLegacyLink.and.returnValue('/tools/infos?token=123456&store=123');
+        directive.ngOnChanges({});
+        expect(elementRef.nativeElement.href).toBe('/tools/infos?token=123456&store=123');
+    });
+
+    it('should add hash to the link when specified', () => {
+        directive.path = '/';
+        directive.hash = 'someHash';
+        legacyLink.getLegacyLink.and.returnValue('/tools/infos?token=123456&store=123');
+        directive.ngOnChanges({});
+        expect(elementRef.nativeElement.href).toBe('/tools/infos?token=123456&store=123#someHash');
+    });
 });

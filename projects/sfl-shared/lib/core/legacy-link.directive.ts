@@ -23,6 +23,11 @@ export class SflLegacyLinkDirective implements OnChanges {
      */
     @Input() addAuthorization = true;
 
+    /**
+     * Hash string added to the end of the link
+     */
+    @Input() hash?: string;
+
     constructor(protected elementRef: ElementRef,
                 protected legacyLink: SflLegacyLinkService) {
     }
@@ -33,7 +38,11 @@ export class SflLegacyLinkDirective implements OnChanges {
 
     protected setLinkHref() {
         let params = this.storeId ? {store: this.storeId} : {};
-        (<HTMLLinkElement>this.elementRef.nativeElement).href = this.legacyLink.getLegacyLink(this.path, params, this.addAuthorization);
+        let link = this.legacyLink.getLegacyLink(this.path, params, this.addAuthorization);
+        if (this.hash) {
+            link = link + '#' + this.hash;
+        }
+        (<HTMLLinkElement>this.elementRef.nativeElement).href = link;
     }
 
 }
