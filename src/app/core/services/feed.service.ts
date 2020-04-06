@@ -82,10 +82,16 @@ export class FeedService {
         ) as Observable<Feed>;
     }
 
-    fetchAutotagByCategory(feedId, catalogCategoryId) {
+    fetchAutotagByCategory(feedId, catalogCategoryId, {requirement, matching}: { requirement?: 'required' | 'optional', matching?: 'matched' | 'empty' } = {}) {
+        let params = new HttpParams().set('limit', MAX_API_LIMIT);
+        if (requirement) {
+            params = params.set('channelAttributeRequirement', requirement);
+        }
+        if (matching) {
+            params = params.set('matching', matching);
+        }
         return this.httpClient.get(
-            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`,
-            {params: new HttpParams().set('limit', MAX_API_LIMIT)}
+            `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`, {params}
         ) as Observable<PagedResponse<{ autotag: Autotag[] }>>;
     }
 

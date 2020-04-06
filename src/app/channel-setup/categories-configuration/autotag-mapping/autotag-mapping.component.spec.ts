@@ -5,7 +5,7 @@ import {Autotag} from '../../autotag';
 import {FeedService} from '../../../core/services/feed.service';
 import {Component, forwardRef, NO_ERRORS_SCHEMA} from '@angular/core';
 import {EMPTY, of, Subject} from 'rxjs';
-import {MatSnackBar} from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {PagedResponse} from 'sfl-shared/entities';
 import {SuccessSnackbarConfig} from '../../../core/entities/success-snackbar-config';
@@ -69,6 +69,21 @@ describe('AutotagMappingComponent', () => {
         expect(fixture.debugElement.nativeElement.querySelectorAll('sf-autotag-dropdown').length).toBe(1);
     });
 
+    it('should display only required attributes without a default value', () => {
+        component.ngOnChanges({});
+        autotags$.next(<any>{
+            _embedded: {
+                autotag: [
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true, defaultMapping: 'some mapping'}}},
+                    {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
+                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: true, defaultMapping: 'some mapping'}}},
+                ]
+            }
+        });
+        expect(component.autotagList.length).toBe(2);
+    });
+
     it('should display both an autotag input and autotag dropdown if autotag has mixed attribute ids', () => {
         component.autotagList = <Autotag[]>[
             {_embedded: {attribute: {constraintGroupId: null}}},
@@ -103,25 +118,7 @@ describe('AutotagMappingComponent', () => {
         component.saveMatching();
         expect(feedService.matchAutotagByCategory.calls.count()).toBe(5);
     });
-
-    it('should display only required attributes without a default value', () => {
-        component.ngOnChanges({});
-        autotags$.next(<any>{
-            _embedded: {
-                autotag: [
-                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: null, isRequired: true, defaultMapping: 'some mapping'}}},
-                    {_embedded: {attribute: {constraintGroupId: 1, isRequired: false}}},
-                    {_embedded: {attribute: {constraintGroupId: null, isRequired: false}}},
-                    {_embedded: {attribute: {constraintGroupId: 2, isRequired: true}}},
-                    {_embedded: {attribute: {constraintGroupId: 3, isRequired: true, defaultMapping: 'some mapping'}}},
-                    {_embedded: {attribute: {constraintGroupId: 4, isRequired: false}}},
-                ]
-            }
-        });
-        expect(component.autotagList.length).toBe(2);
-    });
-
+    
     it('should empty autotags list and fetch a new autotags list when the catalogCategoryId input property changes it`s value', () => {
         expect(feedService.fetchAutotagByCategory).toHaveBeenCalledTimes(0);
         component.autotagList = <any>[{_embedded: {attribute: {}}}];

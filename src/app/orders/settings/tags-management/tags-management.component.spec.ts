@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TagsManagementComponent } from './tags-management.component';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TagsService } from '../../../core/services/tags.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';

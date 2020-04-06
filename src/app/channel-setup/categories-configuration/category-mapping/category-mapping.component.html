@@ -1,32 +1,44 @@
-<div fxLayout="row" fxLayoutAlign="start center" class="mapping-header">
-    <div i18n fxFlex class="mat-body-1 card-label">Search and assign a category</div>
-    <button mat-stroked-button color="accent" class="sf-button-chip-alike blue" (click)="usePreviousMapping()"
-            *ngIf="hasCachedMapping" i18n>Use previous
-    </button>
-</div>
-<mat-card>
+<mat-card class="mat-elevation-z0 sf-card-outlined">
     <mat-card-content>
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px" class="category-mapping">
-            <mat-form-field appearance="outline" color="accent" fxFlex>
-                <mat-label i18n>Category mapping</mat-label>
-                <input type="search" matInput [formControl]="searchChannelCategoryControl" (keyup)="watchDeletion()"
-                       [matAutocomplete]="auto">
-                <button *ngIf="searchChannelCategoryControl.value" mat-button matSuffix mat-icon-button
-                        aria-label="Clear" (click)="removeValue()">
-                    <mat-icon>close</mat-icon>
+        <div class="category-mapping">
+            <div class="mat-subheading-2 category-mapping-heading" i18n>Category Mapping</div>
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field appearance="outline" color="accent" fxFlex>
+                    <mat-label i18n>Category mapping</mat-label>
+                    <input type="search" matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
+                            (keyup)="watchDeletion()" #categoryMappingInput autofocus (blur)="onBlur()"
+                           [matAutocompleteDisabled]="chosenChannelCategory?.name && chosenChannelCategory?.name === searchChannelCategoryControl.value?.name">
+                    <button *ngIf="searchChannelCategoryControl.value" mat-button matSuffix mat-icon-button
+                            aria-label="Clear" (click)="removeValue()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')" i18n>
+                        Please select category from list
+                    </mat-error>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+                                      (optionSelected)="chooseCategory($event.option.value)"
+                                      class="sf-category-autocomplete">
+                        <mat-option *ngIf="cachedMapping" [value]="cachedMapping" class="previous-mapped-category">
+                            <span class="previous-mapped-category-text"><strong i18n>Previous mapping:</strong> {{cachedMapping.name}}</span></mat-option>
+                        <mat-option *ngFor="let category of channelCategoryOptions" [value]="category">
+                            <div class="sf-option-content"
+                                 [innerHTML]="category.name | highlight:searchChannelCategoryControl.value"></div>
+                        </mat-option>
+                        <mat-option disabled
+                                *ngIf="!processingSearch && !channelCategoryOptions.length && searchChannelCategoryControl.value"
+                                i18n>No match found
+                        </mat-option>
+                        <mat-option class="load-more-results" *ngIf="hasNextPage && !loadingNextPage" disabled (click)="loadNextPage($event)" i18n>Load more results</mat-option>
+                        <mat-option class="loading-more-results" *ngIf="loadingNextPage" disabled>
+                            <div fxLayout="row" fxLayoutAlign="center center">
+                                <mat-spinner [diameter]="20" color="accent"></mat-spinner>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button class="save-matching" mat-raised-button i18n color="accent" (click)="saveMatching()">Save
                 </button>
-                <mat-error *ngIf="searchChannelCategoryControl.hasError('categoryMappingEmpty')" i18n>Please select
-                    category from list
-                </mat-error>
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
-                                  (optionSelected)="chooseCategory($event.option.value)" class="sf-category-autocomplete">
-                    <mat-option *ngFor="let category of channelCategoryOptions" [value]="category">
-                        <div class="sf-option-content" [innerHTML]="category.name | highlight:searchChannelCategoryControl.value"></div>
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-            <button class="save-matching" mat-raised-button i18n color="accent" (click)="saveMatching()">Save
-            </button>
+            </div>
         </div>
         <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
     </mat-card-content>

@@ -8,7 +8,6 @@ import { EMPTY, of, Subject, throwError } from 'rxjs';
 import { AggregatedUserInfo, Channel, Country } from 'sfl-shared/entities';
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
-import { MatSnackBar } from '@angular/material';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteRowDialogComponent } from './delete-row-dialog/delete-row-dialog.component';
@@ -16,7 +15,8 @@ import { ErrorSnackbarConfig } from '../../../../../src/app/core/entities/error-
 import { MatMenuModule } from '@angular/material/menu';
 import { FormArray, FormGroup } from '@angular/forms';
 import { FullstoryLoaderService } from '../fullstory-loader.service';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 describe('ChannelSettingsComponent', () => {
     let component: ChannelSettingsComponent;
@@ -486,7 +486,6 @@ describe('ChannelSettingsComponent', () => {
         expect(template.at(2).value.channelField).toBe('2');
 
         component.drop(<any>{previousIndex: 1, currentIndex: 2});
-        console.log(template);
         expect(template.at(0).value.channelField).toBe('3');
         expect(template.at(1).value.channelField).toBe('2');
         expect(template.at(2).value.channelField).toBe('1');

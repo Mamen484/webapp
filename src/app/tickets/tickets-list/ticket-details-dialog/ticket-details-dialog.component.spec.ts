@@ -3,7 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TicketDetailsDialogComponent } from './ticket-details-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TicketsService } from '../../tickets.service';
-import { MAT_DIALOG_DATA, MatTableModule } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 import { EMPTY, of } from 'rxjs';
 import { TicketType } from '../../entities/ticket-type.enum';
 

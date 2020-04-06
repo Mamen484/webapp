@@ -3,7 +3,7 @@ import { toPairs } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { ChannelType } from 'sfl-shared/entities';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ChannelsRequestParams } from 'sfl-shared/entities';
 import { AppState } from '../../core/entities/app-state';
 

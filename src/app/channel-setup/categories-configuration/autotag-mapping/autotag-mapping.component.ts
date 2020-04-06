@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, S
 import { FeedService } from '../../../core/services/feed.service';
 import { Autotag } from '../../autotag';
 import { Subscription, zip } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsSavedSnackbarComponent } from '../settings-saved-snackbar/settings-saved-snackbar.component';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
 import { NgForm } from '@angular/forms';
@@ -20,7 +20,7 @@ import { AutotagFormState } from './autotag-form-state.enum';
 })
 export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
-    @ViewChild(NgForm, {static: false}) form: NgForm;
+    @ViewChild(NgForm) form: NgForm;
 
     @Input() feedId: number;
     @Input() catalogCategoryId: number;
@@ -28,10 +28,6 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() autotagUpdated = new EventEmitter();
     @Output() autotagsLoaded = new EventEmitter();
-    /**
-     * Some of autotag values changed
-     */
-    @Output() nextClicked = new EventEmitter();
 
     autotagList: Autotag[];
     subscription: Subscription;
@@ -44,9 +40,9 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.categoryMappingService.getState().pipe(filter(category => category.id !== this.channelCategoryId))
+        this.categoryMappingService.getState().pipe(filter(category => category?.id !== this.channelCategoryId))
             .subscribe((category: Category) => {
-                this.channelCategoryId = category.id;
+                this.channelCategoryId = category?.id;
                 this.ngOnChanges({})
             });
     }
@@ -91,13 +87,9 @@ export class AutotagMappingComponent implements OnInit, OnChanges, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
-        this.subscription = this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId).subscribe(response => {
-            this.autotagList = this.filterMandatory(response._embedded.autotag);
+        this.subscription = this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId, {requirement: 'required'}).subscribe(response => {
+            this.autotagList = response._embedded.autotag.filter(autotag => !autotag._embedded.attribute.defaultMapping);
             this.autotagsLoaded.emit();
         });
-    }
-
-    protected filterMandatory(autotag: Autotag[]) {
-        return autotag.filter(({_embedded}) => _embedded.attribute.isRequired && !_embedded.attribute.defaultMapping);
     }
 }

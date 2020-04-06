@@ -2,7 +2,8 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 
 import { CategoryMappingComponent } from './category-mapping.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { MatAutocompleteModule, MatSnackBar } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
@@ -12,6 +13,8 @@ import { CategoryMappingService } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CategoryMappingComponent', () => {
     let component: CategoryMappingComponent;
@@ -36,7 +39,7 @@ describe('CategoryMappingComponent', () => {
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent, HighlightPipe],
             schemas: [NO_ERRORS_SCHEMA],
-            imports: [MatAutocompleteModule, FormsModule, ReactiveFormsModule],
+            imports: [MatAutocompleteModule, FormsModule, ReactiveFormsModule, MatInputModule, NoopAnimationsModule],
             providers: [
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
@@ -69,6 +72,58 @@ describe('CategoryMappingComponent', () => {
         expect(component.channelCategoryOptions).toEqual(<any>[83, 70, 72, 50]);
     }));
 
+    it('should get category suggestions when the category name is empty', fakeAsync(() => {
+        appStore.select.and.returnValue(of({country: 'fr'}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{_embedded: {category: [83, 70, 72, 50]}}));
+
+        component.searchChannelCategoryControl.setValue('');
+        tick(300);
+        expect(component.channelCategoryOptions).toEqual(<any>[83, 70, 72, 50]);
+    }));
+
+    it('should request suggestions only once for an empty name and the first page', fakeAsync(() => {
+        appStore.select.and.returnValue(of({country: 'fr'}));
+        channelService.getChannelCategories.and.returnValue(EMPTY);
+        component.searchChannelCategoryControl.setValue('');
+        tick(300);
+        component.searchChannelCategoryControl.setValue('12');
+        tick(300);
+        component.searchChannelCategoryControl.setValue('');
+        tick(300);
+        expect(channelService.getChannelCategories).toHaveBeenCalledTimes(2);
+
+    }));
+
+    it('should reset the current page when user types a category name', fakeAsync(() => {
+        component.currentPage = 5;
+        appStore.select.and.returnValue(of({country: 'fr'}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{page: 1, pages: 5, _embedded: {category: [83, 70, 72, 50]}}));
+
+        component.searchChannelCategoryControl.setValue('1234');
+        tick(300);
+        expect(component.currentPage).toBe(1);
+    }));
+
+    it('should set hasNextPage to true when more pages available',  fakeAsync(() => {
+        component.currentPage = 1;
+        appStore.select.and.returnValue(of({country: 'fr'}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{page: 1, pages: 2, _embedded: {category: [83, 70, 72, 50]}}));
+
+        component.searchChannelCategoryControl.setValue('1234');
+        tick(300);
+        expect(component.hasNextPage).toBe(true);
+    }));
+
+    it('should set hasNextPage to false when last page loaded', fakeAsync(() => {
+        component.currentPage = 1;
+        appStore.select.and.returnValue(of({country: 'fr'}));
+        channelService.getChannelCategories.and.returnValue(of(<any>{page: 1, pages: 1, _embedded: {category: [83, 70, 72, 50]}}));
+
+        component.searchChannelCategoryControl.setValue('1234');
+        tick(300);
+        expect(component.hasNextPage).toBe(false);
+    }));
+
     it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(of({}));
@@ -98,6 +153,7 @@ describe('CategoryMappingComponent', () => {
     });
 
     it('should mark the category control as valid when no category selected and the input does not contain any value', () => {
+        appStore.select.and.returnValue(EMPTY);
         component.chosenChannelCategory = null;
         component.searchChannelCategoryControl.setValue('');
         fixture.detectChanges();
@@ -105,6 +161,7 @@ describe('CategoryMappingComponent', () => {
     });
 
     it('should mark the category control as INvalid when no category selected but the input contains a value', () => {
+        appStore.select.and.returnValue(EMPTY);
         component.chosenChannelCategory = null;
         component.searchChannelCategoryControl.setValue({name: '432'});
         fixture.detectChanges();
@@ -112,6 +169,7 @@ describe('CategoryMappingComponent', () => {
     });
 
     it('should mark the category control as valid when a category is selected from a list and the input value equals it\'s name', () => {
+        appStore.select.and.returnValue(EMPTY);
         component.chosenChannelCategory = <any>{name: '432'};
         component.searchChannelCategoryControl.setValue({name: '432'});
         fixture.detectChanges();
@@ -119,30 +177,38 @@ describe('CategoryMappingComponent', () => {
     });
 
     it('should mark the category control as INvalid when a category is selected from a list and the input value DOES NOT equal it`s name', () => {
+        appStore.select.and.returnValue(EMPTY);
         component.chosenChannelCategory = <any>{name: '432'};
         component.searchChannelCategoryControl.setValue({name: '515'});
         fixture.detectChanges();
         expect(component.searchChannelCategoryControl.valid).toBe(false);
     });
 
-    it('should show a previous mapping button if mappingCacheService.hasCategoryMapping() returns true', () => {
-        mappingCacheService.hasCategoryMapping.and.returnValue(true);
-        component.ngOnChanges({feedCategory: <any>{previousValue: {id: 1}, currentValue: {id: 2}}})
-        expect(component.hasCachedMapping).toBe(true);
+    it('should mark the category control as INvalid when no category mapped, a category control is touched but pristine', () => {
+        appStore.select.and.returnValue(EMPTY);
+        component.chosenChannelCategory = null;
+        fixture.detectChanges();
+        component.searchChannelCategoryControl.markAsPristine();
+        component.searchChannelCategoryControl.markAsTouched();
+        component.searchChannelCategoryControl.updateValueAndValidity();
+        expect(component.searchChannelCategoryControl.valid).toBe(false);
     });
 
-    it('should NOT show a previous mapping button when at least one category was NOT configured', () => {
-        component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(EMPTY);
-        expect(component.hasCachedMapping).toBe(false);
-        component.saveMatching();
-        expect(component.hasCachedMapping).toBe(false);
+    it('should show the error when a user focuses the input, doesn`t type anything and blurs the input', () => {
+        appStore.select.and.returnValue(EMPTY);
+        component.chosenChannelCategory = null;
+        fixture.detectChanges();
+        component.searchChannelCategoryControl.markAsPristine();
+        component.searchChannelCategoryControl.markAsTouched();
+        component.onBlur();
+        expect(component.searchChannelCategoryControl.hasError('categoryMappingEmpty')).toBe(true);
     });
 
-    it('should display the previously mapped category when USE PREVIOUS button pressed', () => {
-        mappingCacheService.getCategoryMapping.and.returnValue({name: 'SomeChannel', id: 123, channelId: 124});
-        component.usePreviousMapping();
-        expect(component.chosenChannelCategory).toEqual({name: 'SomeChannel', id: 123, channelId: 124});
+    it('should show a previous mapping option if mappingCacheService.getCategoryMapping() returns a category', () => {
+        mappingCacheService.getCategoryMapping.and.returnValue(<any>{name: 'some category'});
+        appStore.select.and.returnValue(EMPTY);
+        component.ngOnChanges({feedCategory: <any>{previousValue: {id: 1}, currentValue: {id: 2}}});
+        expect(component.cachedMapping).toEqual(<any>{name: 'some category'});
     });
 
     it('should cache mapped category', () => {
@@ -190,6 +256,7 @@ describe('CategoryMappingComponent', () => {
         }));
 
         it('should be pristine when new category is set', fakeAsync(() => {
+            appStore.select.and.returnValue(EMPTY);
             setInputValue();
             tick(300);
             component.ngOnChanges(<any>{feedCategory: {previousValue: {id: 12}, currentValue: {id: 14}}});
@@ -209,6 +276,69 @@ describe('CategoryMappingComponent', () => {
             input.triggerEventHandler('input', {target: input.nativeElement});
             fixture.detectChanges();
         }
+    });
+
+    describe('loadNextPage', () => {
+        let event;
+        beforeEach(() => {
+            event = {stopPropagation: jasmine.createSpy()};
+            appStore.select.and.returnValue(of(<any>{country: 'fr'}));
+        });
+
+        it('should indicate that loading is in progress', () => {
+            channelService.getChannelCategories.and.returnValue(EMPTY);
+            component.loadNextPage(event);
+            expect(component.loadingNextPage).toBe(true);
+        });
+
+        it('should indicate that loading is finished when data received', () => {
+            channelService.getChannelCategories.and.returnValue(of(<any>{pages: 1, page: 1, _embedded: {category: []}}));
+            component.loadNextPage(event);
+            expect(component.loadingNextPage).toBe(false);
+        });
+
+        it('should add categories from a new page to existing categories', () => {
+            channelService.getChannelCategories.and.returnValue(of(<any>{
+                pages: 1, page: 1, _embedded: {
+                    category: [
+                        {id: 3},
+                        {id: 4},
+                    ]
+                }
+            }));
+            component.channelCategoryOptions = <any>[
+                {id: 1},
+                {id: 2},
+            ];
+            component.loadNextPage(event);
+            expect(component.channelCategoryOptions).toEqual(<any>[
+                {id: 1},
+                {id: 2},
+                {id: 3},
+                {id: 4},
+            ]);
+        });
+
+        it('should set hasNextPage to true if there are more pages', () => {
+            component.currentPage = 1;
+            channelService.getChannelCategories.and.returnValue(of(<any>{pages: 3, page: 1, _embedded: {category: []}}));
+            component.loadNextPage(event);
+            expect(component.hasNextPage).toBe(true);
+        });
+
+        it('should set hasNextPage to false if the last page is loaded', () => {
+            component.currentPage = 2;
+            channelService.getChannelCategories.and.returnValue(of(<any>{pages: 3, page: 3, _embedded: {category: []}}));
+            component.loadNextPage(event);
+            expect(component.hasNextPage).toBe(false);
+        });
+
+        it('should update the current page', () => {
+            component.currentPage = 1;
+            channelService.getChannelCategories.and.returnValue(of(<any>{pages: 3, page: 2, _embedded: {category: []}}));
+            component.loadNextPage(event);
+            expect(component.currentPage).toBe(2);
+        });
     });
 });
 

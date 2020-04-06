@@ -37,7 +37,7 @@
       ],
       "sfl-tools/*": [
         "dist/sfl-tools/*"
-      ],
+      ]
     }
   }
 }

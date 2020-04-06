@@ -10,7 +10,7 @@ import { Ticket } from '../entities/ticket';
 import { map } from 'rxjs/operators';
 import { TicketState } from '../entities/ticket-state.enum';
 import { TicketType } from '../entities/ticket-type.enum';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tickets-dialog.component';
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
 import { ActivatedRoute } from '@angular/router';

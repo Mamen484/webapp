@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterTicketsDialogComponent } from './filter-tickets-dialog.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TicketType } from '../../entities/ticket-type.enum';
 import { TicketState } from '../../entities/ticket-state.enum';
 import { NO_ERRORS_SCHEMA } from '@angular/core';

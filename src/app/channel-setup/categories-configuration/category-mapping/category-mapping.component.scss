@@ -12,12 +12,15 @@ button.save-matching {
 }
 
 .category-mapping {
-  padding: 16px;
+  padding: 30px 25px 20px;
+
+  .category-mapping-heading {
+    font-weight: 500;
+  }
 }
 
 mat-card {
   padding: 0;
-  margin-top: 20px;
 }
 
 ::ng-deep {
@@ -28,14 +31,19 @@ mat-card {
       line-height: 24px;
       font-size: 14px;
       padding: 8px 16px;
+
       & > span.mat-option-text {
-        display: table;
         width: 100%;
-        & > div.sf-option-content {
-          display: table-cell;
-          vertical-align: middle;
-        }
       }
     }
   }
 }
+
+.previous-mapped-category-text, .mat-option.load-more-results[disabled], .mat-option.loading-more-results[disabled] {
+  color: mat-color($accent);
+}
+
+.mat-option.load-more-results[disabled]{
+  cursor: pointer;
+}
+

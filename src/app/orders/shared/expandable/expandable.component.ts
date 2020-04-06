@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { matExpansionAnimations, MatExpansionPanelState } from '@angular/material';
+import { matExpansionAnimations, MatExpansionPanelState } from '@angular/material/expansion';
 import { CdkAccordionItem } from '@angular/cdk/accordion';
 
 @Component({

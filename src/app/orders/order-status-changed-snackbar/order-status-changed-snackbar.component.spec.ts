@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OrderStatusChangedSnackbarComponent } from './order-status-changed-snackbar.component';
-import { MAT_SNACK_BAR_DATA } from '@angular/material';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { OrderNotifyAction } from '../../core/entities/orders/order-notify-action.enum';
 
 describe('OrderStatusChangedSnackbarComponent', () => {

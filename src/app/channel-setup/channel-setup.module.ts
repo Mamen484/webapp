@@ -13,6 +13,7 @@ import {AutotagDropdownComponent} from './categories-configuration/autotag-mappi
 import {SettingsSavedSnackbarComponent} from './categories-configuration/settings-saved-snackbar/settings-saved-snackbar.component';
 import {AutotagsRequiredSnackbarComponent} from './categories-configuration/autotag-mapping/autotags-required-snackbar/autotags-required-snackbar.component';
 import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
         CommonModule,
         SharedModule,
         SftUnsavedDataModule,
+        ScrollingModule,
     ],
     entryComponents: [
         FilterDialogComponent,

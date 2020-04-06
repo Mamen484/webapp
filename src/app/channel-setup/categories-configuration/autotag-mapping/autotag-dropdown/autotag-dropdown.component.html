@@ -6,9 +6,8 @@
         <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" #inputElement>
         <mat-icon matSuffix>arrow_drop_down</mat-icon>
     </mat-form-field>
-
-    <mat-autocomplete #auto="matAutocomplete"
-                      (optionSelected)="changed.emit($event.option.value); input.notifyInputDirty(); control.setValue(''); inputElement.blur()">
-        <mat-option *ngFor="let option of options" [value]="'['+option+']'" [innerHTML]="option | highlight:control.value"></mat-option>
-    </mat-autocomplete>
 </div>
+<mat-autocomplete #auto="matAutocomplete"
+                  (optionSelected)="changed.emit($event.option.value); input.notifyInputDirty(); control.setValue(''); inputElement.blur()">
+    <mat-option *ngFor="let option of options" [value]="'['+option+']'" [innerHTML]="option | highlight:control.value"></mat-option>
+</mat-autocomplete>

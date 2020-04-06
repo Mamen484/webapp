@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SkuModificationDialogComponent } from './sku-modification-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SelectOrdersDialogComponent } from '../../select-orders-dialog/select-orders-dialog.component';
 
 describe('SkuModificationDialogComponent', () => {

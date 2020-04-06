@@ -1,6 +1,6 @@
 ## We use this configuration to get a kubernetes build of WebApp on a testing environment.
 # Step 1: build an angular application
-FROM node:11.0-alpine as node
+FROM node:12-alpine as node
 
 
 # Installs latest Chromium package

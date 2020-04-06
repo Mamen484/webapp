@@ -22,8 +22,8 @@ import { MatChipList } from '@angular/material/chips';
 })
 export class CountryAutocompleteComponent implements OnInit, ControlValueAccessor {
 
-    @ViewChild('input', {static: false}) input;
-    @ViewChild('chipList', {static: false}) chipList: MatChipList;
+    @ViewChild('input') input;
+    @ViewChild('chipList') chipList: MatChipList;
 
     /** show in autocomplete only countries with specified codes */
     @Input() allowedCodes: string[];

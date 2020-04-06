@@ -1,6 +1,10 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CountryAutocompleteComponent } from './country-autocomplete.component';
-import { MatAutocompleteModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
@@ -22,7 +26,7 @@ import { FullCountriesListService } from 'sfl-shared/services';
     exports: [CountryAutocompleteComponent],
 })
 export class SftCountryAutocompleteModule {
-    static forRoot(dependency: { sflCountriesListLink }): ModuleWithProviders {
+    static forRoot(dependency: { sflCountriesListLink }): ModuleWithProviders<SftCountryAutocompleteModule> {
         return {
             ngModule: SftCountryAutocompleteModule,
             providers: [

@@ -6,7 +6,7 @@ import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
-import { MatMenuModule } from '@angular/material';
+import { MatMenuModule } from '@angular/material/menu';
 import { AggregatedUserInfo, PaymentType, StoreStatus } from 'sfl-shared/entities';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar.component';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TimelineFilteringAreaComponent } from './timeline-filtering-area.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('TimelineFilteringAreaComponent', () => {

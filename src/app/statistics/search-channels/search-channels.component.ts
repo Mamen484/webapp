@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FilterChannelsDialogComponent } from '../filter-channels-dialog/filter-channels-dialog.component';
 import { ChannelsRequestParams, ChannelType, Country } from 'sfl-shared/entities';
 import { FullCountriesListService } from 'sfl-shared/services';

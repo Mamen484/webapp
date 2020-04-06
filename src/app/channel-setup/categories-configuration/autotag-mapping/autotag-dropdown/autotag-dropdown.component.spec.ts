@@ -4,7 +4,7 @@ import { AutotagDropdownComponent } from './autotag-dropdown.component';
 import { ChannelService } from '../../../../core/services/channel.service';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { of } from 'rxjs';
-import { MatAutocompleteModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('AutotagDropdownComponent', () => {
     let component: AutotagDropdownComponent;

@@ -1,20 +1,22 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, publishReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
-import { MatSnackBar } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConnectableObservable, Observable, Subscription } from 'rxjs';
 import { FeedCategory } from '../../../core/entities/feed-category';
 import { CategoryMappingService } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { PagedResponse } from 'sfl-shared/entities';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
-const maxApiLimit = '200';
+const searchLimit = '10';
 
 @Component({
     selector: 'sf-category-mapping',
@@ -26,20 +28,32 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     @Input() channelId: number;
     @Input() feedCategory: FeedCategory;
 
+    @ViewChild('categoryMappingInput', {static: false}) categoryMappingInput: ElementRef<HTMLInputElement>;
+    @ViewChild(MatAutocompleteTrigger, {static: false}) autocompleteTrigger: MatAutocompleteTrigger;
+
+    processingSearch = false;
+
     chosenChannelCategory: Category;
     searchChannelCategoryControl = new FormControl('', [
         (control: AbstractControl) =>
             // we allow only either an empty value to delete the mapping
-            (!this.chosenChannelCategory && control.value !== '')
+            (!this.chosenChannelCategory && (control.value !== '' || control.pristine && control.touched))
             // or the value from an autocomplete list. If the a user modifies the value, we force to select the value from a list
-            || (this.chosenChannelCategory && control.value && this.chosenChannelCategory.name !== control.value.name)
+            || (this.chosenChannelCategory?.name !== control.value?.name)
                 ? {categoryMappingEmpty: true}
                 : null,
     ]);
     channelCategoryOptions: Category[] = [];
     searchSubscription: Subscription;
     loading = false;
-    hasCachedMapping = false;
+    cachedMapping: Category;
+
+    // pagination
+    currentPage = 1;
+    hasNextPage = false;
+    loadingNextPage = false;
+
+    initialSuggestions: Observable<PagedResponse<{ category: Category[] }>>;
 
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
@@ -67,7 +81,14 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         }
         this.loading = Boolean(this.feedCategory.channelCategory);
         this.chosenChannelCategory = this.feedCategory.channelCategory;
-        this.hasCachedMapping = this.mappingCache.hasCategoryMapping();
+        this.cachedMapping = this.mappingCache.getCategoryMapping();
+        if (this.categoryMappingInput) {
+            this.categoryMappingInput.nativeElement.focus();
+        }
+        if (!this.searchChannelCategoryControl.value) {
+            this.searchChannelCategoryControl.setValue('');
+        }
+
     }
 
     displayFn(category: Category) {
@@ -123,27 +144,65 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         this.searchChannelCategoryControl.reset('');
         this.searchChannelCategoryControl.markAsDirty();
         this.chosenChannelCategory = null;
+        this.searchChannelCategoryControl.updateValueAndValidity({emitEvent: false});
     }
 
-    usePreviousMapping() {
-        this.chooseCategory(this.mappingCache.getCategoryMapping());
+    loadNextPage(event) {
+        event.stopPropagation();
+        this.loadingNextPage = true;
+        this.fetchCategories(this.searchChannelCategoryControl.value, this.currentPage + 1).subscribe(response => {
+            this.currentPage = +response.page;
+            this.hasNextPage = +response.pages > this.currentPage;
+            this.channelCategoryOptions.push(...response._embedded.category);
+            this.loadingNextPage = false;
+        });
     }
 
+    onBlur() {
+        if (this.searchChannelCategoryControl.pristine && this.searchChannelCategoryControl.touched) {
+            this.searchChannelCategoryControl.updateValueAndValidity({emitEvent: false});
+        }
+    }
+
+    protected fetchCategories(search: string, page = 1) {
+        if (!search && page === 1) {
+            if (!this.initialSuggestions) {
+                this.initialSuggestions = this.doFetchCategories(search, page).pipe(publishReplay());
+                (<ConnectableObservable<any>>this.initialSuggestions).connect();
+            }
+            return this.initialSuggestions;
+        }
+        return this.doFetchCategories(search, page);
+    }
+
+    protected doFetchCategories(search: string, page = 1) {
+        return this.appStore.select('currentStore').pipe(
+            flatMap(store => this.channelService.getChannelCategories(this.channelId, {
+                name: search,
+                country: store.country,
+                limit: searchLimit,
+                page: page.toString(),
+            }))
+        );
+    }
 
     protected listenChannelCategorySearch() {
         this.searchChannelCategoryControl.valueChanges.pipe(
+            startWith(''),
+            tap(() => this.processingSearch = true),
+            tap(() => this.hasNextPage = false),
             debounceTime(SEARCH_DEBOUNCE),
-            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH),
-            switchMap(name =>
-                this.appStore.select('currentStore').pipe(
-                    flatMap(store => this.channelService.getChannelCategories(this.channelId, {
-                        name,
-                        country: store.country,
-                        limit: maxApiLimit,
-                    })))
-            ),
-        )
-            .subscribe(response => this.channelCategoryOptions = response._embedded.category);
+            filter(searchQuery => searchQuery && searchQuery.length >= MIN_QUERY_LENGTH || searchQuery === ''),
+            switchMap(name => this.fetchCategories(name)))
+            .subscribe(response => {
+                this.processingSearch = false;
+                this.channelCategoryOptions = Object.assign([], response._embedded.category);
+                this.currentPage = 1;
+                this.hasNextPage = +response.pages > this.currentPage;
+                if (!this.searchChannelCategoryControl.value) {
+                    this.autocompleteTrigger.openPanel();
+                }
+            });
     }
 
 }

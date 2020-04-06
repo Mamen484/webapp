@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CountryAutocompleteComponent } from './country-autocomplete.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatAutocompleteModule } from '@angular/material';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { of, Subject } from 'rxjs';
 import { FullCountriesListService } from 'sfl-shared/services';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
+import { FormsModule } from '@angular/forms';
 
 describe('CountryAutocompleteComponent', () => {
     let component: CountryAutocompleteComponent;
@@ -236,5 +237,37 @@ describe('CountryAutocompleteComponent', () => {
             })).toBeFalsy();
         });
 
+    });
+
+    describe('integration', () => {
+
+        @Component({
+            selector: 'sft-test-country-autocomplete',
+            template: '<sft-country-autocomplete [(ngModel)]="country"></sft-country-autocomplete>'
+        })
+        class TestCountryAutocompleteComponent {
+            country = 'fr';
+        }
+
+        let testComponent: TestCountryAutocompleteComponent;
+        let testFixture: ComponentFixture<TestCountryAutocompleteComponent>;
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                declarations: [TestCountryAutocompleteComponent, CountryAutocompleteComponent],
+                providers: [
+                    {provide: FullCountriesListService, useValue: jasmine.createSpyObj(['getCountries'])},
+                    {provide: SFL_COUNTRIES_LIST_LINK, useValue: 'countriesLink'},
+                ],
+                imports: [MatAutocompleteModule, FormsModule]
+            })
+                .compileComponents();
+            testFixture = TestBed.createComponent(TestCountryAutocompleteComponent);
+            testComponent = testFixture.componentInstance;
+        });
+
+        it('should create', () => {
+            expect(testComponent).toBeTruthy();
+        });
     });
 });

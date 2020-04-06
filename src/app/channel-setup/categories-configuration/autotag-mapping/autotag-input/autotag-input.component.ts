@@ -33,7 +33,7 @@ import { AutotagFormState } from '../autotag-form-state.enum';
 })
 export class AutotagInputComponent implements OnInit, OnChanges, ControlValueAccessor, Validator {
 
-    @ViewChild(NgModel, {static: false}) ngModel: NgControl;
+    @ViewChild(NgModel) ngModel: NgControl;
 
     @Input() value: string;
     @Input() label: string;

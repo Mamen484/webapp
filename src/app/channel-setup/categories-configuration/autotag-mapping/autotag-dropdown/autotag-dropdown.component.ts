@@ -35,7 +35,7 @@ const SEARCH_DEBOUNCE = 200;
 })
 export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValueAccessor, Validator {
 
-    @ViewChild(AutotagInputComponent, {static: false}) input: AutotagInputComponent;
+    @ViewChild(AutotagInputComponent) input: AutotagInputComponent;
 
     @Input() value: string;
     @Input() attribute: ChannelAttribute;

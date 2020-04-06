@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewTagDialogComponent } from './new-tag-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 describe('NewTagDialogComponent', () => {
     let component: NewTagDialogComponent;

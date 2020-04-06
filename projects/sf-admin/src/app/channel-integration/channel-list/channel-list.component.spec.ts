@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelListComponent } from './channel-list.component';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { ChannelState } from 'sfl-shared/entities';
 import { EMPTY, of, throwError } from 'rxjs';

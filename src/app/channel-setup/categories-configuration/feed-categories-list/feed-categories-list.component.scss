@@ -1,6 +1,16 @@
 @import '../../../../sass/variables';
 
 $line-padding: 5px;
+$header-section-height: 84px;
+$solo-search-height: 80px;
+$table-header: 59px;
+$paginator-height: 64px;
+
+.scrollable-container {
+  max-height: calc(100vh - 2 * #{$content-margin} - #{$header-section-height} - #{$solo-search-height} - #{$table-header} - #{$paginator-height});
+  height: auto;
+}
+
 mat-card.categories-list {
   padding: 0;
 
@@ -51,3 +61,21 @@ mat-card.categories-list {
   }
 }
 
+sft-solo-search {
+  margin-bottom: 20px;
+}
+
+mat-chip-list.filter-chips {
+  margin-bottom: $content-margin;
+  display: block;
+
+  mat-chip {
+    mat-icon {
+      cursor: pointer;
+      color: mat-color($grey);
+    }
+    mat-icon, span {
+      vertical-align: middle;
+    }
+  }
+}

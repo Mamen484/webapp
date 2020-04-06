@@ -6,7 +6,7 @@ import { FormArray, FormControl, FormGroup, ValidationErrors, Validators } from 
 import { Field } from './field';
 import { AppLinkService } from './app-link.service';
 import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SettingsSavedSnackbarComponent } from './settings-saved-snackbar/settings-saved-snackbar.component';
 import { filter } from 'rxjs/operators';
 import { googleTaxonomy } from './google-taxonomy';

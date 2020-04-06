@@ -1,11 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="start center" *ngIf="autotagList?.length" class="mapping-header">
-    <div i18n fxFlex class="mat-body-1 card-label">Fill in the required attributes</div>
-</div>
 <div *ngIf="autotagList?.length">
-    <mat-card>
+    <mat-card class="mat-elevation-z0 sf-card-outlined">
         <mat-card-content>
             <form #form="ngForm">
                 <div class="autotags-list" fxLayout="column" fxLayoutGap="20px">
+                    <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required attributes</div>
                     <ng-container *ngFor="let autotag of autotagList; index as i">
                         <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
                                           (changed)="setAutotagValue(autotag, $event)" [label]="autotag._embedded.attribute.name"
@@ -24,8 +22,4 @@
             </form>
         </mat-card-content>
     </mat-card>
-    <div class="next-category-button">
-        <button mat-stroked-button color="accent" i18n (click)="nextClicked.emit()">Next
-        </button>
-    </div>
 </div>

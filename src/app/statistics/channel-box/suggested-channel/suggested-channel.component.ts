@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { StoreChannel } from 'sfl-shared/entities';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConnectIntlChannelDialogComponent } from '../../connect-intl-channel-dialog/connect-intl-channel-dialog.component';
 import { InternationalAccountService } from '../../../core/services/international-account.service';
 import { IntlRequestSuccessDialogComponent } from '../../intl-request-success-dialog/intl-request-success-dialog.component';

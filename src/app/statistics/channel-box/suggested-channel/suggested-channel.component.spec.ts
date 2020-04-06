@@ -1,6 +1,8 @@
 import { of, throwError } from 'rxjs';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatCardModule, MatDialog } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
 import { SuggestedChannelComponent } from './suggested-channel.component';
 import { InternationalAccountService } from '../../../core/services/international-account.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';

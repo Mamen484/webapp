@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline">
+<mat-form-field appearance="outline" color="accent">
     <mat-label>{{label}}</mat-label>
     <input matInput [(ngModel)]="value" (keyup)="createSuggestions(); watchDeletion()" (blur)="onBlur()" [matAutocomplete]="auto" required (ngModelChange)="notifyInputDirty()">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setAutotagValue($event.option.value)">

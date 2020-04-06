@@ -24,7 +24,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SearchStoreDirective } from './search-store/search-store.directive';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { SubnavComponent } from './subnav/subnav.component';
-import { MatSlideToggleModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {SftSoloSearchModule} from 'sfl-tools/solo-search';
 
 @NgModule({

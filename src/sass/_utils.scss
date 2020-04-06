@@ -173,3 +173,7 @@ button.sf-button-chip-alike {
 .sf-color-accent {
   color: mat-color($accent);
 }
+
+mat-card.sf-card-outlined.mat-elevation-z0 {
+  border: 1px solid $black-12-opacity;
+}

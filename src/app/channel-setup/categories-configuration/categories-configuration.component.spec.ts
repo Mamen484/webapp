@@ -1,16 +1,17 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {CategoriesConfigurationComponent} from './categories-configuration.component';
-import {Directive, NO_ERRORS_SCHEMA, Pipe, PipeTransform} from '@angular/core';
-import {MatAutocompleteModule, MatDialog} from '@angular/material';
-import {ChannelService} from '../../core/services/channel.service';
-import {FeedService} from '../../core/services/feed.service';
-import {EMPTY, of, Subject} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
-import {CategoryState} from '../category-state';
-import {AutotagFormState} from './autotag-mapping/autotag-form-state.enum';
-import {FullstoryLoaderService} from '../../core/services/fullstory-loader.service';
-import {UnsavedDataDialogComponent} from 'sfl-tools/unsaved-data-guard';
+import { CategoriesConfigurationComponent } from './categories-configuration.component';
+import { Directive, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
+import { ChannelService } from '../../core/services/channel.service';
+import { FeedService } from '../../core/services/feed.service';
+import { of, Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { CategoryState } from '../category-state';
+import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
+import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import { UnsavedDataDialogComponent } from 'sfl-tools/unsaved-data-guard';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
@@ -78,34 +79,8 @@ describe('CategoriesConfigurationComponent', () => {
                 ? of(<any>{_embedded: {}, total: 1})
                 : of(<any>{_embedded: {category: []}, total: 10})
         });
-        route.data.next({data: {channel: {}, feed: {}}});
+        component.refreshPercentage();
         expect(component.percentage).toBe(0.1);
-    });
-
-    it('should update data when a user filters categories by mapping', () => {
-        feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        matDialog.open.and.returnValue(<any>{afterClosed: () => of(CategoryState.Configured)});
-        component.feed = <any>{id: 15};
-        component.openFilterDialog();
-        expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
-            page: '1',
-            limit: component.feedCategoriesList.itemsPerPage,
-            name: null,
-            state: CategoryState.Configured,
-        })
-    });
-
-    it('should update data and set a page when a page is changed on paginator', () => {
-        feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        component.feed = <any>{id: 15};
-        component.feedCategoriesList.currentPage = 2;
-        component.refreshCategoriesList();
-        expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
-            page: '3',
-            limit: component.feedCategoriesList.itemsPerPage,
-            name: null,
-            state: undefined,
-        })
     });
 
     it('should open an unsaved data dialog on showCloseDialog() call', () => {

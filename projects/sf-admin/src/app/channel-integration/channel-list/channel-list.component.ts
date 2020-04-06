@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ChannelService, SflWindowRefService } from 'sfl-shared/services';
 import { map } from 'rxjs/operators';
 import { Channel, ChannelState } from 'sfl-shared/entities';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';

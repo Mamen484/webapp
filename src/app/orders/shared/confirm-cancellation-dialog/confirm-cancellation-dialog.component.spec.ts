@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfirmCancellationDialogComponent } from './confirm-cancellation-dialog.component';
 import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carrier-details-dialog.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ConfirmCancellationDialogComponent', () => {

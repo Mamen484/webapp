@@ -5,7 +5,7 @@ import { AppState } from '../core/entities/app-state';
 import { Store as AppStore } from '@ngrx/store';
 import { ChannelsRequestParams, ChannelsResponse, PagedResponse, Statistics, Store, StoreChannel } from 'sfl-shared/entities';
 import { StoreService } from 'sfl-shared/services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { TimelineFilter } from '../core/entities/timeline-filter';

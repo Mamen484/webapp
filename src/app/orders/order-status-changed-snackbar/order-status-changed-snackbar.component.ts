@@ -5,7 +5,7 @@ import { OrderNotifyAction } from '../../core/entities/orders/order-notify-actio
 @Component({
     selector: 'sf-order-status-changed-snackbar',
     templateUrl: './order-status-changed-snackbar.component.html',
-    styleUrls: ['./order-status-changed-snackbar.component.scss']
+    styleUrls: ['./order-status-changed-snackbar.component.scss'],
 })
 export class OrderStatusChangedSnackbarComponent implements OnInit {
 

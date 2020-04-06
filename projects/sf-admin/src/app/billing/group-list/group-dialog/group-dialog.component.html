@@ -34,7 +34,7 @@
 
 <mat-dialog-actions>
     <button mat-button matDialogClose i18n color="accent">Cancel</button>
-    <button mat-button i18n color="accent" (click)="save()">
+    <button mat-button color="accent" (click)="save()">
         <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="processing" color="accent"></mat-spinner>
         <ng-container *ngIf="!processing" i18n>Save</ng-container>
     </button>

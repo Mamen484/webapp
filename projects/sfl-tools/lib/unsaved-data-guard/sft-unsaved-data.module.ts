@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { UnsavedDataDialogComponent } from './unsaved-data-dialog.component';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 
 @NgModule({

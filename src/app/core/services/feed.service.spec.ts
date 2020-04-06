@@ -60,7 +60,6 @@ describe('FeedService', () => {
 
         let reqs = httpMock.match(`${environment.API_URL}/feed?catalogId=14&channelId=41&country=aa`);
         expect(reqs.length).toBe(1);
-
     });
 
     it('should force a call for feed collection when requested a second time with `forceFetch` param', () => {
@@ -118,6 +117,24 @@ describe('FeedService', () => {
 
         httpMock.expectOne(`${environment.API_URL}/catalog/56/mapping`);
         httpMock.expectOne(`${environment.API_URL}/catalog/57/mapping`);
+    });
+
+    it('should fetch appropriate endpoint to get autotag attributes', () => {
+        service.fetchAutotagByCategory(22, 33).subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/feed/22/autotag/category/33?limit=200`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should fetch appropriate endpoint to get required autotag attributes', () => {
+        service.fetchAutotagByCategory(22, 33, {requirement: 'required'}).subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/feed/22/autotag/category/33?limit=200&channelAttributeRequirement=required`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should fetch appropriate endpoint to get matched autotag attributes', () => {
+        service.fetchAutotagByCategory(22, 33, {matching: 'matched'}).subscribe();
+        const req = httpMock.expectOne(`${environment.API_URL}/feed/22/autotag/category/33?limit=200&matching=matched`);
+        expect(req.request.method).toBe('GET');
     });
 
 

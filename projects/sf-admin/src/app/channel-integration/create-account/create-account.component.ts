@@ -7,7 +7,7 @@ import { catchError, flatMap, map } from 'rxjs/operators';
 import { Channel, Store, StoreStatus } from 'sfl-shared/entities';
 import { of, throwError } from 'rxjs';
 import { get, set } from 'lodash';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { CredentialsDialogComponent } from './credentials-dialog/credentials-dialog.component';
 import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/unsaved-data-guard';
 

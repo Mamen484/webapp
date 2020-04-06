@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatTableDataSource } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { TicketsService } from '../../tickets.service';
 import { Ticket, TicketPayload } from '../../entities/ticket';
 import { TicketType } from '../../entities/ticket-type.enum';

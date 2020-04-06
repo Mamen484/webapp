@@ -103,9 +103,9 @@ sfl-sidebar-container {
 
 form.template-form {
   width: calc(
-          55% // form width
-          + 60px // add/remove button
-          + 66px // drag&drop icon + index badge
+          55% /* form width */
+          + 60px /* add/remove button */
+          + 66px /* drag&drop icon + index badge */
   );
   min-width: 795px;
 

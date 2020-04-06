@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
     exports: [SftCountrySelectComponent],
 })
 export class SftCountrySelectModule {
-    static forRoot(dependency: { sflCountriesListLink }): ModuleWithProviders {
+    static forRoot(dependency: { sflCountriesListLink }): ModuleWithProviders<SftCountrySelectModule> {
         return {
             ngModule: SftCountrySelectModule,
             providers: [

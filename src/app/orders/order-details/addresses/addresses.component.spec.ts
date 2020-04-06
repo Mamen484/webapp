@@ -5,7 +5,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, of, throwError } from 'rxjs';
 import { AddressSavedSnackbarComponent, AddressType } from '../address-saved-snackbar/address-saved-snackbar.component';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';

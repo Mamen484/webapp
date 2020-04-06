@@ -7,7 +7,8 @@ import { CarrierDetailsDialogComponent } from '../../carrier-details-dialog/carr
 import { EMPTY, of } from 'rxjs';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
 import { OrdersService } from '../../../core/services/orders.service';

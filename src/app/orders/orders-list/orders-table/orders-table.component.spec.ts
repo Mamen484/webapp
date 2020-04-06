@@ -1,7 +1,10 @@
 import { cloneDeep } from 'lodash';
 import { OrdersTableComponent } from './orders-table.component';
 import { Store } from '@ngrx/store';
-import { MatDialog, MatMenuModule, MatSnackBar, MatTableModule } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 import { ChangeDetectorRef, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EMPTY, of, Subject } from 'rxjs';

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrdersFilterDialogComponent } from './orders-filter-dialog.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../core/entities/app-state';

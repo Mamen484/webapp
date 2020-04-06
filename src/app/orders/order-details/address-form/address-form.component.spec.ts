@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddressFormComponent } from './address-form.component';
 import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Address } from '../../../core/entities/orders/address';
 import { ValidationErrorsSnackbarComponent } from '../../../shared/validation-errors-snackbar/validation-errors-snackbar.component';
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';

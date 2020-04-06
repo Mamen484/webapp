@@ -1,6 +1,6 @@
 import { Component, Inject, Optional } from '@angular/core';
 import { CategoryState } from '../category-state';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'sf-filter-dialog',

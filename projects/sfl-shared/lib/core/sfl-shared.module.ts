@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [SflLegacyLinkDirective],
 })
 export class SflSharedModule {
-    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders {
+    static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders<SflSharedModule> {
         return {
             ngModule: SflSharedModule,
             providers: [

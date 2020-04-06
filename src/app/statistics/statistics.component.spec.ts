@@ -5,7 +5,7 @@ import { of, Subject } from 'rxjs';
 import { StatisticsComponent } from './statistics.component';
 import { statisticsMock } from '../../mocks/statistics-mock';
 import { ChannelsRequestParams, PagedResponse, StoreChannel } from 'sfl-shared/entities';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { StoreService } from 'sfl-shared/services';
 import { storeChannelMock } from '../../mocks/store-channel.mock';

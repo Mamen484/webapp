@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CredentialsDialogComponent } from './credentials-dialog.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 describe('CredentialsDialogComponent', () => {
     let component: CredentialsDialogComponent;

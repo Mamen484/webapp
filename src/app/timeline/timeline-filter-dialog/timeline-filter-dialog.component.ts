@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimelineTypeFilter } from '../../core/entities/timeline-type-filter.enum';
 import { TimelineFilterData } from '../../core/entities/timeline-filter-data';
 import { DateFilter } from '../../core/entities/date-filter.enum';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'sf-timeline-filter-dialog',
