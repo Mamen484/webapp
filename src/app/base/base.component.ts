@@ -13,6 +13,7 @@ import { LOAD_AUTOPILOT } from '../../trackers/autopilot';
 import { ngxZendeskWebwidgetService } from 'ngx-zendesk-webwidget';
 import { FullstoryLoaderService } from '../core/services/fullstory-loader.service';
 import { AppcuesService } from './appcues/appcues.service';
+import { loadSalesMachine } from '../../trackers/salesmachine';
 
 @Component({
     selector: 'app-homepage',
@@ -58,10 +59,10 @@ export class BaseComponent implements OnInit {
                     this.runCountrySpecificCode(userInfo);
                     this.configureAutopilot(userInfo);
                     this.enableAppcues();
+                    this.runSalesMachine(userInfo);
                 }
             });
     }
-
 
     protected configureAutopilot(userInfo) {
         this.appStore.select('currentStore')
@@ -95,6 +96,25 @@ export class BaseComponent implements OnInit {
                     {'page_path': event.urlAfterRedirects}
                 );
             }
+        });
+    }
+
+    protected runSalesMachine(userInfo) {
+        loadSalesMachine(() => {
+            this.appStore.select('currentStore').subscribe(store => {
+                this.sendSalesMachineTrackEvent(userInfo, store);
+                this.router.events.subscribe(event => {
+                    if (event instanceof NavigationEnd) {
+                        this.sendSalesMachineTrackEvent(userInfo, store);
+                    }
+                });
+            })
+        });
+    }
+
+    protected sendSalesMachineTrackEvent(userInfo, store) {
+        this.windowRef.nativeWindow.salesmachine.track(userInfo.email, 'pageview', {
+            account_uid: store.id,
         });
     }
 
