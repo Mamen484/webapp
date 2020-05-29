@@ -6,6 +6,7 @@
 $actions-left-padding: 29px;
 $hover-row-bg: #EBEBEB;
 $chat-height: 50px;
+$table-elevation: 1px;
 
 .actions {
   justify-content: flex-start;
@@ -17,10 +18,10 @@ $chat-height: 50px;
 }
 
 .table-list-layout {
-  height: calc(100vh - 2 * #{$content-margin});
+  height: calc(100vh - 2 * #{$content-margin} - 2 * #{$table-elevation});
 
   ::ng-deep .sf-chat-enabled & {
-    height: calc(100vh - 2 * #{$content-margin} - #{$chat-height});
+    height: calc(100vh - 2 * #{$content-margin} - #{$chat-height} - 2 * #{$table-elevation});
   }
 
   align-content: start;
@@ -28,8 +29,9 @@ $chat-height: 50px;
   display: grid;
 
   mat-card.orders {
-    height: 100%;
+    height: calc(100% - 2 * #{$table-elevation});
     overflow: hidden;
+    border: $table-elevation solid $black-12-opacity;
 
     mat-card-content {
       height: 100%;
@@ -55,7 +57,8 @@ $chat-height: 50px;
 
 mat-card {
   padding: 0;
-  width: 100%;
+  // elevation padding
+  width: calc(100% - 2 * #{$table-elevation});
 }
 
 mat-spinner {

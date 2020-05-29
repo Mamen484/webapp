@@ -21,7 +21,7 @@
             <mat-icon (click)="cancelFilter('tag', 'all')">cancel</mat-icon>
         </mat-chip>
     </mat-chip-list>
-    <mat-card class="orders"
+    <mat-card class="orders mat-elevation-z0"
               [class.filters-applied]="ordersFilter.isActive(['since', 'until', 'tag']) || selectedChannel">
         <mat-card-content>
             <div class="actions" [class.accent]="selection.selected.length" fxLayout="row">
@@ -202,10 +202,10 @@
                     <div class="no-orders-message" i18n *ngIf="!isLoadingResults && !dataSource.data.length">
                         No orders matching your request.
                     </div>
-                    <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
-                                   (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
                 </div>
             </div>
+            <mat-paginator [pageSize]="pageSize" [length]="resultsLength" [pageSizeOptions]="pageSizeOptions"
+                           (page)="pageChanged($event)" [pageIndex]="currentPage"></mat-paginator>
         </mat-card-content>
     </mat-card>
 
