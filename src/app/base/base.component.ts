@@ -22,6 +22,11 @@ import { loadSalesMachine } from '../../trackers/salesmachine';
 })
 export class BaseComponent implements OnInit {
 
+    /**
+     * Indicate a testing mode
+     */
+    testing = false;
+
     constructor(protected appStore: Store<AppState>,
                 protected windowRef: SflWindowRefService,
                 protected storeService: StoreService,
@@ -100,6 +105,9 @@ export class BaseComponent implements OnInit {
     }
 
     protected runSalesMachine(userInfo) {
+        if (this.testing) {
+            return false;
+        }
         loadSalesMachine(() => {
             this.appStore.select('currentStore').subscribe(store => {
                 this.sendSalesMachineTrackEvent(userInfo, store);

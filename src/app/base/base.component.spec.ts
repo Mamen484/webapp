@@ -70,6 +70,7 @@ describe('BaseComponent', () => {
 
         fixture = TestBed.createComponent(BaseComponent);
         component = fixture.componentInstance;
+        component.testing = true;
     });
 
     afterEach(() => {
