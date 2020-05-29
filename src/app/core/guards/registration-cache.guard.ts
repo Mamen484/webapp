@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { filter, flatMap, tap, map, count } from 'rxjs/operators';
+import { count, filter, flatMap, map, tap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
-import { SflWindowRefService } from 'sfl-shared/services';
+import { SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
-import { SflLocalStorageService } from 'sfl-shared/services';
 
 @Injectable()
 export class RegistrationCacheGuard implements CanActivate {
-
-    protected token;
 
     constructor(
         protected shopifyService: ShopifyAuthentifyService,
         protected windowRef: SflWindowRefService,
         protected localStorage: SflLocalStorageService
-        ) {
+    ) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
@@ -25,7 +22,7 @@ export class RegistrationCacheGuard implements CanActivate {
             .pipe(flatMap(store => this.shopifyService.updateStore(store)))
             .pipe(map(() => {
                 this.localStorage.removeItem('sf.registration');
-                this.windowRef.nativeWindow.location.href = environment.APP_URL + '?token=' + this.token;
+                this.windowRef.nativeWindow.location.href = environment.APP_URL;
             }))
             .pipe(count())
             .pipe(map(number => !number));
@@ -37,7 +34,7 @@ export class RegistrationCacheGuard implements CanActivate {
             return of(JSON.parse(cache));
         }
         return this.shopifyService.getStoreData(params['shop'], params)
-        // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
+            // we need to save the store data in cache, because we cannot call shopifyService.getStoreData twice with the same code
             .pipe(tap(store => this.localStorage.setItem('sf.registration', JSON.stringify(store))))
             .pipe(tap(store => this.autoLoginUser(store)));
     }
@@ -47,7 +44,9 @@ export class RegistrationCacheGuard implements CanActivate {
     }
 
     protected autoLoginUser(store) {
-        this.token = store.owner.token;
+        if (!store.owner.token) {
+            return;
+        }
         this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
     }
 
