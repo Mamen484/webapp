@@ -1,3 +1,8 @@
 @import '../../../sass/mixins/form-page';
 
 @include form-page();
+
+a.terms-link {
+  color: mat-color($accent);
+  text-decoration: none;
+}

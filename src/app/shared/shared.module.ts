@@ -51,6 +51,7 @@ import {SftSoloSearchModule} from 'sfl-tools/solo-search';
 import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
 import { TimeagoModule } from 'ngx-timeago';
 import {SflImageModule} from 'sfl-shared/image';
+import { AcceptTermsSnackbarComponent } from './create-account/accept-terms-snackbar/accept-terms-snackbar.component';
 
 @NgModule({
     imports: [
@@ -168,6 +169,7 @@ import {SflImageModule} from 'sfl-shared/image';
         ChannelLinkPipe,
         CreateAccountComponent,
         HighlightPipe,
+        AcceptTermsSnackbarComponent,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

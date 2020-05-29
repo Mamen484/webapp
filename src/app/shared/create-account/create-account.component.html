@@ -26,6 +26,10 @@
                             Password should contain at least 7 symbols.
                         </mat-error>
                     </mat-form-field>
+                    <mat-checkbox [(ngModel)]="termsAccepted" name="termsAccepted">
+                        I accept the <a class="terms-link" href="https://www.shopping-feed.com/wp-content/uploads/2019/02/Shopping-Feed_privacy_policy.pdf" target="_blank">Shoppingfeed policy</a>
+                         and <a class="terms-link" href="https://www.shopping-feed.com/wp-content/uploads/2019/02/Shopping-Feed-Terms-of-Use.pdf" target="_blank">Terms of use</a>
+                    </mat-checkbox>
                     <div class="form-actions">
                         <button mat-raised-button color="accent" i18n>NEXT</button>
                     </div>

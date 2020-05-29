@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AcceptTermsSnackbarComponent } from './accept-terms-snackbar/accept-terms-snackbar.component';
+import { ErrorSnackbarConfig } from '../../core/entities/error-snackbar-config';
 
 @Component({
     selector: 'sf-create-account',
@@ -11,8 +14,13 @@ export class CreateAccountComponent {
     @Input() hideForm = false;
     @Output() submitted = new EventEmitter<{ email: string, password: string }>();
 
+    termsAccepted = false;
+
     emailControl = new FormControl('', [Validators.required, Validators.email]);
     passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
+
+    constructor(protected snackbar: MatSnackBar) {
+    }
 
     submit() {
         if (this.emailControl.hasError('required')
@@ -20,6 +28,11 @@ export class CreateAccountComponent {
             || this.emailControl.hasError('email')
             || this.passwordControl.hasError('minlength')
         ) {
+            return;
+        }
+
+        if (!this.termsAccepted) {
+            this.snackbar.openFromComponent(AcceptTermsSnackbarComponent, new ErrorSnackbarConfig());
             return;
         }
 
