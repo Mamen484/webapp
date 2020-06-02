@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
 import { debounceTime, filter, flatMap, publishReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
@@ -16,20 +16,22 @@ import { PagedResponse } from 'sfl-shared/entities';
 
 const SEARCH_DEBOUNCE = 300;
 const MIN_QUERY_LENGTH = 2;
-const searchLimit = '10';
+const searchLimit = '200';
 
 @Component({
     selector: 'sf-category-mapping',
     templateUrl: './category-mapping.component.html',
-    styleUrls: ['./category-mapping.component.scss']
+    styleUrls: ['./category-mapping.component.scss'],
+    providers: []
 })
-export class CategoryMappingComponent implements OnInit, OnChanges {
+export class CategoryMappingComponent implements OnInit {
 
     @Input() channelId: number;
-    @Input() feedCategory: FeedCategory;
 
     @ViewChild('categoryMappingInput', {static: false}) categoryMappingInput: ElementRef<HTMLInputElement>;
     @ViewChild(MatAutocompleteTrigger, {static: false}) autocompleteTrigger: MatAutocompleteTrigger;
+
+    feedCategory: FeedCategory;
 
     processingSearch = false;
 
@@ -69,34 +71,29 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
         this.searchChannelCategoryControl.markAsDirty();
     }
 
-    ngOnChanges({feedCategory}: SimpleChanges) {
-        if (feedCategory.previousValue
-            && feedCategory.previousValue.id === feedCategory.currentValue.id) {
-            return;
-        }
-        this.searchChannelCategoryControl.reset(this.feedCategory.channelCategory);
-        this.searchChannelCategoryControl.markAsPristine();
-        if (this.searchSubscription) {
-            this.searchSubscription.unsubscribe();
-        }
-        this.loading = Boolean(this.feedCategory.channelCategory);
-        this.chosenChannelCategory = this.feedCategory.channelCategory;
-        this.cachedMapping = this.mappingCache.getCategoryMapping();
-        if (this.categoryMappingInput) {
-            this.categoryMappingInput.nativeElement.focus();
-        }
-        if (!this.searchChannelCategoryControl.value) {
-            this.searchChannelCategoryControl.setValue('');
-        }
-
-    }
-
     displayFn(category: Category) {
         return category ? category.name : undefined;
     }
 
     ngOnInit() {
         this.listenChannelCategorySearch();
+        this.categoryMappingService.getCurrentMapping().subscribe(({mapping}) => {
+            this.feedCategory = mapping.catalogCategory;
+            this.searchChannelCategoryControl.reset(mapping.channelCategory);
+            this.searchChannelCategoryControl.markAsPristine();
+            if (this.searchSubscription) {
+                this.searchSubscription.unsubscribe();
+            }
+            this.loading = Boolean(mapping.channelCategory);
+            this.chosenChannelCategory = mapping.channelCategory;
+            this.cachedMapping = this.mappingCache.getCategoryMapping()?.channelCategory;
+            if (this.categoryMappingInput) {
+                this.categoryMappingInput.nativeElement.focus();
+            }
+            if (!this.searchChannelCategoryControl.value) {
+                this.searchChannelCategoryControl.setValue('');
+            }
+        });
     }
 
     saveMatching() {
@@ -110,24 +107,8 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
             return;
         }
         this.loading = true;
-        this.feedService.mapFeedCategory(
-            this.feedCategory.feedId,
-            this.feedCategory.catalogCategory.id,
-            this.chosenChannelCategory
-                // modify mapping
-                ? this.chosenChannelCategory.id
-                // remove mapping
-                : null
-        )
-            .subscribe(() => {
-                this.searchChannelCategoryControl.markAsPristine();
-                this.categoryMappingService.notifyMappingChange(<Category>this.chosenChannelCategory);
-                this.mappingCache.addCategoryMapping(this.chosenChannelCategory);
-                // we don't wait for autotags loading, so we can hide the progress bar immediately
-                if (!this.chosenChannelCategory) {
-                    this.loading = false;
-                }
-            });
+        this.categoryMappingService.saveNewMapping(this.feedCategory, this.chosenChannelCategory)
+            .subscribe(() => this.afterSave());
 
     }
 
@@ -161,6 +142,14 @@ export class CategoryMappingComponent implements OnInit, OnChanges {
     onBlur() {
         if (this.searchChannelCategoryControl.pristine && this.searchChannelCategoryControl.touched) {
             this.searchChannelCategoryControl.updateValueAndValidity({emitEvent: false});
+        }
+    }
+
+    protected afterSave() {
+        this.searchChannelCategoryControl.markAsPristine();
+        // we don't wait for autotags loading, so we can hide the progress bar immediately
+        if (!this.chosenChannelCategory) {
+            this.loading = false;
         }
     }
 

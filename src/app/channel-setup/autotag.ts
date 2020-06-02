@@ -7,4 +7,7 @@ export interface Autotag {
     channelAttributeId: number; // = ChannelAttribute.id
     value?: string;
     _embedded: {attribute: ChannelAttribute};
+
+    // runtime variables
+    modified: boolean;
 }

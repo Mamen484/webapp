@@ -71,6 +71,7 @@ export class FeedCategoriesListComponent implements OnInit {
 
     chooseClientCategory(category: FeedCategory) {
         this.chosenCatalogCategory = category;
+        this.categoryMappingService.setCurrentMapping({catalogCategory: category, channelCategory: category.channelCategory});
     }
 
     chooseNextCatalogCategory() {
@@ -133,7 +134,7 @@ export class FeedCategoriesListComponent implements OnInit {
                 const category = this.chosenCatalogCategory
                     ? this.categories.find(cat => this.chosenCatalogCategory.id === cat.id)
                     : null;
-                this.chosenCatalogCategory = category || this.categories[0];
+                this.chooseClientCategory(category || this.categories[0]);
                 observer.next();
                 observer.complete();
             }, error => {
@@ -156,7 +157,7 @@ export class FeedCategoriesListComponent implements OnInit {
     }
 
     protected listenCategoryMappingChanged() {
-        this.categoryMappingService.getState().subscribe(channelCategory => {
+        this.categoryMappingService.getChanges().subscribe(channelCategory => {
                 this.refreshCategoriesList(true).subscribe();
             }
         );

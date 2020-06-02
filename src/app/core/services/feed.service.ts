@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { PagedResponse } from 'sfl-shared/entities';
-import { ConnectableObservable, Observable } from 'rxjs';
+import { ConnectableObservable, Observable, of, zip } from 'rxjs';
 import { FeedCategory } from '../entities/feed-category';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { flatMap, publishReplay, take } from 'rxjs/operators';
+import { flatMap, map, publishReplay, take, tap } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { CategoryState } from '../../channel-setup/category-state';
 import { Autotag } from '../../channel-setup/autotag';
@@ -73,6 +73,20 @@ export class FeedService {
         );
     }
 
+    copyCategoryAttributes(feedId: number, sourceCategoryId: number, targetCategoryId: number) {
+        return this.copyCategoryAttributesForPage(feedId, sourceCategoryId, targetCategoryId, 1).pipe(
+            flatMap((response) => {
+                if (response.pages > 1) {
+                    const requests = [];
+                    for (let i = 2; i <= response.pages; i++) {
+                        requests.push(this.copyCategoryAttributesForPage(feedId, sourceCategoryId, targetCategoryId, i));
+                    }
+                    return zip(...requests);
+                }
+                return of(response);
+            }));
+    }
+
     create(channelId) {
         return this.appStore.select('currentStore').pipe(
             take(1),
@@ -82,13 +96,16 @@ export class FeedService {
         ) as Observable<Feed>;
     }
 
-    fetchAutotagByCategory(feedId, catalogCategoryId, {requirement, matching}: { requirement?: 'required' | 'optional', matching?: 'matched' | 'empty' } = {}) {
+    fetchAutotagByCategory(feedId, catalogCategoryId, {requirement, matching, page}: { requirement?: 'required' | 'optional', matching?: 'matched' | 'empty', page?: number } = {}) {
         let params = new HttpParams().set('limit', MAX_API_LIMIT);
         if (requirement) {
             params = params.set('channelAttributeRequirement', requirement);
         }
         if (matching) {
             params = params.set('matching', matching);
+        }
+        if (page) {
+            params = params.set('page', page.toString());
         }
         return this.httpClient.get(
             `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}`, {params}
@@ -125,4 +142,24 @@ export class FeedService {
     fetchFeed(feedId) {
         return this.httpClient.get(`${environment.API_URL}/feed/${feedId}`) as Observable<Feed>;
     }
+
+    protected copyCategoryAttributesForPage(feedId, sourceCategoryId, targetCategoryId, page) {
+        return this.fetchAutotagByCategory(feedId, sourceCategoryId, {page}).pipe(
+            flatMap((response) => this.saveAttributes(feedId, targetCategoryId, response._embedded.autotag).pipe(
+                map(() => response)
+            ))
+        );
+
+    }
+
+    protected saveAttributes(feedId: number, categoryId: number, autotags: Autotag[]) {
+        return zip(...autotags.map(autotag => this.matchAutotagByCategory(
+            feedId,
+            categoryId,
+            autotag.channelAttributeId,
+            autotag.value))
+        );
+    }
+
+
 }

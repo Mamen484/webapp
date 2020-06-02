@@ -6,6 +6,8 @@ import { Category } from '../entities/category';
 import { Observable } from 'rxjs';
 import { ChannelConstraint } from '../entities/channel-constraint';
 
+const maxApiLimit = '200';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -40,10 +42,13 @@ export class ChannelService {
         return this.httpClient.get(`${environment.API_URL}/channel/${channelId}`) as Observable<Channel>;
     }
 
-    fetchChannelConstraintCollection(taxonomyId: number, groupId: number, label?: string) {
-        let params = new HttpParams().set('groupId', groupId.toString());
+    fetchChannelConstraintCollection(taxonomyId: number, groupId: number, label?: string, options?: { page: string }) {
+        let params = new HttpParams().set('groupId', groupId.toString()).set('limit', maxApiLimit);
         if (label) {
             params = params.set('label', label);
+        }
+        if (options?.page) {
+            params = params.set('page', options.page);
         }
         return this.httpClient.get(
             `${environment.API_URL}/channel/taxonomy/${taxonomyId}/constraint`,

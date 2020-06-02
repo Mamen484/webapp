@@ -5,22 +5,29 @@ services:
     networks:
     - sf_network
     ports:
+      - "0.0.0.0:4294:80"
       - "0.0.0.0:4295:80"
+      - "0.0.0.0:4296:80"
     volumes:
     - "$PWD:/var/www"
     environment:
       ENV: dev
       HOST: app.shopping-feed.lan
-      PORT: 80
+      PORT: 4294
       ADMIN_HOST: admin.shopping-feed.lan
       ADMIN_PORT: 4295
+      CHANNEL_SETTINGS_HOST: operator.shopping-feed.lan
+      CHANNEL_SETTINGS_PORT: 4296
     labels:
       traefik.webapp.frontend.rule: "Host:app.shopping-feed.lan;PathPrefix:/v3"
       traefik.webapp.backend: "webapp"
-      traefik.webapp.port: "80"
+      traefik.webapp.port: "4294"
       traefik.webadmin.frontend.rule: "Host:admin.shopping-feed.lan"
       traefik.webadmin.backend: "webadmin"
       traefik.webadmin.port: "4295"
+      traefik.weboperator.frontend.rule: "Host:operator.shopping-feed.lan"
+      traefik.weboperator.backend: "weboperator"
+      traefik.weboperator.port: "4296"
       traefik.docker.network: "sf_network"
       traefik.enable: "true"
 networks:

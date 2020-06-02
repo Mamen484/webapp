@@ -83,7 +83,7 @@
     "docker-serve-webapp": "ng serve --base-href=/v3/en/ --host=0.0.0.0 --disable-host-check --public-host $HOST --port $PORT",
     "docker-serve-webadmin": "ng serve sf-admin --base-href=/en/ --host=0.0.0.0 --disable-host-check --public-host $ADMIN_HOST --port $ADMIN_PORT",
     "docker-serve-channel-settings": "ng serve channel-settings --base-href=/en/ --host=0.0.0.0 --disable-host-check --public-host $CHANNEL_SETTINGS_HOST --port $CHANNEL_SETTINGS_PORT",
-    "docker-start": "npm ci && npm run build-lib && concurrently 'npm run docker-serve-webapp' 'npm run docker-serve-webadmin'",
+    "docker-start": "npm ci && npm run build-lib && ng build webapp && ng build sf-admin && ng build channel-settings && concurrently 'npm run docker-serve-webapp' 'npm run docker-serve-webadmin' 'npm run docker-serve-channel-settings'",
     "compile-env": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-node compile-environment.ts"
   },
   "private": true

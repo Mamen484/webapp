@@ -4,7 +4,7 @@
             <div class="mat-subheading-2 category-mapping-heading" i18n>Category Mapping</div>
             <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
                 <mat-form-field appearance="outline" color="accent" fxFlex>
-                    <mat-label i18n>Category mapping</mat-label>
+                    <mat-label i18n>Type a keyword</mat-label>
                     <input type="search" matInput [formControl]="searchChannelCategoryControl" [matAutocomplete]="auto"
                             (keyup)="watchDeletion()" #categoryMappingInput autofocus (blur)="onBlur()"
                            [matAutocompleteDisabled]="chosenChannelCategory?.name && chosenChannelCategory?.name === searchChannelCategoryControl.value?.name">

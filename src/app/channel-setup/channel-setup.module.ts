@@ -14,6 +14,9 @@ import {SettingsSavedSnackbarComponent} from './categories-configuration/setting
 import {AutotagsRequiredSnackbarComponent} from './categories-configuration/autotag-mapping/autotags-required-snackbar/autotags-required-snackbar.component';
 import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { AttributesListComponent } from './categories-configuration/autotag-mapping/attributes-list/attributes-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { AttributesUpdateErrorSnackbarComponent } from './categories-configuration/autotag-mapping/attributes-update-error-snackbar/attributes-update-error-snackbar.component';
 
 @NgModule({
     declarations: [
@@ -26,6 +29,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         AutotagDropdownComponent,
         SettingsSavedSnackbarComponent,
         AutotagsRequiredSnackbarComponent,
+        AttributesListComponent,
+        AttributesUpdateErrorSnackbarComponent,
     ],
     imports: [
         ChannelSetupRoutingModule,
@@ -33,6 +38,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         SharedModule,
         SftUnsavedDataModule,
         ScrollingModule,
+        MatExpansionModule,
     ],
     entryComponents: [
         FilterDialogComponent,

@@ -75,7 +75,7 @@ describe('FeedCategoriesListComponent', () => {
 
     it('should NOT load next page when chooseNextClientCategory() called and the last category on the last page selected', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
-        component.categories = Array.of(10).map(item => (<any>{id: item}));
+        component.categories = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (<any>{id: item, channelCategory: {}}));
         component.currentPage = 4; // last page
         component.itemsPerPage = '10';
         component.totalCategoriesNumber = 50;

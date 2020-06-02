@@ -25,6 +25,7 @@ mat-card {
 
 ::ng-deep {
   .sf-category-autocomplete {
+    max-height: 410px !important;
     mat-option.mat-option {
       height: auto;
       white-space: normal;

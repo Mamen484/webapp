@@ -21,7 +21,7 @@ describe('MappingCacheService', () => {
     });
 
     it('should return saved category mapping cache on getCategoryMapping() call', () => {
-        service.addCategoryMapping({id: 14, name: 'Name', channelId: 22});
-        expect(service.getCategoryMapping()).toEqual({id: 14, name: 'Name', channelId: 22});
+        service.addCategoryMapping({id: 14, name: 'Name', channelId: 22}, 33);
+        expect(service.getCategoryMapping()).toEqual({channelCategory: {id: 14, name: 'Name', channelId: 22}, catalogCategoryId: 33});
     });
 });

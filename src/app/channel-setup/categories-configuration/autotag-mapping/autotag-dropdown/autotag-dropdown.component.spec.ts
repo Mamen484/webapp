@@ -3,7 +3,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { AutotagDropdownComponent } from './autotag-dropdown.component';
 import { ChannelService } from '../../../../core/services/channel.service';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('AutotagDropdownComponent', () => {
@@ -81,7 +81,73 @@ describe('AutotagDropdownComponent', () => {
         expect(channelService.fetchChannelConstraintCollection).toHaveBeenCalledWith(22, 33, 'fda');
     }));
 
+    describe('loadNextPage', () => {
+
+        let event;
+
+        beforeEach(() => {
+            event = {stopPropagation: jasmine.createSpy()};
+            component.attribute = {taxonomyId: 43, constraintGroupId: 10, id: 1, name: 'someAttribute', isRequired: true};
+            component.options = [];
+        });
+        it('should indicate that loading is in progress', () => {
+            channelService.fetchChannelConstraintCollection.and.returnValue(EMPTY);
+            component.loadNextPage(event);
+            expect(component.loadingNextPage).toBe(true);
+        });
+
+        it('should indicate that loading is finished when data received', () => {
+            channelService.fetchChannelConstraintCollection.and.returnValue(of(<any>{pages: 1, page: 1, _embedded: {constraint: []}}));
+            component.loadNextPage(event);
+            expect(component.loadingNextPage).toBe(false);
+        });
+
+        it('should add categories from a new page to existing categories', () => {
+            channelService.fetchChannelConstraintCollection.and.returnValue(of(<any>{
+                pages: 1, page: 1, _embedded: {
+                    constraint: [
+                        {label: 'three'},
+                        {label: 'four'},
+                    ]
+                }
+            }));
+            component.options = <any>[
+                'one',
+                'two'
+            ];
+            component.loadNextPage(event);
+            expect(component.options).toEqual(<any>[
+                'one',
+                'two',
+                'three',
+                'four',
+            ]);
+        });
+
+        it('should set hasNextPage to true if there are more pages', () => {
+            component.currentPage = 1;
+            channelService.fetchChannelConstraintCollection.and.returnValue(of(<any>{pages: 3, page: 1, _embedded: {constraint: []}}));
+            component.loadNextPage(event);
+            expect(component.hasNextPage).toBe(true);
+        });
+
+        it('should set hasNextPage to false if the last page is loaded', () => {
+            component.currentPage = 2;
+            channelService.fetchChannelConstraintCollection.and.returnValue(of(<any>{pages: 3, page: 3, _embedded: {constraint: []}}));
+            component.loadNextPage(event);
+            expect(component.hasNextPage).toBe(false);
+        });
+
+        it('should update the current page', () => {
+            component.currentPage = 1;
+            channelService.fetchChannelConstraintCollection.and.returnValue(of(<any>{pages: 3, page: 2, _embedded: {constraint: []}}));
+            component.loadNextPage(event);
+            expect(component.currentPage).toBe(2);
+        });
+    });
+
 });
+
 @Pipe({
     name: 'highlight'
 })

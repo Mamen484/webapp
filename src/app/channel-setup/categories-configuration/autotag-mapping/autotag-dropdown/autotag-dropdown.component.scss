@@ -9,3 +9,11 @@ mat-icon[matSuffix] {
   font-size: 24px;
   cursor: pointer;
 }
+
+.mat-option.load-more-results[disabled], .mat-option.loading-more-results[disabled] {
+  color: mat-color($accent);
+}
+
+.mat-option.load-more-results[disabled]{
+  cursor: pointer;
+}

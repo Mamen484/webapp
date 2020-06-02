@@ -37,6 +37,7 @@ export class AutotagInputComponent implements OnInit, OnChanges, ControlValueAcc
 
     @Input() value: string;
     @Input() label: string;
+    @Input() required = true;
     @Output() changed = new EventEmitter<string>();
     mappingCollection: MappingCollection;
     suggestions: string[];
@@ -99,7 +100,7 @@ export class AutotagInputComponent implements OnInit, OnChanges, ControlValueAcc
     }
 
     validate(control: AbstractControl): ValidationErrors | null {
-        return this.ngModel.errors;
+        return this.ngModel?.errors;
     }
 
     watchDeletion() {

@@ -137,5 +137,42 @@ describe('FeedService', () => {
         expect(req.request.method).toBe('GET');
     });
 
+    it('should copy attribute values from one catalog category to another', () => {
+        appStore.select.and.returnValue(of({id: 56}));
+        service.copyCategoryAttributes(11, 222, 333).subscribe();
+        mockSavingAttributesForPage(1);
+        mockSavingAttributesForPage(2);
+        mockSavingAttributesForPage(3);
+        mockSavingAttributesForPage(4);
+
+        httpMock.expectNone(`${environment.API_URL}/feed/11/autotag/category/222?limit=200&page=4`);
+    });
+
+    function mockSavingAttributesForPage(page: number) {
+        httpMock.expectOne(`${environment.API_URL}/feed/11/autotag/category/222?limit=200&page=${page}`)
+            .flush({
+                pages: 4, _embedded: {
+                    autotag: [
+                        {channelAttributeId: page * 3 + 0, value: page.toString()},
+                        {channelAttributeId: page * 3 + 1, value: '3'},
+                        {channelAttributeId: page * 3 + 2, value: '3'},
+                    ]
+                }
+            });
+
+        const saveRequests = [
+            httpMock.expectOne(`${environment.API_URL}/feed/11/autotag/category/333/attribute/${page * 3 + 0}`),
+            httpMock.expectOne(`${environment.API_URL}/feed/11/autotag/category/333/attribute/${page * 3 + 1}`),
+            httpMock.expectOne(`${environment.API_URL}/feed/11/autotag/category/333/attribute/${page * 3 + 2}`),
+        ];
+
+        expect(saveRequests[0].request.method).toBe('PUT');
+        expect(saveRequests[1].request.method).toBe('PUT');
+        expect(saveRequests[2].request.method).toBe('PUT');
+
+        saveRequests.forEach(request => request.flush({}));
+    }
 
 });
+
+

@@ -8,8 +8,8 @@ import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/entities/app-state';
-import { EMPTY, of } from 'rxjs';
-import { CategoryMappingService } from './category-mapping.service';
+import { EMPTY, of, Subject } from 'rxjs';
+import { CategoryMappingService, Mapping } from './category-mapping.service';
 import { MappingCacheService } from '../mapping-cache.service';
 import { By } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,8 +24,12 @@ describe('CategoryMappingComponent', () => {
     let feedService: jasmine.SpyObj<FeedService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let matSnackBar: jasmine.SpyObj<MatSnackBar>;
-    let categoryMappingService: jasmine.SpyObj<CategoryMappingService>;
     let mappingCacheService: jasmine.SpyObj<MappingCacheService>;
+    let categoryMappingService: jasmine.SpyObj<CategoryMappingService>;
+    let categoryMapping$: Subject<{
+        fromCache: boolean,
+        mapping: Mapping
+    }>;
 
     beforeEach(async(() => {
 
@@ -33,9 +37,10 @@ describe('CategoryMappingComponent', () => {
         feedService = jasmine.createSpyObj('FeedService spy', ['mapFeedCategory']);
         appStore = jasmine.createSpyObj('App Store spy', ['select']);
         matSnackBar = jasmine.createSpyObj('MatSnackBar spy', ['openFromComponent']);
-        categoryMappingService = jasmine.createSpyObj('CategoryMappingService spy', ['notifyMappingChange']);
+        categoryMappingService = jasmine.createSpyObj('CategoryMappingService spy', ['saveNewMapping', 'getCurrentMapping']);
         mappingCacheService = jasmine.createSpyObj('MappingCacheService spy', ['getCategoryMapping', 'addCategoryMapping', 'hasCategoryMapping']);
-
+        categoryMapping$ = new Subject();
+        categoryMappingService.getCurrentMapping.and.returnValue(categoryMapping$);
         TestBed.configureTestingModule({
             declarations: [CategoryMappingComponent, HighlightPipe],
             schemas: [NO_ERRORS_SCHEMA],
@@ -104,7 +109,7 @@ describe('CategoryMappingComponent', () => {
         expect(component.currentPage).toBe(1);
     }));
 
-    it('should set hasNextPage to true when more pages available',  fakeAsync(() => {
+    it('should set hasNextPage to true when more pages available', fakeAsync(() => {
         component.currentPage = 1;
         appStore.select.and.returnValue(of({country: 'fr'}));
         channelService.getChannelCategories.and.returnValue(of(<any>{page: 1, pages: 2, _embedded: {category: [83, 70, 72, 50]}}));
@@ -124,32 +129,29 @@ describe('CategoryMappingComponent', () => {
         expect(component.hasNextPage).toBe(false);
     }));
 
-    it('should emit categoryMappingChanged event when a category is saved successfully', async () => {
-        component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(of({}));
-        component.saveMatching();
-        expect(categoryMappingService.notifyMappingChange).toHaveBeenCalledWith(<any>{id: 22});
-    });
-
     it('should show a loading bar when a category mapping save clicked', async () => {
         component.chosenChannelCategory = <any>{id: 22};
         feedService.mapFeedCategory.and.returnValue(EMPTY);
+        categoryMappingService.saveNewMapping.and.returnValue(EMPTY);
         component.saveMatching();
         expect(component.loading).toBe(true);
     });
 
     it('should send a channel category id to modify a category mapping when a mapping created', () => {
         component.chosenChannelCategory = <any>{id: 44};
-        feedService.mapFeedCategory.and.returnValue(EMPTY);
+        component.feedCategory = <any>{id: 123};
+        categoryMappingService.saveNewMapping.and.returnValue(EMPTY);
         component.saveMatching();
-        expect(feedService.mapFeedCategory).toHaveBeenCalledWith(21, 14, 44);
+        expect(categoryMappingService.saveNewMapping).toHaveBeenCalledWith(<any>{id: 123}, <any>{id: 44});
     });
 
     it('should send NULL to remove a category mapping when a mapping input value removed', () => {
         component.chosenChannelCategory = null;
+        component.feedCategory = <any>{id: 123};
         feedService.mapFeedCategory.and.returnValue(EMPTY);
+        categoryMappingService.saveNewMapping.and.returnValue(EMPTY);
         component.saveMatching();
-        expect(feedService.mapFeedCategory).toHaveBeenCalledWith(21, 14, null);
+        expect(categoryMappingService.saveNewMapping).toHaveBeenCalledWith(<any>{id: 123}, null);
     });
 
     it('should mark the category control as valid when no category selected and the input does not contain any value', () => {
@@ -205,17 +207,10 @@ describe('CategoryMappingComponent', () => {
     });
 
     it('should show a previous mapping option if mappingCacheService.getCategoryMapping() returns a category', () => {
-        mappingCacheService.getCategoryMapping.and.returnValue(<any>{name: 'some category'});
         appStore.select.and.returnValue(EMPTY);
-        component.ngOnChanges({feedCategory: <any>{previousValue: {id: 1}, currentValue: {id: 2}}});
+        mappingCacheService.getCategoryMapping.and.returnValue(<any>{channelCategory: {name: 'some category'}});
+        categoryMapping$.next( <any>{mapping: {channelCategory: {name: 'some category'}}});
         expect(component.cachedMapping).toEqual(<any>{name: 'some category'});
-    });
-
-    it('should cache mapped category', () => {
-        component.chosenChannelCategory = <any>{id: 22};
-        feedService.mapFeedCategory.and.returnValue(of({}));
-        component.saveMatching();
-        expect(mappingCacheService.addCategoryMapping).toHaveBeenCalledWith(<any>{id: 22});
     });
 
     describe('modifications check (for parent hasModifications() check)', () => {
@@ -235,17 +230,8 @@ describe('CategoryMappingComponent', () => {
             expect(component.searchChannelCategoryControl.dirty).toBe(true);
         }));
 
-        it('should be pristine after user successfully saves selection', fakeAsync(() => {
-            feedService.mapFeedCategory.and.returnValue(of({}));
-            component.removeValue();
-            tick(300);
-            fixture.debugElement.nativeElement.querySelector('button.save-matching').click();
-            fixture.detectChanges();
-
-            expect(component.searchChannelCategoryControl.dirty).toBe(false);
-        }));
-
         it('should be dirty when user saves selection and then alters search', fakeAsync(() => {
+            mappingCacheService.getCategoryMapping.and.returnValue(<any>{channelCategory: {}})
             feedService.mapFeedCategory.and.returnValue(of({}));
             component.removeValue();
             tick(300);
@@ -253,15 +239,6 @@ describe('CategoryMappingComponent', () => {
             setInputValue();
             tick(300);
             expect(component.searchChannelCategoryControl.dirty).toBe(true);
-        }));
-
-        it('should be pristine when new category is set', fakeAsync(() => {
-            appStore.select.and.returnValue(EMPTY);
-            setInputValue();
-            tick(300);
-            component.ngOnChanges(<any>{feedCategory: {previousValue: {id: 12}, currentValue: {id: 14}}});
-            tick(300);
-            expect(component.searchChannelCategoryControl.dirty).toBe(false);
         }));
 
         it('should be dirty when user chooses a category from autocomplete', fakeAsync(() => {

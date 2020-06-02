@@ -14,8 +14,8 @@ describe('ChannelService', () => {
     }));
 
     beforeEach(() => {
-        service = TestBed.get(ChannelService);
-        httpMock = TestBed.get(HttpTestingController);
+        service = TestBed.inject(ChannelService);
+        httpMock = TestBed.inject(HttpTestingController);
     });
 
     it('should be created', () => {
@@ -24,15 +24,37 @@ describe('ChannelService', () => {
 
     it('should call a proper endpoint on fetchChannelConstraintCollection call', () => {
         service.fetchChannelConstraintCollection(11, 14).subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14`);
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14&limit=200`);
 
         expect(req.request.method).toBe('GET');
     });
 
     it('should call a proper endpoint on fetchChannelConstraintCollection call when results are filtered', () => {
         service.fetchChannelConstraintCollection(11, 14, 'fba').subscribe();
-        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14&label=fba`);
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14&limit=200&label=fba`);
 
         expect(req.request.method).toBe('GET');
     });
+
+    it('should call a proper endpoint on fetchChannelConstraintCollection call  when results are filtered and the page is specified', () => {
+        service.fetchChannelConstraintCollection(11, 14, 'fba', {page: '43'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/taxonomy/11/constraint?groupId=14&limit=200&label=fba&page=43`);
+
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should call a proper endpoint on getChannelCategories call', () => {
+        service.getChannelCategories(11, {name: 'someName', page: '3', limit: '32', country: 'pl'}).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/11/category?name=someName&page=3&limit=32&country=pl`);
+
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should call a proper endpoint on getChannel call', () => {
+        service.getChannel(11).subscribe();
+        let req = httpMock.expectOne(`${environment.API_URL}/channel/11`);
+
+        expect(req.request.method).toBe('GET');
+    });
+
 });

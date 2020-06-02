@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 import { AutotagInputComponent } from '../autotag-input/autotag-input.component';
 import { ChannelAttribute } from '../../../channel-attribute';
 import { debounceTime, startWith, switchMap } from 'rxjs/operators';
+import { PagedResponse } from 'sfl-shared/entities';
+import { ChannelConstraint } from '../../../../core/entities/channel-constraint';
 
 const SEARCH_DEBOUNCE = 200;
 
@@ -39,6 +41,7 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
 
     @Input() value: string;
     @Input() attribute: ChannelAttribute;
+    @Input() required: true;
 
     @Output() changed = new EventEmitter<string>();
     onChange: (value: string) => any;
@@ -47,18 +50,40 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
     options: string[];
     control = new FormControl();
 
+    // pagination
+    currentPage = 1;
+    hasNextPage = false;
+    loadingNextPage = false;
+
     constructor(protected channelService: ChannelService) {
     }
 
     ngOnInit() {
-        this.control.valueChanges.pipe(
+        this.subscription = this.control.valueChanges.pipe(
             debounceTime(SEARCH_DEBOUNCE),
             startWith(''),
             switchMap(name =>
                 this.channelService.fetchChannelConstraintCollection(this.attribute.taxonomyId, this.attribute.constraintGroupId, name)
             ),
         )
-            .subscribe(response => this.options = response._embedded.constraint.map(constraint => constraint.label));
+            .subscribe((response: PagedResponse<{ constraint: ChannelConstraint[] }>) => {
+                this.options = response._embedded.constraint.map(constraint => constraint.label);
+                this.updatePaginator(response.page, response.pages);
+            });
+    }
+
+    loadNextPage(event) {
+        event.stopPropagation();
+        this.loadingNextPage = true;
+        this.channelService.fetchChannelConstraintCollection(
+            this.attribute.taxonomyId
+            , this.attribute.constraintGroupId,
+            this.control.value,
+            {page: String(this.currentPage + 1)})
+            .subscribe((response: PagedResponse<{ constraint: ChannelConstraint[] }>) => {
+                this.options.push( ... response._embedded.constraint.map(constraint => constraint.label));
+                this.updatePaginator(response.page, response.pages);
+            });
     }
 
     registerOnChange(fn: any): void {
@@ -79,6 +104,12 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+    }
+
+    protected updatePaginator(currentPage, pagesTotal) {
+        this.currentPage = +currentPage;
+        this.hasNextPage = +pagesTotal > this.currentPage;
+        this.loadingNextPage = false;
     }
 
 }

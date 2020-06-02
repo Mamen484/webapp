@@ -7,20 +7,20 @@ import { Category } from '../../core/entities/category';
 })
 export class MappingCacheService {
 
-    protected categoryMapping: Category;
+    protected categoryMapping: {channelCategory: Category, catalogCategoryId: number};
 
     constructor(protected feedService: FeedService) {
     }
 
-    addCategoryMapping(channelCategory: Category) {
-        this.categoryMapping = channelCategory;
+    addCategoryMapping(channelCategory: Category, catalogCategoryId: number) {
+        this.categoryMapping = {channelCategory, catalogCategoryId};
     }
 
     hasCategoryMapping() {
         return Boolean(this.categoryMapping);
     }
 
-    getCategoryMapping(): Category {
+    getCategoryMapping() {
         return this.categoryMapping;
     }
 }

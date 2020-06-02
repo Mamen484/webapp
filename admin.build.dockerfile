@@ -21,9 +21,7 @@ RUN npm run compile-env projects/sf-admin/src/environments
 
 # test sf-admin, tracking code coverage
 RUN ./node_modules/.bin/ng test sf-admin --code-coverage --watch false --browsers=ChromeHeadlessCI
-
-RUN chmod +x ./build-admin.sh
-RUN sh build-admin.sh
+RUN npx ng build sf-admin --configuration production
 
 #Step 3: copy files of compiled webapp to the nginx served folder and serve files with nginx
 FROM nginx:1.13

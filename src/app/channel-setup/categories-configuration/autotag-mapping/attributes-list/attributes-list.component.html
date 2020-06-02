@@ -1,0 +1,10 @@
+<ng-container *ngFor="let autotag of autotagList; index as i">
+    <sf-autotag-input *ngIf="!autotag._embedded.attribute.constraintGroupId"
+                      (changed)="attributeChanged.emit({attribute: autotag, value: $event})"
+                      [label]="autotag._embedded.attribute.name"
+                      [value]="autotag.value" ngModel name="autotag{{i}}" [required]="required"></sf-autotag-input>
+
+    <sf-autotag-dropdown *ngIf="autotag._embedded.attribute.constraintGroupId"
+                         [value]="autotag.value" (changed)="attributeChanged.emit({attribute: autotag, value: $event})"
+                         [attribute]="autotag._embedded.attribute" ngModel name="autotag{{i}}" [required]="required"></sf-autotag-dropdown>
+</ng-container>

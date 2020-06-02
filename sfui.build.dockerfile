@@ -4,8 +4,6 @@ ARG imageName
 # use sfeed-webbase for a local build and eu.gcr.io/kube-196515/sfeed-webbase-{branch-name} for kube build
 FROM ${imageName} as base
 
-ARG LOCALES="en fr es pt de it"
-
 # variables from environments/environment.ts
 
 ARG DEFAULT_LANGUAGE
@@ -37,8 +35,8 @@ RUN npm run compile-env
 # test webapp
 RUN ./node_modules/.bin/ng test webapp --watch false --browsers=ChromeHeadlessCI
 
-RUN chmod +x ./build-multiple-locales.sh
-RUN sh build-multiple-locales.sh
+RUN npx npm run compile-env
+RUN npx ng build webapp --configuration production
 
 #Step 3: copy files of compiled webapp to the nginx served folder and serve files with nginx
 FROM nginx:1.13

@@ -4,8 +4,6 @@ ARG imageName
 # use sfeed-webbase for a local build and eu.gcr.io/kube-196515/sfeed-webbase-{branch-name} for kube build
 FROM ${imageName} as base
 
-ARG LOCALES="en"
-
 # variables from environments/environment.ts
 
 ARG apiLink
@@ -18,8 +16,8 @@ RUN npm run compile-env projects/channel-settings/src/environments
 
 RUN ./node_modules/.bin/ng test channel-settings --code-coverage --watch false --browsers=ChromeHeadlessCI
 
-RUN chmod +x ./build-channel-settings.sh
-RUN sh build-channel-settings.sh
+RUN npx npm run compile-env
+RUN npx ng build channel-settings --configuration production
 
 #Step 3: copy files of compiled app to the nginx served folder and serve files with nginx
 FROM nginx:1.13

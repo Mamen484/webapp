@@ -1,6 +1,6 @@
 <mat-form-field appearance="outline" color="accent">
     <mat-label>{{label}}</mat-label>
-    <input matInput [(ngModel)]="value" (keyup)="createSuggestions(); watchDeletion()" (blur)="onBlur()" [matAutocomplete]="auto" required (ngModelChange)="notifyInputDirty()">
+    <input matInput [(ngModel)]="value" (keyup)="createSuggestions(); watchDeletion()" (blur)="onBlur()" [matAutocomplete]="auto" [required]="required" (ngModelChange)="notifyInputDirty()">
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setAutotagValue($event.option.value)">
         <mat-option *ngFor="let suggestion of suggestions" [value]="suggestion"
                     [innerHTML]="suggestion | highlight:value"></mat-option>

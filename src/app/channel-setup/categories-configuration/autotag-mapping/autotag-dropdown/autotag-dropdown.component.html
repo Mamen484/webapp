@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutGap="20px">
     <sf-autotag-input #input [value]="value" [label]="attribute.name" fxFlex
-                      (changed)="changed.emit($event)"></sf-autotag-input>
+                      (changed)="changed.emit($event)" [required]="required"></sf-autotag-input>
     <mat-form-field appearance="outline" color="accent" fxFlex>
         <mat-label i18n>Authorized values</mat-label>
         <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" #inputElement>
@@ -10,4 +10,10 @@
 <mat-autocomplete #auto="matAutocomplete"
                   (optionSelected)="changed.emit($event.option.value); input.notifyInputDirty(); control.setValue(''); inputElement.blur()">
     <mat-option *ngFor="let option of options" [value]="'['+option+']'" [innerHTML]="option | highlight:control.value"></mat-option>
+    <mat-option class="load-more-results" *ngIf="hasNextPage && !loadingNextPage" disabled (click)="loadNextPage($event)" i18n>Load more results</mat-option>
+    <mat-option class="loading-more-results" *ngIf="loadingNextPage" disabled>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-spinner [diameter]="20" color="accent"></mat-spinner>
+        </div>
+    </mat-option>
 </mat-autocomplete>
