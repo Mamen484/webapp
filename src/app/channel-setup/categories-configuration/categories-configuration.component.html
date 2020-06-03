@@ -15,12 +15,9 @@
         <div fxFlex fxLayout="column" class="scrollable-container"
              *ngIf="feedCategoriesList?.categories?.length">
             <sf-category-mapping
-                    [channelId]="channel.id"
-                    [feedCategory]="feedCategoriesList?.chosenCatalogCategory"></sf-category-mapping>
+                    [channelId]="channel.id"></sf-category-mapping>
             <ng-container *ngIf="feedCategoriesList?.chosenCatalogCategory?.channelCategory">
-                <sf-autotag-mapping #autotagMappingComponent [feedId]="feed.id"
-                                    [catalogCategoryId]="feedCategoriesList?.chosenCatalogCategory?.id"
-                                    [channelCategoryId]="feedCategoriesList?.chosenCatalogCategory?.channelCategory?.id"
+                <sf-autotag-mapping #autotagMappingComponent
                                     (autotagsLoaded)="onAutotagsLoaded()"
                                     (autotagUpdated)="feedCategoriesList.refreshCategoriesList().subscribe()"></sf-autotag-mapping>
             </ng-container>
