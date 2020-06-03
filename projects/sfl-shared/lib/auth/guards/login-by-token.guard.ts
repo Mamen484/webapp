@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { SflAuthService } from 'sfl-shared/services';
 
 /**
  * Authenticate a user by adding a token param into a url.
@@ -16,14 +16,13 @@ import { SflLocalStorageService } from 'sfl-shared/services';
 })
 export class SflLoginByTokenGuard implements CanActivate {
 
-    constructor(protected localStorage: SflLocalStorageService) {
+    constructor(protected authService: SflAuthService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): true {
         if (next.queryParamMap.has('token')) {
-            this.localStorage.setItem('Authorization', 'Bearer ' + next.queryParams.token);
+            this.authService.loginByToken(next.queryParams.token);
         }
-
         return true;
     }
 }

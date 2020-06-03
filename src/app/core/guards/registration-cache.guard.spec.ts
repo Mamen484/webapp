@@ -35,7 +35,7 @@ describe('RegistrationCacheGuard', () => {
         guard = new RegistrationCacheGuard(<any>{
             updateStore: updateStoreSpy,
             getStoreData: () => of({owner: {token: 'token'}})
-        }, <any>window, <any>localStorage);
+        }, <any>window, <any>localStorage, <any>{loginByToken: jasmine.createSpy()});
 
     });
 

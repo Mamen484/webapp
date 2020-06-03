@@ -7,6 +7,10 @@ import { Location } from '@angular/common';
 
 export const tokenInUrl = /token=[a-zA-Z0-9]*&?/;
 
+// 1000 * 60 * 60
+const hour = 3600000;
+export const tokenExpiryKey = 'sflTokenExpires';
+
 /**
  * A service that enables you to handle the authentication.
  */
@@ -45,6 +49,14 @@ export class SflAuthService {
      */
     public loginByToken(token: string, tokenType = 'Bearer') {
         this.localStorage.setItem('Authorization', `${tokenType} ${token}`);
+        this.updateTokenExpiry();
+    }
+
+    /**
+     * Set the auth token to expire one hour after now
+     */
+    public updateTokenExpiry() {
+        this.localStorage.setItem(tokenExpiryKey, (new Date().getTime() + hour).toString());
     }
 
     /**
@@ -52,13 +64,14 @@ export class SflAuthService {
      */
     public logout() {
         this.localStorage.removeItem('Authorization');
+        this.localStorage.removeItem(tokenExpiryKey);
     }
 
     /**
      * Check if there is an authorization info about a current user in a storage
      */
     public isLoggedIn() {
-        return Boolean(this.localStorage.getItem('Authorization'));
+        return Boolean(this.localStorage.getItem('Authorization')) && !this.tokenExpired();
     }
 
     /**
@@ -69,11 +82,26 @@ export class SflAuthService {
     }
 
     /**
-     * Retrive the token from the Authorization string
+     * Retrieve the token from the Authorization string
      */
     public getAuthToken() {
+        if (this.tokenExpired()) {
+            return '';
+        }
         const authString = this.getAuthString();
         return authString ? authString.replace('Bearer ', '') : '';
+    }
+
+    /**
+     * Check if a token is expired
+     */
+    public tokenExpired() {
+        const tokenExpires = +this.localStorage.getItem(tokenExpiryKey);
+        if (tokenExpires < new Date().getTime()) {
+            this.logout();
+            return true;
+        }
+        return false;
     }
 
     /**

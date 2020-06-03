@@ -3,6 +3,9 @@ import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStar
 import { filter } from 'rxjs/operators';
 import { PageLoadingService } from './core/services/page-loading.service';
 import { SflAuthService } from 'sfl-shared/services';
+import { Subscription, timer } from 'rxjs';
+
+const minute = 60000;
 
 @Component({
     selector: 'app-root',
@@ -12,6 +15,7 @@ import { SflAuthService } from 'sfl-shared/services';
 export class AppComponent implements OnInit {
 
     loadingNextRoute = true;
+    keepLoggedOutSubscription: Subscription;
 
     constructor(protected router: Router,
                 protected pageLoadingService: PageLoadingService,
@@ -25,6 +29,11 @@ export class AppComponent implements OnInit {
         this.router.events.subscribe(routerEvent => this.checkRouterEvent(routerEvent));
 
         this.pageLoadingService.getState().subscribe(isBeingLoaded => this.loadingNextRoute = isBeingLoaded);
+        this.keepLoggedOutSubscription = timer(minute, minute).subscribe(() => {
+            if (this.authService.isLoggedIn()) {
+                this.authService.updateTokenExpiry();
+            }
+        });
     }
 
     /**

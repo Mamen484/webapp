@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { SflAuthService, SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { LegacyLinkService } from '../services/legacy-link.service';
 
 /**
@@ -14,15 +14,13 @@ export class IsLoggedInGuard implements CanActivate {
     constructor(protected windowRef: SflWindowRefService,
                 protected userService: SflUserService,
                 protected legacyLinkService: LegacyLinkService,
-                protected localStorage: SflLocalStorageService) {
+                protected authService: SflAuthService) {
 
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-
-        let auth = this.localStorage.getItem('Authorization');
-        if (auth) {
-            return Observable.create(observer => {
+        if (this.authService.isLoggedIn()) {
+            return new Observable(observer => {
                 this.userService.fetchAggregatedInfo().subscribe(
                     // token is valid, redirect to the homepage
                     () => {

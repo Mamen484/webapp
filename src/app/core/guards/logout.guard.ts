@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { SflAuthService } from 'sfl-shared/services';
 
 @Injectable()
 export class LogoutGuard implements CanActivate {
 
-    constructor(protected localStorage: SflLocalStorageService, protected router: Router) {
+    constructor(protected router: Router, protected authService: SflAuthService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): boolean {
-        this.localStorage.removeItem('Authorization');
+        this.authService.logout();
         this.router.navigate(['/login']);
         return false;
     }

@@ -4,7 +4,7 @@ import { flatMap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormControl, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { SflAuthService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { Store } from 'sfl-shared/entities';
 
 @Component({
@@ -23,7 +23,8 @@ export class CreatePasswordComponent implements OnInit {
                 protected router: Router,
                 protected route: ActivatedRoute,
                 protected shopifyService: ShopifyAuthentifyService,
-                protected localStorage: SflLocalStorageService) {
+                protected localStorage: SflLocalStorageService,
+                protected authService: SflAuthService) {
     }
 
     public ngOnInit() {
@@ -44,7 +45,7 @@ export class CreatePasswordComponent implements OnInit {
         this.store.owner.password = password;
         this.storeService.createStore(this.store)
             .subscribe((store: Store) => {
-                    this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+                    this.authService.loginByToken(store.owner.token);
                     this.router.navigate(['register', 'create-account']);
                 },
                 () => this.displayServerError = true);

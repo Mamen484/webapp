@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SflLocalStorageService, SflUserService } from 'sfl-shared/services';
+import { SflAuthService, SflUserService } from 'sfl-shared/services';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
@@ -17,19 +17,16 @@ import { AppState } from '../entities/app-state';
 export class IsAuthorizedGuard implements CanActivate {
     constructor(protected router: Router,
                 protected userService: SflUserService,
-                protected localStorage: SflLocalStorageService,
-                protected appStore: Store<AppState>) {
+                protected appStore: Store<AppState>,
+                protected authService: SflAuthService) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
-        // check Authorization in a storage
-        let auth = this.localStorage.getItem('Authorization');
-        if (!auth) {
+        if (!this.authService.isLoggedIn()) {
             this.router.navigate(['/login']);
             return false;
         }
-        return Observable.create(observer => {
+        return new Observable(observer => {
             this.userService.fetchAggregatedInfo().subscribe(
                 userInfo => {
                     if (userInfo.hasEnabledStore(next.queryParams.store) || userInfo.isAdmin()) {
@@ -56,7 +53,7 @@ export class IsAuthorizedGuard implements CanActivate {
 
     protected isNotAuthorized(observer) {
         this.router.navigate(['/login']);
-        this.localStorage.removeItem('Authorization');
+        this.authService.logout();
         observer.next(false);
         observer.complete();
     }

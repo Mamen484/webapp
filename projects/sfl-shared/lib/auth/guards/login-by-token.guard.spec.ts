@@ -1,5 +1,5 @@
-import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-import { SflLocalStorageService } from 'sfl-shared/services';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { SflAuthService } from 'sfl-shared/services';
 import { SflLoginByTokenGuard } from './login-by-token.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -8,15 +8,15 @@ import { Component } from '@angular/core';
 @Component({
     template: '',
 })
-class BlankComponent {}
+class BlankComponent {
+}
 
 describe('SflLoginByTokenGuard', () => {
-
-    let setitemSpy: jasmine.Spy;
     let router: Router;
+    let authService: SflAuthService;
 
     beforeEach(() => {
-        setitemSpy = jasmine.createSpy('localStorage.setItem');
+        authService = jasmine.createSpyObj(['loginByToken']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -28,27 +28,24 @@ describe('SflLoginByTokenGuard', () => {
             ],
             providers: [
                 SflLoginByTokenGuard,
-                {provide: SflLocalStorageService, useValue: {setItem: setitemSpy}}
+                {provide: SflAuthService, useValue: authService}
             ],
             declarations: [BlankComponent]
         });
 
-        router = TestBed.get(Router);
+        router = TestBed.inject(Router);
     });
 
-    it('should return Authorization into the local storage whn the token is provided',
-        fakeAsync(() => {
-            router.navigate([''], {queryParams: {token: 'some token'}});
-            tick();
-            expect(setitemSpy).toHaveBeenCalledWith('Authorization', 'Bearer some token');
-        }));
+    it('should call loginByToken()', fakeAsync(() => {
+        router.navigate([''], {queryParams: {token: 'some token'}});
+        tick();
+        expect(authService.loginByToken).toHaveBeenCalledWith('some token');
+    }));
 
-    it('canActivate should return true anyway',
-        inject([SflLoginByTokenGuard], (guard: SflLoginByTokenGuard) => {
-            expect(guard.canActivate(<any>{queryParamMap: {has: () => true}, queryParams: {token: ''}})).toEqual(true);
-            expect(guard.canActivate(<any>{queryParamMap: {has: () => false}})).toEqual(true);
+    it('should call loginByToken() if not token specified', fakeAsync(() => {
+        router.navigate([''], {queryParams: {}});
+        tick();
+        expect(authService.loginByToken).not.toHaveBeenCalled();
+    }));
 
-        }));
-
-})
-;
+});

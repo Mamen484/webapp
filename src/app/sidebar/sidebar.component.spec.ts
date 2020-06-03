@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Directive, Input, NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
-import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { SflAuthService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, of } from 'rxjs';
@@ -22,7 +22,6 @@ describe('SidebarComponent', () => {
     let fixture: ComponentFixture<SidebarComponent>;
 
     let appStore: jasmine.SpyObj<Store<AppState>>;
-    let localStorage: jasmine.SpyObj<SflLocalStorageService>;
     let userService: jasmine.SpyObj<SflUserService>;
     let windowRef: SflWindowRefService;
     let timelineService: jasmine.SpyObj<TimelineService>;
@@ -31,10 +30,10 @@ describe('SidebarComponent', () => {
     let ticketsDataService: jasmine.SpyObj<TicketsDataService>;
     let channelLinkService: jasmine.SpyObj<ChannelLinkService>;
     let appcuesService: jasmine.SpyObj<AppcuesService>;
+    let authService: jasmine.SpyObj<SflAuthService>;
 
     beforeEach(() => {
         appStore = jasmine.createSpyObj(['select']);
-        localStorage = jasmine.createSpyObj(['removeItem']);
         userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         windowRef = {nativeWindow: <any>{}};
         timelineService = jasmine.createSpyObj(['emitUpdatedTimeline', 'getUpdatesNumber']);
@@ -43,12 +42,12 @@ describe('SidebarComponent', () => {
         ticketsDataService = jasmine.createSpyObj('TicketsDataService spy', ['requestUpdate']);
         channelLinkService = jasmine.createSpyObj('ChannelLinkService spy', ['navigateToChannel']);
         appcuesService = jasmine.createSpyObj('AppcuesService spy', ['enable', 'getState']);
+        authService = jasmine.createSpyObj(['logout']);
         TestBed.configureTestingModule({
             declarations: [SidebarComponent, LegacyLinkDirective, ChannelLinkMockPipe],
             schemas: [NO_ERRORS_SCHEMA],
             providers: [
                 {provide: Store, useValue: appStore},
-                {provide: SflLocalStorageService, useValue: localStorage},
                 {provide: SflUserService, useValue: userService},
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: TimelineService, useValue: timelineService},
@@ -58,6 +57,7 @@ describe('SidebarComponent', () => {
                 {provide: TicketsDataService, useValue: ticketsDataService},
                 {provide: ChannelLinkService, useValue: channelLinkService},
                 {provide: AppcuesService, useValue: appcuesService},
+                {provide: SflAuthService, useValue: authService},
             ],
             imports: [MatMenuModule, NoopAnimationsModule],
         })

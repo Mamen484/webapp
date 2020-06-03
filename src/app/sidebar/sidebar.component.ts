@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../core/entities/app-state';
 import { AggregatedUserInfo, PaymentType, Store, StoreChannel, StoreStatus } from 'sfl-shared/entities';
-import { SflLocalStorageService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { SflAuthService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { SupportLinkService } from '../core/services/support-link.service';
 import { TimelineService } from '../core/services/timeline.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -42,7 +42,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     constructor(protected appStore: AppStore<AppState>,
                 protected windowRef: SflWindowRefService,
-                protected localStorage: SflLocalStorageService,
                 protected supportLinkService: SupportLinkService,
                 protected timelineService: TimelineService,
                 protected route: ActivatedRoute,
@@ -50,7 +49,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
                 protected userService: SflUserService,
                 protected channelLinkService: ChannelLinkService,
                 protected ticketsDataService: TicketsDataService,
-                protected appcuesEnabledService: AppcuesService) {
+                protected appcuesEnabledService: AppcuesService,
+                protected authService: SflAuthService) {
         this.appStore.select('currentStore').subscribe((store: Store) => {
             this.currentStore = store;
         });
@@ -116,7 +116,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
 
     logout() {
-        this.localStorage.removeItem('Authorization');
+        this.authService.logout();
         this.windowRef.nativeWindow.location.href = `${environment.APP_URL}/index/logout`;
     }
 

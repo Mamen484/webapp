@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { count, filter, flatMap, map, tap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../services/shopify-authentify.service';
-import { SflLocalStorageService, SflWindowRefService } from 'sfl-shared/services';
+import { SflAuthService, SflWindowRefService, SflLocalStorageService } from 'sfl-shared/services';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
@@ -12,8 +12,9 @@ export class RegistrationCacheGuard implements CanActivate {
     constructor(
         protected shopifyService: ShopifyAuthentifyService,
         protected windowRef: SflWindowRefService,
-        protected localStorage: SflLocalStorageService
-    ) {
+        protected localStorage: SflLocalStorageService,
+        protected authService: SflAuthService
+        ) {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
@@ -47,7 +48,7 @@ export class RegistrationCacheGuard implements CanActivate {
         if (!store.owner.token) {
             return;
         }
-        this.localStorage.setItem('Authorization', `Bearer ${store.owner.token}`);
+        this.authService.loginByToken(store.owner.token);
     }
 
 }

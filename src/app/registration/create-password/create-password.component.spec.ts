@@ -5,7 +5,7 @@ import { CreatePasswordComponent } from './create-password.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { BlankComponent } from '../../shared/blank.component';
@@ -16,12 +16,14 @@ describe('CreatePasswordComponent', () => {
     let fixture: ComponentFixture<CreatePasswordComponent>;
     let queryParams, localStorage, shopifyService;
     let storeService: jasmine.SpyObj<StoreService>;
+    let authService: jasmine.SpyObj<SflAuthService>;
 
     beforeEach(async(() => {
         localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'setItem', 'removeItem']);
         queryParams = of({});
         shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getStoreData']);
         storeService = jasmine.createSpyObj('StoreService', ['createStore']);
+        authService = jasmine.createSpyObj(['loginByToken']);
 
         TestBed.configureTestingModule({
             imports: [
@@ -42,6 +44,7 @@ describe('CreatePasswordComponent', () => {
                         }
                     }
                 },
+                {provide: SflAuthService, useValue: authService},
             ],
             declarations: [CreatePasswordComponent, BlankComponent]
         })
@@ -113,11 +116,11 @@ describe('CreatePasswordComponent', () => {
 
             fixture.detectChanges();
             component.createPassword({email: 'test@test.com', password: '1234567'});
-            expect(localStorage.setItem).toHaveBeenCalledWith('Authorization', 'Bearer some token');
+            expect(authService.loginByToken).toHaveBeenCalledWith('some token');
         });
 
         it('should redirect to account creation progress dialog if createPassword request is successful', () => {
-            let router = TestBed.get(Router);
+            let router = TestBed.inject(Router);
             spyOn(router, 'navigate');
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
@@ -128,7 +131,7 @@ describe('CreatePasswordComponent', () => {
         });
 
         it('should display an error if the createPassword request returns an error', () => {
-            let router = TestBed.get(Router);
+            let router = TestBed.inject(Router);
             spyOn(router, 'navigate');
             localStorage.getItem.and.returnValue(null);
             shopifyService.getStoreData.and.returnValue(of({owner: {}}));
