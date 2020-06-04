@@ -54,7 +54,7 @@ export class StoreService {
                     })))
                 ;
         }
-        return this.httpClient.get(`${this.sflApi}/store/${storeId}/channel`, {params: httpParams}).pipe(
+        return this.httpClient.get(`${this.sflApi}/store/${storeId}/channel`, {params: httpParams.set('sortBy', 'installed:desc,channelName:asc')}).pipe(
             map((data: StoreChannelResponse) =>
                 // we use 'channel' property to have the same structure for results in the store country and outside it
                 Object.assign({}, data, {_embedded: {channel: data._embedded.storeChannel}})));

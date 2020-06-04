@@ -30,7 +30,7 @@ describe('StoreService', () => {
     it('should request /storechannel resource with storeId in params when calling getAllConfiguredChannels method', () => {
         service.getStoreChannels(24).subscribe();
 
-        const req = httpMock.expectOne('apiUrl/store/24/channel?page=1&limit=200&country=&name=&type=&segment=&status=&embed=stats');
+        const req = httpMock.expectOne('apiUrl/store/24/channel?page=1&limit=200&country=&name=&type=&segment=&status=&embed=stats&sortBy=installed:desc,channelName:asc');
         expect(req.request.method).toEqual('GET');
         httpMock.verify();
     });
@@ -43,7 +43,7 @@ describe('StoreService', () => {
     });
     it('should request /store/11/channel resource when getStoreChannels() is called with foreignChannels = false', () => {
         service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false).subscribe();
-        const req = httpMock.expectOne('apiUrl/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats');
+        const req = httpMock.expectOne('apiUrl/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats&sortBy=installed:desc,channelName:asc');
         expect(req.request.method).toEqual('GET');
         httpMock.verify();
     });
@@ -52,7 +52,7 @@ describe('StoreService', () => {
         const respPromise =
             service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false)
                 .toPromise();
-        const req = httpMock.expectOne('apiUrl/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats');
+        const req = httpMock.expectOne('apiUrl/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats&sortBy=installed:desc,channelName:asc');
         req.flush({_embedded: {storeChannel: []}});
         const resp = await respPromise;
         expect(resp).toEqual(<any>{_embedded: {channel: []}});
