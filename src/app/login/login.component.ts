@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SflAuthService} from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService } from 'sfl-shared/services';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
 import { HttpParams } from '@angular/common/http';
@@ -13,13 +13,14 @@ export class LoginComponent implements OnInit {
 
     error = '';
     showDeletedStoreError = false;
-    contactEmail = environment.CONTACT_EMAIL;
+    contactEmail;
     loadingNextPage = false;
 
     constructor(protected userService: SflUserService,
                 protected authService: SflAuthService,
-                protected windowRef: SflWindowRefService) {
-
+                protected windowRef: SflWindowRefService,
+                protected localeIdService: SflLocaleIdService) {
+        this.contactEmail = environment.contactEmail[this.localeIdService.localeId] || environment.contactEmail.en;
     }
 
     ngOnInit() {

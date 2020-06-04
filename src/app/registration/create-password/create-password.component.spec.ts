@@ -1,5 +1,5 @@
 import { of, throwError } from 'rxjs';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreatePasswordComponent } from './create-password.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LegacyLinkService } from '../../core/services/legacy-link.service';
 import { BlankComponent } from '../../shared/blank.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 describe('CreatePasswordComponent', () => {
     let component: CreatePasswordComponent;
@@ -18,44 +19,10 @@ describe('CreatePasswordComponent', () => {
     let storeService: jasmine.SpyObj<StoreService>;
     let authService: jasmine.SpyObj<SflAuthService>;
 
-    beforeEach(async(() => {
-        localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'setItem', 'removeItem']);
-        queryParams = of({});
-        shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getStoreData']);
-        storeService = jasmine.createSpyObj('StoreService', ['createStore']);
-        authService = jasmine.createSpyObj(['loginByToken']);
-
-        TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule.withRoutes([{path: 'register/create-account', component: BlankComponent}]),
-                FormsModule,
-                ReactiveFormsModule,
-            ],
-            schemas: [NO_ERRORS_SCHEMA],
-            providers: [
-                {provide: ShopifyAuthentifyService, useValue: shopifyService},
-                {provide: SflLocalStorageService, useValue: localStorage},
-                {provide: StoreService, useValue: storeService},
-                {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
-                {provide: ActivatedRoute, useValue: {queryParams: of({})}},
-                {
-                    provide: LegacyLinkService, useValue: {
-                        getLegacyLink: () => {
-                        }
-                    }
-                },
-                {provide: SflAuthService, useValue: authService},
-            ],
-            declarations: [CreatePasswordComponent, BlankComponent]
-        })
-            .compileComponents();
-    }));
 
     describe('ngOnInit', () => {
         beforeEach(() => {
-            fixture = TestBed.createComponent(CreatePasswordComponent);
-            component = fixture.componentInstance;
-
+            createForLocale('en');
         });
 
         it('should be created', () => {
@@ -141,7 +108,74 @@ describe('CreatePasswordComponent', () => {
             component.createPassword({email: 'test@test.com', password: '1234567'});
             expect(component.displayServerError).toEqual(true);
         })
+    });
 
-    })
+    describe('localization', () => {
+        it('should assign an appropriate support email when the french locale is used', () => {
+            createForLocale('fr');
+            expect(component.supportEmail).toBe(environment.supportEmail.fr);
+        });
+
+        it('should assign an appropriate support email when the portuguese locale is used', () => {
+            createForLocale('pt');
+            expect(component.supportEmail).toBe(environment.supportEmail.pt);
+        });
+
+        it('should assign an appropriate support email when the german locale is used', () => {
+            createForLocale('de');
+            expect(component.supportEmail).toBe(environment.supportEmail.de);
+        });
+
+        it('should assign an appropriate support email when the english locale is used', () => {
+            createForLocale('en');
+            expect(component.supportEmail).toBe(environment.supportEmail.en);
+        });
+
+        it('should assign an appropriate support email when the italian locale is used', () => {
+            createForLocale('it');
+            expect(component.supportEmail).toBe(environment.supportEmail.it);
+        });
+
+        it('should assign an appropriate support email when the spanish locale is used', () => {
+            createForLocale('es');
+            expect(component.supportEmail).toBe(environment.supportEmail.es);
+        });
+    });
+
+    function createForLocale(locale) {
+        localStorage = jasmine.createSpyObj('LocalStorage', ['getItem', 'setItem', 'removeItem']);
+        queryParams = of({});
+        shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getStoreData']);
+        storeService = jasmine.createSpyObj('StoreService', ['createStore']);
+        authService = jasmine.createSpyObj(['loginByToken']);
+
+        TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule.withRoutes([{path: 'register/create-account', component: BlankComponent}]),
+                FormsModule,
+                ReactiveFormsModule,
+            ],
+            schemas: [NO_ERRORS_SCHEMA],
+            providers: [
+                {provide: ShopifyAuthentifyService, useValue: shopifyService},
+                {provide: SflLocalStorageService, useValue: localStorage},
+                {provide: StoreService, useValue: storeService},
+                {provide: SflLocaleIdService, useValue: {localeId: locale}},
+                {provide: ActivatedRoute, useValue: {queryParams: of({})}},
+                {
+                    provide: LegacyLinkService, useValue: {
+                        getLegacyLink: () => {
+                        }
+                    }
+                },
+                {provide: SflAuthService, useValue: authService},
+            ],
+            declarations: [CreatePasswordComponent, BlankComponent]
+        })
+            .compileComponents();
+
+        fixture = TestBed.createComponent(CreatePasswordComponent);
+        component = fixture.componentInstance;
+    }
 
 });

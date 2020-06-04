@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
-import { FormControl, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { SflAuthService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { Store } from 'sfl-shared/entities';
 
 @Component({
@@ -14,7 +13,7 @@ import { Store } from 'sfl-shared/entities';
 })
 export class CreatePasswordComponent implements OnInit {
 
-    public supportEmail = environment.SUPPORT_EMAIL;
+    public supportEmail;
     public displayServerError = false;
 
     protected store;
@@ -24,7 +23,9 @@ export class CreatePasswordComponent implements OnInit {
                 protected route: ActivatedRoute,
                 protected shopifyService: ShopifyAuthentifyService,
                 protected localStorage: SflLocalStorageService,
-                protected authService: SflAuthService) {
+                protected authService: SflAuthService,
+                protected localeIdService: SflLocaleIdService) {
+        this.supportEmail = environment.supportEmail[this.localeIdService.localeId] || environment.supportEmail.en;
     }
 
     public ngOnInit() {
