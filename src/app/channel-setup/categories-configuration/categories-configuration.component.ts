@@ -12,6 +12,7 @@ import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.se
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
 import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/unsaved-data-guard';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class CategoriesConfigurationComponent implements OnInit, UnsavedDataInte
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected stateService: AutotagFormStateService,
-                protected fullstoryLoader: FullstoryLoaderService) {
+                protected fullstoryLoader: FullstoryLoaderService,
+                protected titleService: Title) {
     }
 
 
@@ -56,6 +58,8 @@ export class CategoriesConfigurationComponent implements OnInit, UnsavedDataInte
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
             this.feed = data.feed;
+
+            this.titleService.setTitle(`Shoppingfeed / ${this.channel.name} / Setup`);
         });
         this.stateService.getState().subscribe(state => this.autotagFormState = state);
     }

@@ -3,6 +3,7 @@ import { SflAuthService, SflLocaleIdService } from 'sfl-shared/services';
 import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'sf-login',
@@ -19,7 +20,9 @@ export class LoginComponent implements OnInit {
     constructor(protected userService: SflUserService,
                 protected authService: SflAuthService,
                 protected windowRef: SflWindowRefService,
-                protected localeIdService: SflLocaleIdService) {
+                protected localeIdService: SflLocaleIdService,
+                protected titleService: Title) {
+        this.titleService.setTitle('Shoppingfeed / Login');
         this.contactEmail = environment.contactEmail[this.localeIdService.localeId] || environment.contactEmail.en;
     }
 

@@ -25,6 +25,7 @@ import { AppState } from '../core/entities/app-state';
 import { LegacyLinkService } from '../core/services/legacy-link.service';
 import { SflSharedModule } from 'sfl-shared';
 import { PageLoadingService } from '../core/services/page-loading.service';
+import { Title } from '@angular/platform-browser';
 
 @Pipe({
     name: 'sfEventIcon'
@@ -49,6 +50,7 @@ describe('TimelineComponent', () => {
     let component: TimelineComponent;
     let fixture: ComponentFixture<TimelineComponent>;
     let timelineService: jasmine.SpyObj<TimelineService>;
+    let titleService: jasmine.SpyObj<Title>;
 
     describe('shallow tests', () => {
         beforeEach(async(() => {
@@ -59,6 +61,7 @@ describe('TimelineComponent', () => {
                 type: StreamEventType.finished,
                 data: {events, updates}
             }));
+            titleService = jasmine.createSpyObj('Title', ['setTitle']);
 
             TestBed.configureTestingModule({
                 declarations: [
@@ -68,7 +71,8 @@ describe('TimelineComponent', () => {
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
-                    {provide: TimelineService, useValue: timelineService}
+                    {provide: TimelineService, useValue: timelineService},
+                    {provide: Title, useValue: titleService},
                 ]
             })
                 .compileComponents();
@@ -89,6 +93,10 @@ describe('TimelineComponent', () => {
 
             it('should set updatesInProgress amount', () => {
                 expect(component.updatesInProgress).toEqual(1);
+            });
+
+            it('should set the page title', () => {
+                expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / Timeline');
             });
 
         });

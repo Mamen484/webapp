@@ -5,6 +5,7 @@ import { TimelineEvent } from '../core/entities/timeline-event';
 import { Timeline } from '../core/entities/timeline';
 import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
 import { PageLoadingService } from '../core/services/page-loading.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'sf-timeline',
@@ -25,7 +26,9 @@ export class TimelineComponent implements OnInit {
     showUpdates = true;
 
     constructor(protected timelineService: TimelineService,
-                protected pageLoadingService: PageLoadingService) {
+                protected pageLoadingService: PageLoadingService,
+                protected titleService: Title) {
+        this.titleService.setTitle('Shoppingfeed / Timeline');
         this.timelineService.emitUpdatedTimeline();
         this.timelineService.getTimelineStream().subscribe(({type, data}) => {
             if (type === StreamEventType.finished) {

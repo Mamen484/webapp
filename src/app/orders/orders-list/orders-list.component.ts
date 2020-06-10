@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrdersView } from '../../core/entities/orders/orders-view.enum';
 import { ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'sf-orders-list',
@@ -12,7 +13,8 @@ export class OrdersListComponent implements OnInit {
     ordersView = OrdersView;
     activeView: OrdersView;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute, protected titleService: Title) {
+        this.titleService.setTitle('Shoppingfeed / Orders Dashboard');
     }
 
     ngOnInit() {

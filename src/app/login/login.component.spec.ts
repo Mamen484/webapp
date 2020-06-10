@@ -8,6 +8,7 @@ import { aggregatedUserInfoMock } from '../../mocks/agregated-user-info-mock';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Title } from '@angular/platform-browser';
 
 
 describe('LoginComponent', () => {
@@ -16,6 +17,7 @@ describe('LoginComponent', () => {
     let userService: jasmine.SpyObj<SflUserService>;
     let authService: jasmine.SpyObj<SflAuthService>;
     let localeIdService: SflLocaleIdService;
+    let titleService: jasmine.SpyObj<Title>;
 
     describe('', () => {
         beforeEach(() => {
@@ -23,6 +25,10 @@ describe('LoginComponent', () => {
         });
         it('should be created', () => {
             expect(component).toBeTruthy();
+        });
+
+        it('should set the page title', () => {
+            expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / Login');
         });
 
         it('should call user service login() call', () => {
@@ -108,6 +114,7 @@ describe('LoginComponent', () => {
     function createForLocale(locale) {
         userService = jasmine.createSpyObj('SflUserService', ['fetchAggregatedInfo']);
         authService = jasmine.createSpyObj('SflAuthService', ['login', 'logout']);
+        titleService = jasmine.createSpyObj('Title', ['setTitle']);
 
         localeIdService = <any>{localeId: locale};
         TestBed.configureTestingModule({
@@ -129,6 +136,7 @@ describe('LoginComponent', () => {
                     }
                 },
                 {provide: SflLocaleIdService, useValue: localeIdService},
+                {provide: Title, useValue: titleService},
 
             ],
             imports: [

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { Order } from '../../core/entities/orders/order';
 import { ActivatedRoute } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 describe('OrderDetailsComponent', () => {
     let component: OrderDetailsComponent;
@@ -12,17 +13,19 @@ describe('OrderDetailsComponent', () => {
 
     let dataSubject$: Subject<{ order: Order }>;
     let route;
+    let titleService: jasmine.SpyObj<Title>;
 
     beforeEach(async(() => {
 
         dataSubject$ = new Subject();
         route = {data: dataSubject$.asObservable()};
-
+        titleService = jasmine.createSpyObj('Title', ['setTitle']);
 
         TestBed.configureTestingModule({
             declarations: [OrderDetailsComponent],
             providers: [
                 {provide: ActivatedRoute, useValue: route},
+                {provide: Title, useValue: titleService},
             ],
             schemas: [NO_ERRORS_SCHEMA],
         })
@@ -38,6 +41,12 @@ describe('OrderDetailsComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set the page title', () => {
+        let order = {id: 123};
+        dataSubject$.next(<any>{order});
+        expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / Order / Details');
     });
 
     it('should assign an order', () => {

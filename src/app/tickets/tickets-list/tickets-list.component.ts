@@ -16,6 +16,7 @@ import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-det
 import { ActivatedRoute } from '@angular/router';
 import { TicketsDataService } from './tickets-data.service';
 import {TableOperations} from 'sfl-tools/table-operations';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'sf-tickets-list',
@@ -46,8 +47,10 @@ export class TicketsListComponent extends TableOperations<Ticket> implements OnI
                 protected windowRef: SflWindowRefService,
                 protected matDialog: MatDialog,
                 protected route: ActivatedRoute,
-                protected ticketsDataService: TicketsDataService) {
+                protected ticketsDataService: TicketsDataService,
+                protected titleService: Title) {
         super();
+        this.titleService.setTitle('Shoppingfeed / API Integrations');
     }
 
     ngOnInit() {

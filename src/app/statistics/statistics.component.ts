@@ -13,6 +13,7 @@ import { TimelineEventAction } from '../core/entities/timeline-event-action.enum
 import { TimelineEventName } from '../core/entities/timeline-event-name.enum';
 import { TimelineService } from '../core/services/timeline.service';
 import { environment } from '../../environments/environment';
+import { Title } from '@angular/platform-browser';
 
 const LOAD_CHANNELS_COUNT = 6;
 const maxEvents = 200;
@@ -46,8 +47,9 @@ export class StatisticsComponent {
     constructor(protected appStore: AppStore<AppState>,
                 protected storeService: StoreService,
                 protected dialog: MatDialog,
-                protected timelineService: TimelineService) {
-
+                protected timelineService: TimelineService,
+                protected titleService: Title) {
+        this.titleService.setTitle('Shoppingfeed / Homepage');
         this.appStore.select('currentStore').pipe(
             tap(() => this.displayPageLoading()),
             tap((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics)),

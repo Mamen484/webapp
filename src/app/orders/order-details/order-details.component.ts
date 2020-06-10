@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Order } from '../../core/entities/orders/order';
 import { ActivatedRoute } from '@angular/router';
 import { cloneDeep } from 'lodash';
+import { Title } from '@angular/platform-browser';
 
 @Component({
     selector: 'sf-order-details',
@@ -12,7 +13,8 @@ export class OrderDetailsComponent implements OnInit {
 
     order: Order;
 
-    constructor(protected route: ActivatedRoute) {
+    constructor(protected route: ActivatedRoute, protected titleService: Title) {
+        this.titleService.setTitle('Shoppingfeed / Order / Details');
     }
 
     ngOnInit() {

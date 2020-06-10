@@ -15,6 +15,7 @@ import { TicketType } from '../entities/ticket-type.enum';
 import { EMPTY, of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { AggregatedUserInfo } from 'sfl-shared/entities';
+import { Title } from '@angular/platform-browser';
 
 describe('TicketsListComponent', () => {
     let component: TicketsListComponent;
@@ -25,6 +26,7 @@ describe('TicketsListComponent', () => {
     let windowRef: jasmine.SpyObj<SflWindowRefService>;
     let matDialog: jasmine.SpyObj<MatDialog>;
     let route;
+    let titleService: jasmine.SpyObj<Title>;
 
     beforeEach(async(() => {
         appStore = jasmine.createSpyObj('Store spy', ['select']);
@@ -33,6 +35,7 @@ describe('TicketsListComponent', () => {
         windowRef = {nativeWindow: jasmine.createSpyObj('Window spy', ['open'])};
         matDialog = jasmine.createSpyObj('MatDialog spy', ['select', 'open']);
         route = {data: new Subject()};
+        titleService = jasmine.createSpyObj('Title', ['setTitle']);
         TestBed.configureTestingModule({
             declarations: [TicketsListComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -42,7 +45,8 @@ describe('TicketsListComponent', () => {
                 {provide: SflUserService, useValue: userInfo},
                 {provide: SflWindowRefService, useValue: windowRef},
                 {provide: MatDialog, useValue: matDialog},
-                {provide: ActivatedRoute, useValue: route}
+                {provide: ActivatedRoute, useValue: route},
+                {provide: Title, useValue: titleService},
             ],
             imports: [MatTableModule],
         })
@@ -56,6 +60,10 @@ describe('TicketsListComponent', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set the page title', () => {
+        expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / API Integrations');
     });
 
     it('should open Zapier in a new window on goToZapier() call', () => {

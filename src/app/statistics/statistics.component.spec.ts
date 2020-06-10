@@ -12,6 +12,7 @@ import { storeChannelMock } from '../../mocks/store-channel.mock';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
+import { Title } from '@angular/platform-browser';
 
 describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
@@ -19,6 +20,7 @@ describe('StatisticsComponent', () => {
     let channelServiceMock;
     let timelineService: jasmine.SpyObj<TimelineService>;
     let exports$: Subject<PagedResponse<{ timeline: TimelineEvent[] }>>;
+    let titleService: jasmine.SpyObj<Title>;
 
     beforeEach(async(() => {
         channelServiceMock = jasmine.createSpyObj('ChannelServive spy', ['getStoreChannels', 'getStatistics', 'getStoreCharge']);
@@ -29,6 +31,7 @@ describe('StatisticsComponent', () => {
         timelineService = jasmine.createSpyObj('TimelineService spy', ['getEvents']);
         exports$ = new Subject();
         timelineService.getEvents.and.returnValue(exports$);
+        titleService = jasmine.createSpyObj('Title', ['setTitle']);
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
             declarations: [
@@ -44,6 +47,7 @@ describe('StatisticsComponent', () => {
                 {provide: StoreService, useValue: channelServiceMock},
                 {provide: MatDialog, useValue: {}},
                 {provide: TimelineService, useValue: timelineService},
+                {provide: Title, useValue: titleService},
             ]
         })
             .compileComponents();
@@ -58,6 +62,10 @@ describe('StatisticsComponent', () => {
 
     it('should be created', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set the page title', () => {
+        expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / Homepage');
     });
 
     describe('initialization', () => {

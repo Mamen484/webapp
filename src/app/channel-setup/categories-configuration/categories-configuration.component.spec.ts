@@ -12,10 +12,12 @@ import { CategoryState } from '../category-state';
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
 import { UnsavedDataDialogComponent } from 'sfl-tools/unsaved-data-guard';
+import { Title } from '@angular/platform-browser';
 
 describe('CategoriesConfigurationComponent', () => {
     let component: CategoriesConfigurationComponent;
     let fixture: ComponentFixture<CategoriesConfigurationComponent>;
+    let titleService: jasmine.SpyObj<Title>;
 
     @Directive({selector: '[sfLegacyLink]'})
     class LegacyLinkMockDirective {
@@ -39,6 +41,7 @@ describe('CategoriesConfigurationComponent', () => {
         feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection', 'fetchCategoryCollection']);
         route = {data: new Subject()};
         fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
+        titleService = jasmine.createSpyObj('Title', ['setTitle']);
 
         TestBed.configureTestingModule({
             declarations: [CategoriesConfigurationComponent, LegacyLinkMockDirective, ChannelLinkMockPipe],
@@ -50,6 +53,7 @@ describe('CategoriesConfigurationComponent', () => {
                 {provide: FeedService, useValue: feedService},
                 {provide: ActivatedRoute, useValue: route},
                 {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
+                {provide: Title, useValue: titleService},
 
             ],
         })
@@ -64,13 +68,18 @@ describe('CategoriesConfigurationComponent', () => {
             itemsPerPage: '10',
         };
         component.feed = <any>{id: 12};
-        component.channel = <any>{};
+        component.channel = <any>{name: 'Trararam'};
         component.categoryMapping = <any>{searchChannelCategoryControl: <any>{}};
         fixture.detectChanges();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('should set the page title', () => {
+        route.data.next({data: {feed: {}, channel: {name: 'Trararam'}}});
+        expect(titleService.setTitle).toHaveBeenCalledWith('Shoppingfeed / Trararam / Setup');
     });
 
     it('should set a correct percentage of mapped categories', () => {
