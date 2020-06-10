@@ -29,6 +29,7 @@ import { SettingsModule } from './settings/settings.module';
 import { SharedModule } from './shared/shared.module';
 import { SflSidebarModule } from 'sfl-shared/sidebar';
 import { OrderErrorsAlertComponent } from './orders-list/orders-table/order-errors-alert/order-errors-alert.component';
+import { PaginatorIntlModule } from '../shared/paginator-intl/paginator-intl.module';
 
 @NgModule({
     imports: [
@@ -37,6 +38,7 @@ import { OrderErrorsAlertComponent } from './orders-list/orders-table/order-erro
         SflSidebarModule,
         OrdersRoutingModule,
         SettingsModule,
+        PaginatorIntlModule,
     ],
     declarations: [
         AssignTagsDialogComponent,
