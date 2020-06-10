@@ -331,7 +331,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/channel-settings",
+            "outputPath": "dist/channel-settings/en",
             "index": "projects/channel-settings/src/index.html",
             "main": "projects/channel-settings/src/main.ts",
             "polyfills": "projects/channel-settings/src/polyfills.ts",
@@ -348,6 +348,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/en/",
               "fileReplacements": [
                 {
                   "replace": "projects/channel-settings/src/environments/environment.ts",

@@ -22,6 +22,6 @@ RUN npx ng build channel-settings --configuration production
 #Step 3: copy files of compiled app to the nginx served folder and serve files with nginx
 FROM nginx:1.13
 
-COPY --from=base /app/dist/ /usr/share/nginx/html
+COPY --from=base /app/dist/channel-settings /usr/share/nginx/html
 
 COPY ./nginx-channel-settings.conf /etc/nginx/conf.d/default.conf
