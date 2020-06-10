@@ -148,7 +148,17 @@ export class ChannelSettingsComponent implements OnInit {
         this.route.data.subscribe(({channel, fields}) => {
             this.initializeChannel(channel);
             this.initializeControlValues();
-            this.templateFields = fields;
+            this.templateFields = fields?.sort((field1: Field, field2: Field) => {
+                if (field1.label < field2.label) {
+                    return -1;
+                }
+                if (field1.label > field2.label) {
+                    return 1;
+                }
+
+                // names must be equal
+                return 0;
+            });
         });
         this.appLink = this.appLinkService.getLink('/');
         this.initializeCountryNames();

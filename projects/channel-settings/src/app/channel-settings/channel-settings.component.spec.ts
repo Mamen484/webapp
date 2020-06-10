@@ -103,7 +103,7 @@ describe('ChannelSettingsComponent', () => {
             template: [
                 {channelField: 'someChannelField', appField: 'someSfField', defaultValue: '', position: 1},
                 {channelField: 'someChannelField', appField: 'someSfField', defaultValue: '', position: 2},
-                ]
+            ]
         }, 23);
     });
 
@@ -223,6 +223,30 @@ describe('ChannelSettingsComponent', () => {
     it('should assign templateFields', () => {
         routeData.next({fields: [<any>{someProp: 'someValue'}], channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}});
         expect(component.templateFields).toEqual([<any>{someProp: 'someValue'}]);
+    });
+
+    it('should sort templateFields alphabetically', () => {
+        routeData.next({
+            fields: <any>[
+                {label: 'blue'},
+                {label: 'aqua'},
+                {label: 'navy'},
+                {label: 'aqua'},
+                {label: 'green'},
+                {label: 'purple'},
+                {label: 'nvay'},
+            ],
+            channel: {id: 100, contact: <any>{}, _embedded: <any>{country: []}}
+        });
+        expect(component.templateFields).toEqual(<any>[
+            {label: 'aqua'},
+            {label: 'aqua'},
+            {label: 'blue'},
+            {label: 'green'},
+            {label: 'navy'},
+            {label: 'nvay'},
+            {label: 'purple'},
+        ]);
     });
 
     it('should assign country names', () => {
