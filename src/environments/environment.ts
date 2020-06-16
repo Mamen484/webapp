@@ -43,5 +43,5 @@ export const environment = {
     zeConciergeTitleFr: 'Posez-nous toutes vos questions',
     countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master',
     // COVID-19 banner
-    showCovid19Banner: false,
+    showCovid19Banner: 'off',
 };

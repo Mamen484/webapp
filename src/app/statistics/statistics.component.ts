@@ -42,7 +42,7 @@ export class StatisticsComponent {
 
     exportsLoaded = new Subject<TimelineEvent[]>();
 
-    showCovid19Banner = environment.showCovid19Banner;
+    showCovid19Banner = environment.showCovid19Banner.toLowerCase();
 
     constructor(protected appStore: AppStore<AppState>,
                 protected storeService: StoreService,
