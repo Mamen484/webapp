@@ -36,6 +36,13 @@ mat-card {
 
 .actions {
   text-align: right;
+  height: 40px;
+
+  button {
+    position: fixed;
+    bottom: $content-margin;
+    right: $content-margin + 5px;
+  }
 }
 
 ::ng-deep {
