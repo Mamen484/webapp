@@ -154,6 +154,26 @@ describe('ChannelSettingsComponent', () => {
         expect(matSnackBar.open).toHaveBeenCalledWith('An error occured: some error', '', new ErrorSnackbarConfig());
     });
 
+    it('should indicate save progress', () => {
+        prepareChannelForSave();
+        channelService.modifyChannel.and.returnValue(EMPTY);
+        component.save();
+        expect(component.saveInProgress).toBe(true);
+    });
+
+    it('should finish save progress when the response is successful', () => {
+        prepareChannelForSave();
+        component.save();
+        expect(component.saveInProgress).toBe(false);
+    });
+
+    it('should finish save progress when the request is failed', () => {
+        prepareChannelForSave();
+        channelService.modifyChannel.and.returnValue(throwError({error: {detail: 'some error'}}));
+        component.save();
+        expect(component.saveInProgress).toBe(false);
+    });
+
     it('should open a removal dialog when remove icon clicked', () => {
         matDialog.open.and.returnValue(<any>{afterClosed: () => EMPTY});
         component.addField();

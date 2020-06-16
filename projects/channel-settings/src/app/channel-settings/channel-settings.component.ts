@@ -46,6 +46,7 @@ export class ChannelSettingsComponent implements OnInit {
     allowedCountries = allowedCountries;
     accountName = '';
     validationErrors = {};
+    saveInProgress = false;
 
     constructor(protected channelService: ChannelService,
                 protected route: ActivatedRoute,
@@ -179,14 +180,19 @@ export class ChannelSettingsComponent implements OnInit {
         if (!this.formGroup.valid) {
             return;
         }
+        this.saveInProgress = true;
         this.channelService.modifyChannel({
             contact: this.formGroup.get('contact').value,
             segment: this.formGroup.get('segment').value,
             country: this.countryList,
             template: this.formGroup.get('template').value.map((el: ChannelTemplate, index: number) => Object.assign({}, el, {position: index + 1})),
         }, this.channel.id).subscribe(
-            () => this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000}),
+            () => {
+                this.saveInProgress = false;
+                this.matSnackBar.openFromComponent(SettingsSavedSnackbarComponent, {duration: 2000});
+            },
             ({error}) => {
+                this.saveInProgress = false;
                 this.validationErrors = error.validationMessages;
                 this.formGroup.controls.contact.updateValueAndValidity();
                 this.formGroup.controls.segment.updateValueAndValidity();

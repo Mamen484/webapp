@@ -31,6 +31,7 @@ import {SflErrorPagesModule} from 'sfl-shared/error-pages';
 import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -75,6 +76,7 @@ import { MatChipsModule } from '@angular/material/chips';
             sflAppToken: environment.appToken,
             sflLegacyLink: environment.legacyLink,
         }),
+        MatProgressSpinnerModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

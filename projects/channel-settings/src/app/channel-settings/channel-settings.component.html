@@ -160,6 +160,9 @@
         </mat-card-content>
     </mat-card>
     <div class="actions">
-        <button mat-raised-button (click)="save()" color="primary">Save</button>
+        <button mat-raised-button (click)="save()" color="primary" *ngIf="!saveInProgress">Save</button>
+        <button mat-raised-button color="primary" *ngIf="saveInProgress">
+            <mat-spinner mode="indeterminate" [diameter]="20"></mat-spinner>
+        </button>
     </div>
 </form>
