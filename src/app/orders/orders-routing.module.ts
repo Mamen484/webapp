@@ -4,11 +4,12 @@ import { OrdersListComponent } from './orders-list/orders-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderDetailsResolveGuard } from '../core/guards/order-details-resolve.guard';
 import { OrdersRouteGuard } from '../core/guards/orders-route.guard';
+import { CanAccessGuard } from './can-access.guard';
 
 const routes: Routes = [
     {
         path: '',
-        canActivate: [OrdersRouteGuard],
+        canActivate: [OrdersRouteGuard, CanAccessGuard],
         children: [
             {path: '', component: OrdersListComponent},
             {
