@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, publishReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, filter, flatMap, publishReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
@@ -24,7 +24,7 @@ const searchLimit = '200';
     styleUrls: ['./category-mapping.component.scss'],
     providers: []
 })
-export class CategoryMappingComponent implements OnInit {
+export class CategoryMappingComponent implements OnInit, OnDestroy {
 
     @Input() channelId: number;
 
@@ -46,8 +46,7 @@ export class CategoryMappingComponent implements OnInit {
                 : null,
     ]);
     channelCategoryOptions: Category[] = [];
-    searchSubscription: Subscription;
-    loading = false;
+    saveInProgress = false;
     cachedMapping: Category;
 
     // pagination
@@ -56,6 +55,7 @@ export class CategoryMappingComponent implements OnInit {
     loadingNextPage = false;
 
     initialSuggestions: Observable<PagedResponse<{ category: Category[] }>>;
+    subscriptions = new Subscription();
 
     constructor(protected channelService: ChannelService,
                 protected feedService: FeedService,
@@ -77,14 +77,10 @@ export class CategoryMappingComponent implements OnInit {
 
     ngOnInit() {
         this.listenChannelCategorySearch();
-        this.categoryMappingService.getCurrentMapping().subscribe(({mapping}) => {
+        const subscription = this.categoryMappingService.getCurrentMapping().subscribe(({mapping}) => {
             this.feedCategory = mapping.catalogCategory;
             this.searchChannelCategoryControl.reset(mapping.channelCategory);
             this.searchChannelCategoryControl.markAsPristine();
-            if (this.searchSubscription) {
-                this.searchSubscription.unsubscribe();
-            }
-            this.loading = Boolean(mapping.channelCategory);
             this.chosenChannelCategory = mapping.channelCategory;
             this.cachedMapping = this.mappingCache.getCategoryMapping()?.channelCategory;
             if (this.categoryMappingInput) {
@@ -94,6 +90,11 @@ export class CategoryMappingComponent implements OnInit {
                 this.searchChannelCategoryControl.setValue('');
             }
         });
+        this.subscriptions.add(subscription);
+    }
+
+    ngOnDestroy(): void {
+        this.subscriptions.unsubscribe();
     }
 
     saveMatching() {
@@ -106,7 +107,7 @@ export class CategoryMappingComponent implements OnInit {
             // not allow to send save request for the same category to prevent side effect
             return;
         }
-        this.loading = true;
+        this.saveInProgress = true;
         this.categoryMappingService.saveNewMapping(this.feedCategory, this.chosenChannelCategory)
             .subscribe(() => this.afterSave());
 
@@ -147,10 +148,7 @@ export class CategoryMappingComponent implements OnInit {
 
     protected afterSave() {
         this.searchChannelCategoryControl.markAsPristine();
-        // we don't wait for autotags loading, so we can hide the progress bar immediately
-        if (!this.chosenChannelCategory) {
-            this.loading = false;
-        }
+        this.saveInProgress = false;
     }
 
     protected fetchCategories(search: string, page = 1) {
@@ -166,6 +164,7 @@ export class CategoryMappingComponent implements OnInit {
 
     protected doFetchCategories(search: string, page = 1) {
         return this.appStore.select('currentStore').pipe(
+            take(1),
             flatMap(store => this.channelService.getChannelCategories(this.channelId, {
                 name: search,
                 country: store.country,
@@ -176,7 +175,7 @@ export class CategoryMappingComponent implements OnInit {
     }
 
     protected listenChannelCategorySearch() {
-        this.searchChannelCategoryControl.valueChanges.pipe(
+        const subscription = this.searchChannelCategoryControl.valueChanges.pipe(
             startWith(''),
             tap(() => this.processingSearch = true),
             tap(() => this.hasNextPage = false),
@@ -192,6 +191,7 @@ export class CategoryMappingComponent implements OnInit {
                     this.autocompleteTrigger.openPanel();
                 }
             });
+        this.subscriptions.add(subscription);
     }
 
 }

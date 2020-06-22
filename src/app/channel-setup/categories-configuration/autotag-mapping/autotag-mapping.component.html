@@ -1,7 +1,17 @@
-<div *ngIf="autotagList?.length">
+<div>
     <mat-card class="mat-elevation-z0 sf-card-outlined">
         <mat-card-content>
-            <form #form="ngForm">
+            <div *ngIf="fetchInProgress">
+                <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required Attributes</div>
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <mat-spinner color="accent" mode="indeterminate"></mat-spinner>
+                </div>
+            </div>
+            <div *ngIf="!autotagList?.length && !fetchInProgress">
+                <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required Attributes</div>
+                <div i18n>This channel category does not expect any channel attributes</div>
+            </div>
+            <form #form="ngForm" *ngIf="autotagList?.length && !fetchInProgress">
                 <div class="autotags-list" fxLayout="column" fxLayoutGap="20px">
                     <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required Attributes</div>
                     <sf-attributes-list [autotagList]="autotagList" [required]="true"

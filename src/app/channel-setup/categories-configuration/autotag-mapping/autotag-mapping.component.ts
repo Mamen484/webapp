@@ -33,6 +33,7 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
     optionalAutotagsList: Autotag[];
     subscription: Subscription;
     saveInProgress = false;
+    fetchInProgress = false;
 
     constructor(protected feedService: FeedService,
                 protected snackbar: MatSnackBar,
@@ -42,7 +43,11 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.categoryMappingService.getCurrentMapping()
-            .subscribe(({fromCache, mapping}) => {
+            .subscribe(({mapping}) => {
+                if (this.channelCategoryId && this.channelCategoryId === mapping.channelCategory?.id
+                    && this.catalogCategoryId === mapping.catalogCategory?.id) {
+                    return;
+                }
                 this.channelCategoryId = mapping.channelCategory?.id;
                 this.catalogCategoryId = mapping.catalogCategory?.id;
                 this.feedId = mapping.catalogCategory?.feedId;
@@ -92,11 +97,13 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        this.fetchInProgress = true;
         this.subscription = zip(
             this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId, {requirement: 'required'}),
             this.feedService.fetchAutotagByCategory(this.feedId, this.catalogCategoryId, {requirement: 'optional'}),
         )
             .subscribe(([requiredResponse, optionalResponse]) => {
+                this.fetchInProgress = false;
                 this.autotagList = requiredResponse._embedded.autotag.filter(autotag => !autotag._embedded.attribute.defaultMapping);
                 this.optionalAutotagsList = optionalResponse._embedded.autotag.filter(autotag => !autotag._embedded.attribute.defaultMapping);
                 this.autotagsLoaded.emit();

@@ -15,6 +15,7 @@ import { ChannelAttribute } from '../../../channel-attribute';
 import { debounceTime, startWith, switchMap } from 'rxjs/operators';
 import { PagedResponse } from 'sfl-shared/entities';
 import { ChannelConstraint } from '../../../../core/entities/channel-constraint';
+import { OverlayActiveService } from '../../overlay-active.service';
 
 const SEARCH_DEBOUNCE = 200;
 
@@ -42,6 +43,7 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
     @Input() value: string;
     @Input() attribute: ChannelAttribute;
     @Input() required: true;
+    @Input() autofocus = false;
 
     @Output() changed = new EventEmitter<string>();
     onChange: (value: string) => any;
@@ -55,7 +57,7 @@ export class AutotagDropdownComponent implements OnInit, OnDestroy, ControlValue
     hasNextPage = false;
     loadingNextPage = false;
 
-    constructor(protected channelService: ChannelService) {
+    constructor(protected channelService: ChannelService, public overlayActiveService: OverlayActiveService) {
     }
 
     ngOnInit() {

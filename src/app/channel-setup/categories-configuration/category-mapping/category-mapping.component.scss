@@ -48,3 +48,14 @@ mat-card {
   cursor: pointer;
 }
 
+button {
+  mat-spinner {
+    margin: 8px auto;
+
+    ::ng-deep {
+      circle {
+        stroke: white !important;
+      }
+    }
+  }
+}

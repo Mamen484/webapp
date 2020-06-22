@@ -1,13 +1,13 @@
 <div fxLayout="row" fxLayoutGap="20px">
     <sf-autotag-input #input [value]="value" [label]="attribute.name" fxFlex
-                      (changed)="changed.emit($event)" [required]="required"></sf-autotag-input>
+                      (changed)="changed.emit($event)" [required]="required" [autofocus]="autofocus"></sf-autotag-input>
     <mat-form-field appearance="outline" color="accent" fxFlex>
         <mat-label i18n>Authorized values</mat-label>
         <input type="text" matInput [formControl]="control" [matAutocomplete]="auto" #inputElement>
         <mat-icon matSuffix>arrow_drop_down</mat-icon>
     </mat-form-field>
 </div>
-<mat-autocomplete #auto="matAutocomplete"
+<mat-autocomplete #auto="matAutocomplete" (opened)="overlayActiveService.setActive()" (closed)="overlayActiveService.setInactive()"
                   (optionSelected)="changed.emit($event.option.value); input.notifyInputDirty(); control.setValue(''); inputElement.blur()">
     <mat-option *ngFor="let option of options" [value]="'['+option+']'" [innerHTML]="option | highlight:control.value"></mat-option>
     <mat-option class="load-more-results" *ngIf="hasNextPage && !loadingNextPage" disabled (click)="loadNextPage($event)" i18n>Load more results</mat-option>

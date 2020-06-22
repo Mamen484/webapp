@@ -1,8 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FeedCategory } from '../../../core/entities/feed-category';
 import { PageEvent } from '@angular/material/paginator';
 import { CategoryState } from '../../category-state';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { FeedService } from '../../../core/services/feed.service';
 import { FilterDialogComponent } from '../../filter-dialog/filter-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ const CONFLICT_ERROR_CODE = 409;
     templateUrl: './feed-categories-list.component.html',
     styleUrls: ['./feed-categories-list.component.scss']
 })
-export class FeedCategoriesListComponent implements OnInit {
+export class FeedCategoriesListComponent implements OnInit, OnDestroy {
 
     @ViewChild(CdkScrollable, {static: true}) feedCategoriesContainer: CdkScrollable;
 
@@ -47,6 +47,7 @@ export class FeedCategoriesListComponent implements OnInit {
 
     processingClientCategorySearch = false;
     protected subscription: Subscription;
+    protected categoryMappingSubscription;
 
     constructor(protected feedService: FeedService,
                 protected matDialog: MatDialog,
@@ -58,7 +59,7 @@ export class FeedCategoriesListComponent implements OnInit {
         this.route.data.subscribe(({data}) => {
             this.channelType = data.channel.type;
             this.feedId = data.feed.id;
-            this.refreshCategoriesList().subscribe();
+            this.refreshCategoriesList();
             this.listenCategoryMappingChanged();
         });
 
@@ -66,7 +67,7 @@ export class FeedCategoriesListComponent implements OnInit {
 
     cancelFilter() {
         this.categoryStateFilter = CategoryState.NotSpecified;
-        this.refreshCategoriesList().subscribe();
+        this.refreshCategoriesList();
     }
 
     chooseClientCategory(category: FeedCategory) {
@@ -98,13 +99,13 @@ export class FeedCategoriesListComponent implements OnInit {
             this.currentPage = event.pageIndex;
         }
 
-        this.refreshCategoriesList().subscribe();
+        this.refreshCategoriesList();
         this.feedCategoriesContainer.scrollTo({top: 0});
     }
 
     searchClientCategory(value) {
         this.searchedCategoryQuery = value;
-        this.refreshCategoriesList().subscribe();
+        this.refreshCategoriesList();
     }
 
     setPage(page: number) {
@@ -119,31 +120,29 @@ export class FeedCategoriesListComponent implements OnInit {
             this.subscription.unsubscribe();
         }
 
-        return new Observable(observer => {
-            this.subscription = this.feedService.fetchCategoryCollection(this.feedId, {
-                page: (this.currentPage + 1).toString(),
-                limit: this.itemsPerPage,
-                name: this.searchedCategoryQuery,
-                state: this.categoryStateFilter,
-            }).subscribe(categories => {
-                this.categories = categories._embedded.category;
-                this.totalCategoriesNumber = categories.total;
-                this.processingClientCategorySearch = false;
-                this.updated.emit();
+        this.subscription = this.feedService.fetchCategoryCollection(this.feedId, {
+            page: (this.currentPage + 1).toString(),
+            limit: this.itemsPerPage,
+            name: this.searchedCategoryQuery,
+            state: this.categoryStateFilter,
+        }).subscribe(categories => {
+            this.categories = categories._embedded.category;
+            this.totalCategoriesNumber = categories.total;
+            this.processingClientCategorySearch = false;
+            this.updated.emit();
 
-                const category = this.chosenCatalogCategory
-                    ? this.categories.find(cat => this.chosenCatalogCategory.id === cat.id)
-                    : null;
-                this.chooseClientCategory(category || this.categories[0]);
-                observer.next();
-                observer.complete();
-            }, error => {
-                if (error.status === CONFLICT_ERROR_CODE) {
-                    this.setPage(error.pages - 1);
-                    this.refreshCategoriesList().subscribe();
-                }
-                observer.error();
-            });
+            const category = this.chosenCatalogCategory
+                ? this.categories.find(cat => this.chosenCatalogCategory.id === cat.id)
+                : this.categories[0];
+            if (category) {
+                this.chooseClientCategory(category);
+            }
+
+        }, error => {
+            if (error.status === CONFLICT_ERROR_CODE) {
+                this.setPage(error.pages - 1);
+                this.refreshCategoriesList();
+            }
         });
     }
 
@@ -151,16 +150,28 @@ export class FeedCategoriesListComponent implements OnInit {
         this.matDialog.open(FilterDialogComponent, {data: this.categoryStateFilter}).afterClosed().subscribe(state => {
             if (typeof state !== 'undefined') {
                 this.categoryStateFilter = state;
-                this.refreshCategoriesList().subscribe();
+                this.refreshCategoriesList();
             }
         });
     }
 
-    protected listenCategoryMappingChanged() {
-        this.categoryMappingService.getChanges().subscribe(channelCategory => {
-                this.refreshCategoriesList(true).subscribe();
+    listenCategoryMappingChanged() {
+        if (this.categoryMappingSubscription) {
+            this.categoryMappingSubscription.unsubscribe();
+        }
+        this.categoryMappingSubscription = this.categoryMappingService.getChanges().subscribe(channelCategory => {
+                this.refreshCategoriesList();
             }
         );
+    }
+
+    ngOnDestroy(): void {
+        if (this.categoryMappingSubscription) {
+            this.categoryMappingSubscription.unsubscribe();
+        }
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
     }
 
 }

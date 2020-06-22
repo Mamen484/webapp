@@ -134,7 +134,7 @@ describe('CategoryMappingComponent', () => {
         feedService.mapFeedCategory.and.returnValue(EMPTY);
         categoryMappingService.saveNewMapping.and.returnValue(EMPTY);
         component.saveMatching();
-        expect(component.loading).toBe(true);
+        expect(component.saveInProgress).toBe(true);
     });
 
     it('should send a channel category id to modify a category mapping when a mapping created', () => {
@@ -233,6 +233,7 @@ describe('CategoryMappingComponent', () => {
         it('should be dirty when user saves selection and then alters search', fakeAsync(() => {
             mappingCacheService.getCategoryMapping.and.returnValue(<any>{channelCategory: {}})
             feedService.mapFeedCategory.and.returnValue(of({}));
+            categoryMappingService.saveNewMapping.and.returnValue(EMPTY);
             component.removeValue();
             tick(300);
             fixture.debugElement.nativeElement.querySelector('button.save-matching').click();
@@ -260,6 +261,7 @@ describe('CategoryMappingComponent', () => {
         beforeEach(() => {
             event = {stopPropagation: jasmine.createSpy()};
             appStore.select.and.returnValue(of(<any>{country: 'fr'}));
+            fixture.detectChanges();
         });
 
         it('should indicate that loading is in progress', () => {

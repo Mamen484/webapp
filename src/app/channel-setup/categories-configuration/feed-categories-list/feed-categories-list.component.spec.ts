@@ -101,7 +101,7 @@ describe('FeedCategoriesListComponent', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
         component.feedId = 15;
         component.currentPage = 2;
-        component.refreshCategoriesList().subscribe();
+        component.refreshCategoriesList();
         expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
             page: '3',
             limit: component.itemsPerPage,

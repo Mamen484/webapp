@@ -165,10 +165,24 @@ describe('AutotagMappingComponent', () => {
 
     });
 
-    it('should NOT show any content when autotagList is empty', () => {
-        component.autotagList = [];
-        fixture.detectChanges();
-        expect(fixture.debugElement.nativeElement.textContent).toBe('');
+    it('should show an error snackbar if any match attribute request returned an error', () => {
+        component.autotagList = <Autotag[]>[
+            {_embedded: {attribute: {constraintGroupId: null}}, modified: true},
+            {_embedded: {attribute: {constraintGroupId: 1}}, modified: true},
+        ];
+        component.optionalAutotagsList = <Autotag[]>[
+            {_embedded: {attribute: {constraintGroupId: null}}, modified: true},
+            {_embedded: {attribute: {constraintGroupId: 1}}},
+        ];
+        feedService.matchAutotagByCategory.and.returnValues(
+            throwError({}),
+            throwError({}),
+            of({}),
+        );
+        component.saveMatching();
+        expect(feedService.matchAutotagByCategory).toHaveBeenCalledTimes(3);
+        expect(matSnackBar.openFromComponent).toHaveBeenCalledTimes(1);
+        expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(AttributesUpdateErrorSnackbarComponent, new ErrorSnackbarConfig());
     });
 
     it('should show an error snackbar if any match attribute request returned an error', () => {

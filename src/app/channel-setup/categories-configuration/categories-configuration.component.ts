@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { zip } from 'rxjs';
 import { FeedService } from '../../core/services/feed.service';
@@ -12,6 +12,7 @@ import { AutotagFormStateService } from './autotag-mapping/autotag-form-state.se
 import { AutotagFormState } from './autotag-mapping/autotag-form-state.enum';
 import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
 import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/unsaved-data-guard';
+import { OverlayActiveService } from './overlay-active.service';
 import { Title } from '@angular/platform-browser';
 
 
@@ -32,13 +33,16 @@ export class CategoriesConfigurationComponent implements OnInit, UnsavedDataInte
 
     autotagFormState: AutotagFormState;
     catalogCategoryState = CategoryState;
+    overlayActive = false;
 
     constructor(protected matDialog: MatDialog,
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected stateService: AutotagFormStateService,
                 protected fullstoryLoader: FullstoryLoaderService,
-                protected titleService: Title) {
+                protected titleService: Title,
+                private overlayActiveService: OverlayActiveService,
+                private changeDetectorRef: ChangeDetectorRef) {
     }
 
 
@@ -62,10 +66,11 @@ export class CategoriesConfigurationComponent implements OnInit, UnsavedDataInte
             this.titleService.setTitle(`Shoppingfeed / ${this.channel.name} / Setup`);
         });
         this.stateService.getState().subscribe(state => this.autotagFormState = state);
-    }
-
-    onAutotagsLoaded() {
-        this.categoryMapping.loading = false
+        this.overlayActiveService.isActive().subscribe(isActive => {
+            this.overlayActive = isActive;
+            // prevent scroll locking after asynchronous overlay deactivation
+            this.changeDetectorRef.detectChanges();
+        });
     }
 
     refreshPercentage() {

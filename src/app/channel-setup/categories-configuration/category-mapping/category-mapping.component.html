@@ -36,10 +36,11 @@
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <button class="save-matching" mat-raised-button i18n color="accent" (click)="saveMatching()">Save
+                <button class="save-matching" mat-raised-button color="accent" (click)="saveMatching()">
+                    <mat-spinner [diameter]="20" mode="indeterminate" *ngIf="saveInProgress" color="accent"></mat-spinner>
+                    <ng-container *ngIf="!saveInProgress" i18n>Save</ng-container>
                 </button>
             </div>
         </div>
-        <mat-progress-bar mode="indeterminate" color="accent" *ngIf="loading"></mat-progress-bar>
     </mat-card-content>
 </mat-card>
