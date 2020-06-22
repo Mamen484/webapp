@@ -11,7 +11,7 @@ import { IsAuthorizedGuard } from './core/guards/is-authorized.guard';
 import { LogoutGuard } from './core/guards/logout.guard';
 import { IsLoggedInGuard } from './core/guards/is-logged-in.guard';
 import { BlankComponent } from './shared/blank.component';
-import { ShopifyGuard } from './core/guards/shopify.guard';
+import { ShopifyGuard } from './registration/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 import { AddStoreParamGuard } from './core/guards/add-store-param.guard';
 import { SflLoginByTokenGuard } from 'sfl-shared/auth';

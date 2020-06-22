@@ -1,15 +1,12 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { CreateAccountComponent } from './create-account.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { SflLocalStorageService } from 'sfl-shared/services';
 
 describe('CreateAccount', () => {
     let component: CreateAccountComponent;
-    let  fixture: ComponentFixture<CreateAccountComponent>;
-    let localStorage;
+    let fixture: ComponentFixture<CreateAccountComponent>;
 
     beforeEach(() => {
-        localStorage = jasmine.createSpyObj('LocalStorage', ['removeItem']);
         TestBed.configureTestingModule({
             declarations: [
                 CreateAccountComponent,
@@ -17,9 +14,7 @@ describe('CreateAccount', () => {
             schemas: [
                 NO_ERRORS_SCHEMA
             ],
-            providers: [
-                {provide: SflLocalStorageService, useValue: localStorage}
-            ]
+            providers: []
 
         });
     });
@@ -30,10 +25,6 @@ describe('CreateAccount', () => {
         component.updateFrequency = 0;
     });
 
-    it('should remove registration cache from localStorage on init', () => {
-        component.ngOnInit();
-        expect(localStorage.removeItem).toHaveBeenCalledWith('sf.registration');
-    });
     it('should set progress to 100 and activate a button by setting registrationFinished to true', fakeAsync(() => {
         let button = fixture.debugElement.nativeElement.querySelector('a');
         fixture.detectChanges();

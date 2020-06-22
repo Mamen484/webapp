@@ -3,20 +3,13 @@ import { of } from 'rxjs';
 
 describe('ShopifyGuard', () => {
     let guard;
-    let localStorage;
     let windowRef;
     let shopifyService;
     beforeEach(() => {
-        localStorage = jasmine.createSpyObj('LocalStorage', ['removeItem']);
         windowRef = {nativeWindow: {location: {href: ''}}};
         shopifyService = jasmine.createSpyObj('ShopifyAuthentifyService', ['getAuthorizationUrl']);
 
-        guard = new ShopifyGuard(shopifyService, localStorage, windowRef);
-    });
-
-    it('should remove registration data from the local storage on activate', () => {
-        guard.canActivate({queryParams: {}});
-        expect(localStorage.removeItem).toHaveBeenCalledWith('sf.registration');
+        guard = new ShopifyGuard(shopifyService, windowRef);
     });
 
     it('should redirect to shopify app if the shop query param is not specified', () => {

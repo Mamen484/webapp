@@ -1,0 +1,42 @@
+@startuml
+actor Toto
+participant Shopify
+participant Webapp
+participant "SF API" as api
+== authorize ==
+Toto -> Shopify: Install Shoppingfeed application
+Shopify -> Webapp: Redirect to /shopify/authentify?{queryParams}
+alt !queryParams.shop
+Webapp --> Toto: redirect to SHOPIFY_APP_URL
+else !queryParams.code
+Webapp -> api: GET /shopify/auth/{shopName}
+api --> Webapp: {authorizeUrl: string}
+Webapp --> Shopify: redirect to authorizeUrl
+Shopify --> Toto: show "Install app" confirmation
+end
+
+== install ==
+
+Toto -> Shopify: confirm app installation
+Shopify -> Webapp: redirect to /register?{queryParams}
+alt !queryParams.shop
+Webapp --> Toto: redirect to SHOPIFY_APP_URL
+else
+Webapp -> api: GET /shopify/store/{shopName}
+api --> Webapp: store
+Webapp -> Webapp: autologin user
+    alt store.storeId > 0
+        Webapp -> api: PATCH /store/{storeId}
+        Webapp --> Toto: redirect to APP_URL
+    else
+        Webapp --> Toto: show the registration form
+    end
+end
+
+== register ==
+Toto -> Webapp: specify login, password and accept terms and services
+Webapp -> api: POST /store
+api --> Webapp: store
+Webapp -> Webapp: auto login the user
+Webapp --> Toto: store is created, show useful information and a link to the app
+@enduml

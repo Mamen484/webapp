@@ -3,7 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { SflWindowRefService } from 'sfl-shared/services';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ShopSpecifiedGuard implements CanActivate {
 
     constructor(protected windowRef: SflWindowRefService) {

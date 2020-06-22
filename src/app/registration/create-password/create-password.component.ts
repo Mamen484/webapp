@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { flatMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ShopifyAuthentifyService } from '../../core/services/shopify-authentify.service';
 import { environment } from '../../../environments/environment';
-import { SflAuthService, SflLocaleIdService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService, StoreService } from 'sfl-shared/services';
 import { Store } from 'sfl-shared/entities';
 
 @Component({
@@ -22,23 +21,17 @@ export class CreatePasswordComponent implements OnInit {
                 protected router: Router,
                 protected route: ActivatedRoute,
                 protected shopifyService: ShopifyAuthentifyService,
-                protected localStorage: SflLocalStorageService,
                 protected authService: SflAuthService,
                 protected localeIdService: SflLocaleIdService) {
         this.supportEmail = environment.supportEmail[this.localeIdService.localeId] || environment.supportEmail.en;
     }
 
     public ngOnInit() {
-        let cache = this.localStorage.getItem('sf.registration');
-        if (cache) {
-            this.store = JSON.parse(cache);
-            return;
-        }
-        this.route.queryParams.pipe(
-            flatMap((params: Params) => this.shopifyService.getStoreData(params['shop'], params)))
-            .subscribe(store => {
+        this.route.queryParams.subscribe(params => {
+            this.shopifyService.getStoreData(params['shop'], params).subscribe(store => {
                 this.store = store;
-            })
+            });
+        })
     }
 
     public createPassword({email, password}) {

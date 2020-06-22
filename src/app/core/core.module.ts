@@ -13,9 +13,6 @@ import { SupportAuthInterceptor } from './interceptors/support-auth-interceptor'
 import { PasswordRecoveryService } from './services/password-recovery.service';
 import { ChannelLogoService } from './services/channel_logo.service';
 import { ShopifyAuthentifyService } from './services/shopify-authentify.service';
-import { ShopifyGuard } from './guards/shopify.guard';
-import { ShopSpecifiedGuard } from './guards/shop-specified.guard';
-import { RegistrationCacheGuard } from './guards/registration-cache.guard';
 import { IsAuthorizedGuard } from './guards/is-authorized.guard';
 import { LogoutGuard } from './guards/logout.guard';
 import { IsLoggedInGuard } from './guards/is-logged-in.guard';
@@ -61,15 +58,12 @@ import { TimelineRouteGuard } from './guards/timeline-route.guard';
         LogoutGuard,
         OrderDetailsResolveGuard,
         OrdersRouteGuard,
-        ShopifyGuard,
-        ShopSpecifiedGuard,
         TimelineRouteGuard,
 
         InternationalAccountService,
         ChannelLogoService,
         ChannelStorageService,
         ShopifyAuthentifyService,
-        RegistrationCacheGuard,
         SupportService,
         PasswordRecoveryService,
         TimelineService,
