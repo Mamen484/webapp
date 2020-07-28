@@ -1,7 +1,9 @@
 import { TableOperations } from './table-operations';
-import { EMPTY, of } from 'rxjs';
+import { EMPTY, of, Subscription } from 'rxjs';
 import { ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
+import { Directive } from '@angular/core';
 
+@Directive()
 class TableOperationsChild extends TableOperations<any> {
     fetchCollection(params) {
         return undefined;
@@ -44,6 +46,17 @@ describe('TableOperations', () => {
         instance.pageChanged(<any>{pageIndex: 3, previousPageIndex: 3, pageSize: 25});
         expect(fetchCollection).toHaveBeenCalledWith({limit: 25, page: 1, search: ''});
         expect(instance.pageSize).toEqual(25);
+    });
+
+    it('should unsubscribe onDestroy', () => {
+        instance.dataSubscription = new Subscription();
+        instance.ngOnDestroy();
+        expect(instance.dataSubscription.closed).toBe(true);
+    });
+
+    it('should run onDestroy without subscriptions', () => {
+        instance.ngOnDestroy();
+        expect(instance.dataSubscription).not.toBeDefined();
     });
 });
 
@@ -101,5 +114,6 @@ export function runTableOperationSpecs(getParams: () => {
             expect([limit, page, search]).toEqual([25, 1, '']);
             expect(component.pageSize).toEqual(25);
         });
+
     });
 }

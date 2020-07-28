@@ -1,10 +1,10 @@
 import { StatisticsComponent } from './statistics.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ChannelsRouteGuard } from '../core/guards/channels-route.guard';
+import { HomepageRouteGuard } from '../core/guards/homepage-route.guard';
 
 const routes = [
-    {path: '', component: StatisticsComponent, canActivate: [ChannelsRouteGuard]}
+    {path: '', component: StatisticsComponent, canActivate: [HomepageRouteGuard]}
 ];
 
 @NgModule({

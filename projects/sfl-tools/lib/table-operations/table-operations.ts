@@ -1,10 +1,11 @@
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { OnInit } from '@angular/core';
+import { OnDestroy, OnInit, Directive } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
-export abstract class TableOperations<T> implements OnInit {
+@Directive()
+export abstract class TableOperations<T> implements OnInit, OnDestroy {
 
     /** paginator */
     pageSizeOptions = [10, 15, 25, 50, 100];
@@ -17,15 +18,9 @@ export abstract class TableOperations<T> implements OnInit {
 
     /** data processing */
     dataSource = new MatTableDataSource<T>();
-    dataSubscription;
+    dataSubscription: Subscription;
     resultsLength = 0;
     isLoadingResults = true;
-
-    protected abstract fetchCollection(params: {
-        limit: number,
-        page: number,
-        search: string
-    }): Observable<{ total: number, dataList: any[] }>;
 
     pageChanged(event: PageEvent) {
         if (event.pageIndex === event.previousPageIndex) {
@@ -44,6 +39,12 @@ export abstract class TableOperations<T> implements OnInit {
         this.fetchData();
     }
 
+    ngOnDestroy() {
+        if (this.dataSubscription) {
+            this.dataSubscription.unsubscribe();
+        }
+    }
+
     search(searchQuery) {
         this.searchQuery = searchQuery;
         this.isLoadingResults = true;
@@ -51,6 +52,12 @@ export abstract class TableOperations<T> implements OnInit {
         this.currentPage = 0;
         this.fetchData();
     }
+
+    protected abstract fetchCollection(params: {
+        limit: number,
+        page: number,
+        search: string
+    }): Observable<{ total: number, dataList: any[] }>;
 
     protected fetchData() {
         if (this.dataSubscription) {

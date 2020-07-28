@@ -1,0 +1,8 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="sf-content" fxLayoutGap="40px">
+    <div fxFlex>
+        <img [src]="imageLink" height="40px">
+    </div>
+    <div i18n>Your catalog's configuration is up to {{ percentage | percent:'1.0-0' }}</div>
+    <a sflLegacyLink [path]="continueLink" mat-raised-button color="accent" i18n
+       [disabled]="percentage === 0" [class.continue-button]="percentage > 0">Continue</a>
+</div>

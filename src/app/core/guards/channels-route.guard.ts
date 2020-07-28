@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { SET_ROUTE } from '../reducers/current-route-reducer';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ChannelsRouteGuard implements CanActivate {
     constructor(protected appStore: Store<AppState>) {
     }

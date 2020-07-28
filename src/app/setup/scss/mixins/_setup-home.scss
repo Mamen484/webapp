@@ -1,0 +1,22 @@
+@import '../../../../sass/variables';
+
+$header-section-width: 84px;
+$back-to-home-height: 34px;
+
+@mixin setupHome() {
+  .scrollable-container {
+    height: calc(100vh - 3 * #{$content-margin} - #{$header-section-width} - #{$back-to-home-height});
+
+    &.scroll-blocked {
+      overflow: hidden;
+    }
+  }
+
+  .next-category-button {
+    text-align: right;
+  }
+
+  sf-category-mapping {
+    margin-bottom: 20px;
+  }
+}

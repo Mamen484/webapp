@@ -1,0 +1,111 @@
+@startuml
+
+namespace sf.library.tools {
+    class SftSoloSearch {
+
+    }
+}
+
+namespace before {
+
+
+
+        class CategoriesConfiguration {
+            +refreshPercentage()
+            +hasModifications()
+            +showClosedDialog()
+        }
+
+
+
+        class FeedCategoriesList {
+            +cancelFilter()
+            +chooseClientCategory(category: FeedCategory)
+            +chooseNextCatalogCategory()
+            +changePage(event: PageEvent)
+            +searchClientCategory(value)
+            +setPage(page: number)
+            +refreshCategoriesList(silently = false)
+            +openFilterDialog()
+            +listenCategoryMappingChanged()
+            +ngOnInit()
+            +ngOnDestroy()
+        }
+
+         CategoriesConfiguration *-- FeedCategoriesList
+         FeedCategoriesList o-- sf.library.tools.SftSoloSearch
+
+}
+
+namespace after {
+
+    namespace SetupCommon {
+        abstract class ListOperations {
+
+            +@ViewChild feedCategoriesContainer;
+
+            +itemsPerPage
+            +currentPage
+            +totalCategoriesNumber
+            +pageSizeOptions
+
+            +configurationState: ConfigurationState;
+
+            +chosenListItem: FeedCategory || Product
+            +searchQuery: string
+            +dataSubscription
+            +categoryMappingSubscription
+
+
+            +abstract reloadListData()
+            +cancelFilter()
+            +chooseListItem(item)
+            +chooseNextListItem()
+            +changePage(event: PageEvent)
+            +searchClientCategory()
+            +setPage(page)
+            +openFilterDialog()
+            +listenCategoryMappingChanged()
+            +ngOnInit()
+            +ngOnDestroy()
+        }
+
+        enum ConfigurationState {
+            Configured
+            Misconfigured
+        }
+
+        ListOperations o-- ConfigurationState
+    }
+
+    namespace FeedSetup {
+        class FeedSetup {
+
+        }
+
+        class FeedCategoriesList {
+            +reloadListData()
+        }
+
+        FeedSetup *-- FeedCategoriesList
+        FeedCategoriesList --|> after.SetupCommon.ListOperations
+        FeedCategoriesList o-- sf.library.tools.SftSoloSearch
+
+    }
+
+    namespace ProductSetup {
+        class ProductSetup {
+
+        }
+
+        class ProductsList {
+            +reloadListData()
+        }
+
+        ProductSetup *-- ProductsList
+        ProductsList --|> after.SetupCommon.ListOperations
+        ProductsList o-- sf.library.tools.SftSoloSearch
+    }
+}
+
+@enduml

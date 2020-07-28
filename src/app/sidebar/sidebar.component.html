@@ -8,7 +8,7 @@
         <mat-list-item class="mat-active" matTooltip="HOMEPAGE" matTooltipPosition="after" i18n-matTooltip
                        [matTooltipDisabled]="hideTooltips">
             <a routerLink="/" class="homepage-link">
-                <mat-icon [class.active]="currentRoute === 'channels'">home</mat-icon>
+                <mat-icon [class.active]="currentRoute === 'homepage'">home</mat-icon>
                 <span fxHide fxShow.xs i18n>Homepage</span>
             </a>
         </mat-list-item>
@@ -16,7 +16,7 @@
                        matTooltipPosition="after"
                        i18n-matTooltip *ngIf="hasChannelsPermissions()" (onMenuOpen)="onMenuOpen()"
                        [matTooltipDisabled]="hideTooltips">
-            <mat-icon>wb_cloudy</mat-icon>
+            <mat-icon [class.active]="currentRoute === 'channels'">wb_cloudy</mat-icon>
             <span fxHide fxShow.xs i18n>Channels</span>
         </mat-list-item>
 

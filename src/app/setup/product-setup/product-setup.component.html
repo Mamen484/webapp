@@ -1,0 +1,25 @@
+<sf-configuration-status [imageLink]="channel?._links?.image?.href" [percentage]="percentage"
+                         [continueLink]="channel | sfChannelLink"></sf-configuration-status>
+<mat-divider></mat-divider>
+<div class="sf-content">
+    <div>
+        <a class="back-to-home-button" routerLink="/">
+            <mat-icon>keyboard_backspace</mat-icon> <span i18n>Back to homepage</span>
+        </a>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start start">
+        <sf-products-list fxFlex (updated)="refreshPercentage()"></sf-products-list>
+        <div fxFlex fxLayout="column" class="scrollable-container" [class.scroll-blocked]="overlayActive"
+             *ngIf="productsList?.dataSource?.data?.length">
+            <sf-category-mapping
+                    [channelId]="channel.id"></sf-category-mapping>
+            <ng-container *ngIf="productsList?.chosenListItem?.productMappedChannelCategory">
+                <sf-autotag-mapping (autotagUpdated)="productsList.updateData()"></sf-autotag-mapping>
+            </ng-container>
+            <div class="next-category-button">
+                <button *ngIf="productsList.chosenListItem.state === catalogCategoryState.Configured" mat-stroked-button color="accent" i18n (click)="productsList.chooseNextListItem()">Next
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

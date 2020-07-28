@@ -1,5 +1,5 @@
 import { Category } from './category';
-import { CategoryState } from '../../channel-setup/category-state';
+import { ConfigurationState } from '../../setup/configuration-state';
 
 export interface CatalogCategory {
     id: number;
@@ -12,5 +12,5 @@ export interface FeedCategory {
     channelCategory: Category,
     feedId: number;
     id: number;
-    state: CategoryState;
+    state: ConfigurationState;
 }

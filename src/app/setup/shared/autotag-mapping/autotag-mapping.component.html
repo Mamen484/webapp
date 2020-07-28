@@ -1,0 +1,45 @@
+<div>
+    <mat-card class="mat-elevation-z0 sf-card-outlined">
+        <mat-card-content>
+            <div *ngIf="fetchInProgress">
+                <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required Attributes</div>
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <mat-spinner color="accent" mode="indeterminate" [diameter]="50"></mat-spinner>
+                </div>
+            </div>
+            <form #form="ngForm" *ngIf="!fetchInProgress">
+                <div class="autotags-list" fxLayout="column" fxLayoutGap="20px">
+                    <div class="mat-subheading-2 attributes-mapping-heading" i18n>Required Attributes</div>
+                    <sf-attributes-list *ngIf="autotagList?.length" [autotagList]="autotagList" [required]="true"
+                                        (attributeChanged)="setAutotagValue($event.attribute, $event.value)"></sf-attributes-list>
+                    <div i18n *ngIf="!autotagList?.length">This channel category does not expect any required channel attributes</div>
+                    <div class="optional-attributes">
+                        <div class="attributes-divider">
+                            <mat-divider></mat-divider>
+                        </div>
+                        <mat-accordion>
+                            <mat-expansion-panel class="mat-elevation-z0">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title i18n class="mat-subheading-2 attributes-mapping-heading">ProductGraph (Optional Attributes)</mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <sf-attributes-list [autotagList]="optionalAutotagsList" [required]="false"
+                                                    (attributeChanged)="setAutotagValue($event.attribute, $event.value)"></sf-attributes-list>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <div class="attributes-divider">
+                            <mat-divider></mat-divider>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions" fxLayout="row" fxLayoutAlign="end center">
+                    <button *ngIf="!saveInProgress" mat-raised-button i18n color="accent" (click)="saveMatching()">
+                        Save
+                    </button>
+                    <button mat-raised-button color="accent" *ngIf="saveInProgress">
+                        <mat-spinner color="accent" mode="indeterminate" [diameter]="20"></mat-spinner>
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

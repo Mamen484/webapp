@@ -1,0 +1,6 @@
+@import '../../../../sass/variables';
+
+a[color="accent"].continue-button {
+  background-color: mat-color($green);
+  color: white;
+}

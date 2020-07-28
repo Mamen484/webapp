@@ -6,12 +6,13 @@ import { ConnectableObservable, Observable, of, zip } from 'rxjs';
 import { FeedCategory } from '../entities/feed-category';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { flatMap, map, publishReplay, take, tap } from 'rxjs/operators';
+import { flatMap, map, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
-import { CategoryState } from '../../channel-setup/category-state';
-import { Autotag } from '../../channel-setup/autotag';
-import { MappingCollection } from '../../channel-setup/mapping-collection';
-import { FeedCategoryMapping } from '../../channel-setup/feed-category-mapping';
+import { ConfigurationState } from '../../setup/configuration-state';
+import { Autotag } from '../../setup/autotag';
+import { MappingCollection } from '../../setup/mapping-collection';
+import { FeedCategoryMapping } from '../../setup/feed-category-mapping';
+import { Product } from '../../setup/product-setup/entities/product';
 
 const MAX_API_LIMIT = '200';
 
@@ -26,7 +27,7 @@ export class FeedService {
     constructor(protected httpClient: HttpClient, protected appStore: Store<AppState>) {
     }
 
-    fetchCategoryCollection(feedId, {name, page, limit, state}: { name?: string, page?: string, limit?: string, state?: CategoryState }) {
+    fetchCategoryCollection(feedId, {name, page, limit, state}: { name?: string, page?: string, limit?: string, state?: ConfigurationState }) {
         let params = new HttpParams();
         if (name) {
             params = params.set('name', name);
@@ -45,6 +46,27 @@ export class FeedService {
         return this.httpClient.get(
             `${environment.API_URL}/feed/${feedId}/category`, {params}
         ) as Observable<PagedResponse<{ category: FeedCategory[] }>>;
+    }
+
+    fetchProductCollection(feedId, {name, page, limit, state}: { name?: string, page?: string, limit?: string, state?: ConfigurationState }) {
+        let params = new HttpParams();
+        if (name) {
+            params = params.set('name', name);
+        }
+        if (page) {
+            params = params.set('page', page);
+        }
+
+        if (limit) {
+            params = params.set('limit', limit);
+        }
+
+        if (state) {
+            params = params.set('state', state);
+        }
+        return this.httpClient.get(
+            `${environment.API_URL}/feed/${feedId}/product`, {params}
+        ) as Observable<PagedResponse<{ product: Product[] }>>;
     }
 
     fetchFeedCollection(channelId: number, forceFetch = false) {
@@ -69,6 +91,13 @@ export class FeedService {
     mapFeedCategory(feedId, catalogCategoryId: number, channelCategoryId: number) {
         return this.httpClient.put(
             `${environment.API_URL}/feed/${feedId}/mapping/category/${catalogCategoryId}`,
+            {mapping: {channelCategoryId}}
+        );
+    }
+
+    mapProductCategory(feedId, catalogProductId: number, channelCategoryId: number) {
+        return this.httpClient.put(
+            `${environment.API_URL}/feed/${feedId}/mapping/product/${catalogProductId}`,
             {mapping: {channelCategoryId}}
         );
     }
@@ -112,9 +141,32 @@ export class FeedService {
         ) as Observable<PagedResponse<{ autotag: Autotag[] }>>;
     }
 
+    fetchAutotagByProduct(feedId, catalogCategoryId, {requirement, matching, page}: { requirement?: 'required' | 'optional', matching?: 'matched' | 'empty', page?: number } = {}) {
+        let params = new HttpParams().set('limit', MAX_API_LIMIT);
+        if (requirement) {
+            params = params.set('channelAttributeRequirement', requirement);
+        }
+        if (matching) {
+            params = params.set('matching', matching);
+        }
+        if (page) {
+            params = params.set('page', page.toString());
+        }
+        return this.httpClient.get(
+            `${environment.API_URL}/feed/${feedId}/autotag/product/${catalogCategoryId}`, {params}
+        ) as Observable<PagedResponse<{ autotag: Autotag[] }>>;
+    }
+
     matchAutotagByCategory(feedId, catalogCategoryId, channelAttributeId, value) {
         return this.httpClient.put(
             `${environment.API_URL}/feed/${feedId}/autotag/category/${catalogCategoryId}/attribute/${channelAttributeId}`,
+            {autotag: {value}}
+        );
+    }
+
+    matchAutotagByProduct(feedId, catalogProductId, channelAttributeId, value) {
+        return this.httpClient.put(
+            `${environment.API_URL}/feed/${feedId}/autotag/product/${catalogProductId}/attribute/${channelAttributeId}`,
             {autotag: {value}}
         );
     }

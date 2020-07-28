@@ -20,7 +20,6 @@ import { TimelineService } from './services/timeline.service';
 import { InitializeStoreGuard } from './guards/initialize-store.guard';
 import { CanLoadAdminGuard } from './guards/can-load-admin.guard';
 import { currentRouteReducer } from './reducers/current-route-reducer';
-import { ChannelsRouteGuard } from './guards/channels-route.guard';
 import { OrdersRouteGuard } from './guards/orders-route.guard';
 import { OrdersService } from './services/orders.service';
 import { HttpClientService } from './services/http-client.service';
@@ -49,7 +48,6 @@ import { TimelineRouteGuard } from './guards/timeline-route.guard';
     ],
     providers: [
         AggregatedUserInfoResolveGuard,
-        ChannelsRouteGuard,
         CanLoadAdminGuard,
         CheckProperLocaleGuard,
         InitializeStoreGuard,

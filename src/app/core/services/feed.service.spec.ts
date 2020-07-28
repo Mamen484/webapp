@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
 import { EMPTY, of } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CategoryState } from '../../channel-setup/category-state';
+import { ConfigurationState } from '../../setup/configuration-state';
 
 describe('FeedService', () => {
     let appStore: jasmine.SpyObj<Store<AppState>>;
@@ -39,9 +39,9 @@ describe('FeedService', () => {
     });
 
     it('should include page, limit and mapping params to a fetchCategoryCollection call', () => {
-        service.fetchCategoryCollection(11, {limit: '10', page: '3', state: CategoryState.Configured}).subscribe();
+        service.fetchCategoryCollection(11, {limit: '10', page: '3', state: ConfigurationState.Configured}).subscribe();
 
-        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/category?page=3&limit=10&state=${CategoryState.Configured}`);
+        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/category?page=3&limit=10&state=${ConfigurationState.Configured}`);
         expect(req.request.method).toBe('GET');
     });
 
@@ -147,6 +147,29 @@ describe('FeedService', () => {
 
         httpMock.expectNone(`${environment.API_URL}/feed/11/autotag/category/222?limit=200&page=4`);
     });
+
+    it('should call a proper endpoint on fetchProductCollection call', () => {
+        service.fetchProductCollection(11, {name: 'some_name'}).subscribe();
+
+        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/product?name=some_name`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should include page, limit and mapping params to a fetchProductCollection call', () => {
+        service.fetchProductCollection(11, {limit: '10', page: '3', state: ConfigurationState.Configured}).subscribe();
+
+        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/product?page=3&limit=10&state=${ConfigurationState.Configured}`);
+        expect(req.request.method).toBe('GET');
+    });
+
+    it('should call a proper endpoint on mapProductCategory call', () => {
+        service.mapProductCategory(11, 12, 13).subscribe();
+
+        let req = httpMock.expectOne(`${environment.API_URL}/feed/11/mapping/product/12`);
+        expect(req.request.method).toBe('PUT');
+        expect(req.request.body.mapping.channelCategoryId).toBe(13);
+    });
+
 
     function mockSavingAttributesForPage(page: number) {
         httpMock.expectOne(`${environment.API_URL}/feed/11/autotag/category/222?limit=200&page=${page}`)

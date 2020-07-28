@@ -1,0 +1,17 @@
+@import '../../../../sass/variables';
+
+@mixin back-to-home {
+  .back-to-home-button {
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    color: $black-54-opacity;
+    margin-bottom: 10px;
+    text-transform: none;
+    text-decoration: none;
+    mat-icon {
+      margin-right: 5px;
+    }
+
+  }
+}

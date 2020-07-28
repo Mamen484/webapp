@@ -1,0 +1,7 @@
+@import '../../../sass/variables';
+@import '../scss/mixins/back-to-home';
+@import '../scss/mixins/setup-home';
+
+@include back-to-home();
+@include setupHome();
+

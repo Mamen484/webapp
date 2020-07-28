@@ -1,43 +1,44 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "downlevelIteration": true,
-    "importHelpers": true,
-    "module": "esnext",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "baseUrl": "./",
-    "paths": {
-      "sfl-shared": [
-        "dist/sfl-shared"
-      ],
-      "sfl-shared/*": [
-        "dist/sfl-shared/*"
-      ],
-      "core-js/es7/reflect": [
-        "node_modules/core-js/proposals/reflect-metadata"
-      ],
-      "core-js/es6/*": [
-        "node_modules/core-js/es/*"
-      ],
-      "sfl-tools": [
-        "dist/sfl-tools"
-      ],
-      "sfl-tools/*": [
-        "dist/sfl-tools/*"
-      ]
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./src/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/sfl-shared/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/sfl-shared/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/sf-admin/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/sf-admin/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/sf-admin-e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./projects/channel-settings/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/channel-settings/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/sfl-tools/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/sfl-tools/tsconfig.spec.json"
     }
-  }
+  ]
 }

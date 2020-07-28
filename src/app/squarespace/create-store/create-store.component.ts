@@ -22,7 +22,7 @@ export class CreateStoreComponent {
     createStore({email, password}) {
         this.route.data.pipe(
             flatMap(({spStore}) => {
-                const store = Store.createForSquarespace(spStore, spStore.name);
+                const store: any = Store.createForSquarespace(spStore, spStore.name);
                 store.owner.email = email;
                 store.owner.password = password;
 

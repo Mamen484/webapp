@@ -1,0 +1,90 @@
+@import '../../../../sass/variables';
+
+$line-padding: 5px;
+$header-section-height: 84px;
+$solo-search-height: 80px;
+$table-header: 59px;
+$paginator-height: 64px;
+
+@mixin setup-items-list() {
+  .scrollable-container {
+    max-height: calc(100vh - 2 * #{$content-margin} - #{$header-section-height} - #{$solo-search-height} - #{$table-header} - #{$paginator-height});
+    height: auto;
+  }
+
+  .sf-label.mat-chip {
+    cursor: pointer;
+  }
+
+  mat-paginator {
+    padding: 0;
+  }
+
+  tr[mat-row] {
+    opacity: 0.7;
+    cursor: pointer;
+
+    &.selected, &:hover {
+      opacity: 1;
+      background-color: mat-color($accent, 0.1);
+    }
+
+    td.mat-cell.cdk-cell {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+
+
+  div.green {
+    mat-icon {
+      color: mat-color($green);
+    }
+  }
+
+  tr[mat-header-row] {
+    color: $black-54-opacity;
+  }
+
+  .user-category-row-content, .user-category-header-row-content {
+    width: 100%;
+  }
+
+
+  sft-solo-search {
+    margin-bottom: 20px;
+  }
+
+  mat-chip-list.filter-chips {
+    margin-bottom: $content-margin;
+    display: block;
+
+    mat-chip {
+      mat-icon {
+        cursor: pointer;
+        color: mat-color($grey);
+      }
+
+      mat-icon, span {
+        vertical-align: middle;
+      }
+    }
+  }
+  .table-container table {
+    width: 100%;
+  }
+
+  .sf-card-outlined {
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  mat-paginator {
+    padding: 0 8px;
+  }
+
+  .cdk-column-icon {
+    text-align: right;
+  }
+
+}

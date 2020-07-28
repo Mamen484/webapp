@@ -7,5 +7,8 @@
   },
   "scripts": {
     "library-docs": "compodoc -p ./tsconfig.lib.json -s -r 8092 --theme=material --toggleMenuItems=modules  --disableProtected --disablePrivate --disableInternal --open"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
   }
 }

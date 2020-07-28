@@ -1,0 +1,58 @@
+@import '../../../../sass/variables';
+@import '../../feed-setup/mapping-common.mixin';
+
+@include mappingCommon();
+
+sf-autotag-input, sf-autotag-dropdown {
+  width: 100%;
+}
+
+mat-card {
+  margin-top: 20px;
+  padding: 30px 25px;
+  margin-bottom: 20px;
+}
+
+.attributes-mapping-heading {
+  font-weight: 500;
+
+  .optional-attributes & {
+    margin-bottom: 0;
+  }
+}
+
+.optional-attributes {
+  mat-accordion {
+    mat-expansion-panel {
+      position: relative;
+      left: -25px;
+      width: calc(100% + 50px);
+      margin: 0;
+      border-radius: 0;
+
+      mat-expansion-panel-header {
+        padding: 8px 24px;
+      }
+    }
+  }
+}
+
+
+.attributes-divider {
+  height: 1px;
+}
+
+.optional-attributes {
+  margin-bottom: 20px;
+}
+
+button {
+  mat-spinner {
+    margin: 8px auto;
+    ::ng-deep {
+      circle {
+        stroke: white;
+      }
+    }
+  }
+}
