@@ -1,3 +1,15 @@
 @import '../../scss/mixins/list';
 
 @include setup-items-list();
+
+.cdk-cell, .cdk-header-cell {
+  @media screen and (min-width: 1920px) {
+    padding-right: 30px;
+  }
+  @media screen and (max-width: 1919px) {
+    padding-right: 22px;
+  }
+  @media screen and (max-width: 1280px) {
+    padding-right: 15px;
+  }
+}

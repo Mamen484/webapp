@@ -17,7 +17,7 @@ const CONFLICT_ERROR_CODE = 409;
 })
 export class ProductsListComponent extends ListOperations<Product> implements OnInit, OnDestroy {
 
-    displayedColumns = ['image', 'reference', 'name', 'status', 'brand', 'icon'];
+    displayedColumns = ['image', 'reference', 'name', 'brand', 'status', 'icon'];
 
     protected categoryMappingSubscription;
 
