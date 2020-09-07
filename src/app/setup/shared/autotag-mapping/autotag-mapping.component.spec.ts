@@ -14,6 +14,7 @@ import { AttributesUpdateErrorSnackbarComponent } from './attributes-update-erro
 import { ErrorSnackbarConfig } from '../../../core/entities/error-snackbar-config';
 import { CategoryMappingService, Mapping } from '../category-mapping.service';
 import { AutotagService } from './autotag-service';
+import { tap } from 'rxjs/operators';
 
 describe('AutotagMappingComponent', () => {
     let component: AutotagMappingComponent;
@@ -203,6 +204,23 @@ describe('AutotagMappingComponent', () => {
         expect(autotagService.matchAutotag).toHaveBeenCalledTimes(3);
         expect(matSnackBar.openFromComponent).toHaveBeenCalledTimes(1);
         expect(matSnackBar.openFromComponent).toHaveBeenCalledWith(AttributesUpdateErrorSnackbarComponent, new ErrorSnackbarConfig());
+    });
+
+    it('should unsubscribe from categoryMappingSubscription when the component destroys', () => {
+        const subject = new Subject<{ fromCache: boolean; mapping: Mapping }>();
+        let counter = 0;
+        categoryMappingService.getCurrentMapping.and.returnValue(subject.asObservable().pipe(tap(() => counter += 1)));
+        for (let i = 0; i < 10; i++) {
+            fixture.destroy();
+            fixture = TestBed.createComponent(AutotagMappingComponent);
+            component = fixture.componentInstance;
+            fixture.detectChanges();
+        }
+
+        subject.next({fromCache: false, mapping: {catalogCategoryId: 22, feedId: 2, channelCategory: null}});
+        expect(counter).toBe(1);
+        subject.unsubscribe();
+
     });
 });
 

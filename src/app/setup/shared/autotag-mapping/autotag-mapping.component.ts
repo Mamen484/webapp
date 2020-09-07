@@ -32,6 +32,7 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
     autotagList: Autotag[];
     optionalAutotagsList: Autotag[];
     subscription: Subscription;
+    categoryMappingSubscription: Subscription;
     saveInProgress = false;
     fetchInProgress = false;
 
@@ -42,7 +43,7 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.categoryMappingService.getCurrentMapping()
+        this.categoryMappingSubscription = this.categoryMappingService.getCurrentMapping()
             .subscribe(({mapping}) => {
                 if (this.channelCategoryId && this.channelCategoryId === mapping.channelCategory?.id
                     && this.catalogCategoryId === mapping.catalogCategoryId) {
@@ -61,6 +62,9 @@ export class AutotagMappingComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         if (this.subscription) {
             this.subscription.unsubscribe();
+        }
+        if (this.categoryMappingSubscription) {
+            this.categoryMappingSubscription.unsubscribe();
         }
     }
 
