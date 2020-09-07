@@ -9,12 +9,11 @@ import { ChannelsRouteGuard } from '../core/guards/channels-route.guard';
 const routes: Routes = [
     {
         path: ':feedId/setup', children: [
-            {path: '', component: FeedSetupComponent},
-            {path: 'products', component: ProductSetupComponent},
+            {path: '', component: FeedSetupComponent, canDeactivate: [UnsavedDataGuard]},
+            {path: 'products', component: ProductSetupComponent, canDeactivate: [UnsavedDataGuard]},
         ],
         canActivate: [ChannelsRouteGuard],
         resolve: {data: SetupResolverGuard},
-        canDeactivate: [UnsavedDataGuard]
     },
 
 ];
