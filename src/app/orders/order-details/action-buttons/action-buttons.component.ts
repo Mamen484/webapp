@@ -23,7 +23,7 @@ import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-c
 })
 export class ActionButtonsComponent implements OnInit {
 
-    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions];
+    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions, ChannelMap.veepeegroup];
 
     @Input() order: Order;
 
