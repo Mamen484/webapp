@@ -158,6 +158,25 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
             feed: {
                 url: environment.defaultFeedSource,
                 source: 'xml',
+                mapping: {
+                    brand: 'brand',
+                    category: 'category',
+                    description: 'description',
+                    ean: 'ean',
+                    ecotax: 'ecotax',
+                    link: 'link',
+                    name: 'name',
+                    old_price: 'old_price',
+                    price: 'price',
+                    quantity: 'quantity',
+                    reference: 'reference',
+                    shipping_cost: 'shipping_cost',
+                    shipping_time: 'shipping_time',
+                    short_description: 'short_description',
+                    tva: 'tva',
+                    weight: 'weight',
+                }
+
             },
         }).pipe(catchError(({error}) =>
             throwError({detail: 'Account error: ' + error.detail, validationMessages: error.validationMessages})

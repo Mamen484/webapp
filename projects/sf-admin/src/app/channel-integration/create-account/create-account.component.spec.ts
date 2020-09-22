@@ -91,6 +91,24 @@ describe('CreateAccountComponent', () => {
                 feed: {
                     url: 'https://raw.githubusercontent.com/shoppingflux/feed-xml/develop/examples/full.xml',
                     source: 'xml',
+                    mapping: {
+                        brand: 'brand',
+                        category: 'category',
+                        description: 'description',
+                        ean: 'ean',
+                        ecotax: 'ecotax',
+                        link: 'link',
+                        name: 'name',
+                        old_price: 'old_price',
+                        price: 'price',
+                        quantity: 'quantity',
+                        reference: 'reference',
+                        shipping_cost: 'shipping_cost',
+                        shipping_time: 'shipping_time',
+                        short_description: 'short_description',
+                        tva: 'tva',
+                        weight: 'weight',
+                    }
                 },
             });
         });
