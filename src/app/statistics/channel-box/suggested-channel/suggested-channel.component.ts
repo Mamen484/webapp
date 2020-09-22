@@ -8,7 +8,6 @@ import { RequestFailedDialogComponent } from '../../request-failed-dialog/reques
 import { ChannelStorageService, MIN_ONLINE, MIN_TURNOVER } from '../../../core/services/channel-storage.service';
 import { get } from 'lodash';
 import { ChannelLinkService } from '../../../core/services/channel-link.service';
-import { SflWindowRefService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-suggested-channel',
@@ -21,6 +20,7 @@ export class SuggestedChannelComponent implements OnInit {
     @Input() internationalMode = false;
     @Input() firstChannel = false;
     @Input() currency: string;
+    @Input() shopifyUSUser = false;
 
     potentialTurnover: number;
     clientsConnected: number;
@@ -28,8 +28,7 @@ export class SuggestedChannelComponent implements OnInit {
     constructor(protected dialog: MatDialog,
                 protected internationalAccountService: InternationalAccountService,
                 protected channelStorage: ChannelStorageService,
-                protected channelLinkService: ChannelLinkService,
-                protected windowRefService: SflWindowRefService) {
+                protected channelLinkService: ChannelLinkService) {
     }
 
     ngOnInit() {

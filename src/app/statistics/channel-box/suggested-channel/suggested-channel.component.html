@@ -23,10 +23,12 @@
     </div>
 
     <div class="connect-button">
-        <a mat-raised-button color="accent" *ngIf="!internationalMode"
+        <a mat-raised-button color="accent" *ngIf="!internationalMode && !shopifyUSUser"
            (click)="goToChannel()" i18n>CONNECT</a>
-        <a mat-raised-button color="accent" *ngIf="internationalMode"
+        <a mat-raised-button color="accent" *ngIf="internationalMode && !shopifyUSUser"
            (click)="showInternationalChannelDialog()" i18n>CONNECT</a>
+        <a mat-raised-button color="accent" *ngIf="shopifyUSUser"
+           href="javascript:Appcues.show('91cc1e8a-44aa-4b5d-82e9-847431d687d5')" i18n>CONNECT</a>
     </div>
 
 </mat-card-content>

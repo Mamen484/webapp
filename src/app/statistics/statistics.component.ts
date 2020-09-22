@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { flatMap, map, take, tap } from 'rxjs/operators';
 import { Observable, Subject, zip } from 'rxjs';
 import { AppState } from '../core/entities/app-state';
@@ -28,7 +28,7 @@ const INITIAL_PAGES_AMOUNT = 3;
     templateUrl: './statistics.component.html',
     styleUrls: ['./statistics.component.scss']
 })
-export class StatisticsComponent {
+export class StatisticsComponent implements OnInit {
 
     public statistics: Statistics;
     public channels: ChannelsResponse = <any>{_embedded: {channel: []}};
@@ -43,6 +43,7 @@ export class StatisticsComponent {
     exportsLoaded = new Subject<TimelineEvent[]>();
 
     showCovid19Banner = environment.showCovid19Banner.toLowerCase();
+    shopifyUSUser = false;
 
     constructor(protected appStore: AppStore<AppState>,
                 protected storeService: StoreService,
@@ -50,9 +51,17 @@ export class StatisticsComponent {
                 protected timelineService: TimelineService,
                 protected titleService: Title) {
         this.titleService.setTitle('Shoppingfeed / Homepage');
+    }
+
+    ngOnInit() {
         this.appStore.select('currentStore').pipe(
             tap(() => this.displayPageLoading()),
             tap((currentStore: Store) => this.hasStatisticsPermission = Boolean(currentStore.permission.statistics)),
+            tap((currentStore: Store) =>
+                this.shopifyUSUser = currentStore.country.toLowerCase() === 'us'
+                    && currentStore.feed.source.toLowerCase() === 'shopify'
+                    && currentStore.planName === 'none'
+            ),
             flatMap(currentStore => this.fetchData(currentStore))
         )
             .subscribe(([statistics, channels, exports]) => {

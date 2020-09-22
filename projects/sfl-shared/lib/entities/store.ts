@@ -19,6 +19,7 @@ export class Store {
     country = '';
     createdAt?: string;
     paymentType ? = PaymentType.other;
+    planName = 'none';
     sales?: { pathIsActive: boolean };
     _links?: {
         self: {

@@ -22,7 +22,7 @@
                     <sf-configured-channel [channel]="channel" *ngIf="channel.installed"
                                            [hasStatisticsPermission]="hasStatisticsPermission"></sf-configured-channel>
 
-                    <sf-suggested-channel [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
+                    <sf-suggested-channel [shopifyUSUser]="shopifyUSUser" [channel]="channel" *ngIf="!channel.installed" [internationalMode]="internationalMode"
                                           [firstChannel]="haveNoChannels" [currency]="statistics.currency"></sf-suggested-channel>
                 </mat-card>
             </div>

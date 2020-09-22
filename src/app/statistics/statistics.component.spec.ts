@@ -13,6 +13,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TimelineService } from '../core/services/timeline.service';
 import { TimelineEvent } from '../core/entities/timeline-event';
 import { Title } from '@angular/platform-browser';
+import { AppState } from '../core/entities/app-state';
+import { Store as UserStore } from 'sfl-shared/entities';
+import { cloneDeep } from 'lodash';
 
 describe('StatisticsComponent', () => {
     let component: StatisticsComponent;
@@ -21,6 +24,7 @@ describe('StatisticsComponent', () => {
     let timelineService: jasmine.SpyObj<TimelineService>;
     let exports$: Subject<PagedResponse<{ timeline: TimelineEvent[] }>>;
     let titleService: jasmine.SpyObj<Title>;
+    let appStore: jasmine.SpyObj<Store<AppState>>;
 
     beforeEach(async(() => {
         channelServiceMock = jasmine.createSpyObj('ChannelServive spy', ['getStoreChannels', 'getStatistics', 'getStoreCharge']);
@@ -32,18 +36,15 @@ describe('StatisticsComponent', () => {
         exports$ = new Subject();
         timelineService.getEvents.and.returnValue(exports$);
         titleService = jasmine.createSpyObj('Title', ['setTitle']);
+        appStore = jasmine.createSpyObj(['select']);
+
         TestBed.configureTestingModule({
             schemas: [NO_ERRORS_SCHEMA],
             declarations: [
                 StatisticsComponent,
             ],
-            providers: [{
-                provide: Store, useValue: {
-                    select: param => param === 'currentStore'
-                        ? of(aggregatedUserInfoMock._embedded.store[0])
-                        : of(statisticsMock)
-                }
-            },
+            providers: [
+                {provide: Store, useValue: appStore},
                 {provide: StoreService, useValue: channelServiceMock},
                 {provide: MatDialog, useValue: {}},
                 {provide: TimelineService, useValue: timelineService},
@@ -56,8 +57,6 @@ describe('StatisticsComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(StatisticsComponent);
         component = fixture.componentInstance;
-        fixture.detectChanges();
-
     });
 
     it('should be created', () => {
@@ -69,6 +68,14 @@ describe('StatisticsComponent', () => {
     });
 
     describe('initialization', () => {
+        beforeEach(() => {
+            appStore.select.and.callFake(param => param === 'currentStore'
+                ? of(aggregatedUserInfoMock._embedded.store[0])
+                : of(statisticsMock));
+
+            fixture.detectChanges();
+        });
+
         it('should load initial channels', () => {
             exports$.next({_embedded: {timeline: []}});
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(1);
@@ -109,6 +116,11 @@ describe('StatisticsComponent', () => {
     describe('scroll', () => {
 
         beforeEach(() => {
+            appStore.select.and.callFake(param => param === 'currentStore'
+                ? of(aggregatedUserInfoMock._embedded.store[0])
+                : of(statisticsMock));
+
+            fixture.detectChanges();
             exports$.next({_embedded: {timeline: []}});
             timelineService.getEvents.and.returnValue(of({_embedded: {timeline: []}}));
         });
@@ -170,6 +182,11 @@ describe('StatisticsComponent', () => {
 
     describe('filtering', () => {
         beforeEach(() => {
+            appStore.select.and.callFake(param => param === 'currentStore'
+                ? of(aggregatedUserInfoMock._embedded.store[0])
+                : of(statisticsMock));
+
+            fixture.detectChanges();
             exports$.next({_embedded: {timeline: []}});
             timelineService.getEvents.and.returnValue(of({_embedded: {timeline: []}}));
         });
@@ -228,6 +245,11 @@ describe('StatisticsComponent', () => {
     describe('internationalMode', () => {
 
         beforeEach(() => {
+            appStore.select.and.callFake(param => param === 'currentStore'
+                ? of(aggregatedUserInfoMock._embedded.store[0])
+                : of(statisticsMock));
+
+            fixture.detectChanges();
             exports$.next({_embedded: {timeline: []}});
             timelineService.getEvents.and.returnValue(of({_embedded: {timeline: []}}));
         });
@@ -265,6 +287,11 @@ describe('StatisticsComponent', () => {
     describe('foreignChannels', () => {
 
         beforeEach(() => {
+            appStore.select.and.callFake(param => param === 'currentStore'
+                ? of(aggregatedUserInfoMock._embedded.store[0])
+                : of(statisticsMock));
+
+            fixture.detectChanges();
             exports$.next({_embedded: {timeline: []}});
             timelineService.getEvents.and.returnValue(of({_embedded: {timeline: []}}));
         });
@@ -297,6 +324,62 @@ describe('StatisticsComponent', () => {
             expect(channelServiceMock.getStoreChannels).toHaveBeenCalledTimes(3);
             expect(channelServiceMock.getStoreChannels.calls.mostRecent().args[2]).toEqual(true);
         });
+    });
+
+    it('should set shopifyUSUser=true if country=US, feed.source=shopify and planName=none', () => {
+        const store: UserStore = cloneDeep(aggregatedUserInfoMock._embedded.store[0]);
+        store.country = 'US';
+        store.feed.source = 'Shopify';
+        store.planName = 'none';
+
+        appStore.select.and.callFake(param => param === 'currentStore'
+            ? of(store)
+            : of(statisticsMock));
+
+        fixture.detectChanges();
+        expect(component.shopifyUSUser).toBe(true);
+    });
+
+    it('should set shopifyUSUser=false if country is NOT US', () => {
+        const store: UserStore = cloneDeep(aggregatedUserInfoMock._embedded.store[0]);
+        store.country = 'FR';
+        store.feed.source = 'Shopify';
+        store.planName = 'none';
+
+        appStore.select.and.callFake(param => param === 'currentStore'
+            ? of(store)
+            : of(statisticsMock));
+
+        fixture.detectChanges();
+        expect(component.shopifyUSUser).toBe(false);
+    });
+
+    it('should set shopifyUSUser=false if feed source is NOT shopify', () => {
+        const store: UserStore = cloneDeep(aggregatedUserInfoMock._embedded.store[0]);
+        store.country = 'US';
+        store.feed.source = 'magento';
+        store.planName = 'none';
+
+        appStore.select.and.callFake(param => param === 'currentStore'
+            ? of(store)
+            : of(statisticsMock));
+
+        fixture.detectChanges();
+        expect(component.shopifyUSUser).toBe(false);
+    });
+
+    it('should set shopifyUSUser=false if planName is NOT none', () => {
+        const store: UserStore = cloneDeep(aggregatedUserInfoMock._embedded.store[0]);
+        store.country = 'US';
+        store.feed.source = 'Shopify';
+        store.planName = 'someplan';
+
+        appStore.select.and.callFake(param => param === 'currentStore'
+            ? of(store)
+            : of(statisticsMock));
+
+        fixture.detectChanges();
+        expect(component.shopifyUSUser).toBe(false);
     });
 
 });

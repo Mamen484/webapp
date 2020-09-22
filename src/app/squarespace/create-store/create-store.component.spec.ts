@@ -63,7 +63,7 @@ describe('CreateStoreComponent', () => {
             }
         });
 
-        expect(Object.keys(storeService.createStore.calls.mostRecent().args[0])).toEqual(['owner', 'feed', 'country', 'paymentType', 'storeId']);
+        expect(Object.keys(storeService.createStore.calls.mostRecent().args[0])).toEqual(['owner', 'feed', 'country', 'paymentType', 'planName', 'storeId']);
 
         expect(storeService.createStore.calls.mostRecent().args[0].owner).toEqual({
             email: 'some@email.com',
