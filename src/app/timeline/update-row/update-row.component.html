@@ -12,5 +12,15 @@
     <span *ngIf="update.action === actions.ask" i18n>Scheduled</span>
     <span *ngIf="update.action === actions.finish" i18n>Completed</span>
     <span *ngIf="update.action === actions.error" i18n>Error</span>
+    <ng-container *ngIf="update.action === actions.cancel">
+        <span *ngIf="update.name === names.import" i18n i18n-matTooltip
+              matTooltip="We canceled your import because your source feed has not changed since last update">
+            Canceled
+        </span>
+        <span *ngIf="update.name === names.export" i18n i18n-matTooltip
+              matTooltip="We canceled your export to {{update._embedded.channel.name}} because another export is already in progress">
+            Canceled
+        </span>
+    </ng-container>
 </div>
 <div class="event-time mat-body-1">{{update.occurredAt | date:'shortTime'}}</div>

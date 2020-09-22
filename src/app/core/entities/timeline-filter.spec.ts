@@ -70,7 +70,7 @@ describe('TimelineFilter', () => {
         expect(filter.since).not.toBeDefined();
         expect(filter.until).not.toBeDefined();
         expect(filter.name.join(',')).toEqual('feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation');
-        expect(filter.action.join(',')).toEqual('create,push,delete,ship,update,error');
+        expect(filter.action.join(',')).toEqual('create,push,delete,ship,update,error,cancel');
     });
 
     it('should set a right action for `import` typeFilter', () => {
@@ -114,6 +114,6 @@ describe('TimelineFilter', () => {
         expect(filter.since).not.toBeDefined();
         expect(filter.until).not.toBeDefined();
         expect(filter.name.join(',')).toEqual('feed.import,feed.export,order.lifecycle,rule.transformation,rule.segmentation');
-        expect(filter.action.join(',')).toEqual('create,push,delete,ship,update,error,finish');
+        expect(filter.action.join(',')).toEqual('create,push,delete,ship,update,error,cancel,finish');
     });
 });

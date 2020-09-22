@@ -24,6 +24,7 @@ export class TimelineFilter {
         eventAction.ship,
         eventAction.update,
         eventAction.error,
+        eventAction.cancel,
     ];
 
     static createFrom({dateFilter: date, typeFilter: type, dateSince, dateUntil, isActive}: TimelineFilterData) {

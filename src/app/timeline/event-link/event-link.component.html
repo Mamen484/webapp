@@ -17,6 +17,7 @@
 <a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.error" i18n target="_blank">We can't export your feed to {{event._embedded.channel.name}}.</a>
 <a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.export && event.action === actions.cancel" i18n target="_blank">We canceled your export on {{event._embedded.channel.name}} because another export is already in progress.</a>
 
+<a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.cancel" i18n target="_blank">We canceled your import because your source feed has not changed since last update.</a>
 <a sflLegacyLink [path]="event | sfEventLink" *ngIf="event.name === names.import && event.action === actions.finish" i18n target="_blank">
   Your feed has been imported.
 </a>

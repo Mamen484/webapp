@@ -56,7 +56,8 @@ export class TimelineService {
                             TimelineEventAction.ask,
                             TimelineEventAction.start,
                             TimelineEventAction.finish,
-                            TimelineEventAction.error
+                            TimelineEventAction.error,
+                            TimelineEventAction.cancel,
                         ].join(','))
                 })),
             map(this.getDistinctUpdates.bind(this)));

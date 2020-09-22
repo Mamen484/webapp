@@ -58,7 +58,7 @@ describe('TimelineService', () => {
         });
 
         let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import` +
-            `&since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error`);
+            `&since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error,cancel`);
 
         req.flush(data);
 
@@ -82,7 +82,7 @@ describe('TimelineService', () => {
         });
 
         let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
-            `since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error`);
+            `since=2017-06-13T02:22:41.000Z&limit=200&action=ask,start,finish,error,cancel`);
 
         req.flush(data2);
 
@@ -93,7 +93,7 @@ describe('TimelineService', () => {
         service.getEvents().subscribe();
 
         httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
-            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
+            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error,cancel`);
         allowNoExpectations();
         httpMock.verify();
     });
@@ -111,7 +111,7 @@ describe('TimelineService', () => {
         service.getEventUpdates().subscribe();
 
         httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&since=2017-06-13T02:22:41.000Z&` +
-            `limit=200&action=ask,start,finish,error`);
+            `limit=200&action=ask,start,finish,error,cancel`);
         allowNoExpectations();
         httpMock.verify();
     });
@@ -144,7 +144,7 @@ describe('TimelineService', () => {
             expect(upd.length).toEqual(3);
         });
         let req = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
-            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
+            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error,cancel`);
         req.flush(data);
         httpMock.verify();
 
@@ -155,9 +155,9 @@ describe('TimelineService', () => {
         jasmine.clock().mockDate(new Date(Date.UTC(2011, 11, 11)));
         service.emitUpdatedTimeline();
         httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
-            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
+            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error,cancel`);
         httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
-            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
+            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error,cancel`);
         allowNoExpectations();
         httpMock.verify();
 
@@ -179,9 +179,9 @@ describe('TimelineService', () => {
         service.emitUpdatedTimeline();
 
         const updates = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?name=feed.export,feed.import&` +
-            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error`);
+            `since=2011-12-10T00:00:00.000Z&limit=200&action=ask,start,finish,error,cancel`);
         const events = httpMock.expectOne(`${environment.API_URL}/store/909/timeline?limit=50&name=feed.import,feed.export,order.lifecycle,` +
-            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error`);
+            `rule.transformation,rule.segmentation&action=create,push,delete,ship,update,error,cancel`);
 
         updates.flush({test: 112, _embedded: {timeline: []}});
         events.flush({test: 114, _embedded: {timeline: []}});
