@@ -30,7 +30,7 @@ export interface Channel {
         headerFirst: string,
     };
     state?: ChannelState;
-    engine: string;
+    engine?: string;
     _embedded?: {
         account?: {id: number, name: string}[],
         country?: Country[];
