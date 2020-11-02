@@ -27,9 +27,10 @@ describe('TagsService', () => {
 
     it('should GET /store/${storeId}/order/tag when call fetchAll()', () => {
         service.fetchAll(31).subscribe();
-        const req = httpMock.expectOne(`${environment.API_URL}/store/31/order/tag`);
+        const req = httpMock.expectOne(`${environment.API_URL}/store/31/order/tag?limit=200`);
         httpMock.verify();
         expect(req.request.method).toEqual('GET');
+        expect(req.request.params.toString()).toEqual('limit=200');
     });
 
     it('should POST /store/${storeId}/order/tag when call create()', () => {

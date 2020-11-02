@@ -3,7 +3,9 @@ import { environment } from '../../../environments/environment';
 import { Observable, zip } from 'rxjs';
 import { Tag } from '../entities/tag';
 import { PagedResponse } from 'sfl-shared/entities';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+const maxApiLimit = '200';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +16,10 @@ export class TagsService {
     }
 
     public fetchAll(storeId) {
-        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/tag`) as
+
+        let queryParams = new HttpParams()
+            .set('limit', maxApiLimit);
+        return this.httpClient.get(`${environment.API_URL}/store/${storeId}/order/tag`, {params: queryParams}) as
             Observable<PagedResponse<{ tag: Tag[] }>>;
     }
 
