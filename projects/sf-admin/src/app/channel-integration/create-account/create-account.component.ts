@@ -147,6 +147,7 @@ export class CreateAccountComponent implements OnInit, UnsavedDataInterface {
 
     protected createStore() {
         return this.storeService.createStore({
+            planName: 'none',
             owner: {
                 email: this.formGroup.get(['email']).value,
                 login: this.formGroup.get(['login']).value,

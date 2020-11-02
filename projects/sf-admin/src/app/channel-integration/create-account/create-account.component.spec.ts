@@ -86,6 +86,7 @@ describe('CreateAccountComponent', () => {
                     password: 'qwerty123',
                     payment: 'other',
                 },
+                planName: 'none',
                 country: 'es',
                 status: StoreStatus.demo,
                 feed: {
