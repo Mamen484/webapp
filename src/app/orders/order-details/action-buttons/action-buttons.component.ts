@@ -15,6 +15,7 @@ import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component'
 import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
 import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-config';
+import { ChannelService } from 'sfl-shared/services';
 
 @Component({
     selector: 'sf-action-buttons',
@@ -24,6 +25,7 @@ import { SuccessSnackbarConfig } from '../../../core/entities/success-snackbar-c
 export class ActionButtonsComponent implements OnInit {
 
     refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions, ChannelMap.veepeegroup];
+    refundableEngines = ['zalando'];
 
     @Input() order: Order;
 
@@ -37,7 +39,8 @@ export class ActionButtonsComponent implements OnInit {
     constructor(protected matDialog: MatDialog,
                 protected snackBar: MatSnackBar,
                 protected ordersService: OrdersService,
-                protected appStore: Store<AppState>) {
+                protected appStore: Store<AppState>,
+                protected channelService: ChannelService) {
     }
 
     ngOnInit() {
@@ -98,9 +101,13 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     protected checkIfRefundable() {
-        this.supportsRefund =
-            this.refundableChannels.includes(this.order._embedded.channel.id) && !this.allItemsRefunded()
-            && (this.order.status === OrderStatus.shipped || this.order.status === OrderStatus.partially_refunded);
+        this.channelService.fetchChannel(this.order._embedded.channel.id).subscribe(channel => {
+            this.supportsRefund =
+                (this.refundableChannels.includes(this.order._embedded.channel.id) || this.refundableEngines.includes(channel.engine))
+                && !this.allItemsRefunded()
+                && (this.order.status === OrderStatus.shipped || this.order.status === OrderStatus.partially_refunded);
+        });
+
     }
 
     protected allItemsRefunded() {

@@ -17,6 +17,7 @@ import { RefundDialogComponent } from '../refund-dialog/refund-dialog.component'
 import { Order } from '../../../core/entities/orders/order';
 import { ConfirmCancellationDialogComponent } from '../../shared/confirm-cancellation-dialog/confirm-cancellation-dialog.component';
 import { ChannelMap } from '../../../core/entities/channel-map.enum';
+import { ChannelService } from 'sfl-shared/services';
 
 describe('ActionButtonsComponent', () => {
     let component: ActionButtonsComponent;
@@ -27,6 +28,7 @@ describe('ActionButtonsComponent', () => {
     let ordersService: jasmine.SpyObj<OrdersService>;
     let appStore: jasmine.SpyObj<Store<AppState>>;
     let mockOrder: Order;
+    let channelService: jasmine.SpyObj<ChannelService>;
 
     beforeEach(async(() => {
 
@@ -34,6 +36,7 @@ describe('ActionButtonsComponent', () => {
         snackbar = jasmine.createSpyObj(['openFromComponent', 'open']);
         ordersService = jasmine.createSpyObj(['ship', 'acknowledge', 'cancel', 'accept', 'refuse', 'unacknowledge', 'modifyOrder', 'updateItemsReferences']);
         appStore = jasmine.createSpyObj(['select']);
+        channelService = jasmine.createSpyObj(['fetchChannel']);
         TestBed.configureTestingModule({
             declarations: [ActionButtonsComponent],
             schemas: [NO_ERRORS_SCHEMA],
@@ -42,6 +45,7 @@ describe('ActionButtonsComponent', () => {
                 {provide: MatSnackBar, useValue: snackbar},
                 {provide: OrdersService, useValue: ordersService},
                 {provide: Store, useValue: appStore},
+                {provide: ChannelService, useValue: channelService},
             ],
         })
             .compileComponents();
@@ -52,6 +56,7 @@ describe('ActionButtonsComponent', () => {
         fixture = TestBed.createComponent(ActionButtonsComponent);
         component = fixture.componentInstance;
         component.order = mockOrder;
+        channelService.fetchChannel.and.returnValue(of(<any>{}));
     });
 
     it('should create', () => {
@@ -144,6 +149,17 @@ describe('ActionButtonsComponent', () => {
         expect(elements().length).toEqual(2);
     });
 
+    it('should display a refund button if the engine is zalando and status is shipped', () => {
+        component.order.status = OrderStatus.shipped;
+        component.order._embedded.channel.name = 'some channel';
+        component.order._embedded.channel.id = 11111111;
+        channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
+
     it('should NOT display a refund button if the channel is laredoute, status is partially_refunded, but all items have the refunded status',
         () => {
             component.order.status = OrderStatus.partially_refunded;
@@ -180,6 +196,20 @@ describe('ActionButtonsComponent', () => {
             expect(elements().length).toEqual(1);
         });
 
+
+    it('should NOT display a refund button if the engine is zalando, status is partially_refunded, but all items have the refunded status',
+        () => {
+            channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
+            component.order.status = OrderStatus.partially_refunded;
+            component.order.items = <any>[{status: OrderStatus.refunded}, {status: OrderStatus.refunded}];
+            component.order._embedded.channel.name = 'some channel';
+            component.order._embedded.channel.id = 1111111111;
+            fixture.detectChanges();
+            expect(component.supportsRefund).toEqual(false);
+            expect(elements()[0].textContent.trim()).not.toEqual('Refund');
+            expect(elements().length).toEqual(1);
+        });
+
     it('should display a refund button if the channel is laredoute and status is partially_refunded', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'LaRedoute';
@@ -200,6 +230,17 @@ describe('ActionButtonsComponent', () => {
         expect(elements().length).toEqual(2);
     });
 
+    it('should display a refund button if the engine is zalando and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'some channel';
+        component.order._embedded.channel.id = 111111111;
+        channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
+
     it('should NOT display a refund button if the channel is veepeegroup, status is partially_refunded, but all items have the refunded status',
         () => {
             component.order.status = OrderStatus.partially_refunded;
@@ -211,6 +252,30 @@ describe('ActionButtonsComponent', () => {
             expect(elements()[0].textContent.trim()).not.toEqual('Refund');
             expect(elements().length).toEqual(1);
         });
+
+   it('should NOT display a refund button if the engine is zalando, status is partially_refunded, but all items have the refunded status',
+        () => {
+            component.order.status = OrderStatus.partially_refunded;
+            component.order.items = <any>[{status: OrderStatus.refunded}, {status: OrderStatus.refunded}];
+            component.order._embedded.channel.name = 'some channel';
+            component.order._embedded.channel.id = 111111111111;
+            channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
+            fixture.detectChanges();
+            expect(component.supportsRefund).toEqual(false);
+            expect(elements()[0].textContent.trim()).not.toEqual('Refund');
+            expect(elements().length).toEqual(1);
+        });
+
+    it('should display a refund button if the engine is zalando and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'some channel';
+        component.order._embedded.channel.id = 111111111111;
+        channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
 
     it('should display a refund button if the channel is googleshoppingactions and status is partially_refunded', () => {
         component.order.status = OrderStatus.partially_refunded;
@@ -276,6 +341,15 @@ describe('ActionButtonsComponent', () => {
         component.order.status = OrderStatus.shipped;
         component.order._embedded.channel.name = 'googleshoppingactions';
         component.order._embedded.channel.id = ChannelMap.googleshoppingactions;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+    });
+
+    it('should set supportsRefund property to true if the engine is zalando and status is shipped', () => {
+        component.order.status = OrderStatus.shipped;
+        component.order._embedded.channel.name = 'some channel';
+        component.order._embedded.channel.id = 11111111111;
+        channelService.fetchChannel.and.returnValue(<any>of({engine: 'zalando'}));
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(true);
     });
