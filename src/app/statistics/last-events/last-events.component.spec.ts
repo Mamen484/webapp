@@ -4,7 +4,6 @@ import { LastEventsComponent } from './last-events.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { OrdersService } from '../../core/services/orders.service';
 import { TimelineService } from '../../core/services/timeline.service';
-import { of } from 'rxjs/index';
 import { lastImportsResponse } from './mocks/last-imports';
 import { lastExportsResponse } from './mocks/last-exports';
 import { acknowledgmentErrorsResponse } from './mocks/acknowledgment-errors';
@@ -13,6 +12,10 @@ import { TimelineEvent } from '../../core/entities/timeline-event';
 import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 import { Order } from '../../core/entities/orders/order';
+import { OrderErrorType } from '../../core/entities/orders/order-error-type.enum';
+import { OrdersFilter } from '../../core/entities/orders/orders-filter';
+import { OrderStatus } from '../../core/entities/orders/order-status.enum';
+import { EMPTY, of } from 'rxjs';
 
 describe('LastEventsComponent', () => {
     let component: LastEventsComponent;
@@ -69,7 +72,7 @@ describe('LastEventsComponent', () => {
     it('should set `isDisplayed` to true when at least one export received from server', () => {
         timelineService.getEvents.and.returnValue(
             of(<any>{_embedded: {timeline: [{name: TimelineEventName.import}]}})
-        ),
+        );
         ordersService.fetchOrdersList.and.returnValues(
             of(<any>{_embedded: {order: []}}),
             of(<any>{_embedded: {order: []}}));
@@ -88,6 +91,24 @@ describe('LastEventsComponent', () => {
         expect(component.isDisplayed).toBe(true);
     });
 
+    it('should fetch a proper url to get the shipping errors', () => {
+        jasmine.clock().mockDate(new Date('2025-12-20'));
+        timelineService.getEvents.and.returnValue(EMPTY);
+        ordersService.fetchOrdersList.and.returnValue(EMPTY);
+        fixture.detectChanges();
+        expect(ordersService.fetchOrdersList).toHaveBeenCalledWith(new OrdersFilter({
+            channel: 'all',
+            tag: 'all',
+            limit: '3',
+            page: '1',
+            search: '',
+            status: OrderStatus.waiting_shipment,
+            error: OrderErrorType.ship,
+            acknowledgment: undefined,
+            since: new Date('2025-12-13'),
+        }));
+    });
+
     it('should set `isDisplayed` to true when at least one order with shipping error received from server', () => {
         timelineService.getEvents.and.returnValues(
             of(<any>{_embedded: {timeline: []}}),
@@ -96,6 +117,7 @@ describe('LastEventsComponent', () => {
             of(<any>{_embedded: {order: []}}),
             of(<any>{_embedded: {order: [{_embedded: {channel: {name: 'any name'}}}]}}));
         fixture.detectChanges();
+
         expect(component.isDisplayed).toBe(true);
     });
 

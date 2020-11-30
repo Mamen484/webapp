@@ -11,6 +11,7 @@ import { Order } from '../../core/entities/orders/order';
 import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
 import { PagedResponse } from 'sfl-shared/entities';
 import { OrdersView } from '../../core/entities/orders/orders-view.enum';
+import { OrdersFilterPatch } from '../../core/entities/orders/orders-filter-patch';
 
 const maxErrors = 3;
 const maxImports = 4;
@@ -80,9 +81,8 @@ export class LastEventsComponent implements OnInit {
     }
 
     protected fetchShippingErrors(): Observable<PagedResponse<{ order: Order[] }>> {
-        const filter = new OrdersFilter();
+        const filter = Object.assign(new OrdersFilter(), OrdersFilterPatch.OrdersWithShippingErrors);
         filter.limit = String(maxErrors);
-        filter.error = OrderErrorType.ship;
         filter.since = OrdersFilter.aWeekBefore();
 
         return this.ordersService.fetchOrdersList(filter);
