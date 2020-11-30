@@ -253,6 +253,18 @@ describe('ActionButtonsComponent', () => {
             expect(elements().length).toEqual(1);
         });
 
+    it('should NOT display a refund button if the channel is real, status is partially_refunded, but all items have the refunded status',
+        () => {
+            component.order.status = OrderStatus.partially_refunded;
+            component.order.items = <any>[{status: OrderStatus.refunded}, {status: OrderStatus.refunded}];
+            component.order._embedded.channel.name = 'real';
+            component.order._embedded.channel.id = ChannelMap.real;
+            fixture.detectChanges();
+            expect(component.supportsRefund).toEqual(false);
+            expect(elements()[0].textContent.trim()).not.toEqual('Refund');
+            expect(elements().length).toEqual(1);
+        });
+
    it('should NOT display a refund button if the engine is zalando, status is partially_refunded, but all items have the refunded status',
         () => {
             component.order.status = OrderStatus.partially_refunded;
@@ -307,6 +319,16 @@ describe('ActionButtonsComponent', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'veepeegroup';
         component.order._embedded.channel.id = ChannelMap.veepeegroup;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+        expect(elements()[0].textContent.trim()).toEqual('Refund');
+        expect(elements().length).toEqual(2);
+    });
+
+    it('should display a refund button if the channel is veepeegroup and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'real';
+        component.order._embedded.channel.id = ChannelMap.real;
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(true);
         expect(elements()[0].textContent.trim()).toEqual('Refund');
@@ -381,6 +403,14 @@ describe('ActionButtonsComponent', () => {
         component.order.status = OrderStatus.partially_refunded;
         component.order._embedded.channel.name = 'veepeegroup';
         component.order._embedded.channel.id = ChannelMap.veepeegroup;
+        fixture.detectChanges();
+        expect(component.supportsRefund).toEqual(true);
+    });
+
+    it('should set supportsRefund property to true if the channel is real and status is partially_refunded', () => {
+        component.order.status = OrderStatus.partially_refunded;
+        component.order._embedded.channel.name = 'real';
+        component.order._embedded.channel.id = ChannelMap.real;
         fixture.detectChanges();
         expect(component.supportsRefund).toEqual(true);
     });

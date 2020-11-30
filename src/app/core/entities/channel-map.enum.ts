@@ -5,4 +5,5 @@ export enum ChannelMap {
     laredoute = 152,
     googleshoppingactions = 40,
     veepeegroup = 35639,
+    real = 36269,
 }

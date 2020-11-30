@@ -24,7 +24,7 @@ import { ChannelService } from 'sfl-shared/services';
 })
 export class ActionButtonsComponent implements OnInit {
 
-    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions, ChannelMap.veepeegroup];
+    refundableChannels = [ChannelMap.laredoute, ChannelMap.cdiscount, ChannelMap.googleshoppingactions, ChannelMap.veepeegroup, ChannelMap.real];
     refundableEngines = ['zalando'];
 
     @Input() order: Order;
