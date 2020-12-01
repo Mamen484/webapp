@@ -44,13 +44,6 @@
             <mat-icon>build</mat-icon>
             <span fxHide fxShow.xs i18n>Tools</span>
         </mat-list-item>
-
-        <mat-list-item [matMenuTriggerFor]="appsMenu" matTooltip="APPS" i18n-matTooltip
-                       matTooltipPosition="after" *ngIf="currentStore.permission.tools"
-                       [matTooltipDisabled]="hideTooltips">
-            <mat-icon>apps</mat-icon>
-            <span fxHide fxShow.xs i18n>Apps</span>
-        </mat-list-item>
         <mat-list-item matTooltip="SALES" matTooltipPosition="after" *ngIf="currentStore?.sales?.pathIsActive"
                        i18n-matTooltip [matTooltipDisabled]="hideTooltips">
             <a sflLegacyLink path="/index/sales" class="homepage-link">
@@ -132,9 +125,6 @@
     <a mat-menu-item sflLegacyLink path="/tools/marges" i18n>Margings</a>
     <a mat-menu-item sflLegacyLink path="/statistics/compare" i18n>Compare channels</a>
     <a mat-menu-item sflLegacyLink path="/statistics/exportstatistics" i18n>Exports</a>
-</mat-menu>
-<mat-menu #appsMenu="matMenu" class="sf-sidebar-menu" xPosition="after" yPosition="above">
-    <a mat-menu-item sflLegacyLink path="/repricing" i18n>Repricing</a>
 </mat-menu>
 
 <mat-menu #accountMenu="matMenu" class="sf-sidebar-bottom-menu account-menu" [overlapTrigger]="true">
