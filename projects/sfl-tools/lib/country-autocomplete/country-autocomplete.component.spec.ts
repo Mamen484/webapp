@@ -40,6 +40,18 @@ describe('CountryAutocompleteComponent', () => {
             expect(component).toBeTruthy();
         });
 
+        it('should set disabled = true when disabled input passed', () => {
+            component.disabled = 'disabled';
+            fixture.detectChanges();
+            expect(component.control.disabled).toBe(true)
+        });
+
+        it('should set disabled = false when disabled input is false', () => {
+            component.disabled = 'false';
+            fixture.detectChanges();
+            expect(component.control.disabled).toBe(false)
+        });
+
         it('should NOT display any country initially if not ISO-alpha-2 value provided', () => {
             fixture.detectChanges();
             component.writeValue('France');
