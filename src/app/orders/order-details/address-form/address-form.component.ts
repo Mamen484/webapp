@@ -16,6 +16,7 @@ export class AddressFormComponent implements OnInit {
     @ViewChild(NgForm, {static: true}) form: NgForm;
 
     @Input() address: Address;
+    @Input() disabled = false;
 
     @Input() set validationError(error) {
         this.validationMessages = new ServerValidationError(error);

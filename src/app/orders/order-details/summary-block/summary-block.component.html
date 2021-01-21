@@ -2,7 +2,7 @@
     <mat-card-content>
         <div fxLayout="row" fxLayoutGap="40px" fxLayoutAlign="center center">
             <div>
-                <img [src]="order?._embedded?.channel?._links?.image?.href"
+                <img class="channel-preview" [src]="order?._embedded?.channel?._links?.image?.href"
                      [alt]="order?._embedded?.channel?.name">
             </div>
             <div fxFlex>

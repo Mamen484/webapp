@@ -5,20 +5,35 @@
                 <ng-template mat-tab-label>
                     <span class="tab-label" i18n>Delivery address</span>
                 </ng-template>
+                <ng-container *ngIf="orderCopy.anonymized">
+                    <ng-container *ngTemplateOutlet="anonymizedError"></ng-container>
+                </ng-container>
                 <sf-address-form [address]="orderCopy.shippingAddress"
                                  [validationError]="validationMessages?.shippingAddress"
                                  (onSave)="saveShippingAddress()"
-                                 (reset)="resetShippingAddress()"></sf-address-form>
+                                 (reset)="resetShippingAddress()"
+                                 [disabled]="orderCopy.anonymized"></sf-address-form>
             </mat-tab>
             <mat-tab>
                 <ng-template mat-tab-label>
                     <span class="tab-label" i18n>Billing address</span>
                 </ng-template>
+                <ng-container *ngIf="orderCopy.anonymized">
+                    <ng-container *ngTemplateOutlet="anonymizedError"></ng-container>
+                </ng-container>
                 <sf-address-form [address]="orderCopy.billingAddress"
                                  [validationError]="validationMessages?.billingAddress"
                                  (onSave)="saveBillingAddress()"
-                                 (reset)="resetBillingAddress()"></sf-address-form>
+                                 (reset)="resetBillingAddress()"
+                                 [disabled]="orderCopy.anonymized"></sf-address-form>
             </mat-tab>
         </mat-tab-group>
     </mat-card-content>
 </mat-card>
+
+<ng-template #anonymizedError>
+        <div class="sf-warn-alert">
+            <mat-icon color="warn">error</mat-icon>
+            <span i18n class="mat-body-1">Order addresses have been anonymized dur to GDPR compliance.</span>
+        </div>
+</ng-template>

@@ -6,6 +6,7 @@ import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { FullCountriesListService } from 'sfl-shared/services';
 import { Country, SFL_COUNTRIES_LIST_LINK } from 'sfl-shared/entities';
 import { MatChipList } from '@angular/material/chips';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
 
 @Component({
@@ -40,15 +41,26 @@ export class CountryAutocompleteComponent implements OnInit, ControlValueAccesso
     readonly control = new FormControl('');
     protected validationError;
 
+    constructor(@Inject(SFL_COUNTRIES_LIST_LINK) public countriesListLink,
+                protected countriesListService: FullCountriesListService,
+                protected changeDetectorRef: ChangeDetectorRef) {
+    }
+
+
+
+    @Input() set disabled(value: any) {
+        const disabled = coerceBooleanProperty(value);
+        if (disabled) {
+            this.control.disable();
+        } else {
+            this.control.enable();
+        }
+    }
+
     @Input() set serverError(value) {
         this.validationError = value;
         this.control.updateValueAndValidity();
         this.changeDetectorRef.detectChanges();
-    }
-
-    constructor(@Inject(SFL_COUNTRIES_LIST_LINK) public countriesListLink,
-                protected countriesListService: FullCountriesListService,
-                protected changeDetectorRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {

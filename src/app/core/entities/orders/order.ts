@@ -13,6 +13,7 @@ export interface Order {
     },
     id: number;
     acknowledgedAt: any;
+    anonymized: boolean;
     reference: string;
     storeReference: string;
     createdAt: string;
