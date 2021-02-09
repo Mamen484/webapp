@@ -1,0 +1,51 @@
+<ng-container *ngIf="channels.length">
+    <div sfui-flex-layout>
+        <div class="sfui-label-small table-label sfui-col-2" i18n>Channel</div>
+        <div class="sfui-label-small table-label sfui-col-2" i18n>Type</div>
+        <div class="sfui-label-small table-label sfui-col-2" i18n>Category</div>
+        <div class="sfui-label-small table-label sfui-col-4" i18n>Country</div>
+        <div class="sfui-label-small sfui-col-2"></div>
+    </div>
+
+    <ng-container *ngFor="let channel of channels">
+        <div sfui-flex-layout>
+            <div class="sfui-col-2">
+                <img [src]="channel._links?.image?.href"
+                     [alt]="channel.name" class="channel-image">
+            </div>
+            <div class="sfui-col-2" [ngSwitch]="channel.type">
+                <ng-container *ngSwitchCase="'ads'" i18n>Product Listing Ads</ng-container>
+                <ng-container *ngSwitchCase="'affiliation'" i18n>Affiliation</ng-container>
+                <ng-container *ngSwitchCase="'export'" i18n>Custom Exports</ng-container>
+                <ng-container *ngSwitchCase="'marketplace'" i18n>Marketplace</ng-container>
+                <ng-container *ngSwitchCase="'retargeting'" i18n>Retargeting</ng-container>
+                <ng-container *ngSwitchCase="'shopbot'" i18n>Shopping Engines</ng-container>
+                <ng-container *ngSwitchCase="'solomo'" i18n>Social Local Mobile</ng-container>
+            </div>
+            <div class="sfui-col-2" [ngSwitch]="channel.segment">
+                <ng-container *ngSwitchCase="'professional'" i18n>Professional Purchasing</ng-container>
+                <ng-container *ngSwitchCase="'motors'" i18n>Auto / Moto</ng-container>
+                <ng-container *ngSwitchCase="'organic'" i18n>Organic</ng-container>
+                <ng-container *ngSwitchCase="'appliances'" i18n>Home Appliances</ng-container>
+                <ng-container *ngSwitchCase="'gastronomy'" i18n>Gastronomy</ng-container>
+                <ng-container *ngSwitchCase="'highTech'" i18n>High Tech</ng-container>
+                <ng-container *ngSwitchCase="'toys'" i18n>Games And Toys</ng-container>
+                <ng-container *ngSwitchCase="'homeAndGarden'" i18n>Home And Garden</ng-container>
+                <ng-container *ngSwitchCase="'nursery'" i18n>Nursery</ng-container>
+                <ng-container *ngSwitchCase="'healthAndBeauty'" i18n>Health And Beauty</ng-container>
+                <ng-container *ngSwitchCase="'wineAndSpirits'" i18n>Wine And Spirits</ng-container>
+                <ng-container *ngSwitchCase="'fashion'" i18n>Fashion</ng-container>
+                <ng-container *ngSwitchCase="'universal'" i18n>Universal</ng-container>
+                <ng-container *ngSwitchCase="'sports'" i18n>Sports</ng-container>
+            </div>
+            <sf-channel-country class="sfui-col-4"
+                                [defaultCountry]="channel?._embedded?.country && channel?._embedded?.country[0] || country"
+                                [countriesNumber]="channel?._embedded?.country?.length || 1"
+            ></sf-channel-country>
+            <div class="sfui-col-2 sfui-align-right">
+                <sf-channel-connect-button [currentCountry]="country"
+                                           [channel]="channel"></sf-channel-connect-button>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

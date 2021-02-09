@@ -1,0 +1,25 @@
+@import '../scss/variables';
+
+[sfui-tag]{
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 600;
+  &[sfui-tag-green]{
+    background: $green-lighter;
+    color: green;
+  }
+  &[sfui-tag-orange]{
+    background: $orange-lighter;
+    color: $orange;
+  }
+  &[sfui-tag-grey]{
+    background: #EDF0F2;
+    color: $grey-8;
+  }
+  &[sfui-tag-red]{
+    background: $red-lighter;
+    color: $red;
+  }
+}

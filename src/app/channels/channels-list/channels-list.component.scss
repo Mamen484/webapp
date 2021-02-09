@@ -1,0 +1,13 @@
+@import '../../../sass/variables';
+
+.sfui-content {
+  height: 100%;
+}
+
+.header-nav {
+  flex: 0 0 auto;
+}
+
+router-outlet {
+  display: none;
+}

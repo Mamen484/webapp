@@ -1,0 +1,19 @@
+<div class="sfui-content sfui-dialog">
+    <div matDialogTitle>
+        <div sfui-flex-layout>
+            <div class="sfui-header-3" sfui-flex i18n>Do you want to open an international account?</div>
+            <button sfui-icon-button>
+                <sfui-icon name="close" color="dark-grey" mat-dialog-close></sfui-icon>
+            </button>
+        </div>
+    </div>
+    <mat-dialog-content class="sfui-dialog-content">
+        <div class="sfui-body-medium sfui-dialog-text" i18n>To be able to open this platform, you need an international account.</div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="sfui-dialog-actions">
+        <div sfui-flex-layout>
+            <button sfui-button sfui-style="secondary" (click)="disagree()" i18n>Disagree</button>
+            <button sfui-button sfui-style="primary" (click)="agree()" i18n>Agree</button>
+        </div>
+    </mat-dialog-actions>
+</div>

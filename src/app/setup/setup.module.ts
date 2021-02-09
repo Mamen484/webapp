@@ -12,7 +12,7 @@ import {AutotagInputComponent} from './shared/autotag-mapping/autotag-input/auto
 import {AutotagDropdownComponent} from './shared/autotag-mapping/autotag-dropdown/autotag-dropdown.component';
 import {SettingsSavedSnackbarComponent} from './shared/settings-saved-snackbar/settings-saved-snackbar.component';
 import {AutotagsRequiredSnackbarComponent} from './shared/autotag-mapping/autotags-required-snackbar/autotags-required-snackbar.component';
-import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
+import {SftUnsavedDataModule} from 'sfl-tools/src/lib/unsaved-data-guard';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { AttributesListComponent } from './shared/autotag-mapping/attributes-list/attributes-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';

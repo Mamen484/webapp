@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
+import { TimelineEventName } from '../../../../projects/sfl-shared/lib/entities/timeline-event-name.enum';
 
 @Pipe({
     name: 'sfEventIcon'

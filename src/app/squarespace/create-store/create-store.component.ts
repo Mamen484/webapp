@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { flatMap } from 'rxjs/operators';
+import { flatMap, mergeMap } from 'rxjs/operators';
 import { Store } from 'sfl-shared/entities';
 import { SflAuthService, SflLocalStorageService, StoreService } from 'sfl-shared/services';
 import { LocalStorageKey } from '../../core/entities/local-storage-key.enum';
@@ -21,7 +21,7 @@ export class CreateStoreComponent {
 
     createStore({email, password}) {
         this.route.data.pipe(
-            flatMap(({spStore}) => {
+            mergeMap(({spStore}) => {
                 const store: any = Store.createForSquarespace(spStore, spStore.name);
                 store.owner.email = email;
                 store.owner.password = password;

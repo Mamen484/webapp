@@ -1,0 +1,90 @@
+@import '../scss/variables';
+
+$checkmark-size: 16px;
+
+:host {
+  display: inline-flex;
+  height: $checkmark-size;
+}
+
+.sfui-checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  user-select: none;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    :host.sfui-checkbox-checked & ~ .checkmark, :host.sfui-checkbox-indeterminate & ~ .checkmark {
+      background-color: $blue;
+      border: 1px solid $blue;
+
+      &:after {
+        display: block;
+      }
+    }
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $checkmark-size;
+    width: $checkmark-size;
+    background-color: white;
+    border: 1px solid $grey-3;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  &:hover input ~ .checkmark {
+    &:not(&:disabled) {
+      border: 1px solid #217AFF;
+    }
+  }
+
+  :host:not(.sfui-checkbox-checked) & input:disabled ~ .checkmark {
+    background-color: white;
+    opacity: 0.4;
+    border: 1px solid $grey-3;
+  }
+
+  :host.sfui-checkbox-checked & input:disabled ~ .checkmark {
+    background-color: $grey-6;
+    border: 1px solid $grey-6;
+  }
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+:host.sfui-checkbox-checked .sfui-checkbox-container .checkmark:after {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  height: 7px;
+  left: 4.5px;
+  top: 2px;
+  width: 3px;
+}
+
+:host.sfui-checkbox-indeterminate .sfui-checkbox-container .checkmark:after {
+  left: 3px;
+  top: 6px;
+  width: 8px;
+  height: 1px;
+  border: solid white;
+  border-width: 0 0 2px 0;
+  transform: none;
+}

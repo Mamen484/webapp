@@ -1,0 +1,38 @@
+<mat-progress-bar color="accent" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<div class="sfui-content" sfui-flex-layout="column">
+    <div class="sfui-header-2 sfui-dark" i18n>Dashboard</div>
+    <div sfui-flex-layout>
+        <div class="sfui-col-9 dense sfui-gap-32" sfui-flex-layout="column">
+            <sf-store-activity></sf-store-activity>
+                <div *ngIf="connectedChannelsData" sfui-flex-layout="column" class="sfui-gap-16">
+                    <div class="sfui-header-3 sfui-grey-7" i18n>Connected channels</div>
+                    <div sfui-card>
+                        <div class="recommended-channel-line" sfui-flex-layout
+                             *ngIf="connectedChannelsData.channels.length > 3 && recommendedChannels?.length">
+                            <sfl-image source="assets/images/recommended-image.png"></sfl-image>
+                            <div sfui-flex>
+                                <img [src]="recommendedChannels[0]._links.image.href">
+                            </div>
+                            <a routerLink="/channels/all" class="sfui-link-medium" i18n>See all channels</a>
+                            <a sfui-button sfui-style="primary" i18n>Connect {{recommendedChannels[0].name}} channel</a>
+                        </div>
+                        <sf-connected-channels-data-table
+                                [channels]="connectedChannelsData.channels"
+                                [statistics]="connectedChannelsData.statistics"
+                                [currency]="connectedChannelsData.currency"></sf-connected-channels-data-table>
+                        <sf-no-channels-message *ngIf="!connectedChannelsData.channels.length"></sf-no-channels-message>
+                    </div>
+                </div>
+
+            <div *ngIf="displayRecommendedChannels" sfui-flex-layout="column" class="sfui-gap-16">
+                <div class="sfui-header-3 sfui-grey-7" i18n>Recommended channels</div>
+                <div sfui-card>
+                    <sf-recommended-channels-data-table
+                            [channels]="recommendedChannels"
+                            [country]="country"></sf-recommended-channels-data-table>
+                </div>
+            </div>
+        </div>
+        <sf-last-dashboard-events class="sfui-col-3 dense"></sf-last-dashboard-events>
+    </div>
+</div>

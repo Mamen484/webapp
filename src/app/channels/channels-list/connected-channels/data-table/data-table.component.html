@@ -1,0 +1,37 @@
+<ng-container *ngIf="channels.length">
+    <div sfui-flex-layout>
+        <div class="sfui-label-small table-label sfui-col-2" i18n>Channel</div>
+        <div class="sfui-label-small table-label sfui-col-3" i18n>Turnover</div>
+        <div class="sfui-label-small table-label sfui-col-2" i18n>Selected products</div>
+        <div class="sfui-label-small table-label sfui-col-1" i18n>Exported</div>
+        <div class="sfui-label-small table-label sfui-col-3" i18n>Last sync</div>
+        <div class="sfui-label-small sfui-col-1"></div>
+    </div>
+
+    <div sfui-flex-layout *ngFor="let channel of channels">
+        <div class="sfui-col-2">
+            <a sflLegacyLink
+               [path]="channel._embedded.channel | sfChannelLink">
+                <img [src]="channel._embedded.channel?._links?.image?.href"
+                     [alt]="channel._embedded.channel.name" class="channel-image">
+            </a>
+        </div>
+        <div class="sfui-col-3">{{statistics[channel.id]?.revenue || 0 | sfCurrency:currency:0}}</div>
+        <div class="sfui-col-2">{{statistics[channel.id]?.selected || 0}}</div>
+        <div class="sfui-col-1">
+            <span>{{statistics[channel.id]?.exported || 0}}</span>
+        </div>
+        <div class="sfui-col-3">
+            <ng-container *ngIf="exports && exports[channel.id]; else noDate">
+                <span timeago [date]="exports[channel.id].occurredAt"></span>
+            </ng-container>
+            <ng-template #noDate i18n>Unknown</ng-template>
+        </div>
+        <div class="sfui-col-1 sfui-align-right">
+            <a sfui-icon-button class="channel-details-button" sflLegacyLink
+               [path]="channel._embedded.channel | sfChannelLink">
+                <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+            </a>
+        </div>
+    </div>
+</ng-container>

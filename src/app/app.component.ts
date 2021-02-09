@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { PageLoadingService } from './core/services/page-loading.service';
-import { SflAuthService } from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService } from 'sfl-shared/services';
 import { Subscription, timer } from 'rxjs';
 
 const minute = 60000;

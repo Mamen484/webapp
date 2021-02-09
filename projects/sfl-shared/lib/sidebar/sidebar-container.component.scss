@@ -5,13 +5,7 @@ mat-sidenav {
   left: 0;
   text-align: center;
   top: 0;
-
-  @media #{$xs} {
-    position: fixed;
-    padding-top: 10px;
-  }
-
-  width: 74px;
+  width: 0;
 }
 
 mat-sidenav-container {
@@ -21,4 +15,5 @@ mat-sidenav-container {
   transform: none;
   height: auto;
   margin: 0;
+  z-index: 20;
 }

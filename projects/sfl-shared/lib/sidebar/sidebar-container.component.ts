@@ -1,5 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SflToggleSidebarService } from './toggle-sidebar.service';
 
@@ -42,19 +41,30 @@ export class SflSidebarContainerComponent implements OnInit {
     /** CSS position of mat-sidenav */
     @Input() position = 'sticky';
 
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.setWindowHeight();
+    }
+
+    windowHeight;
+
 
     opened = true;
     isMobile = false;
 
-    constructor(protected mediaObserver: MediaObserver, protected toggleSidebarService: SflToggleSidebarService) {
+    constructor(protected toggleSidebarService: SflToggleSidebarService) {
     }
 
     ngOnInit() {
         this.toggleSidebarService.getSubscription().subscribe(() => this.sidenav.toggle());
-        this.mediaObserver.media$.subscribe((value) => {
-            this.opened = value.mqAlias !== 'xs';
-            this.isMobile = value.mqAlias === 'xs';
-        })
+        this.setWindowHeight();
+    }
+
+    /**
+     * we cannot rely on 100vh on ipad, it is intentionally calculated differently, so we take inner window height to calculate it correctly
+     */
+    private setWindowHeight(){
+        this.windowHeight = window.innerHeight + 'px';
     }
 
 }

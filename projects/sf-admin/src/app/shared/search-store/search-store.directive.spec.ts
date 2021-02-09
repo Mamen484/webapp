@@ -1,6 +1,6 @@
 import { SearchStoreDirective } from './search-store.directive';
 import { FormControl } from '@angular/forms';
-import {SftSearchService} from 'sfl-tools/async-autocomplete-search';
+import {SftSearchService} from 'sfl-tools/src/lib/async-autocomplete-search';
 
 describe('SearchStoreDirective', () => {
 

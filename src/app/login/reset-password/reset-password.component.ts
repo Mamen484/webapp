@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { PasswordRecoveryService } from '../../core/services/password-recovery.service';
-import { equalValuesValidator } from '../../shared/equal-values.validator';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,11 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ResetPasswordComponent implements OnInit {
 
-    nameControl = new FormControl('', [Validators.required]);
-    passwordControl = new FormControl('', [Validators.required]);
-    passwordCheckControl = new FormControl('', [Validators.required, equalValuesValidator(this.passwordControl)]);
+    name;
+    password;
+    passwordCheck;
     showSuccessMessage = false;
-    showError = false;
+
+    passwordIncorrect = false;
+    passwordsMatch = false;
 
     protected token;
 
@@ -28,16 +28,15 @@ export class ResetPasswordComponent implements OnInit {
     }
 
     reset() {
-        this.showError = false;
-        if (this.nameControl.hasError('required')
-            || this.passwordControl.hasError('required')
-            || this.passwordCheckControl.hasError('required')
-            || this.passwordCheckControl.hasError('equalValues')) {
+        this.passwordIncorrect = !this.password || this.password.length < 8 || !/\d+/.test(this.password) || !/[A-Z]+/.test(this.password);
+        this.passwordsMatch = this.password === this.passwordCheck;
+
+        if (this.passwordIncorrect || !this.passwordsMatch) {
             return;
         }
-        this.passwordRecoveryService.resetPassword(this.token, this.nameControl.value, this.passwordControl.value).subscribe(
+
+        this.passwordRecoveryService.resetPassword(this.token, this.name, this.password).subscribe(
             data => this.showSuccessMessage = true,
-            error => this.showError = true
         );
     }
 

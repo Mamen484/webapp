@@ -9,12 +9,10 @@ import { TimelineFilteringAreaComponent } from './timeline-filtering-area/timeli
 import { TimelineFilterDialogComponent } from './timeline-filter-dialog/timeline-filter-dialog.component';
 import { EventIconPipe } from './event-icon/event-icon.pipe';
 import { EventLinkPipe } from './event-link/event-link.pipe';
-import { SidebarModule } from '../sidebar/sidebar.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        SidebarModule,
         SharedModule,
         TimelineRoutingModule,
     ],

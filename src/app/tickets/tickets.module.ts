@@ -8,7 +8,7 @@ import { FilterTicketsDialogComponent } from './tickets-list/filter-tickets-dial
 import { TicketDetailsDialogComponent } from './tickets-list/ticket-details-dialog/ticket-details-dialog.component';
 import { StateLabelComponent } from './tickets-list/state-label/state-label.component';
 import { TypeLabelComponent } from './tickets-list/type-label/type-label.component';
-import { SidebarModule } from '../sidebar/sidebar.module';
+import { MenuTabsModule } from 'sfl-tools/src/lib/menu-tabs';
 
 @NgModule({
     declarations: [
@@ -22,7 +22,7 @@ import { SidebarModule } from '../sidebar/sidebar.module';
         CommonModule,
         TicketsRoutingModule,
         SharedModule,
-        SidebarModule,
+        MenuTabsModule,
     ],
     entryComponents: [FilterTicketsDialogComponent, TicketDetailsDialogComponent],
 })

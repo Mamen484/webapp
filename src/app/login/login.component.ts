@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SflAuthService, SflLocaleIdService } from 'sfl-shared/services';
-import { SflUserService, SflWindowRefService } from 'sfl-shared/services';
+import { ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { SflAuthService, SflLocaleIdService, SflUserService, SflWindowRefService } from 'sfl-shared/services';
 import { environment } from '../../environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'sf-login',
@@ -12,16 +12,20 @@ import { Title } from '@angular/platform-browser';
 })
 export class LoginComponent implements OnInit {
 
-    error = '';
+    hasServerError = false;
     showDeletedStoreError = false;
     contactEmail;
     loadingNextPage = false;
+
+    userNameControl = new FormControl('', []);
+    passwordControl = new FormControl('', []);
 
     constructor(protected userService: SflUserService,
                 protected authService: SflAuthService,
                 protected windowRef: SflWindowRefService,
                 protected localeIdService: SflLocaleIdService,
-                protected titleService: Title) {
+                protected titleService: Title,
+                protected elementRef: ElementRef) {
         this.titleService.setTitle('Shoppingfeed / Login');
         this.contactEmail = environment.contactEmail[this.localeIdService.localeId] || environment.contactEmail.en;
     }
@@ -29,10 +33,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
     }
 
-    login({username, password}) {
-        this.error = '';
+    login() {
+        this.hasServerError = false;
         this.loadingNextPage = true;
-        this.authService.login(username, password).subscribe(
+        this.authService.login(this.userNameControl.value, this.passwordControl.value).subscribe(
             data => {
                 this.userService.fetchAggregatedInfo(true)
                     .subscribe(userData => {
@@ -49,13 +53,9 @@ export class LoginComponent implements OnInit {
                         this.showDeletedStoreError = true;
                     })
             },
-            ({error}) => {
-                // @todo: research and refactor type of error issue
-                if (typeof error === 'string') {
-                    error = JSON.parse(error);
-                }
+            () => {
                 this.loadingNextPage = false;
-                this.error = error.detail
+                this.hasServerError = true;
             }
         )
         ;

@@ -53,21 +53,42 @@ $badge-font-level: caption;
   margin-bottom: 30px;
 }
 
-.sf-warn-alert {
-  background-color: mat-color($warn, 900, 0.1);
-  border-radius: 4px;
+@mixin alert() {
+  border-radius: 6px;
   padding: 20px 25px;
   margin-bottom: 20px;
   font-size: mat-font-size($config, body-1);
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.26);
+  color: $grey-8;
 
-  &, a {
+  mat-icon.mat-icon {
+    font-size: mat-font-size($config, body-1);
+    width: mat-font-size($config, body-1);
+    height: mat-font-size($config, body-1);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+}
+
+.sf-warn-alert {
+
+  background: #FFE0E0;
+  border: 1px solid $red;
+  @include alert();
+
+  & .warn-title {
+    color: $red;
+  }
+
+  & .warn-text {
+    margin-left: 24px;
+  }
+
+  a {
     color: mat-color($warn, 900);
   }
+
   mat-icon.mat-icon.mat-warn {
-    vertical-align: middle;
-    color: mat-color($warn, 900);
-    margin-right: 5px;
+    color: $red;
   }
 }
 

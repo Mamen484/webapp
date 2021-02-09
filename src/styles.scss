@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import 'sass/system-font';
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 @import 'sass/material-theme';
 @import 'sass/materialdesign';
 @import 'sass/menu';
@@ -8,17 +8,21 @@
 @import 'sass/dialog';
 @import 'sass/orders-subnav';
 @import 'sass/content';
+// Shoppingfeed UI elements
+@import '../projects/sfui/src/lib/scss/style';
 
 html, body, app-root {
   height: 100vh;
   margin: 0;
   display: block;
   color: $black-87-opacity;
-  @media #{$gt-xs} {
-    background-color: mat-color($grey, 50);
-  }
   overflow: hidden;
   font-family: $font-family;
+}
+
+app-root {
+  min-width: $app-min-width;
+  overflow-x: hidden;
 }
 
 hr {

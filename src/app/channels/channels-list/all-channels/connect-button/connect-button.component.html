@@ -1,0 +1,6 @@
+<a sfui-button sfui-style="primary" sflLegacyLink [path]="channel | sfChannelLink"
+   *ngIf="!internationalMode && !shopifyUSUser" i18n>Connect</a>
+<a sfui-button sfui-style="primary" *ngIf="internationalMode && !shopifyUSUser"
+   (click)="showInternationalChannelDialog()" i18n>Connect</a>
+<a sfui-button sfui-style="primary" *ngIf="shopifyUSUser"
+   href="javascript:Appcues.show('91cc1e8a-44aa-4b5d-82e9-847431d687d5')" i18n>Connect</a>

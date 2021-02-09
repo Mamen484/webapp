@@ -1,0 +1,12 @@
+@import '../scss/_variables.scss';
+
+:host {
+  display: flex
+}
+
+:host.sfui-circle-icon {
+  width: 30px;
+  height: 30px;
+  background: $grey-2;
+  border-radius: 100px;
+}

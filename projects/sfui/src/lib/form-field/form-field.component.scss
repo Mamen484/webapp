@@ -1,0 +1,59 @@
+@import '../scss/variables';
+@import '../scss/form-field';
+
+.sfui-form-field {
+
+  @include form-field();
+
+  :host.sfui-disabled & {
+
+    ::ng-deep {
+      input {
+        background: $grey-3;
+      }
+    }
+  }
+
+
+  ::ng-deep {
+    input[sfui-input] {
+      width: 100%;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: $grey-7;
+      }
+
+      &:-webkit-autofill {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+          -webkit-box-shadow: 0 0 0 30px white inset !important;
+        }
+      }
+    }
+  }
+
+  .sfui-field-prefix, .sfui-field-suffix {
+    font-size: 14px;
+    line-height: 14px;
+  }
+
+  .sfui-field-prefix {
+    ::ng-deep {
+      sfui-icon {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .sfui-field-suffix {
+    ::ng-deep {
+      sfui-icon {
+        margin-left: 10px;
+      }
+    }
+  }
+}

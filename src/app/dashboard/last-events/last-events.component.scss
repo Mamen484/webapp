@@ -1,0 +1,23 @@
+@import '../../../sass/variables';
+
+.acknowledge-errors {
+  border-bottom: 1px solid $grey-4;
+  padding-bottom: var(--sfui-column-gap);
+}
+
+sfui-icon[type="status"] {
+  ::ng-deep {
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.import-unavailable {
+  margin-bottom: 8px;
+}
+
+.event-text {
+  margin-top: 8px;
+}

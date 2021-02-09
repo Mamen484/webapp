@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AcceptTermsSnackbarComponent } from './accept-terms-snackbar/accept-terms-snackbar.component';
-import { ErrorSnackbarConfig } from '../../core/entities/error-snackbar-config';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 @Component({
     selector: 'sf-create-account',
@@ -11,32 +9,31 @@ import { ErrorSnackbarConfig } from '../../core/entities/error-snackbar-config';
 })
 export class CreateAccountComponent {
 
-    @Input() hideForm = false;
     @Output() submitted = new EventEmitter<{ email: string, password: string }>();
 
     termsAccepted = false;
+    passwordIncorrect = false;
+    passwordsMatch = false;
+    emailValid = false;
 
-    emailControl = new FormControl('', [Validators.required, Validators.email]);
-    passwordControl = new FormControl('', [Validators.required, Validators.minLength(7)]);
+    email;
+    password;
+    passwordCheck;
 
-    constructor(protected snackbar: MatSnackBar) {
+    constructor() {
     }
 
     submit() {
-        if (this.emailControl.hasError('required')
-            || this.passwordControl.hasError('required')
-            || this.emailControl.hasError('email')
-            || this.passwordControl.hasError('minlength')
-        ) {
+        const password = this.password;
+        this.passwordIncorrect = !password || password.length < 8 || !/\d+/.test(password) || !/[A-Z]+/.test(password);
+        this.passwordsMatch = this.password === this.passwordCheck;
+        this.emailValid = emailPattern.test(this.email);
+
+        if (this.passwordIncorrect || !this.termsAccepted || !this.passwordsMatch || !this.emailValid) {
             return;
         }
 
-        if (!this.termsAccepted) {
-            this.snackbar.openFromComponent(AcceptTermsSnackbarComponent, new ErrorSnackbarConfig());
-            return;
-        }
-
-        this.submitted.emit({email: this.emailControl.value, password: this.passwordControl.value});
+        this.submitted.emit({email: this.email, password: this.password});
     }
 
 }

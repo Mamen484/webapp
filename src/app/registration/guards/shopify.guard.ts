@@ -14,7 +14,6 @@ export class ShopifyGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot): boolean {
-
         if (!next.queryParams['shop']) {
             this.windowRef.nativeWindow.location.href = environment.SHOPIFY_APP_URL;
         } else if (!next.queryParams['code']) {

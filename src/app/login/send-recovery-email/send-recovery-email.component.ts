@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { PasswordRecoveryService } from '../../core/services/password-recovery.service';
 
 @Component({
@@ -8,9 +8,8 @@ import { PasswordRecoveryService } from '../../core/services/password-recovery.s
 })
 export class SendRecoveryEmailComponent implements OnInit {
 
-    emailControl = new FormControl('', [Validators.required]);
+    emailControl = new FormControl('', []);
     showSuccessMessage = false;
-    showError = false;
 
     constructor(protected passwordRecoveryService: PasswordRecoveryService) {
     }
@@ -19,13 +18,9 @@ export class SendRecoveryEmailComponent implements OnInit {
     }
 
     reset() {
-        this.showError = false;
-        if (this.emailControl.hasError('required')) {
-            return;
-        }
         this.passwordRecoveryService.sendRecoveryEmail(this.emailControl.value).subscribe(
             data => this.showSuccessMessage = true,
-            error => this.showError = true
+            error => this.showSuccessMessage = true,
         );
     }
 

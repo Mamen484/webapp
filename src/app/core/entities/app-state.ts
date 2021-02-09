@@ -1,5 +1,4 @@
-import { AggregatedUserInfo, StoreChannel } from 'sfl-shared/entities';
-import { StoreChannelDetails, Store } from 'sfl-shared/entities';
+import { AggregatedUserInfo, Store, StoreChannel } from 'sfl-shared/entities';
 import { Tag } from './tag';
 
 export interface AppState {

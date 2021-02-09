@@ -1,0 +1,11 @@
+<div class="sfui-content" sfui-flex-layout="column" cdkScrollable>
+    <div sfui-flex-layout="column" class="header-nav">
+        <div sfui-flex-layout class="channels-list">
+            <div class="sfui-header-2" sfui-flex i18n>Channels</div>
+        </div>
+        <sft-menu-tabs bar="channels" [activeTab]="currentRoute" dispatchRouteName="false"></sft-menu-tabs>
+    </div>
+    <router-outlet></router-outlet>
+</div>
+
+

@@ -30,8 +30,17 @@ describe('ChannelService', () => {
     });
 
     it('should GET /channel with params on listChannels() call', () => {
-        service.listChannels({search: 'someName', permission: 'perm', state: 'state', limit: 14, page: 4}).subscribe();
-        let req = httpMock.expectOne('someLink/channel?permission=perm&state=state&limit=14&page=4&name=someName');
+        service.listChannels({
+            search: 'someName',
+            permission: 'perm',
+            state: 'state',
+            limit: 14,
+            page: 4,
+            country: 'fr',
+            segment: 'segment-1',
+            type: 'ads',
+        }).subscribe();
+        let req = httpMock.expectOne('someLink/channel?permission=perm&state=state&limit=14&page=4&name=someName&country=fr&segment=segment-1&type=ads');
         expect(req.request.method).toBe('GET');
     });
 

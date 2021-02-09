@@ -10,8 +10,8 @@ import { of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationState } from '../configuration-state';
 import { AutotagFormState } from '../shared/autotag-mapping/autotag-form-state.enum';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
-import { UnsavedDataDialogComponent } from 'sfl-tools/unsaved-data-guard';
+import { FullstoryLoaderService } from 'tracking-tools';
+import { UnsavedDataDialogComponent } from 'sfl-tools/src/lib/unsaved-data-guard';
 import { Title } from '@angular/platform-browser';
 
 describe('FeedSetupComponent', () => {

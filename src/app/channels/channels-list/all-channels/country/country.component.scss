@@ -1,0 +1,18 @@
+@import '../../../../../sass/variables';
+
+.current-country {
+  text-transform: capitalize;
+  align-items: baseline;
+  & > *:not(:last-child) {
+    margin-right: 8px;
+  }
+}
+
+.countries-number {
+  padding: 6px 10px;
+  background: $grey-3;
+  border-radius: 4px;
+  color: $grey-8;
+  display: flex;
+  align-items: center;
+}

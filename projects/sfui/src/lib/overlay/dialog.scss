@@ -1,0 +1,23 @@
+@import "../scss/variables";
+
+.sfui-dialog {
+  &.sfui-content {
+    padding: 8px;
+
+    .sfui-dialog-text {
+      color: $grey-8;
+    }
+  }
+
+  .sfui-dialog-content {
+    margin: 0 0 32px;
+    padding: 0;
+  }
+
+  .sfui-dialog-actions {
+    margin-bottom: 0;
+    height: 40px;
+    padding: 0;
+    min-height: 40px;
+  }
+}

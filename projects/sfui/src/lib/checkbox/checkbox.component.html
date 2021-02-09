@@ -1,0 +1,14 @@
+<label [attr.for]="inputId" class="sfui-checkbox-layout sfui-checkbox-container" #label>
+        <input #input
+               class="sfui-checkbox-input" type="checkbox"
+               [id]="inputId"
+               [required]="required"
+               [checked]="checked"
+               [attr.value]="value"
+               [disabled]="disabled"
+               [attr.name]="name"
+               (change)="_onInteractionEvent($event)"
+               (click)="_onInputClick($event)">
+    <span class="checkmark"></span>
+    <ng-content></ng-content>
+</label>

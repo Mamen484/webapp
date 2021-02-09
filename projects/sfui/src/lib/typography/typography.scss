@@ -1,0 +1,85 @@
+@import '../scss/variables';
+
+.sfui-header-1 {
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 48px;
+}
+
+.sfui-header-2 {
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.sfui-header-3 {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.sfui-header-4 {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.sfui-body-medium {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.sfui-body-medium-bold {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.sfui-body-small {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.sfui-body-small-bold {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.sfui-button {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.sfui-link-small {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: $blue;
+}
+
+.sfui-link-medium {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  color: $blue;
+}
+
+.sfui-label-small {
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sfui-label-medium {
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

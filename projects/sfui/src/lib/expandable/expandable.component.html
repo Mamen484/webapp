@@ -1,0 +1,11 @@
+<div class="sfui-expandable--trigger" (click)="toggle()">
+    <div class="sfui-expandable--trigger-text">
+        <ng-content select="[sfui-trigger]"></ng-content>
+    </div>
+    <div class="sfui-expandable--trigger-icon">
+        <sfui-icon name="arrowDown"></sfui-icon>
+    </div>
+</div>
+<div class="sfui-expandable--items sfui-body-medium-bold" *ngIf="opened">
+    <ng-content select="[sfui-expandable-item]"></ng-content>
+</div>

@@ -16,8 +16,8 @@ import { ProductCategoryMappingService } from './product-category-mapping.servic
 import { ProductsListComponent } from './products-list/products-list.component';
 import { AutotagService } from '../shared/autotag-mapping/autotag-service';
 import { ProductAutotagService } from './product-autotag.service';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
-import { UnsavedDataDialogComponent } from 'sfl-tools/unsaved-data-guard';
+import { FullstoryLoaderService } from 'tracking-tools';
+import { UnsavedDataDialogComponent } from 'sfl-tools/src/lib/unsaved-data-guard';
 
 @Component({
     selector: 'sf-product-setup',

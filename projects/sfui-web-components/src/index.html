@@ -1,0 +1,1043 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SfuiWebComponents</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <style>
+        * {
+            font-family: "IBM Plex Sans", sans-serif;
+        }
+
+        .title {
+            line-height: 20px;
+            margin-top: 20px;
+        }
+
+        .buttons {
+            line-height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body > div {
+            margin-bottom: 10px;
+        }
+
+        .blocks {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mdl-tabs__panel {
+            margin: 20px;
+        }
+
+        td {
+            min-width: 70px;
+            white-space: nowrap;
+        }
+
+        #grid > [sfui-flex-layout] > [sfui-flex-layout] > div {
+            background: #F0F8FF;
+            border-radius: 6px;
+            border: 1px solid #06284B;
+        }
+    </style>
+</head>
+<body>
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#buttons" class="mdl-tabs__tab is-active">Buttons</a>
+        <a href="#form-elements" class="mdl-tabs__tab">Form elements</a>
+        <a href="#typography" class="mdl-tabs__tab">Typography</a>
+        <a href="#other" class="mdl-tabs__tab">Other components</a>
+        <a href="#grid" class="mdl-tabs__tab">Grid</a>
+    </div>
+
+    <div class="mdl-tabs__panel is-active" id="buttons">
+        <div class="title">button[sfui-button]</div>
+        <div class="buttons">
+            <button sfui-button sfui-style="primary">primary</button>
+            <button sfui-button sfui-style="primary" disabled>Disabled</button>
+            <button sfui-button sfui-style="secondary">secondary</button>
+            <button sfui-button sfui-style="secondary" disabled>Disabled</button>
+        </div>
+        <div class="title">a[sfui-button]</div>
+        <div class="buttons">
+            <a sfui-button sfui-style="primary">primary</a>
+            <a sfui-button sfui-style="primary" disabled>Disabled</a>
+            <a sfui-button sfui-style="secondary">secondary</a>
+            <a sfui-button sfui-style="secondary" disabled>Disabled</a>
+        </div>
+        <div class="title">button[sfui-view-button] > sfui-icon</div>
+        <div class="buttons">
+            <button sfui-view-button sfui-selected>
+                <sfui-icon name="box"></sfui-icon>
+                Product
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="boxes"></sfui-icon>
+                Category
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="warning"></sfui-icon>
+                Errors
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="thumbtack"></sfui-icon>
+                Normal
+            </button>
+        </div>
+        <div class="title">a[sfui-view-button] > sfui-icon</div>
+        <div class="buttons">
+            <a sfui-view-button>
+                <sfui-icon name="box"></sfui-icon>
+                Product
+            </a>
+            <a sfui-view-button sfui-selected>
+                <sfui-icon name="boxes"></sfui-icon>
+                Category
+            </a>
+            <a sfui-view-button>
+                <sfui-icon name="warning"></sfui-icon>
+                Errors
+            </a>
+            <a sfui-view-button>
+                <sfui-icon name="thumbtack"></sfui-icon>
+                Normal
+            </a>
+        </div>
+        <div class="title">button[sfui-view-button] > sfui-icon</div>
+        <div class="buttons">
+            <button sfui-view-button>
+                <sfui-icon name="box"></sfui-icon>
+                Product
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="boxes"></sfui-icon>
+                Category
+            </button>
+            <button sfui-view-button sfui-selected>
+                <sfui-icon name="warning"></sfui-icon>
+                Errors
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="thumbtack"></sfui-icon>
+                Normal
+            </button>
+        </div>
+        <div class="title">button[sfui-view-button] > sfui-icon</div>
+        <div class="buttons">
+            <button sfui-view-button>
+                <sfui-icon name="box"></sfui-icon>
+                Product
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="boxes"></sfui-icon>
+                Category
+            </button>
+            <button sfui-view-button>
+                <sfui-icon name="warning"></sfui-icon>
+                Errors
+            </button>
+            <button sfui-view-button sfui-selected>
+                <sfui-icon name="thumbtack"></sfui-icon>
+                Normal
+            </button>
+        </div>
+        <div class="title">
+            button[sfui-icon-button], a[sfui-icon-button]
+        </div>
+        <div class="buttons">
+            <button sfui-icon-button>
+                <sfui-icon name="info"></sfui-icon>
+            </button>
+            <a sfui-icon-button>
+                <sfui-icon name="info"></sfui-icon>
+            </a>
+            <button sfui-icon-button disabled>
+                <sfui-icon name="info"></sfui-icon>
+            </button>
+
+            <button sfui-icon-button>
+                <sfui-icon name="dashboard"></sfui-icon>
+            </button>
+            <a sfui-icon-button>
+                <sfui-icon name="dashboard"></sfui-icon>
+            </a>
+            <button sfui-icon-button disabled>
+                <sfui-icon name="dashboard"></sfui-icon>
+            </button>
+
+            <button sfui-icon-button>
+                <sfui-icon name="arrowDown"></sfui-icon>
+            </button>
+            <a sfui-icon-button>
+                <sfui-icon name="arrowDown"></sfui-icon>
+            </a>
+            <button sfui-icon-button disabled>
+                <sfui-icon name="arrowDown"></sfui-icon>
+            </button>
+
+        </div>
+        <div class="title">sfui-icon[name=*]</div>
+        <table>
+            <tr>
+                <th></th>
+                <th>product</th>
+                <th>boxes</th>
+                <th>warning</th>
+                <th>pin</th>
+                <th>dashboard</th>
+                <th>orders</th>
+                <th>channels</th>
+                <th>statistics</th>
+                <th>tools</th>
+                <th>app</th>
+                <th>timeline</th>
+                <th>rules</th>
+                <th>help</th>
+                <th>catalog</th>
+                <th>stores</th>
+                <th>close</th>
+                <th>pen</th>
+                <th>arrowLeft</th>
+                <th>arrowLight</th>
+                <th>search</th>
+                <th>chevronDown</th>
+                <th>chevronUp</th>
+            </tr>
+            <tr>
+                <td>[color=dark-grey]</td>
+                <td>
+                    <sfui-icon name="product" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="boxes" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="warning" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pin" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dashboard" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="orders" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="channels" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="statistics" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tools" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="app" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="timeline" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="rules" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="help" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="catalog" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="stores" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="close" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pen" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowLeft" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowRight" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="search" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronDown" color="dark-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronUp" color="dark-grey"></sfui-icon>
+                </td>
+
+            </tr>
+            <tr>
+                <td>[color=light-grey]</td>
+                <td>
+                    <sfui-icon name="product" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="boxes" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="warning" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pin" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dashboard" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="orders" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="channels" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="statistics" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tools" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="app" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="timeline" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="rules" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="help" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="catalog" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="stores" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="close" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pen" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowLeft" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="search" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronDown" color="light-grey"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronUp" color="light-grey"></sfui-icon>
+                </td>
+
+            </tr>
+            <tr>
+                <td>[color=green]</td>
+                <td>
+                    <sfui-icon name="product" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="boxes" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="warning" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pin" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dashboard" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="orders" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="channels" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="statistics" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tools" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="app" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="timeline" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="rules" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="help" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="catalog" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="stores" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="close" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pen" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowLeft" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowRight" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="search" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronDown" color="green"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronUp" color="green"></sfui-icon>
+                </td>
+            </tr>
+            <tr>
+                <td>[color=blue]</td>
+                <td>
+                    <sfui-icon name="product" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="boxes" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="warning" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pin" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dashboard" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="orders" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="channels" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="statistics" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tools" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="app" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="timeline" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="rules" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="help" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="catalog" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="stores" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="close" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pen" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowLeft" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowRight" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="search" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronDown" color="blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronUp" color="blue"></sfui-icon>
+                </td>
+            </tr>
+            <tr>
+                <td>[color=light-blue]</td>
+                <td>
+                    <sfui-icon name="product" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="boxes" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="warning" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pin" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dashboard" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="orders" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="channels" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="statistics" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tools" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="app" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="timeline" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="rules" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="help" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="catalog" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="stores" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="close" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pen" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowLeft" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="arrowRight" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="search" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronDown" color="light-blue"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="chevronUp" color="light-blue"></sfui-icon>
+                </td>
+
+            </tr>
+        </table>
+
+        <div class="title">
+            sfui-icon[type=status][name=*]
+        </div>
+        <table>
+            <tr>
+                <th>warning</th>
+                <th>info</th>
+                <th>success</th>
+                <th>error</th>
+                <th>warningCircled</th>
+                <th>successCircled</th>
+                <th>errorCircled</th>
+            </tr>
+            <tr>
+                <td>
+                    <sfui-icon type="status" name="warning"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="info"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="success"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="error"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="warningCircled"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="successCircled"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon type="status" name="errorCircled"></sfui-icon>
+                </td>
+
+            </tr>
+        </table>
+        <div class="title">
+            sfui-icon[type=flag][name=*]
+        </div>
+        <table>
+            <tr>
+                <td class="sfui-body-medium-bold">code</td>
+                <td>au</td>
+                <td>at</td>
+                <td>be</td>
+                <td>br</td>
+                <td>fr</td>
+                <td>uk</td>
+                <td>de</td>
+                <td>es</td>
+                <td>ca</td>
+                <td>lt</td>
+                <td>no</td>
+                <td>pt</td>
+                <td>bg</td>
+                <td>hr</td>
+                <td>fi</td>
+                <td>lv</td>
+                <td>sl</td>
+                <td>us</td>
+                <td>dk</td>
+                <td>ru</td>
+                <td>ee</td>
+                <td>gr</td>
+                <td>hu</td>
+                <td>in</td>
+                <td>ie</td>
+                <td>mx</td>
+                <td>nl</td>
+                <td>ro</td>
+                <td>jp</td>
+                <td>cz</td>
+                <td>it</td>
+                <td>th</td>
+                <td>pl</td>
+                <td>tr</td>
+                <td>se</td>
+                <td>sh</td>
+                <td>sk</td>
+                <td>si</td>
+            </tr>
+            <tr>
+                <td class="sfui-body-medium-bold">icon</td>
+                <td>
+                    <sfui-icon name="au" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="at" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="be" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="br" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="fr" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="uk" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="de" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="es" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="ca" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="lt" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="no" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pt" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="bg" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="hr" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="fi" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="lv" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="sl" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="us" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="dk" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="ru" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="ee" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="gr" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="hu" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="in" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="ie" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="mx" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="nl" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="ro" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="jp" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="cz" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="it" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="th" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="pl" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="tr" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="se" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="sh" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="sk" type="flag"></sfui-icon>
+                </td>
+                <td>
+                    <sfui-icon name="si" type="flag"></sfui-icon>
+                </td>
+            </tr>
+            <tr>
+                <td class="sfui-body-medium-bold">country</td>
+                <td>Australia</td>
+                <td>Austria</td>
+                <td>Belgium</td>
+                <td>Brazil</td>
+                <td>France</td>
+                <td>United Kingdom</td>
+                <td>Germany</td>
+                <td>Spain</td>
+                <td>Canada</td>
+                <td>Lithuania</td>
+                <td>Norway</td>
+                <td>Portugal</td>
+                <td>Bulgaria</td>
+                <td>Croatia</td>
+                <td>Finland</td>
+                <td>Latvia</td>
+                <td>Sierra Leone</td>
+                <td>USA</td>
+                <td>Denmark</td>
+                <td>Russian Federation</td>
+                <td>Estonia</td>
+                <td>Greece</td>
+                <td>Hungary</td>
+                <td>India</td>
+                <td>Ireland</td>
+                <td>Mexico</td>
+                <td>Netherlands</td>
+                <td>Romania</td>
+                <td>Japan</td>
+                <td>Czech Republic</td>
+                <td>Italy</td>
+                <td>Thailand</td>
+                <td>Poland</td>
+                <td>Turkey</td>
+                <td>Sweden</td>
+                <td>Switzerland</td>
+                <td>Slovakia</td>
+                <td>Slovenia</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="mdl-tabs__panel" id="form-elements">
+        <form>
+            <div class="title">sfui-form-field > input[sfui-input]</div>
+            <div style="display: flex; gap: 10px;">
+                <sfui-form-field style="width:180px; display: block">
+                    <sfui-label>Label</sfui-label>
+                    <input sfui-input placeholder="example">
+                </sfui-form-field>
+
+                <sfui-form-field style="width:180px; display: block">
+                    <sfui-label>Label</sfui-label>
+                    <input sfui-input placeholder="example" disabled>
+                </sfui-form-field>
+
+                <sfui-form-field style="width:180px; display: block">
+                    <sfui-label>Prefix</sfui-label>
+                    <sfui-icon name="search" sfui-prefix></sfui-icon>
+                    <input sfui-input placeholder="example">
+                </sfui-form-field>
+
+                <sfui-form-field style="width:180px; display: block">
+                    <sfui-label>Suffix</sfui-label>
+                    <input sfui-input placeholder="example">
+                    <sfui-icon name="close" sfui-suffix></sfui-icon>
+                </sfui-form-field>
+                <sfui-form-field style="width:180px; display: block">
+                    <sfui-label>Prefix & suffix</sfui-label>
+                    <sfui-icon name="search" sfui-prefix></sfui-icon>
+                    <input sfui-input placeholder="example">
+                    <sfui-icon name="close" sfui-suffix></sfui-icon>
+                </sfui-form-field>
+            </div>
+            <div class="title">sfui-select</div>
+            <div style="width: 400px">
+                <sfui-label>Select</sfui-label>
+                <sfui-select>
+                    <sfui-option value="my value 1">My option 1</sfui-option>
+                    <sfui-option value="my value 2">My option 2</sfui-option>
+                </sfui-select>
+            </div>
+            <div style="width: 400px">
+                <sfui-label>Select</sfui-label>
+                <sfui-select disabled>
+                    <sfui-option value="my value 3">My option 3</sfui-option>
+                    <sfui-option value="my value 4">My option 4</sfui-option>
+                </sfui-select>
+            </div>
+            <button type="button" onclick="myDropdown.opened = !myDropdown.opened; return false;">Trigger</button>
+            <sfui-dropdown-list id="myDropdown">
+                <div> some content here</div>
+                <sfui-dropdown-item>Item 1</sfui-dropdown-item>
+                <sfui-dropdown-item>Item 2</sfui-dropdown-item>
+                <sfui-dropdown-item>Item 3</sfui-dropdown-item>
+            </sfui-dropdown-list>
+            <div class="title">sfui-checkbox</div>
+            <div class="buttons">
+                <sfui-checkbox>Unchecked</sfui-checkbox>
+                <sfui-checkbox checked="true">Checked</sfui-checkbox>
+                <sfui-checkbox disabled>Disabled</sfui-checkbox>
+                <sfui-checkbox checked disabled>Disabled checked</sfui-checkbox>
+                <sfui-checkbox indeterminate="true">Indeterminate</sfui-checkbox>
+            </div>
+            <div class="title">sfui-toggle</div>
+            <div class="buttons">
+                <sfui-toggle>Without state</sfui-toggle>
+                <sfui-toggle state="on">[state="on"]</sfui-toggle>
+                <sfui-toggle state="off">[state="off"]</sfui-toggle>
+                <sfui-toggle disabled>[disabled]</sfui-toggle>
+            </div>
+        </form>
+    </div>
+    <div class="mdl-tabs__panel" id="typography">
+        <div class="sfui-header-1">Header 1</div>
+        <div class="sfui-header-2">Header 2</div>
+        <div class="sfui-header-3">Header 3</div>
+        <div class="sfui-header-4">Header 4</div>
+        <div class="sfui-body-medium">Body medium</div>
+        <div class="sfui-body-medium-bold">Body medium bold</div>
+        <div class="sfui-body-small">Body small</div>
+        <div class="sfui-body-small-bold">Body small bold</div>
+        <div class="sfui-button">Button text</div>
+        <div>
+            <a href="#" class="sfui-link-medium">Link medium</a>
+        </div>
+        <div>
+            <a href="#" class="sfui-link-small">Link small</a>
+        </div>
+    </div>
+    <div class="mdl-tabs__panel" id="other">
+        <div class="title">sfui-expandable</div>
+        <div class="buttons" style="width: 220px; background: #06284B; padding: 0 10px;">
+            <sfui-expandable-group>
+                <sfui-expandable>
+
+                    <div sfui-trigger>
+                        <sfui-icon name="orders"></sfui-icon>
+                        <span class="sfui-label-medium">Orders</span>
+                    </div>
+                    <div sfui-expandable-item>Overview</div>
+                    <div sfui-expandable-item>Reporting</div>
+
+
+                </sfui-expandable>
+                <sfui-expandable>
+
+                    <div sfui-trigger>
+                        <sfui-icon name="orders"></sfui-icon>
+                        <span class="sfui-label-medium">Not orders</span>
+                    </div>
+                    <div sfui-expandable-item>Overview</div>
+                    <div sfui-expandable-item>Reporting</div>
+
+
+                </sfui-expandable>
+            </sfui-expandable-group>
+        </div>
+        <div class="buttons" style="width: 220px; background: #06284B; padding: 0 10px; margin-top: 10px;">
+            <sfui-expandable-group>
+                <sfui-expandable>
+
+                    <div sfui-trigger>
+                        <sfui-icon name="orders"></sfui-icon>
+                        <span class="sfui-label-medium">Catalog</span>
+                    </div>
+                    <div sfui-expandable-item>Overview</div>
+                    <div sfui-expandable-item>Reporting</div>
+
+
+                </sfui-expandable>
+                <sfui-expandable>
+
+                    <div sfui-trigger>
+                        <sfui-icon name="orders"></sfui-icon>
+                        <span class="sfui-label-medium">Rules</span>
+                    </div>
+                    <div sfui-expandable-item>Overview</div>
+                    <div sfui-expandable-item>Reporting</div>
+
+
+                </sfui-expandable>
+            </sfui-expandable-group>
+        </div>
+        <div class="title">[sfui-tag-red],[sfui-tag-orange],[sfui-tag-grey],[sfui-tag-green]</div>
+        <div class="buttons">
+            <div sfui-tag sfui-tag-red>Mapping missing</div>
+            <div sfui-tag sfui-tag-orange>Detail missing</div>
+            <div sfui-tag sfui-tag-grey>Complete</div>
+            <div sfui-tag sfui-tag-green>Connected</div>
+        </div>
+        <div class="blocks" style="width: 400px">
+            <div class="title">sfui-banner-success</div>
+            <sfui-banner type="success">
+                <div sfui-title style="display: flex; align-items: center">
+                    <div style="flex: 1">All values have been assigned</div>
+                    <a href="#" class="sfui-link-medium">Show all</a>
+                </div>
+            </sfui-banner>
+            <div class="title">sfui-banner-error</div>
+            <sfui-banner type="error">
+                <div sfui-title>Unable to connect</div>
+                <div>Your Seller ID and/or your Token are not matching. Aenean lacinia bibendum nulla sed consectetur.
+                </div>
+            </sfui-banner>
+            <div class="title">sfui-banner-warning</div>
+            <sfui-banner type="warning">
+                <div sfui-title style="display: flex; align-items: center">
+                    <div style="flex: 1">Show only the 3 unmatched values and a very very very very very very very very
+                        long text to see how the icon is aligned
+                    </div>
+                    <sfui-icon name="arrowRight"></sfui-icon>
+                </div>
+            </sfui-banner>
+            <div class="title">sfui-banner-info</div>
+            <sfui-banner type="info">
+                <div sfui-title>Map your category on the fluid view “Category”</div>
+                <div>Maecenas sed diam eget risus varius blandit sit amet non magna. Sed posuere consectetur est at
+                    lobortis.
+                </div>
+            </sfui-banner>
+        </div>
+        <div>
+            <div class="title">[sfui-card]</div>
+            <div sfui-card style="width: 400px">
+                <div sfui-card-title>Matching sizes</div>
+                <div>This category doesn’t have a matching category on Cdiscount catalog. Etiam porta sem malesuada
+                    magna mollis
+                    euismod.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mdl-tabs__panel sfui-content" id="grid">
+        <div class="title">[sfui-flex-layout]</div>
+        <div sfui-flex-layout="column">
+            <div sfui-flex-layout>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-1">.sfui-col-1</div>
+            </div>
+            <div sfui-flex-layout>
+                <div class="sfui-col-1">.sfui-col-1</div>
+                <div class="sfui-col-2">.sfui-col-2</div>
+                <div class="sfui-col-3">.sfui-col-3</div>
+                <div class="sfui-col-6">.sfui-col-6</div>
+            </div>
+            <div sfui-flex-layout>
+                <div class="sfui-col-4">.sfui-col-4</div>
+                <div class="sfui-col-4">.sfui-col-4</div>
+                <div class="sfui-col-4 sfui-align-right">.sfui-col-4.sfui-align-right</div>
+            </div>
+            <div sfui-flex-layout>
+                <div class="sfui-col-12">.sfui-col-12</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</body>
+</html>

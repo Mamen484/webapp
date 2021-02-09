@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, flatMap, map } from 'rxjs/operators';
-import { SET_STORE } from '../reducers/current-store-reducer';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { SET_STORE } from 'sfl-shared/reducers';
 import { Store as AppStore } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { StoreService } from 'sfl-shared/services';
+import { SflUserService, StoreService } from 'sfl-shared/services';
 import { Permission, Store } from 'sfl-shared/entities';
-import { SflUserService } from 'sfl-shared/services';
 
 @Injectable()
 export class InitializeStoreGuard implements CanActivate {
@@ -19,7 +18,7 @@ export class InitializeStoreGuard implements CanActivate {
     }
 
     canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-        return this.userService.fetchAggregatedInfo().pipe(flatMap(userInfo => {
+        return this.userService.fetchAggregatedInfo().pipe(mergeMap(userInfo => {
                 if (userInfo.isAdmin() && next.queryParams.store) {
                     return this.storeService.getStore(next.queryParams.store).pipe(map((store: Store) => {
                         store.permission = Permission.createForAdmin();
@@ -32,7 +31,6 @@ export class InitializeStoreGuard implements CanActivate {
                 }
                 let enabledStore = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();
                 this.appStore.dispatch({type: SET_STORE, store: enabledStore});
-
                 return of(true);
             }
         ));

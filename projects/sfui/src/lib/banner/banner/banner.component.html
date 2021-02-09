@@ -1,0 +1,20 @@
+<div class="sfui-banner"
+     [class.sfui-banner-error]="type === 'error'"
+     [class.sfui-banner-success]="type === 'success'"
+     [class.sfui-banner-info]="type === 'info'"
+     [class.sfui-banner-warning]="type === 'warning'">
+    <div class="sfui-banner-heading">
+
+        <sfui-icon name="error" *ngIf="type === 'error'"></sfui-icon>
+        <sfui-icon name="info" *ngIf="type === 'info'"></sfui-icon>
+        <sfui-icon name="check" *ngIf="type === 'success'"></sfui-icon>
+        <sfui-icon name="warning" *ngIf="type === 'warning'"></sfui-icon>
+
+        <div class="sfui-banner-title sfui-body-medium-bold">
+            <ng-content select="[sfui-title]"></ng-content>
+        </div>
+    </div>
+    <div class="sfui-banner-text sfui-body-small" #bannerText [class.empty]="bannerText.childElementCount === 0">
+        <ng-content></ng-content>
+    </div>
+</div>

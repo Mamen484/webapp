@@ -1,0 +1,127 @@
+@import '../scss/variables';
+
+$gap: 16px;
+
+body {
+  --sfui-side-margin: 32px;
+  --flex-gap: 16px;
+  --sfui-column-gap: 24px;
+
+  --sfui-sidebar-width: 224px;
+  --sfui-sidebar-width-collapsed: 24px;
+  @media screen and (min-width: 1920px) {
+    --sfui-side-margin: 64px;
+    --flex-gap: 32px;
+  }
+}
+
+.sfui-content {
+  --gap: #{$gap};
+  background-color: #fff;
+
+  padding: 32px var(--sfui-side-margin);
+
+  max-height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+
+
+  .sfui-align-right {
+    text-align: right;
+  }
+}
+
+.sfui-submenu, [sfui-submenu] {
+  background-color: $blue-lighter;
+  margin: 0 calc(var(--sfui-side-margin) * -1);
+  padding: 16px var(--sfui-side-margin);
+  box-sizing: border-box;
+}
+
+[sfui-flex-layout] {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: var(--flex-gap);
+  }
+
+  &[sfui-flex-layout="column"] {
+    & > *:not(:last-child) {
+      margin-right: 0;
+      margin-bottom: var(--sfui-column-gap);
+    }
+
+    &.sfui-gap-16 > *:not(:last-child) {
+      margin-bottom: 16px;
+    }
+
+    &.sfui-gap-32 > *:not(:last-child) {
+      margin-bottom: 32px;
+    }
+    flex-direction: column;
+  }
+
+  [sfui-flex] {
+    flex: 1;
+  }
+
+  .sfui-col-1, .sfui-col-2, .sfui-col-3, .sfui-col-4, .sfui-col-5, .sfui-col-6, .sfui-col-9, .sfui-col-12 {
+    padding: 5px;
+    align-self: center;
+
+    &.dense {
+      padding: 0;
+      align-self: flex-start;
+    }
+  }
+
+  .sfui-col-1 {
+    width: calc(100% / 12);
+  }
+
+  .sfui-col-2 {
+    width: calc(100% / 6);
+  }
+
+  .sfui-col-3 {
+    width: calc(100% / 4);
+  }
+
+  .sfui-col-4 {
+    width: calc(100% / 3);
+  }
+
+  .sfui-col-5 {
+    width: calc(100% / 12 * 5);
+  }
+
+  .sfui-col-6 {
+    width: calc(100% / 2);
+  }
+
+  .sfui-col-9 {
+    width: calc(100% / 12 * 9);
+  }
+
+  .sfui-col-12 {
+    width: calc(100%);
+  }
+
+  &.sfui-bandeau {
+    flex: 0 0 368px;
+    padding-left: 24px;
+    padding-right: calc(24px - var(--flex-gap));
+
+    @media #{$lg}{
+      flex: 0 0 392px;
+      padding-left: 32px;
+      padding-right: calc(32px - var(--flex-gap));
+    }
+
+    @media #{$xl}{
+      flex: 0 0 448px;
+      padding-left: 32px;
+      padding-right: calc(32px - var(--flex-gap));
+    }
+  }
+}

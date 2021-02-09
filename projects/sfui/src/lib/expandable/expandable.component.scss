@@ -1,0 +1,36 @@
+@import '../scss/variables';
+
+:host {
+  width: 100%;
+}
+
+.sfui-expandable--trigger {
+  display: flex;
+  align-items: center;
+  color: $grey-2;
+  width: 100%;
+  cursor: pointer;
+  box-sizing: border-box;
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  .sfui-expandable--trigger-text {
+    flex: 1;
+  }
+}
+
+::ng-deep [sfui-trigger]{
+  display: flex;
+  align-items: center;
+  & > *:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+.sfui-expandable--items {
+  display: flex;
+  flex-direction: column;
+  color: $grey-2;
+  margin-left: 30px;
+}

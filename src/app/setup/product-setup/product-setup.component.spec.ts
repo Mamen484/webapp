@@ -7,11 +7,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChannelService } from '../../core/services/channel.service';
 import { FeedService } from '../../core/services/feed.service';
 import { of, Subject } from 'rxjs';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
+import { FullstoryLoaderService } from 'tracking-tools';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationState } from '../configuration-state';
-import { UnsavedDataDialogComponent } from 'sfl-tools/unsaved-data-guard';
+import { UnsavedDataDialogComponent } from 'sfl-tools/src/lib/unsaved-data-guard';
 import { AutotagFormState } from '../shared/autotag-mapping/autotag-form-state.enum';
 
 describe('ProductSetupComponent', () => {

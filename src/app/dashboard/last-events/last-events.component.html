@@ -1,0 +1,84 @@
+<div *ngIf="isDisplayed" sfui-flex-layout="column" class="last-events-content sfui-gap-32">
+    <div sfui-flex-layout="column" class="sfui-gap-16">
+        <div class="sfui-header-3 sfui-grey-7" i18n>Orders syncing</div>
+        <div sfui-card sfui-flex-layout="column">
+            <div class="acknowledge-errors" *ngIf="acknowledgeErrors.length">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3 sfui-red">{{totalAcknowledgeErrors}}</div>
+                    <a sfui-icon-button routerLink="/orders"
+                       [queryParams]="{view: orderView.importErrors}">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-8 sfui-body-medium-bold event-text" i18n>Orders not synced</div>
+            </div>
+            <div class="acknowledge-errors" *ngIf="!acknowledgeErrors.length">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3">
+                        <sfui-icon type="status" name="successCircled"></sfui-icon>
+                    </div>
+                    <a sfui-icon-button routerLink="/orders">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-8 sfui-body-medium-bold event-text" i18n>Orders are all synced</div>
+            </div>
+            <div *ngIf="shipmentErrors.length">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3 sfui-red">{{totalShipmentErrors}}</div>
+                    <a sfui-icon-button routerLink="/orders"
+                       [queryParams]="{view: orderView.shippingErrors}">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-8 sfui-body-medium-bold event-text" i18n>Orders cannot be shipped</div>
+            </div>
+            <div *ngIf="!shipmentErrors.length">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3">
+                        <sfui-icon type="status" name="successCircled"></sfui-icon>
+                    </div>
+                    <a sfui-icon-button routerLink="/orders"
+                       [queryParams]="{view: orderView.shippingErrors}">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-8 sfui-body-medium-bold event-text" i18n>Orders are all shipped</div>
+            </div>
+
+        </div>
+    </div>
+    <div sfui-flex-layout="column" class="sfui-gap-16">
+        <div class="sfui-header-3 sfui-grey-7" i18n>Catalog syncing</div>
+        <div sfui-card>
+            <div *ngIf="lastImport">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3">
+                        <span class="sfui-red" *ngIf="lastImport.action === actions.error" i18n>Error</span>
+                        <span class="sfui-green" *ngIf="lastImport.action === actions.finish" i18n>Completed</span>
+                    </div>
+                    <a sfui-icon-button sflLegacyLink path="/tools/info">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-8 sfui-body-medium event-text" i18n>
+                    <div timeago [date]="lastImport.occurredAt"></div>
+                </div>
+            </div>
+            <div *ngIf="!lastImport">
+                <div sfui-flex-layout>
+                    <div sfui-flex class="sfui-header-3">
+                        <span class="sfui-grey-7" i18n>Unavailable</span>
+                    </div>
+                    <a sfui-icon-button sflLegacyLink path="/tools/info">
+                        <sfui-icon name="arrowRight" color="light-grey"></sfui-icon>
+                    </a>
+                </div>
+                <div class="sfui-grey-7 sfui-body-medium-bold event-text" i18n>
+                    No import in the last 14 days.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

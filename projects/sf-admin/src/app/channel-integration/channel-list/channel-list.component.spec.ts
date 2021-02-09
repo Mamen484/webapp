@@ -10,7 +10,7 @@ import { ChannelOperatorsAppLinkService } from '../channel-operators-app-link.se
 import { MatDialog } from '@angular/material/dialog';
 import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
 import { Filter } from './filters-dialog/filter';
-import { runTableOperationSpecs } from '../../../../../sfl-tools/lib/table-operations/table-operations.spec';
+import { runTableOperationSpecs } from '../../../../../sfl-tools/src/lib/table-operations/table-operations.spec';
 
 @Pipe({
     name: 'accountList',

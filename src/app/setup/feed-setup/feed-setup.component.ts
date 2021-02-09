@@ -10,14 +10,14 @@ import { FeedCategoriesListComponent } from './feed-categories-list/feed-categor
 import { CategoryMappingComponent } from '../shared/category-mapping/category-mapping.component';
 import { AutotagFormStateService } from '../shared/autotag-mapping/autotag-form-state.service';
 import { AutotagFormState } from '../shared/autotag-mapping/autotag-form-state.enum';
-import { FullstoryLoaderService } from '../../core/services/fullstory-loader.service';
-import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/unsaved-data-guard';
+import { UnsavedDataDialogComponent, UnsavedDataInterface } from 'sfl-tools/src/lib/unsaved-data-guard';
 import { OverlayActiveService } from './overlay-active.service';
 import { Title } from '@angular/platform-browser';
 import { CategoryMappingService } from '../shared/category-mapping.service';
 import { FeedCategoryMappingService } from './feed-category-mapping.service';
 import { CategoryAutotagService } from './category-autotag.service';
 import { AutotagService } from '../shared/autotag-mapping/autotag-service';
+import { FullstoryLoaderService } from 'tracking-tools';
 
 
 @Component({
@@ -47,10 +47,10 @@ export class FeedSetupComponent implements OnInit, UnsavedDataInterface {
                 protected feedService: FeedService,
                 protected route: ActivatedRoute,
                 protected stateService: AutotagFormStateService,
-                protected fullstoryLoader: FullstoryLoaderService,
                 protected titleService: Title,
                 private overlayActiveService: OverlayActiveService,
-                private changeDetectorRef: ChangeDetectorRef) {
+                private changeDetectorRef: ChangeDetectorRef,
+                private fullstoryLoader: FullstoryLoaderService) {
     }
 
 

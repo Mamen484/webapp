@@ -1,0 +1,16 @@
+<div class="sfui-form-field-label sfui-label-small">
+    <ng-content select="[sfui-label]"></ng-content>
+</div>
+
+<div class="sfui-select" (click)="triggerOpened()">
+    <div class="sfui-select-value">
+        <span>{{displayedValue}}</span>
+        <div class="arrow"></div>
+    </div>
+</div>
+
+<div class="sfui-backdrop" [class.visible]="opened" (click)="opened = false"></div>
+<div class="sfui-options" [style.width]="width + 'px'" [class.visible]="opened">
+    <ng-content></ng-content>
+</div>
+

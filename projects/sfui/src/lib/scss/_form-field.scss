@@ -1,0 +1,43 @@
+@import './variables';
+
+@mixin form-field(){
+  border: 1px solid $grey-4;
+  box-sizing: border-box;
+  border-radius: 6px;
+  min-width: 180px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  color: $blue-darker;
+  font-size: 14px;
+  line-height: 20px;
+  height: 40px;
+  background-color: $white;
+
+  &:hover {
+    border: 1px solid $grey-6;
+  }
+
+  :host.sfui-has-value & {
+    border: 1px solid $grey-7;
+  }
+
+  :host.sfui-focused &, :host.sfui-focused.sfui-has-value {
+    border: 1px solid $blue;
+  }
+
+  :host.sfui-disabled & {
+    background: $grey-3;
+    border: 1px solid $grey-6;
+  }
+
+  :host.sfui-search-field & {
+    border: 1px solid $grey-5;
+
+    &:hover {
+      border: 1px solid $grey-7;
+    }
+  }
+
+
+}

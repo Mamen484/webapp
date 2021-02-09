@@ -1,0 +1,20 @@
+@import '../../scss/variables';
+
+.sfui-option {
+  position: relative;
+  display: block;
+  padding: 8px 16px;
+  color: $dark;
+  cursor: pointer;
+  transition: all 0.5s;
+  line-height: 24px;
+}
+
+.sfui-option:hover {
+  cursor: pointer;
+  background-color: $blue-lighter;
+}
+
+.active {
+  color: $blue;
+}

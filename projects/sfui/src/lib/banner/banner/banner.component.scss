@@ -1,0 +1,95 @@
+@import '../../scss/variables';
+@import '../scss/banner';
+
+@mixin iconColor($color) {
+  sfui-icon {
+    ::ng-deep {
+      svg {
+        path {
+          fill: $color;
+        }
+      }
+    }
+  }
+}
+
+@mixin bannerTypeStyles($mainColor, $bgColor) {
+  background: $bgColor;
+  border: 1px solid $mainColor;
+
+  .sfui-banner-title {
+    color: $mainColor;
+  }
+
+  .sfui-banner-text {
+    color: $grey-8;
+  }
+
+  ::ng-deep {
+    a {
+      color: $mainColor;
+    }
+  }
+  @include iconColor($mainColor);
+}
+
+
+.sfui-banner {
+
+  display: flex;
+  align-items: stretch;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 16px 12px;
+  flex-direction: column;
+
+  .sfui-banner-heading {
+    display: flex;
+    & > *:not(:last-child) {
+      margin-right: 10px;
+    }
+    align-items: baseline;
+
+    sfui-icon {
+      position: relative;
+      top: 1px;
+
+      ::ng-deep {
+        svg {
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+
+  .sfui-banner-title {
+    width: 100%;
+  }
+
+  .sfui-banner-text {
+    margin-top: 5px;
+
+    &.empty {
+      margin-top: 0;
+    }
+  }
+
+  &.sfui-banner-error {
+    @include bannerTypeStyles($red, $red-lighter);
+  }
+
+  &.sfui-banner-success {
+    @include bannerTypeStyles($green-main, $green-lighter);
+  }
+
+  &.sfui-banner-warning {
+    @include bannerTypeStyles($orange, $orange-lighter);
+  }
+
+  &.sfui-banner-info {
+    @include bannerTypeStyles($grey-8, $grey-1);
+  }
+
+
+}

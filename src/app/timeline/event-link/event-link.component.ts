@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
-import { TimelineEventAction } from '../../core/entities/timeline-event-action.enum';
-import { TimelineErrorReason } from '../../core/entities/timeline-error-reason';
-import { TimelineEvent } from '../../core/entities/timeline-event';
+import { TimelineEventName } from '../../../../projects/sfl-shared/lib/entities/timeline-event-name.enum';
+import { TimelineEventAction } from '../../../../projects/sfl-shared/lib/entities/timeline-event-action.enum';
+import { TimelineErrorReason } from '../../../../projects/sfl-shared/lib/entities/timeline-error-reason';
+import { TimelineEvent } from '../../../../projects/sfl-shared/lib/entities/timeline-event';
 
 @Component({
     selector: 'sf-event-link',

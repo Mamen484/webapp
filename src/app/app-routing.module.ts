@@ -15,6 +15,7 @@ import { ShopifyGuard } from './registration/guards/shopify.guard';
 import { InitializeStoreGuard } from './core/guards/initialize-store.guard';
 import { AddStoreParamGuard } from './core/guards/add-store-param.guard';
 import { SflLoginByTokenGuard } from 'sfl-shared/auth';
+import { LoginContainerComponent } from './shared/login-container/login-container.component';
 
 const routes: Routes = [
     {
@@ -32,17 +33,22 @@ const routes: Routes = [
         ],
         canActivateChild: [AddStoreParamGuard],
         children: [
-            {path: '', loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule)},
+            {path: '', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
             {path: 'timeline', loadChildren: () => import('./timeline/timeline.module').then(m => m.TimelineModule)},
             {path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
             {path: 'feed', loadChildren: () => import('./setup/setup.module').then(m => m.SetupModule)},
-            {path: 'api', loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsModule)},
+            {path: 'developers', loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsModule)},
+            {path: 'channels', loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsModule)},
         ]
     },
     {path: 'logout', component: BlankComponent, canActivate: [LogoutGuard]},
-    {path: 'login', component: LoginComponent, canActivate: [IsLoggedInGuard]},
-    {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
-    {path: 'reset-password/:token', component: ResetPasswordComponent},
+    {
+        path: '', component: LoginContainerComponent, children: [
+            {path: 'login', component: LoginComponent, canActivate: [IsLoggedInGuard]},
+            {path: 'reset-password', component: SendRecoveryEmailComponent, data: {showBackButton: ['/login']}},
+            {path: 'reset-password/:token', component: ResetPasswordComponent},
+        ]
+    },
     {path: 'shopify/authentify', canActivate: [ShopifyGuard], component: BlankComponent},
     {path: 'squarespace', loadChildren: () => import('./squarespace/squarespace.module').then(m => m.SquarespaceModule)},
     {path: 'register', loadChildren: () => import('./registration/registration.module').then(m => m.RegistrationModule)},

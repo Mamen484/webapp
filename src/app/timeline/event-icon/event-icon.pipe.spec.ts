@@ -1,5 +1,5 @@
 import { EventIconPipe } from './event-icon.pipe';
-import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
+import { TimelineEventName } from '../../../../projects/sfl-shared/lib/entities/timeline-event-name.enum';
 
 describe('EventIconPipe', () => {
   it('create an instance', () => {

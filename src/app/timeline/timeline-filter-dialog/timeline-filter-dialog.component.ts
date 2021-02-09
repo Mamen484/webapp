@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TimelineTypeFilter } from '../../core/entities/timeline-type-filter.enum';
-import { TimelineFilterData } from '../../core/entities/timeline-filter-data';
-import { DateFilter } from '../../core/entities/date-filter.enum';
+import { TimelineTypeFilter } from '../../../../projects/sfl-shared/lib/entities/timeline-type-filter.enum';
+import { TimelineFilterData } from '../../../../projects/sfl-shared/lib/entities/timeline-filter-data';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DateFilter } from 'sfl-shared/entities';
 
 @Component({
   selector: 'sf-timeline-filter-dialog',

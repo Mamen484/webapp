@@ -49,3 +49,7 @@ environment.prod.ts
 # Crowdin archives
 /*.zip
 /bin/
+
+src/mocks/response/
+src/mocks/response/*
+

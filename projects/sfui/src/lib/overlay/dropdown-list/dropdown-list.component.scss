@@ -1,0 +1,86 @@
+@import '../../scss/variables';
+
+:host {
+  position: absolute;
+}
+
+.sfui-options {
+  min-width: 213px;
+  margin-top: 10px;
+  animation: 100ms ease-out dropdown-show;
+  flex-direction: column;
+  display: flex;
+
+  &.hiding {
+    animation: 75ms ease-in dropdown-hide;
+  }
+
+  ::slotted([slot="sfui-dropdown-label"]) {
+    color: $grey-6;
+    padding: 8px 16px 4px;
+    cursor: initial;
+  }
+
+  ::slotted([sfui-dropdown-item]){
+    line-height: 16px;
+    padding: 11px 16px;
+    color: $dark;
+    text-transform: none;
+    text-decoration: none;
+    height: 40px;
+    box-sizing: border-box;
+
+  }
+
+  ::slotted([sfui-dropdown-item]:hover){
+    background-color: $grey-2;
+  }
+
+  cursor: pointer;
+  border: 1px solid $grey-5;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 9px 36px rgba(111, 124, 148, 0.14), 0 2.01027px 8.04107px rgba(111, 124, 148, 0.083455), 0 0.598509px 2.39404px rgba(111, 124, 148, 0.056545);
+
+  position: absolute;
+  z-index: 1000;
+}
+
+
+.sfui-backdrop {
+  position: fixed;
+  display: none;
+  z-index: 1000;
+  background-color: transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &.visible {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@keyframes dropdown-show {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes dropdown-hide {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}

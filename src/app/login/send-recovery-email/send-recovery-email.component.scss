@@ -1,10 +1,17 @@
 @import '../../../sass/variables';
-@import '../../../sass/mixins/form-page';
+@import '../../../sass/mixins/auth-title';
 
-@include form-page();
+@include auth-title();
 
-.reset-password-description, .success-message {
-  color: $black-54-opacity;
+::ng-deep {
+  app-root {
+    background: $white;
+  }
+}
+
+.reset-password-description {
+  color: $grey-8;
+  margin-top: 10px;
 }
 
 .success-message {

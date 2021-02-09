@@ -1,0 +1,8 @@
+<div class="sfui-backdrop" [class.visible]="opened" (click)="backdropClick()"></div>
+<div class="sfui-options sfui-body-medium" [class.hiding]="!opened"
+    *ngIf="dropdownVisible">
+    <div class="sfui-dropdown-label sfui-label-small">
+        <slot name="sfui-dropdown-label"></slot>
+    </div>
+    <slot></slot>
+</div>

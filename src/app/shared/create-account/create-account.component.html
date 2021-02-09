@@ -1,41 +1,59 @@
-<div class="form-container">
-    <div>
-        <div class="form-title mat-display-1" i18n>Create your Shopping Feed account</div>
-        <mat-card>
-            <mat-card-content>
-                <form (ngSubmit)="submit()" *ngIf="!hideForm">
-                    <mat-form-field color="accent" appearance="outline">
-                        <mat-label>Email address</mat-label>
-                        <input matInput type="email" [formControl]="emailControl">
-                        <mat-error *ngIf="emailControl.hasError('required')" i18n>
-                            Email is required
-                        </mat-error>
-                        <mat-error *ngIf="!emailControl.hasError('required') && emailControl.hasError('email')" i18n>
-                            Email should be a valid email address
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field color="accent" appearance="outline">
-                        <mat-label i18n>Create a password</mat-label>
-                        <input matInput type="password" [formControl]="passwordControl">
-                        <mat-error *ngIf="passwordControl.hasError('required')" i18n>
-                            Password is required
-                        </mat-error>
-                        <mat-error
-                                *ngIf="!passwordControl.hasError('required') && passwordControl.hasError('minlength')" i18n>
-                            Password should contain at least 7 symbols.
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-checkbox [(ngModel)]="termsAccepted" name="termsAccepted">
-                        I accept the <a class="terms-link" href="https://www.shopping-feed.com/wp-content/uploads/2019/02/Shopping-Feed_privacy_policy.pdf" target="_blank">Shoppingfeed policy</a>
-                         and <a class="terms-link" href="https://www.shopping-feed.com/wp-content/uploads/2019/02/Shopping-Feed-Terms-of-Use.pdf" target="_blank">Terms of use</a>
-                    </mat-checkbox>
-                    <div class="form-actions">
-                        <button mat-raised-button color="accent" i18n>NEXT</button>
-                    </div>
-                </form>
-                <ng-content select="[sfServerError]"></ng-content>
-            </mat-card-content>
-        </mat-card>
+<div fxLayout="column" fxLayoutGap="20px">
+    <div class="sfui-header-1" i18n>
+        Create your Shopping Feed account
     </div>
+    <ng-content select="[sfui-welcome-text]"></ng-content>
 </div>
+<form #form="ngForm" (ngSubmit)="submit()" fxLayout="column" fxLayoutGap="20px" class="create-form">
+
+    <sfui-form-field>
+        <sfui-label i18n>Email address</sfui-label>
+        <input sfui-input [(ngModel)]="email" type="email" name="email" placeholder="Your email"
+               i18n-placeholder>
+    </sfui-form-field>
+
+    <sfui-form-field>
+        <sfui-label i18n>Password</sfui-label>
+        <input sfui-input type="password" [(ngModel)]="password" name="password" placeholder="Your password"
+               i18n-placeholder>
+    </sfui-form-field>
+
+    <sfui-form-field>
+        <sfui-label i18n>Confirm password</sfui-label>
+        <input sfui-input type="password" [(ngModel)]="passwordCheck" name="passwordCheck" placeholder="Your password"
+               i18n-placeholder>
+    </sfui-form-field>
+
+
+    <sfui-checkbox [(ngModel)]="termsAccepted" name="termsAccepted">
+        I accept the <a class="terms-link"
+                        href="https://www.shopping-flux.com/wp-content/uploads/2020/02/Master-Services-Agreement.pdf"
+                        i18n-href
+                        target="_blank">Shoppingfeed policy</a>
+    </sfui-checkbox>
+
+    <sfui-banner type="error" *ngIf="passwordIncorrect && form.submitted">
+        <div sfui-title i18n>Error password</div>
+        <div i18n>The password must be 8 characters long and contain at least one number and one capital letter.</div>
+    </sfui-banner>
+
+    <sfui-banner type="error" *ngIf="!termsAccepted && form.submitted">
+        <div sfui-title i18n>Unable to connect</div>
+        <div i18n>You must accept the Shoppingfeed Policy Agreement in order to create your account.</div>
+    </sfui-banner>
+
+    <sfui-banner type="error" *ngIf="!passwordsMatch && form.submitted">
+        <div sfui-title i18n>Error credentials</div>
+        <div i18n>Passwords do not match.</div>
+    </sfui-banner>
+
+    <sfui-banner type="error" *ngIf="!emailValid && form.submitted">
+        <div sfui-title i18n>Error credentials</div>
+        <div i18n>The email address is not valid</div>
+    </sfui-banner>
+
+    <ng-content select="[sfServerError]"></ng-content>
+    <div class="form-actions">
+        <button sfui-button sfui-style="primary" i18n>Create</button>
+    </div>
+</form>

@@ -5,8 +5,15 @@ $expandable-sidenav-width: 200px;
 .sf-content {
 
   margin-left: $left-sidebar-width;
+  .sf-sidebar-collapsed & {
+    margin-left: $collapsed-sidebar-width;
+  }
   &.with-extended-sidenav {
     margin-left: $left-sidebar-width + $expandable-sidenav-width;
+
+    .sf-sidebar-collapsed & {
+      margin-left: $collapsed-sidebar-width + $expandable-sidenav-width;
+    }
   }
   padding: $content-margin;
 

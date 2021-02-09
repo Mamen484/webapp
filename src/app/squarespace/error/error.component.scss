@@ -1,0 +1,21 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/auth-title';
+
+@include auth-title();
+
+.squarespace-header {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 34px;
+  margin: 90px 0 20px;
+}
+
+sfl-image {
+  margin-left: -20px;
+  margin-top: 40px;
+  display: block;
+}
+
+button {
+  margin-top: 40px;
+}

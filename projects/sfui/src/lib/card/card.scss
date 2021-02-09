@@ -1,0 +1,20 @@
+@import '../scss/variables';
+
+[sfui-card] {
+  background: $white;
+  box-shadow: 0 2.01027px 18.9859px rgba(80, 103, 165, 0.0417275), 0 1.12694px 10.6433px rgba(80, 103, 165, 0.035), 0 0.598509px 5.65259px rgba(80, 103, 165, 0.0282725), 0 0.249053px 2.35217px rgba(80, 103, 165, 0.0196802);
+  border-radius: 14px;
+  padding: 24px;
+  font-size: 14px;
+  line-height: 16px;
+
+  [sfui-card-title]{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: $dark;
+    margin-bottom: 10px;
+  }
+
+  color: $grey-8;
+}

@@ -40,7 +40,7 @@ export class CreatePasswordComponent implements OnInit {
         this.storeService.createStore(this.store)
             .subscribe((store: Store) => {
                     this.authService.loginByToken(store.owner.token);
-                    this.router.navigate(['register', 'create-account']);
+                    this.router.navigate(['/']);
                 },
                 () => this.displayServerError = true);
 

@@ -1,0 +1,11 @@
+<div sfui-flex-layout class="sfui-container">
+    <div sfui-flex-layout class="sfui-bandeau scrollable-container login-form" fxLayout="column">
+        <sfl-image source="assets/images/login/onboarding-logo.svg" width="202px"></sfl-image>
+
+        <router-outlet></router-outlet>
+    </div>
+    <div fxFlex class="login-image" fxLayout="row" fxLayoutAlign="end center" fxLayoutAlign.gt-md="center center">
+        <img src="{{baseHref}}/assets/images/login/onboarding.svg" alt="Shoppingfeed login">
+    </div>
+</div>
+

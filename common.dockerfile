@@ -38,5 +38,5 @@ ARG env=prod
 RUN npm run build-lib
 
 # test libs code, sf libraries must provide 100% coverage
-RUN ./node_modules/.bin/ng test sfl-shared --code-coverage --watch false --browsers=ChromeHeadlessCI
-RUN ./node_modules/.bin/ng test sfl-tools --code-coverage --watch false --browsers=ChromeHeadlessCI
+RUN ./node_modules/.bin/ng test sfl-shared --watch false --browsers=ChromeHeadlessCI
+RUN ./node_modules/.bin/ng test sfl-tools --watch false --browsers=ChromeHeadlessCI

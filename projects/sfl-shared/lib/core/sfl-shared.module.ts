@@ -8,6 +8,7 @@ import { SflLegacyLinkDirective } from './legacy-link.directive';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SflWebappLinkDirective } from './webapp-link.directive';
 
 /**
  * The main module required by Shopping Feed apps.
@@ -22,8 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         FormsModule,
         ReactiveFormsModule,
     ],
-    declarations: [SflLegacyLinkDirective],
-    exports: [SflLegacyLinkDirective],
+    declarations: [SflLegacyLinkDirective, SflWebappLinkDirective],
+    exports: [SflLegacyLinkDirective, SflWebappLinkDirective],
 })
 export class SflSharedModule {
     static forRoot(dependency: { baseHref, languageOptions, sflDefaultLanguage?, sflApi, sflAppToken, sflLegacyLink }): ModuleWithProviders<SflSharedModule> {

@@ -1,0 +1,13 @@
+<div [ngSwitch]="storeCountry.toLowerCase() || defaultCountry.code.toLowerCase()"
+     class="current-country" sfui-flex-layout>
+    <ng-container *ngFor="let country of fullCountriesList">
+        <ng-container *ngSwitchCase="country.code">
+            <sfui-icon type="flag" [name]="country.code.toLowerCase()"></sfui-icon>
+            <span>{{country.name}}</span>
+        </ng-container>
+    </ng-container>
+    <ng-container *ngSwitchDefault i18n>{{defaultCountry.code}}</ng-container>
+    <div class="countries-number sfui-body-small-bold" *ngIf="countriesNumber > 1">
+        +{{ countriesNumber - 1 }}
+    </div>
+</div>

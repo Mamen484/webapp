@@ -1,0 +1,17 @@
+<div sfui-flex-layout="column" class="connected-channels">
+    <sfui-form-field *ngIf="channels.length || searchControl.value || loadingChannels" type="search">
+        <input [formControl]="searchControl" sfui-input placeholder="Find a channel" i18n-placeholder>
+        <sfui-icon sfui-prefix name="search" color="light-grey"></sfui-icon>
+    </sfui-form-field>
+    <div sfScrollHandler (scrolledToBottom)="onScroll()" class="sfui-grey-8">
+        <sf-connected-channels-data-table [channels]="channels" [statistics]="statistics"
+                                          [currency]="currency"></sf-connected-channels-data-table>
+        <sf-no-channels-message *ngIf="!loadingChannels && !channels.length && !searchControl.value"></sf-no-channels-message>
+        <sf-no-channels-found-message *ngIf="!loadingChannels && !channels.length && searchControl.value"
+                                      [query]="searchControl.value" (clearSearch)="clearSearch()">
+        </sf-no-channels-found-message>
+        <div sfui-flex-layout="column" class="loading-channel-placeholder" *ngIf="hasNextPage">
+            <ngx-skeleton-loader count="20" appearance="line"></ngx-skeleton-loader>
+        </div>
+    </div>
+</div>

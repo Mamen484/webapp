@@ -28,7 +28,7 @@ import {RowValidationDialogComponent} from './channel-settings/row-validation-di
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {SflErrorPagesModule} from 'sfl-shared/error-pages';
-import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
+import {SftCountryAutocompleteModule} from 'sfl-tools/src/lib/country-autocomplete';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';

@@ -13,11 +13,12 @@ import { environment } from '../environments/environment';
 import { SflAuthModule } from 'sfl-shared/auth';
 import { ErrorPagesModule } from './error-pages/error-pages.module';
 import { TicketsModule } from './tickets/tickets.module';
-import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
-import { ZendeskConfig } from './core/widgets/zendesk.config';
 import { TimeagoCustomFormatter, TimeagoFormatter, TimeagoIntl, TimeagoModule } from 'ngx-timeago';
 import { SfTimeagoIntlService } from './core/services/sf-timeago-intl.service';
 import { SflSharedModule } from 'sfl-shared';
+import { SflWebappLinkService } from 'sfl-shared/services';
+import { WebappLinkService } from './core/services/webapp-link.service';
+import { TrackingToolsModule } from 'tracking-tools';
 
 @NgModule({
     declarations: [
@@ -41,15 +42,22 @@ import { SflSharedModule } from 'sfl-shared';
             sflLegacyLink: environment.APP_URL,
         }),
         TicketsModule,
-        ngxZendeskWebwidgetModule.forRoot(ZendeskConfig),
         TimeagoModule.forRoot({
             intl: {provide: TimeagoIntl, useClass: SfTimeagoIntlService},
-            formatter: { provide: TimeagoFormatter, useClass: TimeagoCustomFormatter }
+            formatter: {provide: TimeagoFormatter, useClass: TimeagoCustomFormatter}
         }),
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
+        TrackingToolsModule.forRoot({
+            GA_MEASUREMENT_ID: environment.GTAG_ID,
+            ZENDESK_ACCOUNT_LINK: environment.zeAccountLink,
+            DEFAULT_AUTOPILOT_EMAIL: environment.DEFAULT_AUTOPILOT_EMAIL,
+            DEFAULT_AUTOPILOT_STORENAME:  environment.DEFAULT_AUTOPILOT_STORENAME,
+            FULLSTORY_ORG_ID: environment.FULLSTORY_ORG_ID,
+        }),
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    providers: [{provide: SflWebappLinkService, useClass: WebappLinkService}],
 })
 export class AppModule {
 }

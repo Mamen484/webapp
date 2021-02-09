@@ -12,8 +12,8 @@ import {CredentialsDialogComponent} from './create-account/credentials-dialog/cr
 import {environment} from '../../environments/environment';
 import {FiltersDialogComponent} from './channel-list/filters-dialog/filters-dialog.component';
 import {MatChipsModule} from '@angular/material/chips';
-import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
-import {SftUnsavedDataModule} from 'sfl-tools/unsaved-data-guard';
+import {SftCountryAutocompleteModule} from 'sfl-tools/src/lib/country-autocomplete';
+import {SftUnsavedDataModule} from 'sfl-tools/src/lib/unsaved-data-guard';
 
 
 @NgModule({

@@ -1,11 +1,40 @@
-<sfl-login-form [loadingNextPage]="loadingNextPage" (loginSubmitted)="login($event)" appearance="outline">
-    <div class="error" *ngIf="error">{{error}}</div>
-    <div class="error deleted-store-message" *ngIf="showDeletedStoreError"
-         i18n="Interpolation replaced with support email@@storeIsDeletedMessage">
-        Your store has been deleted but no worries your datas are not lost, please contact
-        {{contactEmail}} to re-open it.
+<form (ngSubmit)="login()" fxLayout="column" fxLayoutGap="50px" autocomplete="off">
+
+    <div class="auth-title sfui-header-2" i18n>
+        Sign in to your account
     </div>
-    <div sfl-login-links>
-        <a class="below-form-link mat-body-1" i18n [routerLink]="['/reset-password']">Forgot the password?</a>
+
+    <div fxLayout="column" fxLayoutGap="20px">
+        <sfui-form-field #usernameField>
+            <sfui-label i18n>Username</sfui-label>
+            <input sf-detect-autofill (autofilled)="usernameField.markAsHavingValue()" sfui-input [formControl]="userNameControl" placeholder="Your username" i18n-placeholder autocomplete="off" name="username">
+        </sfui-form-field>
+
+
+        <sfui-form-field #passwordField>
+            <sfui-label>
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between baseline">
+                    <div fxFlex i18n>Password</div>
+                    <a i18n class="sfui-link-small forgot-password-link" [routerLink]="['/reset-password']">Forgot
+                        password?</a>
+                </div>
+            </sfui-label>
+            <input  sf-detect-autofill sfui-input [formControl]="passwordControl" (autofilled)="passwordField.markAsHavingValue()"  type="password" placeholder="Your password" i18n-placeholder autocomplete="off" name="password">
+        </sfui-form-field>
     </div>
-</sfl-login-form>
+
+    <sfui-banner type="error" *ngIf="hasServerError || showDeletedStoreError">
+        <div sfui-title i18n>Unable to connect</div>
+        <div *ngIf="hasServerError" i18n>Invalid username or password.</div>
+        <div *ngIf="showDeletedStoreError"
+             i18n="Interpolation replaced with support email@@storeIsDeletedMessage">
+            Your store has been deleted but no worries your datas are not lost, please contact
+            {{contactEmail}} to re-open it.
+        </div>
+    </sfui-banner>
+
+    <div class="form-actions">
+        <button sfui-button sfui-style="primary" i18n>Sign in</button>
+    </div>
+
+</form>

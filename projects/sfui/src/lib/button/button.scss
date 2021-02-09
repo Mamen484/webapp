@@ -1,0 +1,177 @@
+@import '../scss/variables';
+
+$padding-top-hover: 11px;
+$padding-left-hover: 25px;
+$padding-top-normal: 12px;
+$padding-left-normal: 25px;
+
+@mixin sfui-button-base(){
+  font-family: $font-family;
+  min-width: 100px;
+  height: 40px;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  padding: 11px 25px;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:disabled {
+    cursor: auto;
+  }
+
+}
+
+button[sfui-button], a[sfui-button], input[type="button"][sfui-button]{
+  @include sfui-button-base();
+  &[sfui-style="primary"]{
+    background: $blue;
+    color: $white;
+    border: 1px solid $blue;
+
+    &:hover {
+      background: $blue-light;
+    }
+
+    &:active {
+      border: 1px solid $blue-dark;
+      background: $blue-dark;
+    }
+
+    &:disabled {
+      border: 1px solid $grey-3;
+      background: $grey-3;
+      color: $grey-7;
+    }
+
+  }
+
+  &[sfui-style="secondary"]{
+    @include sfui-button-base();
+    background: $white;
+    color: $grey-8;
+    border: 1px solid $grey-4;
+
+    &:hover {
+      background: $grey-2;
+      color: $grey-8;
+      border: 1px solid $grey-6;
+    }
+
+    &:active {
+      background: $grey-4;
+      color: $blue-darker;
+      border: 1px solid $grey-4;
+    }
+
+    &:disabled {
+      background: $grey-1;
+      color: $grey-7;
+      border: 1px solid $grey-1;
+    }
+  }
+
+
+}
+
+button[sfui-view-button], a[sfui-view-button] {
+  @include sfui-button-base();
+  background: $grey-2;
+  box-shadow: 0 2.01027px 8.93452px rgba(133, 146, 161, 0.0417275), 0 1.12694px 5.00862px rgba(133, 146, 161, 0.035), 0 0.598509px 2.66004px rgba(133, 146, 161, 0.0282725), 0 0.249053px 1.1069px rgba(133, 146, 161, 0.0196802);
+  color: $grey-8;
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 15px;
+  box-sizing: border-box;
+  border: 1px solid $grey-2;
+
+  &:hover:not([sfui-selected]) {
+    background: $grey-2;
+    border: 1px solid $grey-6;
+    box-shadow: none;
+  }
+
+  &[sfui-selected]{
+    background-color: $blue;
+    box-shadow: none;
+    color: $white;
+    path {
+      fill: $white;
+    }
+  }
+
+  &:active {
+
+  }
+
+  &:disabled {
+    background: $grey-3;
+    color: $grey-7;
+  }
+
+  sfui-icon {
+    margin-right: 10px;
+    path {
+      fill: $grey-8;
+    }
+  }
+
+}
+
+
+button[sfui-icon-button], a[sfui-icon-button] {
+  background-color: $grey-2;
+  display:inline-block;
+  border: 1px solid $grey-2;
+
+  border-radius: 6px;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $grey-6;
+  }
+
+  &:active {
+    background: $grey-3;
+    border: 1px solid $grey-3;
+  }
+
+  sfui-icon {
+    margin: 7px;
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    font-weight: 900;
+    align-items: center;
+
+    path {
+      fill: $grey-8;;
+    }
+  }
+
+  &:disabled {
+    background: $grey-1;
+    border: 1px solid $grey-1;
+    cursor: auto;
+
+    sfui-icon {
+      path {
+        fill: $grey-7;
+      }
+    }
+  }
+}
+
+
+input[type="checkbox"][sfui-checkbox]{
+  border: 1px solid #EDF0F2;
+  border-radius: 4px;
+}

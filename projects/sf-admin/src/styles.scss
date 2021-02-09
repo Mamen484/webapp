@@ -3,3 +3,14 @@
 @import 'sass/material-theme';
 
 @import './sass/mixins/content';
+.sf-content {
+  margin-left: 75px;
+
+  &.with-extended-sidenav {
+    margin-left: 275px !important;
+  }
+}
+
+.sfl-expandable-sidenav {
+  left: 75px !important;
+}

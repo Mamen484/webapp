@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { TimelineFilter } from '../../core/entities/timeline-filter';
-import { TimelineFilterData } from '../../core/entities/timeline-filter-data';
+import { TimelineFilter } from '../../../../projects/sfl-shared/lib/entities/timeline-filter';
+import { TimelineFilterData } from '../../../../projects/sfl-shared/lib/entities/timeline-filter-data';
 import { TimelineFilterDialogComponent } from '../timeline-filter-dialog/timeline-filter-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { TimelineTypeFilter } from '../../core/entities/timeline-type-filter.enum';
-import { DateFilter } from '../../core/entities/date-filter.enum';
+import { TimelineTypeFilter } from '../../../../projects/sfl-shared/lib/entities/timeline-type-filter.enum';
+import { DateFilter } from 'sfl-shared/entities';
 
 @Component({
     selector: 'sf-timeline-filtering-area',

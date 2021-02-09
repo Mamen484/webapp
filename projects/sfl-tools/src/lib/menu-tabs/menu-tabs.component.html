@@ -1,0 +1,86 @@
+<div *ngIf="bar === 'catalog'" sfui-flex-layout="column">
+    <div class="sfui-header-2" i18n>Catalog</div>
+    <nav sfui-submenu sfui-flex-layout>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.sourceFeed ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/tools/infos" i18n>Source feed</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.filters ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/tools/filters" i18n>Filters</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.newProducts ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/tools/newproducts" i18n>New products</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.manage ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/marketplaces/autotag" i18n>Manage
+            colors & sizes</a>
+        <a sfui-button [attr.sfui-style]="activeTab === tabs.newFields ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/tools/field" i18n>Create new fields</a>
+    </nav>
+</div>
+
+<div *ngIf="bar === 'rules'" sfui-flex-layout="column">
+    <div class="sfui-header-2" i18n>Rules</div>
+    <nav sfui-submenu sfui-flex-layout>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.transformations ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/rules/transformations" i18n>Transformations</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.segmentation ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/tools/segmentations" i18n>Segmentations</a>
+    </nav>
+</div>
+
+<div *ngIf="bar === 'analytics'" sfui-flex-layout="column">
+    <div class="sfui-header-2" i18n>Analytics</div>
+    <nav sfui-submenu sfui-flex-layout>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.settingsGlobal ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/statistics" i18n>Global statistics</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.marketplace ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/statistics/marketplaces" i18n>Marketplace</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.shoppingEngine ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/statistics/shopbots" i18n>Shopping engine</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.compare ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/statistics/compare" i18n>Compare channels</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.export ? 'primary' : 'secondary'"
+           sflLegacyLink [storeId]="storeId" path="/statistics/exportstatistics" i18n>Export</a>
+    </nav>
+</div>
+
+<div *ngIf="bar === 'settings'" sfui-flex-layout="column">
+    <div class="sfui-header-2" i18n>Settings</div>
+    <nav sfui-submenu sfui-flex-layout>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.settingsGeneral ? 'primary' : 'secondary'" sflLegacyLink
+           [storeId]="storeId" path="/settings/account" i18n>General</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.team ? 'primary' : 'secondary'" sflLegacyLink [storeId]="storeId"
+           path="/settings/team" i18n>Team</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.analytics ? 'primary' : 'secondary'" sflLegacyLink [storeId]="storeId"
+           path="/settings/analytics" i18n>Analytics</a>
+        <a sfui-button
+           [attr.sfui-style]="activeTab === tabs.developers ? 'primary' : 'secondary'" sflWebappLink [storeId]="storeId"
+           path="/developers" i18n>Developers</a>
+    </nav>
+</div>
+
+<div *ngIf="bar==='channels'">
+    <nav sfui-submenu sfui-flex-layout class="channels-nav">
+        <a sfui-button [attr.sfui-style]="activeTab === tabs.allChannels ? 'primary' : 'secondary'"
+           sflWebappLink path="/channels/all" i18n>All channels</a>
+        <div class="vertical-divider-container">
+            <div class="vertical-divider"></div>
+        </div>
+        <a sfui-button [attr.sfui-style]="activeTab === tabs.connectedChannels ? 'primary' : 'secondary' "
+           sflWebappLink path="/channels/connected" i18n>Connected channels</a>
+        <a sfui-button [attr.sfui-style]="activeTab === tabs.customFeeds ? 'primary' : 'secondary' "
+           class="custom-feeds" sflLegacyLink path="/tools/export" i18n>Custom
+            feeds</a>
+    </nav>
+</div>

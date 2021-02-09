@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sidebar</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        .sfc-defer-display {
+            visibility: hidden;
+        }
+
+        .tabs-container {
+            margin-left: 220px;
+        }
+    </style>
+</head>
+<body>
+<sfc-initialize store-id="307"></sfc-initialize>
+<!--<sfc-current-route menu-name="stats" page-name="analytics-overview"></sfc-current-route>-->
+<!--<sfc-sidebar></sfc-sidebar>-->
+<div style="width: 100%" class="tabs-container sfc-defer-display">
+    <sfc-tracking-tools
+            enable-google-analytics
+            enable-zendesk-chat
+            enable-autopilot
+            enable-appcues
+            enable-fullstory
+            enable-sales-machine
+    ></sfc-tracking-tools>
+    <div class="sfui-content" sfui-flex-layout="column">
+        <sfc-menu-tabs bar="catalog" active-tab="source-feed"></sfc-menu-tabs>
+        <sfc-menu-tabs bar="rules" active-tab="parameters"></sfc-menu-tabs>
+        <sfc-menu-tabs bar="analytics" active-tab="general"></sfc-menu-tabs>
+        <sfc-menu-tabs bar="settings" active-tab="general"></sfc-menu-tabs>
+        <sfc-menu-tabs bar="channels" active-tab="custom-feeds"></sfc-menu-tabs>
+    </div>
+</div>
+</body>
+</html>

@@ -22,6 +22,7 @@ ARG DEFAULT_AUTOPILOT_EMAIL
 ARG DEFAULT_AUTOPILOT_STORENAME
 ARG RUN_AUTOPILOT
 ARG showCovid19Banner
+ARG production
 
 
 # download translations

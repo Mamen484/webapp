@@ -1,17 +1,19 @@
-import { map, publishReplay } from 'rxjs/operators';
+import { map, mergeMap, publishReplay } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { ConnectableObservable, Observable } from 'rxjs';
-import { SFL_API, Statistics } from 'sfl-shared/entities';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import {
     ChannelsRequestParams,
     ChannelsResponse,
     PagedResponse,
-    Store,
+    SFL_API,
+    Statistics,
+    Store as UserStore,
     StoreChannel,
     StoreChannelResponse,
     StoreCharge
 } from 'sfl-shared/entities';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 /**
  * A service to work with a store API.
@@ -23,7 +25,9 @@ export class StoreService {
 
     charge$: ConnectableObservable<StoreCharge>;
 
-    constructor(protected httpClient: HttpClient, @Inject(SFL_API) protected sflApi) {
+    constructor(private httpClient: HttpClient,
+                @Inject(SFL_API) private sflApi,
+                private appStore: Store<{ currentStore: UserStore }>) {
     }
 
     public getStoreChannels(storeId,
@@ -60,6 +64,28 @@ export class StoreService {
                 Object.assign({}, data, {_embedded: {channel: data._embedded.storeChannel}})));
     }
 
+    getInstalledChannels(params = new ChannelsRequestParams()) {
+        let httpParams = new HttpParams()
+            .set('page', params.page.toString())
+            .set('limit', params.limit.toString())
+            .set('country', params.country)
+            .set('name', params.searchQuery)
+            .set('type', params.type)
+            .set('segment', params.segment)
+            .set('status', 'installed')
+            .set('embed', 'stats');
+
+        return this.appStore.select('currentStore').pipe(
+            mergeMap(store => this.httpClient.get(`${this.sflApi}/store/${store.id}/channel`, {params: httpParams.set('sortBy', 'installed:desc,channelName:asc')}))
+        );
+    }
+
+    public fetchStatistics(): Observable<Statistics> {
+        return this.appStore.select('currentStore').pipe(
+            mergeMap(store => <Observable<Statistics>>this.httpClient.get(`${this.sflApi}/stat/store/${store.id}`))
+        );
+    }
+
     public getStatistics(storeId): Observable<Statistics> {
         return <Observable<Statistics>>this.httpClient.get(`${this.sflApi}/stat/store/${storeId}`);
     }
@@ -77,12 +103,12 @@ export class StoreService {
         return <Observable<any>>this.httpClient.get(`${this.sflApi}/store`, {params: new HttpParams().set('name', filter)});
     }
 
-    public getStore(storeId): Observable<Store> {
-        return <Observable<Store>>this.httpClient.get(`${this.sflApi}/store/${storeId}`);
+    public getStore(storeId): Observable<UserStore> {
+        return <Observable<UserStore>>this.httpClient.get(`${this.sflApi}/store/${storeId}`);
     }
 
-    public createStore(store: Store) {
-        return this.httpClient.post(`${this.sflApi}/store`, {store}) as Observable<Store>;
+    public createStore(store: UserStore) {
+        return this.httpClient.post(`${this.sflApi}/store`, {store}) as Observable<UserStore>;
     }
 }
 

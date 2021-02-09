@@ -1,0 +1,11 @@
+@mixin banner() {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 16px 12px;
+
+  & > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}

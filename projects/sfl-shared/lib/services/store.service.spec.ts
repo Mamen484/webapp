@@ -4,23 +4,28 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { StoreService } from './store.service';
 import { SflLocaleIdService } from 'sfl-shared/services';
 import { ChannelsRequestParams, SFL_API } from 'sfl-shared/entities';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
 describe('StoreService', () => {
     let service: StoreService;
-    let httpMock: HttpTestingController
+    let httpMock: HttpTestingController;
+    let store: jasmine.SpyObj<Store>;
 
     beforeEach(() => {
+        store = jasmine.createSpyObj(['select']);
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
             providers: [
                 StoreService,
                 {provide: SflLocaleIdService, useValue: {localeId: 'en'}},
                 {provide: SFL_API, useValue: 'apiUrl'},
+                {provide: Store, useValue: store},
             ]
         });
 
-        service = TestBed.get(StoreService);
-        httpMock = TestBed.get(HttpTestingController);
+        service = TestBed.inject(StoreService);
+        httpMock = TestBed.inject(HttpTestingController);
     });
 
     it('should be created', () => {
@@ -35,12 +40,31 @@ describe('StoreService', () => {
         httpMock.verify();
     });
 
+    it('should request /store/{store.id}/channel resource with storeId in params when calling getInstalledChannels method', () => {
+        store.select.and.returnValue(of({id: 24}));
+        service.getInstalledChannels().subscribe();
+
+        const req = httpMock.expectOne('apiUrl/store/24/channel?page=1&limit=200&country=&name=&type=&segment=&status=installed&embed=stats&sortBy=installed:desc,channelName:asc');
+        expect(req.request.method).toEqual('GET');
+        httpMock.verify();
+    });
+
+
     it('should request /stat/store/89 resource when calling getStatistics method', () => {
         service.getStatistics(89).subscribe();
         const req = httpMock.expectOne('apiUrl/stat/store/89');
         expect(req.request.method).toEqual('GET');
         httpMock.verify();
     });
+
+    it('should request /stat/store/89 resource when calling fetchStatistics() method', () => {
+        store.select.and.returnValue(of({id: 89}));
+        service.fetchStatistics().subscribe();
+        const req = httpMock.expectOne('apiUrl/stat/store/89');
+        expect(req.request.method).toEqual('GET');
+        httpMock.verify();
+    });
+
     it('should request /store/11/channel resource when getStoreChannels() is called with foreignChannels = false', () => {
         service.getStoreChannels(11, Object.assign(new ChannelsRequestParams(), {page: 1, limit: 18}), false).subscribe();
         const req = httpMock.expectOne('apiUrl/store/11/channel?page=1&limit=18&country=&name=&type=&segment=&status=&embed=stats&sortBy=installed:desc,channelName:asc');

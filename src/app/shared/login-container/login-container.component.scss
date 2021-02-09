@@ -1,0 +1,50 @@
+@import '../../../sass/variables';
+@import '../../../sass/mixins/auth-title';
+
+@include auth-title();
+
+::ng-deep {
+  body, app-root {
+    width: 100vw;
+    overflow: auto;
+  }
+}
+
+.sfui-container {
+  min-width: $app-min-width;
+  background-color: $white;
+  height: 100%;
+}
+
+.login-image {
+  background-color: $blue;
+
+  picture {
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+  }
+}
+
+.login-form {
+  padding-top: 45px;
+  padding-bottom: 66px;
+
+  sfl-image {
+    margin-bottom: 50px;
+  }
+}
+
+.login-container {
+  &, .scrollable-container {
+    height: 100vh;
+  }
+
+  min-width: $app-min-width;
+  overflow: auto;
+}
+

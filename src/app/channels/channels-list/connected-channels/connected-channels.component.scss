@@ -1,0 +1,34 @@
+@import '../../../../sass/variables';
+
+$header-height: 48px;
+
+.connected-channels {
+  height: auto;
+}
+:host, [sfScrollHandler] {
+  height: 100%;
+}
+
+.no-channel-placeholder {
+  opacity: 1;
+  animation: 1s infinite linear blinkPlaceholder;
+}
+
+.no-channel-placeholder {
+  opacity: 1;
+  animation: 1s infinite linear blinkPlaceholder;
+}
+
+@keyframes blinkPlaceholder {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

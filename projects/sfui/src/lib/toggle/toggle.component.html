@@ -1,0 +1,19 @@
+<label [attr.for]="inputId" class="sfui-toggle-layout" #label>
+    <input #input
+           class="sfui-toggle-input" type="checkbox"
+           [id]="inputId"
+           [required]="required"
+           [checked]="checked"
+           [attr.value]="value"
+           [disabled]="disabled"
+           [attr.name]="name"
+           (change)="_onInteractionEvent($event)"
+           (click)="_onInputClick($event)">
+    <div class="sfui-toggle-container">
+        <div class="sfui-toggle-rect">
+            <sfui-icon name="toggleOn" *ngIf="checked"></sfui-icon>
+            <sfui-icon name="toggleOff" *ngIf="!checked"></sfui-icon>
+        </div>
+        <ng-content></ng-content>
+    </div>
+</label>

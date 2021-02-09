@@ -64,7 +64,7 @@ describe('CreatePasswordComponent', () => {
             storeService.createStore.and.returnValue(of(<any>{owner: {}}));
             fixture.detectChanges();
             component.createPassword({email: 'test@test.com', password: '1234567'});
-            expect(router.navigate).toHaveBeenCalledWith(['register', 'create-account'])
+            expect(router.navigate).toHaveBeenCalledWith(['/'])
         });
 
         it('should display an error if the createPassword request returns an error', () => {
@@ -119,7 +119,7 @@ describe('CreatePasswordComponent', () => {
 
         TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule.withRoutes([{path: 'register/create-account', component: BlankComponent}]),
+                RouterTestingModule.withRoutes([{path: '', component: BlankComponent}]),
                 FormsModule,
                 ReactiveFormsModule,
             ],

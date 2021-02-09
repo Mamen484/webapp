@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {SflUserService, SflWindowRefService} from 'sfl-shared/services';
-import {LOAD_FULLSTORY} from '../../../../src/trackers/fullstory';
 import {environment} from '../environments/environment';
+import { LOAD_FULLSTORY } from '../../../tracking-tools/src/lib/trackers/fullstory';
 
 @Injectable({
     providedIn: 'root'

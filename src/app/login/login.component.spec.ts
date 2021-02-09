@@ -34,14 +34,16 @@ describe('LoginComponent', () => {
         it('should call user service login() call', () => {
             authService.login.and.returnValue(of({}));
             userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(aggregatedUserInfoMock)));
-            component.login({username: '123', password: 'asf'});
+            component.userNameControl.setValue('123');
+            component.passwordControl.setValue('asf');
+            component.login();
             expect(authService.login).toHaveBeenCalledWith('123', 'asf');
         });
 
         it('should write the error when the SflUserService returns an error', () => {
             authService.login.and.returnValue(throwError({error: {detail: 'bubidu'}}));
-            component.login({username: '123', password: '456'});
-            expect(component.error).toEqual('bubidu');
+            component.login();
+            expect(component.hasServerError).toEqual(true);
         });
 
         it('should show an error that the store is deleted, when all the stores in the userInfo have deleted status', () => {
@@ -51,7 +53,7 @@ describe('LoginComponent', () => {
             userInfo._embedded.store[2].status = 'deleted';
             userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
             authService.login.and.returnValue(of({}));
-            component.login({username: '123', password: '456'});
+            component.login();
             expect(component.showDeletedStoreError).toEqual(true);
         });
 
@@ -62,7 +64,7 @@ describe('LoginComponent', () => {
             userInfo._embedded.store[2].status = 'suspended';
             userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
             authService.login.and.returnValue(of({}));
-            component.login({username: '123', password: '456'});
+            component.login();
             expect(component.showDeletedStoreError).toEqual(false);
         });
 
@@ -71,7 +73,7 @@ describe('LoginComponent', () => {
             userInfo.roles = ['admin'];
             userService.fetchAggregatedInfo.and.returnValue(of(AggregatedUserInfo.create(userInfo)));
             authService.login.and.returnValue(of({access_token: 'some_token'}));
-            component.login({username: '123', password: '456'});
+            component.login();
             expect(fixture.debugElement.injector.get(SflWindowRefService).nativeWindow.location.href)
                 .toContain(`/admin?token=some_token&store=307`);
         });

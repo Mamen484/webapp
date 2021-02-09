@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { ChannelsPermission } from './filters-dialog/channels-permission.enum';
 import { Filter } from './filters-dialog/filter';
-import { TableOperations } from 'sfl-tools/table-operations';
+import { TableOperations } from 'sfl-tools/src/lib/table-operations';
 
 @Component({
     templateUrl: './channel-list.component.html',

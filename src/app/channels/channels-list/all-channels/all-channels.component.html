@@ -1,0 +1,66 @@
+<div sfui-flex-layout="column">
+    <div sfui-flex-layout>
+        <sfui-form-field class="search-channel-field" type="search">
+            <input [formControl]="searchControl" sfui-input placeholder="Find a channel" i18n-placeholder>
+            <sfui-icon sfui-prefix name="search" color="light-grey"></sfui-icon>
+        </sfui-form-field>
+        <div sfui-flex></div>
+        <button class="filters-button" sfui-button sfui-style="secondary" *ngIf="filtersShown" (click)="filtersShown = false" i18n>Hide filters
+        </button>
+        <button class="filters-button" sfui-button sfui-style="secondary" *ngIf="!filtersShown" (click)="filtersShown = true" i18n>Show filters
+        </button>
+    </div>
+    <div sfui-flex-layout *ngIf="filtersShown" class="filters">
+        <sfui-select [(ngModel)]="type" [value]="type" (ngModelChange)="refreshChannels()">
+            <div sfui-label class="select-label" i18n>Type</div>
+            <sfui-option selected value="" i18n>All Types</sfui-option>
+            <sfui-option value="ads" i18n>Product Listing Ads</sfui-option>
+            <sfui-option value="affiliation" i18n>Affiliation</sfui-option>
+            <sfui-option value="export" i18n>Custom Exports</sfui-option>
+            <sfui-option value="marketplace" i18n>Marketplace</sfui-option>
+            <sfui-option value="retargeting" i18n>Retargeting</sfui-option>
+            <sfui-option value="shopbot" i18n>Shopping Engines</sfui-option>
+            <sfui-option value="solomo" i18n>Social Local Mobile</sfui-option>
+        </sfui-select>
+        <sfui-select [(ngModel)]="category" [value]="category" (ngModelChange)="refreshChannels()">
+            <div sfui-label class="select-label" i18n>Category</div>
+            <sfui-option selected value="" i18n>All Categories</sfui-option>
+            <sfui-option value="professional" i18n>Professional Purchasing</sfui-option>
+            <sfui-option value="motors" i18n>Auto / Moto</sfui-option>
+            <sfui-option value="organic" i18n>Organic</sfui-option>
+            <sfui-option value="appliances" i18n>Home Appliances</sfui-option>
+            <sfui-option value="gastronomy" i18n>Gastronomy</sfui-option>
+            <sfui-option value="highTech" i18n>High Tech</sfui-option>
+            <sfui-option value="toys" i18n>Games And Toys</sfui-option>
+            <sfui-option value="homeAndGarden" i18n>Home And Garden</sfui-option>
+            <sfui-option value="nursery" i18n>Nursery</sfui-option>
+            <sfui-option value="healthAndBeauty" i18n>Health And Beauty</sfui-option>
+            <sfui-option value="wineAndSpirits" i18n>Wine And Spirits</sfui-option>
+            <sfui-option value="fashion" i18n>Fashion</sfui-option>
+            <sfui-option value="universal" i18n>Universal</sfui-option>
+            <sfui-option value="sports" i18n>Sports</sfui-option>
+        </sfui-select>
+        <sfui-select [(ngModel)]="country" [value]="country" class="country-select" (ngModelChange)="refreshChannels()">
+            <div sfui-label class="select-label" i18n>Country</div>
+            <sfui-option value="" selected i18n>All countries</sfui-option>
+            <sfui-option [value]="country.code" *ngFor="let country of countriesList">
+                <sfui-icon [name]="country.code" type="flag"></sfui-icon>
+                <span>{{country.name}}</span>
+            </sfui-option>
+        </sfui-select>
+    </div>
+
+    <div sfScrollHandler (scrolledToBottom)="onScroll()" class="sfui-grey-8">
+        <sf-recommended-channels-data-table *ngIf="channels.length"
+                                            [channels]="channels"
+                                            [country]="country"
+        ></sf-recommended-channels-data-table>
+
+        <div sfui-flex-layout="column" class="loading-channel-placeholder" *ngIf="hasNextPage">
+            <ngx-skeleton-loader count="20" appearance="line"></ngx-skeleton-loader>
+        </div>
+        <sf-no-channels-found-message *ngIf="!loading && !channels.length"
+                                      [query]="searchControl.value" (clearSearch)="clearSearch()">
+        </sf-no-channels-found-message>
+    </div>
+</div>

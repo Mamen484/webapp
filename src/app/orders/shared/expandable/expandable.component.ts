@@ -10,7 +10,14 @@ import { CdkAccordionItem } from '@angular/cdk/accordion';
 })
 export class ExpandableComponent extends CdkAccordionItem implements OnInit {
 
-    @Input() expanded: MatExpansionPanelState = 'collapsed';
+    @Input()
+    private _isExpanded: MatExpansionPanelState = 'collapsed';
+    public get expanded(): MatExpansionPanelState {
+        return this._isExpanded;
+    }
+    public set expanded(value: MatExpansionPanelState) {
+        this._isExpanded = value;
+    }
 
     getExpandedState(): MatExpansionPanelState {
         return this.expanded ? 'expanded' : 'collapsed';

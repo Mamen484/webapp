@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import '../../../src/sass/material-theme';
+@import '../../../src/sass/materialdesign';
+
+@import '../../sfui-web-components/src/styles.scss';
+
+
+html, body, app-root {
+  margin: 0;
+  display: block;
+}
+
+sfc-menu-tabs {
+  display: block;
+}

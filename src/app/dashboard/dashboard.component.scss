@@ -1,0 +1,23 @@
+@import '../../sass/variables';
+
+.sfui-content {
+  min-height: 100vh;
+  background-color: $grey-1;
+}
+
+.recommended-channel-line {
+  background-color: $blue-lighter;
+  border: 1px solid $grey-5;
+  border-radius: 8px;
+  align-items: center;
+  padding-right: 30px;
+  margin-bottom: 24px;
+
+  img {
+    max-height: 40px;
+  }
+}
+
+mat-progress-bar {
+  position:absolute;
+}

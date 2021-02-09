@@ -1,7 +1,0 @@
-{
-  "ngPackage": {
-    "lib": {
-      "entryFile": "../lib/country-autocomplete/public-api"
-    }
-  }
-}

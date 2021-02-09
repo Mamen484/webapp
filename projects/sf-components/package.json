@@ -1,0 +1,14 @@
+{
+  "name": "@shoppingflux/web-components",
+  "version": "1.1.27",
+  "dependencies": {},
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/shoppingflux/webapp.git",
+    "directory": "packages/web-components"
+  },
+  "main": "sf-components.js"
+}

@@ -36,7 +36,6 @@ export class PaginatorIntlComponent extends MatPaginator implements OnInit {
     }
 
     getRangeLabel = (page: number, pageSize: number, length: number) => {
-        console.log(this);
         if (length == 0 || pageSize == 0) {
             return `0 ${this.container.nativeElement.getAttribute('rangeLabelCustom')} ${length}`;
         }

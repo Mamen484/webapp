@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TimelineComponent } from './timeline.component';
 import { events, events2 } from '../../mocks/events-mock';
 import { updates } from '../../mocks/updates-mock';
-import { StreamEventType, TimelineService } from '../core/services/timeline.service';
+import { StreamEventType, TimelineService } from '../../../projects/sfl-shared/lib/services/timeline.service';
 import { EventLinkComponent } from './event-link/event-link.component';
 import { UpdateRowComponent } from './update-row/update-row.component';
 import { Store } from '@ngrx/store';

@@ -1,0 +1,7 @@
+<sft-sidebar [linkRef]="link" *ngIf="currentStore" position="fixed"></sft-sidebar>
+
+<ng-template #link let-link="link" let-content="content">
+    <a [href]="webAppLink + link + '?store=' + currentStore.id">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </a>
+</ng-template>

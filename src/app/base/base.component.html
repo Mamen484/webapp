@@ -1,3 +1,20 @@
-<sf-sidebar></sf-sidebar>
+<sft-sidebar [linkRef]="link"></sft-sidebar>
+
 <router-outlet></router-outlet>
-<sf-appcues></sf-appcues>
+
+<ng-template #link let-link="link" let-content="content" let-active="active">
+    <a [routerLink]="link" [class.active]="active" class="menu-link">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+    </a>
+</ng-template>
+<sfc-tracking-tools
+        enableGoogleAnalytics
+        enableZendeskChat
+        [zendeskChatLocaleId]="localeIdService.localeId"
+        enableAutopilot
+        enableAppcues
+        enableFullstory
+        enableSalesMachine
+        enableFacebook
+>
+</sfc-tracking-tools>

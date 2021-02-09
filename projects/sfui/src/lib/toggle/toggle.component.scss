@@ -1,0 +1,45 @@
+@import '../scss/variables';
+
+$toggle-rect-size: 18px;
+$checkmark-size: 0;
+
+:host {
+  display: inline-flex;
+}
+
+.sfui-toggle-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  & > *:not(:last-child) {
+    margin-right: 5px;
+  }
+}
+
+.sfui-toggle-rect {
+  background: $white;
+  padding: 2px;
+  width: 40px;
+  border: 1px solid $grey-3;
+  box-sizing: border-box;
+  border-radius: 6px;
+
+  ::ng-deep sfui-icon[name="toggleOn"]{
+    display: flex;
+    place-content: flex-end;
+  }
+
+  ::ng-deep sfui-icon[name="toggleOff"]{
+    display: flex;
+    place-content: flex-start;
+  }
+}
+
+
+input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}

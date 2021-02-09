@@ -1,4 +1,4 @@
-import { TableOperations } from 'sfl-tools/table-operations';
+import { TableOperations } from 'sfl-tools/src/lib/table-operations';
 import { EventEmitter, OnInit, Output, ViewChild, Directive } from '@angular/core';
 import { CdkScrollable } from '@angular/cdk/overlay';
 import { ConfigurationState } from '../configuration-state';

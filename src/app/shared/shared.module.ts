@@ -47,11 +47,15 @@ import { ChannelLinkPipe } from './channel-link/channel-link.pipe';
 import { environment } from '../../../projects/channel-settings/src/environments/environment';
 import { HighlightPipe } from './highlight.pipe';
 import { CreateAccountComponent } from './create-account/create-account.component';
-import {SftSoloSearchModule} from 'sfl-tools/solo-search';
-import {SftCountryAutocompleteModule} from 'sfl-tools/country-autocomplete';
+import { SftSoloSearchModule } from 'sfl-tools/src/lib/solo-search';
+import { SftCountryAutocompleteModule } from 'sfl-tools/src/lib/country-autocomplete';
 import { TimeagoModule } from 'ngx-timeago';
-import {SflImageModule} from 'sfl-shared/image';
-import { AcceptTermsSnackbarComponent } from './create-account/accept-terms-snackbar/accept-terms-snackbar.component';
+import { SflImageModule } from 'sfl-shared/image';
+import { LoginContainerComponent } from './login-container/login-container.component';
+import { MenuTabsModule } from 'sfl-tools/src/lib/menu-tabs';
+import { ErrorAlertComponent } from './error-alert/error-alert.component';
+import { SfuiBannerModule, SfuiCheckboxModule, SfuiFormFieldModule, SfuiLabelModule } from 'sfui';
+import { ScrollHandlerDirective } from './scroll-handler.directive';
 
 @NgModule({
     imports: [
@@ -92,8 +96,13 @@ import { AcceptTermsSnackbarComponent } from './create-account/accept-terms-snac
             sflCountriesListLink: environment.countriesListLink,
         }),
         SflSharedModule,
+        MenuTabsModule,
         SftSoloSearchModule,
         TimeagoModule,
+        SfuiFormFieldModule,
+        SfuiLabelModule,
+        SfuiCheckboxModule,
+        SfuiBannerModule,
     ],
     exports: [
         // modules
@@ -147,11 +156,14 @@ import { AcceptTermsSnackbarComponent } from './create-account/accept-terms-snac
         // directives
         HasServerErrorDirective,
         MinNumberDirective,
+        ScrollHandlerDirective,
 
         // components
         CreateAccountComponent,
+        LoginContainerComponent,
         ScheduleCallIframeComponent,
         ValidationErrorsSnackbarComponent,
+        ErrorAlertComponent,
     ],
     declarations: [
         LargeNumberSuffixPipe,
@@ -169,7 +181,9 @@ import { AcceptTermsSnackbarComponent } from './create-account/accept-terms-snac
         ChannelLinkPipe,
         CreateAccountComponent,
         HighlightPipe,
-        AcceptTermsSnackbarComponent,
+        LoginContainerComponent,
+        ErrorAlertComponent,
+        ScrollHandlerDirective,
     ],
     entryComponents: [ValidationErrorsSnackbarComponent]
 })

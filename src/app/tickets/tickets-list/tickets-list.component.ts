@@ -15,7 +15,7 @@ import { FilterTicketsDialogComponent } from './filter-tickets-dialog/filter-tic
 import { TicketDetailsDialogComponent } from './ticket-details-dialog/ticket-details-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { TicketsDataService } from './tickets-data.service';
-import {TableOperations} from 'sfl-tools/table-operations';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 import { Title } from '@angular/platform-browser';
 
 @Component({

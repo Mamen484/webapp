@@ -1,0 +1,7 @@
+<div sfui-flex-layout="column" class="no-channels-message">
+    <sfl-image source="assets/images/no-channel-found.png"></sfl-image>
+    <div class="sfui-header-3 sfui-blue-darker" i18n>Sorry, we couldn’t find any channels matching
+        for {{query}}</div>
+    <div class="sfui-body-medium" i18n>Please try searching with another term</div>
+    <a sfui-button sfui-style="primary" (click)="clearSearch.emit()" i18n>Clear search</a>
+</div>

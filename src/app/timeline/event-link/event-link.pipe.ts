@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TimelineEvent } from '../../core/entities/timeline-event';
-import { TimelineEventName } from '../../core/entities/timeline-event-name.enum';
+import { TimelineEvent } from '../../../../projects/sfl-shared/lib/entities/timeline-event';
+import { TimelineEventName } from '../../../../projects/sfl-shared/lib/entities/timeline-event-name.enum';
 
 @Pipe({
     name: 'sfEventLink'

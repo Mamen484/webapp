@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { groupBy, toPairs } from 'lodash';
-import { StreamEventType, TimelineService } from '../core/services/timeline.service';
-import { TimelineEvent } from '../core/entities/timeline-event';
-import { Timeline } from '../core/entities/timeline';
-import { TimelineEventAction } from '../core/entities/timeline-event-action.enum';
+import { StreamEventType, TimelineService } from '../../../projects/sfl-shared/lib/services/timeline.service';
+import { TimelineEvent } from '../../../projects/sfl-shared/lib/entities/timeline-event';
+import { Timeline } from '../../../projects/sfl-shared/lib/entities/timeline';
+import { TimelineEventAction } from '../../../projects/sfl-shared/lib/entities/timeline-event-action.enum';
 import { PageLoadingService } from '../core/services/page-loading.service';
 import { Title } from '@angular/platform-browser';
 

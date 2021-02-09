@@ -1,0 +1,39 @@
+<ng-container *ngIf="statistics">
+    <div sfui-flex-layout="column" class="sfui-gap-16">
+        <div sfui-flex-layout>
+            <div class="sfui-header-3 sfui-grey-7" i18n sfui-flex>Activity</div>
+            <div i18n class="sfui-blue-darker sfui-body-medium time-filter-inactive">Last 30 days</div>
+        </div>
+        <div sfui-flex-layout>
+            <div sfui-card sfui-flex>
+                <div sfui-flex-layout class="activity-item">
+                    <sfui-icon class="big-icon" type="circled" color="blue" name="dollar"></sfui-icon>
+                    <div>
+                        <div class="sfui-header-2">{{ statistics.revenue | sfCurrency:statistics.currency }}</div>
+                        <div i18n class="sfui-body-medium sfui-blue-darker">Turnover</div>
+                    </div>
+                </div>
+            </div>
+            <div sfui-card sfui-flex>
+                <div sfui-flex-layout class="activity-item">
+                    <sfui-icon class="big-icon" type="circled" color="blue" name="boxes"></sfui-icon>
+                    <div>
+                        <div class="sfui-header-2">{{ statistics.clicks }}</div>
+                        <div i18n class="sfui-body-medium sfui-blue-darker">Clicks</div>
+                    </div>
+
+                </div>
+            </div>
+            <div sfui-card sfui-flex>
+                <div sfui-flex-layout class="activity-item">
+                    <sfui-icon type="circled" color="blue" name="receipt"></sfui-icon>
+                    <div>
+                        <div class="sfui-header-2">{{ordersNumber}}</div>
+                        <div i18n class="sfui-body-medium sfui-blue-darker">Orders</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

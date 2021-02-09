@@ -8,7 +8,7 @@ import {BillingStoreService} from '../billing-store.service';
 import {InvoiceOrder} from './invoice-order';
 import {Observable} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
-import {TableOperations} from 'sfl-tools/table-operations';
+import {TableOperations} from 'sfl-tools/src/lib/table-operations';
 
 @Component({
     selector: 'sfa-invoicing-details',

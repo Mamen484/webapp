@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { PagedResponse } from 'sfl-shared/entities';
+import { Channel, PagedResponse } from 'sfl-shared/entities';
 import { ConnectableObservable, Observable, of, zip } from 'rxjs';
 import { FeedCategory } from '../entities/feed-category';
 import { Store } from '@ngrx/store';
 import { AppState } from '../entities/app-state';
-import { flatMap, map, publishReplay, take } from 'rxjs/operators';
+import { map, mergeMap, publishReplay, take } from 'rxjs/operators';
 import { Feed } from '../entities/feed';
 import { ConfigurationState } from '../../setup/configuration-state';
 import { Autotag } from '../../setup/autotag';
 import { MappingCollection } from '../../setup/mapping-collection';
 import { FeedCategoryMapping } from '../../setup/feed-category-mapping';
 import { Product } from '../../setup/product-setup/entities/product';
+
+export interface Recommendation {
+
+    channelId: number,
+    rank: number,
+    level: string,
+    _embedded: {
+        channel: Channel,
+        feed?: Feed,
+    }
+}
 
 const MAX_API_LIMIT = '200';
 
@@ -73,7 +84,7 @@ export class FeedService {
         if (!this.feedCache.has(channelId) || forceFetch) {
             const observable = this.appStore.select('currentStore').pipe(
                 take(1),
-                flatMap((store) =>
+                mergeMap((store) =>
                     this.httpClient.get(`${environment.API_URL}/feed`, {
                         params: new HttpParams()
                             .set('catalogId', String(store.id))
@@ -86,6 +97,23 @@ export class FeedService {
             this.feedCache.set(channelId, observable);
         }
         return this.feedCache.get(channelId);
+    }
+
+    fetchRecommendations({limit}: { limit?: number }): Observable<PagedResponse<{ recommendation: Recommendation[] }>> {
+        let params = new HttpParams();
+
+        if (limit) {
+            params = params.set('limit', limit.toString());
+        }
+
+        return this.appStore.select('currentStore').pipe(
+            mergeMap(store =>
+                this.httpClient.get(
+                    `${environment.API_URL}/catalog/${store.id}/recommendation`,
+                    {params},
+                ) as Observable<PagedResponse<{ recommendation: Recommendation[] }>>
+            )
+        );
     }
 
     mapFeedCategory(feedId, catalogCategoryId: number, channelCategoryId: number) {
@@ -104,7 +132,7 @@ export class FeedService {
 
     copyCategoryAttributes(feedId: number, sourceCategoryId: number, targetCategoryId: number) {
         return this.copyCategoryAttributesForPage(feedId, sourceCategoryId, targetCategoryId, 1).pipe(
-            flatMap((response) => {
+            mergeMap((response) => {
                 if (response.pages > 1) {
                     const requests = [];
                     for (let i = 2; i <= response.pages; i++) {
@@ -119,7 +147,7 @@ export class FeedService {
     create(channelId) {
         return this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap((store) => this.httpClient.post(`${environment.API_URL}/feed`, {
+            mergeMap((store) => this.httpClient.post(`${environment.API_URL}/feed`, {
                 feed: {catalogId: store.id, channelId, country: store.country},
             }))
         ) as Observable<Feed>;
@@ -174,7 +202,7 @@ export class FeedService {
     fetchMappingCollection() {
         return this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap(store => {
+            mergeMap(store => {
                     const catalogId = store.id;
                     if (!this.mappingCache.has(catalogId)) {
                         const observable = this.httpClient.get(`${environment.API_URL}/catalog/${catalogId}/mapping`)
@@ -197,7 +225,7 @@ export class FeedService {
 
     protected copyCategoryAttributesForPage(feedId, sourceCategoryId, targetCategoryId, page) {
         return this.fetchAutotagByCategory(feedId, sourceCategoryId, {page}).pipe(
-            flatMap((response) => this.saveAttributes(feedId, targetCategoryId, response._embedded.autotag).pipe(
+            mergeMap((response) => this.saveAttributes(feedId, targetCategoryId, response._embedded.autotag).pipe(
                 map(() => response)
             ))
         );

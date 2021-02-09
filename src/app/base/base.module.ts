@@ -3,23 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { BaseComponent } from './base.component';
 import { AggregatedUserInfoResolveGuard } from '../core/guards/aggregated-user-info-resolve.guard';
-import { SidebarModule } from '../sidebar/sidebar.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
-import { ngxZendeskWebwidgetModule } from 'ngx-zendesk-webwidget';
-import { AppcuesComponent } from './appcues/appcues.component';
+import { SftSidebarModule } from 'sfl-tools/src/lib/sidebar';
+import { TrackingToolsModule } from 'tracking-tools';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
-        SidebarModule,
+        SftSidebarModule,
         RouterModule,
-        ngxZendeskWebwidgetModule,
+        TrackingToolsModule,
     ],
     declarations: [
         BaseComponent,
-        AppcuesComponent,
     ],
     providers: [
         AggregatedUserInfoResolveGuard

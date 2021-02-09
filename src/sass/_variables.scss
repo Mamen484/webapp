@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '../../projects/sfui/src/lib/scss/variables';
 
 $primary: mat-palette($mat-blue-grey, 700);
 $accent: mat-palette($mat-blue, 700);
@@ -11,15 +12,18 @@ $theme: mat-light-theme($primary, $accent, $warn);
 $black-54-opacity: rgba(black, 0.54);
 
 $toolbar-height: 0px;
-$left-sidebar-width: 75px;
+$left-sidebar-width: 224px;
+$collapsed-sidebar-width: 24px;
 
-// try to use a native css system-ui font, if it is not supported, use it's polyfill
-$font-family: system-ui, system-font;
+$font-family: 'IBM Plex Sans', sans-serif;
+
+$app-min-width: 1280px;
 
 $config: mat-typography-config(
         $font-family: $font-family,
         $input: mat-typography-level(14px, 1.25, 400)
 );
+
 
 $mobile-tabs-background: #385370;
 

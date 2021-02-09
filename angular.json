@@ -33,7 +33,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -159,7 +158,7 @@
       "prefix": "sfl",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/sfl-shared/tsconfig.lib.json",
             "project": "projects/sfl-shared/ng-package.json"
@@ -229,7 +228,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -362,7 +360,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -445,11 +442,11 @@
     "sfl-tools": {
       "projectType": "library",
       "root": "projects/sfl-tools",
-      "sourceRoot": "projects/sfl-tools",
+      "sourceRoot": "projects/sfl-tools/src",
       "prefix": "sft",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "projects/sfl-tools/tsconfig.lib.json",
             "project": "projects/sfl-tools/ng-package.json"
@@ -465,7 +462,8 @@
           "options": {
             "main": "projects/sfl-tools/test.ts",
             "tsConfig": "projects/sfl-tools/tsconfig.spec.json",
-            "karmaConfig": "projects/sfl-tools/karma.conf.js"
+            "karmaConfig": "projects/sfl-tools/karma.conf.js",
+            "codeCoverageExclude": ["projects/sfl-tools/src/lib/menu-tabs/menu-tabs.component.ts"]
           }
         },
         "lint": {
@@ -474,6 +472,366 @@
             "tsConfig": [
               "projects/sfl-tools/tsconfig.lib.json",
               "projects/sfl-tools/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "sf-components": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/sf-components",
+      "sourceRoot": "projects/sf-components/src",
+      "prefix": "sfc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/sf-components",
+            "index": "projects/sf-components/src/index.html",
+            "main": "projects/sf-components/src/main.ts",
+            "polyfills": "projects/sf-components/src/polyfills.ts",
+            "tsConfig": "projects/sf-components/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/sf-components/src/favicon.ico",
+              "projects/sf-components/src/assets"
+            ],
+            "styles": [
+              "projects/sf-components/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/sf-components/src/environments/environment.ts",
+                  "with": "projects/sf-components/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "localize": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/sf-components/src/environments/environment.ts",
+                  "with": "projects/sf-components/src/environments/environment.hmr.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sf-components:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sf-components:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "sf-components:build:hmr"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sf-components:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sf-components/src/test.ts",
+            "polyfills": "projects/sf-components/src/polyfills.ts",
+            "tsConfig": "projects/sf-components/tsconfig.spec.json",
+            "karmaConfig": "projects/sf-components/karma.conf.js",
+            "assets": [
+              "projects/sf-components/src/favicon.ico",
+              "projects/sf-components/src/assets"
+            ],
+            "styles": [
+              "projects/sf-components/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sf-components/tsconfig.app.json",
+              "projects/sf-components/tsconfig.spec.json",
+              "projects/sf-components/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/sf-components/e2e/protractor.conf.js",
+            "devServerTarget": "sf-components:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sf-components:serve:production"
+            }
+          }
+        }
+      },
+      "i18n": {
+        "sourceLocale": {
+          "code": "en-ng"
+        },
+        "locales": {
+          "en": {
+            "translation": "src/locale/messages.en.xlf"
+          },
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf"
+          },
+          "es": {
+            "translation": "src/locale/messages.es.xlf"
+          },
+          "pt": {
+            "translation": "src/locale/messages.pt.xlf"
+          },
+          "de": {
+            "translation": "src/locale/messages.de.xlf"
+          },
+          "it": {
+            "translation": "src/locale/messages.it.xlf"
+          }
+        }
+      }
+    },
+    "sfui": {
+      "projectType": "library",
+      "root": "projects/sfui",
+      "sourceRoot": "projects/sfui/src",
+      "prefix": "sfui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/sfui/tsconfig.lib.json",
+            "project": "projects/sfui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/sfui/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sfui/src/test.ts",
+            "tsConfig": "projects/sfui/tsconfig.spec.json",
+            "karmaConfig": "projects/sfui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sfui/tsconfig.lib.json",
+              "projects/sfui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "sfui-web-components": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/sfui-web-components",
+      "sourceRoot": "projects/sfui-web-components/src",
+      "prefix": "sfui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/sfui-web-components",
+            "index": "projects/sfui-web-components/src/index.html",
+            "main": "projects/sfui-web-components/src/main.ts",
+            "polyfills": "projects/sfui-web-components/src/polyfills.ts",
+            "tsConfig": "projects/sfui-web-components/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/sfui-web-components/src/favicon.ico",
+              "projects/sfui-web-components/src/assets"
+            ],
+            "styles": [
+              "projects/sfui-web-components/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/sfui-web-components/src/environments/environment.ts",
+                  "with": "projects/sfui-web-components/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "sfui-web-components:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "sfui-web-components:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "sfui-web-components:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/sfui-web-components/src/test.ts",
+            "polyfills": "projects/sfui-web-components/src/polyfills.ts",
+            "tsConfig": "projects/sfui-web-components/tsconfig.spec.json",
+            "karmaConfig": "projects/sfui-web-components/karma.conf.js",
+            "assets": [
+              "projects/sfui-web-components/src/favicon.ico",
+              "projects/sfui-web-components/src/assets"
+            ],
+            "styles": [
+              "projects/sfui-web-components/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/sfui-web-components/tsconfig.app.json",
+              "projects/sfui-web-components/tsconfig.spec.json",
+              "projects/sfui-web-components/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/sfui-web-components/e2e/protractor.conf.js",
+            "devServerTarget": "sfui-web-components:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "sfui-web-components:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "tracking-tools": {
+      "projectType": "library",
+      "root": "projects/tracking-tools",
+      "sourceRoot": "projects/tracking-tools/src",
+      "prefix": "sfc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/tracking-tools/tsconfig.lib.json",
+            "project": "projects/tracking-tools/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/tracking-tools/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/tracking-tools/src/test.ts",
+            "tsConfig": "projects/tracking-tools/tsconfig.spec.json",
+            "karmaConfig": "projects/tracking-tools/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/tracking-tools/tsconfig.lib.json",
+              "projects/tracking-tools/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

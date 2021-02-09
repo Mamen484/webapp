@@ -1,8 +1,20 @@
-@import '../../../sass/mixins/form-page';
+@import '../../../sass/mixins/auth-title';
 
-@include form-page();
+@include auth-title();
 
 a.terms-link {
   color: mat-color($accent);
   text-decoration: none;
+}
+
+.form-actions {
+  margin-top: 20px;
+}
+
+.create-form {
+  margin-top: 40px;
+}
+
+sf-error-alert:first-of-type {
+  margin-top: 20px;
 }

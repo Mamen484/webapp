@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
 import { SquarespaceStore } from 'sfl-shared/entities';
 import { SquarespaceService } from '../squarespace.service';
-import { catchError, flatMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { SflAuthService } from 'sfl-shared/services';
 
 @Injectable({
@@ -19,9 +19,9 @@ export class ResolveStoreGuard implements Resolve<SquarespaceStore> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<SquarespaceStore> {
         return this.service.getStore(route.queryParamMap.get('code')).pipe(
-            flatMap(store => {
+            mergeMap(store => {
                 if (store.storeId) {
-                    return this.service.patchStore(store).pipe(flatMap(
+                    return this.service.patchStore(store).pipe(mergeMap(
                         () => {
                             this.authService.loginByToken(store.sfToken);
                             this.router.navigate(['/'], {queryParams: {store: store.storeId}});

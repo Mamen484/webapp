@@ -1,0 +1,128 @@
+<sfl-sidebar-container bgColor="#06284B" menuHeight="0px"
+                       width="var(--sfui-sidebar-width)"
+                       [class.sidebar-collapsed]="!contentShown"
+                       [class.sidebar-expanded]="contentShown && animationEnabled"
+                       [position]="position"
+>
+    <button sfui-icon-button *ngIf="contentShown" (click)="hideSidebar()" class="hide-sidebar-button">
+        <sfui-icon name="chevronLeft" color="dark-grey"></sfui-icon>
+    </button>
+    <button sfui-icon-button *ngIf="!contentShown" (click)="showSidebar()" class="show-sidebar-button">
+        <sfui-icon name="chevronRight" color="dark-grey"></sfui-icon>
+    </button>
+    <ul fxLayout="column" fxLayoutAlign="start start" class="sf-nav-list">
+        <li class="logo">
+            <div *ngTemplateOutlet="linkRef; context: {link: '/', content: logoLink}"></div>
+            <ng-template #logoLink>
+                <a class="nav-link home">
+                    <sft-logo></sft-logo>
+                </a>
+            </ng-template>
+        </li>
+        <li>
+            <div class="account-name" fxLayout="row" fxLayoutAlign="start center"
+                 [sfuiDropdownTriggerFor]="accountMenu">
+                <div class="account-icon">
+                    <sfui-icon name="account"></sfui-icon>
+                </div>
+                <div fxFlex class="current-account-name sfui-body-medium-bold">{{ currentStore.name }}</div>
+                <sfui-icon name="arrowDown"></sfui-icon>
+
+            </div>
+        </li>
+        <li [class.active]="currentRoute.menuName === 'homepage'">
+            <div *ngTemplateOutlet="linkRef; context: {link: '/', content: homeLink}"></div>
+            <ng-template #homeLink>
+                <div class="nav-item">
+                    <sfui-icon [color]="currentRoute.menuName === 'homepage' ? 'blue' : 'light-grey'"
+                               name="dashboard"></sfui-icon>
+                    <span i18n class="sfui-label-medium">Dashboard</span>
+                </div>
+            </ng-template>
+        </li>
+        <li fxLayout="row" fxLayoutAlign="space-between baseline"
+            [class.active]="currentRoute.menuName === 'channels'">
+            <div *ngTemplateOutlet="linkRef; context: {link: '/channels', content: channelsLink}" fxFlex></div>
+            <ng-template #channelsLink>
+                <div class="nav-item">
+                    <sfui-icon [color]="currentRoute.menuName === 'channels' ? 'blue' : 'light-grey'"
+                               name="channels"></sfui-icon>
+                    <div class="sfui-label-medium" i18n fxFlex>Channels</div>
+                </div>
+            </ng-template>
+        </li>
+        <li [class.active]="currentRoute.menuName === 'orders'">
+            <div *ngTemplateOutlet="linkRef; context: {link: '/orders', content: ordersLink}"
+                 fxFlex></div>
+            <ng-template #ordersLink>
+                <div class="nav-item">
+                    <sfui-icon [color]="currentRoute.menuName === 'orders' ? 'blue' : 'light-grey'"
+                               name="orders"></sfui-icon>
+                    <div class="sfui-label-medium" i18n fxFlex>Orders</div>
+                    <div class="notifications-badge"
+                         *ngIf="currentStore?._embedded.order.newCount">{{currentStore._embedded.order.newCount}}</div>
+                </div>
+            </ng-template>
+
+        </li>
+        <li fxLayout="row" fxLayoutAlign="space-between baseline"
+            [class.active]="currentRoute.menuName === 'catalog'">
+            <a sflLegacyLink [storeId]="currentStore.id" path="/tools/infos" class="nav-item">
+                <sfui-icon [color]="currentRoute.menuName === 'catalog' ? 'blue' : 'light-grey'"
+                           name="catalog"></sfui-icon>
+                <span i18n class="sfui-label-medium">Catalog</span>
+            </a>
+        </li>
+
+        <li fxLayout="row" fxLayoutAlign="space-between baseline"
+            [class.active]="currentRoute.menuName === 'rules'">
+            <a sflLegacyLink [storeId]="currentStore.id" path="/rules/transformations" class="nav-item">
+                <sfui-icon [color]="currentRoute.menuName === 'rules' ? 'blue' : 'light-grey'" name="rules"></sfui-icon>
+                <span class="sfui-label-medium" i18n>Rules</span>
+            </a>
+        </li>
+        <li [class.active]="currentRoute.menuName === 'analytics'">
+            <a sflLegacyLink [storeId]="currentStore.id" path="/statistics" class="nav-item">
+                <sfui-icon [color]="currentRoute.menuName === 'analytics' ? 'blue' : 'light-grey'"
+                           name="statistics"></sfui-icon>
+                <span class="sfui-label-medium" i18n>Analytics</span>
+            </a>
+        </li>
+        <li fxFlex></li>
+        <li>
+            <a [href]="linkToSupportCenter" target="_blank" class="nav-item">
+                <sfui-icon color="light-grey" name="help"></sfui-icon>
+                <span i18n class="sfui-label-medium">Support</span>
+            </a>
+        </li>
+        <li [class.active]="currentRoute.menuName === 'timeline'">
+            <a class="timeline-link nav-item" (click)="sidebarService.navigateToTimeline()" fxFlex
+               fxLayout="row" fxLayoutAlign="space-between center">
+                <sfui-icon [color]="currentRoute.menuName === 'timeline' ? 'blue' : 'light-grey'"
+                           name="timeline"></sfui-icon>
+                <span i18n class="sfui-label-medium" fxFlex>Timeline</span>
+                <div class="notifications-badge" *ngIf="newEvents">{{newEvents}}</div>
+            </a>
+
+        </li>
+    </ul>
+</sfl-sidebar-container>
+<sfui-dropdown-list #accountMenu class="account-menu">
+    <div slot="sfui-dropdown-label" class="sfui-label-small" i18n>Accounts</div>
+    <a *ngFor="let store of stores" sfui-dropdown-item [href]="store.id | storeLink | async" fxLayout="row"
+       fxLayoutGap="10px" fxLayoutAlign="center center">
+        <div class="store-name sfui-body-medium" fxFlex
+             [class.active]="store.id === currentStore.id"
+             [class.sfui-body-medium-bold]="store.id === currentStore.id">{{ store.name }}</div>
+        <sfui-icon name="successCircled" type="status" *ngIf="store.id === currentStore.id"></sfui-icon>
+    </a>
+    <mat-divider></mat-divider>
+    <a sflLegacyLink class="sfui-body-medium" [storeId]="currentStore.id" path="/marketplaces/globalparameters"
+       sfui-dropdown-item
+       i18n>Settings</a>
+    <a sflLegacyLink class="sfui-body-medium" [storeId]="currentStore.id" path="/billing" sfui-dropdown-item i18n>Billing</a>
+    <mat-divider></mat-divider>
+    <a sflLegacyLink [storeId]="currentStore.id" path="/index/logout" (click)="logout()" sfui-dropdown-item
+       class="signout-button sfui-body-medium" i18n>Sign out</a>
+</sfui-dropdown-list>
+

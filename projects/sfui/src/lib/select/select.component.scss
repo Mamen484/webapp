@@ -1,0 +1,86 @@
+@import '../scss/form-field';
+
+.sfui-select {
+  @include form-field();
+  height: 40px;
+  user-select: none;
+}
+
+.sfui-select-value {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  color: #3b3b3b;
+  cursor: pointer;
+  :host.sfui-disabled & {
+    cursor: initial;
+  }
+}
+
+.arrow {
+  position: relative;
+  height: 8px;
+  width: 8px;
+}
+
+.arrow::before, .arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 0.15rem;
+  height: 100%;
+  transition: all 0.5s;
+}
+
+.arrow::before {
+  left: -2.5px;
+  transform: rotate(-45deg);
+  background-color: #A4B5C1;
+}
+
+.arrow::after {
+  left: 2.5px;
+  transform: rotate(45deg);
+  background-color: #A4B5C1;
+}
+
+.sfui-options {
+  user-select: none;
+  max-height: 500px;
+  overflow: auto;
+  & > div {
+    padding: 8px;
+
+    &:hover {
+      background: #F9FBFD;
+    }
+  }
+
+  cursor: pointer;
+  margin-top: 10px;
+  border: 1px solid #E7EEF7;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 9px 36px rgba(111, 124, 148, 0.14), 0 2.01027px 8.04107px rgba(111, 124, 148, 0.083455), 0 0.598509px 2.39404px rgba(111, 124, 148, 0.056545);
+
+  display: none;
+  position: absolute;
+  z-index: 1000;
+}
+
+
+.sfui-backdrop {
+  position: fixed;
+  z-index: 1000;
+  display: none;
+  background-color: transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.visible {
+  display: block;
+}

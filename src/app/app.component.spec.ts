@@ -2,7 +2,7 @@ import { AppComponent } from './app.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { SflAuthService } from 'sfl-shared/services';
+import { SflAuthService, SflLocaleIdService } from 'sfl-shared/services';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('AppComponent', () => {

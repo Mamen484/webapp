@@ -1,0 +1,7 @@
+@import '../variables';
+
+@mixin auth-title() {
+  .auth-title {
+    margin-top: 8px;
+  }
+}

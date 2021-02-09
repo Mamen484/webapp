@@ -1,0 +1,52 @@
+@import '../../../../sass/variables';
+
+.select-label {
+  color: $grey-6;
+}
+
+.country-select {
+  ::ng-deep {
+    .sfui-option {
+      display: flex;
+      align-items: center;
+      text-transform: capitalize;
+      & > *:not(:last-child) {
+        margin-right: 16px;
+      }
+    }
+  }
+}
+
+.filters[hidden] {
+  display: none;
+}
+
+.loading-channel-placeholder {
+}
+
+.search-channel-field {
+  flex: 1 1 100%;
+}
+
+.no-channel-placeholder {
+  opacity: 1;
+  animation: 1s infinite linear blinkPlaceholder;
+}
+
+.filters-button {
+  flex: 0 0 auto;
+}
+
+@keyframes blinkPlaceholder {
+  from {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

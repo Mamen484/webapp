@@ -1,0 +1,308 @@
+@import '../../../../../src/sass/variables';
+
+$sidebar-top-bottom-margin: 16px;
+
+$active-color: #68A4FF;
+$notifications-color: #EB4B4B;
+
+$sidebar-width: '224px';
+$sidebar-width-collapsed: '24px';
+$hide-show-button-width: '30px';
+
+.sf-nav-list {
+
+  padding: 16px 10px 0;
+  height: calc(100% - 2 * #{$sidebar-top-bottom-margin});
+  margin: 16px 0 0 0; //override bootstrap defaults on the legacy
+  user-select: none;
+
+  li {
+    text-align: left;
+    width: 100%;
+    list-style: none;
+    margin-bottom: 10px;
+    line-height: initial;
+
+    &.logo {
+      margin-bottom: 40px;
+      margin-left: 10px;
+    }
+
+    &:last-child {
+      margin-bottom: 12px;
+    }
+  }
+
+  ::ng-deep {
+    a {
+      text-decoration: none;
+      color: white;
+    }
+  }
+
+  li.active {
+
+    .active, ::ng-deep .sfui-label-medium {
+      color: $active-color;
+    }
+
+    ::ng-deep [sfui-trigger], ::ng-deep .sfui-expandable--trigger-icon, ::ng-deep .nav-item {
+    }
+  }
+
+  sfui-icon {
+    vertical-align: middle;
+  }
+}
+
+.notifications-badge {
+  padding: 2px 6px;
+  height: fit-content;
+  background: $notifications-color;
+  border-radius: 10px;
+  color: white;
+  font-size: 10px;
+}
+
+.timeline-link {
+  cursor: pointer;
+}
+
+.menu-label {
+  color: #d4dce4;
+}
+
+sfui-dropdown-list {
+
+  .signout-button {
+    color: $red;
+  }
+}
+
+.sfui-body-medium {
+  line-height: 18px;
+}
+
+$icon-size: 24px;
+.account-icon {
+
+  background-color: $blue-light;
+  width: $icon-size;
+  height: $icon-size;
+  border-radius: $icon-size;
+  margin-right: 10px;
+
+  sfui-icon {
+    margin-right: 0;
+
+    ::ng-deep {
+      svg {
+        width: $icon-size;
+        height: $icon-size;
+      }
+    }
+  }
+}
+
+.account-name {
+  color: white;
+  margin-bottom: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  .current-account-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.stores-container {
+  max-height: 480px; // 10 heights of a mat-menu-item
+  overflow: auto;
+
+  .store-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.store-name {
+  white-space: nowrap;
+}
+
+sfui-icon[name="arrowDown"] {
+  margin-left: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+
+  & > *:not(:last-child) {
+    margin-right: 16px;
+  }
+
+  box-sizing: border-box;
+  height: 40px;
+}
+
+[sfui-expandable-item] {
+  padding: 10px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background: $grey-8;
+    border-radius: 4px;
+  }
+}
+
+::ng-deep .sfui-expandable--trigger, .nav-item {
+  padding: 10px;
+  width: 100%;
+
+  &:hover {
+    background: $grey-8;
+    border-radius: 4px;
+  }
+}
+
+.hide-sidebar-button, .show-sidebar-button {
+  position: fixed;
+  top: 32px;
+  z-index: 20;
+  width: 30px;
+  height: 30px;
+}
+
+.hide-sidebar-button, .show-sidebar-button {
+  left: calc(#{$sidebar-width} - #{$hide-show-button-width} / 2);
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid $grey-5;
+
+  sfui-icon {
+    width: 12px;
+    padding-left: 2px;
+  }
+
+}
+
+.sidebar-collapsed {
+  .sf-nav-list {
+    animation: 200ms linear hideMenu forwards;
+  }
+
+  ::ng-deep {
+    mat-sidenav {
+      animation: 200ms 200ms linear collapseMenu forwards;
+    }
+
+    mat-sidenav-content {
+      animation: 200ms 200ms linear collapseContent forwards;
+    }
+  }
+
+  .show-sidebar-button {
+    animation: 200ms 200ms linear moveCollapseButton forwards;
+  }
+}
+
+
+.sidebar-expanded {
+  .sf-nav-list {
+    opacity: 0;
+    animation: 200ms 200ms linear showMenu forwards;
+  }
+
+  ::ng-deep {
+    mat-sidenav {
+      animation: 200ms linear expandMenu forwards;
+    }
+
+    mat-sidenav-content {
+      animation: 200ms linear expandContent forwards;
+    }
+  }
+
+  .hide-sidebar-button {
+    animation: 200ms linear moveExpandButton forwards;
+  }
+}
+
+
+@keyframes hideMenu {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes collapseMenu {
+  0% {
+    min-width: var(--sfui-sidebar-width);
+  }
+  100% {
+    min-width: var(--sfui-sidebar-width-collapsed);
+  }
+}
+
+@keyframes collapseContent {
+  0% {
+    margin-left: var(--sfui-sidebar-width);
+  }
+  100% {
+    margin-left: var(--sfui-sidebar-width-collapsed);
+  }
+}
+
+@keyframes moveCollapseButton {
+  0% {
+    left: calc(var(--sfui-sidebar-width) - #{$hide-show-button-width} / 2);
+  }
+
+  100% {
+    left: calc(var(--sfui-sidebar-width-collapsed) - #{$hide-show-button-width} / 2);
+  }
+}
+
+
+@keyframes showMenu {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes expandMenu {
+  0% {
+    min-width: var(--sfui-sidebar-width-collapsed);
+  }
+  100% {
+    min-width: var(--sfui-sidebar-width);
+  }
+}
+
+@keyframes expandContent {
+  0% {
+    margin-left: var(--sfui-sidebar-width-collapsed);
+  }
+  100% {
+    margin-left: var(--sfui-sidebar-width);
+  }
+}
+
+@keyframes moveExpandButton {
+  0% {
+    left: calc(var(--sfui-sidebar-width-collapsed) - #{$hide-show-button-width} / 2);
+  }
+
+  100% {
+    left: calc(var(--sfui-sidebar-width) - #{$hide-show-button-width} / 2);
+  }
+}

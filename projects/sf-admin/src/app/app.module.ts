@@ -17,7 +17,9 @@ import { BillingAuthInterceptor } from './billing/billing-auth-interceptor.servi
 import { SfaSharedModule } from './shared/shared.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminSidebarModule } from './admin-sidebar/admin-sidebar.module';
-import {SftCountrySelectModule} from 'sfl-tools/country-select';
+import {SftCountrySelectModule} from 'sfl-tools/src/lib/country-select';
+import { StoreModule } from '@ngrx/store';
+import { currentRouteReducer, currentStoreReducer, userInfoReducer } from 'sfl-shared/reducers';
 
 @NgModule({
     declarations: [
@@ -51,6 +53,9 @@ import {SftCountrySelectModule} from 'sfl-tools/country-select';
 
         // keep this module in the bottom as it contains a wildcard route
         SflErrorPagesModule,
+        StoreModule.forRoot({
+            currentStore: currentStoreReducer,
+        }),
     ],
     providers: [
         {provide: HTTP_INTERCEPTORS, useClass: BillingAuthInterceptor, multi: true},
