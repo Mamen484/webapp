@@ -50,7 +50,7 @@ export class SftSidebarComponent implements OnInit, OnDestroy {
             this.currentRoute = currentRoute;
         });
         this.appStore.select('currentStore').subscribe(currentStore => this.currentStore = currentStore);
-        this.userService.fetchAggregatedInfo().subscribe(info => this.stores = info._embedded.store.slice(0, 5));
+        this.userService.fetchAggregatedInfo().subscribe(info => this.stores = info._embedded.store);
     }
 
 

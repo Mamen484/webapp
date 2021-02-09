@@ -104,7 +104,7 @@ describe('SidebarComponent', () => {
         expect(component.currentRoute).toEqual({menuName: 'orders', pageName: 'orders'});
     });
 
-    it('should fetch 5 first stores', () => {
+    it('should fetch all stores', () => {
         appStore.select.and.callFake(event => event === 'currentRoute' ? of({
             menuName: 'orders',
             pageName: 'orders'
@@ -124,8 +124,8 @@ describe('SidebarComponent', () => {
             }
         }));
         fixture.detectChanges();
-        expect(component.stores.length).toBe(5);
-        expect(component.stores[4]).toEqual(<any>{id: 5, name: 'test5'});
+        expect(component.stores.length).toBe(8);
+        expect(component.stores[7]).toEqual(<any>{id: 8, name: 'test8'});
     });
 
     it('should hide sidebar on hideSidebar() call', () => {
