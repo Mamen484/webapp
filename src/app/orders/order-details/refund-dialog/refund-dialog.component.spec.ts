@@ -5,7 +5,6 @@ import { Order } from '../../../core/entities/orders/order';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OrdersService } from '../../../core/services/orders.service';
-import { SelectItemsDialogComponent } from '../select-items-dialog/select-items-dialog.component';
 import { EMPTY, of, throwError } from 'rxjs';
 import { OrderStatusChangedSnackbarComponent } from '../../order-status-changed-snackbar/order-status-changed-snackbar.component';
 import { OrderNotifyAction } from '../../../core/entities/orders/order-notify-action.enum';
@@ -53,16 +52,20 @@ describe('RefundDialogComponent', () => {
         expect(component.order).toEqual(<any>{});
     });
 
-    it('should show SelectItems dialog if no items nor shipping refund selected on refund() call', () => {
+    it('should NOT request an order refund if no items nor shipping refund selected on refund() call and refund mode is selected items', () => {
         component.itemsTable = <any>{selection: {selected: [], refundShipping: false}};
-        component.refund();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(SelectItemsDialogComponent, new SuccessSnackbarConfig());
-    });
-
-    it('should NOT request an order refund if no items nor shipping refund selected on refund() call', () => {
-        component.itemsTable = <any>{selection: {selected: [], refundShipping: false}};
+        component.refundMode = 'selected';
         component.refund();
         expect(ordersService.notifyRefund).not.toHaveBeenCalled();
+    });
+
+    it('should request an order refund if no items nor shipping refund selected on refund() call and refund mode is full', () => {
+        component.itemsTable = <any>{selection: {selected: [], refundShipping: false}};
+        component.order = <any>{reference: '4321', _embedded: {channel: {name: 'Laredoute'}}};
+        ordersService.notifyRefund.and.returnValue(EMPTY);
+        component.refundMode = 'full';
+        component.refund();
+        expect(ordersService.notifyRefund).toHaveBeenCalled();
     });
 
     it('should request an order refund if at least one item is selected on refund() call', () => {
@@ -99,7 +102,12 @@ describe('RefundDialogComponent', () => {
         component.order = <any>{reference: '4321', _embedded: {channel: {name: 'Laredoute'}}};
         ordersService.notifyRefund.and.returnValue(of({}));
         component.refund();
-        expect(snackBar.openFromComponent).toHaveBeenCalledWith(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: 1, action: OrderNotifyAction.refund}}));
+        expect(snackBar.openFromComponent).toHaveBeenCalledWith(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({
+            data: {
+                ordersNumber: 1,
+                action: OrderNotifyAction.refund
+            }
+        }));
         expect(matDialogRef.close).toHaveBeenCalled();
     });
 

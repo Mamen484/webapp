@@ -42,7 +42,7 @@ export class RefundDialogComponent implements OnInit {
     }
 
     refund() {
-        if (!this.itemsTable.selection.selected.length && !this.itemsTable.refundShipping) {
+        if (!this.itemsTable.selection.selected.length && !this.itemsTable.refundShipping && this.refundMode === 'selected' ) {
             this.snackBar.openFromComponent(SelectItemsDialogComponent, new SuccessSnackbarConfig());
             return;
         }
