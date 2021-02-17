@@ -1,7 +1,7 @@
 version: "3"
 services:
   webapp:
-    image: 813931216550.dkr.ecr.eu-west-1.amazonaws.com/webapp:dev
+    image: ghcr.io/shoppingflux/webapp:2.0
     networks:
     - sf_network
     ports:
