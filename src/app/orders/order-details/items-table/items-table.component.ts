@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Order } from '../../../core/entities/orders/order';
 import { OrderAcknowledgment } from '../../../core/entities/orders/order-acknowledgment.enum';
@@ -84,7 +83,7 @@ export class ItemsTableComponent implements OnInit {
     }
 
     protected checkIfQuantityEditable() {
-        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute;
+        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute || this.order._embedded.channel.engine === 'zalando';
     }
 
     protected determineSku(item: OrderItem) {

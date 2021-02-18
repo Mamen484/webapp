@@ -97,7 +97,7 @@ export class ActionButtonsComponent implements OnInit {
     }
 
     protected showSuccess(action) {
-        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({ data: {ordersNumber: 1, action}}));
+        this.snackBar.openFromComponent(OrderStatusChangedSnackbarComponent, new SuccessSnackbarConfig({data: {ordersNumber: 1, action}}));
     }
 
     protected checkIfRefundable() {
@@ -106,6 +106,8 @@ export class ActionButtonsComponent implements OnInit {
                 (this.refundableChannels.includes(this.order._embedded.channel.id) || this.refundableEngines.includes(channel.engine))
                 && !this.allItemsRefunded()
                 && (this.order.status === OrderStatus.shipped || this.order.status === OrderStatus.partially_refunded);
+
+            this.order._embedded.channel.engine = channel.engine;
         });
 
     }
