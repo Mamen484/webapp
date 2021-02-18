@@ -26,6 +26,6 @@ RUN npx ng build sf-admin --configuration production
 #Step 3: copy files of compiled webapp to the nginx served folder and serve files with nginx
 FROM nginx:1.13
 
-COPY --from=base /app/dist/ /usr/share/nginx/html
+COPY --from=base /app/dist/sf-admin /usr/share/nginx/html
 
 COPY ./nginx-admin.conf /etc/nginx/conf.d/default.conf

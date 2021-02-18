@@ -25,7 +25,7 @@ export class SftCountrySelectComponent implements ControlValueAccessor, OnInit {
     allowedCodes = [
         'at', 'au', 'be', 'bg', 'br', 'ca', 'ch', 'cz', 'de', 'dk', 'ee', 'es',
         'fi', 'fr', 'gr', 'hr', 'hu', 'ie', 'in', 'it', 'jp', 'lt', 'lv', 'mx',
-        'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'se', 'si', 'sk', 'sl', 'th', 'tr', 'uk', 'us'];
+        'nl', 'no', 'pl', 'pt', 'ro', 'ru', 'se', 'si', 'sk', 'sl', 'th', 'tr', 'gb', 'us'];
     countries: Country[] = [];
     onChange: (value: any) => void;
     onTouched: () => void;

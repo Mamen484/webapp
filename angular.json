@@ -99,8 +99,8 @@
       },
       "i18n": {
         "sourceLocale": {
-          "code": "en-ng",
-          "baseHref": "/v3/en-ng/"
+          "code": "en-US",
+          "baseHref": "/v3/en-US/"
         },
         "locales": {
           "en": {

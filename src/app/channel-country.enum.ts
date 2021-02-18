@@ -33,6 +33,6 @@ export enum ChannelCountry {
     sl = 'Sierra Leone',
     th = 'Thailand',
     tr = 'Turkey',
-    uk = 'United Kingdom',
+    en = 'United Kingdom',
     us = 'United States',
 }

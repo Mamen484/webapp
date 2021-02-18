@@ -25,6 +25,6 @@ export const googleTaxonomy = {
     SE: 233,
     TH: 105,
     TR: 232,
-    UK: 111,
+    GB: 111,
     US: 102
 };

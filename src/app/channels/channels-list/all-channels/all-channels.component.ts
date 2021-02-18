@@ -16,7 +16,7 @@ const displayedCountries = [
     'be',
     'br',
     'fr',
-    'uk',
+    'gb',
     'de',
     'es',
     'ca',

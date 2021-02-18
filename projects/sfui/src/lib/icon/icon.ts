@@ -729,6 +729,19 @@ export const FlagIcon = {
 </clipPath>
 </defs>
 </svg>`,
+    gb: `<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0)">
+<path d="M-4.01601 0H20.048V12.032H-4.01601V0Z" fill="#012169"/>
+<path d="M-4.01601 0V1.3442L17.3572 12.032H20.048V10.6878L-1.32526 0H-4.01601ZM20.048 0V1.3442L-1.32526 12.032H-4.01601V10.6878L17.3572 0H20.048Z" fill="white"/>
+<path d="M6.01144 0V12.032H10.0205V0H6.01144ZM-4.01601 4.01145V8.02055H20.048V4.01145H-4.01601Z" fill="white"/>
+<path d="M-4.01601 4.8128V7.2192H20.048V4.8128H-4.01601ZM6.81279 0V12.032H9.21919V0H6.81279ZM-4.01601 12.032L4.00454 8.02055H5.79994L-2.22296 12.032H-4.01601ZM-4.01601 0L4.00454 4.01145H2.21149L-4.01601 0.8977V0ZM10.2344 4.01145L18.2549 0H20.048L12.0274 4.01145H10.2344ZM20.048 12.032L12.0274 8.02055H13.8205L20.048 11.1343V12.032Z" fill="#C8102E"/>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="16" height="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>`,
     de: `<svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0)">
 <path d="M0 8H16V12H0V8Z" fill="#FFCE00"/>
