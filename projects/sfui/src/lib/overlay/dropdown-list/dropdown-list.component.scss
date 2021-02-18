@@ -10,20 +10,19 @@
   animation: 100ms ease-out dropdown-show;
   flex-direction: column;
   display: flex;
-  max-height: 500px;
   overflow: auto;
 
   &.hiding {
     animation: 75ms ease-in dropdown-hide;
   }
 
-  ::slotted([slot="sfui-dropdown-label"]) {
+  [sfui-dropdown-label] {
     color: $grey-6;
     padding: 8px 16px 4px;
     cursor: initial;
   }
 
-  ::slotted([sfui-dropdown-item]){
+  [sfui-dropdown-item] {
     line-height: 16px;
     padding: 11px 16px;
     color: $dark;
@@ -32,11 +31,11 @@
     height: 40px;
     box-sizing: border-box;
 
+    &:hover {
+      background-color: $grey-2;
+    }
   }
 
-  ::slotted([sfui-dropdown-item]:hover){
-    background-color: $grey-2;
-  }
 
   cursor: pointer;
   border: 1px solid $grey-5;

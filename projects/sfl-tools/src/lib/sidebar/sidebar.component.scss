@@ -1,3 +1,5 @@
+@use '../../../../sfui/src/lib/colors/colors';
+@use '../../../../sfui/src/lib/typography/typography';
 @import '../../../../../src/sass/variables';
 
 $sidebar-top-bottom-margin: 16px;
@@ -72,11 +74,8 @@ $hide-show-button-width: '30px';
   color: #d4dce4;
 }
 
-sfui-dropdown-list {
-
-  .signout-button {
-    color: $red;
-  }
+.signout-button[sfui-dropdown-item] {
+  color: $red;
 }
 
 .sfui-body-medium {
@@ -119,7 +118,7 @@ $icon-size: 24px;
 }
 
 .stores-container {
-  max-height: 480px; // 10 heights of a mat-menu-item
+  max-height: 200px; // 5 heights of a mat-menu-item
   overflow: auto;
 
   .store-name {
@@ -305,4 +304,8 @@ sfui-icon[name="arrowDown"] {
   100% {
     left: calc(var(--sfui-sidebar-width) - #{$hide-show-button-width} / 2);
   }
+}
+
+mat-divider {
+  border-top-color: $black-12-opacity;
 }

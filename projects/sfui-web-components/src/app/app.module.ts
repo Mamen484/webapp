@@ -36,6 +36,7 @@ import { createCustomElement } from '@angular/elements';
         SfuiLabelModule,
         SfuiToggleModule,
         SfuiExpandableWebModule,
+        SfuiOverlayModule,
     ],
     providers: [],
     exports: [],

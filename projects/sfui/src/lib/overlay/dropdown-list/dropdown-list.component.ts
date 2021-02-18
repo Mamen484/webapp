@@ -30,12 +30,13 @@ export class SfuiDropdownListComponent {
         this._opened = value;
         if (value) {
             this.dropdownVisible = true;
+            this.changeDetectorRef.detectChanges();
         } else {
             timer(75).subscribe(() => {
                 this.dropdownVisible = false;
+                this.changeDetectorRef.detectChanges();
             });
         }
-        this.changeDetectorRef.detectChanges();
     }
 
     @HostBinding('attr.sfui-id') get sfuiId() {
@@ -49,11 +50,9 @@ export class SfuiDropdownListComponent {
 
     triggerOpened() {
         this.opened = !this.opened;
-        this.changeDetectorRef.detectChanges();
     }
 
     backdropClick() {
         this.opened = false;
-        this.changeDetectorRef.detectChanges();
     }
 }

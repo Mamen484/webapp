@@ -108,14 +108,16 @@
     </ul>
 </sfl-sidebar-container>
 <sfui-dropdown-list #accountMenu class="account-menu">
-    <div slot="sfui-dropdown-label" class="sfui-label-small" i18n>Accounts</div>
-    <a *ngFor="let store of stores" sfui-dropdown-item [href]="store.id | storeLink | async" fxLayout="row"
-       fxLayoutGap="10px" fxLayoutAlign="center center">
-        <div class="store-name sfui-body-medium" fxFlex
-             [class.active]="store.id === currentStore.id"
-             [class.sfui-body-medium-bold]="store.id === currentStore.id">{{ store.name }}</div>
-        <sfui-icon name="successCircled" type="status" *ngIf="store.id === currentStore.id"></sfui-icon>
-    </a>
+    <div sfui-dropdown-label class="sfui-label-small" i18n>Accounts</div>
+    <div class="stores-container">
+        <a *ngFor="let store of stores" sfui-dropdown-item [href]="store.id | storeLink | async" fxLayout="row"
+           fxLayoutGap="10px" fxLayoutAlign="center center">
+            <div class="store-name sfui-body-medium" fxFlex
+                 [class.active]="store.id === currentStore.id"
+                 [class.sfui-body-medium-bold]="store.id === currentStore.id">{{ store.name }}</div>
+            <sfui-icon name="successCircled" type="status" *ngIf="store.id === currentStore.id"></sfui-icon>
+        </a>
+    </div>
     <mat-divider></mat-divider>
     <a sflLegacyLink class="sfui-body-medium" [storeId]="currentStore.id" path="/marketplaces/globalparameters"
        sfui-dropdown-item
