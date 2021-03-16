@@ -78,6 +78,17 @@ describe('ItemsTableComponent', () => {
         expect(component.allowEditQuantity).toEqual(true);
     });
 
+    it('should make quantity editable when the channel is veepeegroup', () => {
+        component.order = <any>{
+            createdAt: new Date('2012-12-12').getTime(),
+            items: [{reference: '1324'}],
+            payment: {},
+            _embedded: {channel: {id: ChannelMap.veepeegroup}},
+        };
+        fixture.detectChanges();
+        expect(component.allowEditQuantity).toEqual(true);
+    });
+
     it('should make quantity editable when the channel engine is zalando', () => {
         component.order = <any>{
             createdAt: new Date('2012-12-12').getTime(),

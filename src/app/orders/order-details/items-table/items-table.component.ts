@@ -83,7 +83,9 @@ export class ItemsTableComponent implements OnInit {
     }
 
     protected checkIfQuantityEditable() {
-        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute || this.order._embedded.channel.engine === 'zalando';
+        this.allowEditQuantity = this.order._embedded.channel.id === ChannelMap.laredoute
+            || this.order._embedded.channel.id === ChannelMap.veepeegroup
+            || this.order._embedded.channel.engine === 'zalando';
     }
 
     protected determineSku(item: OrderItem) {
