@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { debounceTime, filter, flatMap, publishReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
+import { debounceTime, filter, mergeMap, publishReplay, startWith, switchMap, take, tap } from 'rxjs/operators';
 import { Category } from '../../../core/entities/category';
 import { ChannelService } from '../../../core/services/channel.service';
 import { FeedService } from '../../../core/services/feed.service';
@@ -167,7 +167,7 @@ export class CategoryMappingComponent implements OnInit, OnDestroy {
     protected doFetchCategories(search: string, page = 1) {
         return this.appStore.select('currentStore').pipe(
             take(1),
-            flatMap(store => this.channelService.getChannelCategories(this.channelId, {
+            mergeMap(store => this.channelService.getChannelCategories(this.channelId, {
                 name: search,
                 country: store.country,
                 limit: searchLimit,

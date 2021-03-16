@@ -6,7 +6,6 @@ import {
     SfuiBannerModule,
     SfuiCheckboxComponent,
     SfuiCheckboxModule,
-    SfuiDropdownListComponent,
     SfuiExpandableGroupWebComponent,
     SfuiExpandableWebComponent,
     SfuiExpandableWebModule,
@@ -16,7 +15,6 @@ import {
     SfuiLabelComponent,
     SfuiLabelModule,
     SfuiOptionComponent,
-    SfuiOverlayModule,
     SfuiSelectComponent,
     SfuiSelectModule,
     SfuiToggleComponent,
@@ -36,7 +34,6 @@ import { createCustomElement } from '@angular/elements';
         SfuiLabelModule,
         SfuiToggleModule,
         SfuiExpandableWebModule,
-        SfuiOverlayModule,
     ],
     providers: [],
     exports: [],
@@ -55,7 +52,6 @@ export class AppModule implements DoBootstrap {
         this.registerElement(SfuiExpandableGroupWebComponent, 'sfui-expandable-group');
         this.registerElement(SfuiExpandableWebComponent, 'sfui-expandable');
         this.registerElement(SfuiToggleComponent, 'sfui-toggle');
-        this.registerElement(SfuiDropdownListComponent, 'sfui-dropdown-list');
     }
 
     ngDoBootstrap() {
@@ -64,6 +60,5 @@ export class AppModule implements DoBootstrap {
     registerElement(component, selector) {
         const element = createCustomElement(component, {injector: this.injector});
         customElements.define(selector, element);
-
     }
 }

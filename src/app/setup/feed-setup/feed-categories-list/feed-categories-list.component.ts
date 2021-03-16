@@ -53,7 +53,7 @@ export class FeedCategoriesListComponent extends ListOperations<FeedCategory> im
         return this.feedService.fetchCategoryCollection(this.feedId, {
             page: page.toString(),
             limit: limit.toString(),
-            name,
+            name: search,
             state: this.configurationStateFilter,
         }).pipe(
             map(categories => ({total: categories.total, dataList: categories._embedded.category}),

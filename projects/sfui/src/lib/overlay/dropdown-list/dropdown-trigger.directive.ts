@@ -7,7 +7,7 @@ import { SfuiDropdownListComponent } from './dropdown-list.component';
 export class SfuiDropdownTriggerDirective implements AfterViewInit, AfterViewChecked {
 
     @Input('sfuiDropdownTriggerFor') sfuiDropdownList: SfuiDropdownListComponent;
-    position: {left: number, top: number};
+    position: { left: number, top: number };
 
     constructor(private elementRef: ElementRef<HTMLElement>) {
     }

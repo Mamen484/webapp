@@ -115,6 +115,21 @@ describe('FeedCategoriesListComponent', () => {
         })
     });
 
+    it('should search by a category name', () => {
+        feedService.fetchCategoryCollection.and.returnValue(EMPTY);
+        component.feedId = 15;
+        component.currentPage = 2;
+        component.searchQuery = 'barbra'
+        component.updateData();
+        expect(feedService.fetchCategoryCollection).toHaveBeenCalledWith(15, {
+            page: '3',
+            limit: component.pageSize.toString(),
+            name: 'barbra',
+            state: undefined,
+        })
+    });
+
+
     it('should scroll to the top of the list when a page is changed', () => {
         feedService.fetchCategoryCollection.and.returnValue(EMPTY);
         component.feedId = 15;

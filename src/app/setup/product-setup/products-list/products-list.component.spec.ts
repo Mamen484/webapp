@@ -93,11 +93,12 @@ describe('ProductsListComponent', () => {
         feedService.fetchProductCollection.and.returnValue(EMPTY);
         matDialog.open.and.returnValue(<any>{afterClosed: () => of(ConfigurationState.Configured)});
         component.feedId = 15;
+        component.searchQuery = 'redrea';
         component.openFilterDialog();
         expect(feedService.fetchProductCollection).toHaveBeenCalledWith(15, {
             page: '1',
             limit: component.pageSize.toString(),
-            name: '',
+            name: 'redrea',
             state: ConfigurationState.Configured,
         })
     });

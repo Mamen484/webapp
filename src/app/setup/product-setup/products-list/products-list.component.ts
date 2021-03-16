@@ -58,7 +58,7 @@ export class ProductsListComponent extends ListOperations<Product> implements On
         return this.feedService.fetchProductCollection(this.feedId, {
             page: page.toString(),
             limit: limit.toString(),
-            name,
+            name: search,
             state: this.configurationStateFilter,
         }).pipe(
             map(products => ({total: products.total, dataList: products._embedded.product}),

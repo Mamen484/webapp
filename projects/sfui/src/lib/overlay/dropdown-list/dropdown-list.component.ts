@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, ElementRef, HostBinding, Input, ViewEncapsulation } from '@angular/core';
-import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { timer } from 'rxjs';
 
 let id = 0;
