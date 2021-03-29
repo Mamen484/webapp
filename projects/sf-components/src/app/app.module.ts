@@ -47,11 +47,7 @@ import { TrackingToolsComponent, TrackingToolsModule } from 'tracking-tools';
         }),
         MatProgressBarModule,
         TrackingToolsModule.forRoot({
-            GA_MEASUREMENT_ID: environment.googleAnalyticsMeasurmentId,
-            ZENDESK_ACCOUNT_LINK: environment.zendeskAccountLink,
-            DEFAULT_AUTOPILOT_EMAIL: 'default@shopping-feed.com',
-            DEFAULT_AUTOPILOT_STORENAME: 'default',
-            FULLSTORY_ORG_ID: 'D6X8Q',
+            GTM_ID: environment.GTM_ID,
         }),
     ],
     providers: [

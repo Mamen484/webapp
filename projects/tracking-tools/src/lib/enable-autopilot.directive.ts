@@ -34,7 +34,6 @@ export class EnableAutopilotDirective implements OnInit {
     }
 
     private getDataForAssociate(info: AggregatedUserInfo, store: UserStore) {
-        console.log(this.defaultStoreName, this.defaultEmail);
         return info.login === store.name
             ? {_simpleAssociate: true, Email: info.email, FirstName: store.name}
             : {

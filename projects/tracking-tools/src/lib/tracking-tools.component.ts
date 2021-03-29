@@ -5,6 +5,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
     selector: 'sfc-tracking-tools',
     template: `
         <ng-container sfcEnableGoogleAnalytics *ngIf="gaEnabled"></ng-container>
+        <ng-container sfcEnableGoogleTagsManagement *ngIf="gtagEnabled"></ng-container>
         <ng-container sfcEnableZendeskChat [localeId]="zendeskChatLocaleId" *ngIf="zendeskEnabled"></ng-container>
         <ng-container sfEnableAutopilot *ngIf="autopilotEnabled"></ng-container>
         <ng-container sfEnableAppcues *ngIf="appcuesEnabled"></ng-container>
@@ -23,10 +24,15 @@ export class TrackingToolsComponent implements OnInit {
     fullstoryEnabled = false;
     salesMachineEnabled = false;
     facebookEnabled = false;
+    gtagEnabled = false;
 
     @Input() zendeskChatLocaleId = 'en';
 
     constructor() {
+    }
+
+    @Input() set enableGoogleTagsManager(value: any) {
+        this.gtagEnabled = coerceBooleanProperty(value);
     }
 
     @Input() set enableGoogleAnalytics(value: any) {

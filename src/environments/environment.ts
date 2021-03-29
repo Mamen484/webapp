@@ -29,20 +29,7 @@ export const environment = {
         de: 'support@shopping-feed.com',
         pt: 'support@shopping-feed.com',
     },
-    DEFAULT_AUTOPILOT_EMAIL: 'default@shopping-feed.com',
-    DEFAULT_AUTOPILOT_STORENAME: 'default',
-    RUN_AUTOPILOT: true,
-    GTAG_ID: 'UA-78261662-1',
-    FULLSTORY_ORG_ID: 'D6X8Q',
+    GTM_ID: 'GTM-KKGPJKX',
     ZAPIER_LINK: 'https://zapier.com/developer/invite/100387/80c3075b8660cd0602a9eb253b89ad07',
     maxApiLimit: '200',
-    // Zendesk widget
-    zeAccountLink: 'shoppingfeed.zendesk.com',
-    zeChatTitle: 'Chat Shopping Feed',
-    zeConciergeName: 'Team Shopping Feed',
-    zeConciergeTitle: 'I can answer all your questions!',
-    zeConciergeTitleFr: 'Posez-nous toutes vos questions',
-    countriesListLink: 'https://raw.githubusercontent.com/shoppingflux/countries-list/master',
-    // COVID-19 banner
-    showCovid19Banner: 'off',
 };

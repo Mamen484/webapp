@@ -10,7 +10,6 @@ import { of, Subject } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ConfigurationState } from '../configuration-state';
 import { AutotagFormState } from '../shared/autotag-mapping/autotag-form-state.enum';
-import { FullstoryLoaderService } from 'tracking-tools';
 import { UnsavedDataDialogComponent } from 'sfl-tools/src/lib/unsaved-data-guard';
 import { Title } from '@angular/platform-browser';
 
@@ -33,14 +32,12 @@ describe('FeedSetupComponent', () => {
     let channelService: jasmine.SpyObj<ChannelService>;
     let feedService: jasmine.SpyObj<FeedService>;
     let route: jasmine.SpyObj<{ data: Subject<any> }>;
-    let fullstoryLoaderService: jasmine.SpyObj<FullstoryLoaderService>;
 
     beforeEach(async(() => {
         matDialog = jasmine.createSpyObj(['open']);
         channelService = jasmine.createSpyObj('ChannelService', ['getChannelCategories']);
         feedService = jasmine.createSpyObj('FeedService', ['fetchFeedCollection', 'fetchCategoryCollection']);
         route = {data: new Subject()};
-        fullstoryLoaderService = jasmine.createSpyObj('FullstoryLoaderService spy', ['load']);
         titleService = jasmine.createSpyObj('Title', ['setTitle']);
 
         TestBed.configureTestingModule({
@@ -52,7 +49,6 @@ describe('FeedSetupComponent', () => {
                 {provide: ChannelService, useValue: channelService},
                 {provide: FeedService, useValue: feedService},
                 {provide: ActivatedRoute, useValue: route},
-                {provide: FullstoryLoaderService, useValue: fullstoryLoaderService},
                 {provide: Title, useValue: titleService},
 
             ],
@@ -121,10 +117,5 @@ describe('FeedSetupComponent', () => {
         component.categoryMapping = <any>{searchChannelCategoryControl: {dirty: false}};
         component.autotagFormState = AutotagFormState.pristine;
         expect(component.hasModifications()).toBe(false);
-    });
-
-    it('should run fullstory code', () => {
-        component.ngOnInit();
-        expect(fullstoryLoaderService.load).toHaveBeenCalled();
     });
 });

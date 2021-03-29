@@ -42,7 +42,6 @@ export class DataTableComponent implements OnInit {
         this.timelineService.getEvents(timelineFilter, maxEvents).pipe(
             map(response => response._embedded.timeline)
         ).subscribe(timeline => {
-          console.log(timeline);
           this.exports = timeline.reduce((acc, current) => {
             return acc[current._embedded.channel.id] ? acc : Object.assign(acc, {[current._embedded.channel.id]: current})
           }, {});

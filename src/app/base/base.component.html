@@ -7,14 +7,4 @@
         <ng-container *ngTemplateOutlet="content"></ng-container>
     </a>
 </ng-template>
-<sfc-tracking-tools
-        enableGoogleAnalytics
-        enableZendeskChat
-        [zendeskChatLocaleId]="localeIdService.localeId"
-        enableAutopilot
-        enableAppcues
-        enableFullstory
-        enableSalesMachine
-        enableFacebook
->
-</sfc-tracking-tools>
+<sfc-tracking-tools enableGoogleTagsManager></sfc-tracking-tools>

@@ -8,6 +8,6 @@ export const environment = {
     hmr: false,
     apiLink: SFC_API_LINK,
     webAppLink: SFC_WEB_APP_LINK,
-    'googleAnalyticsMeasurmentId': 'UA-78261662-1',
+    GTM_ID: 'GTM-KKGPJKX',
     'zendeskAccountLink': 'shoppingfeed.zendesk.com'
 }

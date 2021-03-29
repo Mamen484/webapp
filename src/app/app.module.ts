@@ -49,11 +49,7 @@ import { TrackingToolsModule } from 'tracking-tools';
         // keep this module in the bottom as it contains a wildcard route
         ErrorPagesModule,
         TrackingToolsModule.forRoot({
-            GA_MEASUREMENT_ID: environment.GTAG_ID,
-            ZENDESK_ACCOUNT_LINK: environment.zeAccountLink,
-            DEFAULT_AUTOPILOT_EMAIL: environment.DEFAULT_AUTOPILOT_EMAIL,
-            DEFAULT_AUTOPILOT_STORENAME:  environment.DEFAULT_AUTOPILOT_STORENAME,
-            FULLSTORY_ORG_ID: environment.FULLSTORY_ORG_ID,
+            GTM_ID: environment.GTM_ID,
         }),
     ],
     bootstrap: [AppComponent],

@@ -17,7 +17,6 @@ import { CategoryMappingService } from '../shared/category-mapping.service';
 import { FeedCategoryMappingService } from './feed-category-mapping.service';
 import { CategoryAutotagService } from './category-autotag.service';
 import { AutotagService } from '../shared/autotag-mapping/autotag-service';
-import { FullstoryLoaderService } from 'tracking-tools';
 
 
 @Component({
@@ -49,8 +48,7 @@ export class FeedSetupComponent implements OnInit, UnsavedDataInterface {
                 protected stateService: AutotagFormStateService,
                 protected titleService: Title,
                 private overlayActiveService: OverlayActiveService,
-                private changeDetectorRef: ChangeDetectorRef,
-                private fullstoryLoader: FullstoryLoaderService) {
+                private changeDetectorRef: ChangeDetectorRef) {
     }
 
 
@@ -66,7 +64,6 @@ export class FeedSetupComponent implements OnInit, UnsavedDataInterface {
     }
 
     ngOnInit() {
-        this.fullstoryLoader.load();
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
             this.feed = data.feed;

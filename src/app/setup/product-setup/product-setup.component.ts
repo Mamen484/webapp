@@ -16,7 +16,6 @@ import { ProductCategoryMappingService } from './product-category-mapping.servic
 import { ProductsListComponent } from './products-list/products-list.component';
 import { AutotagService } from '../shared/autotag-mapping/autotag-service';
 import { ProductAutotagService } from './product-autotag.service';
-import { FullstoryLoaderService } from 'tracking-tools';
 import { UnsavedDataDialogComponent } from 'sfl-tools/src/lib/unsaved-data-guard';
 
 @Component({
@@ -49,8 +48,7 @@ export class ProductSetupComponent implements OnInit {
                 protected stateService: AutotagFormStateService,
                 protected titleService: Title,
                 private overlayActiveService: OverlayActiveService,
-                private changeDetectorRef: ChangeDetectorRef,
-                private fullstoryLoader: FullstoryLoaderService,) {
+                private changeDetectorRef: ChangeDetectorRef) {
     }
 
     @HostListener('window:beforeunload', ['$event'])
@@ -66,7 +64,6 @@ export class ProductSetupComponent implements OnInit {
 
 
     ngOnInit() {
-        this.fullstoryLoader.load();
         this.route.data.subscribe(({data}) => {
             this.channel = data.channel;
             this.feed = data.feed;

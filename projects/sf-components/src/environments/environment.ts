@@ -7,7 +7,7 @@ export const environment = {
   hmr: false,
   apiLink: '//api.shopping-feed.lan/v1',
   webAppLink: 'http://localhost:4200/v3/en',
-  googleAnalyticsMeasurmentId: 'UA-78261662-1',
+  GTM_ID: 'GTM-KKGPJKX',
   zendeskAccountLink: 'shoppingfeed.zendesk.com',
 };
 
