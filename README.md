@@ -34,6 +34,8 @@ And the ones needed for the backend.
 To run a development server in a docker container:
 `docker-compose up -d`
 The webapp will be accessible on address http://app.shopping-feed.lan/v3/en.
+The admin app will be accessible on address http://admin.shopping-feed.lan/en.
+The operator app will be accessible on address http://operator.shopping-feed.lan/en.
 
 ## Running webapp for a development
 
