@@ -30,6 +30,9 @@ export class InitializeStoreGuard implements CanActivate {
                     }));
                 }
                 let enabledStore = userInfo.findEnabledStore(next.queryParams.store) || userInfo.findFirstEnabledStore();
+                if (enabledStore.country?.toLowerCase() === 'uk') {
+                    enabledStore.country = 'gb';
+                }
                 this.appStore.dispatch({type: SET_STORE, store: enabledStore});
                 return of(true);
             }

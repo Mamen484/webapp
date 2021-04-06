@@ -1,6 +1,7 @@
 const countryLocalePairs = {
     us: 'en-US',
     uk: 'en-GB',
+    gb: 'en-GB',
     ca: 'en-CA',
     au: 'en-AU',
     in: 'en-IN',
