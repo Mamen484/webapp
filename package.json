@@ -72,7 +72,7 @@
     "webdriver-manager": "^12.1.7",
     "zone.js": "^0.11.3"
   },
-  "name": "web-app",
+  "name": "Shoppingfeed Web",
   "license": "MIT",
   "scripts": {
     "lint": "tslint \"src/**/*.ts\"",

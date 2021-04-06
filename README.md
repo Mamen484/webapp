@@ -1,16 +1,17 @@
-# Shopping Feed UI
+# Shoppingfeed Web
 
 This project was generated with [@angular/cli](https://github.com/angular/angular-cli).
 
-It contains Shopping Feed UI projects:
+Here is a monorepo for Shoppingfeed Web projects.
+If contains:
 
 - webapp (client's application)
-- admin app
-- operator app
-- sfl-shared - library that contains services/entities shared between Shoppingfeed applications
+- admin app (sf-admin)
+- operator app (channel-settings)
+- sfl-shared - library that contains services/entities shared between Shoppingfeed apps
 - sfl-tools - library that contains useful shared tools
 - sfui - Shoppingfeed UI library
-- tracking-tools - a component to asily load tracking tools like Google Analytics
+- tracking-tools - a component to easily load tracking tools like Google Analytics or Google Tags Manager
 
 ## Prerequisutes
 
@@ -20,11 +21,12 @@ https://github.com/shoppingflux/docker-network-base
 https://github.com/shoppingflux/api  
 https://github.com/shoppingflux/app-billing
 
+Also you need the legacy app
+https://github.com/shoppingflux/legacy
+
 For the local setup make sure you have all the hosts in your /etc/hosts:
 ```
 127.0.0.1   app.shopping-feed.lan
-127.0.0.1   admin.shopping-feed.lan
-127.0.0.1   operator.shopping-feed.lan
 
 And the ones needed for the backend.
 ```
@@ -32,8 +34,19 @@ And the ones needed for the backend.
 To run a development server in a docker container:
 `docker-compose up -d`
 The webapp will be accessible on address http://app.shopping-feed.lan/v3/en.
-The admin app will be accessible on address http://admin.shopping-feed.lan/en.
 
+## Running webapp for a development
+
+### Install all needed dependencies
+
+`npm install`
+
+### Build the libraries
+
+`npm run build-lib`
+
+### Serve the app
+`npm start`
 
 ## Translation
 
