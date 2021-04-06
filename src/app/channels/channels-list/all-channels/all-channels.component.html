@@ -57,7 +57,9 @@
         ></sf-recommended-channels-data-table>
 
         <div sfui-flex-layout="column" class="loading-channel-placeholder" *ngIf="hasNextPage">
-            <ngx-skeleton-loader count="20" appearance="line"></ngx-skeleton-loader>
+            <ngx-skeleton-loader count="300" appearance="line"
+                                 [theme]="{width: '140px', height: '8px', 'margin-right': '32px', 'border-radius': '9px'}"
+            ></ngx-skeleton-loader>
         </div>
         <sf-no-channels-found-message *ngIf="!loading && !channels.length"
                                       [query]="searchControl.value" (clearSearch)="clearSearch()">
