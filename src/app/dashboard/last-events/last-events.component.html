@@ -1,5 +1,5 @@
 <div *ngIf="isDisplayed" sfui-flex-layout="column" class="last-events-content sfui-gap-32">
-    <div sfui-flex-layout="column" class="sfui-gap-16">
+    <div sfui-flex-layout="column" class="sfui-gap-16" *ngIf="hasConnectedChannels">
         <div class="sfui-header-3 sfui-grey-7" i18n>Orders syncing</div>
         <div sfui-card sfui-flex-layout="column">
             <div class="acknowledge-errors" *ngIf="acknowledgeErrors.length">

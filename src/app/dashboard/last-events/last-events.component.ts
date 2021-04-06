@@ -24,6 +24,7 @@ export class LastEventsComponent implements OnInit {
     isDisplayed = false;
     isLoaded = new Subject();
     orderView = OrdersView;
+    hasConnectedChannels = false;
 
     constructor(private dashboardDataService: DashboardDataService) {
     }
@@ -33,7 +34,8 @@ export class LastEventsComponent implements OnInit {
     }
 
     protected fetchData() {
-        this.dashboardDataService.getData().subscribe(({imports, importErrors, shippingErrors}) => {
+        this.dashboardDataService.getData().subscribe(({connectedChannelsData, imports, importErrors, shippingErrors}) => {
+            this.hasConnectedChannels = Boolean(connectedChannelsData?.channels?.length);
             this.lastImport = imports._embedded.timeline.length > 0 && imports._embedded.timeline[0];
             this.acknowledgeErrors = importErrors._embedded.order;
             this.shipmentErrors = shippingErrors._embedded.order;
