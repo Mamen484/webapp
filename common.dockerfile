@@ -31,7 +31,7 @@ RUN apk update && apk add zip curl
 WORKDIR /app
 
 COPY ./ /app/
-RUN yarn install
+RUN npm install
 
 ARG env=prod
 

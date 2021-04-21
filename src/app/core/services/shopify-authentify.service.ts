@@ -19,13 +19,16 @@ export class ShopifyAuthentifyService {
             .pipe(map((data: { authorizeUrl: string }) => data.authorizeUrl));
     }
 
-    public getStoreData(shop: string, {code, timestamp, hmac}: Params): Observable<Store> {
+    public getStoreData(shop: string, queryParams: Params): Observable<Store> {
+        let params = new HttpParams();
+        for (let paramName in queryParams) {
+            if (queryParams.hasOwnProperty(paramName)) {
+                params = params.set(paramName, queryParams[paramName]);
+            }
+        }
         if (!this.storeData) {
             return this.httpClient.get(this.apiUrl + '/shopify/store/' + this.getShopName(shop), {
-                params: new HttpParams()
-                    .set('code', code)
-                    .set('timestamp', timestamp)
-                    .set('hmac', hmac)
+                params
             })
                 .pipe(map((data: any) => Store.createFromResponse(data, this.getShopName(shop))))
                 .pipe(tap(data => this.storeData = data));

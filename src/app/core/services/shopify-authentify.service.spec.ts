@@ -37,11 +37,12 @@ describe('ShopifyAuthentifyServuce', () => {
 
     it('getStoreData should call a proper resource', inject([ShopifyAuthentifyService, HttpClient],
         (service: ShopifyAuthentifyService) => {
-            service.getStoreData('someshop.myshopify.com', {code: 'c11', timestamp: 'ts11', hmac: 'hm11'}).subscribe();
+            service.getStoreData('someshop.myshopify.com', {code: 'c11', timestamp: 'ts11', hmac: 'hm11', host: 'any.host.com'}).subscribe();
             expect(httpClient.get.calls.mostRecent().args[0]).toEqual(environment.API_URL + '/shopify/store/someshop');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('code')).toEqual('c11');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('timestamp')).toEqual('ts11');
             expect(httpClient.get.calls.mostRecent().args[1].params.get('hmac')).toEqual('hm11');
+            expect(httpClient.get.calls.mostRecent().args[1].params.get('host')).toEqual('any.host.com');
         }));
 
     it('getStoreData should NOT call api twice, but load data from cache for the second call', inject([ShopifyAuthentifyService, HttpClient],
